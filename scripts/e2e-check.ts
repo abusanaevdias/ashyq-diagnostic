@@ -324,6 +324,12 @@ async function main() {
   await p2.locator('#booking-name').fill('E2E Student');
   await p2.locator('#booking-grade').fill('10');
   await p2.getByRole('button', { name: 'Записаться на разбор' }).click();
+  check(
+    'lead: без согласия заявка не отправляется',
+    has(await p2.locator('body').innerText(), 'Для отправки заявки нужно согласие'),
+  );
+  await p2.locator('input[type="checkbox"]').last().check();
+  await p2.getByRole('button', { name: 'Записаться на разбор' }).click();
   await p2.getByText('Заявка принята').waitFor();
   check('lead: контактная заявка принята сервером', has(await p2.locator('body').innerText(), 'Заявка принята'));
   const hiddenLeads = await p2.request.get(`${BASE}/api/leads`);
@@ -339,7 +345,7 @@ async function main() {
 
   await ctx2.close();
 
-  /* ---------- 7. Program & Progress ---------- */
+  /* ---------- 7. Public pages, Program & Progress ---------- */
   const ctx3 = await browser.newContext({ ...devices['iPhone 12'] });
   const p3 = await ctx3.newPage();
   await p3.goto(`${BASE}/program`, { waitUntil: 'networkidle' });
@@ -422,12 +428,46 @@ async function main() {
   );
   await p3.screenshot({ path: 'screenshots/progress-mobile.png', fullPage: true });
 
+  // community: реальный публичный маршрут и CTA
+  await p3.goto(`${BASE}/community`, { waitUntil: 'networkidle' });
+  const communityText = await p3.locator('body').innerText();
+  check('community: ценности и CTA на месте', has(communityText, 'Люди делают знания живыми') && has(communityText, 'Следующий сезон'));
+  check('community: изображения имеют alt', (await p3.locator('main img[alt]').count()) >= 2);
+
+  // season: обязательное согласие и рабочий lead endpoint
+  await p3.goto(`${BASE}/season`, { waitUntil: 'networkidle' });
+  await p3.locator('#season-name').fill('E2E Season');
+  await p3.locator('#season-phone').fill('8 706 555 44 33');
+  await p3.getByRole('button', { name: 'Узнать о следующем сезоне' }).click();
+  check('season: без согласия заявка не отправляется', has(await p3.locator('body').innerText(), 'Для отправки заявки нужно согласие'));
+  await p3.locator('input[type="checkbox"]').check();
+  await p3.getByRole('button', { name: 'Узнать о следующем сезоне' }).click();
+  await p3.getByText('Заявка принята').waitFor();
+  check('season: заявка принята сервером', has(await p3.locator('body').innerText(), 'Заявка принята'));
+
+  // FAQ и юридические маршруты
+  await p3.goto(`${BASE}/faq`, { waitUntil: 'networkidle' });
+  check('faq: восемь ответов доступны', (await p3.locator('details').count()) === 8);
+  await p3.goto(`${BASE}/privacy`, { waitUntil: 'networkidle' });
+  check('privacy: описаны согласие и отзыв', has(await p3.locator('body').innerText(), 'Согласие и отзыв'));
+  await p3.goto(`${BASE}/terms`, { waitUntil: 'networkidle' });
+  check('terms: disclaimer диагностики на месте', has(await p3.locator('body').innerText(), 'не равен официальному результату'));
+
+  // SEO endpoints и route metadata
+  const robots = await p3.request.get(`${BASE}/robots.txt`);
+  const sitemap = await p3.request.get(`${BASE}/sitemap.xml`);
+  check('seo: robots.txt доступен', robots.ok() && (await robots.text()).includes('sitemap.xml'));
+  check('seo: sitemap содержит публичные маршруты', sitemap.ok() && (await sitemap.text()).includes('/community'));
+  check('seo: route title установлен', (await p3.title()).includes('Условия использования'));
+
   // landing: nav-ссылки на новые разделы
   await p3.goto(`${BASE}/`, { waitUntil: 'networkidle' });
   check(
-    'landing: nav-ссылки на программу и прогресс',
+    'landing: nav-ссылки на основные разделы',
     (await p3.getByRole('link', { name: 'Программа' }).count()) >= 1 &&
-      (await p3.getByRole('link', { name: 'Прогресс' }).count()) >= 1,
+      (await p3.getByRole('link', { name: 'Прогресс' }).count()) >= 1 &&
+      (await p3.getByRole('link', { name: 'Сообщество' }).count()) >= 1 &&
+      (await p3.getByRole('link', { name: 'FAQ' }).count()) >= 1,
   );
   await ctx3.close();
 

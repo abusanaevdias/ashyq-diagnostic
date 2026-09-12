@@ -10,7 +10,7 @@ import path from 'node:path';
  */
 
 export interface StoredLead {
-  kind: 'result' | 'contact' | 'whatsapp';
+  kind: 'result' | 'contact' | 'whatsapp' | 'season';
   exam: 'sat' | 'ielts';
   runId: string;
   name?: string;
@@ -54,7 +54,9 @@ function leadToText(lead: StoredLead): string {
   const lines: string[] = [];
 
   lines.push(
-    lead.kind === 'contact'
+    lead.kind === 'season'
+      ? `🔴 ЗАЯВКА НА СЕЗОН · ${examLabel(lead.exam)}`
+      : lead.kind === 'contact'
       ? `🔴 НОВАЯ ЗАЯВКА · ${examLabel(lead.exam)}`
       : lead.kind === 'whatsapp'
         ? `🟡 Ушёл в WhatsApp · ${examLabel(lead.exam)}`

@@ -97,7 +97,7 @@ export async function GET(req: Request) {
   }
 
   const onlyContacts = url.searchParams.get('contacts') === '1';
-  const selected = onlyContacts ? leads.filter((l) => l.kind === 'contact') : leads;
+  const selected = onlyContacts ? leads.filter((l) => l.kind === 'contact' || l.kind === 'season') : leads;
 
   if (url.searchParams.get('format') === 'csv') {
     return new NextResponse(`﻿${toCsv(selected)}`, {
@@ -112,7 +112,7 @@ export async function GET(req: Request) {
   return NextResponse.json(
     {
       total: selected.length,
-      contacts: leads.filter((l) => l.kind === 'contact').length,
+      contacts: leads.filter((l) => l.kind === 'contact' || l.kind === 'season').length,
       completed: leads.filter((l) => l.kind === 'result').length,
       leads: selected,
     },

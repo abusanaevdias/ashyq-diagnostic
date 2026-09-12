@@ -9,7 +9,7 @@ import type { ExamId, UtmParams } from './types';
  * контакт, то повторно с контактом (kind: 'contact').
  */
 
-export type LeadKind = 'result' | 'contact' | 'whatsapp';
+export type LeadKind = 'result' | 'contact' | 'whatsapp' | 'season';
 
 export interface LeadPayload {
   kind: LeadKind;

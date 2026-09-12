@@ -1,4 +1,10 @@
 import ProgramScreen from '@/components/ProgramScreen';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Программа ASHYQ',
+  description: 'Система прогресса ASHYQ: Match Days, рейтинг команд и чемпионат сезона.',
+};
 
 /**
  * /program — витрина программы ASHYQ (progress tracking, Match Day,

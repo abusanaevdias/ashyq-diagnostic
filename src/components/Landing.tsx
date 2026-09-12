@@ -94,6 +94,12 @@ export default function Landing({
           <a className="label text-ink-soft transition-colors hover:text-red" href="/progress">
             Прогресс
           </a>
+          <a className="label text-ink-soft transition-colors hover:text-red" href="/community">
+            Сообщество
+          </a>
+          <a className="label text-ink-soft transition-colors hover:text-red" href="/faq">
+            FAQ
+          </a>
         </nav>
         <a href="#start" className="btn btn-primary btn-small w-auto shrink-0">
           Начать
@@ -396,7 +402,38 @@ export default function Landing({
         </div>
       </section>
 
-      {/* ================= S5 BRAND BLOCK ================= */}
+      {/* ================= S5 COMMUNITY ================= */}
+      <section id="community" className="border-t border-line bg-paper-deep/50">
+        <div className="shell-wide py-14 sm:py-20">
+          <EditorialLabel num="05">Сообщество ASHYQ</EditorialLabel>
+          <div className="mt-5 grid items-center gap-9 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <h2 className="display max-w-[18ch] text-h2">Больше, чем подготовка к экзамену</h2>
+              <p className="mt-4 text-[0.98rem] leading-relaxed text-ink-soft">
+                Командные Match Days, Missions, презентации и чемпионат сезона — среда,
+                где виден не только балл, но и твой рост, дисциплина и вклад в команду.
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <a href="/community" className="btn btn-primary">О сообществе</a>
+                <a href="/season" className="btn btn-outline">Следующий сезон</a>
+              </div>
+            </div>
+            <div className="relative lg:col-span-7">
+              <Tape className="-top-3 left-1/2 z-10 -translate-x-1/2 rotate-[2deg]" />
+              <img
+                src="/brand/hero-students.jpg"
+                alt="Студенты ASHYQ"
+                width={1200}
+                height={800}
+                loading="lazy"
+                className="w-full rotate-[-1deg] border border-line bg-paper-card p-2 shadow-paper"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= S6 BRAND BLOCK ================= */}
       <section className="relative bg-paper-deep">
         <TornEdge fill="var(--paper)" flip className="absolute inset-x-0 top-0" />
         <div className="shell py-16 text-center sm:py-20">
@@ -410,7 +447,7 @@ export default function Landing({
         <TornEdge fill="var(--red)" className="absolute inset-x-0 bottom-0 rotate-180" />
       </section>
 
-      {/* ================= S6 FINAL CTA ================= */}
+      {/* ================= S7 FINAL CTA ================= */}
       <section className="bg-red text-paper">
         <div className="shell-wide py-14 sm:py-20">
           <div className="grid items-end gap-8 lg:grid-cols-12">
@@ -462,6 +499,18 @@ export default function Landing({
               </a>
               <a className="label link-underline text-ink-soft hover:text-ink" href="/progress">
                 Мой прогресс
+              </a>
+              <a className="label link-underline text-ink-soft hover:text-ink" href="/community">
+                Сообщество
+              </a>
+              <a className="label link-underline text-ink-soft hover:text-ink" href="/season">
+                Сезон
+              </a>
+              <a className="label link-underline text-ink-soft hover:text-ink" href="/faq">
+                FAQ
+              </a>
+              <a className="label link-underline text-ink-soft hover:text-ink" href="/privacy">
+                Конфиденциальность
               </a>
             </nav>
             <p className="text-[0.75rem] leading-snug text-ink-faint">

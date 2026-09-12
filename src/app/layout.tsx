@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next';
 import './fonts.css';
 import './globals.css';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'ASHYQ — Быстрая диагностика IELTS / SAT',
-  description:
-    '≈20 минут, чтобы понять свою текущую точку, сильные стороны и что стоит подтянуть дальше. Предварительная оценка уровня IELTS и SAT от Ashyq.',
+  metadataBase: new URL(SITE_URL),
+  title: { default: 'ASHYQ — Быстрая диагностика IELTS / SAT', template: '%s' },
+  description: SITE_DESCRIPTION,
   applicationName: 'ASHYQ Quick Diagnostic',
   keywords: ['IELTS', 'SAT', 'диагностика', 'Ashyq', 'Казахстан', 'подготовка'],
   openGraph: {
@@ -14,7 +15,10 @@ export const metadata: Metadata = {
       '≈20 минут. Твоя текущая точка. Твои сильные стороны. Следующий шаг.',
     type: 'website',
     locale: 'ru_RU',
+    siteName: SITE_NAME,
   },
+  twitter: { card: 'summary_large_image', title: 'ASHYQ — диагностика IELTS и SAT', description: SITE_DESCRIPTION },
+  alternates: { canonical: '/' },
 };
 
 export const viewport: Viewport = {
@@ -30,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru">
+    <html lang="ru" data-scroll-behavior="smooth">
       <head>
         <link rel="icon" type="image/png" href="/brand/logo-icon-96.png" />
         <link rel="apple-touch-icon" href="/brand/logo-icon-192.png" />

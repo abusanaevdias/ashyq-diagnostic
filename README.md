@@ -48,6 +48,7 @@ npx tsx scripts/dump-bank.ts  # перегенерировать docs/QUESTION_B
 | Состав теста (кол-во вопросов, mix сложности, длительность) | `src/lib/config.ts` → `EXAMS[..].blueprint` |
 | Цели и сроки в onboarding | `src/lib/config.ts` → `EXAMS[..].targets / whenOptions` |
 | Брендовые цвета и типографика | `tailwind.config.ts`, `src/app/globals.css` |
+| Публичный URL для canonical / sitemap / Open Graph | env `NEXT_PUBLIC_SITE_URL` |
 
 Если номер WhatsApp не задан, на экране результата показывается аккуратная
 плашка «Тестовый режим» — чтобы никто не ушёл в нерабочую ссылку незаметно.
@@ -66,6 +67,7 @@ npx tsx scripts/dump-bank.ts  # перегенерировать docs/QUESTION_B
 | `result` | ученик увидел результат | экзамен, диапазон, цель, слабые темы, UTM — без контакта |
 | `contact` | заполнил форму записи | то же + имя, телефон, класс |
 | `whatsapp` | нажал кнопку WhatsApp | то же + контакт, если он уже оставлен |
+| `season` | запросил условия следующего сезона | имя, телефон, класс и направление после явного согласия |
 
 Каналы доставки задаются в `.env.local`: локальный файл
 `.data/leads.jsonl`, Telegram и/или HTTPS-вебхук для CRM. На serverless-хостинге
@@ -82,6 +84,12 @@ npx tsx scripts/dump-bank.ts  # перегенерировать docs/QUESTION_B
 | `/diagnostic`| точка входа для рассылок с UTM                                |
 | `/program`   | витрина программы: progress tracking, Match Day, leaderboard, чемпионат и призы |
 | `/progress`  | личный прогресс: история замеров, график точки А, skill scores «было → стало» |
+| `/community` | сообщество, командная среда и способы присоединиться |
+| `/season`    | подтверждённая механика сезона + форма заявки |
+| `/faq`       | ответы о диагностике, программе, сезоне и данных |
+| `/privacy`   | политика конфиденциальности и порядок отзыва согласия |
+| `/terms`     | условия использования и ограничения диагностики |
+| `/robots.txt`, `/sitemap.xml` | правила индексации и карта публичных страниц |
 | `/?start=sat\|ielts` | deep-link сразу в выбор экзамена (CTA с /program и /progress) |
 | `/api/validate` | JSON-отчёт валидации банка (для CI / быстрой проверки) |
 | `POST /api/lead` | приём и безопасная нормализация заявки с rate limit |
@@ -103,6 +111,11 @@ src/
     diagnostic/page.tsx     /diagnostic (UTM-вход)
     program/page.tsx        /program (витрина программы)
     progress/page.tsx       /progress (личный прогресс)
+    community/page.tsx      /community (сообщество)
+    season/page.tsx         /season (заявка на сезон)
+    faq/page.tsx            /faq
+    privacy/page.tsx        /privacy
+    terms/page.tsx          /terms
     api/lead/route.ts       POST /api/lead
     api/leads/route.ts      защищённый GET /api/leads
     api/validate/route.ts   GET /api/validate

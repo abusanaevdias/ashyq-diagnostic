@@ -99,7 +99,7 @@ export async function POST(req: Request) {
   }
 
   const kind = body.kind;
-  if (kind !== 'result' && kind !== 'contact' && kind !== 'whatsapp') {
+  if (kind !== 'result' && kind !== 'contact' && kind !== 'whatsapp' && kind !== 'season') {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
@@ -115,7 +115,7 @@ export async function POST(req: Request) {
   }
 
   // контактный лид без единого способа связи бессмысленен
-  if (kind === 'contact' && !phoneDigits) {
+  if ((kind === 'contact' || kind === 'season') && !phoneDigits) {
     return NextResponse.json({ ok: false, error: 'phone' }, { status: 400 });
   }
 

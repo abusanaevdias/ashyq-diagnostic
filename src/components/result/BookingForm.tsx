@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { formatPhoneForDisplay, isValidPhone } from '@/lib/lead';
 import { RedStar } from '@/components/ui/Brand';
+import Link from 'next/link';
 
 type Status = 'idle' | 'sending' | 'done' | 'error';
 
@@ -28,6 +29,7 @@ export default function BookingForm({
   const [grade, setGrade] = useState(defaultLead?.grade ?? '');
   const [status, setStatus] = useState<Status>('idle');
   const [touched, setTouched] = useState(false);
+  const [consent, setConsent] = useState(false);
 
   const phoneOk = isValidPhone(phone);
   const showPhoneError = touched && phone.length > 0 && !phoneOk;
@@ -35,7 +37,7 @@ export default function BookingForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setTouched(true);
-    if (!phoneOk || status === 'sending') return;
+    if (!phoneOk || !consent || status === 'sending') return;
 
     setStatus('sending');
     const ok = await onSubmit({
@@ -133,6 +135,23 @@ export default function BookingForm({
             />
           </div>
         </div>
+
+        <label className="mt-4 flex cursor-pointer items-start gap-3 text-[0.78rem] leading-snug text-ink-soft">
+          <input
+            className="mt-0.5 h-4 w-4 shrink-0 accent-red"
+            type="checkbox"
+            required
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+          />
+          <span>
+            Я согласен(на) на обработку указанных данных для ответа по диагностике и принимаю{' '}
+            <Link className="link-underline text-ink" href="/privacy">политику конфиденциальности</Link>.
+          </span>
+        </label>
+        {touched && !consent ? (
+          <p className="mt-1.5 text-[0.8rem] text-red">Для отправки заявки нужно согласие.</p>
+        ) : null}
 
         <button
           type="submit"
