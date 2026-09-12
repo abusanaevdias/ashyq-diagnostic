@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+.env
+.env.local
+screenshots/
+
+# local comparison inputs and generated lead data
+.sources/
+.data/
+*.jsonl
