@@ -8,7 +8,8 @@
 - axe-core: WCAG 2 A/AA и WCAG 2.1 A/AA;
 - desktop 1440 px и mobile 390 px без горизонтального overflow;
 - видимые кнопки, поля и самостоятельные ссылки не меньше 44×44 px;
-- клавиатурный фокус видим минимум на первых шести элементах маршрута;
+- клавиатурный фокус видим на всех доступных элементах маршрута (защитный
+  предел — 80 Tab-переходов);
 - при `prefers-reduced-motion: reduce` нет активных transition/animation;
 - Lighthouse desktop: Performance не ниже 90, Accessibility не ниже 95;
 - LCP и CLS записываются в отчёт для диагностики.
