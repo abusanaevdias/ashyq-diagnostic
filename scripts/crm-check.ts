@@ -33,7 +33,14 @@ assert.equal(lead.name, 'Aruzhan');
 assert.equal(lead.band, '1190–1290');
 assert.equal(lead.stage, 'contacted');
 assert.equal(lead.activities[0].text, 'Назначен звонок');
+assert.ok(lead.activities.some((activity) => activity.text === 'Отправил обращение с сайта'));
+
+const seasonLead = snapshot.records.find((record) => record.runId === 'season-002');
+assert.ok(seasonLead);
+assert.equal(seasonLead.kind, 'season');
+assert.ok(seasonLead.activities.some((activity) => activity.text === 'Оставил заявку на следующий сезон'));
 
 console.log('PASS  CRM объединяет события по runId');
 console.log('PASS  CRM применяет этапы и заметки');
 console.log('PASS  CRM считает контакты и заявки сезона');
+console.log('PASS  CRM различает обращение с сайта и заявку сезона');

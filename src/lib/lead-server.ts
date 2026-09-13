@@ -57,7 +57,7 @@ function leadToText(lead: StoredLead): string {
     lead.kind === 'season'
       ? `🔴 ЗАЯВКА НА СЕЗОН · ${examLabel(lead.exam)}`
       : lead.kind === 'contact'
-      ? `🔴 НОВАЯ ЗАЯВКА · ${examLabel(lead.exam)}`
+      ? `🔴 НОВОЕ ОБРАЩЕНИЕ · ${examLabel(lead.exam)}`
       : lead.kind === 'whatsapp'
         ? `🟡 Ушёл в WhatsApp · ${examLabel(lead.exam)}`
         : `⚪️ Прошёл диагностику · ${examLabel(lead.exam)}`,
