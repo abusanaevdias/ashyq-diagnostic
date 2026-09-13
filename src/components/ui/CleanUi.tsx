@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './CleanUi.module.css';
 
-type IconName = 'book' | 'chart' | 'compass' | 'search' | 'spark' | 'target';
+type IconName = 'book' | 'chart' | 'chat' | 'compass' | 'mail' | 'pin' | 'search' | 'spark' | 'target';
 
 const ICON_PATHS: Record<IconName, React.ReactNode> = {
   book: <><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H12v16H7.5A2.5 2.5 0 0 0 5 21.5v-16Z" /><path d="M19 5.5A2.5 2.5 0 0 0 16.5 3H12v16h4.5a2.5 2.5 0 0 1 2.5 2.5v-16Z" /></>,
@@ -11,6 +11,9 @@ const ICON_PATHS: Record<IconName, React.ReactNode> = {
   search: <><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 4 4" /></>,
   spark: <><path d="M12 2c.6 5.1 1.8 7 6.9 7.6-5.1.6-6.3 2.5-6.9 7.6-.6-5.1-1.8-7-6.9-7.6C10.2 9 11.4 7.1 12 2Z" /><path d="M19 15.5c.2 1.7.7 2.3 2.4 2.5-1.7.2-2.2.8-2.4 2.5-.2-1.7-.7-2.3-2.4-2.5 1.7-.2 2.2-.8 2.4-2.5Z" /></>,
   target: <><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" /><path d="m15 9 6-6" /><path d="M16 3h5v5" /></>,
+  chat: <><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-5 4v-4.3A2.5 2.5 0 0 1 4 13.5v-8Z" /><path d="M8.5 9.5h7" /></>,
+  mail: <><rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="m4 7 8 6 8-6" /></>,
+  pin: <><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" /><circle cx="12" cy="10" r="2.5" /></>,
 };
 
 export function LineIcon({ name, size = 22 }: { name: IconName; size?: number }) {
@@ -64,6 +67,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
             <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
             <Link className={styles.navLink} href="/community">Сообщество</Link>
             <Link className={styles.navLink} href="/faq">FAQ и поиск</Link>
+            <Link className={styles.navLink} href="/contacts">Контакты</Link>
           </div>
         </details>
         <Link className={styles.searchLink} href="/faq" aria-label="Открыть поиск по вопросам">
@@ -108,7 +112,7 @@ export function FilterChip({ children, active = false, onClick }: { children: Re
 
 const FOOTER_GROUPS = [
   { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/program', label: 'Программа' }, { href: '/?start=ielts', label: 'Диагностика' }, { href: '/progress', label: 'Прогресс' }] },
-  { title: 'ASHYQ', links: [{ href: '/about', label: 'О нас' }, { href: '/blog', label: 'Блог' },{ href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }] },
+  { title: 'ASHYQ', links: [{ href: '/about', label: 'О нас' }, { href: '/blog', label: 'Блог' },{ href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }, { href: '/contacts', label: 'Контакты' }] },
   { title: 'Документы', links: [{ href: '/privacy', label: 'Конфиденциальность' }, { href: '/terms', label: 'Условия' }] },
 ] as const;
 

@@ -473,6 +473,13 @@ async function main() {
   const blogScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('blog: нет горизонтального скролла', blogScroll <= 0, `${blogScroll}px`);
 
+  // contacts: без выдуманных контактов, рабочая форма, noindex
+  await p3.goto(`${BASE}/contacts`, { waitUntil: 'networkidle' });
+  check('contacts: демо-плашка и noindex', has(await p3.locator('body').innerText(), 'Демо-контент') && (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 1);
+  check('contacts: WhatsApp и форма заявки', (await p3.locator('main a[href^="https://wa.me/"]').count()) >= 1 && (await p3.locator('#season-phone').count()) === 1);
+  const contactsScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check('contacts: нет горизонтального скролла', contactsScroll <= 0, `${contactsScroll}px`);
+
   // season: обязательное согласие и рабочий lead endpoint
   await p3.goto(`${BASE}/season`, { waitUntil: 'networkidle' });
   const seasonText = await p3.locator('body').innerText();
