@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { SOCIAL_LINKS } from '@/lib/site';
 import styles from './CleanUi.module.css';
 
-type IconName = 'book' | 'chart' | 'chat' | 'compass' | 'mail' | 'pin' | 'search' | 'spark' | 'target';
+type IconName = 'book' | 'chart' | 'chat' | 'compass' | 'mail' | 'pin' | 'search' | 'send' | 'spark' | 'target';
 
 const ICON_PATHS: Record<IconName, React.ReactNode> = {
   book: <><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H12v16H7.5A2.5 2.5 0 0 0 5 21.5v-16Z" /><path d="M19 5.5A2.5 2.5 0 0 0 16.5 3H12v16h4.5a2.5 2.5 0 0 1 2.5 2.5v-16Z" /></>,
@@ -14,6 +15,7 @@ const ICON_PATHS: Record<IconName, React.ReactNode> = {
   chat: <><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-5 4v-4.3A2.5 2.5 0 0 1 4 13.5v-8Z" /><path d="M8.5 9.5h7" /></>,
   mail: <><rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="m4 7 8 6 8-6" /></>,
   pin: <><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" /><circle cx="12" cy="10" r="2.5" /></>,
+  send: <><path d="M21 3 3 10.5l7 2.5 2.5 7L21 3Z" /><path d="m10 13 4.5-4.5" /></>,
 };
 
 export function LineIcon({ name, size = 22 }: { name: IconName; size?: number }) {
@@ -114,6 +116,7 @@ const FOOTER_GROUPS = [
   { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/program', label: 'Программа' }, { href: '/?start=ielts', label: 'Диагностика' }, { href: '/progress', label: 'Прогресс' }] },
   { title: 'ASHYQ', links: [{ href: '/about', label: 'О нас' }, { href: '/blog', label: 'Блог' },{ href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }, { href: '/contacts', label: 'Контакты' }] },
   { title: 'Документы', links: [{ href: '/privacy', label: 'Конфиденциальность' }, { href: '/terms', label: 'Условия' }] },
+  { title: 'Соцсети', links: SOCIAL_LINKS.map((social) => ({ href: social.href, label: social.label })) },
 ] as const;
 
 export function Footer() {

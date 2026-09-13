@@ -11,6 +11,7 @@ export const SITE_ROUTES = [
   '/',
   '/courses',
   '/about',
+  '/contacts',
   '/program',
   '/progress',
   '/community',
@@ -18,4 +19,13 @@ export const SITE_ROUTES = [
   '/faq',
   '/privacy',
   '/terms',
+] as const;
+
+/** Подтверждены пользователем 2026-09-13. Почты и офиса у ASHYQ пока нет. */
+export const TELEGRAM_CONTACT = 'ashyqeducation';
+
+export const SOCIAL_LINKS = [
+  { label: 'Instagram', handle: '@ashyqedu', href: 'https://www.instagram.com/ashyqedu/' },
+  { label: 'Threads', handle: '@ashyqedu', href: 'https://www.threads.net/@ashyqedu' },
+  { label: 'Telegram-канал', handle: '@ashyqedu', href: 'https://t.me/ashyqedu' },
 ] as const;

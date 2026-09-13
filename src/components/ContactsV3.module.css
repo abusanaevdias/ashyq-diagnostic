@@ -1,12 +1,3 @@
-.demoBar {
-  padding: 12px var(--pad);
-  border-bottom: 1px solid var(--hairline);
-  background: var(--blush);
-  color: var(--ink);
-  font-size: 0.8125rem;
-  text-align: center;
-}
-
 .hero {
   padding-block: 56px 0;
 }
@@ -64,7 +55,8 @@
   text-underline-offset: 3px;
 }
 
-.rowLink:focus-visible {
+.rowLink:focus-visible,
+.socialLink:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 3px;
 }
@@ -79,67 +71,49 @@
   font-size: 0.8125rem;
 }
 
-.mapGrid {
+.socialGrid {
   display: grid;
   grid-template-columns: 7fr 5fr;
+  align-items: start;
   gap: 24px;
 }
 
-.map {
-  position: relative;
-  min-height: 360px;
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-lg);
-  background: var(--hairline);
-}
-
-.mapArt {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  fill: none;
-  stroke: var(--surface);
-  stroke-width: 12;
-  stroke-linecap: round;
-}
-
-.pin {
-  position: absolute;
-  top: 36%;
-  left: 52%;
-  width: 22px;
-  height: 22px;
-  border-radius: var(--r-pill);
-  background: var(--red);
-  box-shadow: 0 0 0 8px color-mix(in srgb, var(--red) 18%, transparent);
-}
-
-.mapCard {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  width: min(320px, calc(100% - 40px));
-  padding: 20px;
+.socialCard {
+  padding: 32px;
   border: 1px solid var(--hairline);
   border-radius: var(--r-lg);
   background: var(--surface);
   box-shadow: var(--shadow-card);
 }
 
-.mapTitle {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+.socialList {
+  margin-top: 24px;
+  display: grid;
+  gap: 12px;
 }
 
-.mapText {
-  margin: 6px 0 14px;
+.socialLink {
+  min-height: 56px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  color: var(--ink);
+  font-weight: 600;
+  transition: border-color var(--t-fast);
+}
+
+.socialLink:hover {
+  border-color: var(--ink);
+}
+
+.handle {
   color: var(--ink-soft);
-  font-size: 0.8125rem;
-  line-height: 1.5;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .photo {
@@ -166,7 +140,7 @@
 
 @media (max-width: 900px) {
   .grid,
-  .mapGrid {
+  .socialGrid {
     grid-template-columns: 1fr;
   }
 }
@@ -181,11 +155,17 @@
     gap: 36px;
   }
 
-  .map {
-    min-height: 420px;
+  .socialCard {
+    padding: 22px;
   }
 
   .photo {
     min-height: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .socialLink {
+    transition: none;
   }
 }
