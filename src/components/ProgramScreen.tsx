@@ -92,6 +92,7 @@ export default function ProgramScreen() {
   return (
     <div className="v3 min-h-dvh">
       <NavBar />
+      <main>
 
       {/* ---------- hero ---------- */}
       <section className="shell-wide pb-12 pt-4 sm:pt-8">
@@ -438,6 +439,7 @@ export default function ProgramScreen() {
           </div>
         </div>
       </section>
+      </main>
 
       <Footer />
     </div>

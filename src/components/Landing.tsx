@@ -63,7 +63,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
                   const continuation = saved ? continueLabel(saved) : null;
                   return (
                     <div key={exam}>
-                      <button type="button" className={exam === 'ielts' ? styles.heroButtonRed : styles.heroButtonOutline} onClick={() => onSelect(exam)} aria-label={`Начать диагностику ${EXAMS[exam].name}`}>
+                      <button type="button" className={exam === 'ielts' ? styles.heroButtonRed : styles.heroButtonOutline} onClick={() => onSelect(exam)} aria-label={`${exam === 'ielts' ? 'Начать с IELTS' : 'Проверить SAT'}. Начать диагностику ${EXAMS[exam].name}`}>
                         {exam === 'ielts' ? 'Начать с IELTS' : 'Проверить SAT'}<HeroArrow />
                       </button>
                       {continuation ? <span className={styles.continue}>{continuation}</span> : null}
@@ -130,7 +130,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
                 <p className={styles.handNote}>видимый прогресс</p>
               </div>
 
-              <div className={styles.progressCard} aria-label="Пример карточки прогресса">
+              <div className={styles.progressCard} role="group" aria-label="Пример карточки прогресса">
                 <div className={styles.progressTop}><div><MicroLabel>Общий прогресс</MicroLabel><p className={styles.progressStat}>78%</p></div><span className={styles.delta}>↗ +12% за 4 месяца</span></div>
                 <svg className={styles.graph} viewBox="0 0 560 150" role="img" aria-label="Линейный график показывает устойчивый рост">
                   <path d="M12 126H548M12 78H548M12 30H548" stroke="var(--hairline)" strokeWidth="1" />
@@ -139,7 +139,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
                 </svg>
                 <div className={styles.skillGrid}>
                   <div className={styles.skills}>{SKILLS.map((skill) => <div key={skill.label}><div className={styles.skillTop}><span>{skill.label}</span><span>{skill.value}</span></div><div className={styles.track}><div className={styles.fill} style={{ '--value': skill.value } as ValueStyle} /></div></div>)}</div>
-                  <div className={styles.bars} aria-label="Активность по неделям">{BARS.map((value, index) => <span className={styles.bar} style={{ '--value': value } as ValueStyle} key={`${value}-${index}`} />)}</div>
+                  <div className={styles.bars} role="img" aria-label="Активность по неделям">{BARS.map((value, index) => <span className={styles.bar} style={{ '--value': value } as ValueStyle} key={`${value}-${index}`} />)}</div>
                 </div>
               </div>
             </div>

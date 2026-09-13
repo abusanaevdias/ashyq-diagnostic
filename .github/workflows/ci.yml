@@ -81,6 +81,7 @@ jobs:
           npm run check:crm
           npm run check:crm-ui
           npm run e2e:audio
+          npm run check:a11y-perf
 
           kill "$(cat "$RUNNER_TEMP/server.pid")" 2>/dev/null || true
 
@@ -92,6 +93,7 @@ jobs:
           path: |
             screenshots/
             .data/
+            artifacts/a11y-perf/
           if-no-files-found: ignore
           retention-days: 7
 
@@ -109,6 +111,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: screenshots-${{ github.run_id }}
-          path: screenshots/
+          path: |
+            screenshots/
+            artifacts/a11y-perf/
           if-no-files-found: ignore
           retention-days: 7
