@@ -1,0 +1,112 @@
+name: CI
+
+# ASHYQ release gates (CI-RELEASE-001).
+# Полный набор проверок из HANDOFF §6 на каждом PR и каждом push в main:
+# lint, typecheck, validate:bank, production build, e2e (с CRM-ключом),
+# check:crm, check:crm-ui, audio check, card-image check.
+# Красная ветка/PR = merge блокировать настройкой branch protection
+# (см. docs/CI.md, раздел «Branch protection»).
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: lint, typecheck, build, e2e, crm, audio, card
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Validate question bank
+        run: npm run validate:bank
+
+      - name: Production build
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+
+      - name: Card image check (offline)
+        run: npx tsx scripts/card-image-check.ts
+
+      - name: E2E + CRM + audio checks (needs running site)
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+        run: |
+          # Одноразовый ключ на прогон: сервер отдаёт CRM только с ним.
+          CI_KEY="$(openssl rand -hex 32)"
+          export ASHYQ_ADMIN_KEY="$CI_KEY"
+          export CRM_ADMIN_KEY="$CI_KEY"
+          export BASE_URL="http://127.0.0.1:3000"
+
+          npm run start > "$RUNNER_TEMP/server.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/server.pid"
+
+          for i in $(seq 1 60); do
+            if curl -sf -o /dev/null "$BASE_URL/"; then break; fi
+            sleep 1
+          done
+          if ! curl -sf -o /dev/null "$BASE_URL/"; then
+            echo "::error::Production server did not start on $BASE_URL"
+            cat "$RUNNER_TEMP/server.log"
+            exit 1
+          fi
+
+          npm run e2e
+          npm run check:crm
+          npm run check:crm-ui
+          npm run e2e:audio
+
+          kill "$(cat "$RUNNER_TEMP/server.pid")" 2>/dev/null || true
+
+      - name: Upload screenshots and lead data on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-failure-${{ github.run_id }}
+          path: |
+            screenshots/
+            .data/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload server log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-log-${{ github.run_id }}
+          path: ${{ runner.temp }}/server.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload screenshots on success
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ github.run_id }}
+          path: screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
