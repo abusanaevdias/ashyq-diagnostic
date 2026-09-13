@@ -100,7 +100,7 @@ export default function LoginView() {
           <h2 id="demo-title" className={styles.cardTitle}>Демо-вход одной кнопкой</h2>
           <div className={styles.stack}>
             {DEMO_ROLES.map((item) => (
-              <button key={item.role} type="button" className={styles.roleButton} disabled={busy} onClick={() => demoSignIn(item.role)} aria-label={`Войти как ${item.label}`}>
+              <button key={item.role} type="button" className={styles.roleButton} disabled={busy} onClick={() => demoSignIn(item.role)}>
                 <Avatar user={{ name: item.name, avatarColor: item.color }} />
                 <span>
                   <span className={styles.roleName}>{item.name} · {item.label}</span>

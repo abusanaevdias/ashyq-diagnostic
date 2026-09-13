@@ -16,8 +16,8 @@ const PUBLIC_ROUTES = [
   '/',
   '/about',
   '/blog',
-  '/blog/match-day-speaking-battle',
-  '/blog/sat-math-linear-equations',
+  '/blog/ielts-true-false-not-given',
+  '/blog/sat-math-module-time',
   '/community',
   '/contacts',
   '/courses',
@@ -70,16 +70,23 @@ function durationMs(value: string): number {
 async function inspectFocus(page: Page): Promise<RouteAudit['focusIndicator']> {
   const failures: string[] = [];
   const seen = new Set<string>();
+  const focusableCount = await page.locator(
+    'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+  ).count();
+  const tabLimit = Math.min(focusableCount + 1, 80);
 
-  for (let index = 0; index < 6; index += 1) {
+  for (let index = 0; index < tabLimit; index += 1) {
     await page.keyboard.press('Tab');
     const result = await page.evaluate(() => {
       const element = document.activeElement as HTMLElement | null;
       if (!element || element === document.body) return null;
       const style = getComputedStyle(element);
       const rect = element.getBoundingClientRect();
+      const focusable = [...document.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+      )];
       return {
-        key: `${element.tagName}:${element.id}:${element.textContent?.trim().slice(0, 40) ?? ''}`,
+        key: `${element.tagName}:${focusable.indexOf(element)}`,
         label: element.getAttribute('aria-label') ?? element.textContent?.trim().slice(0, 60) ?? element.tagName,
         visible: rect.width > 0 && rect.height > 0,
         outlineWidth: Number.parseFloat(style.outlineWidth) || 0,
