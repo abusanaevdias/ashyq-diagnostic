@@ -57,10 +57,23 @@ export default function SearchV3({ entries }: { entries: SearchEntry[] }) {
       </div>
 
       {trimmed === '' ? (
-        <p className={styles.hint}>
-          Поиск ищет по страницам, курсам, вопросам FAQ и материалам блога.
-          Результаты — ссылки, выбирать можно клавишей Tab и Enter.
-        </p>
+        <>
+          <p className={styles.hint}>
+            Поиск ищет по страницам, курсам, вопросам FAQ и материалам блога.
+          </p>
+          <div className={styles.quickLinks}>
+            {[
+              ['Диагностика', '/diagnostic'],
+              ['Курсы', '/courses'],
+              ['Контакты', '/contacts'],
+              ['Расписание сезона', '/season'],
+            ].map(([label, href]) => (
+              <Link key={href} className={styles.quickLink} href={href}>
+                {label}
+              </Link>
+            ))}
+          </div>
+        </>
       ) : total === 0 ? (
         <p className={styles.empty}>
           Ничего не нашлось. Попробуйте другое слово — например, «IELTS»,
