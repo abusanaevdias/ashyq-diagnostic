@@ -451,7 +451,7 @@
 
 @media print {
   body {
-    background: #fff;
+    background: var(--surface);
   }
   .no-print {
     display: none !important;
@@ -462,9 +462,9 @@
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0ms !important;
     scroll-behavior: auto !important;
   }
   .marquee-track {
