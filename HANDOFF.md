@@ -67,6 +67,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 | Route | Состояние |
 |---|---|
 | `/` | Главная v3; CTA сохраняют вход в IELTS/SAT диагностику |
+| `/courses` | Каталог v3: фильтр IELTS/SAT/командный формат, 4 карточки, blush CTA в диагностику |
 | `/diagnostic` | Рабочая существующая воронка диагностики |
 | `/program`, `/progress`, `/community` | Публичные продуктовые страницы |
 | `/season` | Публичный active-season hub, IELTS/SAT и team/participant rating |
@@ -92,13 +93,13 @@ ASHYQ — образовательный клуб Казахстана: подг
 | SEASON-UX-001 | DONE | Codex `/root/design_v3_home` | `codex/design-v3`; isolated worktree | `/season`, `/season/current`, Live Arena/Journey; commit `faa0f5b`; e2e 72/72 |
 | INTEGRATE-001 | DONE | Codex `/root` | `main` | CRM + v3 + championship объединены без конфликтов; merge `799fb5e` |
 | COORD-001 | DONE | Codex `/root` | `main` | Multi-agent protocol, task ledger and mandatory `AGENTS.md` gate; commit `b0e79db` |
+| V3-COURSES-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/courses` (`src/app/courses/page.tsx`, `src/components/CoursesV3.tsx` + `.module.css`); ссылка «Курсы» в nav/footer, `FilterChip` получил `onClick`, `/courses` в sitemap; commit `25228f6`, fast-forward в `main`. Проверки: lint, typecheck, validate:bank, build green; e2e 78/78 (+3 новых courses-проверки, без `CRM_ADMIN_KEY`); visual 1440/390 overflow 0, wordmark 22px, mobile tap ≥44. Риски: в `public/brand` только 2 фото — карточки повторяют снимки (`ponytail:` в коде), нужны реальные фото курсов; цен, модулей и ★рейтинга нет — нет подтверждённых данных; бейдж на `red-deep` и meta на `ink-soft` ради контраста AA |
 
 ## 5. Свободные и заблокированные задачи
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-COURSES-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; ОК пользователя на v3 получен; `/courses` по блюпринту DESIGN_V3 §6.2, контент из существующих данных программы, без выдуманных цен |
-| V3-DIAGNOSTIC-001 | READY | — | После Courses или явный новый приоритет | Оболочка страницы диагностики без изменения state/localStorage |
+| V3-DIAGNOSTIC-001 | READY | — | Courses готов — зависимость снята | Оболочка страницы диагностики без изменения state/localStorage |
 | V3-ABOUT-001 | READY | — | — | Страница «О нас» |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
@@ -106,7 +107,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активные `IN_PROGRESS`: `V3-COURSES-001` (Claude Opus 5).
+Активных `IN_PROGRESS` задач нет. Следующий safe step: `V3-DIAGNOSTIC-001`.
 
 ## 6. Проверки и команды
 
@@ -130,6 +131,9 @@ npx tsx scripts/season-visual-check.ts
 
 - объединённый `main`: e2e `78/78`; lint, typecheck, production build и CRM
   checks green; question bank `49`, ошибок/предупреждений `0`;
+- после V3-COURSES-001 (2026-09-13): e2e `78/78` без `CRM_ADMIN_KEY` (включая 3
+  courses-проверки), lint/typecheck/build green. Playwright 1.63 требует
+  chromium build `1243` — установлен через `npx playwright install chromium`;
 - v3 homepage и championship: visual QA 1440/390, overflow `0`,
   reduced-motion работает;
 - owned championship slice: hardcoded colors `0`; токены совпадают с
