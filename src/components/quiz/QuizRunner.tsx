@@ -199,14 +199,18 @@ export default function QuizRunner({
               Далее
             </button>
           )}
-          <button
-            type="button"
-            className="btn btn-quiet btn-small"
-            onClick={() => setFinishOpen(true)}
-            aria-label="Завершить диагностику"
-          >
-            Финиш
-          </button>
+          {/* «Финиш» только не на первом вопросе: на старте он провоцирует
+              случайный выход, а прерваться можно и позже (UX-FIXES-001) */}
+          {index > 0 && (
+            <button
+              type="button"
+              className="btn btn-quiet btn-small"
+              onClick={() => setFinishOpen(true)}
+              aria-label="Завершить диагностику"
+            >
+              Финиш
+            </button>
+          )}
         </div>
       </footer>
 

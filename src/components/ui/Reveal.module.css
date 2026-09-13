@@ -1,4 +1,8 @@
-.reveal {
+/* Контент виден по умолчанию (SSR, без JS, медленная гидрация — пустых зон нет).
+   Скрывается только элемент ниже первого экрана — и только после гидрации,
+   когда JS успевает пометить его data-pending до попадания в поле зрения. */
+
+.reveal[data-pending] {
   opacity: 0;
   transform: translateY(10px);
 }
@@ -10,10 +14,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal[data-visible='true'] {
+  .reveal[data-pending] {
     opacity: 1;
     transform: none;
+  }
+
+  .reveal[data-visible='true'] {
     transition: none;
   }
 }

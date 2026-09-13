@@ -646,11 +646,16 @@ async function main() {
         await p3.request.post(`${BASE}/api/lead`, {
           data: { kind: 'contact', exam: 'sat', runId: deliveryRunId, name: 'E2E Delivery', phone: '8 706 222 33 44' },
         });
-        const beforeRetry = (await (await p3.request.get(`${BASE}/api/crm`, { headers })).json()) as {
-          records: Array<{ runId: string; delivery: Array<{ channel: string; status: string; attempts: number }> }>;
-        };
-        const target = beforeRetry.records.find((record) => record.runId === deliveryRunId);
-        const failedWebhook = target?.delivery.find((item) => item.channel === 'webhook' && item.status === 'failed');
+        // Доставка асинхронная: ждём появления записи в ledger до 5 секунд.
+        let failedWebhook: { channel: string; status: string; attempts: number } | undefined;
+        for (let attempt = 0; attempt < 10 && !failedWebhook; attempt++) {
+          await p3.waitForTimeout(500);
+          const snapshot = (await (await p3.request.get(`${BASE}/api/crm`, { headers })).json()) as {
+            records: Array<{ runId: string; delivery: Array<{ channel: string; status: string; attempts: number }> }>;
+          };
+          const target = snapshot.records.find((record) => record.runId === deliveryRunId);
+          failedWebhook = target?.delivery.find((item) => item.channel === 'webhook' && item.status === 'failed');
+        }
         check('delivery: неудача видна в CRM со статусом failed', Boolean(failedWebhook), failedWebhook ? `${failedWebhook.attempts} попыток` : 'нет записи');
         if (failedWebhook) {
           const retry = await p3.request.patch(`${BASE}/api/crm`, {

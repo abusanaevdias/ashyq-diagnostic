@@ -58,6 +58,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
           <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
           <Link className={styles.navLink} href="/community">Сообщество</Link>
           <Link className={styles.navLink} href="/faq">FAQ</Link>
+          <Link className={styles.navLink} href="/contacts">Контакты</Link>
         </div>
         <details className={styles.mobileMenu}>
           <summary className={styles.mobileMenuTrigger} aria-label="Открыть меню">

@@ -123,3 +123,32 @@
 .empty strong {
   color: var(--ink);
 }
+
+/* Быстрые ссылки под подсказкой: мобильный сценарий «некогда искать». */
+.quickLinks {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.quickLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color var(--t-fast), border-color var(--t-fast);
+}
+
+.quickLink:hover,
+.quickLink:focus-visible {
+  background: var(--blush);
+  border-color: var(--blush);
+}
