@@ -42,6 +42,16 @@
 .capList { margin-top: 18px; display: grid; }
 .capList li { min-height: 40px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--hairline); font-size: .875rem; }
 .capList strong { font-family: var(--font-display); }
+/* Season HQ участника: плашка превью, ответ капитана на тёмном фоне */
+.previewNote { padding: 16px var(--pad); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 20px; border-bottom: 1px solid var(--hairline); background: var(--surface); text-align: center; font-size: .9rem; }
+.darkCard .micro, .liveArena .micro { color: var(--on-dark); }
+.answerForm { margin-top: 18px; display: grid; gap: 10px; }
+.answerLabel { display: grid; gap: 6px; color: var(--on-dark); font-size: .8rem; font-weight: 600; }
+.answerField { width: 100%; min-height: 120px; padding: 11px 14px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: inherit; resize: vertical; }
+.answerField:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.arenaButton:disabled { opacity: .55; cursor: not-allowed; }
+.reviewed { margin-top: 14px; padding: 6px 12px; display: inline-flex; border-radius: var(--r-pill); background: var(--success-soft); color: var(--success); font-size: .82rem; font-weight: 700; }
+.noteDark { margin-top: 14px; color: var(--on-dark); font-size: .82rem; }
 .checkRow { min-height: 44px; display: flex; align-items: center; gap: 10px; font-size: .9rem; cursor: pointer; }
 .checkRow input { width: 18px; height: 18px; flex: 0 0 auto; accent-color: var(--red); }
 .checkRow input:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }

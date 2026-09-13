@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
-import SeasonHQ from '@/components/season/SeasonHQ';
+import SeasonHome from '@/components/season/SeasonHome';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
 
 export const metadata: Metadata = {
-  title: 'Season HQ — интерактивный прототип',
-  description: 'Демо кабинета участника активного сезона ASHYQ.',
+  title: 'Season HQ — ASHYQ',
+  description: 'Кабинет участника сезона ASHYQ: команда, баллы недели и Match Day.',
   alternates: { canonical: '/season/current' },
   robots: { index: false, follow: false },
 };
 
 export default function CurrentSeasonPage() {
-  return <div><NavBar /><SeasonHQ /><Footer /></div>;
+  return <div><NavBar /><SeasonHome /><Footer /></div>;
 }
