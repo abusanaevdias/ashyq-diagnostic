@@ -367,6 +367,282 @@ textarea.field {
   outline-offset: 3px;
 }
 
+/* ---------- классы, задания, треды (шаг 3) ---------- */
+
+.section {
+  margin-top: 24px;
+}
+
+.spaced {
+  margin-top: 10px;
+}
+
+.hint {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.backLink {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.backLink:hover {
+  color: var(--ink);
+}
+
+.chipsRow {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.feedGrid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: start;
+  gap: 28px;
+}
+
+.aside {
+  order: 2;
+}
+
+.list {
+  margin-top: 14px;
+  display: grid;
+  gap: 14px;
+}
+
+.rowCard {
+  padding: 18px 20px;
+}
+
+.md {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+.md h2,
+.md h3 {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.md h2 {
+  font-size: 1.2rem;
+}
+
+.md h3 {
+  font-size: 1.05rem;
+}
+
+.md ul {
+  padding-left: 1.2em;
+  display: grid;
+  gap: 4px;
+  list-style: disc;
+}
+
+.md p {
+  white-space: pre-line;
+}
+
+.materials {
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.materialLink,
+.materialText summary {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.materialLink,
+.materialText {
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  background: var(--bg);
+}
+
+.materialText summary {
+  list-style: none;
+}
+
+.materialText summary::-webkit-details-marker {
+  display: none;
+}
+
+.materialText p {
+  padding: 0 14px 12px;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.filePicker {
+  display: grid;
+  gap: 10px;
+}
+
+.fileBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.fileLabel {
+  min-height: 44px;
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px dashed var(--ink-soft);
+  border-radius: var(--r-pill);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fileLabel:focus-within {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.fileList {
+  display: grid;
+  gap: 6px;
+}
+
+.fileRow {
+  padding: 4px 4px 4px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  font-size: 0.875rem;
+}
+
+.thread {
+  margin-top: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.commentHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+}
+
+.commentName {
+  font-weight: 600;
+}
+
+.commentTime {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.commentBody {
+  margin-top: 4px;
+  white-space: pre-line;
+  line-height: 1.55;
+}
+
+.grade {
+  margin-top: 12px;
+}
+
+.grade strong {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.subContent {
+  margin-top: 12px;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.inlineForm {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.inlineForm .fieldLabel {
+  flex: 1 1 220px;
+}
+
+.form button:disabled,
+.actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.backLink:focus-visible,
+.materialLink:focus-visible,
+.materialText summary:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
 /* синхронно с бургером навбара (CleanUi.module.css) */
 @media (max-width: 1024px) {
   .barOnly {
@@ -376,8 +652,14 @@ textarea.field {
 
 @media (max-width: 900px) {
   .grid2,
-  .grid3 {
+  .grid3,
+  .feedGrid {
     grid-template-columns: 1fr;
+  }
+
+  /* на телефоне задания — первыми */
+  .aside {
+    order: -1;
   }
 }
 
