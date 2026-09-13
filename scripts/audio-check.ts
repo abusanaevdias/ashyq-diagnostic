@@ -7,6 +7,8 @@ import { chromium, devices } from 'playwright';
  *  - после maxPlays кнопка блокируется.
  */
 
+const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
+
 let failures = 0;
 
 function check(name: string, ok: boolean, detail = ''): void {
@@ -19,7 +21,8 @@ async function main() {
   const context = await browser.newContext({ ...devices['iPhone 12'] });
   const page = await context.newPage();
 
-  await page.goto('http://localhost:3000/?utm_source=test', { waitUntil: 'networkidle' });
+  // load, а не networkidle: на dev-сервере HMR-websocket не даёт сети успокоиться
+  await page.goto(`${BASE}/?utm_source=test`, { waitUntil: 'load' });
   await page.locator('#hero').getByRole('button', { name: 'Начать диагностику IELTS' }).click();
   await page.getByRole('button', { name: '6.5', exact: true }).first().click();
   await page.waitForTimeout(300);
