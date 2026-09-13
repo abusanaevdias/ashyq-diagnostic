@@ -104,7 +104,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-CARD-IMAGE-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-card-image`; `C:\Users\Dias\Documents\ChatGPT\ashyq-card-image`; started 2026-09-13 | Перевести downloadable PNG результата на v3 без изменения scoring/result UI. Owned: `src/lib/card-image.ts`, новый scoped check при необходимости; shared только `HANDOFF.md` |
+| V3-CARD-IMAGE-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-card-image`; `C:\Users\Dias\Documents\ChatGPT\ashyq-card-image`; started 2026-09-13 | Перевести downloadable PNG результата на v3 без изменения scoring/result UI. Owned: `src/lib/card-image.ts`, `public/fonts/manrope-*-700-normal.woff2`, новый scoped check при необходимости; shared только `HANDOFF.md` |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
