@@ -99,7 +99,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-DIAGNOSTIC-001 | READY | — | Courses готов — зависимость снята | Оболочка страницы диагностики без изменения state/localStorage |
+| V3-DIAGNOSTIC-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; v3-intro `/diagnostic` по DESIGN_V3 §6.3 (вместо главной Landing при пустой сессии); quiz/result экраны, `useDiagnostic.ts`, localStorage не меняются. Владею файлами: `src/app/diagnostic/**`, `src/components/DiagnosticApp.tsx`, новый `src/components/DiagnosticV3.*` |
 | V3-ABOUT-001 | READY | — | — | Страница «О нас» |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
@@ -107,7 +107,12 @@ ASHYQ — образовательный клуб Казахстана: подг
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активных `IN_PROGRESS` задач нет. Следующий safe step: `V3-DIAGNOSTIC-001`.
+Активные `IN_PROGRESS`: `V3-DIAGNOSTIC-001` (Claude Opus 5).
+
+Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
+`src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
+добавления своих строк, чужие строки не переписывать; перед push —
+`git fetch` + `git rebase origin/main`, при конфликте сохранять обе стороны.
 
 ## 6. Проверки и команды
 
