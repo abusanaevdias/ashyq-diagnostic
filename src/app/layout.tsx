@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from 'next';
+import '@fontsource/manrope/cyrillic-700.css';
+import '@fontsource/manrope/cyrillic-800.css';
+import '@fontsource/manrope/latin-700.css';
+import '@fontsource/manrope/latin-800.css';
 import './fonts.css';
 import './globals.css';
+import '../../design/tokens.css';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -25,7 +30,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#F7F3EA',
+  themeColor: '#F8F7F3',
 };
 
 export default function RootLayout({

@@ -26,11 +26,17 @@
   },
   "design": {
     "colorMode": "light",
-    "colors": {},
+    "colors": {
+      "background": "--bg",
+      "surface": "--surface",
+      "accent": "--red",
+      "text": "--ink",
+      "secondaryText": "--ink-soft"
+    },
     "typography": {
       "--font-display": {
-        "value": "'Oswald', 'Arial Narrow', Helvetica, sans-serif",
-        "source": "src/app/globals.css"
+        "value": "'Manrope', system-ui, sans-serif",
+        "source": "design/tokens.css"
       },
       "--font-serif": {
         "value": "'Playfair Display', Georgia, 'Times New Roman', serif",
@@ -70,7 +76,8 @@
   },
   "decisions": [
     "Public growth pages reuse the existing editorial paper/red system and only publish claims grounded in supplied ASHYQ materials.",
-    "Lead forms keep the action primary and place explicit privacy consent immediately before submission."
+    "Lead forms keep the action primary and place explicit privacy consent immediately before submission.",
+    "The public product site adopts v3 Clean Premium EdTech: warm off-white space, Manrope display type, token-only soft cards, warm real photography, and red limited to primary actions and data accents."
   ],
   "evidence": [
     {

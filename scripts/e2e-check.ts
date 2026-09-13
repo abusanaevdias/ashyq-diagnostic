@@ -437,6 +437,15 @@ async function main() {
 
   // season: обязательное согласие и рабочий lead endpoint
   await p3.goto(`${BASE}/season`, { waitUntil: 'networkidle' });
+  const seasonText = await p3.locator('body').innerText();
+  check('season: активный публичный hub', has(seasonText, 'Season 03') && has(seasonText, 'Идёт сейчас'));
+  check('season: публичные команды и участники', (await p3.getByRole('tab', { name: 'Команды' }).count()) === 1 && (await p3.getByRole('tab', { name: 'Участники' }).count()) === 1);
+  await p3.getByRole('tab', { name: 'Участники' }).click();
+  check('season: safe aliases объяснены', has(await p3.locator('body').innerText(), 'безопасными псевдонимами'));
+  await p3.getByRole('button', { name: 'SAT', exact: true }).click();
+  check('season: IELTS и SAT разделены', has(await p3.locator('body').innerText(), 'Участники · SAT'));
+  const seasonScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check('season: нет горизонтального скролла', seasonScroll <= 0, `${seasonScroll}px`);
   await p3.locator('#season-name').fill('E2E Season');
   await p3.locator('#season-phone').fill('8 706 555 44 33');
   await p3.getByRole('button', { name: 'Узнать о следующем сезоне' }).click();
@@ -446,9 +455,20 @@ async function main() {
   await p3.getByText('Заявка принята').waitFor();
   check('season: заявка принята сервером', has(await p3.locator('body').innerText(), 'Заявка принята'));
 
+  await p3.goto(`${BASE}/season/current`, { waitUntil: 'networkidle' });
+  check('season HQ: честная demo маркировка', has(await p3.locator('body').innerText(), 'авторизация и серверные баллы ещё не подключены'));
+  await p3.getByRole('button', { name: 'Live Arena' }).click();
+  check('season HQ: Live Arena работает', has(await p3.locator('body').innerText(), 'Командный спринт') && has(await p3.locator('body').innerText(), '12:48'));
+  await p3.getByRole('button', { name: 'Открыть задание' }).click();
+  check('season HQ: задание открывается', has(await p3.locator('body').innerText(), 'Фрагмент B'));
+  await p3.getByRole('button', { name: 'После сезона' }).click();
+  check('season HQ: Journey preview работает', has(await p3.locator('body').innerText(), 'Твой Season Journey') && has(await p3.locator('body').innerText(), 'не равны официальному баллу'));
+  const hqScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check('season HQ: нет горизонтального скролла', hqScroll <= 0, `${hqScroll}px`);
+
   // FAQ и юридические маршруты
   await p3.goto(`${BASE}/faq`, { waitUntil: 'networkidle' });
-  check('faq: восемь ответов доступны', (await p3.locator('details').count()) === 8);
+  check('faq: восемь ответов доступны', (await p3.locator('main details').count()) === 8);
   await p3.goto(`${BASE}/privacy`, { waitUntil: 'networkidle' });
   check('privacy: описаны согласие и отзыв', has(await p3.locator('body').innerText(), 'Согласие и отзыв'));
   await p3.goto(`${BASE}/terms`, { waitUntil: 'networkidle' });
