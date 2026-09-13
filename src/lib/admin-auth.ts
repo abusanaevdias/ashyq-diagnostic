@@ -15,11 +15,10 @@ export function hasValidAdminKey(request: Request): boolean {
   const expected = process.env.ASHYQ_ADMIN_KEY;
   if (!expected) return false;
 
-  const url = new URL(request.url);
+  // Только заголовки: ключ в URL оседает в логах прокси, истории браузера и Referer.
   const provided =
     request.headers.get('x-ashyq-admin-key') ??
     request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ??
-    url.searchParams.get('key') ??
     '';
 
   return Boolean(provided) && safeEqual(provided, expected);

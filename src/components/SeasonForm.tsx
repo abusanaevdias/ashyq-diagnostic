@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { isValidPhone, sendLead } from '@/lib/lead';
+import { newRunId } from '@/lib/storage';
 import styles from '@/components/season/SeasonV3.module.css';
 
 type Status = 'idle' | 'sending' | 'done' | 'error';
@@ -23,7 +24,7 @@ export default function SeasonForm() {
     setStatus('sending');
     const ok = await sendLead({
       kind: 'season',
-      runId: `season-${Date.now()}`,
+      runId: `season-${newRunId()}`,
       exam,
       name: name.trim(),
       phone: phone.trim(),

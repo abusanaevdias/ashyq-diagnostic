@@ -473,10 +473,12 @@ async function main() {
   const blogScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('blog: нет горизонтального скролла', blogScroll <= 0, `${blogScroll}px`);
 
-  // contacts: без выдуманных контактов, рабочая форма, noindex
+  // contacts: подтверждённые контакты, рабочая форма, страница индексируется
   await p3.goto(`${BASE}/contacts`, { waitUntil: 'networkidle' });
-  check('contacts: демо-плашка и noindex', has(await p3.locator('body').innerText(), 'Демо-контент') && (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 1);
-  check('contacts: WhatsApp и форма заявки', (await p3.locator('main a[href^="https://wa.me/"]').count()) >= 1 && (await p3.locator('#season-phone').count()) === 1);
+  check('contacts: WhatsApp, Telegram и форма', (await p3.locator('main a[href^="https://wa.me/"]').count()) >= 1 && (await p3.locator('main a[href="https://t.me/ashyqeducation"]').count()) === 1 && (await p3.locator('#season-phone').count()) === 1);
+  const socials = p3.locator('main a[href="https://www.instagram.com/ashyqedu/"], main a[href="https://www.threads.net/@ashyqedu"], main a[href="https://t.me/ashyqedu"]');
+  check('contacts: соцсети @ashyqedu', (await socials.count()) === 3);
+  check('contacts: страница индексируется', (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 0);
   const contactsScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('contacts: нет горизонтального скролла', contactsScroll <= 0, `${contactsScroll}px`);
 
@@ -518,6 +520,16 @@ async function main() {
   check('privacy: описаны согласие и отзыв', has(await p3.locator('body').innerText(), 'Согласие и отзыв'));
   await p3.goto(`${BASE}/terms`, { waitUntil: 'networkidle' });
   check('terms: disclaimer диагностики на месте', has(await p3.locator('body').innerText(), 'не равен официальному результату'));
+
+  // security: заголовки и admin-ключ только в заголовке
+  const rootRes = await p3.request.get(`${BASE}/`);
+  const csp = rootRes.headers()['content-security-policy'] ?? '';
+  check('security: CSP запрещает object/base/frame', csp.includes("object-src 'none'") && csp.includes("base-uri 'self'") && csp.includes("frame-ancestors 'none'"));
+  check('security: COOP same-origin', rootRes.headers()['cross-origin-opener-policy'] === 'same-origin');
+  if (CRM_ADMIN_KEY) {
+    const viaQuery = await p3.request.get(`${BASE}/api/crm?key=${encodeURIComponent(CRM_ADMIN_KEY)}`);
+    check('security: admin-ключ в URL не принимается', viaQuery.status() === 404, `HTTP ${viaQuery.status()}`);
+  }
 
   // SEO endpoints и route metadata
   const robots = await p3.request.get(`${BASE}/robots.txt`);

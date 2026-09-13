@@ -35,7 +35,10 @@ export function safeRemove(key: string): void {
 }
 
 export function newRunId(): string {
-  const rand = Math.random().toString(36).slice(2, 8);
+  // CSPRNG: по runId CRM склеивает лиды — угадываемый id позволил бы подменить чужой контакт.
+  // getRandomValues, а не randomUUID: тот недоступен по http вне localhost.
+  const bytes = crypto.getRandomValues(new Uint8Array(8));
+  const rand = Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
   return `${Date.now().toString(36)}-${rand}`;
 }
 
