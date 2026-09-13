@@ -102,15 +102,15 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
+| V3-LEGACY-PAGES-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; `/program`, `/progress`, `/community`, `/faq`, `/privacy`, `/terms` на v3 через `.v3` + v3 NavBar/Footer, без TornEdge/красных полос; тексты и e2e-контракт не меняются. Владею: `src/components/ProgramScreen.tsx`, `ProgressScreen.tsx`, `src/app/{community,faq,privacy,terms}/page.tsx`, `src/app/globals.css` (только блок `.v3`), `tailwind.config.ts` (размер `text-display` → переменная с тем же fallback). `/about` и `CleanUi.tsx` не трогаю |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активных `IN_PROGRESS` задач нет. Следующие safe steps: `V3-BLOG-001`,
-`V3-CONTACTS-001` либо перевод оставшихся v2-страниц `/program`, `/progress`,
-`/community`, `/faq`, legal на v3 отдельными task ID.
+Активна `V3-LEGACY-PAGES-001` (Claude Opus 5) — только её owned файлы.
+Свободны: `V3-BLOG-001`, `V3-CONTACTS-001` (обе ждут контент/контакты).
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
