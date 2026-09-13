@@ -6,6 +6,7 @@ import '@fontsource/manrope/latin-800.css';
 import './fonts.css';
 import './globals.css';
 import '../../design/tokens.css';
+import { COLOR } from '@/lib/design-tokens';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#F8F7F3',
+  themeColor: COLOR.bg,
 };
 
 export default function RootLayout({

@@ -1,18 +1,16 @@
 import type { Config } from 'tailwindcss';
 
 /**
- * ASHYQ design tokens — v2.
- * Цвета сняты с оригинальных brand-ассетов (см. docs/DESIGN.md):
- * cream #F7F3EA, brand red #CE1E23, warm ink #211A16.
- * UI не хардкодит цвета — только токены отсюда.
+ * Имена палитры v2 (paper/ink/red/line) — API старых компонентов; значения
+ * приходят только из токенов v3 (design/tokens.css) через globals.css.
+ * UI не хардкодит цвета — только токены; проверка: scripts/token-audit.ts.
  */
 const config: Config = {
   content: ['./src/**/*.{ts,tsx,mdx}'],
   theme: {
     extend: {
       /* RGB-каналы живут в globals.css (--c-*), чтобы работали
-         opacity-модификаторы (bg-ink/60, text-paper/70) и scoped-тема
-         `.v3` могла подменить палитру без правки компонентов. */
+         opacity-модификаторы (bg-ink/60, text-paper/70). */
       colors: {
         paper: {
           DEFAULT: 'rgb(var(--c-paper) / <alpha-value>)',
@@ -34,10 +32,14 @@ const config: Config = {
           DEFAULT: 'rgb(var(--c-line) / <alpha-value>)',
           strong: 'rgb(var(--c-line-strong) / <alpha-value>)',
         },
+        success: {
+          DEFAULT: 'var(--success)',
+          soft: 'var(--success-soft)',
+        },
       },
       borderRadius: {
-        md: 'var(--legacy-radius-md, 0.375rem)',
-        lg: 'var(--legacy-radius-lg, 0.5rem)',
+        md: 'var(--r-md)',
+        lg: 'var(--r-lg)',
       },
       fontFamily: {
         display: ['var(--font-display)', 'Arial Narrow', 'Helvetica Neue', 'sans-serif'],
@@ -58,7 +60,7 @@ const config: Config = {
         block: '6px 6px 0 0 var(--ink)',
         'block-sm': '3px 3px 0 0 var(--ink)',
         'block-red': '6px 6px 0 0 var(--red)',
-        card: 'var(--legacy-shadow-card, 0 1px 2px rgba(33,26,22,0.05), 0 14px 34px -22px rgba(33,26,22,0.28))',
+        card: 'var(--shadow-card)',
       },
       maxWidth: {
         sheet: '44rem',
