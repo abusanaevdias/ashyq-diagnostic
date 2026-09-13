@@ -95,7 +95,7 @@ export default function ProgramScreen() {
 
       {/* ---------- hero ---------- */}
       <section className="shell-wide pb-12 pt-4 sm:pt-8">
-        <EditorialLabel num="00">People · Knowledge · A brighter tomorrow</EditorialLabel>
+        <EditorialLabel>People · Knowledge · A brighter tomorrow</EditorialLabel>
         <h1 className="display mt-5 max-w-[16ch] text-display text-red">
           Больше,
           <br />
@@ -117,7 +117,7 @@ export default function ProgramScreen() {
       {/* ---------- 01 progress tracking ---------- */}
       <section className="border-t border-line">
         <div className="shell-wide py-14 sm:py-18">
-          <EditorialLabel num="01">Progress tracking</EditorialLabel>
+          <EditorialLabel>Progress tracking</EditorialLabel>
           <div className="mt-4 grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <h2 className="display text-h2">Как отслеживается прогресс</h2>
@@ -206,7 +206,7 @@ export default function ProgramScreen() {
       {/* ---------- 02 growth & rating ---------- */}
       <section className="border-t border-line bg-paper-deep/50">
         <div className="shell-wide py-14 sm:py-18">
-          <EditorialLabel num="02">Growth & rating</EditorialLabel>
+          <EditorialLabel>Growth & rating</EditorialLabel>
           <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
             <h2 className="display max-w-[18ch] text-h2">Рост и рейтинг</h2>
             <p className="label max-w-[12rem] text-right text-red">
@@ -219,11 +219,7 @@ export default function ProgramScreen() {
           </p>
 
           {/* match day */}
-          <h3 className="display mt-10 flex items-center gap-3 text-h3">
-            <span className="font-mono text-[0.72rem] text-red">01</span>
-            <span aria-hidden="true" className="h-4 w-px bg-line-strong" />
-            Match Day
-          </h3>
+          <h3 className="display mt-10 text-h3">Match Day</h3>
           <div className="mt-5 grid gap-4 sm:grid-cols-3">
             {MATCH_DAY.map((m) => (
               <article key={m.title} className="rounded-md border border-line bg-paper-card p-4 text-center">
@@ -235,11 +231,7 @@ export default function ProgramScreen() {
           </div>
 
           {/* points */}
-          <h3 className="display mt-10 flex items-center gap-3 text-h3">
-            <span className="font-mono text-[0.72rem] text-red">02</span>
-            <span aria-hidden="true" className="h-4 w-px bg-line-strong" />
-            Leaderboard points
-          </h3>
+          <h3 className="display mt-10 text-h3">Leaderboard points</h3>
           <p className="mt-2 max-w-md text-[0.92rem] text-ink-soft">
             Рост имеет больший вес, чем стартовый уровень.
           </p>
@@ -258,11 +250,7 @@ export default function ProgramScreen() {
           {/* leaderboard demo + principle */}
           <div className="mt-10 grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-6">
-              <h3 className="display flex items-center gap-3 text-h3">
-                <span className="font-mono text-[0.72rem] text-red">03</span>
-                <span aria-hidden="true" className="h-4 w-px bg-line-strong" />
-                Current leaderboard
-              </h3>
+              <h3 className="display text-h3">Current leaderboard</h3>
               <table className="mt-4 w-full border-collapse text-[0.92rem]">
                 <caption className="sr-only">Пример таблицы рейтинга команд сезона</caption>
                 <thead>
@@ -280,7 +268,7 @@ export default function ProgramScreen() {
                       <td className="border-b border-line px-2 py-2.5">
                         <span
                           className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-mono text-[0.7rem] font-bold ${
-                            row.place === 1 ? 'bg-red text-paper' : 'bg-paper-deep text-ink-soft'
+                            row.place === 1 ? 'bg-red text-paper' : 'bg-paper-deep text-ink'
                           }`}
                         >
                           {row.place}
@@ -325,7 +313,7 @@ export default function ProgramScreen() {
       {/* ---------- 03 championship ---------- */}
       <section className="border-t border-line">
         <div className="shell-wide py-14 sm:py-18">
-          <EditorialLabel num="03">Championship</EditorialLabel>
+          <EditorialLabel>Championship</EditorialLabel>
           <h2 className="display mt-4 max-w-[16ch] text-h2 text-red">Чемпионат</h2>
           <p className="mt-4 max-w-lg text-[1rem] leading-relaxed text-ink-soft">
             В конце каждого сезона лучшие команды выходят в Championship.

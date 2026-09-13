@@ -139,7 +139,7 @@ export default function ResultScreen({
 
         {/* ---------- секции ---------- */}
         <section className="mt-12">
-          <EditorialLabel num="01">Где ты сейчас</EditorialLabel>
+          <EditorialLabel>Где ты сейчас</EditorialLabel>
           <div className="mt-6 space-y-5">
             {result.sections.map((s) => (
               <div key={s.section}>
@@ -217,7 +217,7 @@ export default function ResultScreen({
         {/* ---------- insights ---------- */}
         {result.insights.length > 0 ? (
           <section className="mt-12">
-            <EditorialLabel num="02">Что это значит</EditorialLabel>
+            <EditorialLabel>Что это значит</EditorialLabel>
             <ul className="mt-5 space-y-3">
               {result.insights.map((line, i) => (
                 <li key={i} className="flex gap-3">

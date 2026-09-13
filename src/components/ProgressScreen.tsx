@@ -143,7 +143,7 @@ export default function ProgressScreen() {
 
             {/* ---------- skill scores: было → стало ---------- */}
             <section className="mt-8">
-              <EditorialLabel num="02">Skill scores · было → стало</EditorialLabel>
+              <EditorialLabel>Skill scores · было → стало</EditorialLabel>
               <div className="mt-5 space-y-4">
                 {(last.sections ?? []).map((s) => {
                   const was = first.sections.find((f) => f.section === s.section);
@@ -187,7 +187,7 @@ export default function ProgressScreen() {
 
             {/* ---------- история замеров ---------- */}
             <section className="mt-10">
-              <EditorialLabel num="03">История замеров</EditorialLabel>
+              <EditorialLabel>История замеров</EditorialLabel>
               <ul className="mt-4 divide-y divide-line border-y border-line">
                 {[...list].reverse().map((s) => (
                   <li key={s.runId} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">

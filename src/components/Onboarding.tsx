@@ -53,7 +53,7 @@ export default function Onboarding({
       <main className="shell flex flex-1 flex-col justify-center py-10">
         {step === 1 ? (
           <div className="animate-fade-up">
-            <EditorialLabel num="01">Перед стартом</EditorialLabel>
+            <EditorialLabel>Перед стартом</EditorialLabel>
             <h1 className="display mt-4 max-w-[22ch] text-h2">{cfg.targetQuestion}</h1>
             <div className="mt-8 grid gap-2.5 sm:grid-cols-2">
               {cfg.targets.map((t) => {
@@ -76,7 +76,7 @@ export default function Onboarding({
           </div>
         ) : (
           <div className="animate-fade-up">
-            <EditorialLabel num="02">И последнее</EditorialLabel>
+            <EditorialLabel>И последнее</EditorialLabel>
             <h1 className="display mt-4 max-w-[22ch] text-h2">{cfg.whenQuestion}</h1>
             <div className="mt-8 grid gap-2.5">
               {cfg.whenOptions.map((opt) => {

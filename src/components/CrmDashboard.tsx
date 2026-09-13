@@ -137,10 +137,10 @@ export default function CrmDashboard() {
 
   if (!snapshot || !adminKey) {
     return (
-      <main className="shell-narrow flex min-h-dvh items-center py-12">
+      <main className="v3 shell-narrow flex min-h-dvh items-center py-12">
         <section className="card w-full p-6 sm:p-8">
           <Wordmark size="lg" />
-          <EditorialLabel num="CRM" className="mt-6">Закрытый раздел</EditorialLabel>
+          <EditorialLabel className="mt-6">Закрытый раздел</EditorialLabel>
           <h1 className="display mt-4 text-h1">Воронка заявок</h1>
           <p className="mt-4 text-[0.92rem] leading-relaxed text-ink-soft">Введите административный ключ. Он отправляется только в заголовке запроса и хранится до закрытия этой вкладки.</p>
           <form className="mt-6" onSubmit={unlock}>
@@ -156,7 +156,7 @@ export default function CrmDashboard() {
   }
 
   return (
-    <div className="min-h-dvh">
+    <div className="v3 min-h-dvh">
       <header className="border-b border-line bg-paper-card">
         <div className="shell-wide flex flex-wrap items-center justify-between gap-4 py-4">
           <div className="flex items-center gap-4"><Wordmark size="md" /><span className="label text-ink-faint">CRM · Leads</span></div>
@@ -168,7 +168,7 @@ export default function CrmDashboard() {
       </header>
 
       <main className="shell-wide py-8 sm:py-10">
-        <EditorialLabel num="01">Обзор воронки</EditorialLabel>
+        <EditorialLabel>Обзор воронки</EditorialLabel>
         <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             ['Лиды', snapshot.stats.total],
@@ -182,7 +182,7 @@ export default function CrmDashboard() {
 
         <section className="mt-9">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div><EditorialLabel num="02">Контакты и диагностики</EditorialLabel><h1 className="display mt-3 text-h2">Рабочая очередь</h1></div>
+            <div><EditorialLabel>Контакты и диагностики</EditorialLabel><h1 className="display mt-3 text-h2">Рабочая очередь</h1></div>
             <div className="grid gap-3 sm:grid-cols-2">
               <div><label className="label text-ink-faint" htmlFor="crm-search">Поиск</label><input id="crm-search" className="field mt-1.5 min-h-[46px]" value={search} onChange={(event) => { setSearch(event.target.value); setVisibleCount(12); }} placeholder="Имя, телефон, источник" /></div>
               <div><label className="label text-ink-faint" htmlFor="crm-stage">Этап</label><select id="crm-stage" className="field mt-1.5 min-h-[46px]" value={stage} onChange={(event) => { setStage(event.target.value as 'all' | CrmStage); setVisibleCount(12); }}><option value="all">Все этапы</option>{CRM_STAGES.map((item) => <option key={item} value={item}>{CRM_STAGE_LABELS[item]} · {snapshot.stats.byStage[item]}</option>)}</select></div>

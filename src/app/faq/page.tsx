@@ -24,16 +24,16 @@ export default function FaqPage() {
     <div className="v3 min-h-dvh">
       <SiteHeader />
       <main className="shell-wide py-8 sm:py-12">
-        <EditorialLabel num="01">FAQ</EditorialLabel>
+        <EditorialLabel>FAQ</EditorialLabel>
         <h1 className="display mt-5 max-w-[13ch] text-display text-red">Коротко и по делу</h1>
         <div className="mt-9 divide-y divide-line border-y border-line-strong">
-          {FAQ.map(([question, answer], index) => (
-            <details key={question} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-5">
-                <span className="display text-h3"><span className="mr-3 font-mono text-[0.7rem] text-red">{String(index + 1).padStart(2, '0')}</span>{question}</span>
+          {FAQ.map(([question, answer]) => (
+            <details key={question} className="group py-3">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-5">
+                <span className="display text-h3">{question}</span>
                 <span aria-hidden="true" className="text-2xl leading-none text-red transition-transform group-open:rotate-45">+</span>
               </summary>
-              <p className="mt-4 max-w-3xl pl-9 text-[0.98rem] leading-relaxed text-ink-soft">{answer}</p>
+              <p className="mt-3 max-w-3xl pb-2 text-[0.98rem] leading-relaxed text-ink-soft">{answer}</p>
             </details>
           ))}
         </div>

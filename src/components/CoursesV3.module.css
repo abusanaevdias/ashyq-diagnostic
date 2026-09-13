@@ -185,6 +185,7 @@
 }
 
 .blushBand {
+  --micro-color: var(--ink);
   padding: 40px;
   display: flex;
   align-items: center;

@@ -156,7 +156,7 @@
   position: absolute;
   top: 26px;
   left: 0;
-  color: var(--ink-muted);
+  color: var(--ink-soft);
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -348,7 +348,7 @@
   padding: 7px 12px;
   border-radius: var(--r-pill);
   background: var(--blush);
-  color: var(--red);
+  color: var(--red-deep);
   font-size: 0.8125rem;
   font-weight: 600;
 }
@@ -420,6 +420,7 @@
 }
 
 .band {
+  --micro-color: var(--on-dark);
   position: relative;
   overflow: hidden;
   padding: 52px 56px;

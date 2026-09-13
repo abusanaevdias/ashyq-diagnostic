@@ -134,6 +134,7 @@
 }
 
 .quoteCard {
+  --micro-color: var(--on-dark);
   min-height: 480px;
   padding: 40px;
   display: grid;

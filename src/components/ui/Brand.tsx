@@ -63,27 +63,22 @@ export function BrandIcon({
   );
 }
 
-/** Микро-лейбл секции: 01 / ЧТО ТЫ УЗНАЕШЬ + линия. */
+/**
+ * Микро-лейбл над заголовком — v3 MicroLabel: uppercase, приглушённый.
+ * Без нумерации: номера в v3 только у шагов (StepRow), не у разделов.
+ */
 export function EditorialLabel({
-  num,
   children,
-  tone = 'red',
+  tone = 'faint',
   className = '',
 }: {
-  num?: string;
   children: React.ReactNode;
   tone?: 'red' | 'faint' | 'cream';
   className?: string;
 }) {
   const color =
     tone === 'red' ? 'text-red' : tone === 'cream' ? 'text-paper/70' : 'text-ink-faint';
-  return (
-    <p className={`label flex items-center gap-3 ${color} ${className}`}>
-      {num ? <span aria-hidden="true">{num}</span> : null}
-      {num ? <span aria-hidden="true" className="h-px w-6 bg-current opacity-60" /> : null}
-      <span>{children}</span>
-    </p>
-  );
+  return <p className={`label ${color} ${className}`}>{children}</p>;
 }
 
 /** Рукописная пометка + стрелка. Только короткие ноты. */

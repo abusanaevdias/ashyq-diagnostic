@@ -21,7 +21,7 @@ export default function CommunityPage() {
       <SiteHeader />
       <main>
         <section className="shell-wide pb-14 pt-5 sm:pt-10">
-          <EditorialLabel num="01">People · Knowledge · A brighter tomorrow</EditorialLabel>
+          <EditorialLabel>People · Knowledge · A brighter tomorrow</EditorialLabel>
           <div className="mt-5 grid items-center gap-9 lg:grid-cols-12">
             <div className="lg:col-span-6">
               <h1 className="display max-w-[13ch] text-display text-red">Люди делают знания живыми</h1>
@@ -32,7 +32,7 @@ export default function CommunityPage() {
         </section>
         <section className="border-y border-line bg-paper-deep/50">
           <div className="shell-wide py-14 sm:py-18">
-            <EditorialLabel num="02">Что объединяет сообщество</EditorialLabel>
+            <EditorialLabel>Что объединяет сообщество</EditorialLabel>
             <div className="mt-7 grid gap-5 md:grid-cols-3">
               {VALUES.map((item) => (
                 <article key={item.title} className="card p-5">
