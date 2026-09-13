@@ -13,8 +13,9 @@ import styles from './SeasonV3.module.css';
 
 /**
  * Публичный хаб чемпионата: рейтинг считается из журнала баллов (SEASON-DEMO-001).
- * До загрузки на клиенте — тот же демо-сезон из сида; даты и время показываем
- * только после загрузки, чтобы серверная и клиентская разметка совпадали.
+ * Демо-сезон из сида — начальные данные: страница сразу полная и на сервере, без
+ * сдвига макета после загрузки. Время зависит от часового пояса и минуты рендера,
+ * поэтому у элементов с датами suppressHydrationWarning — клиент тихо уточняет текст.
  */
 
 type Board = 'teams' | 'individuals';
@@ -44,7 +45,7 @@ export default function SeasonPublicHub() {
   const [division, setDivision] = useState<Division>('ielts');
   const [board, setBoard] = useState<Board>('teams');
   const [initial] = useState(() => buildSeasonSeed());
-  const { data: loaded } = useLmsData(() => getSeasonRepo().load(), 'season:public');
+  const { data: loaded } = useLmsData(() => getSeasonRepo().load(), 'season:public', initial);
   const data = loaded ?? initial;
   const season = currentSeason(data.seasons);
 
@@ -60,7 +61,6 @@ export default function SeasonPublicHub() {
     );
   }
 
-  const when = (iso: string) => (loaded ? formatDate(iso) : '');
   const week = weekOf(season);
   const weeks = totalWeeks(season);
   const phase = seasonPhase(season);
@@ -101,11 +101,11 @@ export default function SeasonPublicHub() {
             </div>
             <div className={styles.statusGrid}>
               <div className={styles.stat}>
-                <strong>{next ? (matchStatus(next) === 'live' ? 'Сейчас' : when(next.startsAt)) : '—'}</strong>
+                <strong suppressHydrationWarning>{next ? (matchStatus(next) === 'live' ? 'Сейчас' : formatDate(next.startsAt)) : '—'}</strong>
                 <span>{next ? `${next.title}, ${next.place.toLowerCase()}` : 'Match Days завершены'}</span>
               </div>
               <div className={styles.stat}>
-                <strong>{final ? when(final.startsAt) : '—'}</strong>
+                <strong suppressHydrationWarning>{final ? formatDate(final.startsAt) : '—'}</strong>
                 <span>{final ? `финал, ${final.place}` : 'финал'}</span>
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function SeasonPublicHub() {
             <div className={`${styles.card} ${styles.leaderboard}`}>
               <div className={styles.leaderTitle}>
                 <h3>{board === 'teams' ? 'Команды' : 'Участники'} · {DIVISION_LABELS[activeDivision]}</h3>
-                <span className={styles.micro}>{updated && loaded ? `обновлено ${when(updated)}` : `неделя ${week}`}</span>
+                <span className={styles.micro} suppressHydrationWarning>{updated ? `обновлено ${formatDate(updated)}` : `неделя ${week}`}</span>
               </div>
               {rows.length === 0 ? <p className={styles.emptyRow}>{board === 'teams' ? 'Команды ещё формируются.' : 'Участники ещё не заявлены.'}</p> : null}
               {rows.map((row) => (
@@ -172,7 +172,7 @@ export default function SeasonPublicHub() {
                 <article className={`${styles.card} ${styles.event}`} key={match.id}>
                   <span className={styles.eventBadge}>{status === 'live' ? 'Сейчас' : status === 'done' ? 'Прошёл' : String(index + 1).padStart(2, '0')}</span>
                   <h3>{match.title}</h3>
-                  <p>{loaded ? `${when(match.startsAt)} · ` : ''}{match.place}</p>
+                  <p suppressHydrationWarning>{`${formatDate(match.startsAt)} · ${match.place}`}</p>
                 </article>
               );
             })}
