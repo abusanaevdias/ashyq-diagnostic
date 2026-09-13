@@ -122,6 +122,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 |---|---|---|---|---|
 | LMS-001 | IN_PROGRESS | Claude Opus 5 | `claude/lms` (draft PR в `main`, коммит на каждый шаг ТЗ); worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; ТЗ пользователя: учебный слой (классы, уроки, материалы, домашки, сдачи, треды комментариев, оценки), аккаунты с ролями student/teacher/author (admin зарезервирован), ролевой блог-CMS; демо-режим в `localStorage` `ashyq:v2:*` за интерфейсами AuthAdapter/репозиториев/FileStorage под будущий Supabase. Диагностика (`useDiagnostic`, scoring, `ashyq:v1:*`, e2e-имена, дисклеймеры) не меняется; все 99 e2e остаются зелёными. Владею: новые `src/lib/lms/**`, `src/components/lms/**`, маршруты `/login`, `/me`, `/classes/**`, `/assignments/**`, `/teacher/**`, `/submissions/**`, `/write/**`, `/blog/[slug]`, `scripts/lms-e2e.ts`, `scripts/seed-demo.ts`; точечно: `BlogV3.tsx` (чтение из BlogRepo), слот аккаунта в `NavBar` (`CleanUi.tsx`), новые события в `src/lib/analytics.ts`. `package.json`, metadata публичных страниц, `layout.tsx` (`SEO-META-001`) и `.github/**` (`CI-RELEASE-001`) не трогаю |
 | CI-RELEASE-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/ci-release`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-ci` | started 2026-09-13; GitHub Actions workflow `.github/workflows/ci.yml` (+ `docs/CI.md`): на PR и push в `main` — npm ci, playwright chromium, lint, typecheck, validate:bank, build, затем на `next start` e2e с `CRM_ADMIN_KEY`, `check:crm`, `check:crm-ui`, `e2e:audio`, `card-image-check`; скриншоты/лог сервера — артефакты. Owned: `.github/**`, `docs/CI.md`; shared `HANDOFF.md` — только эта строка и итог. Не трогаю owned-файлы `DESIGN-QA-001` и `SEO-META-001`; branch protection (блокировка merge при красном gate) — настройка владельца репозитория, дам шаги в `docs/CI.md` |
+| CONTACT-FORM-001 | IN_PROGRESS | Codex GPT-5 `/root` | `codex/contact-form`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-contact-form` | started 2026-09-13; отделить обращение `/contacts` от заявки сезона: вариант формы отправляет `kind: contact`, нейтральные CTA/success copy, CRM/Telegram явно различают обращение и сезон, e2e проверяет оба payload. Owned: `src/components/SeasonForm.tsx`, `src/components/ContactsV3.tsx`, точечные строки `src/lib/crm.ts`, `src/lib/lead-server.ts`, `scripts/e2e-check.ts`, `scripts/crm-check.ts`; shared `HANDOFF.md`, `PRODUCT_BACKLOG.md`. Не трогать LMS-маршруты/репозитории, `.github/**`, metadata и диагностику |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
@@ -132,6 +133,9 @@ ASHYQ — образовательный клуб Казахстана: подг
 `.github/**`, `docs/CI.md` и её строка в этом реестре.
 
 Активна `LMS-001` (Claude Opus 5) — только её owned файлы, изменения через draft PR.
+
+Активна `CONTACT-FORM-001` (Codex GPT-5 `/root`, worktree `ashyq-contact-form`) —
+только форма contacts/season, различение lead kind и её scoped-проверки.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
