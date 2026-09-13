@@ -104,20 +104,20 @@ ASHYQ — образовательный клуб Казахстана: подг
 | V3-BLOG-001 | DONE (демо-контент) | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/blog` по DESIGN_V3 §6.5: фильтр категорий, рабочий поиск, featured + side-list, пустое состояние, blush-полоса. Статей нет (решение пользователя) — 4 примера тем в `src/data/blog.ts` за флагом `BLOG_IS_DEMO`: видимая демо-плашка, `noindex`, `/blog` не в sitemap; без авторов/дат/просмотров. Карточки «Скоро» — страниц статей нет; подписка ведёт в заявку `/season` — бэкенда рассылки нет. «Блог» в nav/footer. Commit `95b7625`, fast-forward в `main`. Проверки: lint, typecheck, build green; e2e 89/89 (+4 blog, без `CRM_ADMIN_KEY`); 1440/390 overflow 0, wordmark 22px, mobile tap ≥44; nav с 7 ссылками в одну строку на 920px. Когда придут статьи: заменить `BLOG_POSTS`, `BLOG_IS_DEMO = false`, добавить `/blog` в `SITE_ROUTES`, при необходимости `/blog/[slug]` |
 | V3-CARD-IMAGE-001 | DONE | Codex GPT-5 `/root` | `ai2/v3-card-image`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-card-image` | Downloadable PNG результата переведён с v2-постера на v3: точные токены, оригинальный красный wordmark, self-hosted Manrope 700 + Inter 400/600, surface/blush/dark-warm карточки, без grain/Oswald; disclaimer и данные/scoring не менялись. Длинный следующий шаг переносится на 2 строки. Commit `d4a1a95`. Files: `src/lib/card-image.ts`, `public/fonts/manrope-700-{cyrillic,latin}.woff2`, `scripts/card-image-check.ts`. Проверки после rebase: lint/typecheck/build green; bank 49, 0 errors/warnings; card check PASS (v3 tokens, legacy exclusion, disclaimer, настоящий wordmark/fonts, render 1080×1080); e2e 89/89 без `CRM_ADMIN_KEY`. Риски: карточка рассчитана на текущие 2 секции IELTS/SAT; при расширении диагностики до 3+ секций понадобится новая компоновка. Следующий safe step: отдельная чистка неиспользуемых v2-примитивов `Brand.tsx` |
 | V3-CONTACTS-001 | DONE (без подтверждённых контактов) | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/contacts` по DESIGN_V3 §6.6: 3 ContactRow (WhatsApp — ссылка на уже используемый `WHATSAPP_NUMBER`, почта и адрес «уточняется»), рабочая форма = `SeasonForm` (согласие, lead API), карта-заглушка без адреса, фото + рукописная подпись. Выдуманных телефонов/адресов/e-mail нет; `CONTACTS_IS_DEMO` → демо-плашка и `noindex`, `/contacts` не в sitemap. `CleanUi`: иконки chat/mail/pin, «Контакты» в mobile menu и footer (desktop-строка nav заполнена). Commit `e77617c` (rebase на `50ed0b7`), fast-forward в `main`. Проверки на объединённом коде: lint, typecheck, build green; e2e 92/92 (+3 contacts, без `CRM_ADMIN_KEY`); `scripts/card-image-check.ts` PASS; 1440/390 overflow 0, wordmark 22px. Риски: заявки с `/contacts` уходят в CRM как `kind: season` и кнопка «Узнать о следующем сезоне» — при нужде отдельный kind/текст; соцсетей нет. Когда придут контакты: заполнить `CONTACTS` в `ContactsV3.tsx`, `CONTACTS_IS_DEMO = false`, добавить `/contacts` в `SITE_ROUTES`, заменить карту |
+| V3-BRAND-CLEANUP-001 | DONE | Codex GPT-5 `/root` | `ai2/v3-brand-cleanup`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-brand-cleanup` | Удалены доказанно неиспользуемые v2 exports `DiagnosticStamp`, `TopBar`, `Tape`, `TornEdge` и лишний `DIAGNOSTIC_NUMBER` import из `src/components/ui/Brand.tsx`; комментарий модуля обновлён для v3, stroke рукописной стрелки приведён с `2.4` к лимиту `1.6`. Commit `7ac4bb3`. Проверки: `rg` не нашёл потребителей удалённых exports; lint/typecheck/build green; bank 49, 0 errors/warnings; card check PASS; e2e 92/92 без `CRM_ADMIN_KEY`. Риск: удалённые exports были внутренними и не использовались в репо; проект `private`, но неизвестный внешний импорт вне репо потребует миграции. Следующий safe step: новых независимых `READY` задач нет — нужны решения для auth/backend/CRM либо реальные контакты и статьи |
 
 ## 5. Свободные и заблокированные задачи
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-BRAND-CLEANUP-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-brand-cleanup`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-brand-cleanup` | started 2026-09-13; удалить только доказанно неиспользуемые v2 exports `DiagnosticStamp`, `TopBar`, `Tape`, `TornEdge` из `src/components/ui/Brand.tsx`, убрать ставший лишним import, обновить комментарий модуля и привести stroke рукописной стрелки к лимиту v3 `1.6`; shared только `HANDOFF.md`; страницы/общие nav/e2e другого агента не трогать |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
 Блог ждёт настоящие статьи от пользователя (см. строку V3-BLOG-001).
 Контакты ждут подтверждённые данные от пользователя (см. строку V3-CONTACTS-001).
-Активна `V3-BRAND-CLEANUP-001` (Codex GPT-5 `/root`) — только `Brand.tsx` и своя строка `HANDOFF.md`.
-После этой чистки независимых `READY` задач без новых данных/решений пользователя нет.
+Активных `IN_PROGRESS` задач нет.
+Независимых `READY` задач без новых данных/решений пользователя нет.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
@@ -162,6 +162,8 @@ npx tsx scripts/season-visual-check.ts
   lint/typecheck/build green;
 - после V3-CARD-IMAGE-001 (2026-09-13): e2e `89/89` без `CRM_ADMIN_KEY`,
   lint/typecheck/build green; card check PASS, PNG `1080×1080`;
+- после V3-BRAND-CLEANUP-001 (2026-09-13): e2e `92/92` без `CRM_ADMIN_KEY`,
+  lint/typecheck/build green; bank 49 без ошибок; card check PASS;
 - после V3-ABOUT-001 (2026-09-13): e2e `85/85` без `CRM_ADMIN_KEY`,
   lint/typecheck/build green; 1440/390 overflow `0`, mobile tap ≥44;
 - v3 homepage и championship: visual QA 1440/390, overflow `0`,
