@@ -25,6 +25,20 @@
   --line: #e0d8c8;
   --line-strong: #211a16;
 
+  /* те же цвета RGB-каналами для tailwind (tailwind.config.ts); .v3 подменяет */
+  --c-paper: 247 243 234;
+  --c-paper-deep: 237 231 218;
+  --c-paper-card: 252 250 244;
+  --c-ink: 33 26 22;
+  --c-ink-soft: 95 85 75;
+  --c-ink-faint: 140 129 119;
+  --c-ink-invert: 251 248 241;
+  --c-red: 206 30 35;
+  --c-red-deep: 168 20 24;
+  --c-red-wash: 246 227 223;
+  --c-line: 224 216 200;
+  --c-line-strong: 33 26 22;
+
   --font-display: 'Oswald', 'Arial Narrow', Helvetica, sans-serif;
   --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -422,6 +436,92 @@
     to {
       transform: translateX(-50%);
     }
+  }
+
+  /* ---------- .v3: экраны диагностики на токенах design/tokens.css ----------
+     Scoped-тема поверх v2-классов и tailwind-цветов (V3-QUIZ-SCREENS-001).
+     В @layer components намеренно: tailwind-утилиты по-прежнему главнее. */
+  .v3 {
+    --c-paper: 248 247 243;
+    --c-paper-deep: 239 238 234;
+    --c-paper-card: 253 253 253;
+    --c-ink: 22 19 17;
+    --c-ink-soft: 110 109 107;
+    /* ink-muted не проходит AA для текста — «faint» = ink-soft */
+    --c-ink-faint: 110 109 107;
+    --c-ink-invert: 248 247 243;
+    --c-red: 222 11 27;
+    --c-red-deep: 182 9 22;
+    --c-red-wash: 249 224 219;
+    --c-line: 239 238 234;
+    --c-line-strong: 22 19 17;
+    --paper: var(--bg);
+    --paper-deep: var(--hairline);
+    --paper-card: var(--surface);
+    --ink-faint: var(--ink-soft);
+    --ink-invert: var(--on-dark);
+    --red-wash: var(--blush);
+    --line: var(--hairline);
+    --line-strong: var(--ink);
+    --font-ui: var(--font-body);
+    --font-mono: var(--font-body);
+    --font-serif: var(--font-display);
+    --lh-display: 1.05;
+    --lh-heading: 1.15;
+    --legacy-radius-md: var(--r-md);
+    --legacy-radius-lg: var(--r-lg);
+    --legacy-shadow-card: var(--shadow-card);
+    background: var(--bg);
+    font-family: var(--font-body);
+  }
+
+  .v3 .display {
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+
+  .v3 .serif {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .v3 .label {
+    letter-spacing: 0.14em;
+  }
+
+  .v3 .btn,
+  .v3 .chip {
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .v3 .btn-primary {
+    box-shadow: var(--shadow-pill);
+  }
+
+  .v3 .card-ink {
+    border-color: var(--hairline);
+    border-radius: var(--r-lg);
+    background: var(--surface);
+  }
+
+  .v3 .option {
+    border-radius: var(--r-md);
+  }
+
+  /* ключи TRUE/FALSE/NG шире 28px */
+  .v3 .option-key {
+    width: auto;
+    min-width: 28px;
+    padding-inline: 6px;
+    border-color: var(--hairline);
+    border-radius: var(--r-xs);
+  }
+
+  .v3 .meter {
+    border-color: transparent;
   }
 }
 

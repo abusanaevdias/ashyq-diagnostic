@@ -7,9 +7,8 @@ import { Wordmark, RedStar } from '@/components/ui/Brand';
 
 /**
  * ASHYQ PLAYER CARD — то, что студент скринит и отправляет другу.
- * v2: чёрная «рваная бумага» из кампаний, оригинальный wordmark cream,
- * искра из логотипа, моно-метаданные, один красный акцент, штамп prelim.
- * Фиксированная ширина, крупные цифры конденсированным гротеском.
+ * v3: тёмная карточка без текстур, оригинальный wordmark cream, искра
+ * из логотипа, один красный акцент. Фиксированная ширина, крупные цифры.
  */
 export default function DiagnosticCard({
   exam,
@@ -29,16 +28,6 @@ export default function DiagnosticCard({
       data-card="ashyq-player-card"
       className="relative mx-auto w-full max-w-[440px] overflow-hidden rounded-lg bg-ink text-paper shadow-card"
     >
-      {/* зерно чёрной бумаги */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
-      />
-
       <div className="relative p-5 sm:p-6">
         {/* header */}
         <div className="flex items-start justify-between gap-3">
@@ -107,7 +96,7 @@ export default function DiagnosticCard({
           </div>
         </div>
 
-        <div className="mt-3 bg-paper px-3 py-2 text-ink">
+        <div className="mt-3 rounded-md bg-paper px-3 py-2 text-ink">
           <p className="font-mono text-[0.55rem] tracking-[0.16em] text-ink/60">СЛЕДУЮЩИЙ ШАГ</p>
           <p className="display mt-1 break-words text-[0.95rem] leading-tight">{nextStep}</p>
         </div>
@@ -116,10 +105,6 @@ export default function DiagnosticCard({
           Предварительная оценка по короткой диагностике Ashyq · не официальный
           результат {cfg.name}
         </p>
-
-        <span className="stamp absolute right-4 top-[9.5rem] border-paper/50 text-paper/60">
-          prelim
-        </span>
       </div>
     </div>
   );

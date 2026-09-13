@@ -14,7 +14,6 @@ import {
   Wordmark,
   EditorialLabel,
   HandNote,
-  TornEdge,
 } from '@/components/ui/Brand';
 import type { CardData } from '@/lib/card-image';
 
@@ -92,9 +91,9 @@ export default function ResultScreen({
   };
 
   return (
-    <div className="min-h-dvh pb-16">
+    <div className="v3 min-h-dvh pb-16">
       <header className="shell-wide flex items-center justify-between py-5">
-        <Wordmark size="sm" />
+        <Wordmark size="md" />
         <span className="label text-ink-faint">Результат</span>
       </header>
 
@@ -237,9 +236,8 @@ export default function ResultScreen({
         ) : null}
 
         {/* ---------- главный CTA ---------- */}
-        <section className="relative mt-14 bg-red text-paper">
-          <TornEdge fill="var(--paper)" flip className="absolute inset-x-0 top-0" />
-          <div className="px-5 pb-9 pt-12 sm:px-7">
+        <section className="band-dark relative mt-14 overflow-hidden">
+          <div className="relative px-5 py-9 sm:px-7">
             <p className="label text-paper/70">Следующий шаг</p>
             <h2 className="display mt-3 max-w-[24ch] text-h2 text-paper">
               {isSat
@@ -285,7 +283,6 @@ export default function ResultScreen({
                 : '*Это предварительная оценка на основе быстрой диагностики. Она не является официальным IELTS Band Score. Writing и Speaking требуют отдельной оценки.'}
             </p>
           </div>
-          <TornEdge fill="var(--paper)" className="absolute inset-x-0 bottom-0 rotate-180" />
         </section>
 
         {/* ---------- secondary ---------- */}

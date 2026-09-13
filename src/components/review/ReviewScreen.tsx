@@ -51,10 +51,10 @@ export default function ReviewScreen({
   });
 
   return (
-    <div className="min-h-dvh pb-16">
-      <header className="sticky top-0 z-30 border-b border-line bg-paper/95 backdrop-blur-sm">
+    <div className="v3 min-h-dvh pb-16">
+      <header className="sticky top-0 z-30 border-b border-line bg-paper">
         <div className="shell-wide flex items-center justify-between gap-3 py-3">
-          <Wordmark size="sm" />
+          <Wordmark size="md" />
           <button
             type="button"
             className="btn btn-quiet btn-small"

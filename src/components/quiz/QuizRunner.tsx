@@ -93,7 +93,7 @@ export default function QuizRunner({
 
   if (!question) {
     return (
-      <div className="shell py-20 text-center">
+      <div className="v3 shell py-20 text-center">
         <p className="text-ink-soft">Вопросы не загрузились.</p>
         <button type="button" className="btn btn-quiet mt-6 w-auto" onClick={onExit}>
           Вернуться на главную
@@ -107,13 +107,13 @@ export default function QuizRunner({
   const isFirstInGroup = groupStart === index;
 
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="v3 flex min-h-dvh flex-col">
       {/* ---------- header ---------- */}
-      <header className="sticky top-0 z-30 border-b border-line bg-paper/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-30 border-b border-line bg-paper">
         <div className="shell-wide py-3">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <Wordmark size="sm" />
+              <Wordmark size="md" />
               <span className="hidden font-mono text-[0.62rem] font-bold uppercase tracking-[0.18em] text-ink-faint sm:inline">
                 Diagnostic
               </span>
@@ -176,7 +176,7 @@ export default function QuizRunner({
       </main>
 
       {/* ---------- footer nav ---------- */}
-      <footer className="safe-bottom fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 backdrop-blur-sm">
+      <footer className="safe-bottom fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper">
         <div className="shell-wide flex items-center gap-2.5 py-3">
           <button
             type="button"

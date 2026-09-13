@@ -42,9 +42,9 @@ export default function Onboarding({
   };
 
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="v3 flex min-h-dvh flex-col">
       <header className="shell-wide flex items-center justify-between py-5">
-        <Wordmark size="sm" />
+        <Wordmark size="md" />
         <span className="label text-ink-faint">
           {cfg.name} · шаг {step} из 2
         </span>

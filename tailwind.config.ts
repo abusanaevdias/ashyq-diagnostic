@@ -10,30 +10,34 @@ const config: Config = {
   content: ['./src/**/*.{ts,tsx,mdx}'],
   theme: {
     extend: {
-      /* Каналы продублированы из globals.css в RGB, чтобы работали
-         opacity-модификаторы (bg-ink/60, text-paper/70 и т.д.).
-         Менять палитру — в обоих местах сразу. */
+      /* RGB-каналы живут в globals.css (--c-*), чтобы работали
+         opacity-модификаторы (bg-ink/60, text-paper/70) и scoped-тема
+         `.v3` могла подменить палитру без правки компонентов. */
       colors: {
         paper: {
-          DEFAULT: 'rgb(247 243 234 / <alpha-value>)',
-          deep: 'rgb(237 231 218 / <alpha-value>)',
-          card: 'rgb(252 250 244 / <alpha-value>)',
+          DEFAULT: 'rgb(var(--c-paper) / <alpha-value>)',
+          deep: 'rgb(var(--c-paper-deep) / <alpha-value>)',
+          card: 'rgb(var(--c-paper-card) / <alpha-value>)',
         },
         ink: {
-          DEFAULT: 'rgb(33 26 22 / <alpha-value>)',
-          soft: 'rgb(95 85 75 / <alpha-value>)',
-          faint: 'rgb(140 129 119 / <alpha-value>)',
-          invert: 'rgb(251 248 241 / <alpha-value>)',
+          DEFAULT: 'rgb(var(--c-ink) / <alpha-value>)',
+          soft: 'rgb(var(--c-ink-soft) / <alpha-value>)',
+          faint: 'rgb(var(--c-ink-faint) / <alpha-value>)',
+          invert: 'rgb(var(--c-ink-invert) / <alpha-value>)',
         },
         red: {
-          DEFAULT: 'rgb(206 30 35 / <alpha-value>)',
-          deep: 'rgb(168 20 24 / <alpha-value>)',
-          wash: 'rgb(246 227 223 / <alpha-value>)',
+          DEFAULT: 'rgb(var(--c-red) / <alpha-value>)',
+          deep: 'rgb(var(--c-red-deep) / <alpha-value>)',
+          wash: 'rgb(var(--c-red-wash) / <alpha-value>)',
         },
         line: {
-          DEFAULT: 'rgb(224 216 200 / <alpha-value>)',
-          strong: 'rgb(33 26 22 / <alpha-value>)',
+          DEFAULT: 'rgb(var(--c-line) / <alpha-value>)',
+          strong: 'rgb(var(--c-line-strong) / <alpha-value>)',
         },
+      },
+      borderRadius: {
+        md: 'var(--legacy-radius-md, 0.375rem)',
+        lg: 'var(--legacy-radius-lg, 0.5rem)',
       },
       fontFamily: {
         display: ['var(--font-display)', 'Arial Narrow', 'Helvetica Neue', 'sans-serif'],
@@ -43,9 +47,9 @@ const config: Config = {
         mono: ['var(--font-mono)', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       fontSize: {
-        display: ['clamp(2.9rem, 12vw, 7rem)', { lineHeight: '0.92', letterSpacing: '0.005em' }],
-        h1: ['clamp(2rem, 8vw, 4rem)', { lineHeight: '1.02', letterSpacing: '-0.015em' }],
-        h2: ['clamp(1.5rem, 5.6vw, 2.6rem)', { lineHeight: '1.02', letterSpacing: '0em' }],
+        display: ['clamp(2.9rem, 12vw, 7rem)', { lineHeight: 'var(--lh-display, 0.92)', letterSpacing: '0.005em' }],
+        h1: ['clamp(2rem, 8vw, 4rem)', { lineHeight: 'var(--lh-heading, 1.02)', letterSpacing: '-0.015em' }],
+        h2: ['clamp(1.5rem, 5.6vw, 2.6rem)', { lineHeight: 'var(--lh-heading, 1.02)', letterSpacing: '0em' }],
         h3: ['clamp(1.15rem, 4vw, 1.5rem)', { lineHeight: '1.1' }],
         body: ['1.0625rem', { lineHeight: '1.55' }],
         micro: ['0.6875rem', { lineHeight: '1.25', letterSpacing: '0.14em' }],
@@ -54,7 +58,7 @@ const config: Config = {
         block: '6px 6px 0 0 var(--ink)',
         'block-sm': '3px 3px 0 0 var(--ink)',
         'block-red': '6px 6px 0 0 var(--red)',
-        card: '0 1px 2px rgba(33,26,22,0.05), 0 14px 34px -22px rgba(33,26,22,0.28)',
+        card: 'var(--legacy-shadow-card, 0 1px 2px rgba(33,26,22,0.05), 0 14px 34px -22px rgba(33,26,22,0.28))',
       },
       maxWidth: {
         sheet: '44rem',
