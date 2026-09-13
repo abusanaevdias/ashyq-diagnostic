@@ -98,6 +98,35 @@ export interface CrmRecord {
   delivery: DeliveryStatus[];
 }
 
+/** Шаг воронки: сколько записей прошло через каждый тип лида. */
+export interface AnalyticsFunnel {
+  diagnostics: number;
+  whatsapp: number;
+  contacts: number;
+  season: number;
+}
+
+/** Срез по UTM-источнику: считаем лиды (не записи). */
+export interface AnalyticsSourceRow {
+  source: string;
+  leads: number;
+  contacts: number;
+  season: number;
+}
+
+/** Точка дневного тренда: лиды, полученные за конкретный UTC-день. */
+export interface AnalyticsTrendPoint {
+  date: string;
+  leads: number;
+}
+
+export interface AnalyticsStats {
+  leadsLast7Days: number;
+  funnel: AnalyticsFunnel;
+  bySource: AnalyticsSourceRow[];
+  last14Days: AnalyticsTrendPoint[];
+}
+
 export interface CrmSnapshot {
   records: CrmRecord[];
   stats: {
@@ -107,6 +136,7 @@ export interface CrmSnapshot {
     byStage: Record<CrmStage, number>;
     byExam: Record<StoredLead['exam'], number>;
     deliveries: { sent: number; failed: number };
+    analytics: AnalyticsStats;
   };
 }
 
@@ -115,6 +145,50 @@ function leadActivityText(lead: StoredLead): string {
   if (lead.kind === 'season') return 'Оставил заявку на следующий сезон';
   if (lead.kind === 'whatsapp') return 'Перешёл в WhatsApp';
   return `Завершил диагностику${lead.band ? ` · ${lead.band}` : ''}`;
+}
+
+const DAY_MS = 24 * 60 * 60_000;
+
+/**
+ * Аналитика CRM (чистая функция): воронка по типам лидов, срез по UTM-источникам
+ * и дневной тренд за 14 дней (UTC). Лиды считаются по receivedAt, записи — по firstSeenAt.
+ */
+export function computeAnalyticsStats(leads: StoredLead[], records: CrmRecord[], now: number = Date.now()): AnalyticsStats {
+  const funnel: AnalyticsFunnel = {
+    diagnostics: records.filter((record) => record.activities.some((activity) => activity.type === 'result')).length,
+    whatsapp: records.filter((record) => record.activities.some((activity) => activity.type === 'whatsapp')).length,
+    contacts: records.filter((record) => record.activities.some((activity) => activity.type === 'contact')).length,
+    season: records.filter((record) => record.activities.some((activity) => activity.type === 'season')).length,
+  };
+
+  const bySource = new Map<string, AnalyticsSourceRow>();
+  for (const lead of leads) {
+    const source = lead.utm?.utm_source;
+    if (!source) continue;
+    const row = bySource.get(source) ?? { source, leads: 0, contacts: 0, season: 0 };
+    row.leads += 1;
+    if (lead.kind === 'contact') row.contacts += 1;
+    if (lead.kind === 'season') row.season += 1;
+    bySource.set(source, row);
+  }
+  const sourceRows = [...bySource.values()].sort((a, b) => b.leads - a.leads || a.source.localeCompare(b.source));
+
+  const today = new Date(now).toISOString().slice(0, 10);
+  const leadsPerDay = new Map<string, number>();
+  for (const lead of leads) {
+    const day = lead.receivedAt.slice(0, 10);
+    leadsPerDay.set(day, (leadsPerDay.get(day) ?? 0) + 1);
+  }
+  const last14Days: AnalyticsTrendPoint[] = [];
+  for (let offset = 13; offset >= 0; offset -= 1) {
+    const day = new Date(Date.parse(`${today}T00:00:00.000Z`) - offset * DAY_MS).toISOString().slice(0, 10);
+    last14Days.push({ date: day, leads: leadsPerDay.get(day) ?? 0 });
+  }
+
+  const weekCutoff = now - 7 * DAY_MS;
+  const leadsLast7Days = records.filter((record) => Date.parse(record.firstSeenAt) >= weekCutoff).length;
+
+  return { leadsLast7Days, funnel, bySource: sourceRows, last14Days };
 }
 
 export function buildCrmSnapshot(
@@ -229,6 +303,7 @@ export function buildCrmSnapshot(
       byStage,
       byExam,
       deliveries: deliveries_stats,
+      analytics: computeAnalyticsStats(leads, records),
     },
   };
 }

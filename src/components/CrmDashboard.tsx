@@ -30,6 +30,11 @@ function recordName(record: CrmRecord): string {
   return record.name || record.phone || `Аноним · ${record.runId.slice(0, 8)}`;
 }
 
+/** Конверсия шага воронки к предыдущему: N/prev в %, иначе прочерк. */
+function funnelConversion(value: number, prev: number): string {
+  return prev > 0 ? `${Math.round((value / prev) * 100)}%` : '—';
+}
+
 export default function CrmDashboard() {
   const [keyInput, setKeyInput] = useState('');
   const [adminKey, setAdminKey] = useState('');
@@ -186,6 +191,76 @@ export default function CrmDashboard() {
             <div key={label} className="card p-4"><p className="label text-ink-faint">{label}</p><p className="display mt-2 text-[2rem] text-red">{value}</p></div>
           ))}
         </div>
+
+        <section className="mt-9">
+          <EditorialLabel>Аналитика</EditorialLabel>
+          <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {[
+              { label: 'Диагностики', value: snapshot.stats.analytics.funnel.diagnostics },
+              { label: 'В WhatsApp', value: snapshot.stats.analytics.funnel.whatsapp },
+              { label: 'Обращения', value: snapshot.stats.analytics.funnel.contacts },
+              { label: 'Заявки на сезон', value: snapshot.stats.analytics.funnel.season },
+            ].map((step, index, steps) => {
+              const prev = index > 0 ? steps[index - 1].value : 0;
+              return (
+                <div key={step.label} className="card p-4">
+                  <p className="label text-ink-faint">{step.label}</p>
+                  <p className="display mt-2 text-[2rem] text-red">{step.value}</p>
+                  <p className="mt-1 text-[0.72rem] text-ink-faint">Конверсия: {index === 0 ? '—' : funnelConversion(step.value, prev)}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">
+            <div className="card p-4">
+              <p className="label text-ink-faint">Лиды за 14 дней</p>
+              <div className="mt-4 flex h-32 items-end gap-1.5" role="img" aria-label={`Лиды за 14 дней: всего ${snapshot.stats.analytics.last14Days.reduce((sum, point) => sum + point.leads, 0)}`}>
+                {(() => {
+                  const max = Math.max(...snapshot.stats.analytics.last14Days.map((item) => item.leads), 1);
+                  return snapshot.stats.analytics.last14Days.map((point) => {
+                    const height = Math.max(Math.round((point.leads / max) * 100), point.leads > 0 ? 6 : 2);
+                    return (
+                      <div key={point.date} className="flex h-full flex-1 flex-col justify-end" title={`${point.date}: ${point.leads}`}>
+                        <div className="w-full bg-red" style={{ height: `${height}%` }} />
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
+              <p className="mt-2 flex justify-between font-mono text-[0.64rem] text-ink-faint">
+                <span>{snapshot.stats.analytics.last14Days[0]?.date}</span>
+                <span>{snapshot.stats.analytics.last14Days[snapshot.stats.analytics.last14Days.length - 1]?.date}</span>
+              </p>
+            </div>
+            <div className="card p-4">
+              <p className="label text-ink-faint">Источники</p>
+              <table className="mt-3 w-full text-[0.86rem]">
+                <thead>
+                  <tr className="border-b border-line text-left">
+                    <th scope="col" className="label py-2 font-medium text-ink-faint">Источник</th>
+                    <th scope="col" className="label py-2 text-right font-medium text-ink-faint">Лиды</th>
+                    <th scope="col" className="label py-2 text-right font-medium text-ink-faint">Обращения</th>
+                    <th scope="col" className="label py-2 text-right font-medium text-ink-faint">Заявки сезона</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {snapshot.stats.analytics.bySource.slice(0, 5).map((row) => (
+                    <tr key={row.source} className="border-b border-line/60">
+                      <td className="max-w-[10rem] truncate py-2 font-semibold">{row.source}</td>
+                      <td className="py-2 text-right">{row.leads}</td>
+                      <td className="py-2 text-right">{row.contacts}</td>
+                      <td className="py-2 text-right">{row.season}</td>
+                    </tr>
+                  ))}
+                  {snapshot.stats.analytics.bySource.length === 0 ? (
+                    <tr><td colSpan={4} className="py-3 text-ink-soft">UTM-меток пока нет</td></tr>
+                  ) : null}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
 
         <section className="mt-9">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
