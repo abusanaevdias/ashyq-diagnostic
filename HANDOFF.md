@@ -112,13 +112,14 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
+| SEO-META-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/product-backlog-seo`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-seo` | started 2026-09-13; backlog: `PRODUCT_BACKLOG.md`; исправить глобальный canonical `/`, добавить route-specific canonical для публичных страниц, перевести `src/app/opengraph-image.tsx` на v3 с оригинальным wordmark и добавить изолированный metadata check. Owned: `PRODUCT_BACKLOG.md`, `src/app/layout.tsx`, `src/app/opengraph-image.tsx`, metadata публичных route pages, новый scoped check; shared только точечные строки `HANDOFF.md`/`package.json`. Security и contacts задачи уже merged; их бизнес-логику не менять |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
 Блог ждёт настоящие статьи от пользователя (см. строку V3-BLOG-001).
 Контакты подтверждены и внесены (`CONTACTS-DATA-001`); почты и офиса у ASHYQ пока нет.
-Активных `IN_PROGRESS` задач нет.
+Активна `SEO-META-001` (Codex GPT-5 `/root`) — scope зафиксирован в строке задачи и `PRODUCT_BACKLOG.md`.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
