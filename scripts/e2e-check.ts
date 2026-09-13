@@ -582,6 +582,25 @@ async function main() {
   );
   check('maintenance: нет горизонтального скролла', maintScroll <= 0, `${maintScroll}px`);
 
+  // site search: клиентский поиск по FAQ/курсам/статьям, noindex, с клавиатуры
+  await p3.goto(`${BASE}/search`, { waitUntil: 'load' });
+  check('search: страница закрыта от индексации', (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 1);
+  const searchInput = p3.getByLabel('Поиск по сайту ASHYQ');
+  await searchInput.fill('сезон');
+  await p3.waitForTimeout(250);
+  const searchHits = await p3.locator('main a').count();
+  check('search: находит курс сезона и FAQ', searchHits >= 2, `${searchHits} ссылок`);
+  await searchInput.fill('ielts');
+  await p3.waitForTimeout(250);
+  check('search: демо-статьи помечены', has(await p3.locator('main').innerText(), 'демо'));
+  await searchInput.fill('вапржолз');
+  await p3.waitForTimeout(250);
+  check('search: честное пустое состояние', has(await p3.locator('main').innerText(), 'Ничего не нашлось'));
+  const searchScroll = await p3.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  check('search: нет горизонтального скролла', searchScroll <= 0, `${searchScroll}px`);
+
   await p3.goto(`${BASE}/crm`, { waitUntil: 'networkidle' });
   const crmText = await p3.locator('body').innerText();
   check('crm: закрытый экран запрашивает admin key', has(crmText, 'ASHYQ admin key') && has(crmText, 'Закрытый раздел'));

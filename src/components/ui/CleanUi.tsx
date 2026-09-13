@@ -69,12 +69,13 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
             <Link className={styles.navLink} href="/program">Программа</Link>
             <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
             <Link className={styles.navLink} href="/community">Сообщество</Link>
-            <Link className={styles.navLink} href="/faq">FAQ и поиск</Link>
+            <Link className={styles.navLink} href="/faq">FAQ</Link>
+            <Link className={styles.navLink} href="/search">Поиск</Link>
             <Link className={styles.navLink} href="/contacts">Контакты</Link>
             <NavAccount variant="panel" />
           </div>
         </details>
-        <Link className={styles.searchLink} href="/faq" aria-label="Открыть поиск по вопросам">
+        <Link className={styles.searchLink} href="/search" aria-label="Открыть поиск по сайту">
           <LineIcon name="search" />
         </Link>
         <NavAccount variant="bar" />
