@@ -101,15 +101,15 @@ ASHYQ — образовательный клуб Казахстана: подг
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
 | V3-QUIZ-SCREENS-001 | READY | — | После V3-DIAGNOSTIC-001 | Перевести onboarding/quiz/result/review на v3 без изменения aria/e2e-названий, state и localStorage |
-| V3-ABOUT-001 | READY | — | — | Страница «О нас» |
+| V3-ABOUT-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-about`; `C:\Users\Dias\Documents\ChatGPT\ashyq-about`; started 2026-09-13 | `/about` по DESIGN_V3 §6.4; owned: `src/app/about/**`, `src/components/AboutV3.tsx`, `src/components/AboutV3.module.css`; shared точечно: `CleanUi.tsx`, `site.ts`, `e2e-check.ts`, `HANDOFF.md` |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активных `IN_PROGRESS` задач нет. Свободны без зависимостей: `V3-ABOUT-001`,
-`V3-QUIZ-SCREENS-001`.
+Активна `V3-ABOUT-001` (Codex GPT-5 `/root`, только перечисленные owned/shared
+файлы). Свободна без зависимостей: `V3-QUIZ-SCREENS-001`.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
