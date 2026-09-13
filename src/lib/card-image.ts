@@ -5,9 +5,9 @@
  * Если браузер не поддерживает любой из шагов, функция вернёт false,
  * и UI честно предложит сделать обычный скриншот.
  *
- * Дизайн карточки v2 = «ASHYQ PLAYER CARD»: чёрная бумага кампаний,
- * оригинальный wordmark (embedded PNG), конденсированный гротеск Oswald
- * (embedded woff2), один красный акцент. Так она читается и в ленте, и в Stories.
+ * Дизайн карточки v3 = Clean Premium EdTech: тёплый светлый фон, surface,
+ * Manrope/Inter, мягкая геометрия и один красный акцент. Значения ниже —
+ * точная копия design/tokens.css; SVG не умеет читать CSS-переменные страницы.
  */
 
 export interface CardSection {
@@ -28,18 +28,23 @@ export interface CardData {
   strongest: string;
 }
 
-const INK = '#211A16';
-const PAPER = '#F7F3EA';
-const RED = '#CE1E23';
-const FAINT = '#A79C8F';
-const TRACK = '#3A3129';
-const DISPLAY = "'OswaldBrand','Arial Black','Roboto Black','Helvetica Neue',Helvetica,Arial,sans-serif";
-const UI = "'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
-const MONO = "ui-monospace,SFMono-Regular,Menlo,monospace";
+const BG = '#F8F7F3';
+const SURFACE = '#FDFDFD';
+const BLUSH = '#F9E0DB';
+const BLUSH_SOFT = '#FCF3F0';
+const RED = '#DE0B1B';
+const INK = '#161311';
+const INK_SOFT = '#6E6D6B';
+const INK_MUTED = '#8C8B8A';
+const HAIRLINE = '#EFEEEA';
+const DARK_WARM = '#241D16';
+const ON_DARK = '#F8F7F3';
+const DISPLAY = "'ManropeCard','Arial Black','Helvetica Neue',Helvetica,Arial,sans-serif";
+const UI = "'InterCard','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
 interface BrandAssets {
-  wordmark: string | null; // data URI официального wordmark (cream)
-  fontCss: string; // @font-face с embedded woff2
+  wordmark: string | null; // data URI оригинального красного wordmark
+  fontCss: string; // Manrope 700 + Inter 400/600, embedded woff2
 }
 
 let assetsCache: Promise<BrandAssets> | null = null;
@@ -56,26 +61,26 @@ async function blobToDataUrl(url: string): Promise<string> {
   return `data:${res.headers.get('content-type') ?? 'application/octet-stream'};base64,${btoa(bin)}`;
 }
 
-/** Бренд-ассеты для SVG: wordmark PNG + Oswald woff2 (cyrillic+latin). */
+/** Бренд-ассеты для автономного SVG: wordmark + v3-шрифты. */
 function loadBrandAssets(): Promise<BrandAssets> {
   if (!assetsCache) {
     assetsCache = (async () => {
-      const [wordmark, cyr, lat] = await Promise.all([
-        blobToDataUrl('/brand/wordmark-cream.png').catch(() => null),
-        blobToDataUrl('/fonts/oswald-600-cyrillic.woff2').catch(() => null),
-        blobToDataUrl('/fonts/oswald-600-latin.woff2').catch(() => null),
+      const [wordmark, manropeCyr, manropeLat, interCyr, interLat, interCyr600, interLat600] = await Promise.all([
+        blobToDataUrl('/brand/wordmark-red.png').catch(() => null),
+        blobToDataUrl('/fonts/manrope-700-cyrillic.woff2').catch(() => null),
+        blobToDataUrl('/fonts/manrope-700-latin.woff2').catch(() => null),
+        blobToDataUrl('/fonts/inter-400-cyrillic.woff2').catch(() => null),
+        blobToDataUrl('/fonts/inter-400-latin.woff2').catch(() => null),
+        blobToDataUrl('/fonts/inter-600-cyrillic.woff2').catch(() => null),
+        blobToDataUrl('/fonts/inter-600-latin.woff2').catch(() => null),
       ]);
       const faces: string[] = [];
-      if (cyr) {
-        faces.push(
-          `@font-face{font-family:'OswaldBrand';font-weight:600;src:url(${cyr}) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}`,
-        );
-      }
-      if (lat) {
-        faces.push(
-          `@font-face{font-family:'OswaldBrand';font-weight:600;src:url(${lat}) format('woff2');}`,
-        );
-      }
+      if (manropeCyr) faces.push(`@font-face{font-family:'ManropeCard';font-weight:700;font-display:swap;src:url(${manropeCyr}) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}`);
+      if (manropeLat) faces.push(`@font-face{font-family:'ManropeCard';font-weight:700;font-display:swap;src:url(${manropeLat}) format('woff2');}`);
+      if (interCyr) faces.push(`@font-face{font-family:'InterCard';font-weight:400;font-display:swap;src:url(${interCyr}) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}`);
+      if (interLat) faces.push(`@font-face{font-family:'InterCard';font-weight:400;font-display:swap;src:url(${interLat}) format('woff2');}`);
+      if (interCyr600) faces.push(`@font-face{font-family:'InterCard';font-weight:600;font-display:swap;src:url(${interCyr600}) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}`);
+      if (interLat600) faces.push(`@font-face{font-family:'InterCard';font-weight:600;font-display:swap;src:url(${interLat600}) format('woff2');}`);
       return { wordmark, fontCss: faces.join('') };
     })();
   }
@@ -97,6 +102,22 @@ function truncate(text: string, max: number): string {
   return `${clean.slice(0, max - 1).trimEnd()}…`;
 }
 
+/** Делим короткую рекомендацию максимум на две строки без разрыва слов. */
+function wrapTwoLines(text: string, maxPerLine: number): string[] {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxPerLine) return [clean];
+
+  const words = clean.split(' ');
+  let first = '';
+  while (words.length > 0) {
+    const candidate = first ? `${first} ${words[0]}` : words[0];
+    if (candidate.length > maxPerLine && first) break;
+    first = candidate;
+    words.shift();
+  }
+  return [first, truncate(words.join(' '), maxPerLine)];
+}
+
 /** Подгоняем размер крупного текста под доступную ширину */
 function fit(text: string, base: number, maxWidth: number, avgCharWidth = 0.62): number {
   const est = text.length * base * avgCharWidth;
@@ -107,78 +128,79 @@ function fit(text: string, base: number, maxWidth: number, avgCharWidth = 0.62):
 export function buildCardSvg(data: CardData, assets: BrandAssets | null = null): string {
   const W = 1080;
   const H = 1080;
-  const pad = 76;
+  const pad = 68;
 
-  const bandSize = fit(data.bandLabel, 170, W - pad * 2 - 12, 0.5);
-  const examSize = fit(data.exam, 92, 560, 0.55);
-  const nextStepText = truncate(data.nextStep.toUpperCase(), 26);
-  const nextSize = fit(nextStepText, 34, 380, 0.5);
+  const bandSize = fit(data.bandLabel, 144, 620, 0.54);
+  const nextStepLines = wrapTwoLines(data.nextStep, 29);
+  const nextSize = Math.min(...nextStepLines.map((line) => fit(line, 27, 410, 0.64)));
 
   const sectionRows = data.sections
     .map((s, i) => {
-      const y = 706 + i * 100;
-      const width = 430;
+      const y = 610 + i * 94;
+      const width = 520;
       const filled = Math.max(0, Math.min(1, s.percent / 100)) * width;
       return `
-      <text x="${pad}" y="${y}" font-family="${MONO}" font-size="26" letter-spacing="4" fill="${PAPER}">${esc(truncate(s.label.toUpperCase(), 18))}</text>
-      <text x="${W - pad}" y="${y}" text-anchor="end" font-family="${MONO}" font-size="26" letter-spacing="4" fill="${FAINT}">${s.percent}% · ${esc(truncate(s.level.toUpperCase(), 12))}</text>
-      <rect x="${pad}" y="${y + 18}" width="${width}" height="14" rx="7" fill="${TRACK}"/>
-      <rect x="${pad}" y="${y + 18}" width="${filled}" height="14" rx="7" fill="${RED}"/>`;
+      <text x="${pad}" y="${y}" font-family="${UI}" font-size="24" font-weight="600" fill="${INK}">${esc(truncate(s.label, 24))}</text>
+      <text x="${W - pad}" y="${y}" text-anchor="end" font-family="${UI}" font-size="22" fill="${INK_SOFT}">${s.percent}% · ${esc(truncate(s.level, 18))}</text>
+      <rect x="${pad}" y="${y + 18}" width="${width}" height="12" rx="6" fill="${HAIRLINE}"/>
+      <rect x="${pad}" y="${y + 18}" width="${filled}" height="12" rx="6" fill="${RED}"/>`;
     })
     .join('');
 
   const wordmarkHeader = assets?.wordmark
-    ? `<image href="${assets.wordmark}" x="${pad}" y="${pad - 4}" width="168" height="45" />`
-    : `<text x="${pad}" y="${pad + 26}" font-family="${DISPLAY}" font-size="44" letter-spacing="6" fill="${PAPER}">ASHYQ</text>`;
-
-  const sparkX = assets?.wordmark ? pad + 186 : pad + 250;
+    ? `<image href="${assets.wordmark}" x="${pad}" y="${pad}" width="168" height="45" />`
+    : `<text x="${pad}" y="${pad + 34}" font-family="${DISPLAY}" font-size="42" font-weight="700" fill="${RED}">ASHYQ</text>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
-    <filter id="grain">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
-      <feColorMatrix type="saturate" values="0"/>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="${INK}" flood-opacity="0.06"/>
     </filter>
     <style>${assets?.fontCss ?? ''}
       text { font-kerning: normal; }
-      .disp { font-family: ${DISPLAY}; font-weight: 600; }
+      .disp { font-family: ${DISPLAY}; font-weight: 700; }
     </style>
   </defs>
 
-  <rect width="${W}" height="${H}" fill="${INK}"/>
-  <rect width="${W}" height="${H}" filter="url(#grain)" opacity="0.07"/>
-  <rect x="2" y="2" width="${W - 4}" height="${H - 4}" fill="none" stroke="${PAPER}" stroke-width="2" opacity="0.22"/>
+  <rect width="${W}" height="${H}" fill="${BG}"/>
+  <rect x="40" y="40" width="1000" height="1000" rx="24" fill="${SURFACE}" stroke="${HAIRLINE}" filter="url(#cardShadow)"/>
 
   <!-- header -->
   ${wordmarkHeader}
-  <path d="M ${sparkX} ${pad + 2} c 2.2 17.6 4.4 21 8.3 23.5 5.4 3.2 12.2 4.9 21 5.9 -8.8 1 -15.6 2.7 -21 5.9 -3.9 2.5 -6.1 5.9 -8.3 23.5 -2.2 -17.6 -4.4 -21 -8.3 -23.5 -5.4 -3.2 -12.2 -4.9 -21 -5.9 8.8 -1 15.6 -2.7 21 -5.9 3.9 -2.5 6.1 -5.9 8.3 -23.5 Z" fill="${RED}"/>
-  <text x="${W - pad}" y="${pad + 26}" text-anchor="end" font-family="${MONO}" font-size="22" letter-spacing="4" fill="${FAINT}">QUICK DIAGNOSTIC 001</text>
-  <line x1="${pad}" y1="${pad + 66}" x2="${W - pad}" y2="${pad + 66}" stroke="${PAPER}" stroke-width="2" opacity="0.25"/>
+  <text x="${W - pad}" y="${pad + 30}" text-anchor="end" font-family="${UI}" font-size="18" font-weight="600" letter-spacing="3" fill="${INK_MUTED}">QUICK DIAGNOSTIC</text>
+  <line x1="${pad}" y1="${pad + 76}" x2="${W - pad}" y2="${pad + 76}" stroke="${HAIRLINE}"/>
 
   <!-- exam -->
-  <text class="disp" x="${pad}" y="${pad + 176}" font-size="${examSize}" letter-spacing="2" fill="${PAPER}">${esc(data.exam)}</text>
-  <text x="${pad}" y="${pad + 220}" font-family="${MONO}" font-size="23" letter-spacing="5" fill="${FAINT}">${esc(truncate(data.headline, 40).toUpperCase())}</text>
+  <rect x="${pad}" y="174" width="244" height="52" rx="26" fill="${BLUSH}"/>
+  <text x="${pad + 24}" y="208" font-family="${UI}" font-size="21" font-weight="600" fill="${RED}">${esc(truncate(data.exam, 18))}</text>
+  <text x="${pad + 278}" y="207" font-family="${UI}" font-size="18" font-weight="600" letter-spacing="3" fill="${INK_MUTED}">${esc(truncate(data.headline, 36).toUpperCase())}</text>
 
   <!-- band -->
-  <text x="${pad}" y="486" font-family="${MONO}" font-size="26" letter-spacing="6" fill="${RED}">ТВОЯ ТОЧКА А · ПРЕДВАРИТЕЛЬНО</text>
-  <text class="disp" x="${pad - 6}" y="${486 + bandSize}" font-size="${bandSize}" letter-spacing="-2" fill="${PAPER}">${esc(data.bandLabel)}</text>
-  <text x="${pad}" y="${486 + bandSize + 54}" font-family="${UI}" font-size="28" fill="${FAINT}">${esc(truncate(data.level, 60))}</text>
+  <text x="${pad}" y="292" font-family="${UI}" font-size="20" font-weight="600" letter-spacing="4" fill="${RED}">ТВОЯ ТОЧКА А</text>
+  <text class="disp" x="${pad}" y="${292 + bandSize}" font-size="${bandSize}" letter-spacing="-3" fill="${INK}">${esc(data.bandLabel)}</text>
+  <text x="${pad}" y="${292 + bandSize + 48}" font-family="${UI}" font-size="26" fill="${INK_SOFT}">${esc(truncate(data.level, 60))}</text>
+  <rect x="${pad}" y="510" width="${W - pad * 2}" height="58" rx="12" fill="${BLUSH_SOFT}"/>
+  <text x="${pad + 20}" y="547" font-family="${UI}" font-size="20" font-weight="600" fill="${INK}">Сильная сторона · ${esc(truncate(data.strongest, 52))}</text>
 
   <!-- sections -->
   ${sectionRows}
 
   <!-- target / gap / next step -->
-  <line x1="${pad}" y1="916" x2="${W - pad}" y2="916" stroke="${PAPER}" stroke-width="2" opacity="0.25"/>
-  <text x="${pad}" y="960" font-family="${MONO}" font-size="22" letter-spacing="4" fill="${FAINT}">ЦЕЛЬ</text>
-  <text class="disp" x="${pad}" y="1002" font-size="42" fill="${PAPER}">${esc(truncate(data.target, 12))}</text>
-  <text x="${pad + 300}" y="960" font-family="${MONO}" font-size="22" letter-spacing="4" fill="${FAINT}">GAP</text>
-  <text class="disp" x="${pad + 300}" y="1002" font-size="42" fill="${RED}">${esc(truncate(data.gapLabel, 16))}</text>
+  <rect x="${pad}" y="810" width="220" height="126" rx="16" fill="${BLUSH_SOFT}"/>
+  <text x="${pad + 20}" y="850" font-family="${UI}" font-size="17" font-weight="600" letter-spacing="3" fill="${INK_MUTED}">ЦЕЛЬ</text>
+  <text class="disp" x="${pad + 20}" y="906" font-size="38" fill="${INK}">${esc(truncate(data.target, 12))}</text>
 
-  <rect x="${W - pad - 430}" y="926" width="430" height="104" fill="${PAPER}"/>
-  <text x="${W - pad - 406}" y="962" font-family="${MONO}" font-size="19" letter-spacing="4" fill="${INK}" opacity="0.6">СЛЕДУЮЩИЙ ШАГ</text>
-  <text class="disp" x="${W - pad - 406}" y="1004" font-size="${nextSize}" fill="${INK}">${esc(nextStepText)}</text>
+  <rect x="${pad + 236}" y="810" width="220" height="126" rx="16" fill="${BLUSH_SOFT}"/>
+  <text x="${pad + 256}" y="850" font-family="${UI}" font-size="17" font-weight="600" letter-spacing="3" fill="${INK_MUTED}">GAP</text>
+  <text class="disp" x="${pad + 256}" y="906" font-size="38" fill="${RED}">${esc(truncate(data.gapLabel, 16))}</text>
 
-  <text x="${pad}" y="1046" font-family="${UI}" font-size="18" fill="${FAINT}">Предварительная оценка по короткой диагностике Ashyq · не официальный результат IELTS / SAT</text>
+  <rect x="${pad + 472}" y="810" width="472" height="126" rx="20" fill="${DARK_WARM}"/>
+  <text x="${pad + 496}" y="850" font-family="${UI}" font-size="17" font-weight="600" letter-spacing="3" fill="${ON_DARK}" opacity="0.72">СЛЕДУЮЩИЙ ШАГ</text>
+  <text class="disp" x="${pad + 496}" y="892" font-size="${nextSize}" fill="${ON_DARK}">
+    ${nextStepLines.map((line, index) => `<tspan x="${pad + 496}" dy="${index === 0 ? 0 : 32}">${esc(line)}</tspan>`).join('')}
+  </text>
+
+  <text x="${pad}" y="990" font-family="${UI}" font-size="17" fill="${INK_MUTED}">Предварительная оценка по короткой диагностике ASHYQ · не официальный результат IELTS / SAT</text>
 </svg>`;
 }
 
@@ -206,7 +228,7 @@ export async function downloadCardPng(data: CardData, filename: string): Promise
             resolve(false);
             return;
           }
-          ctx.fillStyle = INK;
+          ctx.fillStyle = BG;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
           cleanup();
