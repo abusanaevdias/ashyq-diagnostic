@@ -109,7 +109,7 @@ export default function ReviewScreen({
                   <span
                     className={`label ${
                       state === 'correct'
-                        ? 'text-ink'
+                        ? 'text-success'
                         : state === 'wrong'
                           ? 'text-red'
                           : 'text-ink-faint'
@@ -148,7 +148,7 @@ export default function ReviewScreen({
                             key={opt.id}
                             className={`flex items-start gap-3 border p-3 text-[0.95rem] leading-snug ${
                               isRight
-                                ? 'border-ink bg-[#e8efe2]'
+                                ? 'border-ink bg-success-soft'
                                 : isMine
                                   ? 'border-red bg-red-wash'
                                   : 'border-line bg-paper'

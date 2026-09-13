@@ -73,7 +73,7 @@
   min-height: 44px;
   padding: 12px 16px;
   margin: 0 -16px;
-  border-radius: var(--r-md, 12px);
+  border-radius: var(--r-md);
   text-decoration: none;
   transition: background-color var(--t-fast);
 }

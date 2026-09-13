@@ -3,47 +3,42 @@
 @tailwind utilities;
 
 /* ============================================================
-   ASHYQ design tokens — v2
-   Источник правды: brand-ассеты из /uploads (posters, stories,
-   landing-concept). Цвета сняты с оригиналов, не придуманы.
-   cream paper + brand red + warm ink, один акцент, много воздуха.
+   Слой совместимости v2 → v3.
+   Имена v2 (--paper, --line, каналы --c-* для tailwind.config.ts, классы
+   .btn/.option/.label …) — API старых экранов диагностики; значения берутся
+   только из токенов v3 (design/tokens.css подключается после этого файла).
+   Каналы --c-* — те же токены в RGB для opacity-модификаторов tailwind;
+   scripts/token-audit.ts сверяет их с design/tokens.json.
    ============================================================ */
 
 :root {
-  /* снято с ассетов: фон мокапа #F7F3EA, бумага постеров #EEE9E0,
-     плашечный красный логотипа #CE1E23, чёрная рваная бумага #251917 */
-  --paper: #f7f3ea;
-  --paper-deep: #ede7da;
-  --paper-card: #fcfaf4;
-  --ink: #211a16;
-  --ink-soft: #5f554b;
-  --ink-faint: #8c8177;
-  --ink-invert: #fbf8f1;
-  --red: #ce1e23;
-  --red-deep: #a81418;
-  --red-wash: #f6e3df;
-  --line: #e0d8c8;
-  --line-strong: #211a16;
+  --paper: var(--bg);
+  --paper-deep: var(--hairline);
+  --paper-card: var(--surface);
+  /* ink-muted не проходит AA для текста — «faint» = ink-soft */
+  --ink-faint: var(--ink-soft);
+  --ink-invert: var(--on-dark);
+  --red-wash: var(--blush);
+  --line: var(--hairline);
+  --line-strong: var(--ink);
 
-  /* те же цвета RGB-каналами для tailwind (tailwind.config.ts); .v3 подменяет */
-  --c-paper: 247 243 234;
-  --c-paper-deep: 237 231 218;
-  --c-paper-card: 252 250 244;
-  --c-ink: 33 26 22;
-  --c-ink-soft: 95 85 75;
-  --c-ink-faint: 140 129 119;
-  --c-ink-invert: 251 248 241;
-  --c-red: 206 30 35;
-  --c-red-deep: 168 20 24;
-  --c-red-wash: 246 227 223;
-  --c-line: 224 216 200;
-  --c-line-strong: 33 26 22;
+  --c-paper: 248 247 243;
+  --c-paper-deep: 239 238 234;
+  --c-paper-card: 253 253 253;
+  --c-ink: 22 19 17;
+  --c-ink-soft: 110 109 107;
+  --c-ink-faint: 110 109 107;
+  --c-ink-invert: 248 247 243;
+  --c-red: 222 11 27;
+  --c-red-deep: 182 9 22;
+  --c-red-wash: 249 224 219;
+  --c-line: 239 238 234;
+  --c-line-strong: 22 19 17;
 
-  --font-display: 'Oswald', 'Arial Narrow', Helvetica, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-hand: 'Caveat', 'Segoe Script', cursive;
-  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  --font-serif: var(--font-display);
+  --font-ui: var(--font-body);
+  --font-mono: var(--font-body);
+  --font-hand: var(--font-script);
 }
 
 @layer base {
@@ -62,20 +57,17 @@
     font-family: var(--font-ui);
     font-size: 16.5px;
     line-height: 1.55;
-    /* бумажное зерно: SVG-шум, без внешних ресурсов */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     overflow-x: hidden;
   }
 
   ::selection {
     background: var(--red);
-    color: #fff;
+    color: var(--on-red);
   }
 
   :focus-visible {
     outline: 2px solid var(--red);
     outline-offset: 3px;
-    border-radius: 2px;
   }
 
   h1,
@@ -160,13 +152,13 @@
   .card {
     background: var(--paper-card);
     border: 1px solid var(--line);
-    border-radius: 6px;
+    border-radius: var(--r-md);
   }
 
   .card-ink {
     background: var(--paper-card);
     border: 1px solid var(--line-strong);
-    border-radius: 6px;
+    border-radius: var(--r-md);
   }
 
   /* ---------- buttons: пилюли как в landing-concept ---------- */
@@ -178,7 +170,7 @@
     gap: 0.55rem;
     min-height: 52px;
     padding: 0.8rem 1.5rem;
-    border-radius: 999px;
+    border-radius: var(--r-pill);
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.98rem;
@@ -225,7 +217,7 @@
   }
 
   .btn-ink:hover:not(:disabled) {
-    background: #000;
+    background: var(--dark);
   }
 
   .btn-outline {
@@ -245,7 +237,7 @@
   }
 
   .btn-cream:hover:not(:disabled) {
-    background: #fff;
+    background: var(--surface);
   }
 
   .btn-quiet {
@@ -280,7 +272,7 @@
     text-align: left;
     background: var(--paper-card);
     border: 1px solid var(--line);
-    border-radius: 6px;
+    border-radius: var(--r-md);
     cursor: pointer;
     font-size: 1rem;
     line-height: 1.45;
@@ -303,7 +295,7 @@
     width: 28px;
     height: 28px;
     border: 1px solid var(--line-strong);
-    border-radius: 4px;
+    border-radius: var(--r-xs);
     font-family: var(--font-mono);
     font-size: 0.78rem;
     font-weight: 700;
@@ -319,12 +311,12 @@
   .option[data-selected='true'] .option-key {
     background: var(--red);
     border-color: var(--red);
-    color: #fff;
+    color: var(--on-red);
   }
 
   .option[data-state='correct'] {
     border-color: var(--ink);
-    background: #e9efe2;
+    background: var(--success-soft);
   }
 
   .option[data-state='wrong'] {
@@ -338,9 +330,9 @@
     width: 100%;
     min-height: 54px;
     padding: 0.8rem 1rem;
-    background: #fff;
+    background: var(--surface);
     border: 1px solid var(--line-strong);
-    border-radius: 6px;
+    border-radius: var(--r-sm);
     font-size: 1.02rem;
     font-family: var(--font-ui);
     color: var(--ink);
@@ -356,7 +348,7 @@
     height: 8px;
     background: var(--paper-deep);
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: var(--r-pill);
     overflow: hidden;
   }
 
@@ -379,7 +371,7 @@
     gap: 0.4rem;
     padding: 0.28rem 0.7rem;
     border: 1px solid var(--line-strong);
-    border-radius: 999px;
+    border-radius: var(--r-pill);
     font-family: var(--font-mono);
     font-size: 0.66rem;
     letter-spacing: 0.14em;
@@ -397,7 +389,7 @@
     font-size: 0.62rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    border-radius: 3px;
+    border-radius: var(--r-xs);
     transform: rotate(-3deg);
   }
 
@@ -439,39 +431,13 @@
   }
 
   /* ---------- .v3: экраны диагностики на токенах design/tokens.css ----------
-     Scoped-тема поверх v2-классов и tailwind-цветов (V3-QUIZ-SCREENS-001).
+     Цвета и шрифты уже токены v3 (см. :root выше); здесь — типографика и
+     формы v3 поверх v2-классов (V3-QUIZ-SCREENS-001).
      В @layer components намеренно: tailwind-утилиты по-прежнему главнее. */
   .v3 {
-    --c-paper: 248 247 243;
-    --c-paper-deep: 239 238 234;
-    --c-paper-card: 253 253 253;
-    --c-ink: 22 19 17;
-    --c-ink-soft: 110 109 107;
-    /* ink-muted не проходит AA для текста — «faint» = ink-soft */
-    --c-ink-faint: 110 109 107;
-    --c-ink-invert: 248 247 243;
-    --c-red: 222 11 27;
-    --c-red-deep: 182 9 22;
-    --c-red-wash: 249 224 219;
-    --c-line: 239 238 234;
-    --c-line-strong: 22 19 17;
-    --paper: var(--bg);
-    --paper-deep: var(--hairline);
-    --paper-card: var(--surface);
-    --ink-faint: var(--ink-soft);
-    --ink-invert: var(--on-dark);
-    --red-wash: var(--blush);
-    --line: var(--hairline);
-    --line-strong: var(--ink);
-    --font-ui: var(--font-body);
-    --font-mono: var(--font-body);
-    --font-serif: var(--font-display);
     --lh-display: 1.05;
     --lh-heading: 1.15;
     --fs-display: clamp(2.6rem, 6vw, 4.6rem);
-    --legacy-radius-md: var(--r-md);
-    --legacy-radius-lg: var(--r-lg);
-    --legacy-shadow-card: var(--shadow-card);
     background: var(--bg);
     font-family: var(--font-body);
   }
@@ -508,17 +474,12 @@
     background: var(--surface);
   }
 
-  .v3 .option {
-    border-radius: var(--r-md);
-  }
-
   /* ключи TRUE/FALSE/NG шире 28px */
   .v3 .option-key {
     width: auto;
     min-width: 28px;
     padding-inline: 6px;
     border-color: var(--hairline);
-    border-radius: var(--r-xs);
   }
 
   .v3 .meter {
@@ -551,9 +512,7 @@
   }
 
   .shadow-paper {
-    box-shadow:
-      0 1px 2px rgba(33, 26, 22, 0.05),
-      0 14px 34px -22px rgba(33, 26, 22, 0.28);
+    box-shadow: var(--shadow-card);
   }
 }
 
