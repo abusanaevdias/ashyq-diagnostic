@@ -26,6 +26,15 @@ export function relativeTime(iso: string, now = Date.now()): string {
   return formatDate(iso).split(',')[0];
 }
 
+/** Ссылки материалов — только http(s): javascript:/data: в href недопустимы. */
+export function isHttpUrl(url: string): boolean {
+  try {
+    return ['http:', 'https:'].includes(new URL(url).protocol);
+  } catch {
+    return false;
+  }
+}
+
 export function formatBytes(bytes = 0): string {
   return bytes >= 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} МБ` : `${Math.max(1, Math.round(bytes / 1024))} КБ`;
 }

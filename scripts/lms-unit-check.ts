@@ -53,6 +53,10 @@ async function main() {
   // 4. Учитель создаёт задание → студент видит его в классе
   const task = await repos.assignments.create({ classId: cls.id, teacherId: teacher.id, title: 'Unit task', brief: 'b', dueAt: '2026-01-01T10:00:00Z', maxPoints: 5 });
   assert((await repos.assignments.listByClass(cls.id)).some((a) => a.id === task.id));
+  // Урок: ссылка-материал только http(s) — javascript: в href не попадёт
+  const link = (url: string) => [{ id: 'm1', kind: 'link' as const, title: 'x', url }];
+  await assert.rejects(repos.lessons.create({ classId: cls.id, title: 'L', body: '', materials: link('javascript:alert(1)') }), /http/);
+  assert.equal((await repos.lessons.create({ classId: cls.id, title: 'L', body: '', materials: link('https://ielts.org') })).materials.length, 1);
 
   // 5. Сдача после дедлайна разрешена; тред; оценка
   await assert.rejects(repos.submissions.submit({ assignmentId: task.id, studentId: student.id, content: ' ', attachments: [] }), /Добавьте ответ/);

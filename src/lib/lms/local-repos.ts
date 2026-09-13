@@ -1,5 +1,6 @@
 import { BLOG_POSTS } from '@/data/blog';
 import type { Assignment, BlogPost, ClassRoom, Comment, Lesson, Submission, User } from './types';
+import { isHttpUrl } from './format';
 import type { Repos } from './repos';
 import { lmsBus, newId, newInviteCode, readJson, writeJson } from './store';
 
@@ -121,6 +122,8 @@ export const localDemoRepos: Repos = {
       return lessons.all().filter((l) => l.classId === classId).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
     },
     async create({ classId, title, body, materials }) {
+      // TODO(supabase): серверно проверять, что урок создаёт учитель этого класса.
+      if (materials.some((m) => m.kind === 'link' && !isHttpUrl(m.url ?? ''))) throw new Error('Ссылка должна начинаться с http:// или https://');
       return lessons.upsert({
         id: newId(),
         classId,

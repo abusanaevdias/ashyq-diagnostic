@@ -2,14 +2,16 @@
 
 import { useState } from 'react';
 import { getFileStorage } from '@/lib/lms/files';
-import { formatBytes } from '@/lib/lms/format';
+import { formatBytes, isHttpUrl } from '@/lib/lms/format';
 import type { MaterialRef } from '@/lib/lms/types';
 import styles from './Lms.module.css';
 
 const KIND_LABEL: Record<MaterialRef['kind'], string> = { link: 'ссылка', text: 'текст', file: 'файл' };
 
-export default function MaterialList({ items }: { items: MaterialRef[] }) {
+export default function MaterialList({ items: all }: { items: MaterialRef[] }) {
   const [error, setError] = useState('');
+  // данные из хранилища не доверенные: ссылку не-http(s) не рендерим
+  const items = all.filter((m) => m.kind !== 'link' || isHttpUrl(m.url ?? ''));
   if (items.length === 0) return null;
 
   const download = async (ref: MaterialRef) => {
