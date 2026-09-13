@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 import { BLOG_CATEGORIES, BLOG_IS_DEMO, type BlogCategory } from '@/data/blog';
 import { formatDay, postCover } from '@/lib/lms/format';
 import { useLmsData } from '@/lib/lms/hooks';
 import { getRepos } from '@/lib/lms/repos';
+import type { BlogPost, User } from '@/lib/lms/types';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
 import home from '@/components/HomeV3.module.css';
 import blog from '@/components/BlogV3.module.css';
@@ -16,16 +16,21 @@ import styles from './Lms.module.css';
 
 const categoryLabel = (category: string) => BLOG_CATEGORIES[category as BlogCategory] ?? category;
 
+export interface BlogPostPageData {
+  post: BlogPost;
+  author: User | null;
+  more: BlogPost[];
+}
+
 /** /blog/[slug]: только опубликованные посты; черновик по прямой ссылке — «не найдена». */
-export default function BlogPostView() {
-  const { slug } = useParams<{ slug: string }>();
+export default function BlogPostView({ slug, initialData }: { slug: string; initialData?: BlogPostPageData }) {
   const repos = getRepos();
   const { data, loading } = useLmsData(async () => {
     const post = await repos.blog.getPublishedBySlug(slug);
     if (!post) return null;
     const [author, all] = await Promise.all([repos.users.get(post.authorId), repos.blog.listPublished()]);
     return { post, author, more: all.filter((p) => p.id !== post.id).slice(0, 3) };
-  }, `post:${slug}`);
+  }, `post:${slug}`, initialData);
 
   return (
     <div className={home.page}>

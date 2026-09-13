@@ -47,8 +47,16 @@ export function useStorageAvailable(): boolean | null {
 
 /* ---------- данные репозиториев: перечитываются на каждое изменение ---------- */
 
-export function useLmsData<T>(load: () => Promise<T>, key: string): { data: T | null; error: string | null; loading: boolean } {
-  const [state, setState] = useState<{ key: string; data: T | null; error: string | null }>({ key: '', data: null, error: null });
+export function useLmsData<T>(
+  load: () => Promise<T>,
+  key: string,
+  initialData?: T,
+): { data: T | null; error: string | null; loading: boolean } {
+  const [state, setState] = useState<{ key: string; data: T | null; error: string | null }>(() => ({
+    key: initialData === undefined ? '' : key,
+    data: initialData ?? null,
+    error: null,
+  }));
 
   useEffect(() => {
     let alive = true;
