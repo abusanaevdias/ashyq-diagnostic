@@ -1,0 +1,264 @@
+.hero {
+  padding-block: 72px 56px;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.heroCopy {
+  max-width: 680px;
+}
+
+.title {
+  max-width: 14ch;
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 5.4vw, 4.6rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  max-width: 58ch;
+  margin-top: 24px;
+  color: var(--ink-soft);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.script {
+  margin-top: 24px;
+  color: var(--red);
+  font-family: var(--font-script);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.heroPhoto,
+.quotePhoto {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-md);
+}
+
+.heroPhoto {
+  min-height: 480px;
+  box-shadow: var(--shadow-card);
+}
+
+.heroPhoto img,
+.quotePhoto img {
+  object-fit: cover;
+}
+
+.heroPhoto img {
+  transform: scale(1.6);
+  transform-origin: 50% 10%;
+}
+
+.statsSection {
+  padding-block: 32px 72px;
+}
+
+.statsFrame {
+  padding-block: 28px;
+  border-block: 1px solid var(--hairline);
+}
+
+.statsFrame > div {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.sectionHead {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 48px;
+  align-items: end;
+}
+
+.heading {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.sectionIntro {
+  max-width: 50ch;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.values {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 48px;
+}
+
+.value {
+  min-height: 156px;
+  padding-block: 28px;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 20px;
+  border-top: 1px solid var(--hairline);
+}
+
+.value h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.value p {
+  max-width: 42ch;
+  margin-top: 8px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.closingSection {
+  padding-block: 0 96px;
+}
+
+.quoteCard {
+  min-height: 480px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 44px;
+  align-items: stretch;
+  border-radius: var(--r-xl);
+  background: var(--dark-warm);
+  color: var(--on-dark);
+  box-shadow: var(--shadow-card);
+}
+
+.quoteCopy {
+  padding: 24px 16px 24px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.quoteCopy blockquote {
+  max-width: 18ch;
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.quoteCopy figcaption {
+  margin-top: 24px;
+  color: var(--on-dark);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.quoteAction {
+  margin-top: 28px;
+}
+
+.quotePhoto {
+  min-height: 400px;
+}
+
+@media (max-width: 900px) {
+  .heroGrid,
+  .sectionHead,
+  .quoteCard {
+    grid-template-columns: 1fr;
+  }
+
+  .heroPhoto {
+    min-height: 420px;
+  }
+
+  .quoteCopy {
+    padding: 8px;
+  }
+
+  .quotePhoto {
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-block: 48px 40px;
+  }
+
+  .title {
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
+  }
+
+  .heroPhoto {
+    min-height: 320px;
+  }
+
+  .statsSection {
+    padding-block: 16px 56px;
+  }
+
+  .statsFrame > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .statsFrame > div > div {
+    min-height: 88px;
+    padding: 16px 12px 12px;
+    border-left: 0;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .values {
+    grid-template-columns: 1fr;
+    margin-top: 32px;
+  }
+
+  .value {
+    min-height: auto;
+  }
+
+  .closingSection {
+    padding-block: 0 56px;
+  }
+
+  .quoteCard {
+    min-height: 0;
+    padding: 24px;
+    gap: 32px;
+  }
+
+  .quoteCopy blockquote {
+    font-size: 2rem;
+  }
+
+  .quotePhoto {
+    min-height: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quoteCard,
+  .heroPhoto {
+    transition: none;
+  }
+}

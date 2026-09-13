@@ -445,6 +445,15 @@ async function main() {
   check('community: ценности и CTA на месте', has(communityText, 'Люди делают знания живыми') && has(communityText, 'Следующий сезон'));
   check('community: изображения имеют alt', (await p3.locator('main img[alt]').count()) >= 2);
 
+  // about: v3 mission, confirmed metrics and accessible media
+  await p3.goto(`${BASE}/about`, { waitUntil: 'networkidle' });
+  const aboutText = await p3.locator('body').innerText();
+  check('about: миссия и четыре ценности', has(aboutText, 'Наша миссия') && (await p3.locator('main h3').count()) === 4);
+  check('about: подтверждённые четыре метрики', has(aboutText, '12 000+') && has(aboutText, '4.8') && has(aboutText, '90%') && has(aboutText, '2024'));
+  check('about: изображения имеют alt', (await p3.locator('main img[alt]').count()) === 2);
+  const aboutScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check('about: нет горизонтального скролла', aboutScroll <= 0, `${aboutScroll}px`);
+
   // courses: v3 каталог и рабочий фильтр
   await p3.goto(`${BASE}/courses`, { waitUntil: 'networkidle' });
   check('courses: четыре курса и CTA диагностики', (await p3.locator('main h3').count()) === 4 && has(await p3.locator('body').innerText(), 'Не знаете, с чего начать?'));

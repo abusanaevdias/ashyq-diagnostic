@@ -10,6 +10,7 @@ export const SITE_URL = (
 export const SITE_ROUTES = [
   '/',
   '/courses',
+  '/about',
   '/program',
   '/progress',
   '/community',
