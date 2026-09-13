@@ -20,8 +20,8 @@
 |---|---|---|---|---|
 | SEO-META-001 | DONE | Исправить canonical и перевести Open Graph на v3 | Каждый индексируемый маршрут имеет собственный canonical; OG использует оригинальный wordmark и токены v3; demo/private страницы остаются noindex; metadata проверяется автоматически | Commit `ae3bdfe`; для production обязательно задать реальный `NEXT_PUBLIC_SITE_URL` |
 | LEADS-DURABILITY-001 | READY | Надёжное хранение и доставка заявок | Заявки сохраняются в постоянной БД; повторная отправка идемпотентна; видны delivery status/retry; настроены backup и экспорт; сбой Telegram/webhook не теряет лид | Выбор БД и deployment; не смешивать с security-аудитом |
-| CONTACT-FORM-001 | IN_PROGRESS | Отделить обращение с `/contacts` от заявки на сезон | Контактная форма имеет свой intent/kind, нейтральный CTA и корректно отображается в CRM; season funnel не меняется; есть e2e обоих сценариев | Codex GPT-5 `/root`; `codex/contact-form`, worktree `ashyq-contact-form` |
-| CI-RELEASE-001 | IN_PROGRESS | Добавить GitHub CI и обязательные release gates | PR запускает lint, typecheck, validate:bank, build, e2e, audio/card checks; артефакты и ошибки видны в Actions; merge блокируется при красном gate | Владелец: отдельный Codex worktree `ashyq-ci`; потребуется настройка branch protection владельцем репозитория |
+| CONTACT-FORM-001 | DONE | Отделить обращение с `/contacts` от заявки на сезон | Контактная форма имеет свой intent/kind, нейтральный CTA и корректно отображается в CRM; season funnel не меняется; есть e2e обоих сценариев | Commit `aa434f3`; e2e 103/103 |
+| CI-RELEASE-001 | DONE | Добавить GitHub CI и обязательные release gates | PR запускает lint, typecheck, validate:bank, build, e2e, audio/card checks; артефакты и ошибки видны в Actions; merge блокируется при красном gate | Workflow `8fc121c`; branch protection всё ещё нужно включить владельцу по `docs/CI.md` |
 | DEPLOY-001 | READY | Production deployment | Настроены хостинг, домен, `NEXT_PUBLIC_SITE_URL`, env/secrets, preview deployments и health-check; canonical/sitemap не содержат localhost | После `SEO-META-001`, `LEADS-DURABILITY-001` и security-аудита |
 
 ## P1 — основной продукт
