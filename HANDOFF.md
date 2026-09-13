@@ -95,12 +95,12 @@ ASHYQ — образовательный клуб Казахстана: подг
 | COORD-001 | DONE | Codex `/root` | `main` | Multi-agent protocol, task ledger and mandatory `AGENTS.md` gate; commit `b0e79db` |
 | V3-COURSES-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/courses` (`src/app/courses/page.tsx`, `src/components/CoursesV3.tsx` + `.module.css`); ссылка «Курсы» в nav/footer, `FilterChip` получил `onClick`, `/courses` в sitemap; commit `25228f6`, fast-forward в `main`. Проверки: lint, typecheck, validate:bank, build green; e2e 78/78 (+3 новых courses-проверки, без `CRM_ADMIN_KEY`); visual 1440/390 overflow 0, wordmark 22px, mobile tap ≥44. Риски: в `public/brand` только 2 фото — карточки повторяют снимки (`ponytail:` в коде), нужны реальные фото курсов; цен, модулей и ★рейтинга нет — нет подтверждённых данных; бейдж на `red-deep` и meta на `ink-soft` ради контраста AA |
 | V3-DIAGNOSTIC-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/diagnostic` показывает `DiagnosticV3` (hero + disclaimer-карточка, чек-лист «Что вы получите?», шаги 01–03, 90% + реплика команды) при пустой сессии; `DiagnosticApp` получил проп `intro` (по умолчанию `home` — главная без изменений); `continueLabel` экспортирован из `Landing.tsx`; `useDiagnostic.ts`, localStorage, onboarding/quiz/result не тронуты; commit `cd533da`, fast-forward в `main`. Проверки: lint, typecheck, build green; e2e 81/81 (+3 diagnostic, без `CRM_ADMIN_KEY`); visual 1440/390 overflow 0, wordmark 22px, tap ≥44, mobile CTA низ 536px. Риски: TestimonialCard из блюпринта заменён репликой «Команда ASHYQ» — нет реальных отзывов; avatar-stack пропущен — нет фото; экраны onboarding/quiz/result/review всё ещё в стиле v2 — отдельная задача |
+| V3-QUIZ-SCREENS-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | Scoped-тема `.v3` (конец `@layer components` в `globals.css`): tailwind-цвета/`rounded-md/lg`/`shadow-card`/line-height h1–h2 читают CSS-переменные, чьи `:root`-значения = v2, поэтому страницы вне `.v3` не меняются (скриншоты `/program` и `/progress` байт-в-байт до/после). Корни Onboarding, QuizRunner, ResultScreen, ReviewScreen получили `v3`, wordmark 22px, без backdrop-blur; CTA результата — `band-dark` вместо красной полосы с TornEdge; карточка результата без зерна и штампа prelim; `.option-key` расширяется под TRUE/FALSE/NG. aria, тексты, state, localStorage не менялись. Commit `179f38c`, fast-forward в `main`. Проверки: lint, typecheck, build green; e2e 81/81 (без `CRM_ADMIN_KEY`); overflow 0 на 1440/390; ключи вариантов без переполнения на всех 12 вопросах IELTS. Риски: PNG «Сохранить карточку» (`src/lib/card-image.ts`) рисуется своими v2-цветами — не трогал; `text-ink-faint` в `.v3` = ink-soft ради AA; зелёный фон верного ответа в разборе (`#e8efe2`) остался — функциональный сигнал, в v3-палитре аналога нет |
 
 ## 5. Свободные и заблокированные задачи
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-QUIZ-SCREENS-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; onboarding/quiz/result/review на v3 через scoped `.v3`-тему, без изменения aria/e2e-названий, state и localStorage. Владею: `src/components/Onboarding.tsx`, `src/components/quiz/**`, `result/**`, `review/**`, `DiagnosticApp.tsx`, `src/components/ui/Primitives.tsx`, `tailwind.config.ts` (цвета → CSS-каналы, те же значения), `src/app/globals.css` (только добавочный блок `.v3`) |
 | V3-ABOUT-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-about`; `C:\Users\Dias\Documents\ChatGPT\ashyq-about`; started 2026-09-13 | `/about` по DESIGN_V3 §6.4; owned: `src/app/about/**`, `src/components/AboutV3.tsx`, `src/components/AboutV3.module.css`; shared точечно: `CleanUi.tsx`, `site.ts`, `e2e-check.ts`, `HANDOFF.md` |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
@@ -108,8 +108,10 @@ ASHYQ — образовательный клуб Казахстана: подг
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активны `V3-ABOUT-001` (Codex GPT-5 `/root`) и `V3-QUIZ-SCREENS-001`
-(Claude Opus 5) — только перечисленные owned/shared файлы каждой задачи.
+Активна `V3-ABOUT-001` (Codex GPT-5 `/root`) — только её owned/shared файлы.
+Следующий safe step после неё: перевести v2-страницы `/program`, `/progress`,
+`/community`, `/faq`, legal на v3 — достаточно добавить класс `v3` на корень
+страницы и поправить плакатные элементы (TornEdge, `bg-red`-полосы).
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
@@ -143,6 +145,8 @@ npx tsx scripts/season-visual-check.ts
   chromium build `1243` — установлен через `npx playwright install chromium`;
 - после V3-DIAGNOSTIC-001 (2026-09-13): e2e `81/81` без `CRM_ADMIN_KEY`,
   lint/typecheck/build green;
+- после V3-QUIZ-SCREENS-001 (2026-09-13): e2e `81/81` без `CRM_ADMIN_KEY`,
+  lint/typecheck/build green, v2-страницы вне `.v3` байт-в-байт без изменений;
 - v3 homepage и championship: visual QA 1440/390, overflow `0`,
   reduced-motion работает;
 - owned championship slice: hardcoded colors `0`; токены совпадают с
@@ -155,6 +159,9 @@ npx tsx scripts/season-visual-check.ts
 
 - `AGENTS.md` — обязательные правила работы агентов и Next.js 16.
 - `docs/DESIGN_V3.md`, `design/tokens.css` — визуальный контракт v3.
+- Класс `.v3` (`src/app/globals.css`, конец `@layer components`) переводит
+  v2-разметку на tailwind-классах на токены v3. Не хардкодить цвета в
+  `tailwind.config.ts`: палитра читается из `--c-*` каналов.
 - `docs/PROGRAM_SPEC.md` — диагностика, прогресс и программа.
 - `docs/OPENCRM_ADAPTATION.md` — границы CRM.
 - `src/lib/useDiagnostic.ts` — state machine и persistence диагностики.
