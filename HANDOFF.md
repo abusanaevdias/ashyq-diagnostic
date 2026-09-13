@@ -68,7 +68,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 |---|---|
 | `/` | Главная v3; CTA сохраняют вход в IELTS/SAT диагностику |
 | `/courses` | Каталог v3: фильтр IELTS/SAT/командный формат, 4 карточки, blush CTA в диагностику |
-| `/diagnostic` | Рабочая существующая воронка диагностики |
+| `/diagnostic` | v3-интро (DESIGN_V3 §6.3) → та же воронка диагностики; `/` сохраняет свой Landing |
 | `/program`, `/progress`, `/community` | Публичные продуктовые страницы |
 | `/season` | Публичный active-season hub, IELTS/SAT и team/participant rating |
 | `/season/current` | Noindex demo Season HQ: active, Live Arena, Journey report |
@@ -94,12 +94,13 @@ ASHYQ — образовательный клуб Казахстана: подг
 | INTEGRATE-001 | DONE | Codex `/root` | `main` | CRM + v3 + championship объединены без конфликтов; merge `799fb5e` |
 | COORD-001 | DONE | Codex `/root` | `main` | Multi-agent protocol, task ledger and mandatory `AGENTS.md` gate; commit `b0e79db` |
 | V3-COURSES-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/courses` (`src/app/courses/page.tsx`, `src/components/CoursesV3.tsx` + `.module.css`); ссылка «Курсы» в nav/footer, `FilterChip` получил `onClick`, `/courses` в sitemap; commit `25228f6`, fast-forward в `main`. Проверки: lint, typecheck, validate:bank, build green; e2e 78/78 (+3 новых courses-проверки, без `CRM_ADMIN_KEY`); visual 1440/390 overflow 0, wordmark 22px, mobile tap ≥44. Риски: в `public/brand` только 2 фото — карточки повторяют снимки (`ponytail:` в коде), нужны реальные фото курсов; цен, модулей и ★рейтинга нет — нет подтверждённых данных; бейдж на `red-deep` и meta на `ink-soft` ради контраста AA |
+| V3-DIAGNOSTIC-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/diagnostic` показывает `DiagnosticV3` (hero + disclaimer-карточка, чек-лист «Что вы получите?», шаги 01–03, 90% + реплика команды) при пустой сессии; `DiagnosticApp` получил проп `intro` (по умолчанию `home` — главная без изменений); `continueLabel` экспортирован из `Landing.tsx`; `useDiagnostic.ts`, localStorage, onboarding/quiz/result не тронуты; commit `cd533da`, fast-forward в `main`. Проверки: lint, typecheck, build green; e2e 81/81 (+3 diagnostic, без `CRM_ADMIN_KEY`); visual 1440/390 overflow 0, wordmark 22px, tap ≥44, mobile CTA низ 536px. Риски: TestimonialCard из блюпринта заменён репликой «Команда ASHYQ» — нет реальных отзывов; avatar-stack пропущен — нет фото; экраны onboarding/quiz/result/review всё ещё в стиле v2 — отдельная задача |
 
 ## 5. Свободные и заблокированные задачи
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-DIAGNOSTIC-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; v3-intro `/diagnostic` по DESIGN_V3 §6.3 (вместо главной Landing при пустой сессии); quiz/result экраны, `useDiagnostic.ts`, localStorage не меняются. Владею файлами: `src/app/diagnostic/**`, `src/components/DiagnosticApp.tsx`, новый `src/components/DiagnosticV3.*` |
+| V3-QUIZ-SCREENS-001 | READY | — | После V3-DIAGNOSTIC-001 | Перевести onboarding/quiz/result/review на v3 без изменения aria/e2e-названий, state и localStorage |
 | V3-ABOUT-001 | READY | — | — | Страница «О нас» |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
@@ -107,7 +108,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активные `IN_PROGRESS`: `V3-DIAGNOSTIC-001` (Claude Opus 5).
+Активных `IN_PROGRESS` задач нет. Свободны без зависимостей: `V3-ABOUT-001`,
+`V3-QUIZ-SCREENS-001`.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
@@ -139,6 +141,8 @@ npx tsx scripts/season-visual-check.ts
 - после V3-COURSES-001 (2026-09-13): e2e `78/78` без `CRM_ADMIN_KEY` (включая 3
   courses-проверки), lint/typecheck/build green. Playwright 1.63 требует
   chromium build `1243` — установлен через `npx playwright install chromium`;
+- после V3-DIAGNOSTIC-001 (2026-09-13): e2e `81/81` без `CRM_ADMIN_KEY`,
+  lint/typecheck/build green;
 - v3 homepage и championship: visual QA 1440/390, overflow `0`,
   reduced-motion работает;
 - owned championship slice: hardcoded colors `0`; токены совпадают с
