@@ -76,8 +76,10 @@ export function buildSeasonSeed(now = Date.now()): SeasonData {
   const points: PointEntry[] = [];
   for (const p of participants) {
     const talent = 0.55 + rand() * 0.4;
+    // текущая неделя ещё идёт, и темп у всех разный — в рейтинге есть движение
+    const pace = 0.2 + rand() * 0.55;
     for (let week = 1; week <= currentWeek; week += 1) {
-      const share = week < currentWeek ? 1 : 0.45; // текущая неделя ещё идёт
+      const share = week < currentWeek ? 1 : pace;
       for (const category of CATEGORIES) {
         const value = Math.round(WEEKLY_CAPS[category] * share * Math.min(1, talent + (rand() - 0.5) * 0.3));
         if (value <= 0) continue;
