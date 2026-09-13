@@ -50,10 +50,10 @@ export default function GlobalError({
           style={{
             minHeight: 48,
             padding: '12px 26px',
-            borderRadius: 999,
+            borderRadius: 'var(--r-pill)',
             border: 'none',
             background: 'var(--red)',
-            color: '#fff',
+            color: 'var(--on-red)',
             fontSize: '0.9375rem',
             fontWeight: 600,
             cursor: 'pointer',

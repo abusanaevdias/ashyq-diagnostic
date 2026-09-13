@@ -56,7 +56,7 @@ export function BrandIcon({
       aria-hidden="true"
       width={size}
       height={size}
-      className={`select-none rounded-[22%] ${className}`}
+      className={`select-none rounded-[var(--r-xs)] ${className}`}
       style={{ width: size, height: size }}
       decoding="async"
     />

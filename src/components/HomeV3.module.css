@@ -360,6 +360,11 @@
   color: var(--red);
 }
 
+/* линии графика — только stroke; без этого у сетки чёрная заливка по умолчанию */
+.graph path {
+  fill: none;
+}
+
 .skillGrid {
   margin-top: 22px;
   display: grid;

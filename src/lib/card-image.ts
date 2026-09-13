@@ -6,13 +6,16 @@
  * и UI честно предложит сделать обычный скриншот.
  *
  * Дизайн карточки v3 = Clean Premium EdTech: тёплый светлый фон, surface,
- * Manrope/Inter, мягкая геометрия и один красный акцент. Значения ниже —
- * точная копия design/tokens.css; SVG не умеет читать CSS-переменные страницы.
+ * Manrope/Inter, мягкая геометрия и один красный акцент. Цвета берутся из
+ * design/tokens.json (SVG не умеет читать CSS-переменные страницы);
+ * scripts/token-audit.ts сверяет JSON с design/tokens.css.
  *
  * Раскладка совпадает с экранной DiagnosticCard.tsx — менять вместе.
  * data-max-x у текстов в блоках = правый край блока: по нему
  * scripts/card-image-check.ts ловит вылезающий текст. Не удалять.
  */
+
+import { COLOR } from './design-tokens';
 
 export interface CardSection {
   label: string;
@@ -32,18 +35,18 @@ export interface CardData {
   strongest: string;
 }
 
-const BG = '#F8F7F3';
-const SURFACE = '#FDFDFD';
-const BLUSH = '#F9E0DB';
-const BLUSH_SOFT = '#FCF3F0';
-const RED = '#DE0B1B';
-const RED_DEEP = '#B60916';
-const INK = '#161311';
-const INK_SOFT = '#6E6D6B';
-const INK_MUTED = '#8C8B8A';
-const HAIRLINE = '#EFEEEA';
-const DARK_WARM = '#241D16';
-const ON_DARK = '#F8F7F3';
+const BG = COLOR.bg;
+const SURFACE = COLOR.surface;
+const BLUSH = COLOR.blush;
+const BLUSH_SOFT = COLOR.blushSoft;
+const RED = COLOR.red;
+const RED_DEEP = COLOR.redDeep;
+const INK = COLOR.ink;
+const INK_SOFT = COLOR.inkSoft;
+const INK_MUTED = COLOR.inkMuted;
+const HAIRLINE = COLOR.hairline;
+const DARK_WARM = COLOR.darkWarm;
+const ON_DARK = COLOR.onDark;
 const DISPLAY = "'ManropeCard','Arial Black','Helvetica Neue',Helvetica,Arial,sans-serif";
 const UI = "'InterCard','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 

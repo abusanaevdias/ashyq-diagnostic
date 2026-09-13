@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
+import { COLOR, RADIUS } from '@/lib/design-tokens';
 
 export const alt = 'ASHYQ — диагностика IELTS и SAT, прогресс и сообщество';
 export const size = { width: 1200, height: 630 };
@@ -20,8 +21,8 @@ export default function OpenGraphImage() {
         width: '100%',
         height: '100%',
         display: 'flex',
-        background: '#F8F7F3',
-        color: '#161311',
+        background: COLOR.bg,
+        color: COLOR.ink,
         padding: '36px',
         fontFamily: 'ManropeCyrillic',
       }}
@@ -33,9 +34,9 @@ export default function OpenGraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          background: '#FDFDFD',
-          border: '1px solid #EFEEEA',
-          borderRadius: '24px',
+          background: COLOR.surface,
+          border: `1px solid ${COLOR.hairline}`,
+          borderRadius: RADIUS.xl,
           padding: '48px 54px',
         }}
       >
@@ -45,9 +46,9 @@ export default function OpenGraphImage() {
             style={{
               display: 'flex',
               padding: '12px 20px',
-              borderRadius: '999px',
-              background: '#F9E0DB',
-              color: '#DE0B1B',
+              borderRadius: RADIUS.pill,
+              background: COLOR.blush,
+              color: COLOR.red,
               fontFamily: 'ManropeLatin',
               fontSize: 18,
               letterSpacing: '0.12em',
@@ -58,13 +59,13 @@ export default function OpenGraphImage() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '890px' }}>
-          <span style={{ color: '#DE0B1B', fontSize: 20, letterSpacing: '0.14em' }}>
+          <span style={{ color: COLOR.red, fontSize: 20, letterSpacing: '0.14em' }}>
             ПРЕДВАРИТЕЛЬНАЯ ДИАГНОСТИКА
           </span>
           <span style={{ marginTop: 18, fontSize: 70, lineHeight: 1.04, letterSpacing: '-0.02em' }}>
             Твоя точка А. Понятный следующий шаг.
           </span>
-          <span style={{ marginTop: 22, color: '#6E6D6B', fontSize: 27 }}>
+          <span style={{ marginTop: 22, color: COLOR.inkSoft, fontSize: 27 }}>
             IELTS и SAT · прогресс · Match Days · сообщество ASHYQ
           </span>
         </div>
@@ -74,9 +75,9 @@ export default function OpenGraphImage() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            borderTop: '1px solid #EFEEEA',
+            borderTop: `1px solid ${COLOR.hairline}`,
             paddingTop: '24px',
-            color: '#6E6D6B',
+            color: COLOR.inkSoft,
             fontSize: 20,
           }}
         >

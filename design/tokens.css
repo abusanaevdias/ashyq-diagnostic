@@ -20,6 +20,9 @@
   --dark-warm: #241d16;
   --on-red: #ffffff;
   --on-dark: #f8f7f3;
+  /* semantic «верно»: правильный ответ в квизе и разборе (утверждено 2026-09-13) */
+  --success: #2e5e3a;
+  --success-soft: #e8efe2;
 
   /* type */
   --font-display: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
