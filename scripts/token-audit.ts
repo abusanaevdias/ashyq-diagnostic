@@ -263,6 +263,9 @@ async function walk(browser: Browser, width: number, height: number) {
   await at('/classes/[id]');
   await clickUntil(page.getByRole('link', { name: /Essay Task 2/ }), /\/assignments\/[^/?]+$/, page);
   await at('/assignments/[id]');
+  await page.goto(`${BASE}/season/current`, { waitUntil: 'load' });
+  await page.getByText('Ты капитан').first().waitFor();
+  await at('/season/current · ученик');
 
   await login('учитель');
   await page.goto(`${BASE}/teacher`, { waitUntil: 'load' });
@@ -275,6 +278,12 @@ async function walk(browser: Browser, width: number, height: number) {
   await page.goto(classUrl, { waitUntil: 'load' });
   await clickUntil(page.getByRole('link', { name: 'Открыть работу — Dias' }), /\/submissions\/[^/?]+$/, page);
   await at('/submissions/[id]');
+  await page.goto(`${BASE}/teacher/season`, { waitUntil: 'load' });
+  await at('/teacher/season · обзор');
+  for (const tab of ['Команды', 'Баллы', 'Match Days']) {
+    await page.getByRole('tab', { name: tab }).click();
+    await at(`/teacher/season · ${tab}`);
+  }
 
   await login('автор');
   await page.goto(`${BASE}/write`, { waitUntil: 'load' });

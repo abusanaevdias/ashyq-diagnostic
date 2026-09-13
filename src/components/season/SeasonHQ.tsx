@@ -42,12 +42,14 @@ function Journey() {
   </section>;
 }
 
-export default function SeasonHQ() {
+/** Демо-превью Season HQ для гостей и организатора; ученик-участник видит SeasonHome → MyHQ. */
+export default function SeasonHQ({ notice }: { notice?: React.ReactNode }) {
   const [view, setView] = useState<SeasonView>('overview');
   const [tab, setTab] = useState<Tab>('overview');
   const participant = ACTIVE_SEASON_FIXTURE.participant;
   return <main className={styles.page}>
     <p className={styles.demoBar}>Интерактивный прототип · demo data · авторизация и серверные баллы ещё не подключены</p>
+    {notice}
     <div className={styles.shell}>
       <header className={styles.hqTop}><div><p className={styles.micro}>Season HQ · {participant.alias}</p><h1 className={styles.hqTitle}>Привет, {participant.alias}.</h1><p className={styles.subhead}>{participant.team} · IELTS · активный сезон</p></div><div className={styles.statePicker} aria-label="Состояние прототипа">{([['overview','Активный сезон'],['live','Live Arena'],['journey','После сезона']] as const).map(([key,label]) => <button className={styles.tab} type="button" aria-pressed={view === key} onClick={() => setView(key)} key={key}>{label}</button>)}</div></header>
       <div className={styles.tabs} role="tablist" aria-label="Разделы Season HQ">{([['overview','Обзор'],['matches','Match Days'],['leaderboard','Рейтинг'],['rules','Правила']] as const).map(([key,label]) => <button className={styles.tab} role="tab" aria-selected={tab === key} onClick={() => setTab(key)} key={key}>{label}</button>)}</div>

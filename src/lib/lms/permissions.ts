@@ -1,3 +1,4 @@
+import type { SeasonParticipant, Team } from '@/lib/season/types';
 import type { BlogPost, ClassRoom, Role, Submission, User } from './types';
 
 /**
@@ -21,7 +22,11 @@ export type Action =
   /** Комментировать любую сдачу в своих классах и ставить оценку. */
   | 'submission.review'
   /** Создавать, редактировать, публиковать посты блога. */
-  | 'blog.write';
+  | 'blog.write'
+  /** Чемпионат: сезон, команды, баллы, проверка Match Day (организатор). */
+  | 'season.manage'
+  /** Чемпионат: Season HQ и ответ команды на Match Day. */
+  | 'season.play';
 
 export const ROLES: readonly Role[] = ['student', 'teacher', 'author'];
 
@@ -32,6 +37,9 @@ export const PERMISSIONS: Record<Action, readonly Role[]> = {
   'content.create': ['teacher'],
   'submission.review': ['teacher'],
   'blog.write': ['author'],
+  // решение пользователя 2026-09-14: команды собирает организатор или учитель
+  'season.manage': ['teacher'],
+  'season.play': ['student'],
 };
 
 export function can(role: Role | null | undefined, action: Action): boolean {
@@ -44,6 +52,8 @@ export const ROUTE_ROLES = {
   classes: PERMISSIONS['submission.create'],
   teacher: PERMISSIONS['content.create'],
   write: PERMISSIONS['blog.write'],
+  seasonManage: PERMISSIONS['season.manage'],
+  seasonPlay: PERMISSIONS['season.play'],
 } as const;
 
 export function roleAllowed(role: Role, roles: readonly Role[]): boolean {
@@ -56,6 +66,8 @@ export function roleLinks(role: Role): Array<{ href: string; label: string; text
   if (can(role, 'submission.create')) links.push({ href: '/classes', label: 'Мой класс', text: 'Уроки, материалы и задания ваших классов.' });
   if (can(role, 'content.create')) links.push({ href: '/teacher', label: 'Учителю', text: 'Классы, уроки, задания и проверка сдач.' });
   if (can(role, 'blog.write')) links.push({ href: '/write', label: 'Редактору', text: 'Черновики и публикации блога.' });
+  if (can(role, 'season.play')) links.push({ href: '/season/current', label: 'Мой сезон', text: 'Команда, баллы недели и Match Day.' });
+  if (can(role, 'season.manage')) links.push({ href: '/teacher/season', label: 'Чемпионат', text: 'Сезон, команды, баллы и проверка Match Day.' });
   return links;
 }
 
@@ -93,4 +105,15 @@ export function canUseThread(user: User | null, submission: Submission, cls: Cla
 
 export function canEditPost(user: User | null, post: BlogPost): boolean {
   return Boolean(user) && can(user!.role, 'blog.write') && post.authorId === user!.id;
+}
+
+/* ---------- чемпионат ---------- */
+
+export function canManageSeason(user: User | null): boolean {
+  return Boolean(user) && can(user!.role, 'season.manage');
+}
+
+/** Ответ на Match Day отправляет только капитан своей команды. */
+export function canSubmitMatch(user: User | null, participant: SeasonParticipant | undefined, team: Team | undefined): boolean {
+  return Boolean(user && participant && team) && can(user!.role, 'season.play') && team!.captainId === participant!.id;
 }

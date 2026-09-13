@@ -53,7 +53,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
         </Link>
         <div className={styles.navLinks}>
           <Link className={styles.navLink} href="/courses">Курсы</Link>
-          <Link className={styles.navLink} href="/#directions">Направления</Link>
+          <Link className={styles.navLink} href="/season">Чемпионат</Link>
           <Link className={styles.navLink} href="/program">Программа</Link>
           <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
           <Link className={styles.navLink} href="/community">Сообщество</Link>
@@ -66,7 +66,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
           </summary>
           <div className={styles.mobilePanel}>
             <Link className={styles.navLink} href="/courses">Курсы</Link>
-            <Link className={styles.navLink} href="/#directions">Направления</Link>
+            <Link className={styles.navLink} href="/season">Чемпионат</Link>
             <Link className={styles.navLink} href="/program">Программа</Link>
             <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
             <Link className={styles.navLink} href="/community">Сообщество</Link>
