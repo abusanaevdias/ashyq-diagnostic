@@ -1,5 +1,6 @@
 import { chromium, devices, type Browser, type ConsoleMessage, type Page } from 'playwright';
 import { QUESTION_BANK } from '../src/data/questions';
+import { TELEGRAM_CONTACT } from '../src/lib/site';
 
 /**
  * E2E-прогон основных сценариев (mobile viewport, iPhone 12).
@@ -552,6 +553,34 @@ async function main() {
   check('seo: CRM закрыта от индексации', (await robots.text()).includes('/crm'));
   check('seo: sitemap содержит публичные маршруты', sitemap.ok() && (await sitemap.text()).includes('/community'));
   check('seo: route title установлен', (await p3.title()).includes('Условия использования'));
+
+  // error states: 404 и maintenance брендированы, честно закрыты от индексации
+  const missing = await p3.request.get(`${BASE}/no-such-page-e2e`);
+  check('404: несуществующий маршрут отвечает 404', missing.status() === 404, `HTTP ${missing.status()}`);
+  await p3.goto(`${BASE}/no-such-page-e2e`, { waitUntil: 'load' });
+  const nfText = await p3.locator('body').innerText();
+  check(
+    '404: брендированная страница с навигацией и CTA',
+    has(nfText, 'Такой страницы нет') &&
+      (await p3.getByRole('link', { name: 'Вернуться на главную ASHYQ' }).count()) === 1 &&
+      (await p3.getByRole('link', { name: 'Пройти диагностику IELTS или SAT' }).count()) === 1,
+  );
+  const nfScroll = await p3.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  check('404: нет горизонтального скролла', nfScroll <= 0, `${nfScroll}px`);
+  await p3.goto(`${BASE}/maintenance`, { waitUntil: 'load' });
+  const maintText = await p3.locator('body').innerText();
+  check(
+    'maintenance: заглушка с подтверждёнными контактами и noindex',
+    has(maintText, 'технические работы') &&
+      (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 1 &&
+      (await p3.locator(`main a[href="https://t.me/${TELEGRAM_CONTACT}"]`).count()) === 1,
+  );
+  const maintScroll = await p3.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  check('maintenance: нет горизонтального скролла', maintScroll <= 0, `${maintScroll}px`);
 
   await p3.goto(`${BASE}/crm`, { waitUntil: 'networkidle' });
   const crmText = await p3.locator('body').innerText();

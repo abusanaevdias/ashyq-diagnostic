@@ -1,0 +1,27 @@
+.retry {
+  min-height: 48px;
+  padding: 12px 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast);
+  background: var(--red);
+  color: var(--on-red);
+  box-shadow: var(--shadow-pill);
+}
+
+.retry:hover {
+  background: var(--red-deep);
+}
+
+.retry:focus-visible {
+  outline: 2px solid var(--red-deep);
+  outline-offset: 2px;
+}
