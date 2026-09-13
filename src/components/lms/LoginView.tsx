@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { track } from '@/lib/analytics';
 import { getAuth } from '@/lib/lms/auth';
 import { applyDemoSeed, DEMO_EMAILS, DEMO_PASSWORD } from '@/lib/lms/seed';
@@ -22,9 +22,9 @@ function safeNext(value: string | null): string {
   return value && value.startsWith('/') && !value.startsWith('//') ? value : '/me';
 }
 
-export default function LoginView() {
+export default function LoginView({ nextPath }: { nextPath?: string }) {
   const router = useRouter();
-  const next = safeNext(useSearchParams().get('next'));
+  const next = safeNext(nextPath ?? null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -100,7 +100,14 @@ export default function LoginView() {
           <h2 id="demo-title" className={styles.cardTitle}>Демо-вход одной кнопкой</h2>
           <div className={styles.stack}>
             {DEMO_ROLES.map((item) => (
-              <button key={item.role} type="button" className={styles.roleButton} disabled={busy} onClick={() => demoSignIn(item.role)}>
+              <button
+                key={item.role}
+                type="button"
+                className={styles.roleButton}
+                disabled={busy}
+                onClick={() => demoSignIn(item.role)}
+                aria-label={`Войти как ${item.label}. ${item.name} · ${item.label} ${item.hint}`}
+              >
                 <Avatar user={{ name: item.name, avatarColor: item.color }} />
                 <span>
                   <span className={styles.roleName}>{item.name} · {item.label}</span>

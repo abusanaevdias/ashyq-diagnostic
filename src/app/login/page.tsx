@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 import LmsShell from '@/components/lms/LmsShell';
 import LoginView from '@/components/lms/LoginView';
 
@@ -8,13 +7,17 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string | string[] }>;
+}) {
+  const params = await searchParams;
+  const nextPath = typeof params.next === 'string' ? params.next : undefined;
+
   return (
     <LmsShell>
-      {/* useSearchParams (?next=) — клиентская часть под Suspense */}
-      <Suspense fallback={null}>
-        <LoginView />
-      </Suspense>
+      <LoginView nextPath={nextPath} />
     </LmsShell>
   );
 }
