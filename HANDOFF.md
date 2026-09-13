@@ -104,16 +104,17 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
+| V3-CARD-IMAGE-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-card-image`; `C:\Users\Dias\Documents\ChatGPT\ashyq-card-image`; started 2026-09-13 | Перевести downloadable PNG результата на v3 без изменения scoring/result UI. Owned: `src/lib/card-image.ts`, новый scoped check при необходимости; shared только `HANDOFF.md` |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активных `IN_PROGRESS` задач нет. Свободны: `V3-BLOG-001`, `V3-CONTACTS-001`
-(обе ждут контент/контакты от пользователя). Без внешних зависимостей можно
-взять: перевод PNG-карточки (`src/lib/card-image.ts`) на v3-цвета и чистку
-неиспользуемых v2-примитивов в `Brand.tsx` — завести отдельные task ID.
+Активна `V3-CARD-IMAGE-001` (Codex GPT-5 `/root`), только перечисленные owned
+файлы. `V3-BLOG-001` и `V3-CONTACTS-001` ждут контент/контакты пользователя.
+Без внешних зависимостей после этого остаётся чистка неиспользуемых
+v2-примитивов в `Brand.tsx` — завести отдельный task ID.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
