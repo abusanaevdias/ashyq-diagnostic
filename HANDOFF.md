@@ -100,7 +100,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-QUIZ-SCREENS-001 | READY | — | После V3-DIAGNOSTIC-001 | Перевести onboarding/quiz/result/review на v3 без изменения aria/e2e-названий, state и localStorage |
+| V3-QUIZ-SCREENS-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; onboarding/quiz/result/review на v3 через scoped `.v3`-тему, без изменения aria/e2e-названий, state и localStorage. Владею: `src/components/Onboarding.tsx`, `src/components/quiz/**`, `result/**`, `review/**`, `DiagnosticApp.tsx`, `src/components/ui/Primitives.tsx`, `tailwind.config.ts` (цвета → CSS-каналы, те же значения), `src/app/globals.css` (только добавочный блок `.v3`) |
 | V3-ABOUT-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-about`; `C:\Users\Dias\Documents\ChatGPT\ashyq-about`; started 2026-09-13 | `/about` по DESIGN_V3 §6.4; owned: `src/app/about/**`, `src/components/AboutV3.tsx`, `src/components/AboutV3.module.css`; shared точечно: `CleanUi.tsx`, `site.ts`, `e2e-check.ts`, `HANDOFF.md` |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
@@ -108,8 +108,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активна `V3-ABOUT-001` (Codex GPT-5 `/root`, только перечисленные owned/shared
-файлы). Свободна без зависимостей: `V3-QUIZ-SCREENS-001`.
+Активны `V3-ABOUT-001` (Codex GPT-5 `/root`) и `V3-QUIZ-SCREENS-001`
+(Claude Opus 5) — только перечисленные owned/shared файлы каждой задачи.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
