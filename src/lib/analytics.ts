@@ -30,7 +30,12 @@ export type AnalyticsEvent =
   | 'lms_submission_created'
   | 'lms_comment_created'
   | 'lms_grade_set'
-  | 'blog_post_published';
+  | 'blog_post_published'
+  | 'season_created'
+  | 'season_team_created'
+  | 'season_points_awarded'
+  | 'season_match_submitted'
+  | 'season_match_reviewed';
 
 export interface EventPayload {
   exam?: string;

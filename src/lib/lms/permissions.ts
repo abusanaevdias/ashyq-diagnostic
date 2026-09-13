@@ -52,6 +52,8 @@ export const ROUTE_ROLES = {
   classes: PERMISSIONS['submission.create'],
   teacher: PERMISSIONS['content.create'],
   write: PERMISSIONS['blog.write'],
+  seasonManage: PERMISSIONS['season.manage'],
+  seasonPlay: PERMISSIONS['season.play'],
 } as const;
 
 export function roleAllowed(role: Role, roles: readonly Role[]): boolean {
@@ -64,6 +66,8 @@ export function roleLinks(role: Role): Array<{ href: string; label: string; text
   if (can(role, 'submission.create')) links.push({ href: '/classes', label: 'Мой класс', text: 'Уроки, материалы и задания ваших классов.' });
   if (can(role, 'content.create')) links.push({ href: '/teacher', label: 'Учителю', text: 'Классы, уроки, задания и проверка сдач.' });
   if (can(role, 'blog.write')) links.push({ href: '/write', label: 'Редактору', text: 'Черновики и публикации блога.' });
+  if (can(role, 'season.play')) links.push({ href: '/season/current', label: 'Мой сезон', text: 'Команда, баллы недели и Match Day.' });
+  if (can(role, 'season.manage')) links.push({ href: '/teacher/season', label: 'Чемпионат', text: 'Сезон, команды, баллы и проверка Match Day.' });
   return links;
 }
 
