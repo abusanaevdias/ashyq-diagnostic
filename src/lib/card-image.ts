@@ -8,6 +8,10 @@
  * Дизайн карточки v3 = Clean Premium EdTech: тёплый светлый фон, surface,
  * Manrope/Inter, мягкая геометрия и один красный акцент. Значения ниже —
  * точная копия design/tokens.css; SVG не умеет читать CSS-переменные страницы.
+ *
+ * Раскладка совпадает с экранной DiagnosticCard.tsx — менять вместе.
+ * data-max-x у текстов в блоках = правый край блока: по нему
+ * scripts/card-image-check.ts ловит вылезающий текст. Не удалять.
  */
 
 export interface CardSection {
@@ -33,6 +37,7 @@ const SURFACE = '#FDFDFD';
 const BLUSH = '#F9E0DB';
 const BLUSH_SOFT = '#FCF3F0';
 const RED = '#DE0B1B';
+const RED_DEEP = '#B60916';
 const INK = '#161311';
 const INK_SOFT = '#6E6D6B';
 const INK_MUTED = '#8C8B8A';
@@ -133,6 +138,9 @@ export function buildCardSvg(data: CardData, assets: BrandAssets | null = null):
   const bandSize = fit(data.bandLabel, 144, 620, 0.54);
   const nextStepLines = wrapTwoLines(data.nextStep, 29);
   const nextSize = Math.min(...nextStepLines.map((line) => fit(line, 27, 410, 0.64)));
+  // блоки «Цель»/«Gap» 220px минус отступы: «не выбрана» при 38px не помещалась
+  const targetSize = fit(data.target, 38, 180, 0.66);
+  const gapSize = fit(data.gapLabel, 38, 180, 0.66);
 
   const sectionRows = data.sections
     .map((s, i) => {
@@ -172,7 +180,7 @@ export function buildCardSvg(data: CardData, assets: BrandAssets | null = null):
 
   <!-- exam -->
   <rect x="${pad}" y="174" width="244" height="52" rx="26" fill="${BLUSH}"/>
-  <text x="${pad + 24}" y="208" font-family="${UI}" font-size="21" font-weight="600" fill="${RED}">${esc(truncate(data.exam, 18))}</text>
+  <text x="${pad + 24}" y="208" data-max-x="${pad + 232}" font-family="${UI}" font-size="21" font-weight="600" fill="${RED_DEEP}">${esc(truncate(data.exam, 18))}</text>
   <text x="${pad + 278}" y="207" font-family="${UI}" font-size="18" font-weight="600" letter-spacing="3" fill="${INK_MUTED}">${esc(truncate(data.headline, 36).toUpperCase())}</text>
 
   <!-- band -->
@@ -188,16 +196,16 @@ export function buildCardSvg(data: CardData, assets: BrandAssets | null = null):
   <!-- target / gap / next step -->
   <rect x="${pad}" y="810" width="220" height="126" rx="16" fill="${BLUSH_SOFT}"/>
   <text x="${pad + 20}" y="850" font-family="${UI}" font-size="17" font-weight="600" letter-spacing="3" fill="${INK_MUTED}">ЦЕЛЬ</text>
-  <text class="disp" x="${pad + 20}" y="906" font-size="38" fill="${INK}">${esc(truncate(data.target, 12))}</text>
+  <text class="disp" x="${pad + 20}" y="906" data-max-x="${pad + 204}" data-max-y="928" font-size="${targetSize}" fill="${INK}">${esc(truncate(data.target, 12))}</text>
 
   <rect x="${pad + 236}" y="810" width="220" height="126" rx="16" fill="${BLUSH_SOFT}"/>
   <text x="${pad + 256}" y="850" font-family="${UI}" font-size="17" font-weight="600" letter-spacing="3" fill="${INK_MUTED}">GAP</text>
-  <text class="disp" x="${pad + 256}" y="906" font-size="38" fill="${RED}">${esc(truncate(data.gapLabel, 16))}</text>
+  <text class="disp" x="${pad + 256}" y="906" data-max-x="${pad + 440}" data-max-y="928" font-size="${gapSize}" fill="${RED}">${esc(truncate(data.gapLabel, 16))}</text>
 
   <rect x="${pad + 472}" y="810" width="472" height="126" rx="20" fill="${DARK_WARM}"/>
   <text x="${pad + 496}" y="850" font-family="${UI}" font-size="17" font-weight="600" letter-spacing="3" fill="${ON_DARK}" opacity="0.72">СЛЕДУЮЩИЙ ШАГ</text>
-  <text class="disp" x="${pad + 496}" y="892" font-size="${nextSize}" fill="${ON_DARK}">
-    ${nextStepLines.map((line, index) => `<tspan x="${pad + 496}" dy="${index === 0 ? 0 : 32}">${esc(line)}</tspan>`).join('')}
+  <text class="disp" x="${pad + 496}" y="${nextStepLines.length > 1 ? 884 : 892}" data-max-x="${pad + 928}" data-max-y="928" font-size="${nextSize}" fill="${ON_DARK}">
+    ${nextStepLines.map((line, index) => `<tspan x="${pad + 496}" dy="${index === 0 ? 0 : 30}">${esc(line)}</tspan>`).join('')}
   </text>
 
   <text x="${pad}" y="990" font-family="${UI}" font-size="17" fill="${INK_MUTED}">Предварительная оценка по короткой диагностике ASHYQ · не официальный результат IELTS / SAT</text>

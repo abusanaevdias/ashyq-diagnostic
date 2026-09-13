@@ -19,6 +19,34 @@ const fixture: CardData = {
   strongest: 'Reading: поиск деталей и логика текста',
 };
 
+/** Реальный случай из отчёта пользователя: цель не выбрана — «не выбрана» вылезала из блока. */
+const noTarget: CardData = {
+  exam: 'SAT',
+  headline: 'SAT readiness',
+  bandLabel: '1000–1150',
+  level: 'Ниже среднего · 5 из 16 верно',
+  sections: [
+    { label: 'Reading & Writing', percent: 54, level: 'Developing' },
+    { label: 'Math', percent: 17, level: 'Foundation' },
+  ],
+  target: 'не выбрана',
+  gapLabel: '—',
+  nextStep: 'Standard English Conventions',
+  strongest: 'Information and Ideas',
+};
+
+/** Края каждого <text>: свои data-max-x/data-max-y (граница блока) или край карточки (1040). */
+const OVERFLOW_PROBE = `[...document.querySelectorAll('text')].flatMap((t) => {
+  const box = t.getBBox();
+  const maxX = Number(t.getAttribute('data-max-x') || 1040);
+  const maxY = Number(t.getAttribute('data-max-y') || 1040);
+  const label = t.textContent.replace(/\\s+/g, ' ').trim();
+  const out = [];
+  if (box.x + box.width > maxX + 0.5) out.push(label + ' → x ' + Math.round(box.x + box.width) + ' > ' + maxX);
+  if (box.y + box.height > maxY + 0.5) out.push(label + ' → y ' + Math.round(box.y + box.height) + ' > ' + maxY);
+  return out;
+})`;
+
 async function main() {
   const [wordmark, manropeCyr, manropeLat, interCyr, interLat, interCyr600, interLat600] = await Promise.all([
     readFile('public/brand/wordmark-red.png', 'base64'),
@@ -31,7 +59,7 @@ async function main() {
   ]);
   const fontFace = (family: string, weight: number, encoded: string) =>
     `@font-face{font-family:'${family}';font-weight:${weight};src:url(data:font/woff2;base64,${encoded}) format('woff2');}`;
-  const svg = buildCardSvg(fixture, {
+  const assets = {
     wordmark: `data:image/png;base64,${wordmark}`,
     fontCss: [
       fontFace('ManropeCard', 700, manropeCyr),
@@ -41,7 +69,8 @@ async function main() {
       fontFace('InterCard', 600, interCyr600),
       fontFace('InterCard', 600, interLat600),
     ].join(''),
-  });
+  };
+  const svg = buildCardSvg(fixture, assets);
 
   for (const token of ['#F8F7F3', '#FDFDFD', '#F9E0DB', '#FCF3F0', '#DE0B1B', '#161311', '#6E6D6B', '#8C8B8A', '#EFEEEA', '#241D16']) {
     assert(svg.includes(token), `Missing v3 token ${token}`);
@@ -54,11 +83,16 @@ async function main() {
   await mkdir('screenshots', { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1080, height: 1080 } });
-  await page.setContent(`<style>html,body{margin:0}</style>${svg}`);
-  await page.screenshot({ path: 'screenshots/v3-result-card.png' });
+  for (const [name, data] of [['v3-result-card', fixture], ['v3-result-card-no-target', noTarget]] as const) {
+    await page.setContent(`<style>html,body{margin:0}</style>${buildCardSvg(data, assets)}`);
+    await page.evaluate('document.fonts.ready');
+    const overflow = (await page.evaluate(OVERFLOW_PROBE)) as string[];
+    assert.deepEqual(overflow, [], `${name}: text overflows its box: ${overflow.join('; ')}`);
+    await page.screenshot({ path: `screenshots/${name}.png` });
+  }
   await browser.close();
 
-  console.log('PASS result card: v3 tokens, legacy-style exclusion, disclaimer, 1080x1080 render');
+  console.log('PASS result card: v3 tokens, legacy-style exclusion, disclaimer, no text overflow, 1080x1080 render');
 }
 
 main().catch((error) => {
