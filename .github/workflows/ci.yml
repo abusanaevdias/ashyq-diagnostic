@@ -1,9 +1,10 @@
 name: CI
 
-# ASHYQ release gates (CI-RELEASE-001).
+# ASHYQ release gates (CI-RELEASE-001, CI-GATES-002).
 # Полный набор проверок из HANDOFF §6 на каждом PR и каждом push в main:
-# lint, typecheck, validate:bank, production build, e2e (с CRM-ключом),
-# check:crm, check:crm-ui, audio check, card-image check, axe/Lighthouse.
+# lint, typecheck, validate:bank, production build, unit-проверки LMS и
+# чемпионата, e2e (с CRM-ключом), check:crm, check:crm-ui, audio check,
+# card-image check, LMS e2e, season e2e, аудит дизайн-токенов, axe/Lighthouse.
 # Красная ветка/PR = merge блокировать настройкой branch protection
 # (см. docs/CI.md, раздел «Branch protection»).
 
@@ -18,9 +19,9 @@ concurrency:
 
 jobs:
   checks:
-    name: lint, typecheck, build, e2e, crm, audio, card, a11y
+    name: lint, typecheck, build, e2e, crm, audio, card, lms, season, tokens, a11y
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
@@ -52,7 +53,10 @@ jobs:
       - name: Card image check (offline)
         run: npx tsx scripts/card-image-check.ts
 
-      - name: E2E + CRM + audio checks (needs running site)
+      - name: LMS + season unit checks (offline)
+        run: npm run check:units
+
+      - name: E2E + CRM + audio + LMS + season + tokens + a11y (needs running site)
         env:
           NEXT_TELEMETRY_DISABLED: 1
         run: |
@@ -81,6 +85,10 @@ jobs:
           npm run check:crm
           npm run check:crm-ui
           npm run e2e:audio
+          # CI-GATES-002: учебный слой, чемпионат и дизайн-токены (раньше — только локально)
+          npm run e2e:lms
+          npm run e2e:season
+          npm run check:tokens
           npm run check:a11y-perf
 
           kill "$(cat "$RUNNER_TEMP/server.pid")" 2>/dev/null || true

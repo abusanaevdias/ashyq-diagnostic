@@ -15,7 +15,11 @@
     "check:crm": "tsx scripts/crm-check.ts",
     "check:crm-ui": "tsx scripts/crm-ui-check.ts",
     "check:seo": "tsx scripts/seo-check.ts",
-    "check:a11y-perf": "tsx scripts/a11y-perf-check.ts"
+    "check:a11y-perf": "tsx scripts/a11y-perf-check.ts",
+    "check:units": "tsx scripts/lms-unit-check.ts && tsx scripts/season-unit-check.ts",
+    "e2e:lms": "tsx scripts/lms-e2e.ts",
+    "e2e:season": "tsx scripts/season-e2e.ts",
+    "check:tokens": "tsx scripts/token-audit.ts"
   },
   "dependencies": {
     "@fontsource/manrope": "^5.2.8",
