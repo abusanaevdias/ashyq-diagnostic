@@ -28,6 +28,7 @@ const PUBLIC_ROUTES = [
   '/privacy',
   '/program',
   '/progress',
+  '/search',
   '/season',
   '/season/current',
   '/terms',
