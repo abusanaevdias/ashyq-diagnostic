@@ -1,0 +1,867 @@
+/* Учебный слой: только токены design/tokens.css. */
+
+.banner {
+  padding: 10px var(--pad);
+  border-bottom: 1px solid var(--hairline);
+  background: var(--blush);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.bannerWarn {
+  display: block;
+  font-weight: 600;
+}
+
+.main {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: 40px var(--pad) 96px;
+}
+
+.title {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: 60ch;
+  margin-top: 10px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.grid2 {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+
+.grid3 {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  padding: 24px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.cardLink {
+  display: block;
+  color: var(--ink);
+  transition: transform var(--t-base), box-shadow var(--t-base);
+}
+
+.cardLink:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.muted {
+  margin-top: 6px;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.form {
+  margin-top: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.fieldLabel {
+  display: grid;
+  gap: 6px;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.field {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9375rem;
+}
+
+textarea.field {
+  min-height: 132px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.error,
+.notice {
+  padding: 10px 14px;
+  border-radius: var(--r-sm);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.error {
+  background: var(--blush);
+  color: var(--ink);
+}
+
+.notice {
+  border: 1px solid var(--hairline);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.stack {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.roleButton {
+  width: 100%;
+  min-height: 60px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--t-fast);
+}
+
+.roleButton:hover {
+  border-color: var(--ink);
+}
+
+.roleName {
+  font-weight: 600;
+}
+
+.roleHint {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.textButton {
+  min-height: 44px;
+  padding: 8px 4px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ---------- identity ---------- */
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-pill);
+  color: var(--on-dark);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.avatar_red { background: var(--red); color: var(--on-red); }
+.avatar_red-deep { background: var(--red-deep); color: var(--on-red); }
+.avatar_ink { background: var(--ink); }
+.avatar_dark-warm { background: var(--dark-warm); }
+
+.chip {
+  min-height: 26px;
+  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-pill);
+  background: var(--hairline);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chipBlush {
+  background: var(--blush);
+  color: var(--red-deep);
+}
+
+.chipInk {
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+/* ---------- guard / states ---------- */
+
+.state {
+  max-width: 520px;
+  margin: 24px auto 0;
+  text-align: center;
+}
+
+.stateActions {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ---------- nav account ---------- */
+
+.navSlot {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+}
+
+.signIn {
+  min-height: 44px;
+  padding: 8px 18px;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: border-color var(--t-fast);
+}
+
+.signIn:hover {
+  border-color: var(--ink);
+}
+
+.menu {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.menuTrigger {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  list-style: none;
+}
+
+.menuTrigger::-webkit-details-marker {
+  display: none;
+}
+
+.menuPanel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 50;
+  min-width: 240px;
+  padding: 8px;
+  display: grid;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.menuHead {
+  margin-bottom: 4px;
+  padding: 8px 12px 12px;
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.menuName {
+  font-weight: 600;
+}
+
+.menuItem {
+  min-height: 44px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  background: var(--blush-soft);
+}
+
+.plainButton {
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.roleButton:focus-visible,
+.cardLink:focus-visible,
+.field:focus-visible,
+.textButton:focus-visible,
+.signIn:focus-visible,
+.menuTrigger:focus-visible,
+.menuItem:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* ---------- классы, задания, треды (шаг 3) ---------- */
+
+.section {
+  margin-top: 24px;
+}
+
+.spaced {
+  margin-top: 10px;
+}
+
+.hint {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.backLink {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.backLink:hover {
+  color: var(--ink);
+}
+
+.chipsRow {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.feedGrid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: start;
+  gap: 28px;
+}
+
+.aside {
+  order: 2;
+}
+
+.list {
+  margin-top: 14px;
+  display: grid;
+  gap: 14px;
+}
+
+.rowCard {
+  padding: 18px 20px;
+}
+
+.md {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+.md h2,
+.md h3 {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.md h2 {
+  font-size: 1.2rem;
+}
+
+.md h3 {
+  font-size: 1.05rem;
+}
+
+.md ul {
+  padding-left: 1.2em;
+  display: grid;
+  gap: 4px;
+  list-style: disc;
+}
+
+.md p {
+  white-space: pre-line;
+}
+
+.materials {
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.materialLink,
+.materialText summary {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.materialLink,
+.materialText {
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  background: var(--bg);
+}
+
+.materialText summary {
+  list-style: none;
+}
+
+.materialText summary::-webkit-details-marker {
+  display: none;
+}
+
+.materialText p {
+  padding: 0 14px 12px;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.filePicker {
+  display: grid;
+  gap: 10px;
+}
+
+.fileBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.fileLabel {
+  min-height: 44px;
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px dashed var(--ink-soft);
+  border-radius: var(--r-pill);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fileLabel:focus-within {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.fileList {
+  display: grid;
+  gap: 6px;
+}
+
+.fileRow {
+  padding: 4px 4px 4px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  font-size: 0.875rem;
+}
+
+.thread {
+  margin-top: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.commentHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+}
+
+.commentName {
+  font-weight: 600;
+}
+
+.commentTime {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.commentBody {
+  margin-top: 4px;
+  white-space: pre-line;
+  line-height: 1.55;
+}
+
+.grade {
+  margin-top: 12px;
+}
+
+.grade strong {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.subContent {
+  margin-top: 12px;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.inlineForm {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.inlineForm .fieldLabel {
+  flex: 1 1 220px;
+}
+
+.form button:disabled,
+.actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.backLink:focus-visible,
+.materialLink:focus-visible,
+.materialText summary:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* ---------- учитель: сдачи по ученикам, формы (шаг 4) ---------- */
+
+.whoRow {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.reviewList {
+  margin-top: 14px;
+  display: grid;
+}
+
+.reviewRow {
+  min-height: 56px;
+  padding: 8px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  border-top: 1px solid var(--hairline);
+}
+
+.reviewWho {
+  margin-right: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.reviewLink {
+  min-height: 44px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reviewLink:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.fieldset {
+  margin: 0;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+
+.legend {
+  padding: 0 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- автор: редактор; публичная статья блога (шаг 5) ---------- */
+
+.tabs {
+  margin-top: 20px;
+  display: none;
+  gap: 8px;
+}
+
+.tab {
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab[aria-selected='true'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.editorGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+
+textarea.editorArea {
+  min-height: 360px;
+}
+
+.preview {
+  position: sticky;
+  top: 96px;
+}
+
+.article {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.articleCover {
+  position: relative;
+  margin-top: 24px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+
+.articleCover img {
+  object-fit: cover;
+}
+
+.article .md {
+  margin-top: 28px;
+  font-size: 1.0625rem;
+}
+
+.article .md h2 {
+  margin-top: 16px;
+  font-size: 1.5rem;
+}
+
+.article .md h3 {
+  margin-top: 12px;
+  font-size: 1.25rem;
+}
+
+.moreSection {
+  margin-top: 64px;
+}
+
+@media (max-width: 900px) {
+  .tabs {
+    display: flex;
+  }
+
+  .editorGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .paneHidden {
+    display: none;
+  }
+
+  .preview {
+    position: static;
+  }
+}
+
+/* синхронно с бургером навбара (CleanUi.module.css) */
+@media (max-width: 1024px) {
+  .barOnly {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .grid2,
+  .grid3,
+  .feedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* на телефоне задания — первыми */
+  .aside {
+    order: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 28px var(--pad) 64px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardLink,
+  .roleButton,
+  .signIn {
+    transition: none;
+  }
+
+  .cardLink:hover {
+    transform: none;
+  }
+}

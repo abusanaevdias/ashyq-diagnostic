@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import NavAccount from '@/components/lms/NavAccount';
 import { SOCIAL_LINKS } from '@/lib/site';
 import styles from './CleanUi.module.css';
 
@@ -70,11 +71,13 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
             <Link className={styles.navLink} href="/community">Сообщество</Link>
             <Link className={styles.navLink} href="/faq">FAQ и поиск</Link>
             <Link className={styles.navLink} href="/contacts">Контакты</Link>
+            <NavAccount variant="panel" />
           </div>
         </details>
         <Link className={styles.searchLink} href="/faq" aria-label="Открыть поиск по вопросам">
           <LineIcon name="search" />
         </Link>
+        <NavAccount variant="bar" />
         {onStart ? (
           <button type="button" className={styles.buttonRed} onClick={onStart}>Диагностика<ArrowIcon /></button>
         ) : (

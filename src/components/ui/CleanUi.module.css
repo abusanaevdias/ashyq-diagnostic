@@ -361,7 +361,19 @@
   outline-offset: 3px;
 }
 
-@media (max-width: 900px) {
+/* с кнопкой «Войти» строка не влезала на 900–1180px; поиск дублирует ссылку FAQ */
+@media (max-width: 1180px) {
+  .navLinks {
+    gap: 18px;
+  }
+
+  .searchLink {
+    display: none;
+  }
+}
+
+/* бургер до 1024px: на 900–1024 строка из 7 ссылок + «Войти» + CTA не влезала */
+@media (max-width: 1024px) {
   .nav {
     min-height: 64px;
     gap: 12px;

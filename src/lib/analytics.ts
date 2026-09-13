@@ -24,7 +24,13 @@ export type AnalyticsEvent =
   | 'restart_clicked'
   | 'lead_captured'
   | 'program_page_view'
-  | 'progress_page_view';
+  | 'progress_page_view'
+  | 'lms_signed_in'
+  | 'lms_assignment_created'
+  | 'lms_submission_created'
+  | 'lms_comment_created'
+  | 'lms_grade_set'
+  | 'blog_post_published';
 
 export interface EventPayload {
   exam?: string;
