@@ -103,12 +103,7 @@ export default function ResultScreen({
 
         {/* ---------- карточка для скриншота ---------- */}
         <div className="mt-7">
-          <DiagnosticCard
-            exam={exam}
-            result={result}
-            targetLabel={targetLabel}
-            nextStep={nextStep}
-          />
+          <DiagnosticCard data={cardData} />
         </div>
 
         <div className="mt-5">
