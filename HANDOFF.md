@@ -72,7 +72,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 | `/program`, `/progress`, `/community` | Публичные продуктовые страницы, v3 (`.v3` + NavBar/Footer) |
 | `/faq`, `/privacy`, `/terms` | v3 (`.v3`) |
 | `/blog` | v3, демо-темы до настоящих статей: плашка, noindex, не в sitemap |
-| `/contacts` | v3, без подтверждённых контактов: WhatsApp + форма заявки, «уточняется», noindex, не в sitemap |
+| `/contacts` | v3, подтверждённые WhatsApp/Telegram/соцсети + форма заявки; индексируется, в sitemap |
 | `/season` | Публичный active-season hub, IELTS/SAT и team/participant rating |
 | `/season/current` | Noindex demo Season HQ: active, Live Arena, Journey report |
 | `/crm` | Защищённая очередь лидов, этапы, заметки и CSV |
@@ -105,20 +105,20 @@ ASHYQ — образовательный клуб Казахстана: подг
 | V3-CARD-IMAGE-001 | DONE | Codex GPT-5 `/root` | `ai2/v3-card-image`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-card-image` | Downloadable PNG результата переведён с v2-постера на v3: точные токены, оригинальный красный wordmark, self-hosted Manrope 700 + Inter 400/600, surface/blush/dark-warm карточки, без grain/Oswald; disclaimer и данные/scoring не менялись. Длинный следующий шаг переносится на 2 строки. Commit `d4a1a95`. Files: `src/lib/card-image.ts`, `public/fonts/manrope-700-{cyrillic,latin}.woff2`, `scripts/card-image-check.ts`. Проверки после rebase: lint/typecheck/build green; bank 49, 0 errors/warnings; card check PASS (v3 tokens, legacy exclusion, disclaimer, настоящий wordmark/fonts, render 1080×1080); e2e 89/89 без `CRM_ADMIN_KEY`. Риски: карточка рассчитана на текущие 2 секции IELTS/SAT; при расширении диагностики до 3+ секций понадобится новая компоновка. Следующий safe step: отдельная чистка неиспользуемых v2-примитивов `Brand.tsx` |
 | V3-CONTACTS-001 | DONE (без подтверждённых контактов) | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/contacts` по DESIGN_V3 §6.6: 3 ContactRow (WhatsApp — ссылка на уже используемый `WHATSAPP_NUMBER`, почта и адрес «уточняется»), рабочая форма = `SeasonForm` (согласие, lead API), карта-заглушка без адреса, фото + рукописная подпись. Выдуманных телефонов/адресов/e-mail нет; `CONTACTS_IS_DEMO` → демо-плашка и `noindex`, `/contacts` не в sitemap. `CleanUi`: иконки chat/mail/pin, «Контакты» в mobile menu и footer (desktop-строка nav заполнена). Commit `e77617c` (rebase на `50ed0b7`), fast-forward в `main`. Проверки на объединённом коде: lint, typecheck, build green; e2e 92/92 (+3 contacts, без `CRM_ADMIN_KEY`); `scripts/card-image-check.ts` PASS; 1440/390 overflow 0, wordmark 22px. Риски: заявки с `/contacts` уходят в CRM как `kind: season` и кнопка «Узнать о следующем сезоне» — при нужде отдельный kind/текст; соцсетей нет. Когда придут контакты: заполнить `CONTACTS` в `ContactsV3.tsx`, `CONTACTS_IS_DEMO = false`, добавить `/contacts` в `SITE_ROUTES`, заменить карту |
 | V3-BRAND-CLEANUP-001 | DONE | Codex GPT-5 `/root` | `ai2/v3-brand-cleanup`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-brand-cleanup` | Удалены доказанно неиспользуемые v2 exports `DiagnosticStamp`, `TopBar`, `Tape`, `TornEdge` и лишний `DIAGNOSTIC_NUMBER` import из `src/components/ui/Brand.tsx`; комментарий модуля обновлён для v3, stroke рукописной стрелки приведён с `2.4` к лимиту `1.6`. Commit `7ac4bb3`. Проверки: `rg` не нашёл потребителей удалённых exports; lint/typecheck/build green; bank 49, 0 errors/warnings; card check PASS; e2e 92/92 без `CRM_ADMIN_KEY`. Риск: удалённые exports были внутренними и не использовались в репо; проект `private`, но неизвестный внешний импорт вне репо потребует миграции. Следующий safe step: новых независимых `READY` задач нет — нужны решения для auth/backend/CRM либо реальные контакты и статьи |
+| SEC-AUDIT-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | Аудит всех API (`lead`, `leads`, `crm`, `validate`), admin-auth, JSONL-хранилища, CRM UI, card-image, заголовков, секретов в git и `npm audit`. Исправлено: (1) admin-ключ больше не принимается из `?key=` — только `x-ashyq-admin-key`/`Authorization: Bearer` (URL-секреты утекают в логи/историю/Referer), `.env.example` обновлён; (2) CSP (`object-src 'none'`, `base-uri`/`form-action 'self'`, `frame-ancestors 'none'`, same-origin scripts/connect) + `Cross-Origin-Opener-Policy: same-origin`; (3) `newRunId` и runId формы сезона на `crypto.getRandomValues` — CRM склеивает лиды по runId, угадываемый id позволял бы публичным `/api/lead` подменить чужой телефон. Проверено чисто: XSS (React, без `dangerouslySetInnerHTML`), CSV-инъекция (экранирование + `trim`), path traversal, timing-safe сравнение ключа, SVG-экранирование card-image, Telegram plain text, секретов в git нет, `npm audit --omit=dev` 0. Commit `66287b0`. Проверки: lint/typecheck/build green; e2e 99/99 с `CRM_ADMIN_KEY` (+3 security); `check:crm`, `check:crm-ui`, `card-image-check` PASS; curl: ключ в заголовке 200, в `?key=` 404; консоль без CSP-ошибок. Остаточные риски: `script-src 'unsafe-inline'` (nonce-CSP потребует динамический рендер всех страниц); rate limit и сохраняемый `ip` доверяют `x-forwarded-for` — за доверенным прокси ок, иначе подделываемы; общий admin-ключ без лимита попыток → `CRM-PROD-001`; ответы банка вопросов лежат в клиентском бандле — осознанно для бесплатной предварительной диагностики |
+| CONTACTS-DATA-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | Подтверждённые пользователем контакты: WhatsApp +7 706 708 01 81, Telegram @ashyqeducation, Instagram/Threads/Telegram-канал @ashyqedu (единый источник `SOCIAL_LINKS`/`TELEGRAM_CONTACT` в `src/lib/site.ts`). `/contacts` без демо-плашки и noindex, в sitemap; карта-заглушка заменена карточкой соцсетей — офиса нет; строки e-mail нет — почты нет. Footer получил колонку «Соцсети». Commit `ea7cecd`. e2e: WhatsApp/Telegram/форма, 3 соцсети, страница индексируется, overflow 0 |
 
 ## 5. Свободные и заблокированные задачи
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| SEC-AUDIT-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; аудит безопасности всего сайта с исправлениями: admin-ключ только в заголовке, CSP/COOP, CSPRNG для runId. Владею: `next.config.mjs`, `src/lib/admin-auth.ts`, `newRunId` в `src/lib/storage.ts`, runId в `src/components/SeasonForm.tsx`, `.env.example`, security-блок `scripts/e2e-check.ts`, раздел безопасности `README.md` |
-| CONTACTS-DATA-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; пользователь подтвердил WhatsApp 77067080181, Instagram/Threads/Telegram-канал @ashyqedu, Telegram ashyqeducation; почты и адреса нет. Снять демо с `/contacts`, соцсети в контакты и footer, `/contacts` в sitemap. Владею: `src/components/ContactsV3.*`, `src/app/contacts/**`; shared точечно: footer в `CleanUi.tsx`, `site.ts`, contacts-блок e2e |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
 Блог ждёт настоящие статьи от пользователя (см. строку V3-BLOG-001).
-Контакты подтверждены пользователем 2026-09-13 — вносятся задачей `CONTACTS-DATA-001`.
-Активны `SEC-AUDIT-001` и `CONTACTS-DATA-001` (Claude Opus 5) — только их owned/shared файлы.
+Контакты подтверждены и внесены (`CONTACTS-DATA-001`); почты и офиса у ASHYQ пока нет.
+Активных `IN_PROGRESS` задач нет.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
@@ -161,6 +161,9 @@ npx tsx scripts/season-visual-check.ts
 - после V3-CONTACTS-001 на объединённом `main` с V3-CARD-IMAGE-001
   (2026-09-13): e2e `92/92` без `CRM_ADMIN_KEY`, `card-image-check` PASS,
   lint/typecheck/build green;
+- после SEC-AUDIT-001 + CONTACTS-DATA-001 (2026-09-13): e2e `99/99` с
+  `CRM_ADMIN_KEY`, `check:crm`, `check:crm-ui`, `card-image-check` PASS,
+  `npm audit --omit=dev` 0, lint/typecheck/build green;
 - после V3-CARD-IMAGE-001 (2026-09-13): e2e `89/89` без `CRM_ADMIN_KEY`,
   lint/typecheck/build green; card check PASS, PNG `1080×1080`;
 - после V3-BRAND-CLEANUP-001 (2026-09-13): e2e `92/92` без `CRM_ADMIN_KEY`,
