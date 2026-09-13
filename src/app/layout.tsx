@@ -23,7 +23,6 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
   },
   twitter: { card: 'summary_large_image', title: 'ASHYQ — диагностика IELTS и SAT', description: SITE_DESCRIPTION },
-  alternates: { canonical: '/' },
 };
 
 export const viewport: Viewport = {

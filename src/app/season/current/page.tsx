@@ -5,6 +5,7 @@ import { Footer, NavBar } from '@/components/ui/CleanUi';
 export const metadata: Metadata = {
   title: 'Season HQ — интерактивный прототип',
   description: 'Демо кабинета участника активного сезона ASHYQ.',
+  alternates: { canonical: '/season/current' },
   robots: { index: false, follow: false },
 };
 

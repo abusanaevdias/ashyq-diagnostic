@@ -2,7 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteFooter, SiteHeader } from '@/components/ui/SiteChrome';
 
-export const metadata: Metadata = { title: 'Политика конфиденциальности — ASHYQ' };
+export const metadata: Metadata = {
+  title: 'Политика конфиденциальности — ASHYQ',
+  alternates: { canonical: '/privacy' },
+};
 
 export default function PrivacyPage() {
   return (

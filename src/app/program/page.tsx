@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Программа ASHYQ',
   description: 'Система прогресса ASHYQ: Match Days, рейтинг команд и чемпионат сезона.',
+  alternates: { canonical: '/program' },
 };
 
 /**
