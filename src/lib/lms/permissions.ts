@@ -1,3 +1,4 @@
+import type { SeasonParticipant, Team } from '@/lib/season/types';
 import type { BlogPost, ClassRoom, Role, Submission, User } from './types';
 
 /**
@@ -21,7 +22,11 @@ export type Action =
   /** Комментировать любую сдачу в своих классах и ставить оценку. */
   | 'submission.review'
   /** Создавать, редактировать, публиковать посты блога. */
-  | 'blog.write';
+  | 'blog.write'
+  /** Чемпионат: сезон, команды, баллы, проверка Match Day (организатор). */
+  | 'season.manage'
+  /** Чемпионат: Season HQ и ответ команды на Match Day. */
+  | 'season.play';
 
 export const ROLES: readonly Role[] = ['student', 'teacher', 'author'];
 
@@ -32,6 +37,9 @@ export const PERMISSIONS: Record<Action, readonly Role[]> = {
   'content.create': ['teacher'],
   'submission.review': ['teacher'],
   'blog.write': ['author'],
+  // решение пользователя 2026-09-14: команды собирает организатор или учитель
+  'season.manage': ['teacher'],
+  'season.play': ['student'],
 };
 
 export function can(role: Role | null | undefined, action: Action): boolean {
@@ -93,4 +101,15 @@ export function canUseThread(user: User | null, submission: Submission, cls: Cla
 
 export function canEditPost(user: User | null, post: BlogPost): boolean {
   return Boolean(user) && can(user!.role, 'blog.write') && post.authorId === user!.id;
+}
+
+/* ---------- чемпионат ---------- */
+
+export function canManageSeason(user: User | null): boolean {
+  return Boolean(user) && can(user!.role, 'season.manage');
+}
+
+/** Ответ на Match Day отправляет только капитан своей команды. */
+export function canSubmitMatch(user: User | null, participant: SeasonParticipant | undefined, team: Team | undefined): boolean {
+  return Boolean(user && participant && team) && can(user!.role, 'season.play') && team!.captainId === participant!.id;
 }
