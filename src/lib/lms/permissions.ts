@@ -46,6 +46,19 @@ export const ROUTE_ROLES = {
   write: PERMISSIONS['blog.write'],
 } as const;
 
+export function roleAllowed(role: Role, roles: readonly Role[]): boolean {
+  return roles.includes(role);
+}
+
+/** Ссылки кабинета по роли — для меню аватара и /me. Выводятся из матрицы. */
+export function roleLinks(role: Role): Array<{ href: string; label: string; text: string }> {
+  const links: Array<{ href: string; label: string; text: string }> = [];
+  if (can(role, 'submission.create')) links.push({ href: '/classes', label: 'Мой класс', text: 'Уроки, материалы и задания ваших классов.' });
+  if (can(role, 'content.create')) links.push({ href: '/teacher', label: 'Учителю', text: 'Классы, уроки, задания и проверка сдач.' });
+  if (can(role, 'blog.write')) links.push({ href: '/write', label: 'Редактору', text: 'Черновики и публикации блога.' });
+  return links;
+}
+
 export const ROLE_LABELS: Record<Role, string> = {
   student: 'ученик',
   teacher: 'учитель',
