@@ -112,6 +112,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
+| DESIGN-QA-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; дизайн-аудит всех маршрутов 1440/390 против DESIGN_V3 и исправления: `/crm` на `.v3`, вкладки Season HQ без обрезки на mobile, v2-нумерация `EditorialLabel` → v3 MicroLabel, прочие находки автоматического аудита (дописываю сюда до правки). Владею: `src/components/CrmDashboard.tsx`, `src/components/season/SeasonV3.module.css`, `EditorialLabel` в `src/components/ui/Brand.tsx` и его вызовы в `ProgramScreen.tsx`, `ProgressScreen.tsx`, `Onboarding.tsx`, `result/ResultScreen.tsx`, JSX (не `metadata`) `src/app/{community,faq}/page.tsx`. Не трогаю owned-файлы `SEO-META-001` |
 | SEO-META-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/product-backlog-seo`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-seo` | started 2026-09-13; backlog: `PRODUCT_BACKLOG.md`; исправить глобальный canonical `/`, добавить route-specific canonical для публичных страниц, перевести `src/app/opengraph-image.tsx` на v3 с оригинальным wordmark и добавить изолированный metadata check. Owned: `PRODUCT_BACKLOG.md`, `src/app/layout.tsx`, `src/app/opengraph-image.tsx`, metadata публичных route pages, `public/fonts/manrope-700-{cyrillic,latin}.woff`, новый scoped check; shared только точечные строки `HANDOFF.md`/`package.json`. Security и contacts задачи уже merged; их бизнес-логику не менять |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
@@ -120,6 +121,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 Блог ждёт настоящие статьи от пользователя (см. строку V3-BLOG-001).
 Контакты подтверждены и внесены (`CONTACTS-DATA-001`); почты и офиса у ASHYQ пока нет.
 Активна `SEO-META-001` (Codex GPT-5 `/root`) — scope зафиксирован в строке задачи и `PRODUCT_BACKLOG.md`.
+
+Активна также `DESIGN-QA-001` (Claude Opus 5) — только её owned файлы.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
