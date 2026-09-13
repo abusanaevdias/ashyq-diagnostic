@@ -97,7 +97,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-COURSES-001 | READY | — | ОК пользователя на направление v3 | Страница «Курсы» по `docs/DESIGN_V3.md` |
+| V3-COURSES-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; ОК пользователя на v3 получен; `/courses` по блюпринту DESIGN_V3 §6.2, контент из существующих данных программы, без выдуманных цен |
 | V3-DIAGNOSTIC-001 | READY | — | После Courses или явный новый приоритет | Оболочка страницы диагностики без изменения state/localStorage |
 | V3-ABOUT-001 | READY | — | — | Страница «О нас» |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
@@ -106,7 +106,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активных `IN_PROGRESS` задач на момент этого handoff нет.
+Активные `IN_PROGRESS`: `V3-COURSES-001` (Claude Opus 5).
 
 ## 6. Проверки и команды
 
