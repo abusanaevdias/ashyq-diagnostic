@@ -191,6 +191,42 @@
   font-size: 0.75rem;
 }
 
+/* карточки — ссылки на /blog/[slug] */
+.postLink {
+  display: block;
+  color: inherit;
+}
+
+.featured {
+  transition: box-shadow var(--t-base);
+}
+
+.featured:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.sideItem {
+  color: inherit;
+  transition: border-color var(--t-fast);
+}
+
+.sideItem:hover {
+  border-color: var(--ink);
+}
+
+.postLink:focus-visible,
+.sideItem:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured,
+  .sideItem {
+    transition: none;
+  }
+}
+
 .empty {
   margin-top: 32px;
   padding: 28px;

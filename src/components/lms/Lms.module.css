@@ -720,6 +720,110 @@ textarea.field {
   }
 }
 
+/* ---------- автор: редактор; публичная статья блога (шаг 5) ---------- */
+
+.tabs {
+  margin-top: 20px;
+  display: none;
+  gap: 8px;
+}
+
+.tab {
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab[aria-selected='true'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.editorGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+
+textarea.editorArea {
+  min-height: 360px;
+}
+
+.preview {
+  position: sticky;
+  top: 96px;
+}
+
+.article {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.articleCover {
+  position: relative;
+  margin-top: 24px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+
+.articleCover img {
+  object-fit: cover;
+}
+
+.article .md {
+  margin-top: 28px;
+  font-size: 1.0625rem;
+}
+
+.article .md h2 {
+  margin-top: 16px;
+  font-size: 1.5rem;
+}
+
+.article .md h3 {
+  margin-top: 12px;
+  font-size: 1.25rem;
+}
+
+.moreSection {
+  margin-top: 64px;
+}
+
+@media (max-width: 900px) {
+  .tabs {
+    display: flex;
+  }
+
+  .editorGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .paneHidden {
+    display: none;
+  }
+
+  .preview {
+    position: static;
+  }
+}
+
 /* синхронно с бургером навбара (CleanUi.module.css) */
 @media (max-width: 1024px) {
   .barOnly {

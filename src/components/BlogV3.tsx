@@ -2,14 +2,20 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { BLOG_CATEGORIES, BLOG_IS_DEMO, BLOG_POSTS, type BlogCategory } from '@/data/blog';
+import Link from 'next/link';
+import { BLOG_CATEGORIES, BLOG_IS_DEMO, type BlogCategory } from '@/data/blog';
+import { formatDay, postCover } from '@/lib/lms/format';
+import { useLmsData } from '@/lib/lms/hooks';
+import { defaultPosts } from '@/lib/lms/local-repos';
+import { getRepos } from '@/lib/lms/repos';
 import { ButtonLink, FilterChip, Footer, MicroLabel, NavBar } from './ui/CleanUi';
 import home from './HomeV3.module.css';
 import styles from './BlogV3.module.css';
 
 /**
- * /blog по DESIGN_V3 §6.5. Статей-страниц пока нет, поэтому карточки
- * не ссылки, а «Скоро». Подписка без бэкенда — ведём в заявку сезона.
+ * /blog по DESIGN_V3 §6.5. Статьи — опубликованные посты из BlogRepo (LMS-001);
+ * на сервере и до загрузки — стартовые темы, чтобы разметка не была пустой.
+ * Подписка без бэкенда — ведём в заявку сезона.
  */
 
 type Filter = 'all' | BlogCategory;
@@ -19,12 +25,17 @@ const FILTERS: Array<{ id: Filter; label: string }> = [
   ...(Object.keys(BLOG_CATEGORIES) as BlogCategory[]).map((id) => ({ id, label: BLOG_CATEGORIES[id] })),
 ];
 
+const categoryLabel = (category: string) => BLOG_CATEGORIES[category as BlogCategory] ?? category;
+
 export default function BlogV3() {
   const [filter, setFilter] = useState<Filter>('all');
   const [query, setQuery] = useState('');
+  const { data } = useLmsData(() => getRepos().blog.listPublished(), 'blog:published');
   const q = query.trim().toLowerCase();
-  const posts = BLOG_POSTS.filter((post) => (filter === 'all' || post.category === filter) && (!q || `${post.title} ${post.excerpt}`.toLowerCase().includes(q)));
+  const posts = (data ?? defaultPosts()).filter((post) => (filter === 'all' || post.category === filter) && (!q || `${post.title} ${post.excerpt}`.toLowerCase().includes(q)));
   const [featured, ...rest] = posts;
+  // дата в часовом поясе устройства — только после загрузки, иначе расхождение SSR/клиента
+  const day = (iso?: string) => (data && iso ? formatDay(iso) : '');
 
   return (
     <div className={home.page}>
@@ -54,22 +65,29 @@ export default function BlogV3() {
           {featured ? (
             <div className={styles.grid}>
               <article className={styles.featured}>
-                <div className={styles.featuredPhoto}>
-                  <Image src={featured.photo} alt="" fill sizes="(max-width: 900px) 100vw, 58vw" />
-                  <span className={styles.badge}>{BLOG_CATEGORIES[featured.category]}</span>
-                </div>
-                <div className={styles.featuredBody}>
-                  <h2 className={styles.featuredTitle}>{featured.title}</h2>
-                  <p className={styles.excerpt}>{featured.excerpt}</p>
-                  <div className={styles.metaRow}><span>Статья готовится</span><span className={styles.soon}>Скоро</span></div>
-                </div>
+                <Link href={`/blog/${featured.slug}`} className={styles.postLink}>
+                  <div className={styles.featuredPhoto}>
+                    <Image src={postCover(featured.coverUrl)} alt="" fill sizes="(max-width: 900px) 100vw, 58vw" />
+                    <span className={styles.badge}>{categoryLabel(featured.category)}</span>
+                  </div>
+                  <div className={styles.featuredBody}>
+                    <h2 className={styles.featuredTitle}>{featured.title}</h2>
+                    <p className={styles.excerpt}>{featured.excerpt}</p>
+                    <div className={styles.metaRow}><span>{day(featured.publishedAt)}</span><span className={styles.soon}>Читать →</span></div>
+                  </div>
+                </Link>
               </article>
               {rest.length ? (
                 <div className={styles.side}>
-                  {rest.slice(0, 3).map((post) => (
-                    <article className={styles.sideItem} key={post.slug}>
-                      <div className={styles.sideThumb}><Image src={post.photo} alt="" fill sizes="72px" /></div>
-                      <div><h3 className={styles.sideTitle}>{post.title}</h3><p className={styles.sideMeta}>{BLOG_CATEGORIES[post.category]} · скоро</p></div>
+                  {rest.map((post) => (
+                    <article key={post.id}>
+                      <Link href={`/blog/${post.slug}`} className={styles.sideItem}>
+                        <div className={styles.sideThumb}><Image src={postCover(post.coverUrl)} alt="" fill sizes="72px" /></div>
+                        <div>
+                          <h3 className={styles.sideTitle}>{post.title}</h3>
+                          <p className={styles.sideMeta}>{categoryLabel(post.category)}{day(post.publishedAt) ? ` · ${day(post.publishedAt)}` : ''}</p>
+                        </div>
+                      </Link>
                     </article>
                   ))}
                 </div>

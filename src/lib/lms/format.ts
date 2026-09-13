@@ -26,6 +26,16 @@ export function relativeTime(iso: string, now = Date.now()): string {
   return formatDate(iso).split(',')[0];
 }
 
+/** «20 сен» — дата без времени (посты блога). */
+export function formatDay(iso: string): string {
+  return formatDate(iso).split(',')[0];
+}
+
+/** Обложка поста: только локальный путь из /public (next/image упадёт на чужом хосте). */
+export function postCover(coverUrl?: string): string {
+  return coverUrl && /^\/(?!\/)/.test(coverUrl) ? coverUrl : '/brand/lesson-grid.jpg';
+}
+
 /** Ссылки материалов — только http(s): javascript:/data: в href недопустимы. */
 export function isHttpUrl(url: string): boolean {
   try {
