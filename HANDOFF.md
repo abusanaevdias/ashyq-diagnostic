@@ -118,6 +118,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
+| CARD-UNIFY-001 | IN_PROGRESS | Claude Opus 5 | `claude/card-unify` (PR в `main`); worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; запрос пользователя: экранная карточка результата (тёмная, `DiagnosticCard.tsx`) и сохраняемый PNG (светлый v3, `card-image.ts`) разные; в PNG «не выбрана» вылезает из блока «Цель». Сделать экранную карточку по дизайну PNG из того же `CardData`, подгонять шрифт «Цели»/«Gap» под ширину блока, добавить в `scripts/card-image-check.ts` измерение переполнения текста. Владею: `src/components/result/DiagnosticCard.tsx`, `src/lib/card-image.ts`, `scripts/card-image-check.ts`, пропсы карточки в `src/components/result/ResultScreen.tsx`. Файлы `SEO-META-001` и `CI-RELEASE-001` не трогаю |
 | SEO-META-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/product-backlog-seo`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-seo` | started 2026-09-13; backlog: `PRODUCT_BACKLOG.md`; исправить глобальный canonical `/`, добавить route-specific canonical для публичных страниц, перевести `src/app/opengraph-image.tsx` на v3 с оригинальным wordmark и добавить изолированный metadata check. Owned: `PRODUCT_BACKLOG.md`, `src/app/layout.tsx`, `src/app/opengraph-image.tsx`, metadata публичных route pages, `public/fonts/manrope-700-{cyrillic,latin}.woff`, новый scoped check; shared только точечные строки `HANDOFF.md`/`package.json`. Security и contacts задачи уже merged; их бизнес-логику не менять |
 | CI-RELEASE-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/ci-release`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-ci` | started 2026-09-13; GitHub Actions workflow `.github/workflows/ci.yml` (+ `docs/CI.md`): на PR и push в `main` — npm ci, playwright chromium, lint, typecheck, validate:bank, build, затем на `next start` e2e с `CRM_ADMIN_KEY`, `check:crm`, `check:crm-ui`, `e2e:audio`, `card-image-check`; скриншоты/лог сервера — артефакты. Owned: `.github/**`, `docs/CI.md`; shared `HANDOFF.md` — только эта строка и итог. Не трогаю owned-файлы `DESIGN-QA-001` и `SEO-META-001`; branch protection (блокировка merge при красном gate) — настройка владельца репозитория, дам шаги в `docs/CI.md` |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
@@ -130,6 +131,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 Активна `CI-RELEASE-001` (Codex GPT-5 `/root`, worktree `ashyq-ci`) — только
 `.github/**`, `docs/CI.md` и её строка в этом реестре.
+
+Активна `CARD-UNIFY-001` (Claude Opus 5) — только её owned файлы, изменения через PR.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
