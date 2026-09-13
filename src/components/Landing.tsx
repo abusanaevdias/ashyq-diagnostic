@@ -10,7 +10,7 @@ import styles from './HomeV3.module.css';
 
 type ValueStyle = CSSProperties & { '--value': string };
 
-function continueLabel(run: RunState): string | null {
+export function continueLabel(run: RunState): string | null {
   if (run.stage === 'quiz' && !run.finished) {
     const index = Math.min(run.currentIndex + 1, run.questionIds.length);
     return `Продолжить · вопрос ${index} из ${run.questionIds.length}`;

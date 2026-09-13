@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import DiagnosticV3 from './DiagnosticV3';
 import Landing from './Landing';
 import Onboarding from './Onboarding';
 import QuizRunner from './quiz/QuizRunner';
@@ -16,7 +17,7 @@ import { useDiagnostic } from '@/lib/useDiagnostic';
  * Состояние каждого экзамена хранится отдельно (localStorage), поэтому
  * результаты IELTS и SAT независимы, а refresh не убивает прогресс.
  */
-export default function DiagnosticApp() {
+export default function DiagnosticApp({ intro = 'home' }: { intro?: 'home' | 'diagnostic' }) {
   const d = useDiagnostic();
 
   const { run, activeExam, result } = d;
@@ -35,7 +36,7 @@ export default function DiagnosticApp() {
   }, [d.hydrated, activeExam]);
 
   if (!activeExam || !run) {
-    return <Landing runs={d.runs} onSelect={d.selectExam} />;
+    return intro === 'diagnostic' ? <DiagnosticV3 runs={d.runs} onSelect={d.selectExam} /> : <Landing runs={d.runs} onSelect={d.selectExam} />;
   }
 
   if (run.stage === 'onboarding') {
@@ -84,7 +85,7 @@ export default function DiagnosticApp() {
 
   if (!result) {
     // finished-флаг есть, а данных нет — безопасный выход на лендинг
-    return <Landing runs={d.runs} onSelect={d.selectExam} />;
+    return intro === 'diagnostic' ? <DiagnosticV3 runs={d.runs} onSelect={d.selectExam} /> : <Landing runs={d.runs} onSelect={d.selectExam} />;
   }
 
   if (run.stage === 'review') {

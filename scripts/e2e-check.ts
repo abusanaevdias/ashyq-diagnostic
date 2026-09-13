@@ -196,6 +196,16 @@ async function main() {
   await dpage.screenshot({ path: 'screenshots/landing-desktop.png', fullPage: true });
   check('landing desktop: рендерится', (await dpage.locator('h1').innerText()).length > 10);
   await desktop.close();
+
+  // /diagnostic: v3-интро ведёт в тот же onboarding
+  await page.goto(`${BASE}/diagnostic${UTM}`, { waitUntil: 'networkidle' });
+  const diagText = await page.locator('body').innerText();
+  check('diagnostic: v3-интро и disclaimer', has(diagText, 'Что вы получите') && has(diagText, 'не официальный'));
+  const diagScroll = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check('diagnostic: нет горизонтального скролла', diagScroll <= 0, `${diagScroll}px`);
+  await page.locator('#hero').getByRole('button', { name: 'Начать диагностику SAT' }).click();
+  await page.waitForTimeout(300);
+  check('diagnostic: CTA открывает onboarding', !has(await page.locator('h1').first().innerText(), 'Узнайте свой уровень'));
   await ctx.close();
 
   /* ---------- 2. IELTS: все ответы верные ---------- */
