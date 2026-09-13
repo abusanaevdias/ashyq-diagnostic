@@ -110,14 +110,15 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
+| SEC-AUDIT-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; аудит безопасности всего сайта с исправлениями: admin-ключ только в заголовке, CSP/COOP, CSPRNG для runId. Владею: `next.config.mjs`, `src/lib/admin-auth.ts`, `newRunId` в `src/lib/storage.ts`, runId в `src/components/SeasonForm.tsx`, `.env.example`, security-блок `scripts/e2e-check.ts`, раздел безопасности `README.md` |
+| CONTACTS-DATA-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; пользователь подтвердил WhatsApp 77067080181, Instagram/Threads/Telegram-канал @ashyqedu, Telegram ashyqeducation; почты и адреса нет. Снять демо с `/contacts`, соцсети в контакты и footer, `/contacts` в sitemap. Владею: `src/components/ContactsV3.*`, `src/app/contacts/**`; shared точечно: footer в `CleanUi.tsx`, `site.ts`, contacts-блок e2e |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
 Блог ждёт настоящие статьи от пользователя (см. строку V3-BLOG-001).
-Контакты ждут подтверждённые данные от пользователя (см. строку V3-CONTACTS-001).
-Активных `IN_PROGRESS` задач нет.
-Независимых `READY` задач без новых данных/решений пользователя нет.
+Контакты подтверждены пользователем 2026-09-13 — вносятся задачей `CONTACTS-DATA-001`.
+Активны `SEC-AUDIT-001` и `CONTACTS-DATA-001` (Claude Opus 5) — только их owned/shared файлы.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
