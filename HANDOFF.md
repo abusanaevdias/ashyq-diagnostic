@@ -101,20 +101,19 @@ ASHYQ — образовательный клуб Казахстана: подг
 | V3-ABOUT-001 | DONE | Codex GPT-5 `/root` | `ai2/v3-about`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-about` | `/about` по DESIGN_V3 §6.4; mission hero, 4 подтверждённые метрики, 4 ценности, dark-warm mission card; nav/footer и sitemap. Commit `ae1e25a`. Files: `src/app/about/page.tsx`, `src/components/AboutV3.tsx`, `AboutV3.module.css`; точечные строки в `CleanUi.tsx`, `site.ts`, `e2e-check.ts`. Проверки после rebase: lint/typecheck/build green; bank 49, 0 errors/warnings; e2e 85/85 (+4 about); 21st review 0/0/0; 1440/390 overflow 0, mobile tap ≥44, reduced motion 0s. Риски: campus-фото отсутствует — использован и кадрирован существующий `hero-students.jpg`; нет подтверждённых имён/отзывов; 21st registry search требует login. Следующий safe step: `V3-BLOG-001` или `V3-CONTACTS-001`; quiz-файлы завершены отдельной задачей |
 | V3-LEGACY-PAGES-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/program`, `/progress`, `/community`, `/faq`, `/privacy`, `/terms` на `.v3`; `/program` и `/progress` получили общие v3 NavBar/Footer вместо своих шапок; красная CTA-полоса с TornEdge на `/program` → `band-dark`; штамп «sample» → v3 Badge (`.v3 .stamp`); фото `/community` без полароид-рамки; `text-display` читает `--fs-display` (в `.v3` = display-xl). Тексты и e2e-контракт не менялись. Commit `4ffa497`, fast-forward в `main`. Проверки: lint, typecheck, build green; e2e 85/85 (включая about, без `CRM_ADMIN_KEY`); 6 страниц × 1440/390 — overflow 0, wordmark 22px. Риски: `Brand.tsx` (TornEdge, Tape, EditorialLabel) больше нигде не нужен в v3-виде, кроме EditorialLabel/HandNote — можно чистить отдельной задачей; `/season` и `/crm` на своих модулях не проверялись в этой задаче |
 | V3-BLOG-001 | DONE (демо-контент) | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/blog` по DESIGN_V3 §6.5: фильтр категорий, рабочий поиск, featured + side-list, пустое состояние, blush-полоса. Статей нет (решение пользователя) — 4 примера тем в `src/data/blog.ts` за флагом `BLOG_IS_DEMO`: видимая демо-плашка, `noindex`, `/blog` не в sitemap; без авторов/дат/просмотров. Карточки «Скоро» — страниц статей нет; подписка ведёт в заявку `/season` — бэкенда рассылки нет. «Блог» в nav/footer. Commit `95b7625`, fast-forward в `main`. Проверки: lint, typecheck, build green; e2e 89/89 (+4 blog, без `CRM_ADMIN_KEY`); 1440/390 overflow 0, wordmark 22px, mobile tap ≥44; nav с 7 ссылками в одну строку на 920px. Когда придут статьи: заменить `BLOG_POSTS`, `BLOG_IS_DEMO = false`, добавить `/blog` в `SITE_ROUTES`, при необходимости `/blog/[slug]` |
+| V3-CARD-IMAGE-001 | DONE | Codex GPT-5 `/root` | `ai2/v3-card-image`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-card-image` | Downloadable PNG результата переведён с v2-постера на v3: точные токены, оригинальный красный wordmark, self-hosted Manrope 700 + Inter 400/600, surface/blush/dark-warm карточки, без grain/Oswald; disclaimer и данные/scoring не менялись. Длинный следующий шаг переносится на 2 строки. Commit `d4a1a95`. Files: `src/lib/card-image.ts`, `public/fonts/manrope-700-{cyrillic,latin}.woff2`, `scripts/card-image-check.ts`. Проверки после rebase: lint/typecheck/build green; bank 49, 0 errors/warnings; card check PASS (v3 tokens, legacy exclusion, disclaimer, настоящий wordmark/fonts, render 1080×1080); e2e 89/89 без `CRM_ADMIN_KEY`. Риски: карточка рассчитана на текущие 2 секции IELTS/SAT; при расширении диагностики до 3+ секций понадобится новая компоновка. Следующий safe step: отдельная чистка неиспользуемых v2-примитивов `Brand.tsx` |
 
 ## 5. Свободные и заблокированные задачи
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-CARD-IMAGE-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-card-image`; `C:\Users\Dias\Documents\ChatGPT\ashyq-card-image`; started 2026-09-13 | Перевести downloadable PNG результата на v3 без изменения scoring/result UI. Owned: `src/lib/card-image.ts`, `public/fonts/manrope-*-700-normal.woff2`, новый scoped check при необходимости; shared только `HANDOFF.md` |
 | V3-CONTACTS-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; решение пользователя: делать без подтверждённых контактов — `/contacts` по DESIGN_V3 §6.6 без выдуманных телефонов/адресов/e-mail (только уже используемый WhatsApp из `config.ts` и «Астана · онлайн»), рабочая форма = существующая `SeasonForm`, карта-заглушка; демо-плашка + noindex, вне sitemap. Владею: `src/app/contacts/**`, новые `src/components/ContactsV3.*`; shared точечно: иконки и ссылка «Контакты» (footer + mobile menu) в `CleanUi.tsx`, свой блок в `scripts/e2e-check.ts`, `HANDOFF.md` |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активна `V3-CARD-IMAGE-001` (Codex GPT-5 `/root`) — только её owned файлы.
 Блог ждёт настоящие статьи от пользователя (см. строку V3-BLOG-001).
-Активна также `V3-CONTACTS-001` (Claude Opus 5) — только её owned/shared файлы.
+Активна `V3-CONTACTS-001` (Claude Opus 5) — только её owned/shared файлы.
 Без внешних зависимостей после этого остаётся чистка неиспользуемых
 v2-примитивов в `Brand.tsx` — завести отдельный task ID.
 
@@ -156,6 +155,8 @@ npx tsx scripts/season-visual-check.ts
   lint/typecheck/build green, 6 страниц × 1440/390 overflow 0;
 - после V3-BLOG-001 (2026-09-13): e2e `89/89` без `CRM_ADMIN_KEY`,
   lint/typecheck/build green;
+- после V3-CARD-IMAGE-001 (2026-09-13): e2e `89/89` без `CRM_ADMIN_KEY`,
+  lint/typecheck/build green; card check PASS, PNG `1080×1080`;
 - после V3-ABOUT-001 (2026-09-13): e2e `85/85` без `CRM_ADMIN_KEY`,
   lint/typecheck/build green; 1440/390 overflow `0`, mobile tap ≥44;
 - v3 homepage и championship: visual QA 1440/390, overflow `0`,
