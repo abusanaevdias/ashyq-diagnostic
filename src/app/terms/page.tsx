@@ -2,7 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteFooter, SiteHeader } from '@/components/ui/SiteChrome';
 
-export const metadata: Metadata = { title: 'Условия использования — ASHYQ' };
+export const metadata: Metadata = {
+  title: 'Условия использования — ASHYQ',
+  alternates: { canonical: '/terms' },
+};
 
 export default function TermsPage() {
   return (

@@ -1,5 +1,6 @@
 import { chromium, devices, type Browser, type ConsoleMessage, type Page } from 'playwright';
 import { QUESTION_BANK } from '../src/data/questions';
+import { TELEGRAM_CONTACT } from '../src/lib/site';
 
 /**
  * E2E-прогон основных сценариев (mobile viewport, iPhone 12).
@@ -475,12 +476,23 @@ async function main() {
 
   // contacts: подтверждённые контакты, рабочая форма, страница индексируется
   await p3.goto(`${BASE}/contacts`, { waitUntil: 'networkidle' });
-  check('contacts: WhatsApp, Telegram и форма', (await p3.locator('main a[href^="https://wa.me/"]').count()) >= 1 && (await p3.locator('main a[href="https://t.me/ashyqeducation"]').count()) === 1 && (await p3.locator('#season-phone').count()) === 1);
+  check('contacts: WhatsApp, Telegram и форма', (await p3.locator('main a[href^="https://wa.me/"]').count()) >= 1 && (await p3.locator('main a[href="https://t.me/ashyqeducation"]').count()) === 1 && (await p3.locator('#contact-phone').count()) === 1);
   const socials = p3.locator('main a[href="https://www.instagram.com/ashyqedu/"], main a[href="https://www.threads.net/@ashyqedu"], main a[href="https://t.me/ashyqedu"]');
   check('contacts: соцсети @ashyqedu', (await socials.count()) === 3);
   check('contacts: страница индексируется', (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 0);
   const contactsScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('contacts: нет горизонтального скролла', contactsScroll <= 0, `${contactsScroll}px`);
+  await p3.locator('#contact-name').fill('E2E Contact');
+  await p3.locator('#contact-phone').fill('8 706 555 44 22');
+  await p3.getByRole('button', { name: 'Отправить обращение' }).click();
+  check('contacts: без согласия обращение не отправляется', has(await p3.locator('body').innerText(), 'Для отправки обращения нужно согласие'));
+  const contactRequestPromise = p3.waitForRequest((request) => request.url().endsWith('/api/lead') && request.method() === 'POST');
+  await p3.locator('input[type="checkbox"]').check();
+  await p3.getByRole('button', { name: 'Отправить обращение' }).click();
+  const contactPayload = (await contactRequestPromise).postDataJSON() as { kind?: string; runId?: string; plannedWhen?: string };
+  check('contacts: payload имеет отдельный kind', contactPayload.kind === 'contact' && contactPayload.runId?.startsWith('contact-') === true && contactPayload.plannedWhen === undefined);
+  await p3.getByText('Обращение принято').waitFor();
+  check('contacts: нейтральный success-state', has(await p3.locator('body').innerText(), 'ответит на вопрос'));
 
   // season: обязательное согласие и рабочий lead endpoint
   await p3.goto(`${BASE}/season`, { waitUntil: 'networkidle' });
@@ -498,7 +510,10 @@ async function main() {
   await p3.getByRole('button', { name: 'Узнать о следующем сезоне' }).click();
   check('season: без согласия заявка не отправляется', has(await p3.locator('body').innerText(), 'Для отправки заявки нужно согласие'));
   await p3.locator('input[type="checkbox"]').check();
+  const seasonRequestPromise = p3.waitForRequest((request) => request.url().endsWith('/api/lead') && request.method() === 'POST');
   await p3.getByRole('button', { name: 'Узнать о следующем сезоне' }).click();
+  const seasonPayload = (await seasonRequestPromise).postDataJSON() as { kind?: string; runId?: string; plannedWhen?: string };
+  check('season: payload остаётся отдельной воронкой', seasonPayload.kind === 'season' && seasonPayload.runId?.startsWith('season-') === true && seasonPayload.plannedWhen === 'next-season');
   await p3.getByText('Заявка принята').waitFor();
   check('season: заявка принята сервером', has(await p3.locator('body').innerText(), 'Заявка принята'));
 
@@ -538,6 +553,34 @@ async function main() {
   check('seo: CRM закрыта от индексации', (await robots.text()).includes('/crm'));
   check('seo: sitemap содержит публичные маршруты', sitemap.ok() && (await sitemap.text()).includes('/community'));
   check('seo: route title установлен', (await p3.title()).includes('Условия использования'));
+
+  // error states: 404 и maintenance брендированы, честно закрыты от индексации
+  const missing = await p3.request.get(`${BASE}/no-such-page-e2e`);
+  check('404: несуществующий маршрут отвечает 404', missing.status() === 404, `HTTP ${missing.status()}`);
+  await p3.goto(`${BASE}/no-such-page-e2e`, { waitUntil: 'load' });
+  const nfText = await p3.locator('body').innerText();
+  check(
+    '404: брендированная страница с навигацией и CTA',
+    has(nfText, 'Такой страницы нет') &&
+      (await p3.getByRole('link', { name: 'Вернуться на главную ASHYQ' }).count()) === 1 &&
+      (await p3.getByRole('link', { name: 'Пройти диагностику IELTS или SAT' }).count()) === 1,
+  );
+  const nfScroll = await p3.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  check('404: нет горизонтального скролла', nfScroll <= 0, `${nfScroll}px`);
+  await p3.goto(`${BASE}/maintenance`, { waitUntil: 'load' });
+  const maintText = await p3.locator('body').innerText();
+  check(
+    'maintenance: заглушка с подтверждёнными контактами и noindex',
+    has(maintText, 'технические работы') &&
+      (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 1 &&
+      (await p3.locator(`main a[href="https://t.me/${TELEGRAM_CONTACT}"]`).count()) === 1,
+  );
+  const maintScroll = await p3.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  check('maintenance: нет горизонтального скролла', maintScroll <= 0, `${maintScroll}px`);
 
   await p3.goto(`${BASE}/crm`, { waitUntil: 'networkidle' });
   const crmText = await p3.locator('body').innerText();

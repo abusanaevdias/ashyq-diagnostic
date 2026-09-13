@@ -5,6 +5,7 @@ import { Footer, NavBar } from '@/components/ui/CleanUi';
 export const metadata: Metadata = {
   title: 'ASHYQ Championship — активный сезон',
   description: 'Рейтинг команд и участников, Match Days и путь к финалу сезона ASHYQ.',
+  alternates: { canonical: '/season' },
 };
 
 export default function SeasonPage() {

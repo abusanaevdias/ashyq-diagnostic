@@ -4,6 +4,7 @@ import DiagnosticApp from '@/components/DiagnosticApp';
 export const metadata: Metadata = {
   title: 'Диагностика IELTS и SAT',
   description: 'Бесплатная предварительная оценка IELTS или SAT за 20 минут: диапазон балла, навыки и следующий шаг.',
+  alternates: { canonical: '/diagnostic' },
 };
 
 /**

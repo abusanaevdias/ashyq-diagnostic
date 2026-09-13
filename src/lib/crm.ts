@@ -62,7 +62,7 @@ export interface CrmSnapshot {
 }
 
 function leadActivityText(lead: StoredLead): string {
-  if (lead.kind === 'contact') return 'Оставил контакт для разбора';
+  if (lead.kind === 'contact') return 'Отправил обращение с сайта';
   if (lead.kind === 'season') return 'Оставил заявку на следующий сезон';
   if (lead.kind === 'whatsapp') return 'Перешёл в WhatsApp';
   return `Завершил диагностику${lead.band ? ` · ${lead.band}` : ''}`;

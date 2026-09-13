@@ -7,6 +7,7 @@ import { SiteFooter, SiteHeader } from '@/components/ui/SiteChrome';
 export const metadata: Metadata = {
   title: 'Сообщество ASHYQ',
   description: 'Среда ASHYQ: командная работа, Match Days, презентации и взаимная поддержка.',
+  alternates: { canonical: '/community' },
 };
 
 const VALUES: Array<{ glyph: GlyphName; title: string; text: string }> = [

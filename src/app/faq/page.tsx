@@ -6,6 +6,7 @@ import { SiteFooter, SiteHeader } from '@/components/ui/SiteChrome';
 export const metadata: Metadata = {
   title: 'Вопросы и ответы — ASHYQ',
   description: 'Ответы о диагностике IELTS и SAT, сезонах, прогрессе, формате и заявках ASHYQ.',
+  alternates: { canonical: '/faq' },
 };
 
 const FAQ = [
