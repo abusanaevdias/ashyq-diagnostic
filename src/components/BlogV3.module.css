@@ -1,0 +1,270 @@
+.demoBar {
+  padding: 12px var(--pad);
+  border-bottom: 1px solid var(--hairline);
+  background: var(--blush);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.hero {
+  padding-block: 56px 16px;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: center;
+  gap: 24px;
+}
+
+.heroCopy {
+  grid-column: span 7;
+}
+
+.title {
+  max-width: 16ch;
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.thumb,
+.featuredPhoto,
+.sideThumb {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.thumb {
+  grid-column: span 5;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-md);
+}
+
+.thumb img,
+.featuredPhoto img,
+.sideThumb img {
+  object-fit: cover;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chips button {
+  cursor: pointer;
+}
+
+.search {
+  width: min(320px, 100%);
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+}
+
+.search:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  align-items: start;
+  gap: 24px;
+}
+
+.featured {
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.featuredPhoto {
+  margin: 12px 12px 0;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-md);
+}
+
+.badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  background: var(--blush);
+  color: var(--red-deep);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.featuredBody {
+  padding: 20px 24px 24px;
+}
+
+.featuredTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.excerpt {
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.metaRow {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.soon {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.side {
+  display: grid;
+  gap: 12px;
+}
+
+.sideItem {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+
+.sideThumb {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-sm);
+}
+
+.sideTitle {
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.sideMeta {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+}
+
+.empty {
+  margin-top: 32px;
+  padding: 28px;
+  border: 1px dashed var(--hairline);
+  border-radius: var(--r-lg);
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.bandSection {
+  padding-bottom: 96px;
+}
+
+.band {
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-radius: var(--r-xl);
+  background: var(--blush);
+}
+
+.bandText {
+  max-width: 52ch;
+  margin-top: 12px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .heroGrid,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCopy,
+  .thumb {
+    grid-column: auto;
+  }
+
+  .bandSection {
+    padding-bottom: 72px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-block: 36px 0;
+  }
+
+  .chips button {
+    min-height: 44px;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .featuredBody {
+    padding: 18px 20px 20px;
+  }
+
+  .band {
+    padding: 32px 24px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bandAction > * {
+    width: 100%;
+  }
+
+  .bandSection {
+    padding-bottom: 56px;
+  }
+}

@@ -49,7 +49,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
           <Link className={styles.navLink} href="/courses">Курсы</Link>
           <Link className={styles.navLink} href="/#directions">Направления</Link>
           <Link className={styles.navLink} href="/program">Программа</Link>
-          <Link className={styles.navLink} href="/about">О нас</Link>
+          <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
           <Link className={styles.navLink} href="/community">Сообщество</Link>
           <Link className={styles.navLink} href="/faq">FAQ</Link>
         </div>
@@ -61,7 +61,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
             <Link className={styles.navLink} href="/courses">Курсы</Link>
             <Link className={styles.navLink} href="/#directions">Направления</Link>
             <Link className={styles.navLink} href="/program">Программа</Link>
-            <Link className={styles.navLink} href="/about">О нас</Link>
+            <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
             <Link className={styles.navLink} href="/community">Сообщество</Link>
             <Link className={styles.navLink} href="/faq">FAQ и поиск</Link>
           </div>
@@ -108,7 +108,7 @@ export function FilterChip({ children, active = false, onClick }: { children: Re
 
 const FOOTER_GROUPS = [
   { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/program', label: 'Программа' }, { href: '/?start=ielts', label: 'Диагностика' }, { href: '/progress', label: 'Прогресс' }] },
-  { title: 'ASHYQ', links: [{ href: '/about', label: 'О нас' }, { href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }] },
+  { title: 'ASHYQ', links: [{ href: '/about', label: 'О нас' }, { href: '/blog', label: 'Блог' },{ href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }] },
   { title: 'Документы', links: [{ href: '/privacy', label: 'Конфиденциальность' }, { href: '/terms', label: 'Условия' }] },
 ] as const;
 

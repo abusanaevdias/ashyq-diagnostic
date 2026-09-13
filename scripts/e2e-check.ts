@@ -462,6 +462,17 @@ async function main() {
   const coursesScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('courses: нет горизонтального скролла', coursesScroll <= 0, `${coursesScroll}px`);
 
+  // blog: демо-контент честно помечен и закрыт от индексации
+  await p3.goto(`${BASE}/blog`, { waitUntil: 'networkidle' });
+  check('blog: демо-плашка и noindex', has(await p3.locator('body').innerText(), 'Демо-контент') && (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 1);
+  await p3.getByRole('button', { name: 'SAT', exact: true }).click();
+  check('blog: фильтр категорий', (await p3.locator('main article').count()) === 1);
+  await p3.getByRole('button', { name: 'Все', exact: true }).click();
+  await p3.getByRole('searchbox', { name: 'Поиск по статьям' }).fill('Listening');
+  check('blog: поиск по статьям', (await p3.locator('main article').count()) === 1);
+  const blogScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check('blog: нет горизонтального скролла', blogScroll <= 0, `${blogScroll}px`);
+
   // season: обязательное согласие и рабочий lead endpoint
   await p3.goto(`${BASE}/season`, { waitUntil: 'networkidle' });
   const seasonText = await p3.locator('body').innerText();
