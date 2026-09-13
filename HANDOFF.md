@@ -109,15 +109,15 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
+| V3-BRAND-CLEANUP-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-brand-cleanup`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-brand-cleanup` | started 2026-09-13; удалить только доказанно неиспользуемые v2 exports `DiagnosticStamp`, `TopBar`, `Tape`, `TornEdge` из `src/components/ui/Brand.tsx`, убрать ставший лишним import, обновить комментарий модуля и привести stroke рукописной стрелки к лимиту v3 `1.6`; shared только `HANDOFF.md`; страницы/общие nav/e2e другого агента не трогать |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
 Блог ждёт настоящие статьи от пользователя (см. строку V3-BLOG-001).
 Контакты ждут подтверждённые данные от пользователя (см. строку V3-CONTACTS-001).
-Активных `IN_PROGRESS` задач нет.
-Без внешних зависимостей после этого остаётся чистка неиспользуемых
-v2-примитивов в `Brand.tsx` — завести отдельный task ID.
+Активна `V3-BRAND-CLEANUP-001` (Codex GPT-5 `/root`) — только `Brand.tsx` и своя строка `HANDOFF.md`.
+После этой чистки независимых `READY` задач без новых данных/решений пользователя нет.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
