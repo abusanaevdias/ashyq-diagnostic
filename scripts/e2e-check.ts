@@ -668,6 +668,61 @@ async function main() {
           );
         }
       }
+
+      // Аналитика: POST лида с utm_source и проверка статистики снапшота.
+      await p3.request.post(`${BASE}/api/lead`, {
+        data: {
+          kind: 'contact', exam: 'ielts', runId: `e2e-analytics-${Date.now().toString(36)}`,
+          name: 'E2E Analytics', phone: '8 706 333 44 55',
+          utm: { utm_source: 'e2e-analytics', utm_campaign: 'crm-analytics' },
+        },
+      });
+      const withAnalytics = (await (await p3.request.get(`${BASE}/api/crm`, { headers })).json()) as {
+        stats: {
+          analytics: {
+            leadsLast7Days: number;
+            funnel: { diagnostics: number; whatsapp: number; contacts: number; season: number };
+            bySource: Array<{ source: string; leads: number; contacts: number; season: number }>;
+            last14Days: Array<{ date: string; leads: number }>;
+          };
+        };
+      };
+      const analytics = withAnalytics.stats.analytics;
+
+      const trend = analytics.last14Days;
+      const today = new Date().toISOString().slice(0, 10);
+      const lastPoint = trend[trend.length - 1];
+      check(
+        'crm-analytics: тренд за 14 дней',
+        trend.length === 14 && lastPoint?.date === today && (lastPoint?.leads ?? 0) >= 1,
+        `${trend.length} точек, последняя ${lastPoint?.date} leads=${lastPoint?.leads}`,
+      );
+
+      const e2eSource = analytics.bySource.find((row) => row.source === 'e2e-analytics');
+      const sortedDesc = analytics.bySource.every(
+        (row, i) => i === 0 || analytics.bySource[i - 1].leads >= row.leads,
+      );
+      check(
+        'crm-analytics: источник e2e виден в разбивке',
+        sortedDesc && Boolean(e2eSource) && (e2eSource?.contacts ?? 0) >= 1,
+        e2eSource ? `leads=${e2eSource.leads} contacts=${e2eSource.contacts}` : 'источник не найден',
+      );
+
+      check(
+        'crm-analytics: воронка заполнена',
+        typeof analytics.funnel.diagnostics === 'number' &&
+          typeof analytics.funnel.whatsapp === 'number' &&
+          typeof analytics.funnel.contacts === 'number' &&
+          typeof analytics.funnel.season === 'number' &&
+          analytics.funnel.contacts >= 1,
+        `diagnostics=${analytics.funnel.diagnostics} whatsapp=${analytics.funnel.whatsapp} contacts=${analytics.funnel.contacts} season=${analytics.funnel.season}`,
+      );
+
+      check(
+        'crm-analytics: лиды за 7 дней',
+        typeof analytics.leadsLast7Days === 'number' && analytics.leadsLast7Days >= 1,
+        `leadsLast7Days=${analytics.leadsLast7Days}`,
+      );
     }
   }
 
