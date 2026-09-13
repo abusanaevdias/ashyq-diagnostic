@@ -1,0 +1,286 @@
+.hero {
+  padding-block: 64px 24px;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: center;
+  gap: 24px;
+}
+
+.heroCopy {
+  grid-column: span 6;
+}
+
+.title {
+  max-width: 14ch;
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.script,
+.bandNote {
+  color: var(--red);
+  font-family: var(--font-script);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.script {
+  margin-top: 24px;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  transform: rotate(-2deg);
+}
+
+.collage {
+  position: relative;
+  grid-column: span 6;
+  min-height: 440px;
+}
+
+.collageMain,
+.collageSide,
+.photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.collageMain,
+.collageSide {
+  position: absolute;
+}
+
+.collageMain {
+  top: 0;
+  right: 0;
+  width: 78%;
+  height: 320px;
+}
+
+.collageSide {
+  bottom: 0;
+  left: 0;
+  width: 52%;
+  height: 210px;
+  border: 6px solid var(--bg);
+}
+
+.collage img,
+.photo img {
+  object-fit: cover;
+}
+
+.filters {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filters button {
+  cursor: pointer;
+  transition: border-color var(--t-fast), background-color var(--t-fast), color var(--t-fast);
+}
+
+.filters button:hover {
+  border-color: var(--ink);
+}
+
+.grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  color: var(--ink);
+  transition: transform var(--t-base), box-shadow var(--t-base);
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.card:hover svg {
+  transform: translateX(2px);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.photo {
+  margin: 12px 12px 0;
+  aspect-ratio: 16 / 10;
+}
+
+.badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--blush);
+  color: var(--red-deep);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.cardBody {
+  flex: 1;
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.cardText {
+  max-width: 46ch;
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.cardFooter {
+  margin-top: auto;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.meta {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.bandSection {
+  padding-bottom: 96px;
+}
+
+.blushBand {
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-radius: var(--r-xl);
+  background: var(--blush);
+}
+
+.bandText {
+  max-width: 52ch;
+  margin-top: 14px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.bandActions {
+  margin-top: 24px;
+}
+
+.bandNote {
+  flex: 0 0 auto;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  transform: rotate(-3deg);
+}
+
+@media (max-width: 900px) {
+  .heroGrid,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCopy,
+  .collage {
+    grid-column: auto;
+  }
+
+  .collage {
+    min-height: 360px;
+  }
+
+  .bandSection {
+    padding-bottom: 72px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-block: 40px 0;
+  }
+
+  .collage {
+    min-height: 300px;
+  }
+
+  .collageMain {
+    width: 84%;
+    height: 230px;
+  }
+
+  .collageSide {
+    width: 58%;
+    height: 150px;
+  }
+
+  .filters button {
+    min-height: 44px;
+  }
+
+  .cardBody {
+    padding: 18px 20px 20px;
+  }
+
+  .bandSection {
+    padding-bottom: 56px;
+  }
+
+  .blushBand {
+    padding: 32px 24px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bandActions > * {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .filters button {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:hover svg {
+    transform: none;
+  }
+}

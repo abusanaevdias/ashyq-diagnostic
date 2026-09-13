@@ -46,6 +46,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
           <Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} priority />
         </Link>
         <div className={styles.navLinks}>
+          <Link className={styles.navLink} href="/courses">Курсы</Link>
           <Link className={styles.navLink} href="/#directions">Направления</Link>
           <Link className={styles.navLink} href="/program">Программа</Link>
           <Link className={styles.navLink} href="/community">Сообщество</Link>
@@ -56,6 +57,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
           </summary>
           <div className={styles.mobilePanel}>
+            <Link className={styles.navLink} href="/courses">Курсы</Link>
             <Link className={styles.navLink} href="/#directions">Направления</Link>
             <Link className={styles.navLink} href="/program">Программа</Link>
             <Link className={styles.navLink} href="/community">Сообщество</Link>
@@ -98,12 +100,12 @@ export function DirectionCard({ href, icon, eyebrow, title, children }: { href: 
   );
 }
 
-export function FilterChip({ children, active = false }: { children: React.ReactNode; active?: boolean }) {
-  return <button type="button" className={styles.chip} aria-pressed={active}>{children}</button>;
+export function FilterChip({ children, active = false, onClick }: { children: React.ReactNode; active?: boolean; onClick?: () => void }) {
+  return <button type="button" className={styles.chip} aria-pressed={active} onClick={onClick}>{children}</button>;
 }
 
 const FOOTER_GROUPS = [
-  { title: 'Учёба', links: [{ href: '/program', label: 'Программа' }, { href: '/?start=ielts', label: 'Диагностика' }, { href: '/progress', label: 'Прогресс' }] },
+  { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/program', label: 'Программа' }, { href: '/?start=ielts', label: 'Диагностика' }, { href: '/progress', label: 'Прогресс' }] },
   { title: 'ASHYQ', links: [{ href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }] },
   { title: 'Документы', links: [{ href: '/privacy', label: 'Конфиденциальность' }, { href: '/terms', label: 'Условия' }] },
 ] as const;

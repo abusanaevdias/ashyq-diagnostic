@@ -435,6 +435,14 @@ async function main() {
   check('community: ценности и CTA на месте', has(communityText, 'Люди делают знания живыми') && has(communityText, 'Следующий сезон'));
   check('community: изображения имеют alt', (await p3.locator('main img[alt]').count()) >= 2);
 
+  // courses: v3 каталог и рабочий фильтр
+  await p3.goto(`${BASE}/courses`, { waitUntil: 'networkidle' });
+  check('courses: четыре курса и CTA диагностики', (await p3.locator('main h3').count()) === 4 && has(await p3.locator('body').innerText(), 'Не знаете, с чего начать?'));
+  await p3.getByRole('button', { name: 'SAT', exact: true }).click();
+  check('courses: фильтр SAT работает', (await p3.locator('main h3').count()) === 3 && (await p3.getByRole('heading', { name: 'Подготовка к IELTS' }).count()) === 0);
+  const coursesScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check('courses: нет горизонтального скролла', coursesScroll <= 0, `${coursesScroll}px`);
+
   // season: обязательное согласие и рабочий lead endpoint
   await p3.goto(`${BASE}/season`, { waitUntil: 'networkidle' });
   const seasonText = await p3.locator('body').innerText();
