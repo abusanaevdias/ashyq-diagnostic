@@ -91,6 +91,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 | V3-HOME-001 | DONE | Codex `/root/design_v3_home` | `codex/design-v3`; isolated worktree | Токены, shared UI и главная v3; commit `ac3198f`; e2e 62/62 |
 | SEASON-UX-001 | DONE | Codex `/root/design_v3_home` | `codex/design-v3`; isolated worktree | `/season`, `/season/current`, Live Arena/Journey; commit `faa0f5b`; e2e 72/72 |
 | INTEGRATE-001 | DONE | Codex `/root` | `main` | CRM + v3 + championship объединены без конфликтов; merge `799fb5e` |
+| COORD-001 | DONE | Codex `/root` | `main` | Multi-agent protocol, task ledger and mandatory `AGENTS.md` gate; commit `b0e79db` |
 
 ## 5. Свободные и заблокированные задачи
 
