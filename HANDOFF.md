@@ -105,14 +105,15 @@ ASHYQ — образовательный клуб Казахстана: подг
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
 | V3-CARD-IMAGE-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-card-image`; `C:\Users\Dias\Documents\ChatGPT\ashyq-card-image`; started 2026-09-13 | Перевести downloadable PNG результата на v3 без изменения scoring/result UI. Owned: `src/lib/card-image.ts`, `public/fonts/manrope-*-700-normal.woff2`, новый scoped check при необходимости; shared только `HANDOFF.md` |
-| V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
+| V3-BLOG-001 | IN_PROGRESS | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | started 2026-09-13; решение пользователя: статей пока нет — `/blog` по DESIGN_V3 §6.5 на явно помеченных демо-данных (noindex, вне sitemap), настоящие подставит позже. Владею: `src/app/blog/**`, новые `src/components/BlogV3.*`, `src/data/blog.ts`; shared точечно: ссылка «Блог» в `CleanUi.tsx`, свой блок в `scripts/e2e-check.ts`, `HANDOFF.md` |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активна `V3-CARD-IMAGE-001` (Codex GPT-5 `/root`), только перечисленные owned
-файлы. `V3-BLOG-001` и `V3-CONTACTS-001` ждут контент/контакты пользователя.
+Активны `V3-CARD-IMAGE-001` (Codex GPT-5 `/root`) и `V3-BLOG-001`
+(Claude Opus 5) — только перечисленные owned/shared файлы каждой задачи.
+`V3-CONTACTS-001` ждёт подтверждённые контакты пользователя.
 Без внешних зависимостей после этого остаётся чистка неиспользуемых
 v2-примитивов в `Brand.tsx` — завести отдельный task ID.
 
