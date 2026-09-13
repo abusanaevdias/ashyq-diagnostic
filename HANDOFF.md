@@ -96,22 +96,21 @@ ASHYQ — образовательный клуб Казахстана: подг
 | V3-COURSES-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/courses` (`src/app/courses/page.tsx`, `src/components/CoursesV3.tsx` + `.module.css`); ссылка «Курсы» в nav/footer, `FilterChip` получил `onClick`, `/courses` в sitemap; commit `25228f6`, fast-forward в `main`. Проверки: lint, typecheck, validate:bank, build green; e2e 78/78 (+3 новых courses-проверки, без `CRM_ADMIN_KEY`); visual 1440/390 overflow 0, wordmark 22px, mobile tap ≥44. Риски: в `public/brand` только 2 фото — карточки повторяют снимки (`ponytail:` в коде), нужны реальные фото курсов; цен, модулей и ★рейтинга нет — нет подтверждённых данных; бейдж на `red-deep` и meta на `ink-soft` ради контраста AA |
 | V3-DIAGNOSTIC-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | `/diagnostic` показывает `DiagnosticV3` (hero + disclaimer-карточка, чек-лист «Что вы получите?», шаги 01–03, 90% + реплика команды) при пустой сессии; `DiagnosticApp` получил проп `intro` (по умолчанию `home` — главная без изменений); `continueLabel` экспортирован из `Landing.tsx`; `useDiagnostic.ts`, localStorage, onboarding/quiz/result не тронуты; commit `cd533da`, fast-forward в `main`. Проверки: lint, typecheck, build green; e2e 81/81 (+3 diagnostic, без `CRM_ADMIN_KEY`); visual 1440/390 overflow 0, wordmark 22px, tap ≥44, mobile CTA низ 536px. Риски: TestimonialCard из блюпринта заменён репликой «Команда ASHYQ» — нет реальных отзывов; avatar-stack пропущен — нет фото; экраны onboarding/quiz/result/review всё ещё в стиле v2 — отдельная задача |
 | V3-QUIZ-SCREENS-001 | DONE | Claude Opus 5 | `claude/ashyq-diagnostic-handoff-f946ca`; worktree `.claude/worktrees/ashyq-diagnostic-handoff-f946ca` | Scoped-тема `.v3` (конец `@layer components` в `globals.css`): tailwind-цвета/`rounded-md/lg`/`shadow-card`/line-height h1–h2 читают CSS-переменные, чьи `:root`-значения = v2, поэтому страницы вне `.v3` не меняются (скриншоты `/program` и `/progress` байт-в-байт до/после). Корни Onboarding, QuizRunner, ResultScreen, ReviewScreen получили `v3`, wordmark 22px, без backdrop-blur; CTA результата — `band-dark` вместо красной полосы с TornEdge; карточка результата без зерна и штампа prelim; `.option-key` расширяется под TRUE/FALSE/NG. aria, тексты, state, localStorage не менялись. Commit `179f38c`, fast-forward в `main`. Проверки: lint, typecheck, build green; e2e 81/81 (без `CRM_ADMIN_KEY`); overflow 0 на 1440/390; ключи вариантов без переполнения на всех 12 вопросах IELTS. Риски: PNG «Сохранить карточку» (`src/lib/card-image.ts`) рисуется своими v2-цветами — не трогал; `text-ink-faint` в `.v3` = ink-soft ради AA; зелёный фон верного ответа в разборе (`#e8efe2`) остался — функциональный сигнал, в v3-палитре аналога нет |
+| V3-ABOUT-001 | DONE | Codex GPT-5 `/root` | `ai2/v3-about`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-about` | `/about` по DESIGN_V3 §6.4; mission hero, 4 подтверждённые метрики, 4 ценности, dark-warm mission card; nav/footer и sitemap. Commit `ae1e25a`. Files: `src/app/about/page.tsx`, `src/components/AboutV3.tsx`, `AboutV3.module.css`; точечные строки в `CleanUi.tsx`, `site.ts`, `e2e-check.ts`. Проверки после rebase: lint/typecheck/build green; bank 49, 0 errors/warnings; e2e 85/85 (+4 about); 21st review 0/0/0; 1440/390 overflow 0, mobile tap ≥44, reduced motion 0s. Риски: campus-фото отсутствует — использован и кадрирован существующий `hero-students.jpg`; нет подтверждённых имён/отзывов; 21st registry search требует login. Следующий safe step: `V3-BLOG-001` или `V3-CONTACTS-001`; quiz-файлы завершены отдельной задачей |
 
 ## 5. Свободные и заблокированные задачи
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| V3-ABOUT-001 | IN_PROGRESS | Codex GPT-5 `/root` | `ai2/v3-about`; `C:\Users\Dias\Documents\ChatGPT\ashyq-about`; started 2026-09-13 | `/about` по DESIGN_V3 §6.4; owned: `src/app/about/**`, `src/components/AboutV3.tsx`, `src/components/AboutV3.module.css`; shared точечно: `CleanUi.tsx`, `site.ts`, `e2e-check.ts`, `HANDOFF.md` |
 | V3-BLOG-001 | READY | — | Контент/источник статей | Страница и состояния блога |
 | V3-CONTACTS-001 | READY | — | Подтверждённые контакты/карта | Страница контактов |
 | SEASON-AUTH-001 | BLOCKED | — | Выбор OTP/e-mail/invite и guardian policy | Персональная авторизация и RBAC |
 | SEASON-BACKEND-001 | BLOCKED | — | `SEASON-AUTH-001`, правила scoring и appeal | БД сезонов, ledger баллов, Match Days, апелляции |
 | CRM-PROD-001 | BLOCKED | — | Выбор auth/БД/deployment | Многопользовательская production CRM вместо shared key/JSONL |
 
-Активна `V3-ABOUT-001` (Codex GPT-5 `/root`) — только её owned/shared файлы.
-Следующий safe step после неё: перевести v2-страницы `/program`, `/progress`,
-`/community`, `/faq`, legal на v3 — достаточно добавить класс `v3` на корень
-страницы и поправить плакатные элементы (TornEdge, `bg-red`-полосы).
+Активных `IN_PROGRESS` задач нет. Следующие safe steps: `V3-BLOG-001`,
+`V3-CONTACTS-001` либо перевод оставшихся v2-страниц `/program`, `/progress`,
+`/community`, `/faq`, legal на v3 отдельными task ID.
 
 Общие файлы при параллельной работе (`src/components/ui/CleanUi.tsx`,
 `src/lib/site.ts`, `scripts/e2e-check.ts`, `HANDOFF.md`): только точечные
@@ -147,6 +146,8 @@ npx tsx scripts/season-visual-check.ts
   lint/typecheck/build green;
 - после V3-QUIZ-SCREENS-001 (2026-09-13): e2e `81/81` без `CRM_ADMIN_KEY`,
   lint/typecheck/build green, v2-страницы вне `.v3` байт-в-байт без изменений;
+- после V3-ABOUT-001 (2026-09-13): e2e `85/85` без `CRM_ADMIN_KEY`,
+  lint/typecheck/build green; 1440/390 overflow `0`, mobile tap ≥44;
 - v3 homepage и championship: visual QA 1440/390, overflow `0`,
   reduced-motion работает;
 - owned championship slice: hardcoded colors `0`; токены совпадают с
