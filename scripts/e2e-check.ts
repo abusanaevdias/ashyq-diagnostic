@@ -13,6 +13,7 @@ import { QUESTION_BANK } from '../src/data/questions';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
 const UTM = '?utm_source=whatsapp&utm_campaign=cold01&utm_content=hook_a';
+const CRM_ADMIN_KEY = process.env.CRM_ADMIN_KEY;
 
 
 /** innerText в Chromium возвращает текст с учётом text-transform, поэтому сравниваем в верхнем регистре */
@@ -457,8 +458,31 @@ async function main() {
   const robots = await p3.request.get(`${BASE}/robots.txt`);
   const sitemap = await p3.request.get(`${BASE}/sitemap.xml`);
   check('seo: robots.txt доступен', robots.ok() && (await robots.text()).includes('sitemap.xml'));
+  check('seo: CRM закрыта от индексации', (await robots.text()).includes('/crm'));
   check('seo: sitemap содержит публичные маршруты', sitemap.ok() && (await sitemap.text()).includes('/community'));
   check('seo: route title установлен', (await p3.title()).includes('Условия использования'));
+
+  await p3.goto(`${BASE}/crm`, { waitUntil: 'networkidle' });
+  const crmText = await p3.locator('body').innerText();
+  check('crm: закрытый экран запрашивает admin key', has(crmText, 'ASHYQ admin key') && has(crmText, 'Закрытый раздел'));
+  const crmApi = await p3.request.get(`${BASE}/api/crm`);
+  check('crm: API без ключа скрыт', crmApi.status() === 404, `HTTP ${crmApi.status()}`);
+  if (CRM_ADMIN_KEY) {
+    const headers = { 'x-ashyq-admin-key': CRM_ADMIN_KEY };
+    const authorized = await p3.request.get(`${BASE}/api/crm`, { headers });
+    check('crm: верный ключ открывает API', authorized.ok(), `HTTP ${authorized.status()}`);
+    if (authorized.ok()) {
+      const data = (await authorized.json()) as { records: Array<{ runId: string }> };
+      check('crm: события собраны в записи', data.records.length > 0, `${data.records.length} записей`);
+      if (data.records[0]) {
+        const updated = await p3.request.patch(`${BASE}/api/crm`, {
+          headers,
+          data: { runId: data.records[0].runId, stage: 'contacted' },
+        });
+        check('crm: этап сохраняется', updated.ok(), `HTTP ${updated.status()}`);
+      }
+    }
+  }
 
   // landing: nav-ссылки на новые разделы
   await p3.goto(`${BASE}/`, { waitUntil: 'networkidle' });

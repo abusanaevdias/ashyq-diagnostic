@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { NextResponse } from 'next/server';
-import { timingSafeEqual } from 'node:crypto';
 import type { StoredLead } from '@/lib/lead-server';
+import { hasValidAdminKey, isAdminConfigured } from '@/lib/admin-auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -36,13 +36,6 @@ const CSV_COLUMNS: Array<keyof StoredLead> = [
   'elapsedMin',
 ];
 
-function keyMatches(provided: string, expected: string): boolean {
-  const a = Buffer.from(provided);
-  const b = Buffer.from(expected);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
-}
-
 function toCsv(leads: StoredLead[]): string {
   const escape = (value: unknown): string => {
     if (value === undefined || value === null) return '';
@@ -64,20 +57,14 @@ function toCsv(leads: StoredLead[]): string {
 }
 
 export async function GET(req: Request) {
-  const expected = process.env.ASHYQ_ADMIN_KEY;
-  if (!expected) {
+  if (!isAdminConfigured()) {
+    return new NextResponse('Not found', { status: 404 });
+  }
+  if (!hasValidAdminKey(req)) {
     return new NextResponse('Not found', { status: 404 });
   }
 
   const url = new URL(req.url);
-  const provided =
-    url.searchParams.get('key') ??
-    req.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ??
-    '';
-
-  if (!provided || !keyMatches(provided, expected)) {
-    return new NextResponse('Not found', { status: 404 });
-  }
 
   let lines: string[] = [];
   try {

@@ -94,6 +94,8 @@ npx tsx scripts/dump-bank.ts  # перегенерировать docs/QUESTION_B
 | `/api/validate` | JSON-отчёт валидации банка (для CI / быстрой проверки) |
 | `POST /api/lead` | приём и безопасная нормализация заявки с rate limit |
 | `GET /api/leads` | защищённая выгрузка JSON/CSV; без `ASHYQ_ADMIN_KEY` возвращает 404 |
+| `/crm` | закрытая очередь лидов: этапы, поиск, карточка, лента активности, заметки и CSV |
+| `GET/PATCH /api/crm` | защищённое чтение и append-only изменения CRM |
 
 Всё состояние диагностики живёт в одном клиентском стейт-машине
 (`src/lib/useDiagnostic.ts`): `landing → onboarding → quiz → result → review`.
@@ -118,6 +120,7 @@ src/
     terms/page.tsx          /terms
     api/lead/route.ts       POST /api/lead
     api/leads/route.ts      защищённый GET /api/leads
+    api/crm/route.ts        защищённые GET/PATCH для CRM
     api/validate/route.ts   GET /api/validate
     globals.css             дизайн-токены ASHYQ + компонентные классы
   components/
