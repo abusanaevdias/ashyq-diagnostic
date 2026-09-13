@@ -46,7 +46,7 @@
 | SUBSCRIBE-001 | READY | Подписка на новые материалы | Форма подписки имеет double opt-in/отписку и отдельную CRM/рассылочную интеграцию; больше не ведёт в заявку сезона | Нужен выбор сервиса рассылки |
 | SITE-SEARCH-001 | READY | Честный поиск по сайту | Поиск находит FAQ, курсы и статьи с клавиатуры и мобильного; либо search icon заменён на явно подписанную ссылку FAQ | Полная ценность появится после реальных статей |
 | ERROR-STATES-001 | READY | Брендированные системные состояния | Добавлены not-found, error/retry и maintenance/offline состояния; lead/diagnostic state не теряется после ошибки | Соблюдать Next.js 16 conventions |
-| V3-TOKEN-AUDIT-002 | READY | Закрыть остаточный design-system drift | OG, review success-state и `.21st/design.json` синхронизированы с v3; автоматический аудит не находит неизвестных цветов/радиусов/шрифтов | Для success-state сначала утвердить допустимый semantic token |
+| V3-TOKEN-AUDIT-002 | DONE | Закрыть остаточный design-system drift | OG, review success-state и `.21st/design.json` синхронизированы с v3; автоматический аудит не находит неизвестных цветов/радиусов/шрифтов | PR #4 (`82784ed`); semantic token `--success`/`--success-soft` утверждён пользователем; проверка — `scripts/token-audit.ts` (9/9) |
 
 ## Рекомендуемая последовательность
 

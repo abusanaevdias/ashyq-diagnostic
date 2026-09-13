@@ -235,6 +235,9 @@ async function walk(browser: Browser, width: number, height: number) {
   await page.getByText(/Вопрос \d+ из \d+/).first().waitFor();
   if (await page.locator('.option').count()) await page.locator('.option').first().click();
   await at('quiz');
+  // «Финиш» появляется со второго вопроса (UX-FIXES-001)
+  await page.getByRole('button', { name: 'Далее' }).click();
+  await page.getByText(/Вопрос 2 из \d+/).first().waitFor();
   await page.getByRole('button', { name: 'Завершить диагностику' }).click();
   await page.locator('[role="dialog"]').waitFor();
   await at('quiz-finish');
