@@ -3,6 +3,7 @@ import { appendFile, mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { StoredLead } from './lead-server';
 import { buildCrmSnapshot, type CrmEvent, type CrmSnapshot } from './crm';
+import { readDeliveryLedger, retryFailedDeliveries } from './lead-delivery';
 
 function dataFile(name: string): string {
   const directory = process.env.ASHYQ_LEADS_DIR ?? path.join(process.cwd(), '.data');
@@ -31,7 +32,23 @@ export async function readCrmSnapshot(): Promise<CrmSnapshot> {
     readJsonLines<StoredLead>(dataFile('leads.jsonl')),
     readJsonLines<CrmEvent>(dataFile('crm-events.jsonl')),
   ]);
-  return buildCrmSnapshot(leads, events);
+
+  // Автоматический повтор неудачных доставок (по политике isRetryDue):
+  // оператор открывает CRM — застрявшие заявки получают ещё одну попытку.
+  try {
+    await retryFailedDeliveries('*', leads);
+  } catch {
+    // retry не должен ломать чтение снапшота
+  }
+
+  const deliveries = await readDeliveryLedger();
+  return buildCrmSnapshot(leads, events, deliveries);
+}
+
+/** Ручной повтор из CRM (кнопка «Повторить доставку»): бьёт сразу, без backoff. */
+export async function retryRunDeliveries(runId: string): Promise<void> {
+  const leads = await readJsonLines<StoredLead>(dataFile('leads.jsonl'));
+  await retryFailedDeliveries(runId, leads, { force: true });
 }
 
 export async function appendCrmEvents(events: CrmEvent[]): Promise<void> {

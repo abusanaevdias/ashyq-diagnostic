@@ -61,6 +61,8 @@ jobs:
           export ASHYQ_ADMIN_KEY="$CI_KEY"
           export CRM_ADMIN_KEY="$CI_KEY"
           export BASE_URL="http://127.0.0.1:3000"
+          # Недостижимый webhook: e2e проверяет outbox-ledger и retry доставки лидов.
+          export ASHYQ_LEAD_WEBHOOK_URL="https://127.0.0.1:9/unreachable"
 
           npm run start > "$RUNNER_TEMP/server.log" 2>&1 &
           echo $! > "$RUNNER_TEMP/server.pid"

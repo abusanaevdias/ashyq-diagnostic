@@ -1,12 +1,14 @@
-import { appendFile, mkdir } from 'node:fs/promises';
+import { appendFile, mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { computeDedupeKey } from './crm';
+import { maybeBackupLeads } from './lead-delivery';
 
 /**
- * Серверная сторона лида: хранение + доставка.
+ * Серверная сторона лида: хранение + идемпотентность.
  *
- * Работает без единой настройки (пишет в .data/leads.jsonl), а при заданных
- * env-переменных дополнительно шлёт уведомление, чтобы Ashyq видел заявку
- * сразу, а не заходил в файл.
+ * Работает без единой настройки (пишет в .data/leads.jsonl). Запись идёт
+ * ДО любой доставки — сбой Telegram/webhook не теряет заявку (LEADS-DURABILITY-001).
+ * Доставка и её outbox-ledger живут в ./lead-delivery.
  */
 
 export interface StoredLead {
@@ -28,10 +30,16 @@ export interface StoredLead {
   utm?: Record<string, string>;
   receivedAt: string;
   ip: string;
+  /** Заполняется сервером для идемпотентности повторной отправки. */
+  dedupeKey?: string;
 }
 
 const LEADS_DIR = process.env.ASHYQ_LEADS_DIR ?? path.join(process.cwd(), '.data');
 const LEADS_FILE = path.join(LEADS_DIR, 'leads.jsonl');
+
+const DEDUPE_WINDOW_MS = 24 * 60 * 60_000;
+
+export { computeDedupeKey };
 
 /**
  * JSONL, а не JSON-массив: дозапись одной строкой атомарна и не портит файл,
@@ -41,89 +49,31 @@ export async function appendLead(lead: StoredLead): Promise<void> {
   try {
     await mkdir(LEADS_DIR, { recursive: true });
     await appendFile(LEADS_FILE, `${JSON.stringify(lead)}\n`, 'utf8');
+    // Ежедневная копия — best-effort, не задерживает и не ломает приём.
+    void maybeBackupLeads(LEADS_FILE);
   } catch {
     // read-only FS (serverless) — тогда единственный канал это deliverLead
   }
 }
 
-function examLabel(exam: StoredLead['exam']): string {
-  return exam === 'sat' ? 'SAT' : 'IELTS';
-}
-
-function leadToText(lead: StoredLead): string {
-  const lines: string[] = [];
-
-  lines.push(
-    lead.kind === 'season'
-      ? `🔴 ЗАЯВКА НА СЕЗОН · ${examLabel(lead.exam)}`
-      : lead.kind === 'contact'
-      ? `🔴 НОВОЕ ОБРАЩЕНИЕ · ${examLabel(lead.exam)}`
-      : lead.kind === 'whatsapp'
-        ? `🟡 Ушёл в WhatsApp · ${examLabel(lead.exam)}`
-        : `⚪️ Прошёл диагностику · ${examLabel(lead.exam)}`,
-  );
-
-  if (lead.name) lines.push(`Имя: ${lead.name}`);
-  if (lead.phone) lines.push(`Телефон: +${lead.phone}`);
-  if (lead.grade) lines.push(`Класс: ${lead.grade}`);
-
-  if (lead.band) lines.push(`Результат: ${lead.band}`);
-  if (lead.correct !== undefined && lead.total !== undefined) {
-    lines.push(`Верно: ${lead.correct}/${lead.total}`);
+/** Повторная отправка идемпотентна: тот же ключ в пределах окна — это дубль. */
+export async function findRecentDuplicate(lead: StoredLead): Promise<boolean> {
+  let raw: string;
+  try {
+    raw = await readFile(LEADS_FILE, 'utf8');
+  } catch {
+    return false;
   }
-  if (lead.target) lines.push(`Цель: ${lead.target}`);
-  if (lead.plannedWhen) lines.push(`Сдаёт: ${lead.plannedWhen}`);
-  if (lead.weakest) lines.push(`Слабее всего: ${lead.weakest}`);
-  if (lead.elapsedMin !== undefined) lines.push(`Время: ${lead.elapsedMin} мин`);
-
-  if (lead.utm?.utm_campaign) lines.push(`Кампания: ${lead.utm.utm_campaign}`);
-  if (lead.utm?.utm_source) lines.push(`Источник: ${lead.utm.utm_source}`);
-
-  if (lead.phone) {
-    lines.push('');
-    lines.push(`Написать: https://wa.me/${lead.phone}`);
+  const cutoff = Date.now() - DEDUPE_WINDOW_MS;
+  for (const line of raw.split('\n')) {
+    if (!line.includes(lead.dedupeKey ?? '')) continue;
+    try {
+      const parsed = JSON.parse(line) as StoredLead;
+      if (parsed.dedupeKey !== lead.dedupeKey) continue;
+      if (Date.parse(parsed.receivedAt) >= cutoff) return true;
+    } catch {
+      // повреждённая строка не считается дублем
+    }
   }
-
-  return lines.join('\n');
-}
-
-async function sendTelegram(lead: StoredLead): Promise<void> {
-  const token = process.env.ASHYQ_TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.ASHYQ_TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
-
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: leadToText(lead),
-      disable_web_page_preview: true,
-    }),
-  });
-}
-
-async function sendWebhook(lead: StoredLead): Promise<void> {
-  const url = process.env.ASHYQ_LEAD_WEBHOOK_URL;
-  if (!url) return;
-  // операторская настройка, но https обязателен: телефон не должен идти открытым текстом
-  if (!url.startsWith('https://')) return;
-
-  await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...lead, text: leadToText(lead) }),
-  });
-}
-
-/**
- * Доставка «тихих» лидов (kind: 'result') в мессенджер выключена по умолчанию:
- * иначе телефон Ashyq будет звенеть на каждого зашедшего. Включается
- * ASHYQ_NOTIFY_ALL=1, когда нужно следить за воронкой в реальном времени.
- */
-export async function deliverLead(lead: StoredLead): Promise<void> {
-  const notifyAll = process.env.ASHYQ_NOTIFY_ALL === '1';
-  if (lead.kind === 'result' && !notifyAll) return;
-
-  await Promise.allSettled([sendTelegram(lead), sendWebhook(lead)]);
+  return false;
 }

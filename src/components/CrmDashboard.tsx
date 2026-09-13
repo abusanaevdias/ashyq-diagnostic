@@ -80,7 +80,7 @@ export default function CrmDashboard() {
     setSnapshot(await fetchSnapshot(key));
   }
 
-  async function updateRecord(runId: string, payload: { stage?: CrmStage; note?: string }) {
+  async function updateRecord(runId: string, payload: { stage?: CrmStage; note?: string; action?: string }) {
     setSavingId(runId);
     setError('');
     try {
@@ -97,6 +97,10 @@ export default function CrmDashboard() {
     } finally {
       setSavingId('');
     }
+  }
+
+  async function retryDelivery(runId: string) {
+    await updateRecord(runId, { action: 'retry-delivery' });
   }
 
   async function downloadCsv() {
@@ -175,6 +179,9 @@ export default function CrmDashboard() {
             ['С контактом', snapshot.stats.contacts],
             ['Заявки сезона', snapshot.stats.seasonRequests],
             ['Зачислены', snapshot.stats.byStage.enrolled],
+            ...(snapshot.stats.deliveries.failed > 0
+              ? [['Не доставлено', snapshot.stats.deliveries.failed] as const]
+              : []),
           ].map(([label, value]) => (
             <div key={label} className="card p-4"><p className="label text-ink-faint">{label}</p><p className="display mt-2 text-[2rem] text-red">{value}</p></div>
           ))}
@@ -198,7 +205,7 @@ export default function CrmDashboard() {
               {records.slice(0, visibleCount).map((record) => (
                 <article key={record.runId} className="card overflow-hidden">
                   <div className="grid items-center gap-4 p-4 md:grid-cols-[minmax(0,1.5fr)_0.7fr_0.8fr_1fr_auto]">
-                    <div className="min-w-0"><p className="display truncate text-[1.05rem]">{recordName(record)}</p><p className="mt-1 truncate font-mono text-[0.68rem] text-ink-faint">{record.phone ? `+${record.phone}` : record.runId}</p></div>
+                    <div className="min-w-0"><p className="display truncate text-[1.05rem]">{recordName(record)}</p><p className="mt-1 truncate font-mono text-[0.68rem] text-ink-faint">{record.phone ? `+${record.phone}` : record.runId}</p>{record.delivery.some((item) => item.status === 'failed') ? <p className="mt-1 text-[0.7rem] font-semibold text-red">Не доставлено: {record.delivery.filter((item) => item.status === 'failed').map((item) => item.channel).join(', ')}</p> : null}</div>
                     <div><p className="label text-ink-faint">Экзамен</p><p className="mt-1 font-semibold uppercase">{record.exam}</p></div>
                     <div><p className="label text-ink-faint">Результат</p><p className="mt-1 font-semibold">{record.band ?? '—'}</p></div>
                     <div>
@@ -217,6 +224,21 @@ export default function CrmDashboard() {
                           <dt className="text-ink-faint">Слабее всего</dt><dd>{record.weakest ?? '—'}</dd>
                           <dt className="text-ink-faint">Источник</dt><dd>{record.source ?? '—'}{record.campaign ? ` · ${record.campaign}` : ''}</dd>
                           <dt className="text-ink-faint">Первый контакт</dt><dd>{formatDate(record.firstSeenAt)}</dd>
+                          <dt className="text-ink-faint">Доставка</dt>
+                          <dd>
+                            {record.delivery.length === 0
+                              ? 'каналы не настроены'
+                              : record.delivery.map((item) => (
+                                <span key={item.channel} className={item.status === 'sent' ? 'mr-3 inline-block text-[0.8rem] text-ink' : 'mr-3 inline-block text-[0.8rem] font-semibold text-red'}>
+                                  {item.channel === 'telegram' ? 'Telegram' : 'Webhook'}: {item.status === 'sent' ? 'отправлено' : `не доставлено (${item.attempts})`}
+                                </span>
+                              ))}
+                            {record.delivery.some((item) => item.status === 'failed') ? (
+                              <button type="button" className="btn btn-outline btn-small mt-2" disabled={savingId === record.runId} onClick={() => void retryDelivery(record.runId)}>
+                                Повторить доставку
+                              </button>
+                            ) : null}
+                          </dd>
                         </dl>
                         {record.phone ? <a className="btn btn-ink mt-5" href={`https://wa.me/${record.phone}`} target="_blank" rel="noopener noreferrer">Открыть WhatsApp</a> : null}
                       </div>

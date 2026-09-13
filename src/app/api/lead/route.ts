@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
-import { appendLead, deliverLead, type StoredLead } from '@/lib/lead-server';
+import { appendLead, findRecentDuplicate, type StoredLead } from '@/lib/lead-server';
 import { normalizePhone, toInternationalKz } from '@/lib/lead';
+import { deliverLead } from '@/lib/lead-delivery';
+import { computeDedupeKey } from '@/lib/crm';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -138,7 +140,14 @@ export async function POST(req: Request) {
     utm: parseUtm(body.utm),
     receivedAt: new Date().toISOString(),
     ip,
+    dedupeKey: '',
   };
+  lead.dedupeKey = computeDedupeKey(lead);
+
+  // Идемпотентность: повторная отправка того же лида не плодит записи и уведомления.
+  if (await findRecentDuplicate(lead)) {
+    return NextResponse.json({ ok: true, duplicate: true });
+  }
 
   await appendLead(lead);
   // доставка в Telegram/вебхук не должна задерживать ответ ученику

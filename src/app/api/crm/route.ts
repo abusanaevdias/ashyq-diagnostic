@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { hasValidAdminKey, isAdminConfigured } from '@/lib/admin-auth';
 import { CRM_STAGES, type CrmEvent, type CrmStage } from '@/lib/crm';
-import { appendCrmEvents, readCrmSnapshot } from '@/lib/crm-server';
+import { appendCrmEvents, readCrmSnapshot, retryRunDeliveries } from '@/lib/crm-server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -38,10 +38,18 @@ export async function PATCH(request: Request) {
     ? (body.stage as CrmStage)
     : undefined;
   const note = typeof body.note === 'string' ? body.note.trim().slice(0, 1_000) : '';
-  if (!runId || (!stage && !note)) return NextResponse.json({ ok: false }, { status: 400 });
+  const retryDelivery = body.action === 'retry-delivery';
+  if (!runId || (!stage && !note && !retryDelivery)) {
+    return NextResponse.json({ ok: false }, { status: 400 });
+  }
 
   const snapshot = await readCrmSnapshot();
   if (!snapshot.records.some((record) => record.runId === runId)) return denied();
+
+  if (retryDelivery) {
+    await retryRunDeliveries(runId);
+    return NextResponse.json({ ok: true });
+  }
 
   const createdAt = new Date().toISOString();
   const events: CrmEvent[] = [];

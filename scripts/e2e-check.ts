@@ -611,7 +611,9 @@ async function main() {
     const authorized = await p3.request.get(`${BASE}/api/crm`, { headers });
     check('crm: верный ключ открывает API', authorized.ok(), `HTTP ${authorized.status()}`);
     if (authorized.ok()) {
-      const data = (await authorized.json()) as { records: Array<{ runId: string }> };
+      const data = (await authorized.json()) as {
+        records: Array<{ runId: string; delivery?: Array<{ channel: string; status: string; attempts: number }> }>;
+      };
       check('crm: события собраны в записи', data.records.length > 0, `${data.records.length} записей`);
       if (data.records[0]) {
         const updated = await p3.request.patch(`${BASE}/api/crm`, {
@@ -619,6 +621,52 @@ async function main() {
           data: { runId: data.records[0].runId, stage: 'contacted' },
         });
         check('crm: этап сохраняется', updated.ok(), `HTTP ${updated.status()}`);
+      }
+
+      // Идемпотентность: двойная отправка одного лида не плодит записей.
+      const dedupeRunId = `e2e-dedupe-${Date.now().toString(36)}`;
+      const dedupePayload = {
+        kind: 'contact', exam: 'ielts', runId: dedupeRunId,
+        name: 'E2E Dedupe', phone: '8 706 111 22 33',
+      };
+      const firstPost = await p3.request.post(`${BASE}/api/lead`, { data: dedupePayload });
+      const secondPost = await p3.request.post(`${BASE}/api/lead`, { data: dedupePayload });
+      const afterDup = await p3.request.get(`${BASE}/api/crm`, { headers });
+      const dupData = (await afterDup.json()) as { records: Array<{ runId: string }> };
+      check(
+        'leads: повторная отправка идемпотентна',
+        firstPost.ok() && secondPost.ok() &&
+          dupData.records.filter((record) => record.runId === dedupeRunId).length === 1,
+      );
+
+      // Доставка: если webhook настроен (CI указывает недостижимый URL),
+      // лид должен попасть в ledger как failed и ретраиться вручную.
+      if (process.env.ASHYQ_LEAD_WEBHOOK_URL) {
+        const deliveryRunId = `e2e-delivery-${Date.now().toString(36)}`;
+        await p3.request.post(`${BASE}/api/lead`, {
+          data: { kind: 'contact', exam: 'sat', runId: deliveryRunId, name: 'E2E Delivery', phone: '8 706 222 33 44' },
+        });
+        const beforeRetry = (await (await p3.request.get(`${BASE}/api/crm`, { headers })).json()) as {
+          records: Array<{ runId: string; delivery: Array<{ channel: string; status: string; attempts: number }> }>;
+        };
+        const target = beforeRetry.records.find((record) => record.runId === deliveryRunId);
+        const failedWebhook = target?.delivery.find((item) => item.channel === 'webhook' && item.status === 'failed');
+        check('delivery: неудача видна в CRM со статусом failed', Boolean(failedWebhook), failedWebhook ? `${failedWebhook.attempts} попыток` : 'нет записи');
+        if (failedWebhook) {
+          const retry = await p3.request.patch(`${BASE}/api/crm`, {
+            headers,
+            data: { runId: deliveryRunId, action: 'retry-delivery' },
+          });
+          const afterRetry = (await (await p3.request.get(`${BASE}/api/crm`, { headers })).json()) as {
+            records: Array<{ runId: string; delivery: Array<{ channel: string; status: string; attempts: number }> }>;
+          };
+          const retried = afterRetry.records.find((record) => record.runId === deliveryRunId)?.delivery.find((item) => item.channel === 'webhook');
+          check(
+            'delivery: ручной retry увеличивает счётчик попыток',
+            retry.ok() && Boolean(retried) && (retried?.attempts ?? 0) > failedWebhook.attempts,
+            retried ? `attempts ${failedWebhook.attempts} -> ${retried.attempts}` : 'нет записи',
+          );
+        }
       }
     }
   }
