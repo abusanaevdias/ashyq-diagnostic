@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'Политика конфиденц�
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-dvh">
+    <div className="v3 min-h-dvh">
       <SiteHeader />
       <main className="shell py-10 sm:py-14">
         <p className="label text-red">Документы · версия 13.09.2026</p>

@@ -47,7 +47,7 @@ const config: Config = {
         mono: ['var(--font-mono)', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       fontSize: {
-        display: ['clamp(2.9rem, 12vw, 7rem)', { lineHeight: 'var(--lh-display, 0.92)', letterSpacing: '0.005em' }],
+        display: ['var(--fs-display, clamp(2.9rem, 12vw, 7rem))', { lineHeight: 'var(--lh-display, 0.92)', letterSpacing: '0.005em' }],
         h1: ['clamp(2rem, 8vw, 4rem)', { lineHeight: 'var(--lh-heading, 1.02)', letterSpacing: '-0.015em' }],
         h2: ['clamp(1.5rem, 5.6vw, 2.6rem)', { lineHeight: 'var(--lh-heading, 1.02)', letterSpacing: '0em' }],
         h3: ['clamp(1.15rem, 4vw, 1.5rem)', { lineHeight: '1.1' }],

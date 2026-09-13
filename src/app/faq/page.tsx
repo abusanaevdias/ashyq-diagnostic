@@ -21,7 +21,7 @@ const FAQ = [
 
 export default function FaqPage() {
   return (
-    <div className="min-h-dvh">
+    <div className="v3 min-h-dvh">
       <SiteHeader />
       <main className="shell-wide py-8 sm:py-12">
         <EditorialLabel num="01">FAQ</EditorialLabel>

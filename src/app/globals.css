@@ -468,6 +468,7 @@
     --font-serif: var(--font-display);
     --lh-display: 1.05;
     --lh-heading: 1.15;
+    --fs-display: clamp(2.6rem, 6vw, 4.6rem);
     --legacy-radius-md: var(--r-md);
     --legacy-radius-lg: var(--r-lg);
     --legacy-shadow-card: var(--shadow-card);
@@ -522,6 +523,17 @@
 
   .v3 .meter {
     border-color: transparent;
+  }
+
+  /* v3 Badge вместо повёрнутого штампа */
+  .v3 .stamp {
+    border-color: transparent;
+    border-radius: var(--r-pill);
+    background: var(--blush);
+    color: var(--red-deep);
+    font-family: var(--font-body);
+    letter-spacing: 0.08em;
+    transform: none;
   }
 }
 

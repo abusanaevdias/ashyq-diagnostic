@@ -4,14 +4,13 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { track } from '@/lib/analytics';
 import {
-  Wordmark,
   EditorialLabel,
   HandNote,
   RedStar,
   PaperCard,
   BrandIcon,
-  TornEdge,
 } from './ui/Brand';
+import { Footer, NavBar } from './ui/CleanUi';
 import { Glyph, GlyphBadge, type GlyphName } from './ui/Glyphs';
 
 /**
@@ -91,14 +90,8 @@ export default function ProgramScreen() {
   }, []);
 
   return (
-    <div className="min-h-dvh">
-      {/* ---------- header ---------- */}
-      <header className="shell-wide flex items-center justify-between gap-4 py-5">
-        <Link href="/" aria-label="ASHYQ — на главную">
-          <Wordmark size="md" />
-        </Link>
-        <span className="label text-ink-faint">Program series · 01–03</span>
-      </header>
+    <div className="v3 min-h-dvh">
+      <NavBar />
 
       {/* ---------- hero ---------- */}
       <section className="shell-wide pb-12 pt-4 sm:pt-8">
@@ -427,9 +420,8 @@ export default function ProgramScreen() {
       </section>
 
       {/* ---------- CTA ---------- */}
-      <section className="relative bg-red text-paper">
-        <TornEdge fill="var(--paper)" flip className="absolute inset-x-0 top-0" />
-        <div className="shell-wide py-14 sm:py-18">
+      <section className="shell-wide pb-14 sm:pb-18">
+        <div className="band-dark px-6 py-12 sm:px-10">
           <div className="grid items-end gap-8 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <p className="label flex items-center gap-2 text-paper/75">
@@ -459,19 +451,7 @@ export default function ProgramScreen() {
         </div>
       </section>
 
-      {/* ---------- footer ---------- */}
-      <footer className="border-t border-line">
-        <div className="shell-wide flex flex-col gap-4 py-7 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <Wordmark size="sm" />
-            <p className="label mt-2 text-ink-faint">Astana, KZ · Online, worldwide · Est. 2024</p>
-          </div>
-          <nav aria-label="Навигация по сайту" className="flex gap-5">
-            <Link className="label link-underline text-ink-soft hover:text-ink" href="/">Диагностика</Link>
-            <Link className="label link-underline text-ink-soft hover:text-ink" href="/progress">Прогресс</Link>
-          </nav>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

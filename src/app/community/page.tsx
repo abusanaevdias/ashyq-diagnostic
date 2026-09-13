@@ -17,7 +17,7 @@ const VALUES: Array<{ glyph: GlyphName; title: string; text: string }> = [
 
 export default function CommunityPage() {
   return (
-    <div className="min-h-dvh">
+    <div className="v3 min-h-dvh">
       <SiteHeader />
       <main>
         <section className="shell-wide pb-14 pt-5 sm:pt-10">
@@ -27,7 +27,7 @@ export default function CommunityPage() {
               <h1 className="display max-w-[13ch] text-display text-red">Люди делают знания живыми</h1>
               <p className="mt-6 max-w-lg text-[1.05rem] leading-relaxed text-ink-soft">ASHYQ — это не только уроки и баллы. Это среда, где ученики тренируются в команде, пробуют себя под давлением и учатся показывать прогресс.</p>
             </div>
-            <img src="/brand/hero-students.jpg" alt="Студенты ASHYQ" width="1200" height="800" className="w-full rotate-[1deg] border border-line bg-paper-card p-2 shadow-paper lg:col-span-6" />
+            <img src="/brand/hero-students.jpg" alt="Студенты ASHYQ" width="1200" height="800" className="w-full rounded-md object-cover lg:col-span-6" />
           </div>
         </section>
         <section className="border-y border-line bg-paper-deep/50">
@@ -46,7 +46,7 @@ export default function CommunityPage() {
         </section>
         <section className="shell-wide py-14 sm:py-18">
           <div className="grid items-center gap-8 lg:grid-cols-12">
-            <img src="/brand/lesson-grid.jpg" alt="Онлайн-занятие ASHYQ" width="1000" height="390" className="w-full border border-line bg-paper-card p-2 shadow-paper lg:col-span-7" />
+            <img src="/brand/lesson-grid.jpg" alt="Онлайн-занятие ASHYQ" width="1000" height="390" className="w-full rounded-md object-cover lg:col-span-7" />
             <div className="lg:col-span-5">
               <p className="label flex items-center gap-2 text-red"><RedStar className="h-2.5 w-2.5" />Онлайн и в Астане</p>
               <h2 className="display mt-4 text-h2">Начни со своей точки А</h2>

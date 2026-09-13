@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { readHistory } from '@/lib/storage';
 import { track } from '@/lib/analytics';
 import type { ExamId, ProgressSnapshot } from '@/lib/types';
-import { Wordmark, EditorialLabel, RedStar, HandNote } from './ui/Brand';
+import { EditorialLabel, RedStar, HandNote } from './ui/Brand';
+import { Footer, NavBar } from './ui/CleanUi';
 
 /**
  * /progress — личный прогресс ученика (мини-версия Student Progress Report
@@ -49,15 +50,10 @@ export default function ProgressScreen() {
   }, [first, last, list.length, tab]);
 
   return (
-    <div className="min-h-dvh pb-16">
-      <header className="shell-wide flex items-center justify-between gap-4 py-5">
-        <Link href="/" aria-label="ASHYQ — на главную">
-          <Wordmark size="md" />
-        </Link>
-        <span className="label text-ink-faint">Мой прогресс</span>
-      </header>
+    <div className="v3 min-h-dvh">
+      <NavBar />
 
-      <main className="shell pt-4">
+      <main className="shell pb-16 pt-8">
         <EditorialLabel>Student progress · локально на устройстве</EditorialLabel>
 
         {!hasAny || !tab ? (
@@ -222,6 +218,7 @@ export default function ProgressScreen() {
           </>
         )}
       </main>
+      <Footer />
     </div>
   );
 }
