@@ -98,6 +98,7 @@ Caddy (сертификат выпускает сам), nginx + certbot или H
 - [ ] `.env.production` заполнен: новый `ASHYQ_ADMIN_KEY`, Telegram или webhook.
 - [ ] В логе старта нет `[ashyq env] ОШИБКА`.
 - [ ] `curl https://ЗАМЕНИТЬ-ДОМЕН/api/health` → `{"status":"ok"}`.
+- [ ] Vercel и другие хостинги с read-only диском: `ASHYQ_LEADS_PROVIDER=supabase` + `ASHYQ_SUPABASE_URL` + `ASHYQ_SUPABASE_SERVICE_ROLE_KEY`, иначе заявки в `/tmp` теряются. В этом режиме `/api/health` проверяет, что Supabase отвечает на `crm_leads`: 200 — заявки сохраняются, 503 — причина в логе `[ashyq env]`.
 - [ ] Тестовая заявка с `/contacts` пришла в Telegram и видна в `/crm`.
 - [ ] `/crm` без ключа отвечает 404.
 - [ ] `robots.txt` и `sitemap.xml` содержат прод-домен, а не localhost.
