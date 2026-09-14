@@ -55,7 +55,7 @@ export function defaultPosts(): BlogPost[] {
     title: p.title,
     category: p.category,
     excerpt: p.excerpt,
-    body: `${p.excerpt}\n\nПолный текст статьи появится позже.`,
+    body: p.body,
     coverUrl: p.photo,
     status: 'published',
     authorId: 'ashyq-team',
@@ -63,8 +63,15 @@ export function defaultPosts(): BlogPost[] {
   }));
 }
 
+/** Хвост заглушки, с которой демо-статьи сохранялись в localStorage до BLOG-DRAFTS-001. */
+const OLD_STUB = '\n\nПолный текст статьи появится позже.';
+
 function allPosts(): BlogPost[] {
-  return readJson<BlogPost[] | null>('posts', null) ?? defaultPosts();
+  const stored = readJson<BlogPost[] | null>('posts', null);
+  if (!stored) return defaultPosts();
+  // сохранённые копии демо-статей с заглушкой получают текст; правки автора не трогаем
+  const bodies = new Map(defaultPosts().map((p) => [p.id, p.body]));
+  return stored.map((p) => (p.body.endsWith(OLD_STUB) && bodies.has(p.id) ? { ...p, body: bodies.get(p.id)! } : p));
 }
 
 const TRANSLIT: Record<string, string> = {
