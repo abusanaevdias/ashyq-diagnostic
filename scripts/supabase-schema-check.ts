@@ -7,6 +7,7 @@ const migration = readFileSync(
   'utf8',
 ).toLowerCase();
 const seed = readFileSync(join(root, 'supabase', 'seed.sql'), 'utf8').toLowerCase();
+const behaviorTest = readFileSync(join(root, 'supabase', 'tests', 'rls_behavior.test.sql'), 'utf8').toLowerCase();
 
 const tables = [
   'profiles', 'classes', 'class_members', 'lessons', 'assignments',
@@ -55,6 +56,9 @@ if (/revoke\s+all\s+on\s+all\s+(tables|functions)\s+in\s+schema/.test(migration)
 }
 if (/\b(insert|update|delete)\s+into\b/.test(seed) || /@/.test(seed)) {
   failures.push('seed must remain data-free until synthetic identities are approved');
+}
+for (const invariant of ['role":"admin', 'weekly category cap exceeded', 'anon cannot read private participant rows']) {
+  if (!behaviorTest.includes(invariant)) failures.push(`missing behavioral policy test: ${invariant}`);
 }
 
 if (failures.length > 0) {

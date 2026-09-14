@@ -17,6 +17,9 @@ from its current local demo repositories.
   returns aliases rather than private names;
 - database guards for consistent season/division links, the five-person team
   maximum and concurrency-safe weekly point caps (25/20/15/10/30 by category).
+- pgTAP covers both schema structure and behavioral boundaries: signup role
+  escalation, anonymous/private reads, student/teacher class access, weekly
+  point caps, team size, and alias-only public leaderboard output.
 
 The schema intentionally contains no CRM lead data, diagnostic answers, real
 student identities or committed demo accounts.
@@ -36,11 +39,18 @@ npx --yes supabase@latest test db --local
 Studio is available at `http://127.0.0.1:54323`. Stop only this project stack:
 
 ```powershell
-npx --yes supabase@latest stop --project-id ashyq-diagnostic --no-backup
+npx --yes supabase@latest stop --project-id ashyq-diagnostic
 ```
 
 Never run `db reset` without `--local` during development. The committed seed
 is intentionally empty; production/student data must not be copied into it.
+Use `--no-backup` only when you intentionally want to delete this local
+project's development volumes.
+
+On Windows, if Docker Desktop crashes before creating its Linux engine pipe,
+check `com.docker.backend.exe.log` for stale AF_UNIX sockets. Preserve the
+named socket files before restarting Docker; do not factory-reset Docker or
+delete volumes merely to recover the engine.
 
 ## Hosted rollout (not part of this task)
 
