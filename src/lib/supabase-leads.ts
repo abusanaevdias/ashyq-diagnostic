@@ -1,0 +1,81 @@
+import 'server-only';
+import type { CrmEvent, DeliveryLedgerEntry } from './crm';
+import type { StoredLead } from './lead-server';
+
+type Row<T> = { payload: T };
+
+function config(): { url: string; key: string } | null {
+  if (process.env.ASHYQ_LEADS_PROVIDER !== 'supabase') return null;
+  const url = process.env.ASHYQ_SUPABASE_URL?.replace(/\/$/, '');
+  const key = process.env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) throw new Error('Supabase lead provider requires ASHYQ_SUPABASE_URL and ASHYQ_SUPABASE_SERVICE_ROLE_KEY');
+  if (!url.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(url)) {
+    throw new Error('ASHYQ_SUPABASE_URL must use HTTPS outside localhost');
+  }
+  return { url, key };
+}
+
+export function usesSupabaseLeads(): boolean {
+  return process.env.ASHYQ_LEADS_PROVIDER === 'supabase';
+}
+
+async function rest<T>(path: string, init?: RequestInit): Promise<T> {
+  const active = config();
+  if (!active) throw new Error('Supabase lead provider is disabled');
+  const response = await fetch(`${active.url}/rest/v1/${path}`, {
+    ...init,
+    headers: {
+      apikey: active.key,
+      Authorization: `Bearer ${active.key}`,
+      'Content-Type': 'application/json',
+      ...(init?.headers ?? {}),
+    },
+    signal: AbortSignal.timeout(10_000),
+    cache: 'no-store',
+  });
+  if (!response.ok) throw new Error(`Supabase REST ${response.status}`);
+  const body = await response.text();
+  return body ? JSON.parse(body) as T : undefined as T;
+}
+
+export async function appendSupabaseLead(lead: StoredLead): Promise<void> {
+  await rest('crm_leads', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({
+    run_id: lead.runId, dedupe_key: lead.dedupeKey, kind: lead.kind, exam: lead.exam,
+    payload: lead, received_at: lead.receivedAt,
+  }) });
+}
+
+export async function readSupabaseLeads(): Promise<StoredLead[]> {
+  const rows = await rest<Array<Row<StoredLead>>>('crm_leads?select=payload&order=received_at.asc');
+  return rows.map((row) => row.payload);
+}
+
+export async function findSupabaseDuplicate(lead: StoredLead, cutoff: string): Promise<boolean> {
+  const key = encodeURIComponent(lead.dedupeKey ?? '');
+  const since = encodeURIComponent(cutoff);
+  const rows = await rest<Array<{ id: string }>>(`crm_leads?select=id&dedupe_key=eq.${key}&received_at=gte.${since}&limit=1`);
+  return rows.length > 0;
+}
+
+export async function readSupabaseEvents(): Promise<CrmEvent[]> {
+  const rows = await rest<Array<Row<CrmEvent>>>('crm_events?select=payload&order=created_at.asc');
+  return rows.map((row) => row.payload);
+}
+
+export async function appendSupabaseEvents(events: CrmEvent[]): Promise<void> {
+  await rest('crm_events', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(events.map((event) => ({
+    id: event.id, run_id: event.runId, payload: event, created_at: event.createdAt,
+  }))) });
+}
+
+export async function readSupabaseDeliveries(): Promise<DeliveryLedgerEntry[]> {
+  const rows = await rest<Array<Row<DeliveryLedgerEntry>>>('crm_delivery_entries?select=payload&order=updated_at.asc');
+  return rows.map((row) => row.payload);
+}
+
+export async function appendSupabaseDelivery(entry: DeliveryLedgerEntry): Promise<void> {
+  await rest('crm_delivery_entries', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({
+    id: entry.id, run_id: entry.runId, dedupe_key: entry.key, channel: entry.channel,
+    payload: entry, updated_at: entry.updatedAt,
+  }) });
+}

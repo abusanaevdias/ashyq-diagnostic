@@ -2,6 +2,12 @@ import { appendFile, mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { computeDedupeKey } from './crm';
 import { maybeBackupLeads } from './lead-delivery';
+import {
+  appendSupabaseLead,
+  findSupabaseDuplicate,
+  readSupabaseLeads,
+  usesSupabaseLeads,
+} from './supabase-leads';
 
 /**
  * Серверная сторона лида: хранение + идемпотентность.
@@ -41,11 +47,35 @@ const DEDUPE_WINDOW_MS = 24 * 60 * 60_000;
 
 export { computeDedupeKey };
 
+export async function readStoredLeads(): Promise<StoredLead[]> {
+  if (usesSupabaseLeads()) return readSupabaseLeads();
+
+  try {
+    const raw = await readFile(LEADS_FILE, 'utf8');
+    const result: StoredLead[] = [];
+    for (const line of raw.split('\n').filter(Boolean)) {
+      try {
+        result.push(JSON.parse(line) as StoredLead);
+      } catch {
+        // Одна повреждённая строка не блокирует остальные записи.
+      }
+    }
+    return result;
+  } catch {
+    return [];
+  }
+}
+
 /**
  * JSONL, а не JSON-массив: дозапись одной строкой атомарна и не портит файл,
  * если два запроса пришли одновременно.
  */
 export async function appendLead(lead: StoredLead): Promise<void> {
+  if (usesSupabaseLeads()) {
+    await appendSupabaseLead(lead);
+    return;
+  }
+
   try {
     await mkdir(LEADS_DIR, { recursive: true });
     await appendFile(LEADS_FILE, `${JSON.stringify(lead)}\n`, 'utf8');
@@ -58,13 +88,17 @@ export async function appendLead(lead: StoredLead): Promise<void> {
 
 /** Повторная отправка идемпотентна: тот же ключ в пределах окна — это дубль. */
 export async function findRecentDuplicate(lead: StoredLead): Promise<boolean> {
+  const cutoff = Date.now() - DEDUPE_WINDOW_MS;
+  if (usesSupabaseLeads()) {
+    return findSupabaseDuplicate(lead, new Date(cutoff).toISOString());
+  }
+
   let raw: string;
   try {
     raw = await readFile(LEADS_FILE, 'utf8');
   } catch {
     return false;
   }
-  const cutoff = Date.now() - DEDUPE_WINDOW_MS;
   for (const line of raw.split('\n')) {
     if (!line.includes(lead.dedupeKey ?? '')) continue;
     try {

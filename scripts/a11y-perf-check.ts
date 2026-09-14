@@ -21,6 +21,8 @@ const PUBLIC_ROUTES = [
   '/community',
   '/contacts',
   '/courses',
+  '/courses/ielts',
+  '/courses/sat',
   '/diagnostic',
   '/faq',
   '/login',
