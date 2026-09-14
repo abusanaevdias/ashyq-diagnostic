@@ -66,8 +66,29 @@ $env:SUPABASE_ANON_KEY = '<ANON_KEY>'; $env:SUPABASE_SERVICE_ROLE_KEY = '<SERVIC
 npx tsx scripts/supabase-auth-check.ts
 ```
 
-Until the LMS and championship adapters land, `NEXT_PUBLIC_AUTH_PROVIDER=supabase`
-switches sign-in only; class, blog and season pages still need their repositories.
+## LMS data and files (SUPABASE-LMS-001)
+
+With `NEXT_PUBLIC_AUTH_PROVIDER=supabase` the learning layer reads and writes
+the foundation tables through `src/lib/lms/supabase-repos.ts` (same `Repos`
+interface as the demo, loaded as a separate chunk). Class joins and grading go
+through the `join_class` / `grade_submission` RPCs; every other rule is RLS.
+Until authors publish their own posts, the four demo articles from
+`src/data/blog.ts` stay visible as a fallback.
+
+Files live in the private Storage bucket `lms-files` (2 MB per file, like the
+LMS spec). Objects are stored under `<owner uid>/<id>-<ascii name>` — Storage
+rejects non-ASCII keys, so the original name is kept in the material title and
+restored on download. Owners can upload only into their own folder; reading is
+allowed to the owner and to teacher↔student pairs of a shared class, and the
+app hands out 10-minute signed links. The service role gets explicit table
+privileges for admin work (moderation, export, deletion on request).
+
+```powershell
+npx tsx scripts/supabase-lms-check.ts     # teacher/student/outsider/author/anon
+npx tsx scripts/supabase-files-check.ts   # owner folder, shared-class reads, 2 MB
+```
+
+The championship still uses its local demo repository until its adapter lands.
 
 ## Local verification
 

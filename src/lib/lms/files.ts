@@ -53,7 +53,14 @@ export const demoFileStorage: FileStorage = {
   },
 };
 
+/** В режиме supabase — Storage (SUPABASE-FILES-001), модуль грузится отдельным чанком. */
+const supabaseFiles = () => import('./supabase-files').then((m) => m.supabaseFileStorage);
+
 export function getFileStorage(): FileStorage {
-  // TODO(supabase): SupabaseFileStorage при NEXT_PUBLIC_AUTH_PROVIDER=supabase.
-  return demoFileStorage;
+  if (process.env.NEXT_PUBLIC_AUTH_PROVIDER !== 'supabase') return demoFileStorage;
+  return {
+    upload: async (file) => (await supabaseFiles()).upload(file),
+    resolveUrl: async (ref) => (await supabaseFiles()).resolveUrl(ref),
+    usage: async () => (await supabaseFiles()).usage(),
+  };
 }
