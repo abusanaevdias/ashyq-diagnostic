@@ -39,6 +39,7 @@
 | `ASHYQ_TELEGRAM_BOT_TOKEN` + `ASHYQ_TELEGRAM_CHAT_ID` | при запуске | **ЗАМЕНИТЬ**: бот от @BotFather + chat id менеджеров |
 | `ASHYQ_TELEGRAM_APP_URL` | при запуске | необязательно; ссылка Mini App `https://t.me/<бот>/crm` из @BotFather `/newapp` (Web App URL — `https://<домен>/crm`): CRM в Telegram для участников группы заявок и кнопка «Открыть в CRM» под заявкой |
 | `ASHYQ_TELEGRAM_WEBHOOK_SECRET` | при запуске | необязательно; `openssl rand -hex 32`: кнопки этапов под заявкой и команды бота. После деплоя один раз `curl -X PUT https://<домен>/api/telegram -H "x-ashyq-admin-key: <ключ>"` (webhook + меню команд); бот — админ группы |
+| `CRON_SECRET` | при запуске | необязательно; `openssl rand -hex 32`: утренняя сводка и напоминания бота, расписание — ниже, «Расписание бота» |
 | `ASHYQ_LEAD_WEBHOOK_URL` | при запуске | необязательно; только `https://` |
 | `ASHYQ_LEADS_DIR` | при запуске | постоянный диск; в Docker уже `/data` |
 | `ASHYQ_NOTIFY_ALL` | при запуске | пусто (или `1` — уведомлять и о результатах без контакта) |
@@ -52,6 +53,40 @@
 `[ashyq env] …`. Предупреждения там означают, что сайт работает, но не как в
 проде. Строки `ОШИБКА` означают, что заявки теряются или не доставляются; в
 этом случае `/api/health` отвечает 503.
+
+### Расписание бота: сводка в 9:00 и напоминания
+
+`/api/telegram/cron?job=digest|remind` вызывается по расписанию с заголовком
+`Authorization: Bearer <CRON_SECRET>`. Расписание живёт в Supabase
+(`pg_cron` + `pg_net`): бесплатно и хоть каждые 5 минут. Vercel Hobby
+запускает cron раз в сутки, а GitHub Actions в приватном репозитории съел бы
+лимит минут. Один раз в Supabase → SQL Editor, подставив домен и секрет:
+
+```sql
+create extension if not exists pg_cron;
+create extension if not exists pg_net;
+
+-- 04:00 UTC = 09:00 в Алматы
+select cron.schedule('ashyq-digest', '0 4 * * *', $$
+  select net.http_get(
+    url := 'https://<домен>/api/telegram/cron?job=digest',
+    headers := jsonb_build_object('Authorization', 'Bearer <CRON_SECRET>')
+  )
+$$);
+
+select cron.schedule('ashyq-remind', '*/5 * * * *', $$
+  select net.http_get(
+    url := 'https://<домен>/api/telegram/cron?job=remind',
+    headers := jsonb_build_object('Authorization', 'Bearer <CRON_SECRET>')
+  )
+$$);
+```
+
+Повторный `cron.schedule` с тем же именем обновляет задачу — так меняют домен
+или секрет. Проверка: `select status_code, content from net._http_response
+order by created desc limit 5;` — ожидается `200` и `{"ok":true,"sent":…}`.
+Напоминание приходит один раз, если «Новый» с телефоном 15 минут никто не
+взял; заявки старше суток не напоминаются — они попадают в утреннюю сводку.
 
 ## 4. Запуск
 
