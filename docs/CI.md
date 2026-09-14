@@ -18,10 +18,15 @@ GitHub Actions workflow [`.github/workflows/ci.yml`](../.github/workflows/ci.yml
 | Question bank | `npm run validate:bank` | битый банк вопросов |
 | Production build | `npm run build` | ошибки сборки Next.js |
 | Card image check | `npx tsx scripts/card-image-check.ts` | регрессия v3-карточки результата |
-| E2E | `npm run e2e` против `next start` | главный регрессионный контракт (99 проверок с ключом) |
+| LMS + season unit | `npm run check:units` | матрица прав, репозитории LMS, лимиты недели, команды по 5, Match Day (без браузера) |
+| E2E | `npm run e2e` против `next start` | главный регрессионный контракт (118 проверок с ключом) |
 | CRM unit | `npm run check:crm` | склейка лидов по runId, этапы, статистика |
 | CRM UI | `npm run check:crm-ui` | экран `/crm` с ключом |
 | Audio | `npm run e2e:audio` | IELTS Listening MP3 против запущенного сайта |
+| LMS e2e | `npm run e2e:lms` | учебный слой: сценарии a–e на 1440/390, приватный режим, reduced-motion (CI-GATES-002) |
+| Season e2e | `npm run e2e:season` | чемпионат: капитан → организатор → рейтинг, права ролей, 1440/390 (CI-GATES-002) |
+| Design tokens | `npm run check:tokens` | цвета/радиусы/шрифты только из `design/tokens.*` на 80 экранах (CI-GATES-002) |
+| A11Y/Perf | `npm run check:a11y-perf` | axe, tap targets, focus, reduced-motion, Lighthouse ≥90/≥95 |
 
 Артефакты: скриншоты `screenshots/` — при успехе и при падении; лог сервера и
 `.data/` с заявками прогона — только при падении.
@@ -71,4 +76,10 @@ npm run e2e
 npm run check:crm
 npm run check:crm-ui
 npm run e2e:audio
+npm run e2e:lms
+npm run e2e:season
+npm run check:tokens
+npm run check:a11y-perf
 ```
+
+Без сервера: `npm run check:units` (LMS и чемпионат в режиме памяти).
