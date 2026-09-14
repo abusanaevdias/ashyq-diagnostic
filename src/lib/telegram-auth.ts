@@ -78,3 +78,19 @@ export async function isTelegramManagerRequest(request: Request): Promise<boolea
   const userId = verifyInitData(initData, token);
   return userId !== null && isManager(userId);
 }
+
+/** Вызов Bot API. В ответе и ошибках нет URL: в нём токен бота. */
+export async function callTelegram(method: string, body: Record<string, unknown>): Promise<{ ok: boolean; description?: string }> {
+  const response = await fetch(`https://api.telegram.org/bot${process.env.ASHYQ_TELEGRAM_BOT_TOKEN}/${method}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(10_000),
+  });
+  return (await response.json().catch(() => ({ ok: false, description: `HTTP ${response.status}` }))) as { ok: boolean; description?: string };
+}
+
+export async function telegramApi(method: string, body: Record<string, unknown>): Promise<void> {
+  const result = await callTelegram(method, body);
+  if (!result.ok) throw new Error(`telegram ${method}: ${result.description ?? 'failed'}`);
+}

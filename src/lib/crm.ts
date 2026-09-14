@@ -11,12 +11,19 @@ export const CRM_STAGE_LABELS: Record<CrmStage, string> = {
   lost: 'Неактуально',
 };
 
+/** Ответственный менеджер — пользователь Telegram, нажавший «Взял». */
+export interface CrmAssignee {
+  id: number;
+  name: string;
+}
+
 export interface CrmEvent {
   id: string;
   runId: string;
-  type: 'stage_change' | 'note';
+  type: 'stage_change' | 'note' | 'assign';
   stage?: CrmStage;
   body?: string;
+  assignee?: CrmAssignee;
   createdAt: string;
 }
 
@@ -92,6 +99,7 @@ export interface CrmRecord {
   source?: string;
   campaign?: string;
   stage: CrmStage;
+  assignee?: CrmAssignee;
   firstSeenAt: string;
   lastSeenAt: string;
   activities: CrmActivity[];
@@ -247,13 +255,16 @@ export function buildCrmSnapshot(
     const runEvents = [...(eventsByRun.get(runId) ?? [])].sort((a, b) => a.createdAt.localeCompare(b.createdAt));
     for (const event of runEvents) {
       if (event.type === 'stage_change' && event.stage) record.stage = event.stage;
+      if (event.type === 'assign' && event.assignee) record.assignee = event.assignee;
       record.activities.push({
         id: event.id,
         type: event.type,
         text:
           event.type === 'stage_change' && event.stage
             ? `Этап изменён: ${CRM_STAGE_LABELS[event.stage]}`
-            : event.body ?? 'Заметка',
+            : event.type === 'assign'
+              ? `Взял в работу: ${event.assignee?.name ?? '—'}`
+              : event.body ?? 'Заметка',
         createdAt: event.createdAt,
       });
       if (event.createdAt > record.lastSeenAt) record.lastSeenAt = event.createdAt;

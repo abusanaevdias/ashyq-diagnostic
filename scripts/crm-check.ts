@@ -40,6 +40,16 @@ assert.ok(seasonLead);
 assert.equal(seasonLead.kind, 'season');
 assert.ok(seasonLead.activities.some((activity) => activity.text === 'Оставил заявку на следующий сезон'));
 
+// TG-BOT-002: ответственный из Telegram — событие assign, последнее побеждает
+const assigned = buildCrmSnapshot(leads, [
+  ...events,
+  { id: 'event-3', runId: 'run-001', type: 'assign', assignee: { id: 7, name: 'Дана' }, createdAt: '2026-09-13T10:12:00.000Z' },
+  { id: 'event-4', runId: 'run-001', type: 'assign', assignee: { id: 8, name: 'Аружан' }, createdAt: '2026-09-13T10:13:00.000Z' },
+]).records.find((record) => record.runId === 'run-001');
+assert.deepEqual(assigned?.assignee, { id: 8, name: 'Аружан' }, 'ответственный — из последнего assign');
+assert.equal(assigned?.activities[0].text, 'Взял в работу: Аружан', 'смена ответственного видна в истории');
+assert.equal(seasonLead.assignee, undefined, 'без assign ответственного нет');
+
 // --- LEADS-DURABILITY-001: идемпотентность, outbox-ledger, политика retry ---
 
 

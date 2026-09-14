@@ -3,7 +3,19 @@ import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
 import type { CrmEvent, CrmRecord, CrmSnapshot } from '../src/lib/crm';
 import { isTelegramManagerRequest, verifyInitData } from '../src/lib/telegram-auth';
-import { findRecords, handleUpdate, leadKeyboard, today, unprocessed, type TelegramIo, type TgUpdate } from '../src/lib/telegram-bot';
+import {
+  REMINDER_NOTE,
+  dueReminders,
+  findRecords,
+  handleUpdate,
+  leadKeyboard,
+  mine,
+  runCron,
+  today,
+  unprocessed,
+  type TelegramIo,
+  type TgUpdate,
+} from '../src/lib/telegram-bot';
 
 const token = '123:abc';
 const now = Date.parse('2026-09-15T10:00:00Z');
@@ -62,12 +74,23 @@ const member = (id: number, status: string) => {
   const records = [
     rec('new-1', 'new', '2026-09-15T19:30:00Z'), // 00:30 в Алматы — уже сегодня
     rec('new-nophone', 'new', '2026-09-15T19:40:00Z', { phone: undefined }),
+    rec('taken-new', 'new', '2026-09-15T19:50:00Z', { phone: '77015550001', assignee: { id: 8, name: 'Дана' } }),
     rec('stale', 'contacted', '2026-09-12T10:00:00Z', { name: 'Дана', phone: '77770001122' }),
     rec('fresh-contacted', 'contacted', '2026-09-15T18:30:00Z'), // 23:30 в Алматы — вчера
     rec('done', 'enrolled', '2026-09-01T10:00:00Z'),
+    rec('mine', 'contacted', '2026-09-15T12:00:00Z', { phone: '77015550000', assignee: { id: 7, name: 'Аружан' } }),
   ];
-  assert.deepEqual(unprocessed(records, botNow).map((r) => r.runId), ['new-1', 'stale'], 'новые с телефоном + зависшие');
-  assert.deepEqual(today(records, botNow).map((r) => r.runId), ['new-1'], 'сегодня по Алматы, только с телефоном');
+  assert.deepEqual(unprocessed(records, botNow).map((r) => r.runId), ['new-1', 'stale'], 'никем не взятые + зависшие, взятые свежие не в списке');
+  assert.deepEqual(today(records, botNow).map((r) => r.runId), ['new-1', 'taken-new'], 'сегодня по Алматы, только с телефоном');
+  assert.deepEqual(mine(records, 7).map((r) => r.runId), ['mine'], 'мои открытые');
+  const reminded = rec('reminded', 'new', '2026-09-15T19:00:00Z', {
+    activities: [{ id: 'r', type: 'note', text: REMINDER_NOTE, createdAt: '2026-09-15T19:20:00Z' }],
+  });
+  assert.deepEqual(
+    dueReminders([...records, reminded, rec('old-new', 'new', '2026-09-10T10:00:00Z'), rec('just-now', 'new', '2026-09-15T19:55:00Z')], botNow).map((r) => r.runId),
+    ['new-1'],
+    'напоминание: не взяли 15+ мин, не старше суток, один раз',
+  );
   assert.deepEqual(findRecords(records, '8 701 234 56 78').map((r) => r.runId), ['new-1', 'fresh-contacted', 'done'], 'номер через 8');
   assert.deepEqual(findRecords(records, 'дан').map((r) => r.runId), ['stale'], 'имя без регистра');
 
@@ -86,10 +109,28 @@ const member = (id: number, status: string) => {
   const lastEdit = () => calls.filter(([method]) => method === 'editMessageText').at(-1)?.[1].text;
 
   await handleUpdate(press('s:contacted:new-1', '🔴 НОВОЕ ОБРАЩЕНИЕ'), io, botNow);
-  assert.deepEqual(appended.map((e) => [e.type, e.stage ?? e.body, e.runId]), [['stage_change', 'contacted', 'new-1'], ['note', 'Telegram: Аружан', 'new-1']], 'кнопка пишет этап и автора');
-  assert.equal(lastEdit(), '🔴 НОВОЕ ОБРАЩЕНИЕ\n\nСтатус: Связались — Аружан', 'сообщение дополнено статусом');
+  assert.deepEqual(
+    appended.map((e) => [e.type, e.stage ?? e.body ?? e.assignee?.name, e.runId]),
+    [['assign', 'Аружан', 'new-1'], ['stage_change', 'contacted', 'new-1'], ['note', 'Telegram: Аружан', 'new-1']],
+    'этап без ответственного назначает нажавшего',
+  );
+  assert.equal(lastEdit(), '🔴 НОВОЕ ОБРАЩЕНИЕ\n\nСтатус: Связались · взял Аружан', 'сообщение дополнено статусом');
   await handleUpdate(press('s:lost:new-1', String(lastEdit())), io, botNow);
-  assert.equal(lastEdit(), '🔴 НОВОЕ ОБРАЩЕНИЕ\n\nСтатус: Неактуально — Аружан', 'повторное нажатие заменяет статус');
+  assert.equal(lastEdit(), '🔴 НОВОЕ ОБРАЩЕНИЕ\n\nСтатус: Неактуально · взял Аружан', 'повторное нажатие заменяет статус');
+
+  appended.length = 0;
+  await handleUpdate(press('s:lost:taken-new', 'x'), io, botNow);
+  assert.deepEqual(appended.map((e) => e.type), ['stage_change', 'note'], 'этап не отбирает заявку у ответственного');
+  assert.equal(lastEdit(), 'x\n\nСтатус: Неактуально · взял Дана', 'в статусе прежний ответственный');
+  appended.length = 0;
+  await handleUpdate(press('a:taken-new', 'x'), io, botNow);
+  assert.deepEqual(appended.map((e) => [e.type, e.assignee?.name]), [['assign', 'Аружан']], '«Взял» забирает заявку');
+  calls.length = 0;
+  await handleUpdate(press('a:mine', 'y\n\nСтатус: Связались · взял Аружан'), io, botNow);
+  assert.equal(calls.some(([method]) => method === 'editMessageText'), false, 'тот же текст не редактируем (message is not modified)');
+  calls.length = 0;
+  await handleUpdate(press('a:missing', 'z'), io, botNow);
+  assert.equal(calls[0]?.[1].show_alert, true, 'неизвестная заявка — отказ');
 
   calls.length = 0;
   appended.length = 0;
@@ -118,6 +159,22 @@ const member = (id: number, status: string) => {
   const capped = await sent(command('/new'), { ...io, snapshot: async () => ({ records: many, stats }) as unknown as CrmSnapshot });
   assert.equal(capped.length, 6, 'не больше 5 карточек + ссылка на остальное');
   assert.match(String(capped[5].text), /Ещё 2/, 'сколько осталось');
+  assert.deepEqual((await sent(command('/my'))).map((body) => String(body.text).split('\n')[0]), ['Аружан · IELTS'], '/my — мои открытые');
+
+  // расписание: напоминания и утренняя сводка — в тему заявок
+  process.env.ASHYQ_TELEGRAM_THREAD_ID = '1885';
+  calls.length = 0;
+  appended.length = 0;
+  assert.equal(await runCron('remind', io, botNow), 1, 'одно напоминание: new-1');
+  assert.match(String(calls[0][1].text), /никто не взял/, 'текст напоминания');
+  assert.equal(calls[0][1].message_thread_id, 1885, 'в тему заявок');
+  assert.deepEqual(appended.map((e) => [e.runId, e.body]), [['new-1', REMINDER_NOTE]], 'напоминание отмечено в CRM');
+  calls.length = 0;
+  assert.equal(await runCron('digest', io, botNow), 1, 'сводка — одно сообщение');
+  const digest = String(calls[0][1].text);
+  assert.match(digest, /Вчера пришло: 2/, 'вчера по Алматы');
+  assert.match(digest, /Никто не взял: 1/, 'невзятые');
+  assert.match(digest, /Зависли больше 2 дней: 1/, 'зависшие');
 
   console.log('telegram-check: ok');
 })();

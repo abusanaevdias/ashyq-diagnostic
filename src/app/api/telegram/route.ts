@@ -1,27 +1,11 @@
 import { NextResponse } from 'next/server';
 import { isAuthorized, safeEqual } from '@/lib/admin-auth';
 import { appendCrmEvents, readCrmSnapshot } from '@/lib/crm-server';
-import { isManager } from '@/lib/telegram-auth';
+import { callTelegram, isManager, telegramApi } from '@/lib/telegram-auth';
 import { BOT_COMMANDS, handleUpdate, type TgUpdate } from '@/lib/telegram-bot';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-// в ошибке — только метод и статус: URL содержит токен бота
-async function callTelegram(method: string, body: Record<string, unknown>): Promise<{ ok: boolean; description?: string }> {
-  const response = await fetch(`https://api.telegram.org/bot${process.env.ASHYQ_TELEGRAM_BOT_TOKEN}/${method}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-    signal: AbortSignal.timeout(10_000),
-  });
-  return (await response.json().catch(() => ({ ok: false, description: `HTTP ${response.status}` }))) as { ok: boolean; description?: string };
-}
-
-async function api(method: string, body: Record<string, unknown>): Promise<void> {
-  const result = await callTelegram(method, body);
-  if (!result.ok) throw new Error(`telegram ${method}: ${result.description ?? 'failed'}`);
-}
 
 /** Входящие обновления бота; Telegram подписывает их секретом из setWebhook. */
 export async function POST(request: Request) {
@@ -33,7 +17,7 @@ export async function POST(request: Request) {
 
   try {
     const update = (await request.json()) as TgUpdate;
-    await handleUpdate(update, { snapshot: readCrmSnapshot, append: appendCrmEvents, isManager, api });
+    await handleUpdate(update, { snapshot: readCrmSnapshot, append: appendCrmEvents, isManager, api: telegramApi });
   } catch (error) {
     console.error('[ashyq bot] update failed:', error instanceof Error ? error.message : 'unknown');
   }
