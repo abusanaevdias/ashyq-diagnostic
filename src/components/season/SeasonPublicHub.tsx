@@ -44,9 +44,22 @@ function Trend({ value }: { value: number }) {
 export default function SeasonPublicHub() {
   const [division, setDivision] = useState<Division>('ielts');
   const [board, setBoard] = useState<Board>('teams');
-  const [initial] = useState(() => buildSeasonSeed());
+  // Демо-сид как стартовые данные — только в демо: с Supabase показываем настоящий сезон, а не фикстуру
+  const [initial] = useState(() => (process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' ? undefined : buildSeasonSeed()));
   const { data: loaded } = useLmsData(() => getSeasonRepo().load(), 'season:public', initial);
   const data = loaded ?? initial;
+
+  if (!data) {
+    return (
+      <main className={styles.page}>
+        <section className={`${styles.shell} ${styles.hero}`}>
+          <p className={styles.eyebrow}>ASHYQ Championship</p>
+          <p className={styles.lead} role="status">Загружаем сезон…</p>
+        </section>
+      </main>
+    );
+  }
+
   const season = currentSeason(data.seasons);
 
   if (!season) {
@@ -93,7 +106,7 @@ export default function SeasonPublicHub() {
           <aside className={styles.statusCard} aria-label="Статус сезона">
             <div className={styles.liveRow}>
               <span className={styles.live}><span className={styles.dot} />{PHASE_TITLE[phase]}</span>
-              <span className={styles.micro}>Демо-данные</span>
+              {process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' ? null : <span className={styles.micro}>Демо-данные</span>}
             </div>
             <p className={styles.week}>{season.name} · неделя {week} из {weeks}</p>
             <div className={styles.progressTrack} role="progressbar" aria-label="Прогресс сезона" aria-valuemin={0} aria-valuemax={weeks} aria-valuenow={week}>

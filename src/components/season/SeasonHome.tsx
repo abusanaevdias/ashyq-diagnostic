@@ -130,7 +130,9 @@ function MyHQ({ user }: { user: User }) {
 
   return (
     <main className={styles.page}>
-      <p className={styles.demoBar}>Демо: команды и баллы хранятся на этом устройстве. Серверные баллы и авторизация появятся с Supabase.</p>
+      {process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' ? null : (
+        <p className={styles.demoBar}>Демо: команды и баллы хранятся на этом устройстве. Серверные баллы и авторизация появятся с Supabase.</p>
+      )}
       <div className={styles.shell}>
         <header className={styles.hqTop}>
           <div>

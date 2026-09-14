@@ -88,7 +88,24 @@ npx tsx scripts/supabase-lms-check.ts     # teacher/student/outsider/author/anon
 npx tsx scripts/supabase-files-check.ts   # owner folder, shared-class reads, 2 MB
 ```
 
-The championship still uses its local demo repository until its adapter lands.
+## Championship (SUPABASE-SEASON-001)
+
+The season UI computes standings from a whole `SeasonData` document, so the
+database serves it through one role-redacted RPC, `season_snapshot()`:
+organizers get everything; students get public data plus their own `userId`,
+their team's answers and the reasons for their own points; anonymous visitors
+get aliases, teams, Match Days and points without reasons, answers or the
+Match Day brief. Composite actions are atomic RPCs: `create_season_team`
+(exactly five members, captain from the roster), `add_season_participant`
+(optional link to a student account by email — without it the student has no
+Season HQ) and `review_match_and_award` (review plus capped «Команда» points
+for each member in one transaction, week computed like `weekOf`). A trigger
+lets only the captain submit or edit a Match Day answer, and only while the
+match is live. Appeals are out of scope until the rules are decided.
+
+```powershell
+npx tsx scripts/supabase-season-check.ts   # organizer/captain/member/anon
+```
 
 ## Local verification
 
