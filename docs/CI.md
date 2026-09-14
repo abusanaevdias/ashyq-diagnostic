@@ -18,7 +18,7 @@ GitHub Actions workflow [`.github/workflows/ci.yml`](../.github/workflows/ci.yml
 | Question bank | `npm run validate:bank` | битый банк вопросов |
 | Production build | `npm run build` | ошибки сборки Next.js |
 | Card image check | `npx tsx scripts/card-image-check.ts` | регрессия v3-карточки результата |
-| LMS + season unit | `npm run check:units` | матрица прав, репозитории LMS, лимиты недели, команды по 5, Match Day (без браузера) |
+| LMS + season unit | `npm run check:units` | матрица прав, репозитории LMS, лимиты недели, команды по 5, Match Day, правила проверки окружения `src/lib/env.ts` (без браузера) |
 | E2E | `npm run e2e` против `next start` | главный регрессионный контракт (118 проверок с ключом) |
 | CRM unit | `npm run check:crm` | склейка лидов по runId, этапы, статистика |
 | CRM UI | `npm run check:crm-ui` | экран `/crm` с ключом |
@@ -82,4 +82,4 @@ npm run check:tokens
 npm run check:a11y-perf
 ```
 
-Без сервера: `npm run check:units` (LMS и чемпионат в режиме памяти).
+Без сервера: `npm run check:units` (LMS и чемпионат в режиме памяти, проверка окружения).

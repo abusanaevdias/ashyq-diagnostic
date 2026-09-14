@@ -25,6 +25,14 @@ assert.deepEqual(count({ ...prod, ASHYQ_TELEGRAM_CHAT_ID: undefined }), [1, 1], 
 assert.deepEqual(count({ ...prod, ASHYQ_TELEGRAM_BOT_TOKEN: undefined, ASHYQ_TELEGRAM_CHAT_ID: undefined, ASHYQ_LEAD_WEBHOOK_URL: 'https://hook' }), [0, 0], 'webhook по https — достаточный канал');
 assert.deepEqual(count({ ...prod, NEXT_PUBLIC_SITE_URL: 'http://ashyq.example', NEXT_PUBLIC_ASHYQ_WHATSAPP: '+7 706', ASHYQ_NOTIFY_ALL: 'yes' }), [0, 3], 'сомнительные значения — предупреждения');
 
+const supabase = { ...prod, ASHYQ_LEADS_PROVIDER: 'supabase', ASHYQ_SUPABASE_URL: 'https://project.supabase.co/', ASHYQ_SUPABASE_SERVICE_ROLE_KEY: 'service-role' };
+assert.deepEqual(count(supabase), [0, 0], 'Supabase по https с ключом — чисто');
+assert.deepEqual(count({ ...supabase, ASHYQ_SUPABASE_URL: 'http://localhost:54321' }), [0, 0], 'локальный Supabase по http допустим');
+assert.deepEqual(count({ ...supabase, ASHYQ_SUPABASE_URL: 'http://db.example' }), [1, 0], 'Supabase по http вне localhost — ошибка');
+assert.deepEqual(count({ ...supabase, ASHYQ_SUPABASE_SERVICE_ROLE_KEY: undefined }), [1, 0], 'Supabase без ключа — ошибка');
+assert.deepEqual(count({ ...supabase, ASHYQ_LEADS_PROVIDER: undefined }), [0, 1], 'Supabase задан, но не включён — предупреждение');
+assert.deepEqual(count({ ...prod, ASHYQ_LEADS_PROVIDER: 'postgres' }), [0, 1], 'неизвестный провайдер — предупреждение');
+
 (async () => {
   const temp = await mkdtemp(path.join(tmpdir(), 'ashyq-env-'));
   try {
@@ -35,5 +43,5 @@ assert.deepEqual(count({ ...prod, NEXT_PUBLIC_SITE_URL: 'http://ashyq.example', 
   } finally {
     await rm(temp, { recursive: true, force: true });
   }
-  console.log('PASS env check: prod config, CI defaults, weak key, http webhook, half Telegram, leads dir');
+  console.log('PASS env check: prod config, CI defaults, weak key, http webhook, half Telegram, Supabase provider, leads dir');
 })();

@@ -40,6 +40,8 @@
 | `ASHYQ_LEAD_WEBHOOK_URL` | при запуске | необязательно; только `https://` |
 | `ASHYQ_LEADS_DIR` | при запуске | постоянный диск; в Docker уже `/data` |
 | `ASHYQ_NOTIFY_ALL` | при запуске | пусто (или `1` — уведомлять и о результатах без контакта) |
+| `ASHYQ_LEADS_PROVIDER` | при запуске | пусто — файлы в `ASHYQ_LEADS_DIR`; `supabase` — заявки в Supabase |
+| `ASHYQ_SUPABASE_URL` + `ASHYQ_SUPABASE_SERVICE_ROLE_KEY` | при запуске | **ЗАМЕНИТЬ**, если выбран Supabase: `https://ПРОЕКТ.supabase.co` + service role key (только на сервере) |
 
 `NEXT_PUBLIC_*` вшиваются в JS при `next build`. После смены домена образ
 нужно пересобрать, одной переменной при запуске недостаточно.
@@ -82,8 +84,12 @@ ASHYQ_LEADS_DIR=/var/lib/ashyq ASHYQ_ADMIN_KEY=… npm run start   # порт 30
 Caddy (сертификат выпускает сам), nginx + certbot или HTTPS от платформы.
 Прокси проксирует всё на `127.0.0.1:3000`.
 
-Сейчас нужен один экземпляр: заявки пишутся в локальный файл. Несколько
-серверов появятся только вместе с БД (CRM-PROD-001).
+С файловым хранилищем нужен один экземпляр: заявки пишутся в локальный файл.
+С `ASHYQ_LEADS_PROVIDER=supabase` заявки, журнал доставки и события CRM
+живут в Supabase (схема и RLS — [`SUPABASE_FOUNDATION.md`](SUPABASE_FOUNDATION.md)),
+поэтому постоянный диск для них не нужен и проверка папки заявок
+отключается. Общий ключ CRM остаётся до персональной авторизации
+(CRM-PROD-001).
 
 ## 5. Чек-лист запуска
 
