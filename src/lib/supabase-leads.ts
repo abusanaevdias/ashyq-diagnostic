@@ -1,22 +1,24 @@
 import 'server-only';
 import type { CrmEvent, DeliveryLedgerEntry } from './crm';
 import type { StoredLead } from './lead-server';
+import { resolveLeadsStorage } from './env';
 
 type Row<T> = { payload: T };
 
+// Выбор хранилища — один на весь сервер: /api/health и запись заявок не могут разойтись (LEADS-VERCEL-001)
 function config(): { url: string; key: string } | null {
-  if (process.env.ASHYQ_LEADS_PROVIDER !== 'supabase') return null;
-  const url = process.env.ASHYQ_SUPABASE_URL?.replace(/\/$/, '');
-  const key = process.env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) throw new Error('Supabase lead provider requires ASHYQ_SUPABASE_URL and ASHYQ_SUPABASE_SERVICE_ROLE_KEY');
+  const storage = resolveLeadsStorage(process.env);
+  if (storage.provider !== 'supabase') return null;
+  const { url, key } = storage;
+  if (!url || !key) throw new Error('Supabase lead storage requires a URL and a service role key (ASHYQ_SUPABASE_* or the Vercel integration SUPABASE_*)');
   if (!url.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(url)) {
-    throw new Error('ASHYQ_SUPABASE_URL must use HTTPS outside localhost');
+    throw new Error('Supabase URL must use HTTPS outside localhost');
   }
   return { url, key };
 }
 
 export function usesSupabaseLeads(): boolean {
-  return process.env.ASHYQ_LEADS_PROVIDER === 'supabase';
+  return resolveLeadsStorage(process.env).provider === 'supabase';
 }
 
 async function rest<T>(path: string, init?: RequestInit): Promise<T> {

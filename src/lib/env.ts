@@ -20,6 +20,26 @@ type Env = Record<string, string | undefined>;
 
 export const ADMIN_KEY_MIN_LENGTH = 32;
 
+/** Где хранятся заявки (LEADS-VERCEL-001). */
+export interface LeadsStorage {
+  provider: 'supabase' | 'file';
+  url?: string;
+  key?: string;
+}
+
+/**
+ * Явный ASHYQ_LEADS_PROVIDER важнее всего. Без него на Vercel (диск read-only,
+ * файлы в /tmp пропадают) — Supabase, если есть ключи официальной интеграции
+ * Supabase ↔ Vercel: она задаёт SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY, а не ASHYQ_*.
+ */
+export function resolveLeadsStorage(env: Env): LeadsStorage {
+  const url = (env.ASHYQ_SUPABASE_URL || env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL)?.replace(/\/$/, '') || undefined;
+  const key = env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || undefined;
+  if (env.ASHYQ_LEADS_PROVIDER === 'supabase') return { provider: 'supabase', url, key };
+  if (!env.ASHYQ_LEADS_PROVIDER && env.VERCEL && url && key) return { provider: 'supabase', url, key };
+  return { provider: 'file', url, key };
+}
+
 export function checkEnv(env: Env): EnvReport {
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -64,17 +84,18 @@ export function checkEnv(env: Env): EnvReport {
 
   // те же условия, что в src/lib/supabase-leads.ts: там они всплывают только на первой заявке
   const provider = env.ASHYQ_LEADS_PROVIDER;
-  const supabaseUrl = env.ASHYQ_SUPABASE_URL?.replace(/\/$/, '');
-  const supabaseKey = env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY;
-  if (provider === 'supabase') {
-    if (!supabaseUrl || !supabaseKey) {
-      errors.push('ASHYQ_LEADS_PROVIDER=supabase: нужны оба ASHYQ_SUPABASE_URL и ASHYQ_SUPABASE_SERVICE_ROLE_KEY, иначе заявки не сохраняются');
-    } else if (!supabaseUrl.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(supabaseUrl)) {
-      errors.push('ASHYQ_SUPABASE_URL должен быть https (http — только для localhost), иначе заявки не сохраняются');
+  const storage = resolveLeadsStorage(env);
+  if (storage.provider === 'supabase') {
+    if (!storage.url || !storage.key) {
+      errors.push('Заявки в Supabase: нужны URL и service role key (ASHYQ_SUPABASE_URL + ASHYQ_SUPABASE_SERVICE_ROLE_KEY или SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY интеграции), иначе заявки не сохраняются');
+    } else if (!storage.url.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(storage.url)) {
+      errors.push('Адрес Supabase должен быть https (http — только для localhost), иначе заявки не сохраняются');
     }
-  } else if (provider) {
+  } else if (provider && provider !== 'supabase') {
     warnings.push(`ASHYQ_LEADS_PROVIDER=${provider} не поддерживается (только supabase): заявки пишутся в файлы`);
-  } else if (supabaseUrl || supabaseKey) {
+  } else if (env.VERCEL) {
+    errors.push('Vercel: диск только для чтения, файлы заявок в /tmp пропадают между запусками — подключи Supabase (интеграция Supabase ↔ Vercel или ASHYQ_LEADS_PROVIDER=supabase)');
+  } else if (storage.key) {
     warnings.push('Supabase задан, но не включён: чтобы хранить заявки в Supabase, укажи ASHYQ_LEADS_PROVIDER=supabase');
   }
 
@@ -131,8 +152,8 @@ export async function checkSupabaseLeads(url: string, key: string, fetchImpl: ty
   }
 }
 
-export async function inspectDeployment(): Promise<EnvReport> {
-  const report = checkEnv({
+export async function inspectDeployment(): Promise<EnvReport & { storage: LeadsStorage['provider'] }> {
+  const env: Env = {
     ...process.env,
     // NEXT_PUBLIC_* вшиваются при сборке: прямое обращение даёт значение из
     // сборки, а не из окружения запуска (в Docker их при запуске может не быть)
@@ -141,15 +162,17 @@ export async function inspectDeployment(): Promise<EnvReport> {
     NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER,
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  });
+  };
+  const report = checkEnv(env);
+  const storage = resolveLeadsStorage(env);
   // с Supabase заявки не живут на диске: read-only хостинг не должен давать 503
-  if (process.env.ASHYQ_LEADS_PROVIDER !== 'supabase') {
+  if (storage.provider === 'file') {
     const leadsDirError = await checkLeadsDir();
     if (leadsDirError) report.errors.push(leadsDirError);
-  } else if (process.env.ASHYQ_SUPABASE_URL && process.env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY) {
+  } else if (storage.url && storage.key) {
     // без URL/ключа checkEnv уже сообщил ошибку — ходить в сеть незачем
-    const supabaseError = await checkSupabaseLeads(process.env.ASHYQ_SUPABASE_URL, process.env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY);
+    const supabaseError = await checkSupabaseLeads(storage.url, storage.key);
     if (supabaseError) report.errors.push(supabaseError);
   }
-  return report;
+  return { ...report, storage: storage.provider };
 }
