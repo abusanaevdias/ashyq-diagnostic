@@ -46,6 +46,14 @@ const nextConfig = {
         ],
       },
       {
+        // /crm — Telegram Mini App: веб-версия Telegram открывает его во фрейме.
+        // X-Frame-Options: DENY выше остаётся, но при frame-ancestors браузеры его не применяют
+        source: '/crm',
+        headers: [
+          { key: 'Content-Security-Policy', value: csp.replace("frame-ancestors 'none'", 'frame-ancestors https://web.telegram.org') },
+        ],
+      },
+      {
         // Выгрузка лидов не должна попадать ни в один кэш
         source: '/api/leads',
         headers: [{ key: 'Cache-Control', value: 'no-store' }],

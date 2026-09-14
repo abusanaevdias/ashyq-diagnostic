@@ -37,6 +37,7 @@
 | `NEXT_PUBLIC_ASHYQ_WHATSAPP` | **при сборке** | `77067080181` (подтверждён) |
 | `ASHYQ_ADMIN_KEY` | при запуске | `openssl rand -hex 32`, не короче 32 символов |
 | `ASHYQ_TELEGRAM_BOT_TOKEN` + `ASHYQ_TELEGRAM_CHAT_ID` | при запуске | **ЗАМЕНИТЬ**: бот от @BotFather + chat id менеджеров |
+| `ASHYQ_TELEGRAM_APP_URL` | при запуске | необязательно; ссылка Mini App `https://t.me/<бот>/crm` из @BotFather `/newapp` (Web App URL — `https://<домен>/crm`): CRM в Telegram для участников группы заявок и кнопка «Открыть в CRM» под заявкой |
 | `ASHYQ_LEAD_WEBHOOK_URL` | при запуске | необязательно; только `https://` |
 | `ASHYQ_LEADS_DIR` | при запуске | постоянный диск; в Docker уже `/data` |
 | `ASHYQ_NOTIFY_ALL` | при запуске | пусто (или `1` — уведомлять и о результатах без контакта) |

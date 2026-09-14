@@ -24,6 +24,8 @@ assert.deepEqual(count({ ...prod, ASHYQ_LEAD_WEBHOOK_URL: 'http://hook' }), [1, 
 assert.deepEqual(count({ ...prod, ASHYQ_TELEGRAM_CHAT_ID: undefined }), [1, 1], 'половина Telegram — ошибка и нет канала');
 assert.deepEqual(count({ ...prod, ASHYQ_TELEGRAM_BOT_TOKEN: undefined, ASHYQ_TELEGRAM_CHAT_ID: undefined, ASHYQ_LEAD_WEBHOOK_URL: 'https://hook' }), [0, 0], 'webhook по https — достаточный канал');
 assert.deepEqual(count({ ...prod, NEXT_PUBLIC_SITE_URL: 'http://ashyq.example', NEXT_PUBLIC_ASHYQ_WHATSAPP: '+7 706', ASHYQ_NOTIFY_ALL: 'yes' }), [0, 3], 'сомнительные значения — предупреждения');
+assert.deepEqual(count({ ...prod, ASHYQ_TELEGRAM_APP_URL: 'https://t.me/ashyq_bot/crm' }), [0, 0], 'ссылка Mini App — чисто');
+assert.deepEqual(count({ ...prod, ASHYQ_TELEGRAM_APP_URL: 'https://ashyq.example/crm' }), [0, 1], 'не t.me — кнопки не будет, предупреждение');
 
 const supabase = { ...prod, ASHYQ_LEADS_PROVIDER: 'supabase', ASHYQ_SUPABASE_URL: 'https://project.supabase.co/', ASHYQ_SUPABASE_SERVICE_ROLE_KEY: 'service-role' };
 assert.deepEqual(count(supabase), [0, 0], 'Supabase по https с ключом — чисто');

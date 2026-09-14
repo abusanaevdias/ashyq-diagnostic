@@ -113,6 +113,13 @@ async function sendToTelegram(lead: StoredLead): Promise<void> {
   const chatId = process.env.ASHYQ_TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
 
+  // кнопка открывает карточку в Mini App; startapp пропускает только A-Za-z0-9_-,
+  // а кривая ссылка сорвала бы саму доставку (HTTP 400) — тогда просто без кнопки
+  const appUrl = process.env.ASHYQ_TELEGRAM_APP_URL;
+  const crmButton = appUrl?.startsWith('https://t.me/') && /^[\w-]+$/.test(lead.runId)
+    ? { inline_keyboard: [[{ text: 'Открыть в CRM', url: `${appUrl}?startapp=${lead.runId}` }]] }
+    : undefined;
+
   const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -122,6 +129,7 @@ async function sendToTelegram(lead: StoredLead): Promise<void> {
       message_thread_id: process.env.ASHYQ_TELEGRAM_THREAD_ID ? Number(process.env.ASHYQ_TELEGRAM_THREAD_ID) : undefined,
       text: leadToText(lead),
       disable_web_page_preview: true,
+      reply_markup: crmButton,
     }),
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });

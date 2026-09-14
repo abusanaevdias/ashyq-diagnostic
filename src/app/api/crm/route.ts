@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import { hasValidAdminKey, isAdminConfigured } from '@/lib/admin-auth';
+import { isAuthorized } from '@/lib/admin-auth';
 import { CRM_STAGES, type CrmEvent, type CrmStage } from '@/lib/crm';
 import { appendCrmEvents, readCrmSnapshot, retryRunDeliveries } from '@/lib/crm-server';
 
@@ -12,14 +12,14 @@ function denied(): NextResponse {
 }
 
 export async function GET(request: Request) {
-  if (!isAdminConfigured() || !hasValidAdminKey(request)) return denied();
+  if (!(await isAuthorized(request))) return denied();
   return NextResponse.json(await readCrmSnapshot(), {
     headers: { 'Cache-Control': 'no-store' },
   });
 }
 
 export async function PATCH(request: Request) {
-  if (!isAdminConfigured() || !hasValidAdminKey(request)) return denied();
+  if (!(await isAuthorized(request))) return denied();
 
   const raw = await request.text();
   if (raw.length > 4_000) return NextResponse.json({ ok: false }, { status: 413 });
