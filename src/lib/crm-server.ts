@@ -1,9 +1,14 @@
 import 'server-only';
 import { appendFile, mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { StoredLead } from './lead-server';
+import { readStoredLeads } from './lead-server';
 import { buildCrmSnapshot, type CrmEvent, type CrmSnapshot } from './crm';
 import { readDeliveryLedger, retryFailedDeliveries } from './lead-delivery';
+import {
+  appendSupabaseEvents,
+  readSupabaseEvents,
+  usesSupabaseLeads,
+} from './supabase-leads';
 
 function dataFile(name: string): string {
   const directory = process.env.ASHYQ_LEADS_DIR ?? path.join(process.cwd(), '.data');
@@ -29,8 +34,10 @@ async function readJsonLines<T>(file: string): Promise<T[]> {
 
 export async function readCrmSnapshot(): Promise<CrmSnapshot> {
   const [leads, events] = await Promise.all([
-    readJsonLines<StoredLead>(dataFile('leads.jsonl')),
-    readJsonLines<CrmEvent>(dataFile('crm-events.jsonl')),
+    readStoredLeads(),
+    usesSupabaseLeads()
+      ? readSupabaseEvents()
+      : readJsonLines<CrmEvent>(dataFile('crm-events.jsonl')),
   ]);
 
   // Автоматический повтор неудачных доставок (по политике isRetryDue):
@@ -47,12 +54,16 @@ export async function readCrmSnapshot(): Promise<CrmSnapshot> {
 
 /** Ручной повтор из CRM (кнопка «Повторить доставку»): бьёт сразу, без backoff. */
 export async function retryRunDeliveries(runId: string): Promise<void> {
-  const leads = await readJsonLines<StoredLead>(dataFile('leads.jsonl'));
+  const leads = await readStoredLeads();
   await retryFailedDeliveries(runId, leads, { force: true });
 }
 
 export async function appendCrmEvents(events: CrmEvent[]): Promise<void> {
   if (events.length === 0) return;
+  if (usesSupabaseLeads()) {
+    await appendSupabaseEvents(events);
+    return;
+  }
   const file = dataFile('crm-events.jsonl');
   await mkdir(path.dirname(file), { recursive: true });
   await appendFile(file, `${events.map((event) => JSON.stringify(event)).join('\n')}\n`, 'utf8');

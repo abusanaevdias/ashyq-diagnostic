@@ -21,8 +21,26 @@ from its current local demo repositories.
   escalation, anonymous/private reads, student/teacher class access, weekly
   point caps, team size, and alias-only public leaderboard output.
 
-The schema intentionally contains no CRM lead data, diagnostic answers, real
-student identities or committed demo accounts.
+The schema intentionally contains no diagnostic answers, real student
+identities or committed demo accounts. CRM lead tables are empty by default
+and are reachable only by the server-side service role.
+
+## Optional lead persistence
+
+Lead, CRM-event and delivery-ledger persistence can be switched from local
+JSONL files to Supabase without changing the public API contracts:
+
+```text
+ASHYQ_LEADS_PROVIDER=supabase
+ASHYQ_SUPABASE_URL=https://your-project.supabase.co
+ASHYQ_SUPABASE_SERVICE_ROLE_KEY=server-only-secret
+```
+
+If `ASHYQ_LEADS_PROVIDER` is absent, the existing `.data/*.jsonl` storage is
+used unchanged. When Supabase is selected, missing credentials or failed
+writes return a retryable server error instead of pretending that the lead was
+saved. Never prefix the service-role key with `NEXT_PUBLIC_` or expose it in
+browser code. Local HTTP is accepted only for `localhost` and `127.0.0.1`.
 
 ## Local verification
 
@@ -30,6 +48,7 @@ Requirements: Node.js, a running Docker-compatible engine and Supabase CLI.
 
 ```powershell
 npx tsx scripts/supabase-schema-check.ts
+npx tsx scripts/supabase-leads-check.ts
 npx --yes supabase@latest start
 npx --yes supabase@latest db reset --local
 npx --yes supabase@latest db lint --local
@@ -60,11 +79,11 @@ delete volumes merely to recover the engine.
    `supabase/config.toml`.
 3. Review migrations in a staging project, run policy tests as anon, student,
    teacher and author, then back up before `supabase db push`.
-4. Add the JS client and server-only service-role handling in a separate claimed
-   task. Never expose the service-role key through a `NEXT_PUBLIC_*` variable.
-5. Implement adapters behind the existing async repository interfaces and an
-   explicit, resumable localStorage migration. Keep demo mode as rollback until
-   parity and deletion/export flows are verified.
+4. Configure the existing server-only lead adapter in staging and keep the
+   service-role key outside every `NEXT_PUBLIC_*` variable.
+5. Implement LMS and championship adapters behind their existing async
+   repository interfaces, with an explicit resumable localStorage migration.
+   Keep demo mode as rollback until parity and deletion/export flows are verified.
 
 ## Known boundaries
 

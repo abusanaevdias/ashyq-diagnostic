@@ -149,7 +149,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, duplicate: true });
   }
 
-  await appendLead(lead);
+  try {
+    await appendLead(lead);
+  } catch {
+    return NextResponse.json({ ok: false }, { status: 503 });
+  }
   // доставка в Telegram/вебхук не должна задерживать ответ ученику
   void deliverLead(lead);
 
