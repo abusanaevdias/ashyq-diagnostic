@@ -1,0 +1,94 @@
+import { constants } from 'node:fs';
+import { access, mkdir } from 'node:fs/promises';
+import path from 'node:path';
+
+/**
+ * Проверка окружения прод-сервера (DEPLOY-PREP-001).
+ *
+ * Сайт стартует и без настроек, но часть ошибок конфигурации была тихой:
+ * webhook на http и половина настроек Telegram просто игнорировались, а
+ * read-only диск терял заявки. errors — конфигурация сломана (/api/health
+ * отвечает 503), warnings — работает, но не так, как нужно в проде.
+ * Подробности пишутся только в лог сервера, наружу не отдаются.
+ */
+export interface EnvReport {
+  errors: string[];
+  warnings: string[];
+}
+
+type Env = Record<string, string | undefined>;
+
+export const ADMIN_KEY_MIN_LENGTH = 32;
+
+export function checkEnv(env: Env): EnvReport {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  const site = env.NEXT_PUBLIC_SITE_URL;
+  if (!site) {
+    warnings.push('NEXT_PUBLIC_SITE_URL не задан при сборке: canonical, sitemap и Open Graph ведут на http://localhost:3000');
+  } else if (!site.startsWith('https://')) {
+    warnings.push(`NEXT_PUBLIC_SITE_URL=${site} без https: поисковики и соцсети получат небезопасный адрес`);
+  }
+
+  const whatsapp = env.NEXT_PUBLIC_ASHYQ_WHATSAPP;
+  if (whatsapp && !/^\d{10,15}$/.test(whatsapp)) {
+    warnings.push('NEXT_PUBLIC_ASHYQ_WHATSAPP: только цифры в международном формате, например 77067080181');
+  }
+
+  const adminKey = env.ASHYQ_ADMIN_KEY;
+  if (!adminKey) {
+    warnings.push('ASHYQ_ADMIN_KEY не задан: /crm и /api/leads отвечают 404, заявки видны только в файле');
+  } else if (adminKey.length < ADMIN_KEY_MIN_LENGTH) {
+    errors.push(`ASHYQ_ADMIN_KEY короче ${ADMIN_KEY_MIN_LENGTH} символов: этот ключ открывает базу телефонов (openssl rand -hex 32)`);
+  }
+
+  const webhook = env.ASHYQ_LEAD_WEBHOOK_URL;
+  const webhookReady = Boolean(webhook?.startsWith('https://'));
+  if (webhook && !webhookReady) {
+    errors.push('ASHYQ_LEAD_WEBHOOK_URL должен начинаться с https://, иначе заявки на него не отправляются');
+  }
+
+  const telegramToken = env.ASHYQ_TELEGRAM_BOT_TOKEN;
+  const telegramChat = env.ASHYQ_TELEGRAM_CHAT_ID;
+  if (Boolean(telegramToken) !== Boolean(telegramChat)) {
+    errors.push('Telegram: нужны оба ASHYQ_TELEGRAM_BOT_TOKEN и ASHYQ_TELEGRAM_CHAT_ID, иначе уведомления не уходят');
+  }
+  if (!(telegramToken && telegramChat) && !webhookReady) {
+    warnings.push('Нет канала уведомлений о заявках (Telegram или webhook): новые заявки видны только в /crm');
+  }
+
+  if (env.ASHYQ_NOTIFY_ALL && env.ASHYQ_NOTIFY_ALL !== '1') {
+    warnings.push('ASHYQ_NOTIFY_ALL понимает только значение 1');
+  }
+
+  return { errors, warnings };
+}
+
+/** Папка заявок должна быть на постоянном и доступном для записи диске. */
+export async function checkLeadsDir(
+  // ignore: иначе сборка трассирует локальную .data (заявки с телефонами) в standalone-вывод
+  directory = process.env.ASHYQ_LEADS_DIR ?? path.join(/*turbopackIgnore: true*/ process.cwd(), '.data'),
+): Promise<string | null> {
+  try {
+    await mkdir(directory, { recursive: true });
+    await access(directory, constants.W_OK);
+    return null;
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code ?? 'unknown';
+    return `Папка заявок ${directory} недоступна для записи (${code}): заявки будут теряться, задай ASHYQ_LEADS_DIR на постоянный том`;
+  }
+}
+
+export async function inspectDeployment(): Promise<EnvReport> {
+  const report = checkEnv({
+    ...process.env,
+    // NEXT_PUBLIC_* вшиваются при сборке: прямое обращение даёт значение из
+    // сборки, а не из окружения запуска (в Docker их при запуске может не быть)
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+    NEXT_PUBLIC_ASHYQ_WHATSAPP: process.env.NEXT_PUBLIC_ASHYQ_WHATSAPP,
+  });
+  const leadsDirError = await checkLeadsDir();
+  if (leadsDirError) report.errors.push(leadsDirError);
+  return report;
+}

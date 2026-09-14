@@ -17,7 +17,12 @@ const csp = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  // standalone только для Docker-образа (Dockerfile задаёт NEXT_OUTPUT):
+  // `next start` в CI и локально с ним ругается, что не поддерживается
+  output: process.env.NEXT_OUTPUT === 'standalone' ? 'standalone' : undefined,
+  // заявки с телефонами — данные, а не код: API-маршруты ссылаются на .data,
+  // и без исключения локальные заявки копируются в standalone-сборку
+  outputFileTracingExcludes: { '/*': ['.data/**/*'] },  reactStrictMode: true,
   poweredByHeader: false,
   async headers() {
     return [
