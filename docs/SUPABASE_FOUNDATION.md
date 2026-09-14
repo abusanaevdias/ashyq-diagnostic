@@ -66,8 +66,46 @@ $env:SUPABASE_ANON_KEY = '<ANON_KEY>'; $env:SUPABASE_SERVICE_ROLE_KEY = '<SERVIC
 npx tsx scripts/supabase-auth-check.ts
 ```
 
-Until the LMS and championship adapters land, `NEXT_PUBLIC_AUTH_PROVIDER=supabase`
-switches sign-in only; class, blog and season pages still need their repositories.
+## LMS data and files (SUPABASE-LMS-001)
+
+With `NEXT_PUBLIC_AUTH_PROVIDER=supabase` the learning layer reads and writes
+the foundation tables through `src/lib/lms/supabase-repos.ts` (same `Repos`
+interface as the demo, loaded as a separate chunk). Class joins and grading go
+through the `join_class` / `grade_submission` RPCs; every other rule is RLS.
+Until authors publish their own posts, the four demo articles from
+`src/data/blog.ts` stay visible as a fallback.
+
+Files live in the private Storage bucket `lms-files` (2 MB per file, like the
+LMS spec). Objects are stored under `<owner uid>/<id>-<ascii name>` — Storage
+rejects non-ASCII keys, so the original name is kept in the material title and
+restored on download. Owners can upload only into their own folder; reading is
+allowed to the owner and to teacher↔student pairs of a shared class, and the
+app hands out 10-minute signed links. The service role gets explicit table
+privileges for admin work (moderation, export, deletion on request).
+
+```powershell
+npx tsx scripts/supabase-lms-check.ts     # teacher/student/outsider/author/anon
+npx tsx scripts/supabase-files-check.ts   # owner folder, shared-class reads, 2 MB
+```
+
+## Championship (SUPABASE-SEASON-001)
+
+The season UI computes standings from a whole `SeasonData` document, so the
+database serves it through one role-redacted RPC, `season_snapshot()`:
+organizers get everything; students get public data plus their own `userId`,
+their team's answers and the reasons for their own points; anonymous visitors
+get aliases, teams, Match Days and points without reasons, answers or the
+Match Day brief. Composite actions are atomic RPCs: `create_season_team`
+(exactly five members, captain from the roster), `add_season_participant`
+(optional link to a student account by email — without it the student has no
+Season HQ) and `review_match_and_award` (review plus capped «Команда» points
+for each member in one transaction, week computed like `weekOf`). A trigger
+lets only the captain submit or edit a Match Day answer, and only while the
+match is live. Appeals are out of scope until the rules are decided.
+
+```powershell
+npx tsx scripts/supabase-season-check.ts   # organizer/captain/member/anon
+```
 
 ## Local verification
 
