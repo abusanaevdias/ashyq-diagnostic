@@ -97,7 +97,7 @@ export default function ProgramScreen() {
       {/* ---------- hero ---------- */}
       <section className="shell-wide pb-12 pt-4 sm:pt-8">
         <EditorialLabel>People · Knowledge · A brighter tomorrow</EditorialLabel>
-        <h1 className="display mt-5 max-w-[16ch] text-display text-red">
+        <h1 className="display mt-5 max-w-[10.8em] text-display text-red">
           Больше,
           <br />
           чем курсы
@@ -209,7 +209,7 @@ export default function ProgramScreen() {
         <div className="shell-wide py-14 sm:py-18">
           <EditorialLabel>Growth & rating</EditorialLabel>
           <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="display max-w-[18ch] text-h2">Рост и рейтинг</h2>
+            <h2 className="display max-w-[12.1em] text-h2">Рост и рейтинг</h2>
             <p className="label max-w-[12rem] text-right text-red">
               More than just classes
             </p>
@@ -290,7 +290,7 @@ export default function ProgramScreen() {
             </div>
             <div className="lg:col-span-6 lg:pl-8">
               <GlyphBadge name="trophy" className="h-14 w-14" />
-              <p className="serif mt-4 max-w-[22ch] text-[clamp(1.3rem,4.4vw,1.9rem)] leading-snug">
+              <p className="serif mt-4 max-w-[14.8em] text-[clamp(1.3rem,4.4vw,1.9rem)] leading-snug">
                 Рост важнее стартовой точки.
               </p>
               <p className="mt-3 max-w-sm text-[0.95rem] leading-relaxed text-ink-soft">
@@ -315,7 +315,7 @@ export default function ProgramScreen() {
       <section className="border-t border-line">
         <div className="shell-wide py-14 sm:py-18">
           <EditorialLabel>Championship</EditorialLabel>
-          <h2 className="display mt-4 max-w-[16ch] text-h2 text-red">Чемпионат</h2>
+          <h2 className="display mt-4 max-w-[10.8em] text-h2 text-red">Чемпионат</h2>
           <p className="mt-4 max-w-lg text-[1rem] leading-relaxed text-ink-soft">
             В конце каждого сезона лучшие команды выходят в Championship.
             Это уже не обычные занятия, а финальное соревнование.
@@ -400,7 +400,7 @@ export default function ProgramScreen() {
             </div>
           </div>
 
-          <p className="serif mt-10 max-w-[26ch] text-[clamp(1.4rem,5vw,2.1rem)] leading-snug">
+          <p className="serif mt-10 max-w-[17.5em] text-[clamp(1.4rem,5vw,2.1rem)] leading-snug">
             Мы готовим не просто к экзаменам. Мы готовим к тому, что будет
             после него.
           </p>
@@ -417,7 +417,7 @@ export default function ProgramScreen() {
                 <RedStar className="h-2.5 w-2.5" />
                 Первый шаг — точка А
               </p>
-              <h2 className="display mt-3 max-w-[18ch] text-h2 text-paper">
+              <h2 className="display mt-3 max-w-[12.1em] text-h2 text-paper">
                 Система начинается с диагностики
               </h2>
               <p className="mt-4 max-w-md text-[0.95rem] leading-snug text-paper/85">

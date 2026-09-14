@@ -21,7 +21,7 @@ export default function MaintenancePage() {
       <SiteHeader />
       <main className="shell-wide flex min-h-[60vh] flex-col justify-center py-16 sm:py-24">
         <MicroLabel>Скоро вернёмся</MicroLabel>
-        <h1 className="display mt-5 max-w-[14ch] text-display text-red">Идут технические работы</h1>
+        <h1 className="display mt-5 max-w-[9.4em] text-display text-red">Идут технические работы</h1>
         <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-ink-soft">
           Сайт временно недоступен. Напишите нам в WhatsApp или Telegram —
           ответим, как только сможем.

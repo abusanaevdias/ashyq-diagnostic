@@ -1,8 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import '@fontsource/manrope/cyrillic-700.css';
-import '@fontsource/manrope/cyrillic-800.css';
-import '@fontsource/manrope/latin-700.css';
-import '@fontsource/manrope/latin-800.css';
 import './fonts.css';
 import './globals.css';
 import '../../design/tokens.css';
@@ -43,6 +39,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" type="image/png" href="/brand/logo-icon-96.png" />
         <link rel="apple-touch-icon" href="/brand/logo-icon-192.png" />
+        {/* Шрифты первого экрана (заголовки и текст) грузятся вместе с CSS, а не после него: меньше поздних подмен (FONT-CLS-001) */}
+        {['manrope-800-cyrillic', 'manrope-800-latin', 'inter-400-cyrillic', 'inter-400-latin'].map((font) => (
+          <link key={font} rel="preload" href={`/fonts/${font}.woff2`} as="font" type="font/woff2" crossOrigin="" />
+        ))}
       </head>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>

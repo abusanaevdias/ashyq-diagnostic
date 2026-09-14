@@ -99,7 +99,7 @@ export default function ResultScreen({
 
       <main className="shell pt-4">
         <EditorialLabel>Your Ashyq Diagnostic</EditorialLabel>
-        <h1 className="serif mt-4 max-w-[16ch] text-h1 text-red">Твоя точка А</h1>
+        <h1 className="serif mt-4 max-w-[10.8em] text-h1 text-red">Твоя точка А</h1>
 
         {/* ---------- карточка для скриншота ---------- */}
         <div className="mt-7">
@@ -234,7 +234,7 @@ export default function ResultScreen({
         <section className="band-dark relative mt-14 overflow-hidden">
           <div className="relative px-5 py-9 sm:px-7">
             <p className="label text-paper/70">Следующий шаг</p>
-            <h2 className="display mt-3 max-w-[24ch] text-h2 text-paper">
+            <h2 className="display mt-3 max-w-[16.2em] text-h2 text-paper">
               {isSat
                 ? 'До цели уже видно маршрут.'
                 : 'Дальше — проверить Writing и Speaking.'}

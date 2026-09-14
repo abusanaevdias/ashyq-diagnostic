@@ -61,7 +61,7 @@ export default function SearchPage() {
       <SiteHeader />
       <main className="shell-wide py-10 sm:py-14">
         <MicroLabel>Поиск</MicroLabel>
-        <h1 className="display mt-5 max-w-[16ch] text-display text-red">Найти на сайте ASHYQ</h1>
+        <h1 className="display mt-5 max-w-[10.8em] text-display text-red">Найти на сайте ASHYQ</h1>
         <SearchV3 entries={buildEntries()} />
       </main>
       <SiteFooter />

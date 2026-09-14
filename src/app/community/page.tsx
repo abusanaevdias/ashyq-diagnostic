@@ -25,7 +25,7 @@ export default function CommunityPage() {
           <EditorialLabel>People · Knowledge · A brighter tomorrow</EditorialLabel>
           <div className="mt-5 grid items-center gap-9 lg:grid-cols-12">
             <div className="lg:col-span-6">
-              <h1 className="display max-w-[13ch] text-display text-red">Люди делают знания живыми</h1>
+              <h1 className="display max-w-[8.8em] text-display text-red">Люди делают знания живыми</h1>
               <p className="mt-6 max-w-lg text-[1.05rem] leading-relaxed text-ink-soft">ASHYQ — это не только уроки и баллы. Это среда, где ученики тренируются в команде, пробуют себя под давлением и учатся показывать прогресс.</p>
             </div>
             <img src="/brand/hero-students.jpg" alt="Студенты ASHYQ" width="1200" height="800" className="w-full rounded-md object-cover lg:col-span-6" />

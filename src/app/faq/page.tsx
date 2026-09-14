@@ -18,7 +18,7 @@ export default function FaqPage() {
       <SiteHeader />
       <main className="shell-wide py-8 sm:py-12">
         <EditorialLabel>FAQ</EditorialLabel>
-        <h1 className="display mt-5 max-w-[13ch] text-display text-red">Коротко и по делу</h1>
+        <h1 className="display mt-5 max-w-[8.8em] text-display text-red">Коротко и по делу</h1>
         <div className="mt-9 divide-y divide-line border-y border-line-strong">
           {FAQ.map(([question, answer]) => (
             <details key={question} className="group py-3">
