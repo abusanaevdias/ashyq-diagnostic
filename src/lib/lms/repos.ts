@@ -70,10 +70,36 @@ export function lmsProvider(): 'demo' | 'supabase' {
   return process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' ? 'supabase' : 'demo';
 }
 
+/**
+ * Supabase-репозитории грузятся отдельным чанком (как вход): демо-страницы не
+ * скачивают supabase-js. Каждый метод дожидается модуля и зовёт настоящий.
+ */
+function lazySupabaseRepos(): Repos {
+  const load = () => import('./supabase-repos').then((m) => m.supabaseRepos);
+  const section = <K extends keyof Repos>(key: K): Repos[K] =>
+    new Proxy({} as Repos[K], {
+      get: (_target, method: string | symbol) =>
+        method === 'then' || typeof method === 'symbol'
+          ? undefined // не притворяться thenable при await
+          : async (...args: unknown[]) => {
+              const repo = (await load())[key] as unknown as Record<string, (...a: unknown[]) => Promise<unknown>>;
+              return repo[method](...args);
+            },
+    });
+  return {
+    classes: section('classes'),
+    lessons: section('lessons'),
+    assignments: section('assignments'),
+    submissions: section('submissions'),
+    comments: section('comments'),
+    blog: section('blog'),
+    users: section('users'),
+  };
+}
+
+let supabaseInstance: Repos | null = null;
+
 export function getRepos(): Repos {
-  if (lmsProvider() === 'supabase') {
-    // TODO(supabase): SupabaseRepos с тем же интерфейсом — отдельный файл.
-    throw new Error('Supabase-репозитории ещё не подключены: используйте NEXT_PUBLIC_AUTH_PROVIDER=demo');
-  }
+  if (lmsProvider() === 'supabase') return (supabaseInstance ??= lazySupabaseRepos());
   return localDemoRepos;
 }
