@@ -48,6 +48,12 @@ assert.deepEqual(count({ ...prod, VERCEL: '1', ...integration }), [0, 0], 'Verce
 assert.deepEqual(count({ ...prod, VERCEL: '1' }), [1, 0], 'Vercel без Supabase — ошибка: файлы в /tmp теряются');
 assert.deepEqual(count({ ...prod, VERCEL: '1', SUPABASE_URL: 'https://project.supabase.co' }), [1, 0], 'Vercel с URL, но без service role — ошибка');
 
+// Прод 2026-09-15: в ASHYQ_SUPABASE_URL попал токен Telegram — ошибка понятная и без значения
+const leaked = '8834231251:AAH-test-token';
+const misplaced = checkEnv({ ...prod, VERCEL: '1', ...integration, ASHYQ_SUPABASE_URL: leaked });
+assert.equal(misplaced.errors.length, 1, 'не-URL в адресе Supabase — ошибка');
+assert.ok(!JSON.stringify(misplaced).includes(leaked), 'значение переменной не попадает в отчёт и логи');
+
 (async () => {
   // Проверка Supabase-хранилища заявок: сеть подменяем, CI без Supabase
   const reply = (status: number) => (async () => new Response('[]', { status })) as unknown as typeof fetch;
@@ -56,6 +62,8 @@ assert.deepEqual(count({ ...prod, VERCEL: '1', SUPABASE_URL: 'https://project.su
   assert.match((await checkSupabaseLeads('https://p.supabase.co', 'service', reply(404))) ?? '', /миграции/, 'нет таблицы — ошибка про миграции');
   const offline = (async () => { throw new Error('ECONNREFUSED'); }) as unknown as typeof fetch;
   assert.match((await checkSupabaseLeads('https://p.supabase.co', 'service', offline)) ?? '', /недоступен/, 'нет сети — ошибка');
+  const secretInUrl = (async () => { throw new TypeError('Failed to parse URL from 8834231251:AAH-secret/rest/v1/crm_leads'); }) as unknown as typeof fetch;
+  assert.ok(!((await checkSupabaseLeads('https://p.supabase.co', 'service', secretInUrl)) ?? '').includes('AAH-secret'), 'текст ошибки fetch с адресом не попадает в лог');
 
   const temp = await mkdtemp(path.join(tmpdir(), 'ashyq-env-'));
   try {

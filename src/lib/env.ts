@@ -20,6 +20,10 @@ type Env = Record<string, string | undefined>;
 
 export const ADMIN_KEY_MIN_LENGTH = 32;
 
+/** Адрес Supabase: https, http — только локальный стек. */
+export const validSupabaseUrl = (url: string): boolean =>
+  url.startsWith('https://') || /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(url);
+
 /** Где хранятся заявки (LEADS-VERCEL-001). */
 export interface LeadsStorage {
   provider: 'supabase' | 'file';
@@ -48,7 +52,7 @@ export function checkEnv(env: Env): EnvReport {
   if (!site) {
     warnings.push('NEXT_PUBLIC_SITE_URL не задан при сборке: canonical, sitemap и Open Graph ведут на http://localhost:3000');
   } else if (!site.startsWith('https://')) {
-    warnings.push(`NEXT_PUBLIC_SITE_URL=${site} без https: поисковики и соцсети получат небезопасный адрес`);
+    warnings.push('NEXT_PUBLIC_SITE_URL без https: поисковики и соцсети получат небезопасный адрес');
   }
 
   const whatsapp = env.NEXT_PUBLIC_ASHYQ_WHATSAPP;
@@ -88,8 +92,9 @@ export function checkEnv(env: Env): EnvReport {
   if (storage.provider === 'supabase') {
     if (!storage.url || !storage.key) {
       errors.push('Заявки в Supabase: нужны URL и service role key (ASHYQ_SUPABASE_URL + ASHYQ_SUPABASE_SERVICE_ROLE_KEY или SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY интеграции), иначе заявки не сохраняются');
-    } else if (!storage.url.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(storage.url)) {
-      errors.push('Адрес Supabase должен быть https (http — только для localhost), иначе заявки не сохраняются');
+    } else if (!validSupabaseUrl(storage.url)) {
+      // значение не повторяем: сюда уже попадал токен Telegram-бота
+      errors.push('Адрес Supabase должен быть https://<проект>.supabase.co (http — только для localhost): проверь, что в ASHYQ_SUPABASE_URL или SUPABASE_URL не попал другой ключ — заявки не сохраняются');
     }
   } else if (provider && provider !== 'supabase') {
     warnings.push(`ASHYQ_LEADS_PROVIDER=${provider} не поддерживается (только supabase): заявки пишутся в файлы`);
@@ -148,7 +153,8 @@ export async function checkSupabaseLeads(url: string, key: string, fetchImpl: ty
     if (response.status === 404) return 'В Supabase нет таблицы crm_leads: примени миграции (supabase/migrations) — заявки не сохраняются';
     return `Supabase ответил ${response.status} на crm_leads: заявки не сохраняются`;
   } catch (error) {
-    return `Supabase недоступен (${error instanceof Error ? error.message : 'сеть'}): заявки не сохраняются`;
+    // текст ошибки fetch содержит адрес целиком — а в переменную адреса может по ошибке попасть секрет
+    return `Supabase недоступен (${error instanceof Error ? error.name : 'сеть'}): проверь адрес Supabase и сеть — заявки не сохраняются`;
   }
 }
 
@@ -169,7 +175,7 @@ export async function inspectDeployment(): Promise<EnvReport & { storage: LeadsS
   if (storage.provider === 'file') {
     const leadsDirError = await checkLeadsDir();
     if (leadsDirError) report.errors.push(leadsDirError);
-  } else if (storage.url && storage.key) {
+  } else if (storage.url && storage.key && validSupabaseUrl(storage.url)) {
     // без URL/ключа checkEnv уже сообщил ошибку — ходить в сеть незачем
     const supabaseError = await checkSupabaseLeads(storage.url, storage.key);
     if (supabaseError) report.errors.push(supabaseError);
