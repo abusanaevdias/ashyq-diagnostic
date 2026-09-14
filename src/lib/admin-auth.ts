@@ -1,5 +1,6 @@
 import 'server-only';
 import { timingSafeEqual } from 'node:crypto';
+import { isSupabaseStaffRequest } from './supabase-staff-auth';
 import { isTelegramManagerRequest } from './telegram-auth';
 
 export function safeEqual(provided: string, expected: string): boolean {
@@ -8,9 +9,9 @@ export function safeEqual(provided: string, expected: string): boolean {
   return left.length === right.length && timingSafeEqual(left, right);
 }
 
-/** Доступ к CRM и выгрузке: ключ админа или менеджер из Telegram Mini App. */
+/** Доступ к CRM и выгрузке: ключ админа, менеджер из Telegram Mini App или аккаунт ASHYQ с ролью admin/manager. */
 export async function isAuthorized(request: Request): Promise<boolean> {
-  return hasValidAdminKey(request) || isTelegramManagerRequest(request);
+  return hasValidAdminKey(request) || (await isTelegramManagerRequest(request)) || isSupabaseStaffRequest(request);
 }
 
 function hasValidAdminKey(request: Request): boolean {

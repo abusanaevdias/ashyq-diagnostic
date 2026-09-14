@@ -92,6 +92,12 @@ export class SupabaseAuth implements AuthAdapter {
     await this.adopt(null);
   }
 
+  /** getSession() сам обновляет истёкший токен по refresh token. */
+  async accessToken(): Promise<string | null> {
+    const { data } = await this.client.auth.getSession();
+    return data.session?.access_token ?? null;
+  }
+
   onAuthChange(callback: (session: Session | null) => void): () => void {
     this.listeners.add(callback);
     return () => {

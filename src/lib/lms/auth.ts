@@ -20,6 +20,8 @@ export interface AuthAdapter {
   onAuthChange(callback: (session: Session | null) => void): () => void;
   /** false, пока адаптер восстанавливает сессию (Supabase); демо готово сразу. */
   isReady?(): boolean;
+  /** Access token Supabase для своих API (вход в CRM); у демо его нет. */
+  accessToken?(): Promise<string | null>;
 }
 
 /**
@@ -145,6 +147,10 @@ class LazySupabaseAuth implements AuthAdapter {
 
   async signOut(): Promise<void> {
     return (await this.loaded).signOut();
+  }
+
+  async accessToken(): Promise<string | null> {
+    return (await this.loaded).accessToken?.() ?? null;
   }
 
   onAuthChange(callback: (session: Session | null) => void): () => void {

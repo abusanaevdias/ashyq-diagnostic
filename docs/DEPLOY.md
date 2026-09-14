@@ -125,8 +125,28 @@ Caddy (сертификат выпускает сам), nginx + certbot или H
 С `ASHYQ_LEADS_PROVIDER=supabase` заявки, журнал доставки и события CRM
 живут в Supabase (схема и RLS — [`SUPABASE_FOUNDATION.md`](SUPABASE_FOUNDATION.md)),
 поэтому постоянный диск для них не нужен и проверка папки заявок
-отключается. Общий ключ CRM остаётся до персональной авторизации
-(CRM-PROD-001).
+отключается.
+
+### Персональный вход в CRM (CRM-PROD-001)
+
+С `NEXT_PUBLIC_AUTH_PROVIDER=supabase` на экране `/crm` есть кнопка «Войти
+аккаунтом ASHYQ»: сотрудник входит на `/login` своей почтой и паролем, сервер
+проверяет сессию в Supabase и пускает роли `admin` и `manager`. Новых
+переменных не нужно — сервер берёт адрес и service role key заявок
+(`ASHYQ_SUPABASE_*` или переменные интеграции Vercel). Ключ админа и вход из
+Telegram работают как раньше.
+
+Роль выдаёт владелец в SQL Editor Supabase (один раз применить миграцию
+`supabase/migrations/20260915000200_crm_staff.sql`). Сотрудник сначала
+регистрируется на `/login`, затем:
+
+```sql
+update public.profiles set role = 'manager'
+where id = (select id from auth.users where email = 'ПОЧТА-СОТРУДНИКА');
+```
+
+Снять доступ — `role = 'student'`; уже открытая CRM работает ещё до 5 минут
+(кэш проверки). В учебном разделе у `manager` учебных прав нет.
 
 ## 5. Чек-лист запуска
 
