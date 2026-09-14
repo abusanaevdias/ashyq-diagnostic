@@ -168,6 +168,8 @@ async function recordAttempt(
       updatedAt: new Date().toISOString(),
     });
   } catch (error) {
+    // без ASHYQ_ADMIN_KEY ledger не виден в CRM — причина должна быть хотя бы в логе хостинга
+    console.error(`[ashyq lead] ${channel} delivery failed:`, error instanceof Error ? error.message : error);
     await appendDeliveryEntry({
       id: randomUUID(),
       key: computeDedupeKey(lead),
