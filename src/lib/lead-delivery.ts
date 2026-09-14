@@ -9,6 +9,11 @@ import {
   type DeliveryChannel,
   type DeliveryLedgerEntry,
 } from './crm';
+import {
+  appendSupabaseDelivery,
+  readSupabaseDeliveries,
+  usesSupabaseLeads,
+} from './supabase-leads';
 
 /**
  * Надёжная доставка лида (LEADS-DURABILITY-001).
@@ -22,8 +27,7 @@ import {
 
 function dataFile(name: string): string {
   const directory = process.env.ASHYQ_LEADS_DIR ?? path.join(process.cwd(), '.data');
-  // папка данных — не код: без ignore standalone-сборка трассирует весь проект (DEPLOY-PREP-001)
-  return path.join(/*turbopackIgnore: true*/ directory, name);
+  return path.join(/* turbopackIgnore: true */ directory, name);
 }
 
 const DELIVERIES_FILE = dataFile('lead-deliveries.jsonl');
@@ -32,6 +36,8 @@ const BACKUP_INTERVAL_MS = 24 * 60 * 60_000;
 const BACKUP_KEEP = 14;
 
 export async function readDeliveryLedger(): Promise<DeliveryLedgerEntry[]> {
+  if (usesSupabaseLeads()) return readSupabaseDeliveries();
+
   try {
     const raw = await readFile(DELIVERIES_FILE, 'utf8');
     const result: DeliveryLedgerEntry[] = [];
@@ -50,6 +56,10 @@ export async function readDeliveryLedger(): Promise<DeliveryLedgerEntry[]> {
 
 async function appendDeliveryEntry(entry: DeliveryLedgerEntry): Promise<void> {
   try {
+    if (usesSupabaseLeads()) {
+      await appendSupabaseDelivery(entry);
+      return;
+    }
     await mkdir(path.dirname(DELIVERIES_FILE), { recursive: true });
     await appendFile(DELIVERIES_FILE, `${JSON.stringify(entry)}\n`, 'utf8');
   } catch {

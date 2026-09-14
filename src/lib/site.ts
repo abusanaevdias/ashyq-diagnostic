@@ -10,6 +10,8 @@ export const SITE_URL = (
 export const SITE_ROUTES = [
   '/',
   '/courses',
+  '/courses/ielts',
+  '/courses/sat',
   '/about',
   '/contacts',
   '/diagnostic',

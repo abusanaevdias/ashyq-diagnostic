@@ -1,0 +1,489 @@
+.hero {
+  padding-block: 72px 56px;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  align-items: center;
+  gap: 56px;
+}
+
+.heroCopy {
+  max-width: 680px;
+}
+
+.title {
+  max-width: 14ch;
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: 58ch;
+  margin-top: 24px;
+  color: var(--ink-soft);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.actions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.heroPhoto {
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.heroPhoto img {
+  object-fit: cover;
+}
+
+.factsSection {
+  padding-block: 24px 72px;
+}
+
+.provisionalPanel {
+  padding: 32px;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.6fr);
+  gap: 40px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  background: var(--blush-soft);
+}
+
+.panelTitle,
+.heading,
+.ctaTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.panelTitle {
+  margin-top: 12px;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.panelIntro > p:last-child,
+.sectionIntro,
+.includedCopy > p,
+.ctaBand > div > p {
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.panelIntro > p:last-child {
+  margin-top: 12px;
+}
+
+.provisionalLabel {
+  width: fit-content;
+  margin-top: 18px;
+  padding: 7px 10px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--red-deep);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.fact {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.fact dt,
+.fact span,
+.itemNumber,
+.stepNumber {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fact dt {
+  color: var(--ink-soft);
+}
+
+.fact dd {
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.fact dd span {
+  margin-top: 10px;
+  display: block;
+  color: var(--red-deep);
+}
+
+.sectionHead,
+.includedGrid,
+.faqSection {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 56px;
+}
+
+.sectionHead {
+  align-items: end;
+}
+
+.heading {
+  max-width: 18ch;
+  margin-top: 14px;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.15;
+}
+
+.sectionIntro {
+  max-width: 52ch;
+}
+
+.curriculum {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.curriculumCard {
+  min-height: 210px;
+  padding: 28px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.itemNumber,
+.stepNumber {
+  color: var(--red);
+}
+
+.curriculumCard h3,
+.step h3 {
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.curriculumCard > p:last-child,
+.step > p:last-child {
+  margin-top: 10px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.stepsBand {
+  border-block: 1px solid var(--hairline);
+  background: var(--surface);
+}
+
+.steps {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.step {
+  position: relative;
+  padding-right: 20px;
+}
+
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 13px;
+  right: -12px;
+  width: 24px;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.includedGrid {
+  align-items: start;
+}
+
+.includedCopy > p {
+  max-width: 46ch;
+  margin-top: 20px;
+  font-size: 1.0625rem;
+}
+
+.checklist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+}
+
+.checklist li {
+  min-height: 72px;
+  padding-block: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--hairline);
+  line-height: 1.5;
+}
+
+.faqSection {
+  padding-block: 0 96px;
+  align-items: start;
+}
+
+.faqHead {
+  position: sticky;
+  top: 96px;
+}
+
+.faqList {
+  border-top: 1px solid var(--hairline);
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.faqItem summary {
+  min-height: 64px;
+  padding-block: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.35;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem summary span {
+  flex: 0 0 auto;
+  color: var(--red);
+  font-size: 1.5rem;
+  transition: transform var(--t-fast);
+}
+
+.faqItem[open] summary span {
+  transform: rotate(45deg);
+}
+
+.faqItem > p {
+  max-width: 66ch;
+  padding: 0 44px 22px 0;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.faqItem summary:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+.ctaSection {
+  padding-bottom: 96px;
+}
+
+.ctaBand {
+  --micro-color: var(--ink);
+  padding: 44px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  border-radius: var(--r-xl);
+  background: var(--blush);
+}
+
+.ctaTitle {
+  max-width: 19ch;
+  margin-top: 12px;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.15;
+}
+
+.ctaBand > div > p {
+  max-width: 54ch;
+  margin-top: 14px;
+  color: var(--ink);
+}
+
+.ctaAction {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 900px) {
+  .heroGrid,
+  .sectionHead,
+  .includedGrid,
+  .faqSection {
+    grid-template-columns: 1fr;
+  }
+
+  .heroPhoto {
+    min-height: 420px;
+  }
+
+  .provisionalPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step:nth-child(2)::after {
+    display: none;
+  }
+
+  .faqHead {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-block: 48px 40px;
+  }
+
+  .title {
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
+  }
+
+  .actions {
+    display: grid;
+  }
+
+  .actions > * {
+    width: 100%;
+  }
+
+  .heroPhoto {
+    min-height: 300px;
+  }
+
+  .factsSection {
+    padding-block: 16px 56px;
+  }
+
+  .provisionalPanel {
+    padding: 24px;
+    gap: 28px;
+  }
+
+  .facts,
+  .curriculum,
+  .steps,
+  .checklist {
+    grid-template-columns: 1fr;
+  }
+
+  .curriculum {
+    margin-top: 32px;
+  }
+
+  .curriculumCard {
+    min-height: 0;
+    padding: 22px;
+  }
+
+  .steps {
+    margin-top: 32px;
+  }
+
+  .step {
+    padding: 0 0 24px 46px;
+  }
+
+  .stepNumber {
+    position: absolute;
+    top: 4px;
+    left: 0;
+  }
+
+  .step h3 {
+    margin-top: 0;
+  }
+
+  .step:not(:last-child)::after {
+    top: 30px;
+    right: auto;
+    bottom: 0;
+    left: 10px;
+    width: 1px;
+    height: auto;
+  }
+
+  .step:nth-child(2)::after {
+    display: block;
+  }
+
+  .faqSection,
+  .ctaSection {
+    padding-bottom: 56px;
+  }
+
+  .ctaBand {
+    padding: 32px 24px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ctaAction > * {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faqItem summary span {
+    transition: none;
+  }
+
+  .faqItem[open] summary span {
+    transform: none;
+  }
+}

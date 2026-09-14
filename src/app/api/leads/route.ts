@@ -1,7 +1,5 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
 import { NextResponse } from 'next/server';
-import type { StoredLead } from '@/lib/lead-server';
+import { readStoredLeads, type StoredLead } from '@/lib/lead-server';
 import { hasValidAdminKey, isAdminConfigured } from '@/lib/admin-auth';
 
 export const runtime = 'nodejs';
@@ -14,11 +12,6 @@ export const dynamic = 'force-dynamic';
  * не существует вовсе (404) — чтобы забытая переменная окружения не
  * превратилась в открытую базу телефонов.
  */
-
-const LEADS_FILE = path.join(
-  process.env.ASHYQ_LEADS_DIR ?? path.join(process.cwd(), '.data'),
-  'leads.jsonl',
-);
 
 const CSV_COLUMNS: Array<keyof StoredLead> = [
   'receivedAt',
@@ -66,22 +59,7 @@ export async function GET(req: Request) {
 
   const url = new URL(req.url);
 
-  let lines: string[] = [];
-  try {
-    const raw = await readFile(LEADS_FILE, 'utf8');
-    lines = raw.split('\n').filter(Boolean);
-  } catch {
-    lines = [];
-  }
-
-  const leads: StoredLead[] = [];
-  for (const line of lines) {
-    try {
-      leads.push(JSON.parse(line) as StoredLead);
-    } catch {
-      // одна битая строка не должна ломать всю выгрузку
-    }
-  }
+  const leads = await readStoredLeads();
 
   const onlyContacts = url.searchParams.get('contacts') === '1';
   const selected = onlyContacts ? leads.filter((l) => l.kind === 'contact' || l.kind === 'season') : leads;
