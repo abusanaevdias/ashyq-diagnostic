@@ -23,7 +23,7 @@
 }
 
 .title {
-  max-width: 16ch;
+  max-width: 10.8em; /* = 16ch Manrope 800; em не прыгает при подмене шрифта (FONT-CLS-001) */
   margin-top: 18px;
   font-family: var(--font-display);
   font-size: clamp(2rem, 4.6vw, 3.4rem);

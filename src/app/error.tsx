@@ -40,7 +40,7 @@ export default function Error({
       <SiteHeader />
       <main className="shell-wide flex min-h-[60vh] flex-col justify-center py-16 sm:py-24">
         <MicroLabel>Техническая ошибка</MicroLabel>
-        <h1 className="display mt-5 max-w-[14ch] text-display text-red">Что-то пошло не так</h1>
+        <h1 className="display mt-5 max-w-[9.4em] text-display text-red">Что-то пошло не так</h1>
         <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-ink-soft">
           Попробуйте повторить действие. Если ошибка повторяется — напишите нам в
           WhatsApp или Telegram, ссылки есть на странице контактов.

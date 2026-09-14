@@ -14,7 +14,7 @@ export default function NotFound() {
       <SiteHeader />
       <main className="shell-wide flex min-h-[60vh] flex-col justify-center py-16 sm:py-24">
         <MicroLabel>Ошибка 404</MicroLabel>
-        <h1 className="display mt-5 max-w-[14ch] text-display text-red">Такой страницы нет</h1>
+        <h1 className="display mt-5 max-w-[9.4em] text-display text-red">Такой страницы нет</h1>
         <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-ink-soft">
           Возможно, ссылка устарела или в адресе опечатка. Начните с главной или
           сразу перейдите к диагностике IELTS и SAT.

@@ -59,7 +59,7 @@ export default function ProgressScreen() {
         {!hasAny || !tab ? (
           /* ---------- пустое состояние ---------- */
           <section className="py-10">
-            <h1 className="serif max-w-[14ch] text-h1 text-red">Пока пусто</h1>
+            <h1 className="serif max-w-[9.4em] text-h1 text-red">Пока пусто</h1>
             <p className="mt-5 max-w-md text-[1rem] leading-relaxed text-ink-soft">
               Заверши диагностику — и здесь появится твоя динамика точки А:
               график, skill scores «было → стало» и история замеров.
@@ -101,7 +101,7 @@ export default function ProgressScreen() {
 
             {/* ---------- сводка ---------- */}
             <section className="mt-8">
-              <h1 className="serif max-w-[16ch] text-h1 text-red">Твоя динамика</h1>
+              <h1 className="serif max-w-[10.8em] text-h1 text-red">Твоя динамика</h1>
               <div className="mt-6 flex flex-wrap items-end gap-x-6 gap-y-3">
                 <div>
                   <p className="label text-ink-faint">Точка А сейчас</p>
