@@ -214,10 +214,21 @@ export const localSeasonRepo: SeasonRepo = {
   },
 };
 
+/** Supabase-репозиторий сезона (SUPABASE-SEASON-001) грузится отдельным чанком: демо не тянет supabase-js. */
+const supabaseSeason = () => import('./supabase-repo').then((m) => m.supabaseSeasonRepo);
+
+const lazySupabaseSeasonRepo: SeasonRepo = {
+  load: async () => (await supabaseSeason()).load(),
+  createSeason: async (input) => (await supabaseSeason()).createSeason(input),
+  addParticipant: async (input) => (await supabaseSeason()).addParticipant(input),
+  createTeam: async (input) => (await supabaseSeason()).createTeam(input),
+  createMatchDay: async (input) => (await supabaseSeason()).createMatchDay(input),
+  awardPoints: async (input) => (await supabaseSeason()).awardPoints(input),
+  submitMatch: async (input) => (await supabaseSeason()).submitMatch(input),
+  reviewMatch: async (input) => (await supabaseSeason()).reviewMatch(input),
+  resetDemo: async () => (await supabaseSeason()).resetDemo(),
+};
+
 export function getSeasonRepo(): SeasonRepo {
-  if (lmsProvider() === 'supabase') {
-    // TODO(supabase): SupabaseSeasonRepo с тем же интерфейсом — SEASON-BACKEND-001.
-    throw new Error('Supabase-репозиторий сезона ещё не подключён: используйте NEXT_PUBLIC_AUTH_PROVIDER=demo');
-  }
-  return localSeasonRepo;
+  return lmsProvider() === 'supabase' ? lazySupabaseSeasonRepo : localSeasonRepo;
 }
