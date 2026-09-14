@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { checkEnv, checkLeadsDir } from '../src/lib/env';
+import { checkEnv, checkLeadsDir, checkSupabaseLeads } from '../src/lib/env';
 
 const prod = {
   NEXT_PUBLIC_SITE_URL: 'https://ashyq.example',
@@ -40,6 +40,14 @@ assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_URL: 'http://db.example' 
 assert.deepEqual(count({ ...prod, NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY: 'secret' }), [1, 0], 'секретный ключ в NEXT_PUBLIC_* — ошибка');
 
 (async () => {
+  // Проверка Supabase-хранилища заявок: сеть подменяем, CI без Supabase
+  const reply = (status: number) => (async () => new Response('[]', { status })) as unknown as typeof fetch;
+  assert.equal(await checkSupabaseLeads('https://p.supabase.co/', 'service', reply(200)), null, 'crm_leads отвечает — хранилище готово');
+  assert.match((await checkSupabaseLeads('https://p.supabase.co', 'anon', reply(401))) ?? '', /service_role/, 'чужой ключ — ошибка про service_role');
+  assert.match((await checkSupabaseLeads('https://p.supabase.co', 'service', reply(404))) ?? '', /миграции/, 'нет таблицы — ошибка про миграции');
+  const offline = (async () => { throw new Error('ECONNREFUSED'); }) as unknown as typeof fetch;
+  assert.match((await checkSupabaseLeads('https://p.supabase.co', 'service', offline)) ?? '', /недоступен/, 'нет сети — ошибка');
+
   const temp = await mkdtemp(path.join(tmpdir(), 'ashyq-env-'));
   try {
     assert.equal(await checkLeadsDir(path.join(temp, 'leads', 'nested')), null, 'папка заявок создаётся');

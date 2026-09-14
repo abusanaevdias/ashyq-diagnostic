@@ -110,6 +110,27 @@ export async function checkLeadsDir(
   }
 }
 
+/**
+ * С Supabase-хранилищем заявок: таблица crm_leads отвечает service role — значит, миграции
+ * применены и ключ верный. Так прод подтверждается без тестовой заявки (Vercel: диск read-only).
+ */
+export async function checkSupabaseLeads(url: string, key: string, fetchImpl: typeof fetch = fetch): Promise<string | null> {
+  try {
+    const response = await fetchImpl(`${url.replace(/\/$/, '')}/rest/v1/crm_leads?select=id&limit=1`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (response.ok) return null;
+    if (response.status === 401 || response.status === 403) {
+      return `Supabase отклонил ключ (${response.status}): в ASHYQ_SUPABASE_SERVICE_ROLE_KEY нужен service_role, не anon — заявки не сохраняются`;
+    }
+    if (response.status === 404) return 'В Supabase нет таблицы crm_leads: примени миграции (supabase/migrations) — заявки не сохраняются';
+    return `Supabase ответил ${response.status} на crm_leads: заявки не сохраняются`;
+  } catch (error) {
+    return `Supabase недоступен (${error instanceof Error ? error.message : 'сеть'}): заявки не сохраняются`;
+  }
+}
+
 export async function inspectDeployment(): Promise<EnvReport> {
   const report = checkEnv({
     ...process.env,
@@ -125,6 +146,10 @@ export async function inspectDeployment(): Promise<EnvReport> {
   if (process.env.ASHYQ_LEADS_PROVIDER !== 'supabase') {
     const leadsDirError = await checkLeadsDir();
     if (leadsDirError) report.errors.push(leadsDirError);
+  } else if (process.env.ASHYQ_SUPABASE_URL && process.env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY) {
+    // без URL/ключа checkEnv уже сообщил ошибку — ходить в сеть незачем
+    const supabaseError = await checkSupabaseLeads(process.env.ASHYQ_SUPABASE_URL, process.env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY);
+    if (supabaseError) report.errors.push(supabaseError);
   }
   return report;
 }
