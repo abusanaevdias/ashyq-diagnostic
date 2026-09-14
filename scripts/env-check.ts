@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { checkEnv, checkLeadsDir, checkSupabaseLeads } from '../src/lib/env';
+import { checkEnv, checkLeadsDir, checkSupabaseLeads, resolveLeadsStorage } from '../src/lib/env';
 
 const prod = {
   NEXT_PUBLIC_SITE_URL: 'https://ashyq.example',
@@ -38,6 +38,15 @@ assert.deepEqual(count(auth), [0, 0], 'вход через Supabase с адре�
 assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_ANON_KEY: undefined }), [1, 0], 'вход через Supabase без anon-ключа — ошибка');
 assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_URL: 'http://db.example' }), [1, 0], 'вход через Supabase по http вне localhost — ошибка');
 assert.deepEqual(count({ ...prod, NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY: 'secret' }), [1, 0], 'секретный ключ в NEXT_PUBLIC_* — ошибка');
+
+// Vercel (LEADS-VERCEL-001): интеграция Supabase задаёт SUPABASE_*, а диск read-only
+const integration = { SUPABASE_URL: 'https://project.supabase.co', SUPABASE_SERVICE_ROLE_KEY: 'service-role' };
+assert.equal(resolveLeadsStorage({ VERCEL: '1', ...integration }).provider, 'supabase', 'Vercel + ключи интеграции — заявки в Supabase сами');
+assert.equal(resolveLeadsStorage(integration).provider, 'file', 'вне Vercel без явного провайдера — файлы (dev не переключается сам)');
+assert.equal(resolveLeadsStorage({ ASHYQ_LEADS_PROVIDER: 'supabase', ...integration }).key, 'service-role', 'явный провайдер берёт ключ интеграции');
+assert.deepEqual(count({ ...prod, VERCEL: '1', ...integration }), [0, 0], 'Vercel + интеграция — чисто');
+assert.deepEqual(count({ ...prod, VERCEL: '1' }), [1, 0], 'Vercel без Supabase — ошибка: файлы в /tmp теряются');
+assert.deepEqual(count({ ...prod, VERCEL: '1', SUPABASE_URL: 'https://project.supabase.co' }), [1, 0], 'Vercel с URL, но без service role — ошибка');
 
 (async () => {
   // Проверка Supabase-хранилища заявок: сеть подменяем, CI без Supabase
