@@ -865,3 +865,9 @@ textarea.editorArea {
     transform: none;
   }
 }
+
+/* Галочки формы регистрации (SUPABASE-AUTH-001): вся строка — цель нажатия ≥44px */
+.checkRow { min-height: 44px; display: flex; align-items: flex-start; gap: 10px; padding-block: 10px; color: var(--ink); font-size: .9rem; line-height: 1.45; cursor: pointer; }
+.checkRow input { width: 18px; height: 18px; margin-top: 2px; flex: 0 0 auto; accent-color: var(--red); }
+.checkRow input:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.checkRow a { color: var(--red-deep); text-decoration: underline; }

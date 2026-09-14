@@ -6,12 +6,20 @@ import { lmsBus, newId, readJson, removeRaw, writeJson } from './store';
  * позже SupabaseAuth — UI не меняется, фабрика читает
  * NEXT_PUBLIC_AUTH_PROVIDER=demo|supabase.
  */
+/** До 18 лет регистрация — только с согласием родителя (решение пользователя 2026-09-14). */
+export interface SignUpConsent {
+  minor: boolean;
+  guardianConsent: boolean;
+}
+
 export interface AuthAdapter {
   signIn(email: string, password: string): Promise<Session>;
-  signUp(name: string, email: string, password: string, role?: Role): Promise<Session>;
+  signUp(name: string, email: string, password: string, role?: Role, consent?: SignUpConsent): Promise<Session>;
   signOut(): Promise<void>;
   getSession(): Session | null;
   onAuthChange(callback: (session: Session | null) => void): () => void;
+  /** false, пока адаптер восстанавливает сессию (Supabase); демо готово сразу. */
+  isReady?(): boolean;
 }
 
 /**
@@ -59,12 +67,13 @@ class LocalDemoAuth implements AuthAdapter {
     return this.start(account.user);
   }
 
-  async signUp(name: string, email: string, password: string, role: Role = 'student'): Promise<Session> {
+  async signUp(name: string, email: string, password: string, role: Role = 'student', consent?: SignUpConsent): Promise<Session> {
     const cleanName = name.trim();
     const cleanEmail = normalizeEmail(email);
     if (!cleanName) throw new Error('Укажите имя');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) throw new Error('Проверьте email');
     if (password.length < 6) throw new Error('Пароль — минимум 6 символов');
+    if (consent?.minor && !consent.guardianConsent) throw new Error('Для регистрации до 18 лет нужно согласие родителя');
     if (accounts().some((a) => a.user.email === cleanEmail)) throw new Error('Этот email уже зарегистрирован');
     // Демо: роль выбирается при регистрации. В Supabase роли назначает админ.
     const user: User = { id: newId(), name: cleanName, email: cleanEmail, role, avatarColor: COLORS[accounts().length % COLORS.length] };
@@ -99,11 +108,54 @@ class LocalDemoAuth implements AuthAdapter {
 
 let instance: AuthAdapter | null = null;
 
-export function getAuth(): AuthAdapter {
-  if (process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase') {
-    // TODO(supabase): SupabaseAuth реализует тот же AuthAdapter — отдельный файл.
-    throw new Error('SupabaseAuth ещё не подключён: используйте NEXT_PUBLIC_AUTH_PROVIDER=demo');
+/**
+ * Supabase-адаптер грузится отдельным чанком через import(): демо-страницы не
+ * скачивают supabase-js (≈270 КБ). Пока модуль грузится — «не готово».
+ */
+class LazySupabaseAuth implements AuthAdapter {
+  private impl: AuthAdapter | null = null;
+  private readonly loaded: Promise<AuthAdapter>;
+  private readonly listeners = new Set<(session: Session | null) => void>();
+
+  constructor() {
+    this.loaded = import('./supabase-auth').then(({ SupabaseAuth, supabaseBrowser }) => {
+      const impl = new SupabaseAuth(supabaseBrowser());
+      impl.onAuthChange((session) => this.listeners.forEach((listener) => listener(session)));
+      this.impl = impl;
+      lmsBus.emit();
+      return impl;
+    });
   }
-  instance ??= new LocalDemoAuth();
+
+  isReady(): boolean {
+    return this.impl?.isReady?.() ?? false;
+  }
+
+  getSession(): Session | null {
+    return this.impl?.getSession() ?? null;
+  }
+
+  async signIn(email: string, password: string): Promise<Session> {
+    return (await this.loaded).signIn(email, password);
+  }
+
+  async signUp(name: string, email: string, password: string, role?: Role, consent?: SignUpConsent): Promise<Session> {
+    return (await this.loaded).signUp(name, email, password, role, consent);
+  }
+
+  async signOut(): Promise<void> {
+    return (await this.loaded).signOut();
+  }
+
+  onAuthChange(callback: (session: Session | null) => void): () => void {
+    this.listeners.add(callback);
+    return () => {
+      this.listeners.delete(callback);
+    };
+  }
+}
+
+export function getAuth(): AuthAdapter {
+  instance ??= process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' ? new LazySupabaseAuth() : new LocalDemoAuth();
   return instance;
 }

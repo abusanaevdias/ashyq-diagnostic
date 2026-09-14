@@ -2,13 +2,16 @@ const isDev = process.env.NODE_ENV === 'development';
 
 // CSP без nonce: все страницы статические, nonce сделал бы каждую динамической.
 // Главное здесь — запрет плагинов, чужих <base>/форм/фреймов и внешних скриптов.
+// Вход и данные LMS через Supabase идут из браузера на его домен — разрешаем, только если он задан при сборке
+const supabaseOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin : '';
+
 const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data:",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  `connect-src 'self'${supabaseOrigin ? ` ${supabaseOrigin}` : ''}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
