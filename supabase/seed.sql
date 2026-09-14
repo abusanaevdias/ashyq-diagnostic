@@ -1,0 +1,4 @@
+-- Intentionally empty. The current ASHYQ demo fixtures stay in localStorage until
+-- the authentication and migration contracts are approved. Never add real student
+-- names, e-mail addresses, diagnostic answers, or CRM leads to a committed seed.
+
