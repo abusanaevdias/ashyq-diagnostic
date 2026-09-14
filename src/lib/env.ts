@@ -119,6 +119,9 @@ export function checkEnv(env: Env): EnvReport {
     } else if (!authUrl.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(authUrl)) {
       errors.push('NEXT_PUBLIC_SUPABASE_URL должен быть https (http — только для localhost)');
     }
+  } else if (env.NEXT_PUBLIC_AUTH_PROVIDER && env.NEXT_PUBLIC_AUTH_PROVIDER !== 'demo') {
+    // прод 2026-09-15: значение было задано, но не ровно supabase — вход тихо остался демо
+    warnings.push('NEXT_PUBLIC_AUTH_PROVIDER понимает только supabase или demo (строчными, без кавычек и пробелов): сейчас вход работает в демо-режиме');
   }
   for (const name of Object.keys(env)) {
     if (name.startsWith('NEXT_PUBLIC_') && /SERVICE_ROLE|SECRET/.test(name) && env[name]) {
@@ -166,7 +169,7 @@ export async function checkSupabaseLeads(url: string, key: string, fetchImpl: ty
   }
 }
 
-export async function inspectDeployment(): Promise<EnvReport & { storage: LeadsStorage['provider'] }> {
+export async function inspectDeployment(): Promise<EnvReport & { storage: LeadsStorage['provider']; auth: 'supabase' | 'demo' }> {
   const env: Env = {
     ...process.env,
     // NEXT_PUBLIC_* вшиваются при сборке: прямое обращение даёт значение из
@@ -188,5 +191,6 @@ export async function inspectDeployment(): Promise<EnvReport & { storage: LeadsS
     const supabaseError = await checkSupabaseLeads(storage.url, storage.key);
     if (supabaseError) report.errors.push(supabaseError);
   }
-  return { ...report, storage: storage.provider };
+  // как в src/lib/lms/auth.ts: вшитое при сборке значение, иначе демо
+  return { ...report, storage: storage.provider, auth: env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' ? 'supabase' : 'demo' };
 }
