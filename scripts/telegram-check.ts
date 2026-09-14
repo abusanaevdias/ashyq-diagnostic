@@ -1,7 +1,9 @@
 // Самопроверка подписи Telegram Mini App (TG-MINIAPP-001): npx tsx scripts/telegram-check.ts
 import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
+import type { CrmEvent, CrmRecord, CrmSnapshot } from '../src/lib/crm';
 import { isTelegramManagerRequest, verifyInitData } from '../src/lib/telegram-auth';
+import { findRecords, handleUpdate, leadKeyboard, today, unprocessed, type TelegramIo, type TgUpdate } from '../src/lib/telegram-bot';
 
 const token = '123:abc';
 const now = Date.parse('2026-09-15T10:00:00Z');
@@ -45,5 +47,77 @@ const member = (id: number, status: string) => {
   globalThis.fetch = async () => { throw new Error('offline'); };
   assert.equal(await isTelegramManagerRequest(request(failing)), false, 'Telegram недоступен — не пускаем');
   assert.equal(await isTelegramManagerRequest(new Request('https://ashyq.example/api/crm')), false, 'без заголовка');
+
+  // бот менеджеров (TG-BOT-001)
+  process.env.ASHYQ_TELEGRAM_WEBHOOK_SECRET = 'a1'.repeat(32);
+  process.env.ASHYQ_TELEGRAM_APP_URL = 'https://t.me/ashyq_bot/crm';
+  assert.equal(leadKeyboard('mf1-abc')?.inline_keyboard.length, 3, 'этапы в два ряда + CRM');
+  assert.equal(leadKeyboard('x'.repeat(64))?.inline_keyboard.length, 1, 'runId не влезает в callback_data — только CRM');
+
+  const botNow = Date.parse('2026-09-15T20:00:00Z'); // 16 сентября, 01:00 в Алматы
+  const rec = (runId: string, stage: CrmRecord['stage'], at: string, extra: Partial<CrmRecord> = {}): CrmRecord => ({
+    runId, exam: 'ielts', kind: 'contact', name: 'Аружан', phone: '77012345678', stage,
+    firstSeenAt: at, lastSeenAt: at, activities: [], delivery: [], ...extra,
+  });
+  const records = [
+    rec('new-1', 'new', '2026-09-15T19:30:00Z'), // 00:30 в Алматы — уже сегодня
+    rec('new-nophone', 'new', '2026-09-15T19:40:00Z', { phone: undefined }),
+    rec('stale', 'contacted', '2026-09-12T10:00:00Z', { name: 'Дана', phone: '77770001122' }),
+    rec('fresh-contacted', 'contacted', '2026-09-15T18:30:00Z'), // 23:30 в Алматы — вчера
+    rec('done', 'enrolled', '2026-09-01T10:00:00Z'),
+  ];
+  assert.deepEqual(unprocessed(records, botNow).map((r) => r.runId), ['new-1', 'stale'], 'новые с телефоном + зависшие');
+  assert.deepEqual(today(records, botNow).map((r) => r.runId), ['new-1'], 'сегодня по Алматы, только с телефоном');
+  assert.deepEqual(findRecords(records, '8 701 234 56 78').map((r) => r.runId), ['new-1', 'fresh-contacted', 'done'], 'номер через 8');
+  assert.deepEqual(findRecords(records, 'дан').map((r) => r.runId), ['stale'], 'имя без регистра');
+
+  const stats = { byStage: { new: 2, contacted: 2, consultation: 0, enrolled: 1, lost: 0 }, analytics: { leadsLast7Days: 4, bySource: [] } };
+  const calls: [string, Record<string, unknown>][] = [];
+  const appended: CrmEvent[] = [];
+  const io: TelegramIo = {
+    snapshot: async () => ({ records, stats }) as unknown as CrmSnapshot,
+    append: async (events) => { appended.push(...events); },
+    isManager: async (id) => id === 7,
+    api: async (method, body) => { calls.push([method, body]); },
+  };
+  const group = { id: -100500, type: 'supergroup' };
+  const press = (data: string, text: string, from = { id: 7, first_name: 'Аружан' }): TgUpdate =>
+    ({ callback_query: { id: 'q', from, data, message: { message_id: 10, chat: group, text } } });
+  const lastEdit = () => calls.filter(([method]) => method === 'editMessageText').at(-1)?.[1].text;
+
+  await handleUpdate(press('s:contacted:new-1', '🔴 НОВОЕ ОБРАЩЕНИЕ'), io, botNow);
+  assert.deepEqual(appended.map((e) => [e.type, e.stage ?? e.body, e.runId]), [['stage_change', 'contacted', 'new-1'], ['note', 'Telegram: Аружан', 'new-1']], 'кнопка пишет этап и автора');
+  assert.equal(lastEdit(), '🔴 НОВОЕ ОБРАЩЕНИЕ\n\nСтатус: Связались — Аружан', 'сообщение дополнено статусом');
+  await handleUpdate(press('s:lost:new-1', String(lastEdit())), io, botNow);
+  assert.equal(lastEdit(), '🔴 НОВОЕ ОБРАЩЕНИЕ\n\nСтатус: Неактуально — Аружан', 'повторное нажатие заменяет статус');
+
+  calls.length = 0;
+  appended.length = 0;
+  await handleUpdate(press('s:contacted:new-1', 'x', { id: 99, first_name: 'Чужой' }), io, botNow);
+  assert.equal(appended.length, 0, 'не участник не меняет этап');
+  assert.equal(calls[0]?.[1].show_alert, true, 'не участнику — отказ');
+
+  const command = (text: string, chat = group): TgUpdate =>
+    ({ message: { message_id: 1, chat, from: { id: 7 }, text, is_topic_message: true, message_thread_id: 1885 } });
+  const sent = async (update: TgUpdate, custom = io) => {
+    calls.length = 0;
+    await handleUpdate(update, custom, botNow);
+    return calls.map(([, body]) => body);
+  };
+
+  const cards = await sent(command('/new@ashyq_bot'));
+  assert.deepEqual(cards.map((body) => body.message_thread_id), [1885, 1885], '/new — по карточке в ту же тему');
+  assert.match(String(cards[0].text), /Этап: Новый/, 'карточка с этапом');
+  assert.equal((cards[0].reply_markup as { inline_keyboard: unknown[] }).inline_keyboard.length, 3, 'у карточки кнопки этапов');
+  assert.equal((await sent(command('/new', { id: -1009, type: 'group' }))).length, 0, 'чужая группа — молчим');
+  assert.match(String((await sent(command('/find')))[0].text), /кого искать/, 'пустой /find — подсказка');
+  assert.match(String((await sent(command('/stats')))[0].text), /Необработанных сейчас: 2/, '/stats');
+  assert.equal((await sent(command('/unknown'))).length, 0, 'чужая команда — молчим');
+
+  const many = Array.from({ length: 7 }, (_, index) => rec(`m${index}`, 'new', '2026-09-15T19:00:00Z'));
+  const capped = await sent(command('/new'), { ...io, snapshot: async () => ({ records: many, stats }) as unknown as CrmSnapshot });
+  assert.equal(capped.length, 6, 'не больше 5 карточек + ссылка на остальное');
+  assert.match(String(capped[5].text), /Ещё 2/, 'сколько осталось');
+
   console.log('telegram-check: ok');
 })();

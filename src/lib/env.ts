@@ -82,6 +82,10 @@ export function checkEnv(env: Env): EnvReport {
   if (telegramApp && !telegramApp.startsWith('https://t.me/')) {
     warnings.push('ASHYQ_TELEGRAM_APP_URL: нужна ссылка Mini App вида https://t.me/<бот>/<app>, иначе под заявкой нет кнопки «Открыть в CRM»');
   }
+  const webhookSecret = env.ASHYQ_TELEGRAM_WEBHOOK_SECRET;
+  if (webhookSecret && !/^[\w-]{16,256}$/.test(webhookSecret)) {
+    errors.push('ASHYQ_TELEGRAM_WEBHOOK_SECRET: 16–256 символов из A-Z, a-z, 0-9, _ и - (openssl rand -hex 32), иначе Telegram не примет webhook');
+  }
   if (!(telegramToken && telegramChat) && !webhookReady) {
     warnings.push('Нет канала уведомлений о заявках (Telegram или webhook): новые заявки видны только в /crm');
   }

@@ -2,7 +2,7 @@ import 'server-only';
 import { timingSafeEqual } from 'node:crypto';
 import { isTelegramManagerRequest } from './telegram-auth';
 
-function safeEqual(provided: string, expected: string): boolean {
+export function safeEqual(provided: string, expected: string): boolean {
   const left = Buffer.from(provided);
   const right = Buffer.from(expected);
   return left.length === right.length && timingSafeEqual(left, right);
