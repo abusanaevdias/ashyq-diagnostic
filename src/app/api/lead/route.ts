@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { after, NextResponse } from 'next/server';
 import { appendLead, findRecentDuplicate, type StoredLead } from '@/lib/lead-server';
 import { normalizePhone, toInternationalKz } from '@/lib/lead';
 import { deliverLead } from '@/lib/lead-delivery';
@@ -154,8 +154,9 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ ok: false }, { status: 503 });
   }
-  // доставка в Telegram/вебхук не должна задерживать ответ ученику
-  void deliverLead(lead);
+  // доставка в Telegram/вебхук не должна задерживать ответ ученику; after, а не void:
+  // на serverless (Vercel) функцию замораживают сразу после ответа и fetch не уходит
+  after(() => deliverLead(lead));
 
   return NextResponse.json({ ok: true });
 }

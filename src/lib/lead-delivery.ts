@@ -116,7 +116,13 @@ async function sendToTelegram(lead: StoredLead): Promise<void> {
   const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: chatId, text: leadToText(lead), disable_web_page_preview: true }),
+    body: JSON.stringify({
+      chat_id: chatId,
+      // тема супергруппы-форума; без неё сообщение уходит в General
+      message_thread_id: process.env.ASHYQ_TELEGRAM_THREAD_ID ? Number(process.env.ASHYQ_TELEGRAM_THREAD_ID) : undefined,
+      text: leadToText(lead),
+      disable_web_page_preview: true,
+    }),
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
   if (!response.ok) throw new Error(`telegram HTTP ${response.status}`);
@@ -168,6 +174,8 @@ async function recordAttempt(
       updatedAt: new Date().toISOString(),
     });
   } catch (error) {
+    // без ASHYQ_ADMIN_KEY ledger не виден в CRM — причина должна быть хотя бы в логе хостинга
+    console.error(`[ashyq lead] ${channel} delivery failed:`, error instanceof Error ? error.message : error);
     await appendDeliveryEntry({
       id: randomUUID(),
       key: computeDedupeKey(lead),
