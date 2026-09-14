@@ -189,9 +189,11 @@ function Overview({ data, season, user, onDone, onTab }: { data: SeasonData; sea
             <button type="submit" className={ui.buttonBlack} disabled={busy}>Создать сезон</button>
           </div>
         </form>
-        <div className={lms.actions}>
-          <button type="button" className={lms.textButton} onClick={reset}>Сбросить демо-сезон</button>
-        </div>
+        {process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' ? null : (
+          <div className={lms.actions}>
+            <button type="button" className={lms.textButton} onClick={reset}>Сбросить демо-сезон</button>
+          </div>
+        )}
       </section>
     </div>
   );
@@ -208,6 +210,7 @@ function Teams({ data, season, onDone }: PanelProps) {
   const [teamError, setTeamError] = useState('');
   const [name, setName] = useState('');
   const [alias, setAlias] = useState('');
+  const [email, setEmail] = useState('');
   const [addError, setAddError] = useState('');
 
   const activeDivision = season.divisions.includes(division) ? division : season.divisions[0];
@@ -239,10 +242,11 @@ function Teams({ data, season, onDone }: PanelProps) {
     event.preventDefault();
     setAddError('');
     try {
-      const p = await getSeasonRepo().addParticipant({ seasonId: season.id, division: activeDivision, alias, name });
+      const p = await getSeasonRepo().addParticipant({ seasonId: season.id, division: activeDivision, alias, name, email: email.trim() || undefined });
       onDone(`Участник ${p.alias} добавлен в ${DIVISION_LABELS[activeDivision]}`);
       setName('');
       setAlias('');
+      setEmail('');
     } catch (err) {
       setAddError(message(err, 'Участник не добавлен'));
     }
@@ -325,6 +329,11 @@ function Teams({ data, season, onDone }: PanelProps) {
               <label className={lms.fieldLabel}>
                 Псевдоним в рейтинге
                 <input className={lms.field} value={alias} onChange={(e) => setAlias(e.target.value)} required maxLength={24} placeholder="Qyran · A7" />
+              </label>
+              <label className={lms.fieldLabel}>
+                Email аккаунта ученика (необязательно)
+                <input className={lms.field} type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="off" maxLength={120} />
+                <span className={lms.hint}>Связывает участника с аккаунтом: ученик увидит свой сезон в кабинете.</span>
               </label>
               {addError ? <p className={lms.error} role="alert">{addError}</p> : null}
               <div>
