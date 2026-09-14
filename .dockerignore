@@ -1,0 +1,11 @@
+.git
+.github
+.claude
+node_modules
+.next
+.data
+.env*
+!.env.example
+screenshots
+artifacts
+*.log

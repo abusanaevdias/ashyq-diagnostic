@@ -22,7 +22,8 @@ import {
 
 function dataFile(name: string): string {
   const directory = process.env.ASHYQ_LEADS_DIR ?? path.join(process.cwd(), '.data');
-  return path.join(directory, name);
+  // папка данных — не код: без ignore standalone-сборка трассирует весь проект (DEPLOY-PREP-001)
+  return path.join(/*turbopackIgnore: true*/ directory, name);
 }
 
 const DELIVERIES_FILE = dataFile('lead-deliveries.jsonl');
