@@ -70,21 +70,26 @@ create extension if not exists pg_net;
 select cron.schedule('ashyq-digest', '0 4 * * *', $$
   select net.http_get(
     url := 'https://<домен>/api/telegram/cron?job=digest',
-    headers := jsonb_build_object('Authorization', 'Bearer <CRON_SECRET>')
+    headers := jsonb_build_object('Authorization', 'Bearer <CRON_SECRET>'),
+    -- по умолчанию pg_net ждёт секунды: холодный старт Vercel + чтение CRM не успевают
+    timeout_milliseconds := 30000
   )
 $$);
 
 select cron.schedule('ashyq-remind', '*/5 * * * *', $$
   select net.http_get(
     url := 'https://<домен>/api/telegram/cron?job=remind',
-    headers := jsonb_build_object('Authorization', 'Bearer <CRON_SECRET>')
+    headers := jsonb_build_object('Authorization', 'Bearer <CRON_SECRET>'),
+    timeout_milliseconds := 30000
   )
 $$);
 ```
 
 Повторный `cron.schedule` с тем же именем обновляет задачу — так меняют домен
-или секрет. Проверка: `select status_code, content from net._http_response
-order by created desc limit 5;` — ожидается `200` и `{"ok":true,"sent":…}`.
+или секрет. Проверка: `select status_code, timed_out, error_msg, content from
+net._http_response order by created desc limit 5;` — ожидается `200` и
+`{"ok":true,"sent":…}`; `NULL` в `status_code` с `timed_out = true` — не задан
+`timeout_milliseconds`, `404` — секрет не совпадает с `CRON_SECRET` в Vercel.
 Напоминание приходит один раз, если «Новый» с телефоном 15 минут никто не
 взял; заявки старше суток не напоминаются — они попадают в утреннюю сводку.
 
