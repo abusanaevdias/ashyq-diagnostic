@@ -62,6 +62,22 @@ export function checkEnv(env: Env): EnvReport {
     warnings.push('ASHYQ_NOTIFY_ALL понимает только значение 1');
   }
 
+  // те же условия, что в src/lib/supabase-leads.ts: там они всплывают только на первой заявке
+  const provider = env.ASHYQ_LEADS_PROVIDER;
+  const supabaseUrl = env.ASHYQ_SUPABASE_URL?.replace(/\/$/, '');
+  const supabaseKey = env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY;
+  if (provider === 'supabase') {
+    if (!supabaseUrl || !supabaseKey) {
+      errors.push('ASHYQ_LEADS_PROVIDER=supabase: нужны оба ASHYQ_SUPABASE_URL и ASHYQ_SUPABASE_SERVICE_ROLE_KEY, иначе заявки не сохраняются');
+    } else if (!supabaseUrl.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(supabaseUrl)) {
+      errors.push('ASHYQ_SUPABASE_URL должен быть https (http — только для localhost), иначе заявки не сохраняются');
+    }
+  } else if (provider) {
+    warnings.push(`ASHYQ_LEADS_PROVIDER=${provider} не поддерживается (только supabase): заявки пишутся в файлы`);
+  } else if (supabaseUrl || supabaseKey) {
+    warnings.push('Supabase задан, но не включён: чтобы хранить заявки в Supabase, укажи ASHYQ_LEADS_PROVIDER=supabase');
+  }
+
   return { errors, warnings };
 }
 
@@ -88,7 +104,10 @@ export async function inspectDeployment(): Promise<EnvReport> {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_ASHYQ_WHATSAPP: process.env.NEXT_PUBLIC_ASHYQ_WHATSAPP,
   });
-  const leadsDirError = await checkLeadsDir();
-  if (leadsDirError) report.errors.push(leadsDirError);
+  // с Supabase заявки не живут на диске: read-only хостинг не должен давать 503
+  if (process.env.ASHYQ_LEADS_PROVIDER !== 'supabase') {
+    const leadsDirError = await checkLeadsDir();
+    if (leadsDirError) report.errors.push(leadsDirError);
+  }
   return report;
 }
