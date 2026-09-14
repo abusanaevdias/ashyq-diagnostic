@@ -42,6 +42,33 @@ writes return a retryable server error instead of pretending that the lead was
 saved. Never prefix the service-role key with `NEXT_PUBLIC_` or expose it in
 browser code. Local HTTP is accepted only for `localhost` and `127.0.0.1`.
 
+## Sign-in (SUPABASE-AUTH-001)
+
+User decisions (2026-09-14): email + password; every new account is a
+`student`, teacher/author roles are granted only by an admin (edit
+`public.profiles.role` in Studio); users under 18 sign up themselves with a
+parental-consent checkbox. The database enforces the consent rule: the
+signup trigger rejects `is_minor` without `guardian_consent`, and the consent
+timestamp lives in `private.signup_consents`, which the API cannot read.
+
+```text
+NEXT_PUBLIC_AUTH_PROVIDER=supabase
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321      # hosted: https://<project>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<ANON_KEY from `supabase status -o env`>
+```
+
+These are build-time values. The browser uses only the anon/publishable key;
+the CSP `connect-src` is widened to the Supabase origin only when the URL is
+set. Integration check against the local stack:
+
+```powershell
+$env:SUPABASE_ANON_KEY = '<ANON_KEY>'; $env:SUPABASE_SERVICE_ROLE_KEY = '<SERVICE_ROLE_KEY>'
+npx tsx scripts/supabase-auth-check.ts
+```
+
+Until the LMS and championship adapters land, `NEXT_PUBLIC_AUTH_PROVIDER=supabase`
+switches sign-in only; class, blog and season pages still need their repositories.
+
 ## Local verification
 
 Requirements: Node.js, a running Docker-compatible engine and Supabase CLI.

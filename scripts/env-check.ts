@@ -33,6 +33,12 @@ assert.deepEqual(count({ ...supabase, ASHYQ_SUPABASE_SERVICE_ROLE_KEY: undefined
 assert.deepEqual(count({ ...supabase, ASHYQ_LEADS_PROVIDER: undefined }), [0, 1], 'Supabase задан, но не включён — предупреждение');
 assert.deepEqual(count({ ...prod, ASHYQ_LEADS_PROVIDER: 'postgres' }), [0, 1], 'неизвестный провайдер — предупреждение');
 
+const auth = { ...prod, NEXT_PUBLIC_AUTH_PROVIDER: 'supabase', NEXT_PUBLIC_SUPABASE_URL: 'https://project.supabase.co', NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon' };
+assert.deepEqual(count(auth), [0, 0], 'вход через Supabase с адресом и anon-ключом — чисто');
+assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_ANON_KEY: undefined }), [1, 0], 'вход через Supabase без anon-ключа — ошибка');
+assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_URL: 'http://db.example' }), [1, 0], 'вход через Supabase по http вне localhost — ошибка');
+assert.deepEqual(count({ ...prod, NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY: 'secret' }), [1, 0], 'секретный ключ в NEXT_PUBLIC_* — ошибка');
+
 (async () => {
   const temp = await mkdtemp(path.join(tmpdir(), 'ashyq-env-'));
   try {

@@ -10,8 +10,10 @@ import type { Session } from './types';
 let lastKey = '';
 let lastSession: Session | null = null;
 
-function sessionSnapshot(): Session | null {
-  const session = getAuth().getSession();
+function sessionSnapshot(): Session | null | undefined {
+  const auth = getAuth();
+  if (auth.isReady && !auth.isReady()) return undefined; // Supabase ещё восстанавливает сессию
+  const session = auth.getSession();
   const key = session ? JSON.stringify(session) : '';
   if (key !== lastKey) {
     lastKey = key;

@@ -78,6 +78,20 @@ export function checkEnv(env: Env): EnvReport {
     warnings.push('Supabase задан, но не включён: чтобы хранить заявки в Supabase, укажи ASHYQ_LEADS_PROVIDER=supabase');
   }
 
+  if (env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase') {
+    const authUrl = env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '');
+    if (!authUrl || !env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      errors.push('NEXT_PUBLIC_AUTH_PROVIDER=supabase: при сборке нужны NEXT_PUBLIC_SUPABASE_URL и NEXT_PUBLIC_SUPABASE_ANON_KEY, иначе вход не работает');
+    } else if (!authUrl.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(authUrl)) {
+      errors.push('NEXT_PUBLIC_SUPABASE_URL должен быть https (http — только для localhost)');
+    }
+  }
+  for (const name of Object.keys(env)) {
+    if (name.startsWith('NEXT_PUBLIC_') && /SERVICE_ROLE|SECRET/.test(name) && env[name]) {
+      errors.push(`${name}: секретный ключ с префиксом NEXT_PUBLIC_ попадает в браузер — убери префикс`);
+    }
+  }
+
   return { errors, warnings };
 }
 
@@ -103,6 +117,9 @@ export async function inspectDeployment(): Promise<EnvReport> {
     // сборки, а не из окружения запуска (в Docker их при запуске может не быть)
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_ASHYQ_WHATSAPP: process.env.NEXT_PUBLIC_ASHYQ_WHATSAPP,
+    NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER,
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   });
   // с Supabase заявки не живут на диске: read-only хостинг не должен давать 503
   if (process.env.ASHYQ_LEADS_PROVIDER !== 'supabase') {
