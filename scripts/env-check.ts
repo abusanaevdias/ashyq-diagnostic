@@ -42,6 +42,8 @@ assert.deepEqual(count(auth), [0, 0], 'вход через Supabase с адре�
 assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_ANON_KEY: undefined }), [1, 0], 'вход через Supabase без anon-ключа — ошибка');
 assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_URL: 'http://db.example' }), [1, 0], 'вход через Supabase по http вне localhost — ошибка');
 assert.deepEqual(count({ ...prod, NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY: 'secret' }), [1, 0], 'секретный ключ в NEXT_PUBLIC_* — ошибка');
+assert.deepEqual(count({ ...prod, NEXT_PUBLIC_AUTH_PROVIDER: 'demo' }), [0, 0], 'демо-вход явно — чисто');
+assert.deepEqual(count({ ...prod, NEXT_PUBLIC_AUTH_PROVIDER: '"supabase"' }), [0, 1], 'провайдер входа с кавычками — предупреждение: вход тихо остаётся демо');
 
 // Vercel (LEADS-VERCEL-001): интеграция Supabase задаёт SUPABASE_*, а диск read-only
 const integration = { SUPABASE_URL: 'https://project.supabase.co', SUPABASE_SERVICE_ROLE_KEY: 'service-role' };

@@ -10,11 +10,12 @@ export const dynamic = 'force-dynamic';
  * Что именно не так, наружу не отдаём: детали в логе сервера.
  */
 export async function GET() {
-  const { errors, storage } = await inspectDeployment();
+  const { errors, storage, auth } = await inspectDeployment();
   const ok = errors.length === 0;
   return NextResponse.json(
-    // storage — где хранятся заявки (supabase | file): без секретов, но видно снаружи, что прод настроен
-    { status: ok ? 'ok' : 'misconfigured', storage },
+    // storage — где хранятся заявки (supabase | file), auth — режим входа (supabase | demo):
+    // без секретов, но видно снаружи, что прод настроен
+    { status: ok ? 'ok' : 'misconfigured', storage, auth },
     { status: ok ? 200 : 503, headers: { 'Cache-Control': 'no-store' } },
   );
 }

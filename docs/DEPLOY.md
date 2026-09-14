@@ -139,7 +139,8 @@ Caddy (сертификат выпускает сам), nginx + certbot или H
       На Vercel с официальной интеграцией Supabase ↔ Vercel ничего добавлять не нужно: сайт сам берёт её
       `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`. Без интеграции — `ASHYQ_LEADS_PROVIDER=supabase` +
       `ASHYQ_SUPABASE_URL` + `ASHYQ_SUPABASE_SERVICE_ROLE_KEY`. `/api/health` отвечает
-      `{"status":"ok","storage":"supabase"}`, когда заявки сохраняются; 503 — причина в логе `[ashyq env]`
+      `{"status":"ok","storage":"supabase","auth":"supabase"}`, когда заявки сохраняются, а вход настоящий
+      (`auth:"demo"` — сборка не увидела `NEXT_PUBLIC_AUTH_PROVIDER=supabase` ровно строчными, без кавычек); 503 — причина в логе `[ashyq env]`
       (на Vercel в файловом режиме — всегда 503).
 - [ ] Тестовая заявка с `/contacts` пришла в Telegram и видна в `/crm`.
 - [ ] `/crm` без ключа отвечает 404.
