@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { readStoredLeads, type StoredLead } from '@/lib/lead-server';
-import { hasValidAdminKey, isAdminConfigured } from '@/lib/admin-auth';
+import { isAuthorized } from '@/lib/admin-auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -50,10 +50,7 @@ function toCsv(leads: StoredLead[]): string {
 }
 
 export async function GET(req: Request) {
-  if (!isAdminConfigured()) {
-    return new NextResponse('Not found', { status: 404 });
-  }
-  if (!hasValidAdminKey(req)) {
+  if (!(await isAuthorized(req))) {
     return new NextResponse('Not found', { status: 404 });
   }
 

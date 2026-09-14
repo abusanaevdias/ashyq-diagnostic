@@ -1,5 +1,6 @@
 import 'server-only';
 import { timingSafeEqual } from 'node:crypto';
+import { isTelegramManagerRequest } from './telegram-auth';
 
 function safeEqual(provided: string, expected: string): boolean {
   const left = Buffer.from(provided);
@@ -7,11 +8,12 @@ function safeEqual(provided: string, expected: string): boolean {
   return left.length === right.length && timingSafeEqual(left, right);
 }
 
-export function isAdminConfigured(): boolean {
-  return Boolean(process.env.ASHYQ_ADMIN_KEY);
+/** Доступ к CRM и выгрузке: ключ админа или менеджер из Telegram Mini App. */
+export async function isAuthorized(request: Request): Promise<boolean> {
+  return hasValidAdminKey(request) || isTelegramManagerRequest(request);
 }
 
-export function hasValidAdminKey(request: Request): boolean {
+function hasValidAdminKey(request: Request): boolean {
   const expected = process.env.ASHYQ_ADMIN_KEY;
   if (!expected) return false;
 

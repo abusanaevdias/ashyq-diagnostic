@@ -7,13 +7,17 @@ import { EditorialLabel, RedStar, Wordmark } from '@/components/ui/Brand';
 
 const SESSION_KEY = 'ashyq:crm:admin-key';
 
-async function fetchSnapshot(key: string): Promise<CrmSnapshot> {
-  const response = await fetch('/api/crm', {
-    headers: { 'x-ashyq-admin-key': key },
-    cache: 'no-store',
-  });
+type AuthHeaders = Record<string, string>;
+
+async function fetchSnapshot(headers: AuthHeaders): Promise<CrmSnapshot> {
+  const response = await fetch('/api/crm', { headers, cache: 'no-store' });
   if (!response.ok) throw new Error('access');
   return response.json() as Promise<CrmSnapshot>;
+}
+
+/** Запуск как Telegram Mini App: Telegram кладёт подписанный initData в hash адреса. */
+function telegramInitData(): string {
+  return new URLSearchParams(window.location.hash.slice(1)).get('tgWebAppData') ?? '';
 }
 
 function formatDate(value: string): string {
@@ -37,7 +41,7 @@ function funnelConversion(value: number, prev: number): string {
 
 export default function CrmDashboard() {
   const [keyInput, setKeyInput] = useState('');
-  const [adminKey, setAdminKey] = useState('');
+  const [auth, setAuth] = useState<AuthHeaders | null>(null);
   const [snapshot, setSnapshot] = useState<CrmSnapshot | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -49,12 +53,32 @@ export default function CrmDashboard() {
   const [savingId, setSavingId] = useState('');
 
   useEffect(() => {
+    const initData = telegramInitData();
+    if (initData) {
+      const headers = { 'x-telegram-init-data': initData };
+      // runId из кнопки «Открыть в CRM» под заявкой — сразу её карточка
+      const runId = new URLSearchParams(initData).get('start_param') ?? '';
+      setLoading(true);
+      fetchSnapshot(headers)
+        .then((next) => {
+          setAuth(headers);
+          setSnapshot(next);
+          if (runId) {
+            setSearch(runId);
+            setSelectedId(runId);
+          }
+        })
+        .catch(() => setError('Нет доступа: CRM в Telegram открывается только участникам группы с заявками.'))
+        .finally(() => setLoading(false));
+      return;
+    }
+
     const stored = sessionStorage.getItem(SESSION_KEY);
     if (!stored) return;
     setLoading(true);
-    fetchSnapshot(stored)
+    fetchSnapshot({ 'x-ashyq-admin-key': stored })
       .then((next) => {
-        setAdminKey(stored);
+        setAuth({ 'x-ashyq-admin-key': stored });
         setSnapshot(next);
       })
       .catch(() => sessionStorage.removeItem(SESSION_KEY))
@@ -68,9 +92,9 @@ export default function CrmDashboard() {
     setLoading(true);
     setError('');
     try {
-      const next = await fetchSnapshot(candidate);
+      const next = await fetchSnapshot({ 'x-ashyq-admin-key': candidate });
       sessionStorage.setItem(SESSION_KEY, candidate);
-      setAdminKey(candidate);
+      setAuth({ 'x-ashyq-admin-key': candidate });
       setSnapshot(next);
       setKeyInput('');
     } catch {
@@ -80,9 +104,9 @@ export default function CrmDashboard() {
     }
   }
 
-  async function refresh(key = adminKey) {
-    if (!key) return;
-    setSnapshot(await fetchSnapshot(key));
+  async function refresh() {
+    if (!auth) return;
+    setSnapshot(await fetchSnapshot(auth));
   }
 
   async function updateRecord(runId: string, payload: { stage?: CrmStage; note?: string; action?: string }) {
@@ -91,7 +115,7 @@ export default function CrmDashboard() {
     try {
       const response = await fetch('/api/crm', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'x-ashyq-admin-key': adminKey },
+        headers: { 'Content-Type': 'application/json', ...auth },
         body: JSON.stringify({ runId, ...payload }),
       });
       if (!response.ok) throw new Error('save');
@@ -110,9 +134,7 @@ export default function CrmDashboard() {
 
   async function downloadCsv() {
     try {
-      const response = await fetch('/api/leads?contacts=1&format=csv', {
-        headers: { 'x-ashyq-admin-key': adminKey },
-      });
+      const response = await fetch('/api/leads?contacts=1&format=csv', { headers: auth ?? {} });
       if (!response.ok) throw new Error('download');
       const url = URL.createObjectURL(await response.blob());
       const link = document.createElement('a');
@@ -127,7 +149,7 @@ export default function CrmDashboard() {
 
   function lock() {
     sessionStorage.removeItem(SESSION_KEY);
-    setAdminKey('');
+    setAuth(null);
     setSnapshot(null);
     setSelectedId('');
   }
@@ -144,7 +166,7 @@ export default function CrmDashboard() {
     });
   }, [search, snapshot, stage]);
 
-  if (!snapshot || !adminKey) {
+  if (!snapshot || !auth) {
     return (
       <main className="v3 shell-narrow flex min-h-dvh items-center py-12">
         <section className="card w-full p-6 sm:p-8">
