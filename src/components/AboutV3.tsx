@@ -29,7 +29,7 @@ export default function AboutV3() {
               <MicroLabel>Наша миссия</MicroLabel>
               <h1 className={styles.title}>Открывать возможности через знания и людей.</h1>
               <p className={styles.lead}>ASHYQ помогает студентам готовиться к IELTS и SAT, видеть свой прогресс и учиться работать в команде. Онлайн и в Астане.</p>
-              <p className={styles.script}>расти вместе</p>
+              <p className={styles.script}>растём вместе</p>
             </div>
             <div className={styles.heroPhoto}>
               <Image src="/brand/hero-students.jpg" alt="Студенты ASHYQ занимаются вместе" fill priority sizes="(max-width: 900px) 100vw, 42vw" />

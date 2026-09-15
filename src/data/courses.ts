@@ -17,8 +17,8 @@ export type CourseDetail = {
   lead: string;
   photo: string;
   alt: string;
+  /** provisional: true — ещё не подтверждено; такие факты не показываются, вместо них — «узнать в WhatsApp». */
   facts: Array<{ label: string; value: string; provisional?: boolean }>;
-  provisionalNote: string;
   curriculum: Array<{ title: string; description: string }>;
   steps: Array<{ title: string; description: string }>;
   included: string[];
@@ -69,7 +69,6 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
       { label: 'Формат', value: 'Онлайн и в Астане' },
       ...provisionalFacts,
     ],
-    provisionalNote: 'Длительность, расписание, стоимость, преподаватель и статус набора пока уточняются. Обновим страницу после подтверждения.',
     curriculum: [
       { title: 'Reading', description: 'Работа с академическими текстами, типами заданий и временем.' },
       { title: 'Listening', description: 'Практика понимания речи, деталей и структуры аудиозаписи.' },
@@ -177,7 +176,6 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
       { label: 'Формат', value: 'Онлайн и в Астане' },
       ...provisionalFacts,
     ],
-    provisionalNote: 'Длительность, расписание, стоимость, преподаватель и статус набора пока уточняются. Обновим страницу после подтверждения.',
     curriculum: [
       { title: 'Reading & Writing', description: 'Работа с короткими текстами, языковыми правилами, аргументацией и данными.' },
       { title: 'Math', description: 'Алгебра, решение задач, анализ данных и практика в формате Digital SAT.' },

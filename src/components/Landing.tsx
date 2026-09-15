@@ -56,7 +56,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
             <div className={styles.heroCopy}>
               <MicroLabel>Образование открывает двери</MicroLabel>
               <h1 className={styles.title}>Больше, чем подготовка.<span className={styles.titleAccent}>Реальные возможности.</span></h1>
-              <p className={styles.lead}>Узнай, какой балл ты получил бы сегодня. Затем собери маршрут к IELTS или SAT вместе с тренерами и сообществом ASHYQ. Около 20 минут, результат сразу.</p>
+              <p className={styles.lead}>Узнайте, какой балл вы получили бы сегодня. Затем соберите маршрут к IELTS или SAT вместе с тренерами и сообществом ASHYQ. Около 20 минут, результат сразу.</p>
               <div className={styles.actions}>
                 {(['ielts', 'sat'] as const).map((exam) => {
                   const saved = runs[exam];
@@ -76,14 +76,14 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
 
             <div className={styles.heroVisual}>
               <span className={styles.verticalNote}>People · Knowledge · Progress</span>
-              <span className={styles.scriptNote}>начни здесь</span>
+              <span className={styles.scriptNote}>начните здесь</span>
               <div className={styles.photoFrame}>
                 <Image className={styles.heroPhoto} src="/brand/lesson-grid.jpg" alt="Студенты ASHYQ на совместном онлайн-занятии" width={1000} height={390} priority sizes="(max-width: 900px) 100vw, 42vw" />
               </div>
               <div className={styles.floatingCard}>
                 <IconChip name="spark" solid />
-                <p className={styles.floatingTitle}>Запишись сегодня</p>
-                <p className={styles.floatingText}>Начни с быстрой диагностики. Регистрация для результата не нужна.</p>
+                <p className={styles.floatingTitle}>Запишитесь сегодня</p>
+                <p className={styles.floatingText}>Начните с быстрой диагностики. Регистрация для результата не нужна.</p>
               </div>
             </div>
           </div>

@@ -41,6 +41,22 @@ function Trend({ value }: { value: number }) {
   );
 }
 
+/** Заявка на следующий сезон: и внизу активного сезона, и в пустом состоянии (CLIENT-POLISH-001). */
+function JoinSection() {
+  return (
+    <section className={styles.section} id="join">
+      <div className={`${styles.shell} ${styles.blush} ${styles.formArea}`}>
+        <div>
+          <p className={styles.micro}>Следующий набор</p>
+          <h2 className={styles.heading}>Хотите в следующий сезон?</h2>
+          <p className={styles.subhead}>Оставьте контакт. Команда сообщит только подтверждённые даты, формат и стоимость.</p>
+        </div>
+        <SeasonForm />
+      </div>
+    </section>
+  );
+}
+
 export default function SeasonPublicHub() {
   const [division, setDivision] = useState<Division>('ielts');
   const [board, setBoard] = useState<Board>('teams');
@@ -68,8 +84,16 @@ export default function SeasonPublicHub() {
         <section className={`${styles.shell} ${styles.hero}`}>
           <p className={styles.eyebrow}>ASHYQ Championship</p>
           <h1 className={styles.title}>Сезон готовится</h1>
-          <p className={styles.lead}>Даты следующего сезона ещё не объявлены.</p>
+          <p className={styles.lead}>
+            Даты следующего сезона ещё не объявлены. В сезоне — Match Days, рейтинг команд и участников (IELTS и SAT отдельно)
+            и финал офлайн в Астане. Оставьте контакт — сообщим о старте первыми.
+          </p>
+          <div className={styles.actions}>
+            <a href="#join" className={styles.primary}>Оставить заявку</a>
+            <Link href="/program" className={styles.secondary}>Как устроен чемпионат</Link>
+          </div>
         </section>
+        <JoinSection />
       </main>
     );
   }
@@ -193,16 +217,7 @@ export default function SeasonPublicHub() {
         </div>
       </section>
 
-      <section className={styles.section} id="join">
-        <div className={`${styles.shell} ${styles.blush} ${styles.formArea}`}>
-          <div>
-            <p className={styles.micro}>Следующий набор</p>
-            <h2 className={styles.heading}>Хочешь в следующий сезон?</h2>
-            <p className={styles.subhead}>Оставь контакт. Команда сообщит только подтверждённые даты, формат и стоимость.</p>
-          </div>
-          <SeasonForm />
-        </div>
-      </section>
+      <JoinSection />
     </main>
   );
 }

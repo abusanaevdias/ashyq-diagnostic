@@ -376,7 +376,7 @@ async function main() {
   // progress: пустое состояние честно зовёт в диагностику
   await p3.goto(`${BASE}/progress`, { waitUntil: 'networkidle' });
   const emptyText = await p3.locator('body').innerText();
-  check('progress: пустое состояние зовёт в диагностику', has(emptyText, 'Пока пусто'));
+  check('progress: пустое состояние зовёт в диагностику', has(emptyText, 'Здесь появится ваш прогресс'));
   await p3.getByRole('link', { name: 'Начать диагностику SAT' }).click();
   await p3.waitForTimeout(500);
   const startedText = await p3.locator('body').innerText();
