@@ -15,7 +15,9 @@ let browserClient: SupabaseClient | null = null;
 /** Браузерный клиент с anon/publishable-ключом. Service role сюда не попадает никогда. */
 export function supabaseBrowser(): SupabaseClient {
   if (browserClient) return browserClient;
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  // Supabase показывает адрес REST API (…/rest/v1/), а клиенту нужен адрес проекта:
+  // иначе «Invalid path specified in request URL» (прод 2026-09-15). Как SUPABASE_PATH в src/lib/env.ts
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/(\/(rest|auth)\/v1)?\/?$/, '');
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) throw new Error('Supabase не настроен: задайте NEXT_PUBLIC_SUPABASE_URL и NEXT_PUBLIC_SUPABASE_ANON_KEY');
   browserClient = createClient(url, key, { auth: { persistSession: true, autoRefreshToken: true, storageKey: 'ashyq:v2:supabase-auth' } });
