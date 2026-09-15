@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BLOG_CATEGORIES, BLOG_IS_DEMO, type BlogCategory } from '@/data/blog';
+import { PHOTOS } from '@/data/media';
 import { formatDay, postCover } from '@/lib/lms/format';
 import { useLmsData } from '@/lib/lms/hooks';
 import { defaultPosts } from '@/lib/lms/local-repos';
@@ -50,7 +51,7 @@ export default function BlogV3() {
               <h1 className={styles.title}>Разборы, стратегии и жизнь сезона</h1>
               <p className={home.lead}>Короткие материалы о подготовке к IELTS и SAT, типичных ошибках и о том, как устроены Match Days.</p>
             </div>
-            <div className={styles.thumb}><Image src="/brand/hero-students.jpg" alt="Студенты ASHYQ на занятии" fill priority sizes="(max-width: 900px) 100vw, 40vw" /></div>
+            <div className={styles.thumb}><Image src={PHOTOS.blogHero.src} alt={PHOTOS.blogHero.alt} fill priority sizes="(max-width: 900px) 100vw, 40vw" /></div>
           </div>
         </section>
 

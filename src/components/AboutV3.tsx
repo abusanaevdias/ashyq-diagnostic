@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { PHOTOS } from '@/data/media';
 import home from './HomeV3.module.css';
 import styles from './AboutV3.module.css';
 import { ButtonLink, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
@@ -32,7 +33,7 @@ export default function AboutV3() {
               <p className={styles.script}>растём вместе</p>
             </div>
             <div className={styles.heroPhoto}>
-              <Image src="/brand/hero-students.jpg" alt="Студенты ASHYQ занимаются вместе" fill priority sizes="(max-width: 900px) 100vw, 42vw" />
+              <Image src={PHOTOS.aboutHero.src} alt={PHOTOS.aboutHero.alt} fill priority sizes="(max-width: 900px) 100vw, 42vw" />
             </div>
           </div>
         </section>
@@ -70,7 +71,7 @@ export default function AboutV3() {
                 <div className={styles.quoteAction}><ButtonLink href="/program">Смотреть программу</ButtonLink></div>
               </figure>
               <div className={styles.quotePhoto}>
-                <Image src="/brand/lesson-grid.jpg" alt="Онлайн-занятие сообщества ASHYQ" fill sizes="(max-width: 900px) 100vw, 38vw" />
+                <Image src={PHOTOS.aboutQuote.src} alt={PHOTOS.aboutQuote.alt} fill sizes="(max-width: 900px) 100vw, 38vw" />
               </div>
             </div>
           </section>

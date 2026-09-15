@@ -73,7 +73,18 @@ async function checkOgImage() {
   console.log(`PASS OG image ${width}x${height}, ${bytes.byteLength} bytes`);
 }
 
+/** JSON-LD Schema.org (SEO-SCHEMA-001): блок разбирается как JSON и содержит нужный @type. */
+async function checkJsonLd(route: string, type: string) {
+  const html = await (await fetch(`${BASE_URL}${route}`)).text();
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]) as { '@type'?: string });
+  if (!blocks.some((block) => block['@type'] === type)) throw new Error(`${route}: JSON-LD ${type} is missing (found: ${blocks.map((b) => b['@type']).join(', ') || 'none'})`);
+  console.log(`PASS JSON-LD ${type} ${route}`);
+}
+
 async function main() {
+  await checkJsonLd('/', 'EducationalOrganization');
+  await checkJsonLd('/courses/ielts', 'Course');
+  await checkJsonLd('/faq', 'FAQPage');
   for (const route of CANONICAL_ROUTES) await checkCanonical(route);
   for (const route of NOINDEX_ROUTES) await checkNoindex(route);
   await checkOgImage();

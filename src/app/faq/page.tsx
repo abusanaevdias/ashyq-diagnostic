@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { EditorialLabel } from '@/components/ui/Brand';
 import { SiteFooter, SiteHeader } from '@/components/ui/SiteChrome';
+import JsonLd from '@/components/JsonLd';
 import { FAQ } from '@/data/faq';
+import { FAQ_SCHEMA } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Вопросы и ответы — ASHYQ',
@@ -15,6 +17,7 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <div className="v3 min-h-dvh">
+      <JsonLd data={FAQ_SCHEMA} />
       <SiteHeader />
       <main className="shell-wide py-8 sm:py-12">
         <EditorialLabel>FAQ</EditorialLabel>

@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from 'react';
 import Image from 'next/image';
+import { PHOTOS } from '@/data/media';
 import { EXAMS } from '@/lib/config';
 import type { ExamId, RunState } from '@/lib/types';
 import { ButtonLink, DirectionCard, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
@@ -78,7 +79,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
               <span className={styles.verticalNote}>People · Knowledge · Progress</span>
               <span className={styles.scriptNote}>начните здесь</span>
               <div className={styles.photoFrame}>
-                <Image className={styles.heroPhoto} src="/brand/lesson-grid.jpg" alt="Студенты ASHYQ на совместном онлайн-занятии" width={1000} height={390} priority sizes="(max-width: 900px) 100vw, 42vw" />
+                <Image className={styles.heroPhoto} src={PHOTOS.homeHero.src} alt={PHOTOS.homeHero.alt} width={PHOTOS.homeHero.width} height={PHOTOS.homeHero.height} priority sizes="(max-width: 900px) 100vw, 42vw" />
               </div>
               <div className={styles.floatingCard}>
                 <IconChip name="spark" solid />
