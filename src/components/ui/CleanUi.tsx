@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import NavAccount from '@/components/lms/NavAccount';
+import { BLOG_IS_DEMO } from '@/data/blog';
 import { SOCIAL_LINKS } from '@/lib/site';
 import styles from './CleanUi.module.css';
 
@@ -56,7 +57,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
           <Link className={styles.navLink} href="/courses">Курсы</Link>
           <Link className={styles.navLink} href="/season">Чемпионат</Link>
           <Link className={styles.navLink} href="/program">Программа</Link>
-          <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
+          <Link className={styles.navLink} href="/about">О нас</Link>{BLOG_IS_DEMO ? null : <Link className={styles.navLink} href="/blog">Блог</Link>}
           <Link className={styles.navLink} href="/community">Сообщество</Link>
           <Link className={styles.navLink} href="/faq">FAQ</Link>
           <Link className={styles.navLink} href="/contacts">Контакты</Link>
@@ -69,7 +70,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
             <Link className={styles.navLink} href="/courses">Курсы</Link>
             <Link className={styles.navLink} href="/season">Чемпионат</Link>
             <Link className={styles.navLink} href="/program">Программа</Link>
-            <Link className={styles.navLink} href="/about">О нас</Link><Link className={styles.navLink} href="/blog">Блог</Link>
+            <Link className={styles.navLink} href="/about">О нас</Link>{BLOG_IS_DEMO ? null : <Link className={styles.navLink} href="/blog">Блог</Link>}
             <Link className={styles.navLink} href="/community">Сообщество</Link>
             <Link className={styles.navLink} href="/faq">FAQ</Link>
             <Link className={styles.navLink} href="/search">Поиск</Link>
@@ -131,7 +132,7 @@ export function Footer() {
       <div className={styles.footerInner}>
         <div className={styles.footerTop}>
           <div><Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} /><p className={styles.footerTagline}>Знания, прогресс и люди, с которыми хочется двигаться дальше.</p></div>
-          {FOOTER_GROUPS.map((group) => <div key={group.title}><p className={styles.footerTitle}>{group.title}</p><div className={styles.footerLinks}>{group.links.map((link) => <Link className={styles.footerLink} href={link.href} key={link.href}>{link.label}</Link>)}</div></div>)}
+          {FOOTER_GROUPS.map((group) => <div key={group.title}><p className={styles.footerTitle}>{group.title}</p><div className={styles.footerLinks}>{group.links.filter((link) => !(BLOG_IS_DEMO && link.href === '/blog')).map((link) => <Link className={styles.footerLink} href={link.href} key={link.href}>{link.label}</Link>)}</div></div>)}
         </div>
         <div className={styles.footerBottom}><span>© 2026 ASHYQ</span><span>Предварительная диагностика IELTS / SAT</span></div>
       </div>

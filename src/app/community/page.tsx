@@ -50,8 +50,8 @@ export default function CommunityPage() {
             <img src="/brand/lesson-grid.jpg" alt="Онлайн-занятие ASHYQ" width="1000" height="390" className="w-full rounded-md object-cover lg:col-span-7" />
             <div className="lg:col-span-5">
               <p className="label flex items-center gap-2 text-red"><RedStar className="h-2.5 w-2.5" />Онлайн и в Астане</p>
-              <h2 className="display mt-4 text-h2">Начни со своей точки А</h2>
-              <p className="mt-4 text-ink-soft">Пройди диагностику или оставь заявку на следующий сезон — команда расскажет об актуальном формате.</p>
+              <h2 className="display mt-4 text-h2">Начните со своей точки А</h2>
+              <p className="mt-4 text-ink-soft">Пройдите диагностику или оставьте заявку на следующий сезон — команда расскажет об актуальном формате.</p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <Link href="/?start=ielts" className="btn btn-primary">Диагностика</Link>
                 <Link href="/season" className="btn btn-outline">Следующий сезон</Link>

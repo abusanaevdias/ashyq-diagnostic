@@ -95,7 +95,7 @@ export default function BookingForm({
               value={phone}
               onBlur={() => setTouched(true)}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="+7 706 708 01 81"
+              placeholder="+7 7XX XXX XX XX"
             />
             {showPhoneError ? (
               <p id="booking-phone-error" className="mt-1.5 text-[0.8rem] text-red">

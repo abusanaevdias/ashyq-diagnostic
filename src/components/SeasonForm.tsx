@@ -63,7 +63,7 @@ export default function SeasonForm({ context = 'season' }: SeasonFormProps) {
         </div>
         <div>
           <label className={styles.fieldLabel} htmlFor={`${context}-phone`}>Телефон / WhatsApp *</label>
-          <input id={`${context}-phone`} className={styles.field} type="tel" inputMode="tel" autoComplete="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+7 706 708 01 81" />
+          <input id={`${context}-phone`} className={styles.field} type="tel" inputMode="tel" autoComplete="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+7 7XX XXX XX XX" />
           {touched && !isValidPhone(phone) ? <p className={styles.error}>Проверьте номер: нужно 10–15 цифр.</p> : null}
         </div>
         <div>

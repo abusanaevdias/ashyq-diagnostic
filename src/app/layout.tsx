@@ -12,9 +12,9 @@ export const metadata: Metadata = {
   applicationName: 'ASHYQ Quick Diagnostic',
   keywords: ['IELTS', 'SAT', 'диагностика', 'Ashyq', 'Казахстан', 'подготовка'],
   openGraph: {
-    title: 'ASHYQ Quick Diagnostic — какой балл ты получил бы сегодня?',
+    title: 'ASHYQ Quick Diagnostic — какой балл вы получили бы сегодня?',
     description:
-      '≈20 минут. Твоя текущая точка. Твои сильные стороны. Следующий шаг.',
+      '≈20 минут. Ваша текущая точка. Ваши сильные стороны. Следующий шаг.',
     type: 'website',
     locale: 'ru_RU',
     siteName: SITE_NAME,

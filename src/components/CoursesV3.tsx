@@ -39,7 +39,7 @@ export default function CoursesV3() {
               <MicroLabel>Курсы ASHYQ</MicroLabel>
               <h1 className={styles.title}>Курсы с понятным маршрутом к цели</h1>
               <p className={home.lead}>IELTS и SAT онлайн и в Астане. Каждый курс начинается с диагностики, дальше — план, практика и прогресс, который видно в цифрах.</p>
-              <p className={styles.script}>выбери свой маршрут</p>
+              <p className={styles.script}>выберите свой маршрут</p>
             </div>
             <div className={styles.collage}>
               <div className={styles.collageMain}><Image src="/brand/hero-students.jpg" alt="Студенты ASHYQ на занятии" fill priority sizes="(max-width: 900px) 84vw, 38vw" /></div>
@@ -82,7 +82,7 @@ export default function CoursesV3() {
                 <p className={styles.bandText}>Пройдите бесплатную диагностику: 12–20 минут, без регистрации. Вы получите предварительную оценку и поймёте, какой курс подходит.</p>
                 <div className={styles.bandActions}><ButtonLink href="/?start=ielts" tone="black">Пройти диагностику</ButtonLink></div>
               </div>
-              <p className={styles.bandNote}>начни здесь</p>
+              <p className={styles.bandNote}>начните здесь</p>
             </div>
           </section>
         </Reveal>

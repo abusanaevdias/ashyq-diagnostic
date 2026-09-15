@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { courseLessons, freeLessons, lessonsWord, type CourseDetail } from '@/data/courses';
-import { ButtonLink, Footer, IconChip, LineIcon, MicroLabel, NavBar } from './ui/CleanUi';
+import { WHATSAPP_NUMBER } from '@/lib/config';
+import { ArrowIcon, ButtonLink, Footer, IconChip, LineIcon, MicroLabel, NavBar } from './ui/CleanUi';
+import ui from './ui/CleanUi.module.css';
 import { Reveal } from './ui/Reveal';
 import home from './HomeV3.module.css';
 import styles from './CourseDetailsV3.module.css';
@@ -10,6 +12,10 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
   const free = freeLessons(course);
   const locked = courseLessons(course).filter((lesson) => !lesson.free);
   const lessonsHref = `/courses/${course.slug}/lessons`;
+  // неподтверждённые условия не показываем стеной «Уточняется» — клиент сразу спрашивает в WhatsApp (CLIENT-POLISH-001)
+  const confirmed = course.facts.filter((fact) => !fact.provisional);
+  const pending = course.facts.filter((fact) => fact.provisional);
+  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Здравствуйте! Хочу узнать стоимость и расписание курса ${course.exam} в ASHYQ.`)}`;
   return (
     <div className={home.page}>
       <NavBar />
@@ -46,21 +52,29 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
             <div className={styles.provisionalPanel}>
               <div className={styles.panelIntro}>
                 <MicroLabel>Условия набора</MicroLabel>
-                <h2 id="course-format-title" className={styles.panelTitle}>Формат курса</h2>
-                <p className={styles.provisionalLabel}>Предварительная информация</p>
-                <p>{course.provisionalNote}</p>
+                <h2 id="course-format-title" className={styles.panelTitle}>Стоимость и расписание</h2>
+                <p>
+                  {pending.length
+                    ? 'Цена, расписание и дата старта зависят от набора и вашей цели. Напишите нам — пришлём актуальные условия.'
+                    : 'Условия ближайшего набора.'}
+                </p>
               </div>
-              <dl className={styles.facts}>
-                {course.facts.map((fact) => (
-                  <div className={styles.fact} key={fact.label}>
-                    <dt>{fact.label}</dt>
-                    <dd>
-                      {fact.value}
-                      {fact.provisional ? <span>Предварительно</span> : null}
-                    </dd>
+              <div className={styles.factsSide}>
+                <dl className={styles.facts}>
+                  {confirmed.map((fact) => (
+                    <div className={styles.fact} key={fact.label}>
+                      <dt>{fact.label}</dt>
+                      <dd>{fact.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                {pending.length ? (
+                  <div className={styles.askActions}>
+                    <a className={ui.buttonRed} href={whatsappHref} target="_blank" rel="noopener noreferrer">Узнать цену в WhatsApp<ArrowIcon /></a>
+                    <ButtonLink href="/contacts" tone="outline">Оставить заявку</ButtonLink>
                   </div>
-                ))}
-              </dl>
+                ) : null}
+              </div>
             </div>
           </section>
         </Reveal>

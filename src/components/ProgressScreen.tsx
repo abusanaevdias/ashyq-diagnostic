@@ -59,10 +59,10 @@ export default function ProgressScreen() {
         {!hasAny || !tab ? (
           /* ---------- пустое состояние ---------- */
           <section className="py-10">
-            <h1 className="serif max-w-[9.4em] text-h1 text-red">Пока пусто</h1>
+            <h1 className="serif max-w-[12em] text-h1">Здесь появится ваш прогресс</h1>
             <p className="mt-5 max-w-md text-[1rem] leading-relaxed text-ink-soft">
-              Заверши диагностику — и здесь появится твоя динамика точки А:
-              график, skill scores «было → стало» и история замеров.
+              Пройдите диагностику — и здесь появится ваша динамика: график,
+              баллы по навыкам «было → стало» и история замеров.
             </p>
             <div className="mt-8 grid max-w-md gap-3 sm:grid-cols-2">
               <Link href="/?start=ielts" className="btn btn-primary" aria-label="Начать диагностику IELTS">
