@@ -45,7 +45,7 @@ async function account(tag: string, role: 'student' | 'teacher' | 'author'): Pro
     const cls = await t.classes.create({ title: 'IELTS 7+', subject: 'IELTS', teacherId: teacher.id });
     assert.equal(cls.teacherId, teacher.id);
     await assert.rejects(s.classes.create({ title: 'Мой класс', subject: 'SAT', teacherId: student.id }), /прав|security/i);
-    await t.lessons.create({ classId: cls.id, title: 'Reading: T/F/NG', body: 'Главное правило', materials: [{ id: 'l1', kind: 'link', title: 'Формат', url: 'https://ielts.org' }] });
+    const lesson = await t.lessons.create({ classId: cls.id, title: 'Reading: T/F/NG', body: 'Главное правило', materials: [{ id: 'l1', kind: 'link', title: 'Формат', url: 'https://ielts.org' }] });
     const task = await t.assignments.create({ classId: cls.id, teacherId: teacher.id, title: 'Эссе Task 2', brief: '250 слов', dueAt: new Date(Date.now() + 86_400_000).toISOString(), maxPoints: 10 });
 
     // 2. До вступления ученик класс не видит; по коду вступает, видит урок и задание
@@ -55,6 +55,12 @@ async function account(tag: string, role: 'student' | 'teacher' | 'author'): Pro
     assert.ok(joined.memberIds.includes(student.id), 'ученик в составе класса');
     assert.equal((await s.lessons.listByClass(cls.id)).length, 1);
     assert.equal((await s.assignments.listByClass(cls.id)).length, 1);
+
+    // 2a. Самооценка урока: upsert заменяет оценку, учитель видит, посторонний не оценивает
+    await s.lessonRatings.rate({ lessonId: lesson.id, studentId: student.id, level: 3 });
+    await s.lessonRatings.rate({ lessonId: lesson.id, studentId: student.id, level: 2 });
+    assert.deepEqual((await t.lessonRatings.listByLessons([lesson.id])).map((r) => r.level), [2]);
+    await assert.rejects(o.lessonRatings.rate({ lessonId: lesson.id, studentId: outsider.id, level: 1 }), /прав|security/i);
 
     // 3. Сдача, повторная сдача до оценки, комментарии учителя и ученика
     await assert.rejects(s.submissions.submit({ assignmentId: task.id, studentId: student.id, content: ' ', attachments: [] }), /Добавьте ответ/);

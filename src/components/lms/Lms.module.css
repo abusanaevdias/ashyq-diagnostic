@@ -714,6 +714,27 @@ textarea.field {
   font-weight: 600;
 }
 
+.rating {
+  margin-top: 16px;
+  gap: 0;
+}
+
+.ratingOption {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.ratingOption input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--ink);
+}
+
 @media (max-width: 600px) {
   .fieldRow {
     grid-template-columns: 1fr;

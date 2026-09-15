@@ -58,7 +58,13 @@ async function main() {
   // Урок: ссылка-материал только http(s) — javascript: в href не попадёт
   const link = (url: string) => [{ id: 'm1', kind: 'link' as const, title: 'x', url }];
   await assert.rejects(repos.lessons.create({ classId: cls.id, title: 'L', body: '', materials: link('javascript:alert(1)') }), /http/);
-  assert.equal((await repos.lessons.create({ classId: cls.id, title: 'L', body: '', materials: link('https://ielts.org') })).materials.length, 1);
+  const lesson = await repos.lessons.create({ classId: cls.id, title: 'L', body: '', materials: link('https://ielts.org') });
+  assert.equal(lesson.materials.length, 1);
+  // Самооценка урока: повторная оценка заменяет прежнюю, уровни только 1–4
+  await repos.lessonRatings.rate({ lessonId: lesson.id, studentId: student.id, level: 3 });
+  await repos.lessonRatings.rate({ lessonId: lesson.id, studentId: student.id, level: 1 });
+  assert.deepEqual((await repos.lessonRatings.listByLessons([lesson.id])).map((r) => r.level), [1]);
+  await assert.rejects(repos.lessonRatings.rate({ lessonId: lesson.id, studentId: student.id, level: 5 as 1 }), /вариант/);
 
   // 5. Сдача после дедлайна разрешена; тред; оценка
   await assert.rejects(repos.submissions.submit({ assignmentId: task.id, studentId: student.id, content: ' ', attachments: [] }), /Добавьте ответ/);

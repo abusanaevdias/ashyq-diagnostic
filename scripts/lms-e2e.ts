@@ -155,6 +155,12 @@ async function flow(browser: Browser, label: string, viewport: { width: number; 
   check(`${label} a: ученик видит новое задание`, await shown(taskLink));
   await shot(s, 'class', label);
 
+  // f) ученик оценивает понятность урока → учитель видит распределение (LESSON-RATING-001)
+  await s.getByRole('radio', { name: 'Скорее всего ошибусь' }).first().check();
+  await sync(s, t);
+  await t.goto(teacherClassUrl, { waitUntil: 'load' });
+  check(`${label} f: учитель видит самооценку урока`, await shown(t.getByText('Скорее всего ошибусь: 1').first()));
+
   // b) сдача текст + файл → учитель оценивает и комментирует → ученик видит, aria-live объявляет
   await clickTo(s, taskLink, /\/assignments\/[^/?]+$/);
   await s.locator('input[type="file"]').setInputFiles({ name: 'monologue.txt', mimeType: 'text/plain', buffer: Buffer.from('Part 2 notes') });
