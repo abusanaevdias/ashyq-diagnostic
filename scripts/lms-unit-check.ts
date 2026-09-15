@@ -115,7 +115,14 @@ async function main() {
   assert.deepEqual(await noRatingsTable.lessonRatings.listByLessons(['l1']), []);
   await assert.rejects(noRatingsTable.lessonRatings.rate({ lessonId: 'l1', studentId: 's1', level: 2 }), /миграцию/);
 
-  console.log('PASS lms unit: permissions matrix, auth, repos, grading, blog publish, file limits, memory mode, non-uuid profiles, missing ratings table');
+  // 10. Ошибка без поля message (тело ответа шлюза/Auth): понятный текст, а не TypeError из humanize (ERROR-SHAPE-FIX-001)
+  const bare = (error: object) => createSupabaseRepos(() => ({ from: () => ({ select: () => ({ in: async () => ({ data: null, error }) }) }) }) as never);
+  const readable = (pattern: RegExp) => (err: unknown) => err instanceof Error && !(err instanceof TypeError) && pattern.test(err.message);
+  await assert.rejects(bare({ code: 401, msg: 'Invalid JWT' }).lessonRatings.listByLessons(['l1']), readable(/^Invalid JWT$/));
+  await assert.rejects(bare({ code: 500 }).lessonRatings.listByLessons(['l1']), readable(/код 500/));
+  await assert.rejects(bare({}).lessonRatings.listByLessons(['l1']), readable(/Ошибка сервера/));
+
+  console.log('PASS lms unit: permissions matrix, auth, repos, grading, blog publish, file limits, memory mode, non-uuid profiles, missing ratings table, error without message');
 }
 
 main().catch((error) => {

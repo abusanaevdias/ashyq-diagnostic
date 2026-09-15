@@ -72,15 +72,22 @@ const toPost = (row: PostRow): BlogPost => ({
 });
 const toUser = (row: ProfileRow): User => ({ id: row.id, name: row.display_name, email: '', role: ROLES[row.role] ?? 'student', avatarColor: row.avatar_color });
 
+type DbError = { message?: unknown; msg?: unknown; error_description?: unknown; error?: unknown; code?: unknown };
+
 /** Ошибки БД → сообщения интерфейса (тексты RPC — из миграции). */
-function humanize(error: PostgrestError | { message: string; code?: string }): string {
-  const text = error.message;
+function humanize(error: PostgrestError | DbError): string {
+  // postgrest-js кладёт в error тело неуспешного ответа как есть: у ответа шлюза или Auth
+  // поля message может не быть — текст ищем в известных полях (ERROR-SHAPE-FIX-001)
+  const raw = error as DbError;
+  const found = [raw.message, raw.msg, raw.error_description, raw.error].find((value) => typeof value === 'string' && value.trim());
+  const code = raw.code === undefined || raw.code === null ? '' : String(raw.code);
+  const text = typeof found === 'string' ? found : `Ошибка сервера${code ? ` (код ${code})` : ''}. Обновите страницу или попробуйте позже.`;
   if (text.includes('Class not found')) return 'Класс с таким кодом не найден — проверьте код у учителя.';
   if (text.includes('Only students can join')) return 'Вступить в класс по коду может только ученик.';
   if (text.includes('Submission not found')) return 'Сдача не найдена или её оценивает другой учитель.';
   if (text.includes('outside assignment range')) return 'Оценка вне диапазона задания.';
-  if (error.code === '42501' || /row-level security/i.test(text)) return 'Недостаточно прав для этого действия.';
-  if (error.code === 'PGRST205') return 'Эта функция ещё не включена на сервере: администратору нужно применить миграцию базы данных.';
+  if (code === '42501' || /row-level security/i.test(text)) return 'Недостаточно прав для этого действия.';
+  if (code === 'PGRST205') return 'Эта функция ещё не включена на сервере: администратору нужно применить миграцию базы данных.';
   return text;
 }
 
