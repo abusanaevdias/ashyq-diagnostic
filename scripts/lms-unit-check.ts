@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { getAuth } from '../src/lib/lms/auth';
 import { demoFileStorage, FILE_LIMIT_BYTES } from '../src/lib/lms/files';
-import { can, canEditPost, canManageClass, canSubmit, canUseThread, canViewClass, PERMISSIONS, type Action } from '../src/lib/lms/permissions';
+import { can, canEditPost, canManageClass, canSubmit, canUseThread, canViewClass, isAshyqStudent, PERMISSIONS, type Action } from '../src/lib/lms/permissions';
 import { getRepos } from '../src/lib/lms/repos';
 import { applyDemoSeed, DEMO_EMAILS, DEMO_PASSWORD } from '../src/lib/lms/seed';
 import { createSupabaseRepos } from '../src/lib/lms/supabase-repos';
@@ -52,6 +52,9 @@ async function main() {
   const [cls] = await repos.classes.listForUser(student);
   assert(cls && canViewClass(student, cls) && canSubmit(student, cls));
   assert(canManageClass(teacher, cls) && !canManageClass(student, cls) && !canViewClass(author, cls));
+  // Основные уроки курса: ученик класса — да, зарегистрированный без класса — нет, сотрудники — да
+  assert(isAshyqStudent(student, [cls]) && !isAshyqStudent({ ...student, id: 'guest' }, [cls]) && !isAshyqStudent(student, []));
+  assert(isAshyqStudent(teacher, []) && isAshyqStudent(author, []));
 
   // 4. Учитель создаёт задание → студент видит его в классе
   const task = await repos.assignments.create({ classId: cls.id, teacherId: teacher.id, title: 'Unit task', brief: 'b', dueAt: '2026-01-01T10:00:00Z', maxPoints: 5 });

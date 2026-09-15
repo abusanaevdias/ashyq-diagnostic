@@ -92,6 +92,15 @@ export function canSubmit(user: User | null, cls: ClassRoom): boolean {
   return Boolean(user) && can(user!.role, 'submission.create') && cls.memberIds.includes(user!.id);
 }
 
+/**
+ * Ученик ASHYQ = состоит хотя бы в одном классе: код класса менеджер выдаёт после
+ * записи на курс. Регистрация открыта всем — закрыты основные уроки (COURSE-LESSONS-001).
+ * Сотрудники (учитель, автор) доступ имеют.
+ */
+export function isAshyqStudent(user: User, classes: ClassRoom[]): boolean {
+  return user.role !== 'student' || classes.some((cls) => cls.memberIds.includes(user.id));
+}
+
 export function canReviewSubmission(user: User | null, cls: ClassRoom): boolean {
   return Boolean(user) && can(user!.role, 'submission.review') && cls.teacherId === user!.id;
 }
