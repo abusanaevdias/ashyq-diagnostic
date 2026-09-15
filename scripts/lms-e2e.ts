@@ -153,6 +153,17 @@ async function flow(browser: Browser, label: string, viewport: { width: number; 
   check(`${label} a: задание появилось в классе учителя`, await shown(t.getByText(task)));
   await shot(t, 'teacher-class', label);
 
+  // h) учитель открывает созданный урок и исправляет опечатку; задание тоже открывается на правку (LESSON-EDIT-001)
+  await clickTo(t, t.getByRole('link', { name: /^Открыть и изменить урок/ }).first(), /\/teacher\/lessons\/[^/?]+$/);
+  const lessonTitle = t.getByLabel('Тема урока');
+  const fixedTitle = `${await lessonTitle.inputValue()} (исправлено)`;
+  await lessonTitle.fill(fixedTitle);
+  await clickTo(t, t.getByRole('button', { name: 'Сохранить изменения' }), teacherClassUrl);
+  check(`${label} h: исправленный урок виден в классе`, await shown(t.getByText(fixedTitle)));
+  await clickTo(t, t.getByRole('link', { name: `Изменить задание «${task}»` }), /\/teacher\/assignments\/[^/?]+$/);
+  check(`${label} h: форма задания открылась с текущими данными`, (await t.getByLabel('Название задания').inputValue()) === task);
+  await clickTo(t, t.getByRole('link', { name: 'Отмена' }), teacherClassUrl);
+
   await s.goto(`${BASE}/login`, { waitUntil: 'load' });
   await sync(t, s);
   await demoLogin(s, 'ученик');

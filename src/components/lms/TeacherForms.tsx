@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
 import { track } from '@/lib/analytics';
 import { isHttpUrl } from '@/lib/lms/format';
@@ -9,7 +9,7 @@ import { useLmsData } from '@/lib/lms/hooks';
 import { canManageClass, ROUTE_ROLES } from '@/lib/lms/permissions';
 import { getRepos } from '@/lib/lms/repos';
 import { newId } from '@/lib/lms/store';
-import type { ClassRoom, MaterialRef, User } from '@/lib/lms/types';
+import type { Assignment, ClassRoom, Lesson, MaterialRef, User } from '@/lib/lms/types';
 import ui from '@/components/ui/CleanUi.module.css';
 import FilePicker from './FilePicker';
 import RequireRole from './RequireRole';
@@ -35,6 +35,37 @@ function ClassGate({ classId, user, render }: { classId: string; user: User; ren
   return <>{render(data, user)}</>;
 }
 
+type ItemProps<T> = {
+  load: (id: string) => Promise<T | null>;
+  cacheKey: string;
+  missing: string;
+  children: (item: T, cls: ClassRoom, user: User) => ReactNode;
+};
+
+/** Правка созданного урока или задания: только в классе, который ведёт этот учитель (LESSON-EDIT-001). */
+function ManagedItem<T extends { classId: string }>({ load, cacheKey, missing, children }: ItemProps<T>) {
+  const { id } = useParams<{ id: string }>();
+  return (
+    <RequireRole roles={ROUTE_ROLES.teacher}>
+      {(user) => <ItemGate id={id} user={user} load={load} cacheKey={cacheKey} missing={missing}>{children}</ItemGate>}
+    </RequireRole>
+  );
+}
+
+function ItemGate<T extends { classId: string }>({ id, user, load, cacheKey, missing, children }: ItemProps<T> & { id: string; user: User }) {
+  const { data, loading, error } = useLmsData(async () => {
+    const item = await load(id);
+    const cls = item ? await getRepos().classes.get(item.classId) : null;
+    return item && cls ? { item, cls } : null;
+  }, `${cacheKey}:${id}`);
+  if (loading) return <Loading />;
+  if (error) return <Unavailable title="Не удалось загрузить" text={error} href="/teacher" label="К классам" />;
+  if (!data || !canManageClass(user, data.cls)) {
+    return <Unavailable title={missing} text="Не найдено или относится к классу другого учителя." href="/teacher" label="К классам" />;
+  }
+  return <>{children(data.item, data.cls, user)}</>;
+}
+
 function FormHead({ cls, title }: { cls: ClassRoom; title: string }) {
   return (
     <>
@@ -52,18 +83,35 @@ export function NewAssignment() {
   return <ManagedClass>{(cls, user) => <AssignmentForm cls={cls} user={user} />}</ManagedClass>;
 }
 
+export function EditLesson() {
+  return (
+    <ManagedItem load={(id) => getRepos().lessons.get(id)} cacheKey="lesson-edit" missing="Урок недоступен">
+      {(lesson, cls) => <LessonForm cls={cls} initial={lesson} />}
+    </ManagedItem>
+  );
+}
+
+export function EditAssignment() {
+  return (
+    <ManagedItem load={(id) => getRepos().assignments.get(id)} cacheKey="assignment-edit" missing="Задание недоступно">
+      {(assignment, cls, user) => <AssignmentForm cls={cls} user={user} initial={assignment} />}
+    </ManagedItem>
+  );
+}
+
 /* ---------- урок: тема, текст markdown-lite, материалы (ссылка / заметка / файл) ---------- */
 
-function LessonForm({ cls }: { cls: ClassRoom }) {
+function LessonForm({ cls, initial }: { cls: ClassRoom; initial?: Lesson }) {
   const router = useRouter();
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [materials, setMaterials] = useState<MaterialRef[]>([]);
+  const [title, setTitle] = useState(initial?.title ?? '');
+  const [body, setBody] = useState(initial?.body ?? '');
+  const [materials, setMaterials] = useState<MaterialRef[]>(initial?.materials ?? []);
   const [kind, setKind] = useState<'link' | 'text'>('link');
   const [materialTitle, setMaterialTitle] = useState('');
   const [materialValue, setMaterialValue] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const classHref = `/teacher/classes/${cls.id}`;
 
   const files = materials.filter((m) => m.kind === 'file');
   const others = materials.filter((m) => m.kind !== 'file');
@@ -79,22 +127,32 @@ function LessonForm({ cls }: { cls: ClassRoom }) {
     setMaterialValue('');
   };
 
-  const save = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const run = async (action: () => Promise<unknown>, fallback: string) => {
     setBusy(true);
     setError('');
     try {
-      await getRepos().lessons.create({ classId: cls.id, title, body, materials });
-      router.push(`/teacher/classes/${cls.id}`);
+      await action();
+      router.push(classHref);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Урок не сохранён');
+      setError(err instanceof Error ? err.message : fallback);
       setBusy(false);
     }
   };
 
+  const save = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const repos = getRepos();
+    void run(() => (initial ? repos.lessons.update(initial.id, { title, body, materials }) : repos.lessons.create({ classId: cls.id, title, body, materials })), 'Урок не сохранён');
+  };
+
+  const remove = () => {
+    if (!initial || !window.confirm(`Удалить урок «${initial.title}»? Ученики его больше не увидят.`)) return;
+    void run(() => getRepos().lessons.remove(initial.id), 'Урок не удалён');
+  };
+
   return (
     <>
-      <FormHead cls={cls} title="Новый урок" />
+      <FormHead cls={cls} title={initial ? 'Изменить урок' : 'Новый урок'} />
       <form className={`${styles.card} ${styles.section} ${styles.form}`} onSubmit={save} aria-busy={busy}>
         <label className={styles.fieldLabel}>
           Тема урока
@@ -149,8 +207,9 @@ function LessonForm({ cls }: { cls: ClassRoom }) {
 
         {error ? <p className={styles.error} role="alert">{error}</p> : null}
         <div className={styles.actions}>
-          <button type="submit" className={ui.buttonBlack} disabled={busy}>Опубликовать урок</button>
-          <Link href={`/teacher/classes/${cls.id}`} className={ui.buttonOutline}>Отмена</Link>
+          <button type="submit" className={ui.buttonBlack} disabled={busy}>{initial ? 'Сохранить изменения' : 'Опубликовать урок'}</button>
+          <Link href={classHref} className={ui.buttonOutline}>Отмена</Link>
+          {initial ? <button type="button" className={styles.textButton} onClick={remove} disabled={busy}>Удалить урок</button> : null}
         </div>
       </form>
     </>
@@ -159,23 +218,35 @@ function LessonForm({ cls }: { cls: ClassRoom }) {
 
 /* ---------- задание: название, условие, дедлайн, максимум баллов ---------- */
 
-function AssignmentForm({ cls, user }: { cls: ClassRoom; user: User }) {
+/** ISO → значение datetime-local в часовом поясе браузера. */
+function toLocalInput(iso: string): string {
+  const date = new Date(iso);
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
+}
+
+function AssignmentForm({ cls, user, initial }: { cls: ClassRoom; user: User; initial?: Assignment }) {
   const router = useRouter();
-  const [title, setTitle] = useState('');
-  const [brief, setBrief] = useState('');
-  const [dueAt, setDueAt] = useState('');
-  const [maxPoints, setMaxPoints] = useState('10');
+  const [title, setTitle] = useState(initial?.title ?? '');
+  const [brief, setBrief] = useState(initial?.brief ?? '');
+  const [dueAt, setDueAt] = useState(initial ? toLocalInput(initial.dueAt) : '');
+  const [maxPoints, setMaxPoints] = useState(String(initial?.maxPoints ?? 10));
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const classHref = `/teacher/classes/${cls.id}`;
 
   const save = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setBusy(true);
     setError('');
+    const input = { title, brief, dueAt, maxPoints: Number(maxPoints) };
     try {
-      const assignment = await getRepos().assignments.create({ classId: cls.id, teacherId: user.id, title, brief, dueAt, maxPoints: Number(maxPoints) });
-      track('lms_assignment_created', { maxPoints: assignment.maxPoints });
-      router.push(`/teacher/classes/${cls.id}`);
+      if (initial) {
+        await getRepos().assignments.update(initial.id, input);
+      } else {
+        const assignment = await getRepos().assignments.create({ classId: cls.id, teacherId: user.id, ...input });
+        track('lms_assignment_created', { maxPoints: assignment.maxPoints });
+      }
+      router.push(classHref);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Задание не сохранено');
       setBusy(false);
@@ -184,7 +255,7 @@ function AssignmentForm({ cls, user }: { cls: ClassRoom; user: User }) {
 
   return (
     <>
-      <FormHead cls={cls} title="Новое задание" />
+      <FormHead cls={cls} title={initial ? 'Изменить задание' : 'Новое задание'} />
       <form className={`${styles.card} ${styles.section} ${styles.form}`} onSubmit={save} aria-busy={busy}>
         <label className={styles.fieldLabel}>
           Название задания
@@ -206,8 +277,8 @@ function AssignmentForm({ cls, user }: { cls: ClassRoom; user: User }) {
         </div>
         {error ? <p className={styles.error} role="alert">{error}</p> : null}
         <div className={styles.actions}>
-          <button type="submit" className={ui.buttonBlack} disabled={busy}>Выдать задание</button>
-          <Link href={`/teacher/classes/${cls.id}`} className={ui.buttonOutline}>Отмена</Link>
+          <button type="submit" className={ui.buttonBlack} disabled={busy}>{initial ? 'Сохранить изменения' : 'Выдать задание'}</button>
+          <Link href={classHref} className={ui.buttonOutline}>Отмена</Link>
         </div>
       </form>
     </>

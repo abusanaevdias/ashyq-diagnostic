@@ -16,7 +16,11 @@ export interface ClassRepo {
 
 export interface LessonRepo {
   listByClass(classId: string): Promise<Lesson[]>;
+  get(id: string): Promise<Lesson | null>;
   create(input: { classId: string; title: string; body: string; materials: MaterialRef[] }): Promise<Lesson>;
+  /** Исправить опечатку: дата публикации не меняется (LESSON-EDIT-001). */
+  update(id: string, input: { title: string; body: string; materials: MaterialRef[] }): Promise<Lesson>;
+  remove(id: string): Promise<void>;
 }
 
 /** Одна оценка на пару урок × ученик; повторная заменяет прежнюю. В Supabase ученик читает свои, учитель — оценки своего класса. */
@@ -29,6 +33,8 @@ export interface AssignmentRepo {
   listByClass(classId: string): Promise<Assignment[]>;
   get(id: string): Promise<Assignment | null>;
   create(input: { classId: string; teacherId: string; title: string; brief: string; dueAt: string; maxPoints: number }): Promise<Assignment>;
+  /** Максимум баллов нельзя опустить ниже уже выставленной оценки. */
+  update(id: string, input: { title: string; brief: string; dueAt: string; maxPoints: number }): Promise<Assignment>;
 }
 
 export interface SubmissionRepo {

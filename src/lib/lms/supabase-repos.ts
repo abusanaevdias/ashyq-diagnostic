@@ -117,6 +117,15 @@ function changed<T>(value: T): T {
 
 const nowIso = () => new Date().toISOString();
 
+/** Поля задания проверяются одинаково при создании и правке. */
+function assignmentFields(input: { title: string; brief: string; dueAt: string; maxPoints: number }) {
+  if (Number.isNaN(Date.parse(input.dueAt))) throw new Error('Укажите дедлайн');
+  if (!Number.isInteger(input.maxPoints) || input.maxPoints < 1 || input.maxPoints > 1000) throw new Error('Максимум баллов — целое число от 1 до 1000');
+  return { title: required(input.title, 'Укажите название задания'), brief: input.brief.trim(), due_at: new Date(input.dueAt).toISOString(), max_points: input.maxPoints };
+}
+
+const NOT_YOURS = 'Не найдено или относится к классу другого учителя.';
+
 export function createSupabaseRepos(client: () => SupabaseClient): Repos {
   const db = () => client();
 
@@ -275,6 +284,25 @@ export function createSupabaseRepos(client: () => SupabaseClient): Repos {
         const row = data(await db().from('lessons').insert({ class_id: classId, title: required(title, 'Укажите тему урока'), body: body.trim(), materials }).select('*').single());
         return changed(toLesson(row as LessonRow));
       },
+      async get(id) {
+        if (!UUID.test(id)) return null;
+        const { data: row, error } = await db().from('lessons').select('*').eq('id', id).maybeSingle();
+        if (error) throw new Error(humanize(error));
+        return row ? toLesson(row as LessonRow) : null;
+      },
+      async update(id, { title, body, materials }) {
+        if (materials.some((m) => m.kind === 'link' && !isHttpUrl(m.url ?? ''))) throw new Error('Ссылка должна начинаться с http:// или https://');
+        // RLS lessons_manage: чужой урок не обновится — maybeSingle вернёт null
+        const { data: row, error } = await db().from('lessons').update({ title: required(title, 'Укажите тему урока'), body: body.trim(), materials }).eq('id', id).select('*').maybeSingle();
+        if (error) throw new Error(humanize(error));
+        if (!row) throw new Error(NOT_YOURS);
+        return changed(toLesson(row as LessonRow));
+      },
+      async remove(id) {
+        const removed = list(await db().from('lessons').delete().eq('id', id).select('id'));
+        if (!removed.length) throw new Error(NOT_YOURS);
+        changed(null);
+      },
     },
     lessonRatings: {
       async listByLessons(lessonIds) {
@@ -305,13 +333,22 @@ export function createSupabaseRepos(client: () => SupabaseClient): Repos {
         if (error) throw new Error(humanize(error));
         return row ? toAssignment(row as AssignmentRow) : null;
       },
-      async create({ classId, teacherId, title, brief, dueAt, maxPoints }) {
-        if (Number.isNaN(Date.parse(dueAt))) throw new Error('Укажите дедлайн');
-        if (!Number.isInteger(maxPoints) || maxPoints < 1 || maxPoints > 1000) throw new Error('Максимум баллов — целое число от 1 до 1000');
+      async update(id, input) {
+        const fields = assignmentFields(input);
+        const graded = list(await db().from('submissions').select('grade').eq('assignment_id', id).not('grade', 'is', null)) as Array<{ grade: number }>;
+        const top = Math.max(0, ...graded.map((s) => s.grade));
+        if (fields.max_points < top) throw new Error(`Уже выставлена оценка ${top} — максимум баллов не может быть меньше`);
+        // RLS assignments_manage: чужое задание не обновится — maybeSingle вернёт null
+        const { data: row, error } = await db().from('assignments').update(fields).eq('id', id).select('*').maybeSingle();
+        if (error) throw new Error(humanize(error));
+        if (!row) throw new Error(NOT_YOURS);
+        return changed(toAssignment(row as AssignmentRow));
+      },
+      async create({ classId, teacherId, ...input }) {
         const row = data(
           await db()
             .from('assignments')
-            .insert({ class_id: classId, teacher_id: teacherId, title: required(title, 'Укажите название задания'), brief: brief.trim(), due_at: new Date(dueAt).toISOString(), max_points: maxPoints })
+            .insert({ class_id: classId, teacher_id: teacherId, ...assignmentFields(input) })
             .select('*')
             .single(),
         );

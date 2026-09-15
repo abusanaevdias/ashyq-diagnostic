@@ -34,6 +34,13 @@ function required(value: string, message: string): string {
   return clean;
 }
 
+/** Поля задания проверяются одинаково при создании и правке. */
+function assignmentFields(input: { title: string; brief: string; dueAt: string; maxPoints: number }) {
+  if (Number.isNaN(Date.parse(input.dueAt))) throw new Error('Укажите дедлайн');
+  if (!Number.isInteger(input.maxPoints) || input.maxPoints < 1 || input.maxPoints > 1000) throw new Error('Максимум баллов — целое число от 1 до 1000');
+  return { title: required(input.title, 'Укажите название задания'), brief: input.brief.trim(), dueAt: new Date(input.dueAt).toISOString(), maxPoints: input.maxPoints };
+}
+
 const classes = collection<ClassRoom>('classes');
 const lessons = collection<Lesson>('lessons');
 const assignments = collection<Assignment>('assignments');
@@ -140,6 +147,20 @@ export const localDemoRepos: Repos = {
         publishedAt: nowIso(),
       });
     },
+    async get(id) {
+      return lessons.all().find((l) => l.id === id) ?? null;
+    },
+    async update(id, { title, body, materials }) {
+      // TODO(supabase): серверно проверять, что урок правит учитель этого класса (RLS lessons_manage).
+      const found = lessons.all().find((l) => l.id === id);
+      if (!found) throw new Error('Урок не найден');
+      if (materials.some((m) => m.kind === 'link' && !isHttpUrl(m.url ?? ''))) throw new Error('Ссылка должна начинаться с http:// или https://');
+      return lessons.upsert({ ...found, title: required(title, 'Укажите тему урока'), body: body.trim(), materials });
+    },
+    async remove(id) {
+      writeJson('lessonRatings', readJson<LessonRating[]>('lessonRatings', []).filter((r) => r.lessonId !== id));
+      lessons.put(lessons.all().filter((l) => l.id !== id));
+    },
   },
 
   lessonRatings: {
@@ -164,19 +185,17 @@ export const localDemoRepos: Repos = {
     async get(id) {
       return assignments.all().find((a) => a.id === id) ?? null;
     },
-    async create({ classId, teacherId, title, brief, dueAt, maxPoints }) {
-      if (Number.isNaN(Date.parse(dueAt))) throw new Error('Укажите дедлайн');
-      if (!Number.isInteger(maxPoints) || maxPoints < 1 || maxPoints > 1000) throw new Error('Максимум баллов — целое число от 1 до 1000');
-      return assignments.upsert({
-        id: newId(),
-        classId,
-        teacherId,
-        title: required(title, 'Укажите название задания'),
-        brief: brief.trim(),
-        dueAt: new Date(dueAt).toISOString(),
-        maxPoints,
-        createdAt: nowIso(),
-      });
+    async create({ classId, teacherId, ...input }) {
+      return assignments.upsert({ id: newId(), classId, teacherId, ...assignmentFields(input), createdAt: nowIso() });
+    },
+    async update(id, input) {
+      // TODO(supabase): серверно проверять, что задание правит учитель этого класса (RLS assignments_manage).
+      const found = assignments.all().find((a) => a.id === id);
+      if (!found) throw new Error('Задание не найдено');
+      const fields = assignmentFields(input);
+      const top = Math.max(0, ...submissions.all().filter((s) => s.assignmentId === id).map((s) => s.grade ?? 0));
+      if (fields.maxPoints < top) throw new Error(`Уже выставлена оценка ${top} — максимум баллов не может быть меньше`);
+      return assignments.upsert({ ...found, ...fields });
     },
   },
 
