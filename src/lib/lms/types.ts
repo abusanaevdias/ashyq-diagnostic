@@ -17,6 +17,8 @@ export interface User {
   email: string;
   role: Role;
   avatarColor: AvatarColor;
+  /** admin/manager в Supabase: ссылка на /crm в кабинете. Доступ к данным всё равно проверяет сервер. */
+  crm?: boolean;
 }
 
 export interface Session {

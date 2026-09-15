@@ -31,6 +31,14 @@ const created: string[] = [];
     await assert.rejects(adult.signIn(email('adult'), 'wrong-password'), /Неверный email или пароль/);
     assert.equal((await adult.signIn(email('adult'), 'password-123')).user.email, email('adult'));
 
+    // 2a. Ссылка на CRM в кабинете — только admin/manager (CABINET-CRM-LINK-001)
+    assert.equal(adult.getSession()?.user.crm, false, 'у ученика нет ссылки на CRM');
+    if (SERVICE) {
+      await createClient(URL, SERVICE, { auth: { persistSession: false } }).from('profiles').update({ role: 'admin' }).eq('id', session.user.id);
+      await adult.signOut();
+      assert.equal((await adult.signIn(email('adult'), 'password-123')).user.crm, true, 'админ видит ссылку на CRM');
+    }
+
     // 3. Короткий пароль и повторный email отсекаются
     await assert.rejects(fresh().signUp('Коротко', email('short'), '1234567'), /минимум 8/);
     await assert.rejects(fresh().signUp('Повтор', email('adult'), 'password-123'), /уже зарегистрирован|Неверный|существ/i);

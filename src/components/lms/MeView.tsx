@@ -36,6 +36,12 @@ export default function MeView() {
               <h2 className={styles.cardTitle}>Блог</h2>
               <p className={styles.muted}>Опубликованные статьи ASHYQ.</p>
             </Link>
+            {user.crm ? (
+              <Link href="/crm" className={`${styles.card} ${styles.cardLink}`}>
+                <h2 className={styles.cardTitle}>CRM</h2>
+                <p className={styles.muted}>Заявки, этапы и заметки. Вход — «Войти аккаунтом ASHYQ».</p>
+              </Link>
+            ) : null}
           </div>
 
           <div className={styles.actions}>
