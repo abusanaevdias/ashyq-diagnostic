@@ -108,7 +108,14 @@ async function main() {
   assert.equal(await offline.users.get('ashyq-team'), null);
   assert.deepEqual(await offline.users.listByIds(['ashyq-team']), []);
 
-  console.log('PASS lms unit: permissions matrix, auth, repos, grading, blog publish, file limits, memory mode, non-uuid profiles');
+  // 9. Supabase без таблицы lesson_ratings (миграция не применена): класс грузится без оценок, оценка — понятная ошибка (CLASS-LOAD-FIX-001)
+  const missing = { data: null, error: { code: 'PGRST205', message: "Could not find the table 'public.lesson_ratings' in the schema cache" } };
+  const query = { select: () => query, in: async () => missing, upsert: () => query, single: async () => missing };
+  const noRatingsTable = createSupabaseRepos(() => ({ from: () => query }) as never);
+  assert.deepEqual(await noRatingsTable.lessonRatings.listByLessons(['l1']), []);
+  await assert.rejects(noRatingsTable.lessonRatings.rate({ lessonId: 'l1', studentId: 's1', level: 2 }), /миграцию/);
+
+  console.log('PASS lms unit: permissions matrix, auth, repos, grading, blog publish, file limits, memory mode, non-uuid profiles, missing ratings table');
 }
 
 main().catch((error) => {

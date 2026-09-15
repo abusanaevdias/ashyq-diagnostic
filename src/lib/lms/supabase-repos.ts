@@ -80,6 +80,7 @@ function humanize(error: PostgrestError | { message: string; code?: string }): s
   if (text.includes('Submission not found')) return 'Сдача не найдена или её оценивает другой учитель.';
   if (text.includes('outside assignment range')) return 'Оценка вне диапазона задания.';
   if (error.code === '42501' || /row-level security/i.test(text)) return 'Недостаточно прав для этого действия.';
+  if (error.code === 'PGRST205') return 'Эта функция ещё не включена на сервере: администратору нужно применить миграцию базы данных.';
   return text;
 }
 
@@ -271,7 +272,11 @@ export function createSupabaseRepos(client: () => SupabaseClient): Repos {
     lessonRatings: {
       async listByLessons(lessonIds) {
         if (!lessonIds.length) return [];
-        return list(await db().from('lesson_ratings').select('*').in('lesson_id', lessonIds)).map((row) => toLessonRating(row as LessonRatingRow));
+        const result = await db().from('lesson_ratings').select('*').in('lesson_id', lessonIds);
+        // ponytail: пока в базе не применена миграция 20260915000400, таблицы нет (PGRST205) —
+        // класс открывается без оценок, а не падает целиком (CLASS-LOAD-FIX-001)
+        if (result.error?.code === 'PGRST205') return [];
+        return list(result).map((row) => toLessonRating(row as LessonRatingRow));
       },
       async rate({ lessonId, studentId, level }) {
         const row = data(
