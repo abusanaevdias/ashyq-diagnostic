@@ -151,6 +151,7 @@ function ClassManage({ id, user }: { id: string; user: User }) {
                     <DeadlineChip dueAt={a.dueAt} />
                     <span className={styles.chip}>сдали {forAssignment.length} из {students.length}</span>
                   </div>
+                  <Link href={`/teacher/assignments/${a.id}`} className={styles.textButton} aria-label={`Изменить задание «${a.title}»`}>Изменить</Link>
                   <ul className={styles.reviewList} aria-label={`Сдачи: ${a.title}`}>
                     {students.map((student) => {
                       const sub = forAssignment.find((s) => s.studentId === student.id);
@@ -181,6 +182,7 @@ function ClassManage({ id, user }: { id: string; user: User }) {
                 <p className={styles.hint}>{formatDate(lesson.publishedAt)}</p>
                 <h3 className={`${styles.cardTitle} ${styles.spaced}`}>{lesson.title}</h3>
                 <p className={styles.muted}>Материалов: {lesson.materials.length}</p>
+                <Link href={`/teacher/lessons/${lesson.id}`} className={styles.textButton} aria-label={`Открыть и изменить урок «${lesson.title}»`}>Открыть и изменить</Link>
                 <LessonRatingSummary
                   ratings={ratings.filter((r) => r.lessonId === lesson.id && cls.memberIds.includes(r.studentId))}
                   students={students.length}

@@ -69,6 +69,15 @@ async function main() {
   await repos.lessonRatings.rate({ lessonId: lesson.id, studentId: student.id, level: 1 });
   assert.deepEqual((await repos.lessonRatings.listByLessons([lesson.id])).map((r) => r.level), [1]);
   await assert.rejects(repos.lessonRatings.rate({ lessonId: lesson.id, studentId: student.id, level: 5 as 1 }), /вариант/);
+  // Созданный урок можно открыть, исправить (дата публикации не меняется) и удалить (LESSON-EDIT-001)
+  assert.equal((await repos.lessons.get(lesson.id))?.title, 'L');
+  const fixed = await repos.lessons.update(lesson.id, { title: 'L исправлен', body: 'текст', materials: [] });
+  assert.equal(fixed.title, 'L исправлен');
+  assert.equal(fixed.publishedAt, lesson.publishedAt);
+  await assert.rejects(repos.lessons.update(lesson.id, { title: ' ', body: '', materials: [] }), /тему урока/);
+  await repos.lessons.remove(lesson.id);
+  assert.equal(await repos.lessons.get(lesson.id), null);
+  assert.deepEqual(await repos.lessonRatings.listByLessons([lesson.id]), [], 'оценки удалённого урока тоже удалены');
 
   // 5. Сдача после дедлайна разрешена; тред; оценка
   await assert.rejects(repos.submissions.submit({ assignmentId: task.id, studentId: student.id, content: ' ', attachments: [] }), /Добавьте ответ/);
@@ -81,6 +90,12 @@ async function main() {
   assert.equal(graded.status, 'graded');
   assert.equal(sub.status, 'submitted', 'мутации не меняют старые объекты');
   await assert.rejects(repos.submissions.submit({ assignmentId: task.id, studentId: student.id, content: 'again', attachments: [] }), /уже оценена/);
+  // Задание можно исправить, но максимум баллов — не ниже выставленной оценки 4 (LESSON-EDIT-001)
+  await assert.rejects(repos.assignments.update(task.id, { title: 'Unit task', brief: 'b', dueAt: task.dueAt, maxPoints: 3 }), /оценка 4/);
+  const edited = await repos.assignments.update(task.id, { title: 'Unit task 2', brief: 'b2', dueAt: task.dueAt, maxPoints: 10 });
+  assert.equal(edited.title, 'Unit task 2');
+  assert.equal(edited.maxPoints, 10);
+  assert.equal(edited.createdAt, task.createdAt);
 
   // 6. Блог: черновик не публичен, публикация, снятие
   const published = await repos.blog.listPublished();
