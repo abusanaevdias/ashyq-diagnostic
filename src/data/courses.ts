@@ -23,13 +23,24 @@ export type CourseDetail = {
   steps: Array<{ title: string; description: string }>;
   included: string[];
   faq: Array<{ question: string; answer: string }>;
-  /** Открыты всем прямо на странице курса. */
-  introLessons: Array<{ title: string; minutes: number; points: string[] }>;
-  /** Только анонс: сами уроки учитель публикует в классе, куда пускает код после записи (RLS). */
-  mainLessons: Array<{ title: string; summary: string }>;
+  /** Программа уроков /courses/[slug]/lessons: модули по порядку прохождения. */
+  modules: Array<{ title: string; lessons: CourseLesson[] }>;
   diagnosticHref: string;
   diagnosticAriaLabel: string;
 };
+
+export type CourseLesson = {
+  slug: string;
+  title: string;
+  summary: string;
+  /**
+   * Только у бесплатных уроков: они открыты всем на /courses/[slug]/lessons/[lesson].
+   * У остальных здесь лишь анонс — сами уроки учитель публикует в классе, куда пускает код после записи (RLS).
+   */
+  free?: { minutes: number; intro: string; points: string[]; practice: string };
+};
+
+export type FreeLesson = CourseLesson & { free: NonNullable<CourseLesson['free']> };
 
 export const COURSES: Array<{ title: string; text: string; meta: string; href: string; photo: string; alt: string; tags: Array<Exclude<CourseFilter, 'all'>>; badge?: string }> = [
   { title: 'Подготовка к IELTS', text: 'Reading, Listening, Writing и Speaking по плану из диагностики. Пробные тесты, домашние задания и Speaking Battles.', meta: '4 секции · онлайн и в Астане', href: '/courses/ielts', photo: '/brand/lesson-grid.jpg', alt: 'Онлайн-занятие ASHYQ по IELTS', tags: ['ielts'] },
@@ -82,34 +93,75 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
       { question: 'Входит ли Speaking и Writing в диагностику?', answer: 'Нет. Автоматическая диагностика проверяет Reading и Listening. Writing и Speaking требуют отдельной проверки с тренером.' },
       { question: 'Где проходят занятия?', answer: 'Формат курса — онлайн и в Астане. Конкретное расписание пока уточняется.' },
     ],
-    introLessons: [
+    modules: [
       {
-        title: 'Как устроен IELTS',
-        minutes: 10,
-        points: [
-          'Четыре секции: Listening (около 30 минут, 40 вопросов), Reading (60 минут, 40 вопросов), Writing (60 минут, 2 задания) и Speaking (11–14 минут, 3 части).',
-          'Academic сдают для поступления в вузы, General Training — для работы и переезда. Listening и Speaking в них одинаковые.',
-          'Каждая секция оценивается по шкале от 0 до 9 с шагом 0.5, итоговый балл — среднее по четырём секциям.',
-          'Speaking проходит отдельно, иногда в другой день.',
+        title: 'Введение',
+        lessons: [
+          {
+            slug: 'how-ielts-works',
+            title: 'Как устроен IELTS',
+            summary: 'Секции, время, шкала баллов и чем Academic отличается от General Training.',
+            free: {
+              minutes: 10,
+              intro: 'IELTS проверяет английский по четырём навыкам. Прежде чем готовиться, важно понять формат: от него зависит, как распределять время и на чём набирать баллы.',
+              points: [
+                'Четыре секции: Listening (около 30 минут, 40 вопросов), Reading (60 минут, 40 вопросов), Writing (60 минут, 2 задания) и Speaking (11–14 минут, 3 части).',
+                'Academic сдают для поступления в вузы, General Training — для работы и переезда. Listening и Speaking в них одинаковые.',
+                'Каждая секция оценивается по шкале от 0 до 9 с шагом 0.5, итоговый балл — среднее по четырём секциям.',
+                'Speaking проходит отдельно, иногда в другой день.',
+              ],
+              practice: 'Выясните, какой вариант экзамена нужен вам — Academic или General Training, — и какой минимальный балл требует ваш вуз или программа. От этой цифры и строится план подготовки.',
+            },
+          },
         ],
       },
       {
-        title: 'Reading: как не терять время',
-        minutes: 12,
-        points: [
-          'На 3 текста и 40 вопросов — 60 минут, отдельного времени на перенос ответов нет.',
-          'Сначала прочитайте вопросы, затем ищите ответ по ключевым словам и их синонимам.',
-          'True / False / Not Given: Not Given — когда текст не подтверждает и не опровергает утверждение.',
-          'Держите темп около 20 минут на текст: трудный вопрос пропустите и вернитесь к нему в конце.',
+        title: 'Reading',
+        lessons: [
+          {
+            slug: 'reading-time',
+            title: 'Reading: как не терять время',
+            summary: 'Как уложить 3 текста и 40 вопросов в 60 минут.',
+            free: {
+              minutes: 12,
+              intro: 'Главная трудность Reading — не сложность текстов, а время. Большинство теряет баллы на последних вопросах, до которых просто не доходит.',
+              points: [
+                'На 3 текста и 40 вопросов — 60 минут, отдельного времени на перенос ответов нет.',
+                'Сначала прочитайте вопросы, затем ищите ответ по ключевым словам и их синонимам.',
+                'True / False / Not Given: Not Given — когда текст не подтверждает и не опровергает утверждение.',
+                'Держите темп около 20 минут на текст: трудный вопрос пропустите и вернитесь к нему в конце.',
+              ],
+              practice: 'Возьмите один текст Reading, засеките 20 минут и ответьте на все вопросы. Отметьте вопросы, на которых задержались дольше двух минут, — это ваш первый фокус.',
+            },
+          },
+          { slug: 'true-false-not-given', title: 'Reading: True / False / Not Given', summary: 'Как отличать False от Not Given и не додумывать за автора.' },
         ],
       },
-    ],
-    mainLessons: [
-      { title: 'Listening: Form completion и ловушки в цифрах', summary: 'Имена, даты и числа, которые диктуют с поправками.' },
-      { title: 'Writing Task 1: графики и процессы', summary: 'Обзор, группировка данных и сравнения без пересказа цифр.' },
-      { title: 'Writing Task 2: эссе на 7+', summary: 'Структура, аргументация и связность под критерии оценки.' },
-      { title: 'Speaking Part 2: монолог за 2 минуты', summary: 'Как за минуту подготовки собрать план ответа по карточке.' },
-      { title: 'Пробный тест с разбором', summary: 'Полный формат экзамена на время и разбор ошибок с тренером.' },
+      {
+        title: 'Listening',
+        lessons: [
+          { slug: 'listening-form-completion', title: 'Listening: Form completion и ловушки в цифрах', summary: 'Имена, даты и числа, которые диктуют с поправками.' },
+        ],
+      },
+      {
+        title: 'Writing',
+        lessons: [
+          { slug: 'writing-task-1', title: 'Writing Task 1: графики и процессы', summary: 'Обзор, группировка данных и сравнения без пересказа цифр.' },
+          { slug: 'writing-task-2', title: 'Writing Task 2: эссе на 7+', summary: 'Структура, аргументация и связность под критерии оценки.' },
+        ],
+      },
+      {
+        title: 'Speaking',
+        lessons: [
+          { slug: 'speaking-part-2', title: 'Speaking Part 2: монолог за 2 минуты', summary: 'Как за минуту подготовки собрать план ответа по карточке.' },
+        ],
+      },
+      {
+        title: 'Пробный тест',
+        lessons: [
+          { slug: 'mock-test', title: 'Пробный тест с разбором', summary: 'Полный формат экзамена на время и разбор ошибок с тренером.' },
+        ],
+      },
     ],
     diagnosticHref: '/?start=ielts',
     diagnosticAriaLabel: 'Начать диагностику IELTS',
@@ -147,34 +199,64 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
       { question: 'Какие секции проверяет диагностика?', answer: 'Диагностика проверяет Reading & Writing и Math. Результат предварительный и не является официальным баллом SAT.' },
       { question: 'Где проходят занятия?', answer: 'Формат курса — онлайн и в Астане. Конкретное расписание пока уточняется.' },
     ],
-    introLessons: [
+    modules: [
       {
-        title: 'Как устроен Digital SAT',
-        minutes: 10,
-        points: [
-          'Две секции: Reading and Writing (64 минуты, 54 вопроса) и Math (70 минут, 44 вопроса) — вместе около 2 часов 14 минут.',
-          'Каждая секция состоит из двух модулей: сложность второго зависит от результата первого.',
-          'Итоговый балл — от 400 до 1600, по 200–800 за каждую секцию.',
-          'Встроенный калькулятор Desmos доступен во всей секции Math.',
+        title: 'Введение',
+        lessons: [
+          {
+            slug: 'how-digital-sat-works',
+            title: 'Как устроен Digital SAT',
+            summary: 'Модули, адаптивность, шкала 400–1600 и калькулятор Desmos.',
+            free: {
+              minutes: 10,
+              intro: 'Digital SAT сдают на компьютере или планшете в приложении Bluebook. Экзамен адаптивный, и его устройство прямо влияет на стратегию.',
+              points: [
+                'Две секции: Reading and Writing (64 минуты, 54 вопроса) и Math (70 минут, 44 вопроса) — вместе около 2 часов 14 минут.',
+                'Каждая секция состоит из двух модулей: сложность второго зависит от результата первого.',
+                'Итоговый балл — от 400 до 1600, по 200–800 за каждую секцию.',
+                'Встроенный калькулятор Desmos доступен во всей секции Math.',
+              ],
+              practice: 'Установите Bluebook и откройте бесплатный полный пробный тест от College Board: так вы увидите интерфейс, таймер и калькулятор ещё до экзамена.',
+            },
+          },
         ],
       },
       {
-        title: 'Math: как распределять время',
-        minutes: 12,
-        points: [
-          'На модуль из 22 вопросов — 35 минут, то есть около полутора минут на вопрос.',
-          'Сначала решайте то, в чём уверены, трудные вопросы отмечайте и возвращайтесь к ним.',
-          'Графики и системы уравнений удобно проверять в Desmos.',
-          'За неверный ответ баллы не снимают, поэтому не оставляйте вопросы без ответа.',
+        title: 'Reading and Writing',
+        lessons: [
+          { slug: 'words-in-context', title: 'Reading and Writing: Words in Context', summary: 'Как выбрать точное слово по смыслу короткого текста.' },
+          { slug: 'standard-english-conventions', title: 'Standard English Conventions', summary: 'Пунктуация, согласование и границы предложений.' },
         ],
       },
-    ],
-    mainLessons: [
-      { title: 'Reading and Writing: Words in Context', summary: 'Как выбрать точное слово по смыслу короткого текста.' },
-      { title: 'Standard English Conventions', summary: 'Пунктуация, согласование и границы предложений.' },
-      { title: 'Math: линейные уравнения и системы', summary: 'Базовая алгебра, на которой держится большая часть секции.' },
-      { title: 'Math: Problem-Solving and Data Analysis', summary: 'Проценты, пропорции, таблицы и графики.' },
-      { title: 'Пробный тест с разбором', summary: 'Оба модуля на время и разбор ошибок с тренером.' },
+      {
+        title: 'Math',
+        lessons: [
+          {
+            slug: 'math-time',
+            title: 'Math: как распределять время',
+            summary: 'Темп, порядок решения и проверка ответов в Desmos.',
+            free: {
+              minutes: 12,
+              intro: 'В секции Math два модуля по 35 минут. Время легко потерять на одной трудной задаче и не успеть решить три простых.',
+              points: [
+                'На модуль из 22 вопросов — 35 минут, то есть около полутора минут на вопрос.',
+                'Сначала решайте то, в чём уверены, трудные вопросы отмечайте и возвращайтесь к ним.',
+                'Графики и системы уравнений удобно проверять в Desmos.',
+                'За неверный ответ баллы не снимают, поэтому не оставляйте вопросы без ответа.',
+              ],
+              practice: 'Решите 11 задач из пробного теста за 17 минут. Сколько осталось нерешёнными и на какой задаче вы потеряли больше всего времени?',
+            },
+          },
+          { slug: 'linear-equations', title: 'Math: линейные уравнения и системы', summary: 'Базовая алгебра, на которой держится большая часть секции.' },
+          { slug: 'problem-solving-data', title: 'Math: Problem-Solving and Data Analysis', summary: 'Проценты, пропорции, таблицы и графики.' },
+        ],
+      },
+      {
+        title: 'Пробный тест',
+        lessons: [
+          { slug: 'mock-test', title: 'Пробный тест с разбором', summary: 'Оба модуля на время и разбор ошибок с тренером.' },
+        ],
+      },
     ],
     diagnosticHref: '/?start=sat',
     diagnosticAriaLabel: 'Начать диагностику SAT',
@@ -185,4 +267,17 @@ export const COURSE_SLUGS = Object.keys(COURSE_DETAILS) as CourseSlug[];
 
 export function isCourseSlug(slug: string): slug is CourseSlug {
   return Object.prototype.hasOwnProperty.call(COURSE_DETAILS, slug);
+}
+
+export const courseLessons = (course: CourseDetail): CourseLesson[] => course.modules.flatMap((module) => module.lessons);
+
+export const freeLessons = (course: CourseDetail): FreeLesson[] => courseLessons(course).filter((lesson): lesson is FreeLesson => Boolean(lesson.free));
+
+/** 1 урок, 2 урока, 5 уроков, 21 урок. */
+export function lessonsWord(count: number): string {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return `${count} урок`;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return `${count} урока`;
+  return `${count} уроков`;
 }
