@@ -42,6 +42,12 @@ export default function MeView() {
                 <p className={styles.muted}>Заявки, этапы и заметки. Вход — «Войти аккаунтом ASHYQ».</p>
               </Link>
             ) : null}
+            {user.crm ? (
+              <Link href="/me/roles" className={`${styles.card} ${styles.cardLink}`}>
+                <h2 className={styles.cardTitle}>Роли</h2>
+                <p className={styles.muted}>Сделать ученика учителем или автором.</p>
+              </Link>
+            ) : null}
           </div>
 
           <div className={styles.actions}>
