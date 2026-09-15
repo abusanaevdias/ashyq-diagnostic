@@ -21,7 +21,7 @@ export default function ClassView() {
 
 function ClassFeed({ id, user }: { id: string; user: User }) {
   const repos = getRepos();
-  const { data, loading } = useLmsData(async () => {
+  const { data, loading, error } = useLmsData(async () => {
     const cls = await repos.classes.get(id);
     if (!cls) return null;
     const [lessons, assignments, mine, teacher] = await Promise.all([
@@ -35,6 +35,8 @@ function ClassFeed({ id, user }: { id: string; user: User }) {
   }, `class:${id}:${user.id}`);
 
   if (loading) return <Loading />;
+  // ошибку загрузки не выдаём за «класс не найден» (CLASS-LOAD-FIX-001)
+  if (error) return <Unavailable title="Не удалось загрузить класс" text={error} href="/classes" label="К моим классам" />;
   if (!data || !canViewClass(user, data.cls)) {
     return <Unavailable title="Класс недоступен" text="Класс не найден или вы в нём не состоите." href="/classes" label="К моим классам" />;
   }

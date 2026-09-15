@@ -103,7 +103,7 @@ export function TeacherClass() {
 
 function ClassManage({ id, user }: { id: string; user: User }) {
   const repos = getRepos();
-  const { data, loading } = useLmsData(async () => {
+  const { data, loading, error } = useLmsData(async () => {
     const cls = await repos.classes.get(id);
     if (!cls) return null;
     const [lessons, assignments, students] = await Promise.all([
@@ -119,6 +119,8 @@ function ClassManage({ id, user }: { id: string; user: User }) {
   }, `teacher-class:${id}`);
 
   if (loading) return <Loading />;
+  // ошибку загрузки не выдаём за «класс не найден» (CLASS-LOAD-FIX-001)
+  if (error) return <Unavailable title="Не удалось загрузить класс" text={error} href="/teacher" label="К классам" />;
   if (!data || !canManageClass(user, data.cls)) {
     return <Unavailable title="Класс недоступен" text="Класс не найден или его ведёт другой учитель." href="/teacher" label="К классам" />;
   }
