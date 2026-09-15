@@ -4,6 +4,7 @@ import { demoFileStorage, FILE_LIMIT_BYTES } from '../src/lib/lms/files';
 import { can, canEditPost, canManageClass, canSubmit, canUseThread, canViewClass, PERMISSIONS, type Action } from '../src/lib/lms/permissions';
 import { getRepos } from '../src/lib/lms/repos';
 import { applyDemoSeed, DEMO_EMAILS, DEMO_PASSWORD } from '../src/lib/lms/seed';
+import { createSupabaseRepos } from '../src/lib/lms/supabase-repos';
 import { storageAvailable } from '../src/lib/lms/store';
 import type { Role } from '../src/lib/lms/types';
 
@@ -91,7 +92,14 @@ async function main() {
   const ref = await demoFileStorage.upload(new File(['hello'], 'note.txt', { type: 'text/plain' }));
   assert.equal(await demoFileStorage.resolveUrl(ref), `data:text/plain;base64,${Buffer.from('hello').toString('base64')}`);
 
-  console.log('PASS lms unit: permissions matrix, auth, repos, grading, blog publish, file limits, memory mode');
+  // 8. Supabase: автор демо-статей `ashyq-team` — не uuid; в базу не ходим, профиля нет (BLOG-AUTHOR-FIX-001)
+  const offline = createSupabaseRepos(() => {
+    throw new Error('не-uuid id не должен доходить до базы');
+  });
+  assert.equal(await offline.users.get('ashyq-team'), null);
+  assert.deepEqual(await offline.users.listByIds(['ashyq-team']), []);
+
+  console.log('PASS lms unit: permissions matrix, auth, repos, grading, blog publish, file limits, memory mode, non-uuid profiles');
 }
 
 main().catch((error) => {

@@ -22,6 +22,8 @@ type ProfileRow = { id: string; display_name: string; role: string; avatar_color
 
 const CLASS_COLUMNS = 'id, title, subject, teacher_id, invite_code, created_at, class_members(student_id)';
 const ROLES: Record<string, Role> = { student: 'student', teacher: 'teacher', author: 'author', admin: 'teacher' };
+/** profiles.id — uuid; не-uuid (автор демо-статей `ashyq-team`) Postgres отвергает 400-й, а профиля у него и нет. */
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const toClass = (row: ClassRow): ClassRoom => ({
   id: row.id,
@@ -140,11 +142,13 @@ export function createSupabaseRepos(client: () => SupabaseClient): Repos {
 
   const users: Repos['users'] = {
     async get(id) {
+      if (!UUID.test(id)) return null;
       const { data: row, error } = await db().from('profiles').select('id, display_name, role, avatar_color').eq('id', id).maybeSingle();
       if (error) throw new Error(humanize(error));
       return row ? toUser(row as ProfileRow) : null;
     },
-    async listByIds(ids) {
+    async listByIds(all) {
+      const ids = all.filter((id) => UUID.test(id));
       if (!ids.length) return [];
       return list(await db().from('profiles').select('id, display_name, role, avatar_color').in('id', ids)).map((row) => toUser(row as ProfileRow));
     },
