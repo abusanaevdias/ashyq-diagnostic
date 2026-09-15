@@ -124,6 +124,7 @@ export class SupabaseAuth implements AuthAdapter {
         email: auth.user.email ?? '',
         role: ROLES[data.role] ?? 'student',
         avatarColor: COLORS.includes(data.avatar_color) ? data.avatar_color : 'red',
+        crm: data.role === 'admin' || data.role === 'manager',
       },
       expiresAt: new Date((auth.expires_at ?? Date.now() / 1000 + 3600) * 1000).toISOString(),
     };
