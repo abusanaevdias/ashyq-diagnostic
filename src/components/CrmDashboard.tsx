@@ -2,10 +2,14 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { CRM_STAGES, CRM_STAGE_LABELS, type CrmRecord, type CrmSnapshot, type CrmStage } from '@/lib/crm';
 import { EditorialLabel, RedStar, Wordmark } from '@/components/ui/Brand';
 
 const SESSION_KEY = 'ashyq:crm:admin-key';
+/** Вход аккаунтом ASHYQ (CRM-PROD-001) — только когда сайт работает с Supabase Auth. */
+const ACCOUNT_LOGIN = process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase';
+const NO_CRM_ROLE = 'Нет доступа к CRM — роль выдаёт администратор.';
 
 type AuthHeaders = Record<string, string>;
 
@@ -13,6 +17,13 @@ async function fetchSnapshot(headers: AuthHeaders): Promise<CrmSnapshot> {
   const response = await fetch('/api/crm', { headers, cache: 'no-store' });
   if (!response.ok) throw new Error('access');
   return response.json() as Promise<CrmSnapshot>;
+}
+
+/** Access token сессии Supabase как Bearer; null — в аккаунт не вошли. supabase-js грузится только здесь. */
+async function accountHeaders(): Promise<AuthHeaders | null> {
+  const { getAuth } = await import('@/lib/lms/auth');
+  const token = await getAuth().accessToken?.();
+  return token ? { authorization: `Bearer ${token}` } : null;
 }
 
 /** Запуск как Telegram Mini App: Telegram кладёт подписанный initData в hash адреса. */
@@ -40,6 +51,7 @@ function funnelConversion(value: number, prev: number): string {
 }
 
 export default function CrmDashboard() {
+  const router = useRouter();
   const [keyInput, setKeyInput] = useState('');
   const [auth, setAuth] = useState<AuthHeaders | null>(null);
   const [snapshot, setSnapshot] = useState<CrmSnapshot | null>(null);
@@ -74,7 +86,19 @@ export default function CrmDashboard() {
     }
 
     const stored = sessionStorage.getItem(SESSION_KEY);
-    if (!stored) return;
+    if (!stored) {
+      // уже вошли в аккаунт ASHYQ (например, вернулись с /login) — CRM открывается сама
+      if (ACCOUNT_LOGIN) {
+        accountHeaders()
+          .then(async (headers) => {
+            if (!headers) return;
+            setSnapshot(await fetchSnapshot(headers));
+            setAuth(headers);
+          })
+          .catch(() => setError(NO_CRM_ROLE));
+      }
+      return;
+    }
     setLoading(true);
     fetchSnapshot({ 'x-ashyq-admin-key': stored })
       .then((next) => {
@@ -103,6 +127,34 @@ export default function CrmDashboard() {
       setLoading(false);
     }
   }
+
+  async function unlockWithAccount() {
+    setLoading(true);
+    setError('');
+    try {
+      const headers = await accountHeaders();
+      if (!headers) {
+        router.push('/login?next=/crm');
+        return;
+      }
+      setSnapshot(await fetchSnapshot(headers));
+      setAuth(headers);
+    } catch {
+      setError(NO_CRM_ROLE);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // access token живёт час: supabase-js обновляет его сам, забираем свежий раз в минуту
+  const accountMode = Boolean(auth?.authorization);
+  useEffect(() => {
+    if (!accountMode) return;
+    const timer = window.setInterval(() => {
+      void accountHeaders().then((headers) => headers && setAuth(headers));
+    }, 60_000);
+    return () => window.clearInterval(timer);
+  }, [accountMode]);
 
   async function refresh() {
     if (!auth) return;
@@ -173,7 +225,10 @@ export default function CrmDashboard() {
           <Wordmark size="lg" />
           <EditorialLabel className="mt-6">Закрытый раздел</EditorialLabel>
           <h1 className="display mt-4 text-h1">Воронка заявок</h1>
-          <p className="mt-4 text-[0.92rem] leading-relaxed text-ink-soft">Введите административный ключ. Он отправляется только в заголовке запроса и хранится до закрытия этой вкладки.</p>
+          {ACCOUNT_LOGIN ? (
+            <button className="btn btn-ink mt-6" type="button" onClick={() => void unlockWithAccount()} disabled={loading}>Войти аккаунтом ASHYQ</button>
+          ) : null}
+          <p className="mt-4 text-[0.92rem] leading-relaxed text-ink-soft">{ACCOUNT_LOGIN ? 'Или введите' : 'Введите'} административный ключ. Он отправляется только в заголовке запроса и хранится до закрытия этой вкладки.</p>
           <form className="mt-6" onSubmit={unlock}>
             <label className="label text-ink-faint" htmlFor="crm-key">ASHYQ admin key</label>
             <input id="crm-key" className="field mt-1.5" type="password" autoComplete="current-password" value={keyInput} onChange={(event) => setKeyInput(event.target.value)} required />
