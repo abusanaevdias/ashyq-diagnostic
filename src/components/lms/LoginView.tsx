@@ -10,6 +10,7 @@ import type { Role } from '@/lib/lms/types';
 import { MicroLabel } from '@/components/ui/CleanUi';
 import ui from '@/components/ui/CleanUi.module.css';
 import { Avatar } from './Identity';
+import PasswordField from './PasswordField';
 import styles from './Lms.module.css';
 
 /** Вход через Supabase: настоящие аккаунты, регистрация вместо демо-кнопок. */
@@ -109,10 +110,7 @@ export default function LoginView({ nextPath }: { nextPath?: string }) {
               Email
               <input className={styles.field} type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
             </label>
-            <label className={styles.fieldLabel}>
-              Пароль
-              <input className={styles.field} type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-            </label>
+            <PasswordField label="Пароль" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             {error ? <p className={styles.error} role="alert">{error}</p> : null}
             <button type="submit" className={ui.buttonBlack} disabled={busy}>Войти</button>
           </form>
@@ -131,18 +129,14 @@ export default function LoginView({ nextPath }: { nextPath?: string }) {
                 Email
                 <input className={styles.field} type="email" autoComplete="email" required value={signup.email} onChange={(e) => update({ email: e.target.value })} />
               </label>
-              <label className={styles.fieldLabel}>
-                Пароль, минимум {MIN_PASSWORD} символов
-                <input
-                  className={styles.field}
-                  type="password"
-                  autoComplete="new-password"
-                  minLength={MIN_PASSWORD}
-                  required
-                  value={signup.password}
-                  onChange={(e) => update({ password: e.target.value })}
-                />
-              </label>
+              <PasswordField
+                label={`Пароль, минимум ${MIN_PASSWORD} символов`}
+                autoComplete="new-password"
+                minLength={MIN_PASSWORD}
+                required
+                value={signup.password}
+                onChange={(e) => update({ password: e.target.value })}
+              />
               <label className={styles.checkRow}>
                 <input type="checkbox" checked={signup.minor} onChange={(e) => update({ minor: e.target.checked, consent: false })} />
                 Мне меньше 18 лет

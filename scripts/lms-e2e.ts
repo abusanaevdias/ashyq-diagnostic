@@ -133,6 +133,13 @@ async function flow(browser: Browser, label: string, viewport: { width: number; 
   // a) учитель выдаёт задание → ученик видит его в классе
   await t.goto(`${BASE}/login`, { waitUntil: 'load' });
   await shot(t, 'login', label);
+  // пароль можно посмотреть: «Показать» делает поле текстовым, «Скрыть» — обратно (PASSWORD-TOGGLE-001)
+  const password = t.getByLabel('Пароль', { exact: true });
+  await password.fill('secret-123');
+  await t.getByRole('button', { name: 'Показать' }).click();
+  const visible = (await password.getAttribute('type')) === 'text';
+  await t.getByRole('button', { name: 'Скрыть' }).click();
+  check(`${label} пароль: «Показать»/«Скрыть» переключают видимость`, visible && (await password.getAttribute('type')) === 'password');
   await demoLogin(t, 'учитель'); // демо-вход сам кладёт сид в пустое хранилище
   await t.goto(`${BASE}/teacher`, { waitUntil: 'load' });
   await clickTo(t, t.getByRole('link', { name: /IELTS Intermediate · Осень/ }), /\/teacher\/classes\/[^/?]+$/);
