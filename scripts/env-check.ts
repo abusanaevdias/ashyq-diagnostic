@@ -41,6 +41,9 @@ const auth = { ...prod, NEXT_PUBLIC_AUTH_PROVIDER: 'supabase', NEXT_PUBLIC_SUPAB
 assert.deepEqual(count(auth), [0, 0], 'вход через Supabase с адресом и anon-ключом — чисто');
 assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_ANON_KEY: undefined }), [1, 0], 'вход через Supabase без anon-ключа — ошибка');
 assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_URL: 'http://db.example' }), [1, 0], 'вход через Supabase по http вне localhost — ошибка');
+// прод 2026-09-15: в адрес попал REST API из панели Supabase — вход отвечал «Invalid path»
+assert.deepEqual(count({ ...auth, NEXT_PUBLIC_SUPABASE_URL: 'https://project.supabase.co/rest/v1/' }), [0, 1], 'адрес REST API вместо адреса проекта — предупреждение');
+assert.equal(resolveLeadsStorage({ ASHYQ_LEADS_PROVIDER: 'supabase', ASHYQ_SUPABASE_URL: 'https://p.supabase.co/rest/v1/' }).url, 'https://p.supabase.co', 'хранилище заявок берёт адрес проекта без /rest/v1');
 assert.deepEqual(count({ ...prod, NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY: 'secret' }), [1, 0], 'секретный ключ в NEXT_PUBLIC_* — ошибка');
 assert.deepEqual(count({ ...prod, NEXT_PUBLIC_AUTH_PROVIDER: 'demo' }), [0, 0], 'демо-вход явно — чисто');
 assert.deepEqual(count({ ...prod, NEXT_PUBLIC_AUTH_PROVIDER: '"supabase"' }), [0, 1], 'провайдер входа с кавычками — предупреждение: вход тихо остаётся демо');

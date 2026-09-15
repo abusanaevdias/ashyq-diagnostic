@@ -24,6 +24,9 @@ export const ADMIN_KEY_MIN_LENGTH = 32;
 export const validSupabaseUrl = (url: string): boolean =>
   url.startsWith('https://') || /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(url);
 
+/** Хвост адреса REST/Auth API: Supabase показывает …/rest/v1/, а клиентам нужен адрес проекта. */
+const SUPABASE_PATH = /(\/(rest|auth)\/v1)?\/?$/;
+
 /** Где хранятся заявки (LEADS-VERCEL-001). */
 export interface LeadsStorage {
   provider: 'supabase' | 'file';
@@ -37,7 +40,7 @@ export interface LeadsStorage {
  * Supabase ↔ Vercel: она задаёт SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY, а не ASHYQ_*.
  */
 export function resolveLeadsStorage(env: Env): LeadsStorage {
-  const url = (env.ASHYQ_SUPABASE_URL || env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL)?.replace(/\/$/, '') || undefined;
+  const url = (env.ASHYQ_SUPABASE_URL || env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL)?.replace(SUPABASE_PATH, '') || undefined;
   const key = env.ASHYQ_SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || undefined;
   if (env.ASHYQ_LEADS_PROVIDER === 'supabase') return { provider: 'supabase', url, key };
   if (!env.ASHYQ_LEADS_PROVIDER && env.VERCEL && url && key) return { provider: 'supabase', url, key };
@@ -113,11 +116,13 @@ export function checkEnv(env: Env): EnvReport {
   }
 
   if (env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase') {
-    const authUrl = env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '');
+    const authUrl = env.NEXT_PUBLIC_SUPABASE_URL?.replace(SUPABASE_PATH, '');
     if (!authUrl || !env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
       errors.push('NEXT_PUBLIC_AUTH_PROVIDER=supabase: при сборке нужны NEXT_PUBLIC_SUPABASE_URL и NEXT_PUBLIC_SUPABASE_ANON_KEY, иначе вход не работает');
     } else if (!authUrl.startsWith('https://') && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(authUrl)) {
       errors.push('NEXT_PUBLIC_SUPABASE_URL должен быть https (http — только для localhost)');
+    } else if (authUrl !== env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '')) {
+      warnings.push('NEXT_PUBLIC_SUPABASE_URL: нужен адрес проекта https://<проект>.supabase.co без /rest/v1 — сайт отрезает путь сам, но лучше исправить значение');
     }
   } else if (env.NEXT_PUBLIC_AUTH_PROVIDER && env.NEXT_PUBLIC_AUTH_PROVIDER !== 'demo') {
     // прод 2026-09-15: значение было задано, но не ровно supabase — вход тихо остался демо
