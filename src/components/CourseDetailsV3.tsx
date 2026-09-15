@@ -1,12 +1,15 @@
 import Image from 'next/image';
-import type { CourseDetail } from '@/data/courses';
-import CourseAccess from './CourseAccess';
+import Link from 'next/link';
+import { courseLessons, freeLessons, lessonsWord, type CourseDetail } from '@/data/courses';
 import { ButtonLink, Footer, IconChip, LineIcon, MicroLabel, NavBar } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import home from './HomeV3.module.css';
 import styles from './CourseDetailsV3.module.css';
 
 export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
+  const free = freeLessons(course);
+  const locked = courseLessons(course).filter((lesson) => !lesson.free);
+  const lessonsHref = `/courses/${course.slug}/lessons`;
   return (
     <div className={home.page}>
       <NavBar />
@@ -93,32 +96,23 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
               <p className={styles.sectionIntro}>Вступительные уроки открыты всем. Основные уроки, задания и разборы — для учеников ASHYQ в их классе.</p>
             </div>
 
-            <h3 className={styles.lessonsLabel}>Вступительные · бесплатно</h3>
             <div className={styles.lessons}>
-              {course.introLessons.map((lesson) => (
-                <details className={styles.lessonCard} key={lesson.title}>
-                  <summary>
-                    <span className={styles.lessonMeta}>Открыт · {lesson.minutes} мин</span>
-                    <span className={styles.lessonTitle}>{lesson.title}</span>
-                  </summary>
-                  <ul className={styles.lessonPoints}>
-                    {lesson.points.map((point) => <li key={point}>{point}</li>)}
-                  </ul>
-                </details>
-              ))}
-            </div>
-
-            <h3 className={styles.lessonsLabel}>Основные · для учеников ASHYQ</h3>
-            <ul className={styles.lessons}>
-              {course.mainLessons.map((lesson) => (
-                <li className={`${styles.lessonCard} ${styles.lessonLocked}`} key={lesson.title}>
-                  <span className={styles.lessonMeta}><LineIcon name="lock" size={14} />Закрыт</span>
+              {free.map((lesson) => (
+                <Link href={`${lessonsHref}/${lesson.slug}`} className={`${styles.lessonCard} ${styles.lessonLink}`} key={lesson.slug}>
+                  <span className={styles.lessonMeta}>Бесплатно · {lesson.free.minutes} мин</span>
                   <span className={styles.lessonTitle}>{lesson.title}</span>
                   <p>{lesson.summary}</p>
-                </li>
+                </Link>
               ))}
-            </ul>
-            <CourseAccess slug={course.slug} />
+              <div className={`${styles.lessonCard} ${styles.lessonLocked}`}>
+                <span className={styles.lessonMeta}><LineIcon name="lock" size={14} />Для учеников ASHYQ</span>
+                <span className={styles.lessonTitle}>Ещё {lessonsWord(locked.length)}</span>
+                <p>{locked.slice(0, 3).map((lesson) => lesson.title).join(' · ')} и другие.</p>
+              </div>
+            </div>
+            <div className={styles.lessonsAction}>
+              <ButtonLink href={lessonsHref} tone="black">Вся программа уроков</ButtonLink>
+            </div>
           </section>
         </Reveal>
 

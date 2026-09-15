@@ -19,7 +19,7 @@ export default function CourseAccess({ slug }: { slug: string }) {
     return (
       <Panel text="Основные уроки откроются после записи на курс: менеджер выдаст код вашего класса.">
         <ButtonLink href="/contacts">Записаться на курс</ButtonLink>
-        <ButtonLink href={`/login?next=/courses/${slug}`} tone="outline">Я ученик — войти</ButtonLink>
+        <ButtonLink href={`/login?next=/courses/${slug}/lessons`} tone="outline">Я ученик — войти</ButtonLink>
       </Panel>
     );
   }

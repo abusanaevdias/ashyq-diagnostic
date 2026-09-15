@@ -198,13 +198,19 @@ async function flow(browser: Browser, label: string, viewport: { width: number; 
     check(`${label} c: ученик → ${path}: «Недостаточно прав»`, blocked && new URL(s.url()).pathname === path);
   }
 
-  // g) страница курса: гостю — вступительные уроки и замок, ученику класса — доступ (COURSE-LESSONS-001)
+  // g) курс → программа уроков → бесплатный урок; гостю основные закрыты, ученику класса открыты (COURSE-LESSONS-001/002)
   const guest = await browser.newPage(options);
   await guest.goto(`${BASE}/courses/ielts`, { waitUntil: 'load' });
-  check(`${label} g: гость видит вступительный урок`, await shown(guest.getByText('Как устроен IELTS')));
+  await clickTo(guest, guest.getByRole('link', { name: 'Вся программа уроков' }), /\/courses\/ielts\/lessons$/);
   check(`${label} g: гостю основные уроки закрыты`, await shown(guest.getByRole('link', { name: 'Я ученик — войти' })));
+  await shot(guest, 'course-lessons', label);
+  await clickTo(guest, guest.getByRole('link', { name: /Как устроен IELTS/ }), /\/lessons\/how-ielts-works$/);
+  check(`${label} g: бесплатный урок открыт гостю`, await shown(guest.getByRole('heading', { name: 'Попробуйте сами' })));
+  await shot(guest, 'free-lesson', label);
+  const lockedLesson = await guest.goto(`${BASE}/courses/ielts/lessons/writing-task-2`);
+  check(`${label} g: у закрытого урока нет страницы`, lockedLesson?.status() === 404);
   await guest.close();
-  await s.goto(`${BASE}/courses/ielts`, { waitUntil: 'load' });
+  await s.goto(`${BASE}/courses/ielts/lessons`, { waitUntil: 'load' });
   check(`${label} g: ученик класса видит «Доступ открыт»`, await shown(s.getByText(/Доступ открыт/)));
 
   // e) refresh сохраняет сессию

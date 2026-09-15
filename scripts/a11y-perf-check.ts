@@ -23,6 +23,8 @@ const PUBLIC_ROUTES = [
   '/courses',
   '/courses/ielts',
   '/courses/sat',
+  '/courses/ielts/lessons',
+  '/courses/sat/lessons/math-time',
   '/diagnostic',
   '/faq',
   '/login',
