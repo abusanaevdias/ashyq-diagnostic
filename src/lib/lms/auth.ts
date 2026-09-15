@@ -16,6 +16,8 @@ export interface AuthAdapter {
   signIn(email: string, password: string): Promise<Session>;
   signUp(name: string, email: string, password: string, role?: Role, consent?: SignUpConsent): Promise<Session>;
   signOut(): Promise<void>;
+  /** Сменить своё имя (EDIT-MORE-001): учителя и одноклассники видят его в классе. */
+  updateName(name: string): Promise<Session>;
   getSession(): Session | null;
   onAuthChange(callback: (session: Session | null) => void): () => void;
   /** false, пока адаптер восстанавливает сессию (Supabase); демо готово сразу. */
@@ -88,6 +90,17 @@ class LocalDemoAuth implements AuthAdapter {
     this.notify(null);
   }
 
+  async updateName(name: string): Promise<Session> {
+    const session = this.getSession();
+    if (!session) throw new Error('Войдите, чтобы изменить имя');
+    const cleanName = name.trim();
+    if (!cleanName) throw new Error('Укажите имя');
+    if (cleanName.length > 120) throw new Error('Имя — не длиннее 120 символов');
+    const user: User = { ...session.user, name: cleanName };
+    writeJson(USERS, accounts().map((a) => (a.user.id === user.id ? { ...a, user } : a)));
+    return this.start(user);
+  }
+
   onAuthChange(callback: (session: Session | null) => void): () => void {
     this.listeners.add(callback);
     return () => {
@@ -147,6 +160,10 @@ class LazySupabaseAuth implements AuthAdapter {
 
   async signOut(): Promise<void> {
     return (await this.loaded).signOut();
+  }
+
+  async updateName(name: string): Promise<Session> {
+    return (await this.loaded).updateName(name);
   }
 
   async accessToken(): Promise<string | null> {

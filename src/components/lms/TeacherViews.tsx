@@ -7,7 +7,7 @@ import { formatDate } from '@/lib/lms/format';
 import { useLmsData } from '@/lib/lms/hooks';
 import { canManageClass, ROUTE_ROLES } from '@/lib/lms/permissions';
 import { getRepos } from '@/lib/lms/repos';
-import type { User } from '@/lib/lms/types';
+import type { ClassRoom, User } from '@/lib/lms/types';
 import { MicroLabel } from '@/components/ui/CleanUi';
 import ui from '@/components/ui/CleanUi.module.css';
 import { Avatar } from './Identity';
@@ -101,6 +101,56 @@ export function TeacherClass() {
   return <RequireRole roles={ROUTE_ROLES.teacher}>{(user) => <ClassManage id={id} user={user} />}</RequireRole>;
 }
 
+/** Название и предмет класса можно исправить (EDIT-MORE-001); заголовок остаётся на месте, форма — под ним. */
+function ClassTitle({ cls }: { cls: ClassRoom }) {
+  const [editing, setEditing] = useState(false);
+  const [title, setTitle] = useState(cls.title);
+  const [subject, setSubject] = useState(cls.subject);
+  const [error, setError] = useState('');
+
+  const open = () => {
+    setTitle(cls.title);
+    setSubject(cls.subject);
+    setError('');
+    setEditing(true);
+  };
+
+  const save = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError('');
+    try {
+      await getRepos().classes.update(cls.id, { title, subject });
+      setEditing(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Название не сохранено');
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.chipsRow}><span className={styles.chip}>{cls.subject}</span></div>
+      <h1 className={styles.title}>{cls.title}</h1>
+      {editing ? (
+        <form className={`${styles.card} ${styles.section} ${styles.inlineForm}`} onSubmit={save} aria-label="Название класса">
+          <label className={styles.fieldLabel}>
+            Название
+            <input className={styles.field} value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={80} />
+          </label>
+          <label className={styles.fieldLabel}>
+            Предмет
+            <input className={styles.field} value={subject} onChange={(e) => setSubject(e.target.value)} required maxLength={30} />
+          </label>
+          <button type="submit" className={ui.buttonBlack}>Сохранить</button>
+          <button type="button" className={ui.buttonOutline} onClick={() => setEditing(false)}>Отмена</button>
+          {error ? <p className={styles.error} role="alert">{error}</p> : null}
+        </form>
+      ) : (
+        <button type="button" className={styles.textButton} onClick={open}>Изменить название</button>
+      )}
+    </>
+  );
+}
+
 function ClassManage({ id, user }: { id: string; user: User }) {
   const repos = getRepos();
   const { data, loading, error } = useLmsData(async () => {
@@ -129,8 +179,7 @@ function ClassManage({ id, user }: { id: string; user: User }) {
   return (
     <>
       <Link href="/teacher" className={styles.backLink}>← Классы</Link>
-      <div className={styles.chipsRow}><span className={styles.chip}>{cls.subject}</span></div>
-      <h1 className={styles.title}>{cls.title}</h1>
+      <ClassTitle cls={cls} />
       <p className={styles.lead}>Код приглашения: <strong>{cls.inviteCode}</strong> · учеников: {students.length}</p>
       <div className={styles.actions}>
         <Link href={`/teacher/assignments/new?class=${cls.id}`} className={ui.buttonBlack}>Новое задание</Link>

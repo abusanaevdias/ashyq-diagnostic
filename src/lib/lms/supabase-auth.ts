@@ -94,6 +94,18 @@ export class SupabaseAuth implements AuthAdapter {
     await this.adopt(null);
   }
 
+  /** RLS profiles_update_self и grant на display_name: правится только своё имя. */
+  async updateName(name: string): Promise<Session> {
+    const cleanName = name.trim();
+    if (!cleanName) throw new Error('Укажите имя');
+    if (cleanName.length > 120) throw new Error('Имя — не длиннее 120 символов');
+    const { data } = await this.client.auth.getSession();
+    if (!data.session) throw new Error('Войдите, чтобы изменить имя');
+    const { error } = await this.client.from('profiles').update({ display_name: cleanName }).eq('id', data.session.user.id);
+    if (error) throw new Error(typeof error.message === 'string' && error.message ? error.message : 'Имя не сохранено');
+    return this.require(await this.adopt(data.session));
+  }
+
   /** getSession() сам обновляет истёкший токен по refresh token. */
   async accessToken(): Promise<string | null> {
     const { data } = await this.client.auth.getSession();

@@ -129,6 +129,12 @@ export const localDemoRepos: Repos = {
       if (found.memberIds.includes(studentId)) return found;
       return classes.upsert({ ...found, memberIds: [...found.memberIds, studentId] });
     },
+    async update(id, { title, subject }) {
+      // TODO(supabase): серверно проверять, что класс правит его учитель (RLS classes_manage).
+      const found = classes.all().find((c) => c.id === id);
+      if (!found) throw new Error('Класс не найден');
+      return classes.upsert({ ...found, title: required(title, 'Укажите название класса'), subject: required(subject, 'Укажите предмет') });
+    },
   },
 
   lessons: {

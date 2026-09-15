@@ -108,7 +108,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
             <div className={`${styles.container} ${styles.section}`}>
               <div className={styles.sectionHead}>
                 <div><MicroLabel>Путь ученика</MicroLabel><h2 className={styles.heading}>Как это работает</h2></div>
-                <p className={styles.sectionIntro}>Что ты узнаешь на каждом этапе: от честной точки А до навыков, которые остаются после экзамена.</p>
+                <p className={styles.sectionIntro}>Что вы узнаете на каждом этапе: от честной точки А до навыков, которые остаются после экзамена.</p>
               </div>
               <ol className={styles.steps}>{STEPS.map((step) => <li className={styles.step} key={step.number}><span className={styles.stepNumber}>{step.number}</span><h3 className={styles.stepTitle}>{step.title}</h3><p className={styles.stepText}>{step.text}</p></li>)}</ol>
             </div>

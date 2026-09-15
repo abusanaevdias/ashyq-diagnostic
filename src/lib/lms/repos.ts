@@ -12,6 +12,8 @@ export interface ClassRepo {
   get(id: string): Promise<ClassRoom | null>;
   create(input: { title: string; subject: string; teacherId: string }): Promise<ClassRoom>;
   join(inviteCode: string, studentId: string): Promise<ClassRoom>;
+  /** Исправить название и предмет (EDIT-MORE-001); код приглашения и состав не меняются. */
+  update(id: string, input: { title: string; subject: string }): Promise<ClassRoom>;
 }
 
 export interface LessonRepo {

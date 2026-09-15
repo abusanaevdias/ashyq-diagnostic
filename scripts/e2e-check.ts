@@ -183,7 +183,7 @@ async function main() {
     Boolean(ctaBox) && (ctaBox!.y + ctaBox!.height) <= vp.height,
     ctaBox ? `низ кнопки ${Math.round(ctaBox.y + ctaBox.height)}px при viewport ${vp.height}px` : 'кнопка не найдена',
   );
-  check('landing: секции лендинга на месте', has(landing, 'Что ты узнаешь') && has(landing, 'Как это работает'));
+  check('landing: секции лендинга на месте', has(landing, 'Что вы узнаете') && has(landing, 'Как это работает'));
   const landingScroll = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );

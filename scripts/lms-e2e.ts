@@ -163,6 +163,13 @@ async function flow(browser: Browser, label: string, viewport: { width: number; 
   await clickTo(t, t.getByRole('link', { name: `Изменить задание «${task}»` }), /\/teacher\/assignments\/[^/?]+$/);
   check(`${label} h: форма задания открылась с текущими данными`, (await t.getByLabel('Название задания').inputValue()) === task);
   await clickTo(t, t.getByRole('link', { name: 'Отмена' }), teacherClassUrl);
+  // название класса тоже можно исправить; ученик ниже находит класс по тому же началу (EDIT-MORE-001)
+  await t.getByRole('button', { name: 'Изменить название' }).click();
+  const classTitle = t.getByLabel('Название', { exact: true });
+  const renamedClass = `${await classTitle.inputValue()} (исправлено)`;
+  await classTitle.fill(renamedClass);
+  await t.getByRole('button', { name: 'Сохранить', exact: true }).click();
+  check(`${label} h: класс переименован`, await shown(t.getByRole('heading', { level: 1, name: renamedClass })));
 
   await s.goto(`${BASE}/login`, { waitUntil: 'load' });
   await sync(t, s);

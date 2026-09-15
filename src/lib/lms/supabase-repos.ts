@@ -157,6 +157,14 @@ export function createSupabaseRepos(client: () => SupabaseClient): Repos {
       if (!joined) throw new Error('Класс не найден');
       return changed(joined);
     },
+    async update(id, { title, subject }) {
+      // RLS classes_manage: чужой класс не обновится — вернётся пустой список
+      const updated = list(await db().from('classes').update({ title: required(title, 'Укажите название класса'), subject: required(subject, 'Укажите предмет') }).eq('id', id).select('id'));
+      if (!updated.length) throw new Error(NOT_YOURS);
+      const cls = await classes.get(id);
+      if (!cls) throw new Error(NOT_YOURS);
+      return changed(cls);
+    },
   };
 
   const users: Repos['users'] = {
