@@ -7,6 +7,7 @@ import { useLmsData } from '@/lib/lms/hooks';
 import { canViewClass, ROUTE_ROLES } from '@/lib/lms/permissions';
 import { getRepos } from '@/lib/lms/repos';
 import type { User } from '@/lib/lms/types';
+import { LessonRatingPicker } from './LessonRating';
 import Markdown from './Markdown';
 import MaterialList from './MaterialList';
 import RequireRole from './RequireRole';
@@ -29,14 +30,15 @@ function ClassFeed({ id, user }: { id: string; user: User }) {
       repos.submissions.listByStudent(user.id),
       repos.users.get(cls.teacherId),
     ]);
-    return { cls, lessons, assignments, mine, teacher };
+    const ratings = (await repos.lessonRatings.listByLessons(lessons.map((l) => l.id))).filter((r) => r.studentId === user.id);
+    return { cls, lessons, assignments, mine, teacher, ratings };
   }, `class:${id}:${user.id}`);
 
   if (loading) return <Loading />;
   if (!data || !canViewClass(user, data.cls)) {
     return <Unavailable title="Класс недоступен" text="Класс не найден или вы в нём не состоите." href="/classes" label="К моим классам" />;
   }
-  const { cls, lessons, assignments, mine, teacher } = data;
+  const { cls, lessons, assignments, mine, teacher, ratings } = data;
 
   return (
     <>
@@ -77,6 +79,9 @@ function ClassFeed({ id, user }: { id: string; user: User }) {
                 <h3 className={`${styles.cardTitle} ${styles.spaced}`}>{lesson.title}</h3>
                 <Markdown text={lesson.body} />
                 <MaterialList items={lesson.materials} />
+                {user.role === 'student' ? (
+                  <LessonRatingPicker lessonId={lesson.id} studentId={user.id} rating={ratings.find((r) => r.lessonId === lesson.id)} />
+                ) : null}
               </article>
             ))}
           </div>

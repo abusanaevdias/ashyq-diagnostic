@@ -1,5 +1,5 @@
 import { BLOG_POSTS } from '@/data/blog';
-import type { Assignment, BlogPost, ClassRoom, Comment, Lesson, Submission, User } from './types';
+import type { Assignment, BlogPost, ClassRoom, Comment, Lesson, LessonRating, Submission, User } from './types';
 import { isHttpUrl } from './format';
 import type { Repos } from './repos';
 import { lmsBus, newId, newInviteCode, readJson, writeJson } from './store';
@@ -139,6 +139,21 @@ export const localDemoRepos: Repos = {
         materials,
         publishedAt: nowIso(),
       });
+    },
+  },
+
+  lessonRatings: {
+    async listByLessons(lessonIds) {
+      return readJson<LessonRating[]>('lessonRatings', []).filter((r) => lessonIds.includes(r.lessonId));
+    },
+    async rate({ lessonId, studentId, level }) {
+      // TODO(supabase): серверно проверять, что оценивает ученик этого класса (RLS lesson_ratings_*).
+      if (![1, 2, 3, 4].includes(level)) throw new Error('Выберите вариант оценки');
+      const rating: LessonRating = { lessonId, studentId, level, ratedAt: nowIso() };
+      const others = readJson<LessonRating[]>('lessonRatings', []).filter((r) => r.lessonId !== lessonId || r.studentId !== studentId);
+      writeJson('lessonRatings', [...others, rating]);
+      lmsBus.emit();
+      return rating;
     },
   },
 

@@ -11,6 +11,7 @@ import type { User } from '@/lib/lms/types';
 import { MicroLabel } from '@/components/ui/CleanUi';
 import ui from '@/components/ui/CleanUi.module.css';
 import { Avatar } from './Identity';
+import { LessonRatingSummary } from './LessonRating';
 import RequireRole from './RequireRole';
 import { DeadlineChip, Loading, SubmissionChip, Unavailable } from './States';
 import styles from './Lms.module.css';
@@ -110,15 +111,18 @@ function ClassManage({ id, user }: { id: string; user: User }) {
       repos.assignments.listByClass(id),
       repos.users.listByIds(cls.memberIds),
     ]);
-    const subs = (await Promise.all(assignments.map((a) => repos.submissions.listByAssignment(a.id)))).flat();
-    return { cls, lessons, assignments, students, subs };
+    const [subs, ratings] = await Promise.all([
+      Promise.all(assignments.map((a) => repos.submissions.listByAssignment(a.id))).then((all) => all.flat()),
+      repos.lessonRatings.listByLessons(lessons.map((l) => l.id)),
+    ]);
+    return { cls, lessons, assignments, students, subs, ratings };
   }, `teacher-class:${id}`);
 
   if (loading) return <Loading />;
   if (!data || !canManageClass(user, data.cls)) {
     return <Unavailable title="Класс недоступен" text="Класс не найден или его ведёт другой учитель." href="/teacher" label="К классам" />;
   }
-  const { cls, lessons, assignments, students, subs } = data;
+  const { cls, lessons, assignments, students, subs, ratings } = data;
 
   return (
     <>
@@ -175,6 +179,10 @@ function ClassManage({ id, user }: { id: string; user: User }) {
                 <p className={styles.hint}>{formatDate(lesson.publishedAt)}</p>
                 <h3 className={`${styles.cardTitle} ${styles.spaced}`}>{lesson.title}</h3>
                 <p className={styles.muted}>Материалов: {lesson.materials.length}</p>
+                <LessonRatingSummary
+                  ratings={ratings.filter((r) => r.lessonId === lesson.id && cls.memberIds.includes(r.studentId))}
+                  students={students.length}
+                />
               </article>
             ))}
           </div>

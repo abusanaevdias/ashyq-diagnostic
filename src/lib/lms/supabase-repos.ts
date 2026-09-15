@@ -4,7 +4,7 @@ import { isHttpUrl } from './format';
 import type { Repos } from './repos';
 import { lmsBus, newId, newInviteCode } from './store';
 import { supabaseBrowser } from './supabase-auth';
-import type { Assignment, AvatarColor, BlogPost, ClassRoom, Comment, Lesson, MaterialRef, Role, Submission, User } from './types';
+import type { Assignment, AvatarColor, BlogPost, ClassRoom, Comment, Lesson, LessonRating, LessonRatingLevel, MaterialRef, Role, Submission, User } from './types';
 
 /**
  * Репозитории учебного слоя поверх таблиц Supabase (SUPABASE-LMS-001).
@@ -14,6 +14,7 @@ import type { Assignment, AvatarColor, BlogPost, ClassRoom, Comment, Lesson, Mat
 
 type ClassRow = { id: string; title: string; subject: string; teacher_id: string; invite_code: string; created_at: string; class_members?: { student_id: string }[] };
 type LessonRow = { id: string; class_id: string; title: string; body: string; materials: MaterialRef[]; published_at: string };
+type LessonRatingRow = { lesson_id: string; student_id: string; level: LessonRatingLevel; rated_at: string };
 type AssignmentRow = { id: string; class_id: string; teacher_id: string; title: string; brief: string; due_at: string; max_points: number; created_at: string };
 type SubmissionRow = { id: string; assignment_id: string; student_id: string; content: string; attachments: MaterialRef[]; submitted_at: string; status: 'submitted' | 'graded'; grade: number | null };
 type CommentRow = { id: string; submission_id: string; author_id: string; author_role: Role; body: string; created_at: string };
@@ -33,6 +34,7 @@ const toClass = (row: ClassRow): ClassRoom => ({
   createdAt: row.created_at,
 });
 const toLesson = (row: LessonRow): Lesson => ({ id: row.id, classId: row.class_id, title: row.title, body: row.body, materials: row.materials ?? [], publishedAt: row.published_at });
+const toLessonRating = (row: LessonRatingRow): LessonRating => ({ lessonId: row.lesson_id, studentId: row.student_id, level: row.level, ratedAt: row.rated_at });
 const toAssignment = (row: AssignmentRow): Assignment => ({
   id: row.id,
   classId: row.class_id,
@@ -260,6 +262,22 @@ export function createSupabaseRepos(client: () => SupabaseClient): Repos {
         if (materials.some((m) => m.kind === 'link' && !isHttpUrl(m.url ?? ''))) throw new Error('Ссылка должна начинаться с http:// или https://');
         const row = data(await db().from('lessons').insert({ class_id: classId, title: required(title, 'Укажите тему урока'), body: body.trim(), materials }).select('*').single());
         return changed(toLesson(row as LessonRow));
+      },
+    },
+    lessonRatings: {
+      async listByLessons(lessonIds) {
+        if (!lessonIds.length) return [];
+        return list(await db().from('lesson_ratings').select('*').in('lesson_id', lessonIds)).map((row) => toLessonRating(row as LessonRatingRow));
+      },
+      async rate({ lessonId, studentId, level }) {
+        const row = data(
+          await db()
+            .from('lesson_ratings')
+            .upsert({ lesson_id: lessonId, student_id: studentId, level, rated_at: nowIso() }, { onConflict: 'lesson_id,student_id' })
+            .select('*')
+            .single(),
+        );
+        return changed(toLessonRating(row as LessonRatingRow));
       },
     },
     assignments: {

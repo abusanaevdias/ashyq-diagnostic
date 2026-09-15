@@ -1,4 +1,4 @@
-import type { Assignment, BlogPost, ClassRoom, Comment, Lesson, MaterialRef, Role, Submission, User } from './types';
+import type { Assignment, BlogPost, ClassRoom, Comment, Lesson, LessonRating, LessonRatingLevel, MaterialRef, Role, Submission, User } from './types';
 import { localDemoRepos } from './local-repos';
 
 /**
@@ -17,6 +17,12 @@ export interface ClassRepo {
 export interface LessonRepo {
   listByClass(classId: string): Promise<Lesson[]>;
   create(input: { classId: string; title: string; body: string; materials: MaterialRef[] }): Promise<Lesson>;
+}
+
+/** Одна оценка на пару урок × ученик; повторная заменяет прежнюю. В Supabase ученик читает свои, учитель — оценки своего класса. */
+export interface LessonRatingRepo {
+  listByLessons(lessonIds: string[]): Promise<LessonRating[]>;
+  rate(input: { lessonId: string; studentId: string; level: LessonRatingLevel }): Promise<LessonRating>;
 }
 
 export interface AssignmentRepo {
@@ -59,6 +65,7 @@ export interface UserRepo {
 export interface Repos {
   classes: ClassRepo;
   lessons: LessonRepo;
+  lessonRatings: LessonRatingRepo;
   assignments: AssignmentRepo;
   submissions: SubmissionRepo;
   comments: CommentRepo;
@@ -89,6 +96,7 @@ function lazySupabaseRepos(): Repos {
   return {
     classes: section('classes'),
     lessons: section('lessons'),
+    lessonRatings: section('lessonRatings'),
     assignments: section('assignments'),
     submissions: section('submissions'),
     comments: section('comments'),

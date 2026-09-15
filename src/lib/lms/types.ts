@@ -55,6 +55,16 @@ export interface Lesson {
   publishedAt: string;
 }
 
+/** Самооценка ученика «если тема попадётся в тесте»: 1 — решу 100/100 … 4 — не смогу решить. */
+export type LessonRatingLevel = 1 | 2 | 3 | 4;
+
+export interface LessonRating {
+  lessonId: string;
+  studentId: string;
+  level: LessonRatingLevel;
+  ratedAt: string;
+}
+
 export interface Assignment {
   id: string;
   classId: string;
