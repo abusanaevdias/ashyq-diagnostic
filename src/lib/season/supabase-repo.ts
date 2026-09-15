@@ -30,7 +30,8 @@ const toSubmission = (r: SubmissionRow): MatchSubmission => ({
 
 /** Ошибки БД → сообщения интерфейса (тексты — из миграций). */
 function humanize(error: PostgrestError): string {
-  const text = error.message;
+  // postgrest-js кладёт в error тело ответа как есть: у ответа шлюза/Auth поля message может не быть (ERROR-SHAPE-FIX-001)
+  const text = typeof error.message === 'string' && error.message ? error.message : `Ошибка сервера${error.code ? ` (код ${error.code})` : ''}. Обновите страницу или попробуйте позже.`;
   const known: Array<[string, string]> = [
     ['exactly five participants', `В команде ровно ${TEAM_SIZE} участников`],
     ['Captain must be a team member', 'Капитан должен быть в составе команды'],
