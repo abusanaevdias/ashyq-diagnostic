@@ -198,6 +198,15 @@ async function flow(browser: Browser, label: string, viewport: { width: number; 
     check(`${label} c: ученик → ${path}: «Недостаточно прав»`, blocked && new URL(s.url()).pathname === path);
   }
 
+  // g) страница курса: гостю — вступительные уроки и замок, ученику класса — доступ (COURSE-LESSONS-001)
+  const guest = await browser.newPage(options);
+  await guest.goto(`${BASE}/courses/ielts`, { waitUntil: 'load' });
+  check(`${label} g: гость видит вступительный урок`, await shown(guest.getByText('Как устроен IELTS')));
+  check(`${label} g: гостю основные уроки закрыты`, await shown(guest.getByRole('link', { name: 'Я ученик — войти' })));
+  await guest.close();
+  await s.goto(`${BASE}/courses/ielts`, { waitUntil: 'load' });
+  check(`${label} g: ученик класса видит «Доступ открыт»`, await shown(s.getByText(/Доступ открыт/)));
+
   // e) refresh сохраняет сессию
   await s.goto(`${BASE}/classes`, { waitUntil: 'load' });
   await s.reload({ waitUntil: 'load' });

@@ -48,7 +48,7 @@ function ClassesList({ user }: { user: User }) {
 
       {loading ? <Loading /> : null}
       {error ? <p className={styles.error} role="alert">{error}</p> : null}
-      {data && data.classes.length === 0 ? <p className={`${styles.notice} ${styles.section}`}>Вы пока не состоите в классе. Введите код приглашения от учителя.</p> : null}
+      {data && data.classes.length === 0 ? <p className={`${styles.notice} ${styles.section}`}>Вы пока не состоите в классе. Код класса выдаёт менеджер ASHYQ после записи на курс — введите его ниже.</p> : null}
 
       {data && data.classes.length > 0 ? (
         <div className={styles.grid3}>
