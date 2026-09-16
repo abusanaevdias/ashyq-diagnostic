@@ -283,3 +283,4 @@ npx tsx scripts/season-visual-check.ts
 commit/PR; изменённые маршруты и модули; точные команды и результаты проверок;
 неустранённые риски; что следующему агенту делать нельзя; следующий safe step.
 ```
+| LEAD-RATELIMIT-001 | IN_PROGRESS | Claude Opus 4.8; ветка `claude/lead-rate-limit`, worktree `.claude/worktrees/sat-ielts-lesson-comprehension-5e1024` | — | started 2026-09-16; общий лимит заявок в Supabase вместо счётчика в памяти одного сервера (на Vercel копий много → лимит не работал). Миграция `check_rate_limit` + вызов в `/api/lead`, honeypot в форме, fail-open. Нужна SQL-миграция |
