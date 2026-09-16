@@ -55,6 +55,18 @@ async function main() {
   // Основные уроки курса: ученик класса — да, зарегистрированный без класса — нет, сотрудники — да
   assert(isAshyqStudent(student, [cls]) && !isAshyqStudent({ ...student, id: 'guest' }, [cls]) && !isAshyqStudent(student, []));
   assert(isAshyqStudent(teacher, []) && isAshyqStudent(author, []));
+  // Класс можно переименовать — код приглашения и состав не меняются; своё имя тоже (EDIT-MORE-001)
+  const renamed = await repos.classes.update(cls.id, { title: `${cls.title} (исправлено)`, subject: cls.subject });
+  assert.equal(renamed.title, `${cls.title} (исправлено)`);
+  assert.equal(renamed.inviteCode, cls.inviteCode);
+  assert.deepEqual(renamed.memberIds, cls.memberIds);
+  await assert.rejects(repos.classes.update(cls.id, { title: ' ', subject: 'IELTS' }), /название класса/);
+  await auth.signIn(DEMO_EMAILS.student, DEMO_PASSWORD);
+  assert.equal((await auth.updateName('  Dias K.  ')).user.name, 'Dias K.');
+  assert.equal((await repos.users.get(student.id))?.name, 'Dias K.', 'новое имя видно в классе');
+  await assert.rejects(auth.updateName(' '), /Укажите имя/);
+  await auth.signOut();
+  await assert.rejects(auth.updateName('X'), /Войдите/);
 
   // 4. Учитель создаёт задание → студент видит его в классе
   const task = await repos.assignments.create({ classId: cls.id, teacherId: teacher.id, title: 'Unit task', brief: 'b', dueAt: '2026-01-01T10:00:00Z', maxPoints: 5 });
