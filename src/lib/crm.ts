@@ -62,8 +62,9 @@ export interface DeliveryStatus {
 }
 
 /** Идемпотентность повторной отправки: ключ без receivedAt — клиентский ретрай не плодит дублей. */
-export function computeDedupeKey(lead: Pick<StoredLead, 'runId' | 'kind' | 'phone' | 'name'>): string {
-  return [lead.runId, lead.kind, lead.phone ?? '', lead.name ?? ''].join('|').slice(0, 200);
+export function computeDedupeKey(lead: Pick<StoredLead, 'runId' | 'kind' | 'phone' | 'name' | 'answers'>): string {
+  // ответы — отдельный ключ: лид без них (старая версия страницы) не должен блокировать досылку с ответами
+  return [lead.runId, lead.kind, lead.phone ?? '', lead.name ?? '', ...(lead.answers ? ['answers'] : [])].join('|').slice(0, 200);
 }
 
 const RETRY_MAX_ATTEMPTS = 5;
@@ -247,6 +248,8 @@ export function buildCrmSnapshot(
       if (lead.answers) record.answers = lead.answers;
       if (lead.utm?.utm_source) record.source = lead.utm.utm_source;
       if (lead.utm?.utm_campaign) record.campaign = lead.utm.utm_campaign;
+      // досылка ответов к той же диагностике — не новое событие в ленте
+      if (lead.kind === 'result' && record.activities.some((activity) => activity.type === 'result')) continue;
       record.activities.push({
         id: `${runId}:${lead.receivedAt}:${lead.kind}`,
         type: lead.kind,

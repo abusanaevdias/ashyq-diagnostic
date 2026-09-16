@@ -209,6 +209,23 @@ export default function CrmDashboard() {
     return () => window.clearInterval(timer);
   }, [accountMode]);
 
+  // новые лиды без перезагрузки: опрос раз в 20 с, пока вкладка видна, и сразу при возврате на неё
+  const authKey = JSON.stringify(auth);
+  useEffect(() => {
+    if (!auth) return;
+    const poll = () => {
+      if (document.visibilityState !== 'visible') return;
+      fetchSnapshot(auth).then(setSnapshot).catch(() => {});
+    };
+    const timer = window.setInterval(poll, 20_000);
+    document.addEventListener('visibilitychange', poll);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', poll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authKey]);
+
   async function refresh() {
     if (!auth) return;
     setSnapshot(await fetchSnapshot(auth));

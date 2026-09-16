@@ -24,7 +24,7 @@ const noTarget: CardData = {
   exam: 'SAT',
   headline: 'SAT readiness',
   bandLabel: '1000–1150',
-  level: 'Ниже среднего · 5 из 16 верно',
+  level: 'Есть на что опереться · 5 из 16 верно',
   sections: [
     { label: 'Reading & Writing', percent: 54, level: 'Developing' },
     { label: 'Math', percent: 17, level: 'Foundation' },
