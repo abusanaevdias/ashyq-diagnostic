@@ -5,6 +5,8 @@ const CANONICAL_ROUTES = [
   '/',
   '/about',
   '/blog',
+  '/career',
+  '/career/intj',
   '/community',
   '/contacts',
   '/courses',

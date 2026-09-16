@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { PHOTOS } from '@/data/media';
 import { EXAMS } from '@/lib/config';
 import type { ExamId, RunState } from '@/lib/types';
@@ -60,6 +61,7 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
               <IconChip name="spark" solid />
               <p className={styles.asideTitle}>Точнее точка А — точнее план</p>
               <p className={styles.asideText}>Диагностика даёт предварительную оценку, а не официальный IELTS Band Score или SAT score. Её задача — показать, с чего начать.</p>
+              <p className={styles.asideLink}>Ещё не решили, какой экзамен вам нужен? Начните с <Link href="/career">Компаса</Link> — шесть минут, и станет понятно направление.</p>
               <p className={styles.script}>20 минут — и план готов</p>
             </aside>
           </div>

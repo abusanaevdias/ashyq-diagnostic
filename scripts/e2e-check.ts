@@ -1,5 +1,7 @@
 import { chromium, devices, type Browser, type ConsoleMessage, type Page } from 'playwright';
 import { QUESTION_BANK } from '../src/data/questions';
+import { CAREER_STATEMENTS } from '../src/data/career/questions';
+import { FAQ } from '../src/data/faq';
 import { TELEGRAM_CONTACT } from '../src/lib/site';
 
 /**
@@ -530,7 +532,10 @@ async function main() {
 
   // FAQ и юридические маршруты
   await p3.goto(`${BASE}/faq`, { waitUntil: 'networkidle' });
-  check('faq: восемь ответов доступны', (await p3.locator('main details').count()) === 8);
+  // число берём из источника данных: добавление вопроса в src/data/faq.ts не должно ронять e2e
+  const faqCount = await p3.locator('main details').count();
+  check('faq: показаны все ответы из src/data/faq.ts', faqCount === FAQ.length, `${faqCount} из ${FAQ.length}`);
+  check('faq: «Компас» объяснён рядом с диагностикой', has(await p3.locator('body').innerText(), 'Компас'));
   await p3.goto(`${BASE}/privacy`, { waitUntil: 'networkidle' });
   check('privacy: описаны согласие и отзыв', has(await p3.locator('body').innerText(), 'Согласие и отзыв'));
   await p3.goto(`${BASE}/terms`, { waitUntil: 'networkidle' });
@@ -731,6 +736,123 @@ async function main() {
     }
   }
 
+  /* ---------- 8. Компас: профориентация (CAREER-COMPASS-001) ---------- */
+  const ctxCareer = await browser.newContext({ ...devices['iPhone 12'] });
+  const pc = await ctxCareer.newPage();
+
+  await pc.goto(`${BASE}/career`, { waitUntil: 'networkidle' });
+  const careerIntro = await pc.locator('body').innerText();
+  check(
+    'career: интро объясняет, зачем тест',
+    has(careerIntro, 'Компас') && has(careerIntro, '40 утверждений') && has(careerIntro, 'Что вы получите'),
+  );
+  check(
+    'career: честная оговорка про метод',
+    has(careerIntro, 'не психологический диагноз') && has(careerIntro, 'MBTI'),
+  );
+  const careerScroll = await pc.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  check('career: нет горизонтального скролла', careerScroll <= 0, `${careerScroll}px`);
+
+  // Полный прогон: согласие с I/N/T/J и несогласие с остальным даёт INTJ
+  const poleById = new Map(CAREER_STATEMENTS.map((statement) => [String(statement.id), statement.pole]));
+  await pc.getByRole('button', { name: 'Пройти Компас' }).first().click();
+  await pc.locator('[data-statement-id]').waitFor();
+
+  let careerSteps = 0;
+  let careerResumeChecked = false;
+  while ((await pc.locator('[data-statement-id]').count()) > 0 && careerSteps < CAREER_STATEMENTS.length + 2) {
+    const id = await pc.locator('[data-statement-id]').first().getAttribute('data-statement-id');
+    const pole = id ? poleById.get(id) : undefined;
+    if (!pole) break;
+
+    // на середине проверяем, что прогресс переживает перезагрузку вкладки
+    if (careerSteps === 5 && !careerResumeChecked) {
+      careerResumeChecked = true;
+      await pc.reload({ waitUntil: 'networkidle' });
+      const restoredId = await pc.locator('[data-statement-id]').first().getAttribute('data-statement-id');
+      check('career: прогресс переживает refresh', restoredId === id, `${restoredId} vs ${id}`);
+    }
+
+    const agree = 'INTJ'.includes(pole);
+    await pc.getByRole('button', { name: agree ? 'Точно про меня' : 'Совсем не про меня' }).click();
+    careerSteps += 1;
+  }
+
+  check('career: пройдены все утверждения', careerSteps === CAREER_STATEMENTS.length, `${careerSteps} шагов`);
+
+  const careerResult = await pc.locator('body').innerText();
+  check('career: профиль посчитан', has(careerResult, 'INTJ') && has(careerResult, 'Архитектор'));
+  check(
+    'career: результат ведёт в диагностику',
+    has(careerResult, 'Топ-3 направления') &&
+      has(careerResult, 'Что это значит для экзамена') &&
+      (await pc.getByRole('link', { name: 'Проверить уровень IELTS' }).count()) >= 1,
+  );
+  check('career: дисклеймер остался на результате', has(careerResult, 'не психологический диагноз'));
+
+  // Сплошное согласие гасит шкалы — об этом на результате говорится прямо
+  const ctxAgreeable = await browser.newContext({ ...devices['iPhone 12'] });
+  const pa = await ctxAgreeable.newPage();
+  await pa.goto(`${BASE}/career`, { waitUntil: 'networkidle' });
+  await pa.getByRole('button', { name: 'Пройти Компас' }).first().click();
+  await pa.locator('[data-statement-id]').waitFor();
+  for (let i = 0; i < CAREER_STATEMENTS.length; i += 1) {
+    await pa.getByRole('button', { name: 'Точно про меня' }).click();
+  }
+  await pa.locator('h1').first().waitFor();
+  check(
+    'career: согласие со всем честно названо монеткой',
+    has(await pa.locator('body').innerText(), 'почти монетка'),
+  );
+  await ctxAgreeable.close();
+
+  // Воронка диагностики не затронута: у «Компаса» собственный ключ
+  const careerKeys = await pc.evaluate(() => Object.keys(window.localStorage));
+  check(
+    'career: свой ключ localStorage, диагностика не тронута',
+    careerKeys.includes('ashyq:v1:career') && !careerKeys.some((key) => key.startsWith('ashyq:v1:run:')),
+    careerKeys.join(', '),
+  );
+
+  // Профиль по ссылке — отдельная статическая страница, без JS и без мигания интро
+  await pc.goto(`${BASE}/career/enfp`, { waitUntil: 'domcontentloaded' });
+  const sharedResult = await pc.locator('body').innerText();
+  check(
+    'career: профиль по ссылке отдаётся сервером',
+    has(sharedResult, 'ENFP') && has(sharedResult, 'Искра') && has(sharedResult, 'Топ-3 направления'),
+  );
+  check(
+    'career: страница профиля зовёт пройти тест',
+    (await pc.getByRole('link', { name: 'Пройти Компас' }).count()) >= 1,
+  );
+  const profileScroll = await pc.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  check('career: профиль без горизонтального скролла', profileScroll <= 0, `${profileScroll}px`);
+
+  // Несуществующий профиль не выдумывается
+  const unknownProfile = await pc.goto(`${BASE}/career/zzzz`, { waitUntil: 'domcontentloaded' });
+  check('career: неизвестный профиль отвечает 404', unknownProfile?.status() === 404, `HTTP ${unknownProfile?.status()}`);
+
+  // Возврат на /career показывает сохранённый результат, а не интро заново
+  await pc.goto(`${BASE}/career`, { waitUntil: 'networkidle' });
+  await pc.locator('h1').first().waitFor();
+  check(
+    'career: сохранённый результат открывается при возврате',
+    has(await pc.locator('body').innerText(), 'Архитектор'),
+  );
+  await ctxCareer.close();
+
+  // Все 16 профилей доступны с интро (чистое устройство)
+  const ctxCareerFresh = await browser.newContext({ ...devices['iPhone 12'] });
+  const pcf = await ctxCareerFresh.newPage();
+  await pcf.goto(`${BASE}/career`, { waitUntil: 'networkidle' });
+  const profileLinks = await pcf.locator('a[href^="/career/"]').count();
+  check('career: с интро доступны все 16 профилей', profileLinks === 16, `${profileLinks} ссылок`);
+  await ctxCareerFresh.close();
+
   // landing: nav-ссылки на новые разделы
   await p3.goto(`${BASE}/`, { waitUntil: 'networkidle' });
   check(
@@ -739,6 +861,10 @@ async function main() {
       (await p3.getByRole('link', { name: 'Прогресс' }).count()) >= 1 &&
       (await p3.getByRole('link', { name: 'Сообщество' }).count()) >= 1 &&
       (await p3.getByRole('link', { name: 'FAQ' }).count()) >= 1,
+  );
+  check(
+    'landing: точка входа в Компас',
+    (await p3.getByRole('link', { name: /Компас/ }).count()) >= 1,
   );
   await ctx3.close();
 

@@ -13,6 +13,8 @@ export const STORAGE_KEYS = {
   active: `ashyq:v${SCHEMA_VERSION}:active`,
   leads: `ashyq:v${SCHEMA_VERSION}:leads`,
   history: (exam: ExamId) => `ashyq:v${SCHEMA_VERSION}:history:${exam}`,
+  /** Тест «Компас» (/career) — отдельный ключ, воронку диагностики не трогает. */
+  career: `ashyq:v${SCHEMA_VERSION}:career`,
 } as const;
 
 /**

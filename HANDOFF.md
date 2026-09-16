@@ -49,6 +49,10 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 - Quick Diagnostic даёт предварительную оценку, а не официальный IELTS/SAT
   score. Не менять disclaimer и aria/e2e-названия без обновления тестов.
+- «Компас» (`/career`) — ориентир по склонностям, а не психологический диагноз
+  и не официальный MBTI®. Дисклеймер, предупреждение «почти монетка» при всех
+  сбалансированных шкалах и формулировка `examHint` как гипотезы — часть
+  контракта: e2e проверяет эти тексты.
 - Существующие localStorage keys и state machine диагностики сохраняют
   обратную совместимость.
 - CRM `/crm` — operator MVP: общий `ASHYQ_ADMIN_KEY`, append-only JSONL,
@@ -74,6 +78,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 | `/courses` | Каталог v3: фильтр IELTS/SAT/командный формат, 4 карточки, blush CTA в диагностику |
 | `/courses/ielts`, `/courses/sat` | Индексируемые v3-страницы курсов: программа, маршрут подготовки, FAQ и CTA в соответствующую диагностику; коммерческие условия честно помечены как предварительные до подтверждения |
 | `/diagnostic` | v3-интро (DESIGN_V3 §6.3) → та же воронка диагностики; `/` сохраняет свой Landing |
+| `/career` | «Компас»: профориентационный тест на 40 утверждений → профиль, топ-3 направления, разбор по сферам и мост в диагностику. Интро рендерится на сервере, индексируется |
+| `/career/<код>` | 16 статических страниц профилей «Компаса» (`/career/intj` и т. д.): результат по ссылке открывается без JS, `dynamicParams = false` |
 | `/program`, `/progress`, `/community` | Публичные продуктовые страницы, v3 (`.v3` + NavBar/Footer) |
 | `/faq`, `/privacy`, `/terms` | v3 (`.v3`) |
 | `/blog` | v3, демо-темы до настоящих статей: плашка, noindex, не в sitemap |
@@ -146,7 +152,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| CAREER-COMPASS-001 | IN_PROGRESS | Claude Opus 5; ветка `claude/career-test-website-a98uzk` | — | started 2026-09-16; профориентационный тест «Компас» на `/career`: 40 утверждений → 4 шкалы → 16 профилей, топ-профессии по сферам и мост в Quick Diagnostic (какой экзамен нужен под направление). Новые файлы `src/data/career/*`, `src/lib/career.ts`, `src/components/CareerV3.*`, `src/app/career/page.tsx`; правки `src/lib/site.ts`, `src/lib/config.ts`, `src/lib/analytics.ts`, `src/app/search/page.tsx`, `src/data/faq.ts`, `scripts/seo-check.ts`, `scripts/e2e-check.ts`, `scripts/career-unit-check.ts`. Воронка диагностики, её localStorage-ключи и e2e-названия не трогаются. Claim опубликован в ветке задачи, а не в `origin/main`: у сессии нет прав на push в `main` |
+| CAREER-COMPASS-001 | REVIEW | Claude Opus 5; ветка `claude/career-test-website-a98uzk` | — | Профориентационный тест «Компас»: `/career` (интро + прохождение + свой результат) и 16 статических страниц профиля `/career/<код>`. Данные — `src/data/career/{questions,profiles,professions}.ts` (40 утверждений по 10 на шкалу и ровно по 5 на полюс, 16 профилей, 79 профессий в 6 сферах), движок — `src/lib/career.ts` + `src/lib/career-types.ts`, UI — `src/components/CareerV3.*` и `src/components/career/CareerResultView.tsx`. Точки входа: 4-я карточка на главной, aside на `/diagnostic`, футер «Учёба», `/search`, FAQ, sitemap. Своё хранилище `ashyq:v1:career` (`STORAGE_KEYS.career`), события `career_test_*`. Воронка Quick Diagnostic, её ключи и e2e-названия не менялись. Проверки: e2e `127/127`, career-unit, check:seo `21 canonical`, check:tokens `9/9`, check:units, a11y-perf `50 audits / 25 routes` (a11y 100 на `/career` и `/career/intj`), v3-visual, validate:bank, lint/typecheck/build green. Claim и работа лежат в ветке задачи: у сессии нет разрешения на push в `main` |
 | PHOTO-SLOTS-001 | DONE (PR #39 слит) | Claude Opus 5; ветка `claude/photo-slots` | CLIENT-POLISH-001 | Бриф фотосъёмки `docs/PHOTO_BRIEF.md` + версия для фотографа https://claude.ai/artifact/3qqxFGfUpLXBKLKZx1ZFPF: 22 кадра (F-01…F-22) — слот, что снимать и чего избегать, пропорции по реальным замерам прода 1440/390, мастер-размер, имя файла, alt. Все фото сайта теперь из `src/data/media.ts` (`PHOTOS`, 16 слотов с кодами F-xx; пока указывают на два общих снимка): новое фото = файл в `public/brand/photos/` + правка `src`/`width`/`height` у слота. Компоненты: Landing, CoursesV3 (+`COURSES`/`COURSE_DETAILS`), DiagnosticV3, AboutV3, BlogV3, ContactsV3, `/community`. Визуально без изменений. **Нужно от владельца**: сама съёмка по брифу |
 | SEO-SCHEMA-001 | DONE (PR #39 слит) | Claude Opus 5; ветка `claude/photo-slots` | — | JSON-LD Schema.org (`src/components/JsonLd.tsx`, `src/lib/schema.ts`, экранирование `<` по доке Next): `EducationalOrganization` (Астана, WhatsApp, соцсети) в корневом layout, `Course` на `/courses/[slug]`, `FAQPage` на `/faq` из `src/data/faq.ts`. Только подтверждённые факты — без цен и рейтинга. Проверка: `scripts/seo-check.ts` разбирает JSON-LD и ждёт нужный `@type`. Следующий шаг: после деплоя прогнать https://search.google.com/test/rich-results |
 | LESSON-EDIT-001 | DONE (PR #37 слит) | Claude Opus 5; ветка `claude/lesson-edit` | CLASS-LOAD-FIX-001 | Учитель открывает созданный урок и исправляет его (`/teacher/lessons/[id]`: та же форма, «Сохранить изменения», «Удалить урок» с подтверждением; дата публикации не меняется) и исправляет задание (`/teacher/assignments/[id]`; максимум баллов не ниже уже выставленной оценки). Ссылки «Открыть и изменить» / «Изменить» в `/teacher/classes/[id]`. Репозитории: `lessons.get/update/remove`, `assignments.update` (demo + Supabase, RLS уже разрешает правку учителю класса — миграция не нужна; чужое → «Не найдено или относится к классу другого учителя»). Проверки: typecheck, lint, `check:units`, build, `e2e:lms` (сценарий h). Аудит «созданное нельзя исправить» — ещё нет: переименовать/удалить класс, убрать ученика из класса, удалить задание, править/удалять свои комментарии, удалить пост блога, сменить имя в профиле |
@@ -255,6 +261,16 @@ npx tsx scripts/season-visual-check.ts
 - owned championship slice: hardcoded colors `0`; токены совпадают с
   приложенным источником.
 
+- после CAREER-COMPASS-001 (2026-09-16): e2e `127/127` без `CRM_ADMIN_KEY`
+  (+11 career: интро, дисклеймер, refresh-персистентность, полный прогон на
+  40 утверждений, «почти монетка» при сплошном согласии, отдельный ключ
+  localStorage, серверная страница профиля, 404 на неизвестный код, возврат
+  к сохранённому результату, 16 ссылок с интро, точка входа с главной),
+  career-unit PASS, check:units PASS, check:seo `21 canonical` PASS,
+  check:tokens `9/9`, a11y-perf `50 audits / 25 routes` (a11y 100 на
+  `/career` и `/career/intj`), v3-visual 1440/390 overflow `0`,
+  validate:bank `0/0`, lint/typecheck/build green.
+
 После любого merge все проверки нужно повторить на объединённом `main` —
 результаты веток не заменяют интеграционный прогон.
 
@@ -270,6 +286,8 @@ npx tsx scripts/season-visual-check.ts
 - `src/lib/useDiagnostic.ts` — state machine и persistence диагностики.
 - `src/features/season/types.ts`, `fixture.ts` — заменяемая модель прототипа сезона.
 - `src/components/season/` — public season hub и Season HQ.
+- `src/lib/career.ts`, `src/data/career/` — движок и контент теста «Компас»;
+  баланс банка и полнота выдачи защищены `scripts/career-unit-check.ts`.
 - `scripts/e2e-check.ts` — главный регрессионный контракт.
 
 ## 8. Шаблон обновления задачи

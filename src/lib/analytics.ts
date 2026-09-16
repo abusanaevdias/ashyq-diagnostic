@@ -35,7 +35,11 @@ export type AnalyticsEvent =
   | 'season_team_created'
   | 'season_points_awarded'
   | 'season_match_submitted'
-  | 'season_match_reviewed';
+  | 'season_match_reviewed'
+  | 'career_test_started'
+  | 'career_test_completed'
+  | 'career_result_shared'
+  | 'career_diagnostic_cta_clicked';
 
 export interface EventPayload {
   exam?: string;

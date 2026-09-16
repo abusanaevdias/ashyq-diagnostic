@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 const PAGES: Array<{ title: string; text: string; href: string }> = [
   { title: 'Главная', text: 'Диагностика IELTS и SAT, направления клуба и статистика подготовки.', href: '/' },
   { title: 'Диагностика', text: 'Предварительная оценка IELTS или SAT: 12–20 минут, без регистрации, не официальный балл.', href: '/diagnostic' },
+  { title: 'Компас — профориентация', text: 'Тест на 40 утверждений: профиль, подходящие профессии по шести сферам и экзамен, который к ним ведёт.', href: '/career' },
   { title: 'Курсы', text: 'Каталог подготовки: IELTS, SAT, сезон и Match Days, бесплатная диагностика.', href: '/courses' },
   { title: 'О нас', text: 'Миссия ASHYQ, подтверждённые метрики и ценности клуба.', href: '/about' },
   { title: 'Контакты', text: 'WhatsApp, Telegram, соцсети @ashyqedu и форма обращения.', href: '/contacts' },
