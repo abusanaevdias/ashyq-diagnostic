@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import CourseDetailsV3 from '@/components/CourseDetailsV3';
+import JsonLd from '@/components/JsonLd';
 import { COURSE_DETAILS, COURSE_SLUGS, isCourseSlug } from '@/data/courses';
+import { courseSchema } from '@/lib/schema';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -36,5 +38,10 @@ export default async function CourseDetailPage({ params }: Props) {
     notFound();
   }
 
-  return <CourseDetailsV3 course={COURSE_DETAILS[slug]} />;
+  return (
+    <>
+      <JsonLd data={courseSchema(COURSE_DETAILS[slug])} />
+      <CourseDetailsV3 course={COURSE_DETAILS[slug]} />
+    </>
+  );
 }

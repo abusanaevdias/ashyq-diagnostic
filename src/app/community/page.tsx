@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { EditorialLabel, RedStar } from '@/components/ui/Brand';
 import { GlyphBadge, type GlyphName } from '@/components/ui/Glyphs';
+import { PHOTOS } from '@/data/media';
 import { SiteFooter, SiteHeader } from '@/components/ui/SiteChrome';
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export default function CommunityPage() {
               <h1 className="display max-w-[8.8em] text-display text-red">Люди делают знания живыми</h1>
               <p className="mt-6 max-w-lg text-[1.05rem] leading-relaxed text-ink-soft">ASHYQ — это не только уроки и баллы. Это среда, где ученики тренируются в команде, пробуют себя под давлением и учатся показывать прогресс.</p>
             </div>
-            <img src="/brand/hero-students.jpg" alt="Студенты ASHYQ" width="1200" height="800" className="w-full rounded-md object-cover lg:col-span-6" />
+            <img src={PHOTOS.communityMain.src} alt={PHOTOS.communityMain.alt} width={PHOTOS.communityMain.width} height={PHOTOS.communityMain.height} className="w-full rounded-md object-cover lg:col-span-6" />
           </div>
         </section>
         <section className="border-y border-line bg-paper-deep/50">
@@ -47,7 +48,7 @@ export default function CommunityPage() {
         </section>
         <section className="shell-wide py-14 sm:py-18">
           <div className="grid items-center gap-8 lg:grid-cols-12">
-            <img src="/brand/lesson-grid.jpg" alt="Онлайн-занятие ASHYQ" width="1000" height="390" className="w-full rounded-md object-cover lg:col-span-7" />
+            <img src={PHOTOS.communityWide.src} alt={PHOTOS.communityWide.alt} width={PHOTOS.communityWide.width} height={PHOTOS.communityWide.height} className="w-full rounded-md object-cover lg:col-span-7" />
             <div className="lg:col-span-5">
               <p className="label flex items-center gap-2 text-red"><RedStar className="h-2.5 w-2.5" />Онлайн и в Астане</p>
               <h2 className="display mt-4 text-h2">Начните со своей точки А</h2>

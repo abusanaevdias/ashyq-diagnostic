@@ -6,6 +6,8 @@
  * когда появятся съёмки курсов.
  */
 
+import { PHOTOS } from './media';
+
 export type CourseFilter = 'all' | 'ielts' | 'sat' | 'team';
 
 export type CourseSlug = 'ielts' | 'sat';
@@ -43,10 +45,10 @@ export type CourseLesson = {
 export type FreeLesson = CourseLesson & { free: NonNullable<CourseLesson['free']> };
 
 export const COURSES: Array<{ title: string; text: string; meta: string; href: string; photo: string; alt: string; tags: Array<Exclude<CourseFilter, 'all'>>; badge?: string }> = [
-  { title: 'Подготовка к IELTS', text: 'Reading, Listening, Writing и Speaking по плану из диагностики. Пробные тесты, домашние задания и Speaking Battles.', meta: '4 секции · онлайн и в Астане', href: '/courses/ielts', photo: '/brand/lesson-grid.jpg', alt: 'Онлайн-занятие ASHYQ по IELTS', tags: ['ielts'] },
-  { title: 'Подготовка к SAT', text: 'Reading & Writing и Math: навыки, стратегия времени и регулярные пробные тесты с разбором.', meta: '2 секции · онлайн и в Астане', href: '/courses/sat', photo: '/brand/hero-students.jpg', alt: 'Студенты ASHYQ готовятся к SAT', tags: ['sat'] },
-  { title: 'Сезон и Match Days', text: 'Командные задания, рейтинг и Championship сезона. IELTS и SAT считаются раздельно.', meta: 'команды и участники · финал в Астане', href: '/season', photo: '/brand/hero-students.jpg', alt: 'Команда ASHYQ на Match Day', tags: ['team', 'ielts', 'sat'] },
-  { title: 'Quick Diagnostic', text: 'Предварительная оценка IELTS или SAT и понятный следующий шаг. Это не официальный балл.', meta: '12–20 минут · без регистрации', href: '/?start=ielts', photo: '/brand/lesson-grid.jpg', alt: 'Ученик проходит диагностику ASHYQ', tags: ['ielts', 'sat'], badge: 'Бесплатно' },
+  { title: 'Подготовка к IELTS', text: 'Reading, Listening, Writing и Speaking по плану из диагностики. Пробные тесты, домашние задания и Speaking Battles.', meta: '4 секции · онлайн и в Астане', href: '/courses/ielts', photo: PHOTOS.courseCardIelts.src, alt: PHOTOS.courseCardIelts.alt, tags: ['ielts'] },
+  { title: 'Подготовка к SAT', text: 'Reading & Writing и Math: навыки, стратегия времени и регулярные пробные тесты с разбором.', meta: '2 секции · онлайн и в Астане', href: '/courses/sat', photo: PHOTOS.courseCardSat.src, alt: PHOTOS.courseCardSat.alt, tags: ['sat'] },
+  { title: 'Сезон и Match Days', text: 'Командные задания, рейтинг и Championship сезона. IELTS и SAT считаются раздельно.', meta: 'команды и участники · финал в Астане', href: '/season', photo: PHOTOS.courseCardSeason.src, alt: PHOTOS.courseCardSeason.alt, tags: ['team', 'ielts', 'sat'] },
+  { title: 'Quick Diagnostic', text: 'Предварительная оценка IELTS или SAT и понятный следующий шаг. Это не официальный балл.', meta: '12–20 минут · без регистрации', href: '/?start=ielts', photo: PHOTOS.courseCardDiagnostic.src, alt: PHOTOS.courseCardDiagnostic.alt, tags: ['ielts', 'sat'], badge: 'Бесплатно' },
 ];
 
 const provisionalFacts = [
@@ -63,8 +65,8 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
     exam: 'IELTS',
     title: 'Подготовка к IELTS',
     lead: 'Четыре секции экзамена, практика по плану из диагностики и понятный трекинг прогресса.',
-    photo: '/brand/lesson-grid.jpg',
-    alt: 'Онлайн-занятие ASHYQ по IELTS',
+    photo: PHOTOS.courseHeroIelts.src,
+    alt: PHOTOS.courseHeroIelts.alt,
     facts: [
       { label: 'Формат', value: 'Онлайн и в Астане' },
       ...provisionalFacts,
@@ -170,8 +172,8 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
     exam: 'SAT',
     title: 'Подготовка к SAT',
     lead: 'Reading & Writing и Math: навыки, стратегия времени и регулярная практика с разбором.',
-    photo: '/brand/hero-students.jpg',
-    alt: 'Студенты ASHYQ готовятся к SAT',
+    photo: PHOTOS.courseHeroSat.src,
+    alt: PHOTOS.courseHeroSat.alt,
     facts: [
       { label: 'Формат', value: 'Онлайн и в Астане' },
       ...provisionalFacts,

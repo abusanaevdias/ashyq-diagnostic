@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { PHOTOS } from '@/data/media';
 import { WHATSAPP_NUMBER } from '@/lib/config';
 import { formatPhoneForDisplay } from '@/lib/lead';
 import { SOCIAL_LINKS, TELEGRAM_CONTACT } from '@/lib/site';
@@ -73,7 +74,7 @@ export default function ContactsV3() {
               </ul>
             </div>
             <div>
-              <div className={styles.photo}><Image src="/brand/lesson-grid.jpg" alt="Онлайн-занятие ASHYQ" fill sizes="(max-width: 900px) 100vw, 40vw" /></div>
+              <div className={styles.photo}><Image src={PHOTOS.contacts.src} alt={PHOTOS.contacts.alt} fill sizes="(max-width: 900px) 100vw, 40vw" /></div>
               <p className={styles.script}>let’s make it happen together</p>
             </div>
           </div>

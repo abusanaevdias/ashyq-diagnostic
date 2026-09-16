@@ -4,6 +4,8 @@ import './globals.css';
 import '../../design/tokens.css';
 import { COLOR } from '@/lib/design-tokens';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
+import JsonLd from '@/components/JsonLd';
+import { ORGANIZATION } from '@/lib/schema';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -44,7 +46,10 @@ export default function RootLayout({
           <link key={font} rel="preload" href={`/fonts/${font}.woff2`} as="font" type="font/woff2" crossOrigin="" />
         ))}
       </head>
-      <body className="min-h-dvh antialiased">{children}</body>
+      <body className="min-h-dvh antialiased">
+        <JsonLd data={ORGANIZATION} />
+        {children}
+      </body>
     </html>
   );
 }

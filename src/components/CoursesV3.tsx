@@ -7,6 +7,7 @@ import { ArrowIcon, ButtonLink, FilterChip, Footer, MicroLabel, NavBar } from '.
 import { Reveal } from './ui/Reveal';
 import ui from './ui/CleanUi.module.css';
 import { COURSES, type CourseFilter as Filter } from '@/data/courses';
+import { PHOTOS } from '@/data/media';
 import home from './HomeV3.module.css';
 import styles from './CoursesV3.module.css';
 
@@ -42,8 +43,8 @@ export default function CoursesV3() {
               <p className={styles.script}>выберите свой маршрут</p>
             </div>
             <div className={styles.collage}>
-              <div className={styles.collageMain}><Image src="/brand/hero-students.jpg" alt="Студенты ASHYQ на занятии" fill priority sizes="(max-width: 900px) 84vw, 38vw" /></div>
-              <div className={styles.collageSide}><Image src="/brand/lesson-grid.jpg" alt="Онлайн-занятие ASHYQ" fill sizes="(max-width: 900px) 58vw, 26vw" /></div>
+              <div className={styles.collageMain}><Image src={PHOTOS.coursesCollageMain.src} alt={PHOTOS.coursesCollageMain.alt} fill priority sizes="(max-width: 900px) 84vw, 38vw" /></div>
+              <div className={styles.collageSide}><Image src={PHOTOS.coursesCollageSide.src} alt={PHOTOS.coursesCollageSide.alt} fill sizes="(max-width: 900px) 58vw, 26vw" /></div>
             </div>
           </div>
         </section>

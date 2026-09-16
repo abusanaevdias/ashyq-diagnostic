@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { PHOTOS } from '@/data/media';
 import { EXAMS } from '@/lib/config';
 import type { ExamId, RunState } from '@/lib/types';
 import { continueLabel } from './Landing';
@@ -73,7 +74,7 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
                 <ul className={styles.checklist}>{GAINS.map((gain) => <li key={gain.text}><IconChip name={gain.icon} />{gain.text}</li>)}</ul>
                 <div className={styles.gainAction}><button type="button" className={home.heroButtonRed} onClick={() => onSelect('ielts')}>Пройти диагностику<ArrowIcon /></button></div>
               </div>
-              <div className={styles.photo}><Image src="/brand/lesson-grid.jpg" alt="Онлайн-занятие ASHYQ" fill sizes="(max-width: 900px) 100vw, 45vw" /></div>
+              <div className={styles.photo}><Image src={PHOTOS.diagnostic.src} alt={PHOTOS.diagnostic.alt} fill sizes="(max-width: 900px) 100vw, 45vw" /></div>
             </div>
           </section>
         </Reveal>
