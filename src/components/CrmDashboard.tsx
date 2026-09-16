@@ -42,6 +42,11 @@ function formatDate(value: string): string {
   }).format(new Date(value));
 }
 
+/** Для строки последней активности в списке: «17 сент., 14:05» без года. */
+function formatShortDate(value: string): string {
+  return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+}
+
 function recordName(record: CrmRecord): string {
   return record.name || record.phone || `Аноним · ${record.runId.slice(0, 8)}`;
 }
@@ -58,7 +63,9 @@ function MistakesPanel({ record }: { record: CrmRecord }) {
     return (
       <div className="lg:col-span-2">
         <p className="label text-ink-faint">Разбор ошибок</p>
-        <p className="mt-2 text-[0.86rem] text-ink-soft">{record.band ? 'Ответы по вопросам не сохранены — диагностика пройдена до обновления CRM.' : 'Клиент не проходил диагностику.'}</p>
+        <p className="mt-2 text-[0.86rem] text-ink-soft">{!record.activities.some((activity) => activity.type === 'result')
+            ? (record.band ? 'Результат диагностики не дошёл до CRM — есть только обращение клиента.' : 'Клиент не проходил диагностику.')
+            : 'Ответы по вопросам не сохранены — диагностика пройдена до обновления CRM.'}</p>
       </div>
     );
   }
@@ -250,6 +257,12 @@ export default function CrmDashboard() {
     }
   }
 
+  async function deleteRecord(record: CrmRecord) {
+    if (!window.confirm(`Удалить запись «${recordName(record)}» из CRM? Если клиент снова оставит заявку, запись вернётся.`)) return;
+    setSelectedId('');
+    await updateRecord(record.runId, { action: 'delete' });
+  }
+
   async function retryDelivery(runId: string) {
     await updateRecord(runId, { action: 'retry-delivery' });
   }
@@ -427,7 +440,7 @@ export default function CrmDashboard() {
               {records.slice(0, visibleCount).map((record) => (
                 <article key={record.runId} className="card overflow-hidden">
                   <div className="grid items-center gap-4 p-4 md:grid-cols-[minmax(0,1.5fr)_0.7fr_0.8fr_1fr_auto]">
-                    <div className="min-w-0"><p className="display truncate text-[1.05rem]">{recordName(record)}</p><p className="mt-1 truncate font-mono text-[0.68rem] text-ink-faint">{record.phone ? `+${record.phone}` : record.runId}</p>{record.assignee ? <p className="mt-1 truncate text-[0.7rem] text-ink-soft">Взял: {record.assignee.name}</p> : null}{record.delivery.some((item) => item.status === 'failed') ? <p className="mt-1 text-[0.7rem] font-semibold text-red">Не доставлено: {record.delivery.filter((item) => item.status === 'failed').map((item) => item.channel).join(', ')}</p> : null}</div>
+                    <div className="min-w-0"><p className="display truncate text-[1.05rem]">{recordName(record)}</p><p className="mt-1 truncate font-mono text-[0.68rem] text-ink-faint">{record.phone ? `+${record.phone}` : record.runId}</p>{record.activities[0] ? <p className="mt-1 line-clamp-2 text-[0.7rem] leading-snug text-ink-soft" title={record.activities[0].text}><span className="font-mono text-ink-faint">{formatShortDate(record.activities[0].createdAt)}</span> · {record.activities[0].text}</p> : null}{record.assignee ? <p className="mt-1 truncate text-[0.7rem] text-ink-soft">Взял: {record.assignee.name}</p> : null}{record.delivery.some((item) => item.status === 'failed') ? <p className="mt-1 text-[0.7rem] font-semibold text-red">Не доставлено: {record.delivery.filter((item) => item.status === 'failed').map((item) => item.channel).join(', ')}</p> : null}</div>
                     <div><p className="label text-ink-faint">Экзамен</p><p className="mt-1 font-semibold uppercase">{record.exam}</p></div>
                     <div><p className="label text-ink-faint">Результат</p><p className="mt-1 font-semibold">{record.band ?? '—'}</p></div>
                     <div>
@@ -462,7 +475,10 @@ export default function CrmDashboard() {
                             ) : null}
                           </dd>
                         </dl>
-                        {record.phone ? <a className="btn btn-ink mt-5" href={`https://wa.me/${record.phone}`} target="_blank" rel="noopener noreferrer">Открыть WhatsApp</a> : null}
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {record.phone ? <a className="btn btn-ink" href={`https://wa.me/${record.phone}`} target="_blank" rel="noopener noreferrer">Открыть WhatsApp</a> : null}
+                          <button type="button" className="btn btn-outline" disabled={savingId === record.runId} onClick={() => void deleteRecord(record)}>Удалить запись</button>
+                        </div>
                       </div>
                       <div>
                         <p className="label text-ink-faint">Лента активности</p>

@@ -198,3 +198,15 @@ console.log('PASS  CRM показывает статусы доставки и �
   assert.equal(record.activities.filter((activity) => activity.type === 'result').length, 1, 'одна диагностика — одно событие в ленте');
   console.log('PASS  CRM досылка ответов к диагностике без дубля в ленте');
 }
+
+// CRM-DELETE-001: удаление скрывает запись и её лиды из статистики; новая заявка возвращает запись
+{
+  const lead: StoredLead = { ...base, runId: 'run-del', kind: 'contact', name: 'Del', phone: '77060000001' };
+  const del: CrmEvent = { id: 'del-1', runId: 'run-del', type: 'delete', createdAt: '2026-09-13T11:00:00.000Z' };
+  const hidden = buildCrmSnapshot([lead], [del]);
+  assert.equal(hidden.records.length, 0, 'удалённая запись не показывается');
+  assert.equal(hidden.stats.contacts, 0, 'и не попадает в статистику');
+  const revived = buildCrmSnapshot([lead, { ...lead, kind: 'season', receivedAt: '2026-09-13T12:00:00.000Z' }], [del]);
+  assert.equal(revived.records.length, 1, 'новая заявка после удаления возвращает запись');
+  console.log('PASS  CRM удаление записи и возврат при новой заявке');
+}

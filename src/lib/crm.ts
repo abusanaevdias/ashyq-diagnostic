@@ -20,7 +20,8 @@ export interface CrmAssignee {
 export interface CrmEvent {
   id: string;
   runId: string;
-  type: 'stage_change' | 'note' | 'assign';
+  /** delete — запись скрыта из CRM; новая заявка с тем же runId возвращает её */
+  type: 'stage_change' | 'note' | 'assign' | 'delete';
   stage?: CrmStage;
   body?: string;
   assignee?: CrmAssignee;
@@ -207,6 +208,20 @@ export function buildCrmSnapshot(
   events: CrmEvent[],
   deliveries: DeliveryLedgerEntry[] = [],
 ): CrmSnapshot {
+  // Удаление — событие, а не стирание строк: хранилище append-only (файл/Supabase без права delete).
+  // Запись скрыта, если удалена позже последней заявки по этому runId (CRM-DELETE-001).
+  const lastLeadAt = new Map<string, string>();
+  for (const lead of leads) {
+    if (lead.receivedAt > (lastLeadAt.get(lead.runId) ?? '')) lastLeadAt.set(lead.runId, lead.receivedAt);
+  }
+  const deleted = new Set(
+    events.filter((event) => event.type === 'delete' && event.createdAt >= (lastLeadAt.get(event.runId) ?? '')).map((event) => event.runId),
+  );
+  if (deleted.size > 0) {
+    leads = leads.filter((lead) => !deleted.has(lead.runId));
+    events = events.filter((event) => !deleted.has(event.runId));
+  }
+
   const grouped = new Map<string, StoredLead[]>();
   for (const lead of leads) {
     const list = grouped.get(lead.runId) ?? [];

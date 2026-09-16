@@ -58,6 +58,20 @@ export async function checkSupabaseRateLimit(key: string, windowSeconds: number,
   }
 }
 
+/**
+ * PostgREST отдаёт не больше 1000 строк за запрос (max-rows): без постраничного чтения
+ * CRM видела только первые 1000 записей по возрастанию даты — новые лиды пропадали.
+ */
+async function readAllPayloads<T>(query: string): Promise<T[]> {
+  const out: T[] = [];
+  for (let offset = 0; ; offset += PAGE) {
+    const rows = await rest<Array<Row<T>>>(`${query}&limit=${PAGE}&offset=${offset}`);
+    out.push(...rows.map((row) => row.payload));
+    if (rows.length < PAGE) return out;
+  }
+}
+const PAGE = 1000;
+
 export async function appendSupabaseLead(lead: StoredLead): Promise<void> {
   await rest('crm_leads', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({
     run_id: lead.runId, dedupe_key: lead.dedupeKey, kind: lead.kind, exam: lead.exam,
@@ -66,8 +80,7 @@ export async function appendSupabaseLead(lead: StoredLead): Promise<void> {
 }
 
 export async function readSupabaseLeads(): Promise<StoredLead[]> {
-  const rows = await rest<Array<Row<StoredLead>>>('crm_leads?select=payload&order=received_at.asc');
-  return rows.map((row) => row.payload);
+  return readAllPayloads<StoredLead>('crm_leads?select=payload&order=received_at.asc,id.asc');
 }
 
 export async function findSupabaseDuplicate(lead: StoredLead, cutoff: string): Promise<boolean> {
@@ -78,8 +91,7 @@ export async function findSupabaseDuplicate(lead: StoredLead, cutoff: string): P
 }
 
 export async function readSupabaseEvents(): Promise<CrmEvent[]> {
-  const rows = await rest<Array<Row<CrmEvent>>>('crm_events?select=payload&order=created_at.asc');
-  return rows.map((row) => row.payload);
+  return readAllPayloads<CrmEvent>('crm_events?select=payload&order=created_at.asc,id.asc');
 }
 
 export async function appendSupabaseEvents(events: CrmEvent[]): Promise<void> {
@@ -89,8 +101,7 @@ export async function appendSupabaseEvents(events: CrmEvent[]): Promise<void> {
 }
 
 export async function readSupabaseDeliveries(): Promise<DeliveryLedgerEntry[]> {
-  const rows = await rest<Array<Row<DeliveryLedgerEntry>>>('crm_delivery_entries?select=payload&order=updated_at.asc');
-  return rows.map((row) => row.payload);
+  return readAllPayloads<DeliveryLedgerEntry>('crm_delivery_entries?select=payload&order=updated_at.asc,id.asc');
 }
 
 export async function appendSupabaseDelivery(entry: DeliveryLedgerEntry): Promise<void> {
