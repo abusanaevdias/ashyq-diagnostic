@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { buildCrmSnapshot, computeDedupeKey, isRetryDue, type CrmEvent, type DeliveryLedgerEntry } from '../src/lib/crm';
 import type { StoredLead } from '../src/lib/lead-server';
+import { analyzeAnswers, isKnownQuestion } from '../src/lib/mistakes';
 
 const base = {
   exam: 'sat' as const,
@@ -161,3 +162,28 @@ console.log('PASS  CRM различает обращение с сайта и з
 console.log('PASS  dedupeKey стабилен и различает разные лиды');
 console.log('PASS  политика retry: backoff, лимит попыток, sent не трогаем');
 console.log('PASS  CRM показывает статусы доставки и считает sent/failed');
+
+// CRM-MISTAKES-001: ответы по вопросам доходят до карточки и превращаются в слабые места
+{
+  const answers = { 'ielts-r-02': 'FALSE', 'ielts-r-05': 'B', 'ielts-r-07': 'C', 'ielts-l-03': '2050', 'ielts-l-04': null, 'ielts-l-01': null, 'sat-math-01': 'C' };
+  const withAnswers = buildCrmSnapshot([{ ...base, exam: 'ielts', runId: 'run-ans', kind: 'result', answers }], []);
+  assert.deepEqual(withAnswers.records[0].answers, answers, 'ответы сохраняются в записи CRM');
+
+  const report = analyzeAnswers('ielts', answers);
+  assert.equal(report.total, 6, 'вопросы чужого экзамена отбрасываются');
+  assert.equal(report.correct, 2, 'r-05 и r-07 верные');
+  const ids = report.weakSpots.map((spot) => spot.id);
+  assert.ok(ids.includes('tfng-confusion'), 'FALSE вместо NG → путает False и Not Given');
+  assert.ok(!ids.includes('tfng'), 'общий сценарий T/F/NG не дублирует точный');
+  assert.ok(ids.includes('skipped'), '2 пропуска → сценарий пропусков');
+  assert.ok(ids.includes('numbers') && !ids.includes('completion'), 'неверное число на слух → сценарий чисел, без сценария орфографии Reading');
+  assert.equal(report.weakSpots[0].severity, 'high', 'важные слабые места идут первыми');
+
+  const sat = analyzeAnswers('sat', { 'sat-math-01': 'A', 'sat-math-04': 'B', 'sat-math-02': 'A', 'sat-math-10': 'A', 'sat-math-06': 'D' });
+  const satIds = sat.weakSpots.map((spot) => spot.id);
+  assert.ok(satIds.includes('careless'), 'ошибка в лёгком при решённом сложном → невнимательность');
+  assert.ok(satIds.includes('contextual'), 'текстовые задачи хуже чистых → не переводит условие в уравнение');
+  assert.equal(analyzeAnswers('sat', { 'sat-math-01': 'C' }).weakSpots.length, 0, 'без ошибок — без слабых мест');
+  assert.equal(isKnownQuestion('sat', 'ielts-r-02'), false, 'сервер не примет id другого экзамена');
+  console.log('PASS  CRM разбор ошибок: ответы в записи, сценарии слабых мест, фильтр по банку');
+}

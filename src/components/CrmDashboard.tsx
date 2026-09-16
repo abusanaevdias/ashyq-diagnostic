@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CRM_STAGES, CRM_STAGE_LABELS, type CrmRecord, type CrmSnapshot, type CrmStage } from '@/lib/crm';
 import { EditorialLabel, RedStar, Wordmark } from '@/components/ui/Brand';
+import { analyzeAnswers } from '@/lib/mistakes';
 
 const SESSION_KEY = 'ashyq:crm:admin-key';
 /** Вход аккаунтом ASHYQ (CRM-PROD-001) — только когда сайт работает с Supabase Auth. */
@@ -48,6 +49,58 @@ function recordName(record: CrmRecord): string {
 /** Конверсия шага воронки к предыдущему: N/prev в %, иначе прочерк. */
 function funnelConversion(value: number, prev: number): string {
   return prev > 0 ? `${Math.round((value / prev) * 100)}%` : '—';
+}
+
+/** Разбор диагностики: слабые места по сценариям + ответ на каждый вопрос (CRM-MISTAKES-001). */
+function MistakesPanel({ record }: { record: CrmRecord }) {
+  const report = useMemo(() => (record.answers ? analyzeAnswers(record.exam, record.answers) : null), [record.answers, record.exam]);
+  if (!report || report.total === 0) {
+    return (
+      <div className="lg:col-span-2">
+        <p className="label text-ink-faint">Разбор ошибок</p>
+        <p className="mt-2 text-[0.86rem] text-ink-soft">{record.band ? 'Ответы по вопросам не сохранены — диагностика пройдена до обновления CRM.' : 'Клиент не проходил диагностику.'}</p>
+      </div>
+    );
+  }
+  const reviews = [...report.reviews].sort((a, b) => Number(a.correct) - Number(b.correct));
+  return (
+    <div className="lg:col-span-2">
+      <p className="label text-ink-faint">Разбор ошибок · верно {report.correct} из {report.total}</p>
+      {report.weakSpots.length === 0 ? (
+        <p className="mt-2 text-[0.86rem] text-ink">Ошибок нет — можно предлагать программу на высокий балл.</p>
+      ) : (
+        <ul className="mt-3 grid gap-3 md:grid-cols-2">
+          {report.weakSpots.map((spot) => (
+            <li key={spot.id} className={`border bg-paper-card p-3 ${spot.severity === 'high' ? 'border-red/60' : 'border-line'}`}>
+              <p className="text-[0.92rem] font-semibold text-ink">{spot.severity === 'high' ? <span className="text-red">● </span> : null}{spot.title}</p>
+              <p className="mt-1 text-[0.78rem] text-ink-faint">{spot.evidence}</p>
+              <p className="mt-2 text-[0.84rem] text-ink-soft">{spot.advice}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+      <details className="mt-4">
+        <summary className="cursor-pointer text-[0.86rem] font-semibold text-ink">Ответы по вопросам</summary>
+        <ol className="mt-3 space-y-2">
+          {reviews.map((item) => (
+            <li key={item.id} className={`border-l-2 pl-3 ${item.correct ? 'border-line' : 'border-red'}`}>
+              <p className="text-[0.86rem]"><span className={item.correct ? 'text-ink-faint' : 'font-semibold text-red'}>{item.correct ? 'Верно' : item.answer ? 'Ошибка' : 'Пропуск'}</span> · {item.skillLabel}</p>
+              {item.correct ? null : (
+                <>
+                  <p className="mt-1 text-[0.8rem] text-ink-soft">Ответ: {item.answer ?? '—'} · правильно: {item.correctAnswer}</p>
+                  <details className="mt-1">
+                    <summary className="cursor-pointer text-[0.76rem] text-ink-faint">Вопрос и решение</summary>
+                    <p className="mt-1 whitespace-pre-line text-[0.8rem] text-ink">{item.prompt}</p>
+                    <p className="mt-1 text-[0.8rem] text-ink-soft">{item.explanation}</p>
+                  </details>
+                </>
+              )}
+            </li>
+          ))}
+        </ol>
+      </details>
+    </div>
+  );
 }
 
 export default function CrmDashboard() {
@@ -405,6 +458,7 @@ export default function CrmDashboard() {
                           <button type="submit" className="btn btn-primary btn-small mt-3" disabled={!note.trim() || savingId === record.runId}>Сохранить заметку</button>
                         </form>
                       </div>
+                      <MistakesPanel record={record} />
                     </div>
                   ) : null}
                 </article>

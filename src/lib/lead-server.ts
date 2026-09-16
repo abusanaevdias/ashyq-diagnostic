@@ -33,6 +33,8 @@ export interface StoredLead {
   strongest?: string;
   weakest?: string;
   elapsedMin?: number;
+  /** Ответы по вопросам, отфильтрованные по банку (CRM-MISTAKES-001) */
+  answers?: Record<string, string | null>;
   utm?: Record<string, string>;
   receivedAt: string;
   ip: string;
