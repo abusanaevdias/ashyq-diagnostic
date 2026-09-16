@@ -21,7 +21,7 @@ export function usesSupabaseLeads(): boolean {
   return resolveLeadsStorage(process.env).provider === 'supabase';
 }
 
-async function rest<T>(path: string, init?: RequestInit): Promise<T> {
+export async function supabaseRest<T>(path: string, init?: RequestInit): Promise<T> {
   const active = config();
   if (!active) throw new Error('Supabase lead provider is disabled');
   const response = await fetch(`${active.url}/rest/v1/${path}`, {
@@ -48,7 +48,7 @@ async function rest<T>(path: string, init?: RequestInit): Promise<T> {
 export async function checkSupabaseRateLimit(key: string, windowSeconds: number, max: number): Promise<boolean> {
   if (!config()) return true;
   try {
-    const allowed = await rest<boolean>('rpc/check_rate_limit', {
+    const allowed = await supabaseRest<boolean>('rpc/check_rate_limit', {
       method: 'POST',
       body: JSON.stringify({ p_key: key, p_window_seconds: windowSeconds, p_max: max }),
     });
@@ -59,42 +59,42 @@ export async function checkSupabaseRateLimit(key: string, windowSeconds: number,
 }
 
 export async function appendSupabaseLead(lead: StoredLead): Promise<void> {
-  await rest('crm_leads', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({
+  await supabaseRest('crm_leads', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({
     run_id: lead.runId, dedupe_key: lead.dedupeKey, kind: lead.kind, exam: lead.exam,
     payload: lead, received_at: lead.receivedAt,
   }) });
 }
 
 export async function readSupabaseLeads(): Promise<StoredLead[]> {
-  const rows = await rest<Array<Row<StoredLead>>>('crm_leads?select=payload&order=received_at.asc');
+  const rows = await supabaseRest<Array<Row<StoredLead>>>('crm_leads?select=payload&order=received_at.asc');
   return rows.map((row) => row.payload);
 }
 
 export async function findSupabaseDuplicate(lead: StoredLead, cutoff: string): Promise<boolean> {
   const key = encodeURIComponent(lead.dedupeKey ?? '');
   const since = encodeURIComponent(cutoff);
-  const rows = await rest<Array<{ id: string }>>(`crm_leads?select=id&dedupe_key=eq.${key}&received_at=gte.${since}&limit=1`);
+  const rows = await supabaseRest<Array<{ id: string }>>(`crm_leads?select=id&dedupe_key=eq.${key}&received_at=gte.${since}&limit=1`);
   return rows.length > 0;
 }
 
 export async function readSupabaseEvents(): Promise<CrmEvent[]> {
-  const rows = await rest<Array<Row<CrmEvent>>>('crm_events?select=payload&order=created_at.asc');
+  const rows = await supabaseRest<Array<Row<CrmEvent>>>('crm_events?select=payload&order=created_at.asc');
   return rows.map((row) => row.payload);
 }
 
 export async function appendSupabaseEvents(events: CrmEvent[]): Promise<void> {
-  await rest('crm_events', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(events.map((event) => ({
+  await supabaseRest('crm_events', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(events.map((event) => ({
     id: event.id, run_id: event.runId, payload: event, created_at: event.createdAt,
   }))) });
 }
 
 export async function readSupabaseDeliveries(): Promise<DeliveryLedgerEntry[]> {
-  const rows = await rest<Array<Row<DeliveryLedgerEntry>>>('crm_delivery_entries?select=payload&order=updated_at.asc');
+  const rows = await supabaseRest<Array<Row<DeliveryLedgerEntry>>>('crm_delivery_entries?select=payload&order=updated_at.asc');
   return rows.map((row) => row.payload);
 }
 
 export async function appendSupabaseDelivery(entry: DeliveryLedgerEntry): Promise<void> {
-  await rest('crm_delivery_entries', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({
+  await supabaseRest('crm_delivery_entries', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({
     id: entry.id, run_id: entry.runId, dedupe_key: entry.key, channel: entry.channel,
     payload: entry, updated_at: entry.updatedAt,
   }) });
