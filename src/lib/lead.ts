@@ -28,6 +28,8 @@ export interface LeadPayload {
   strongest?: string | null;
   weakest?: string | null;
   elapsedMin?: number;
+  /** Ответы по вопросам (questionId → ответ) — для разбора ошибок в CRM */
+  answers?: Record<string, string | null>;
   utm?: UtmParams;
   /** Honeypot: у человека всегда пусто; заполнено — заявку тихо отбрасывает сервер. */
   website?: string;

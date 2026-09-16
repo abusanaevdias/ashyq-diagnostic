@@ -4,6 +4,7 @@ import { normalizePhone, toInternationalKz } from '@/lib/lead';
 import { deliverLead } from '@/lib/lead-delivery';
 import { computeDedupeKey } from '@/lib/crm';
 import { checkSupabaseRateLimit } from '@/lib/supabase-leads';
+import { isKnownQuestion } from '@/lib/mistakes';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -81,6 +82,17 @@ function parseUtm(value: unknown): Record<string, string> | undefined {
   return Object.keys(out).length > 0 ? out : undefined;
 }
 
+/** Ответы диагностики: только id из банка этого экзамена, короткие строки (CRM-MISTAKES-001). */
+function parseAnswers(value: unknown, exam: 'sat' | 'ielts'): Record<string, string | null> | undefined {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+  const out: Record<string, string | null> = {};
+  for (const [id, answer] of Object.entries(value as Record<string, unknown>).slice(0, 40)) {
+    if (!isKnownQuestion(exam, id)) continue;
+    out[id] = str(answer, 60) ?? null;
+  }
+  return Object.keys(out).length > 0 ? out : undefined;
+}
+
 export async function POST(req: Request) {
   const ip = clientIp(req);
   if (globallyFlooded() || rateLimited(ip)) {
@@ -150,6 +162,7 @@ export async function POST(req: Request) {
     strongest: str(body.strongest, 80),
     weakest: str(body.weakest, 80),
     elapsedMin: num(body.elapsedMin),
+    answers: parseAnswers(body.answers, exam),
     utm: parseUtm(body.utm),
     receivedAt: new Date().toISOString(),
     ip,

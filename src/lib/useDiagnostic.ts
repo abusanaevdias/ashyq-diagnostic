@@ -507,6 +507,7 @@ export function useDiagnostic(): DiagnosticController {
       strongest: result.strongest[0]?.domain ?? null,
       weakest: result.weakest[0]?.domain ?? null,
       elapsedMin: Math.max(1, Math.round(result.elapsedMs / 60000)),
+      answers: Object.fromEntries(run.questionIds.map((id) => [id, run.answers[id] ?? null])),
       utm,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

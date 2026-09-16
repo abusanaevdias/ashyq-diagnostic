@@ -96,6 +96,8 @@ export interface CrmRecord {
   total?: number;
   strongest?: string;
   weakest?: string;
+  /** Ответы диагностики — разбор ошибок строится в карточке (src/lib/mistakes.ts) */
+  answers?: Record<string, string | null>;
   source?: string;
   campaign?: string;
   stage: CrmStage;
@@ -242,6 +244,7 @@ export function buildCrmSnapshot(
       }
       if (lead.correct !== undefined) record.correct = lead.correct;
       if (lead.total !== undefined) record.total = lead.total;
+      if (lead.answers) record.answers = lead.answers;
       if (lead.utm?.utm_source) record.source = lead.utm.utm_source;
       if (lead.utm?.utm_campaign) record.campaign = lead.utm.utm_campaign;
       record.activities.push({
