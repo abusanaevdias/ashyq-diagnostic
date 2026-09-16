@@ -3,6 +3,8 @@ import { isAuthorized, safeEqual } from '@/lib/admin-auth';
 import { appendCrmEvents, readCrmSnapshot } from '@/lib/crm-server';
 import { callTelegram, isManager, telegramApi } from '@/lib/telegram-auth';
 import { BOT_COMMANDS, handleUpdate, type TgUpdate } from '@/lib/telegram-bot';
+import { handleThreadsUpdate, isThreadsUpdate } from '@/lib/threads-bot';
+import { threadsIo } from '@/lib/threads-server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -17,6 +19,8 @@ export async function POST(request: Request) {
 
   try {
     const update = (await request.json()) as TgUpdate;
+    // черновики Threads (THREADS-BOT-001): кнопки и ответ на карточку своим текстом
+    if (isThreadsUpdate(update) && (await handleThreadsUpdate(update, threadsIo()))) return NextResponse.json({ ok: true });
     await handleUpdate(update, { snapshot: readCrmSnapshot, append: appendCrmEvents, isManager, api: telegramApi });
   } catch (error) {
     console.error('[ashyq bot] update failed:', error instanceof Error ? error.message : 'unknown');

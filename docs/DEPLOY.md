@@ -187,3 +187,41 @@ npx tsx scripts/env-check.ts
 Выполните `supabase/migrations/20260915000500_rate_limit.sql` в SQL Editor. Без него защита
 формы от спама работает только в памяти одного инстанса (на Vercel их несколько), а
 общий лимит не действует. Функция самоочищается, отдельный cron не нужен.
+
+## ИИ в Threads (THREADS-BOT-001)
+
+Бот отвечает на комментарии под постами @ashyqedu и на упоминания, реагирует на
+слова-триггеры и комментирует свежие посты по темам. Характер, триггеры и темы
+поиска — `src/lib/threads-persona.ts`. Пока `THREADS_AUTOPUBLISH` пуст, каждый
+ответ приходит в группу Telegram: «Опубликовать», «Отклонить» или ответ на
+карточку своим текстом — он и уйдёт в Threads. Эти решения бот берёт в примеры
+стиля (последние 30), поэтому чем больше разобрано, тем точнее ответы.
+
+1. SQL Editor: `supabase/migrations/20260916000100_threads_bot.sql`.
+2. developers.facebook.com → Create App → сценарий «Access the Threads API».
+   В настройках Threads: Redirect Callback URL `https://<домен>/api/threads/auth`;
+   права — `threads_basic`, `threads_content_publish`, `threads_read_replies`,
+   `threads_manage_replies`, `threads_manage_mentions`, `threads_keyword_search`.
+   В App Roles → Roles добавить аккаунт @ashyqedu как Threads Tester и принять
+   приглашение в Threads (Настройки → Аккаунт → Сайты → Приглашения).
+3. Vercel → переменные из `.env.example` (блок Threads), Redeploy.
+4. Открыть `https://<домен>/api/threads/auth`, войти в @ashyqedu → «Threads подключён».
+   Токен живёт 60 дней, бот продлевает его сам.
+5. Supabase SQL Editor — обход каждые 10 минут:
+
+```sql
+select cron.schedule('ashyq-threads', '*/10 * * * *', $$
+  select net.http_get(
+    url := 'https://<домен>/api/threads/cron',
+    headers := jsonb_build_object('Authorization', 'Bearer <CRON_SECRET>'),
+    timeout_milliseconds := 30000
+  )
+$$);
+```
+
+Ответ `202` — обход запущен, итог в логах Vercel (`[ashyq threads] run`).
+Ограничения Meta: пока приложение не прошло App Review, поиск находит только свои
+посты, а упоминания и ответы работают только для тестировщиков приложения. Для
+комментариев под чужими постами нужен App Review прав `threads_keyword_search`
+и `threads_manage_mentions`. Публикацию без одобрения (`THREADS_AUTOPUBLISH=1`)
+включать, когда черновики стабильно одобряются без правок.
