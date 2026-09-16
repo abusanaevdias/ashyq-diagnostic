@@ -66,7 +66,7 @@ export default function SeasonForm({ context = 'season' }: SeasonFormProps) {
         aria-hidden="true"
         value={website}
         onChange={(e) => setWebsite(e.target.value)}
-        style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+        style={{ position: 'absolute', left: '-9999px', width: 0, height: 0, padding: 0, border: 0, opacity: 0 }}
       />
 
       <div className={styles.formGrid}>
