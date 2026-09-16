@@ -39,7 +39,8 @@ export async function PATCH(request: Request) {
     : undefined;
   const note = typeof body.note === 'string' ? body.note.trim().slice(0, 1_000) : '';
   const retryDelivery = body.action === 'retry-delivery';
-  if (!runId || (!stage && !note && !retryDelivery)) {
+  const remove = body.action === 'delete';
+  if (!runId || (!stage && !note && !retryDelivery && !remove)) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
@@ -52,6 +53,10 @@ export async function PATCH(request: Request) {
   }
 
   const createdAt = new Date().toISOString();
+  if (remove) {
+    await appendCrmEvents([{ id: randomUUID(), runId, type: 'delete', createdAt }]);
+    return NextResponse.json({ ok: true });
+  }
   const events: CrmEvent[] = [];
   if (stage) events.push({ id: randomUUID(), runId, type: 'stage_change', stage, createdAt });
   if (note) events.push({ id: randomUUID(), runId, type: 'note', body: note, createdAt });
