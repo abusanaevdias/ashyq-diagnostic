@@ -29,6 +29,8 @@ export interface LeadPayload {
   weakest?: string | null;
   elapsedMin?: number;
   utm?: UtmParams;
+  /** Honeypot: у человека всегда пусто; заполнено — заявку тихо отбрасывает сервер. */
+  website?: string;
 }
 
 export const PHONE_MIN_DIGITS = 10;

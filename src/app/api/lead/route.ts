@@ -3,6 +3,7 @@ import { appendLead, findRecentDuplicate, type StoredLead } from '@/lib/lead-ser
 import { normalizePhone, toInternationalKz } from '@/lib/lead';
 import { deliverLead } from '@/lib/lead-delivery';
 import { computeDedupeKey } from '@/lib/crm';
+import { checkSupabaseRateLimit } from '@/lib/supabase-leads';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -98,6 +99,18 @@ export async function POST(req: Request) {
     body = parsed as Record<string, unknown>;
   } catch {
     return NextResponse.json({ ok: false }, { status: 400 });
+  }
+
+  // Honeypot: скрытое поле, которого человек не видит. Бот его заполняет —
+  // молча отвечаем «ок», не сохраняя и не уведомляя (LEAD-RATELIMIT-001).
+  if (typeof body.website === 'string' && body.website.trim()) {
+    return NextResponse.json({ ok: true });
+  }
+
+  // Общий лимит на все инстансы (в отличие от rateLimited выше, живущего в памяти одного).
+  // Только для форм с контактом — авто-события диагностики (result/whatsapp) не спамят менеджеров.
+  if ((body.kind === 'contact' || body.kind === 'season') && !(await checkSupabaseRateLimit(`lead:ip:${ip}`, RATE_LIMIT_WINDOW_MS / 1000, RATE_LIMIT_MAX))) {
+    return NextResponse.json({ ok: false }, { status: 429 });
   }
 
   const kind = body.kind;

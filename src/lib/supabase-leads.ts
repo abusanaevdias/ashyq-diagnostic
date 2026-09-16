@@ -40,6 +40,24 @@ async function rest<T>(path: string, init?: RequestInit): Promise<T> {
   return body ? JSON.parse(body) as T : undefined as T;
 }
 
+/**
+ * Общий лимит частоты через RPC check_rate_limit (LEAD-RATELIMIT-001): один счётчик
+ * на все инстансы Vercel. true — в пределах лимита. Fail-open: при недоступности
+ * базы пропускаем — потерять клиента хуже, чем пропустить немного спама.
+ */
+export async function checkSupabaseRateLimit(key: string, windowSeconds: number, max: number): Promise<boolean> {
+  if (!config()) return true;
+  try {
+    const allowed = await rest<boolean>('rpc/check_rate_limit', {
+      method: 'POST',
+      body: JSON.stringify({ p_key: key, p_window_seconds: windowSeconds, p_max: max }),
+    });
+    return allowed !== false;
+  } catch {
+    return true;
+  }
+}
+
 export async function appendSupabaseLead(lead: StoredLead): Promise<void> {
   await rest('crm_leads', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({
     run_id: lead.runId, dedupe_key: lead.dedupeKey, kind: lead.kind, exam: lead.exam,
