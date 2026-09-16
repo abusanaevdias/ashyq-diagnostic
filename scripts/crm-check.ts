@@ -187,3 +187,14 @@ console.log('PASS  CRM показывает статусы доставки и �
   assert.equal(isKnownQuestion('sat', 'ielts-r-02'), false, 'сервер не примет id другого экзамена');
   console.log('PASS  CRM разбор ошибок: ответы в записи, сценарии слабых мест, фильтр по банку');
 }
+
+// CRM-LIVE-001: лид без ответов (старая версия страницы) не блокирует досылку с ответами
+{
+  const old: StoredLead = { ...base, runId: 'run-backfill', kind: 'result', band: '5.5–6.0' };
+  const withAns: StoredLead = { ...old, answers: { 'sat-math-01': 'C' }, receivedAt: '2026-09-13T10:30:00.000Z' };
+  assert.notEqual(computeDedupeKey(old), computeDedupeKey(withAns), 'досылка с ответами — не дубль');
+  const record = buildCrmSnapshot([old, withAns], []).records[0];
+  assert.deepEqual(record.answers, { 'sat-math-01': 'C' });
+  assert.equal(record.activities.filter((activity) => activity.type === 'result').length, 1, 'одна диагностика — одно событие в ленте');
+  console.log('PASS  CRM досылка ответов к диагностике без дубля в ленте');
+}
