@@ -181,3 +181,9 @@ where id = (select id from auth.users where email = 'ПОЧТА-СОТРУДНИ
 ```bash
 npx tsx scripts/env-check.ts
 ```
+
+## Лимит заявок (LEAD-RATELIMIT-001)
+
+Выполните `supabase/migrations/20260915000500_rate_limit.sql` в SQL Editor. Без него защита
+формы от спама работает только в памяти одного инстанса (на Vercel их несколько), а
+общий лимит не действует. Функция самоочищается, отдельный cron не нужен.

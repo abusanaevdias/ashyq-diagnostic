@@ -18,6 +18,7 @@ export default function SeasonForm({ context = 'season' }: SeasonFormProps) {
   const [grade, setGrade] = useState('');
   const [exam, setExam] = useState<'ielts' | 'sat'>('ielts');
   const [consent, setConsent] = useState(false);
+  const [website, setWebsite] = useState(''); // honeypot: человек не видит и не заполняет
   const [status, setStatus] = useState<Status>('idle');
   const [touched, setTouched] = useState(false);
   const isContact = context === 'contact';
@@ -35,6 +36,7 @@ export default function SeasonForm({ context = 'season' }: SeasonFormProps) {
       phone: phone.trim(),
       grade: grade.trim() || undefined,
       plannedWhen: isContact ? undefined : 'next-season',
+      website,
     });
     setStatus(ok ? 'done' : 'error');
   }
@@ -55,6 +57,18 @@ export default function SeasonForm({ context = 'season' }: SeasonFormProps) {
 
   return (
     <form className={styles.form} onSubmit={submit} noValidate>
+      {/* honeypot: скрыт от людей (off-screen, не в табе), боты заполняют — сервер отбрасывает */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+      />
+
       <div className={styles.formGrid}>
         <div>
           <label className={styles.fieldLabel} htmlFor={`${context}-name`}>Имя *</label>
