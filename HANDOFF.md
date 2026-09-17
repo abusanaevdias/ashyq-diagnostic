@@ -49,6 +49,10 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 - Quick Diagnostic даёт предварительную оценку, а не официальный IELTS/SAT
   score. Не менять disclaimer и aria/e2e-названия без обновления тестов.
+- «Компас» (`/career`) — ориентир по склонностям, а не психологический диагноз
+  и не официальный MBTI®. Дисклеймер, предупреждение «почти монетка» при всех
+  сбалансированных шкалах и формулировка `examHint` как гипотезы — часть
+  контракта: e2e проверяет эти тексты.
 - Существующие localStorage keys и state machine диагностики сохраняют
   обратную совместимость.
 - CRM `/crm` — operator MVP: общий `ASHYQ_ADMIN_KEY`, append-only JSONL,
@@ -74,6 +78,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 | `/courses` | Каталог v3: фильтр IELTS/SAT/командный формат, 4 карточки, blush CTA в диагностику |
 | `/courses/ielts`, `/courses/sat` | Индексируемые v3-страницы курсов: программа, маршрут подготовки, FAQ и CTA в соответствующую диагностику; коммерческие условия честно помечены как предварительные до подтверждения |
 | `/diagnostic` | v3-интро (DESIGN_V3 §6.3) → та же воронка диагностики; `/` сохраняет свой Landing |
+| `/career` | «Компас»: профориентационный тест на 40 утверждений → профиль, топ-3 направления, разбор по сферам и мост в диагностику. Интро рендерится на сервере, индексируется |
+| `/career/<код>` | 16 статических страниц профилей «Компаса» (`/career/intj` и т. д.): результат по ссылке открывается без JS, `dynamicParams = false` |
 | `/program`, `/progress`, `/community` | Публичные продуктовые страницы, v3 (`.v3` + NavBar/Footer) |
 | `/faq`, `/privacy`, `/terms` | v3 (`.v3`) |
 | `/blog` | v3, демо-темы до настоящих статей: плашка, noindex, не в sitemap |
@@ -146,6 +152,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
+| CAREER-COMPASS-001 | REVIEW | Claude Opus 5; ветка `claude/career-test-website-a98uzk` | — | Профориентационный тест «Компас»: `/career` (интро + прохождение + свой результат) и 16 статических страниц профиля `/career/<код>`. Данные — `src/data/career/{questions,profiles,professions}.ts` (40 утверждений по 10 на шкалу и ровно по 5 на полюс, 16 профилей, 79 профессий в 6 сферах), движок — `src/lib/career.ts` + `src/lib/career-types.ts`, UI — `src/components/CareerV3.*` и `src/components/career/CareerResultView.tsx`. Точки входа: 4-я карточка на главной, aside на `/diagnostic`, футер «Учёба», `/search`, FAQ, sitemap. Своё хранилище `ashyq:v1:career` (`STORAGE_KEYS.career`), события `career_test_*`. Воронка Quick Diagnostic, её ключи и e2e-названия не менялись. Плюс собственные OG-картинки (`src/lib/career-og.tsx` + метаданные-роуты `/career/opengraph-image` и `/career/<код>/opengraph-image`, 17 статических PNG 1200×630): результатом делятся ссылкой, и превью показывает конкретный профиль с его топ-3, а не общий баннер сайта. Точка входа добавлена и на `/program`. Проверки: e2e `128/128`, career-unit, check:seo `21 canonical` + 3 OG-картинки, check:tokens `9/9`, check:units, a11y-perf `50 audits / 25 routes` (a11y 100 на `/career` и `/career/intj`), v3-visual, validate:bank, lint/typecheck/build green. Claim и работа лежат в ветке задачи: у сессии нет разрешения на push в `main` |
 | CRM-MISTAKES-001 | REVIEW | Claude Opus 5; ветка `claude/crm-mistakes` | — | Разбор ошибок клиента в CRM. Диагностика шлёт в лиде `result` ответы по каждому вопросу (`answers`); `/api/lead` принимает только id из банка этого экзамена, строки ≤60, ≤40 шт. Правильность пересчитывается по банку в `src/lib/mistakes.ts` (`analyzeAnswers`): ответы по вопросам (вопрос, ответ клиента, правильный, решение) и слабые места по сценариям — поведенческие (пропуски, невнимательность в лёгких, потолок сложности), точные (IELTS False↔Not Given, SAT текстовые задачи хуже «чистых») и по темам (алгебра, Advanced Math, данные, геометрия, понимание текста, лексика, грамматика, переходы; IELTS T/F/NG, главная мысль, выводы, парафраз, запись ответа, числа на слух, ловушки, спикеры) с советом, что делать. Карточка CRM: блок «Разбор ошибок», важные — красной рамкой. Старые лиды без ответов — честная подпись. SQL не нужен (payload jsonb). Проверки: typecheck, lint, build, check:crm (+сценарии), check:crm-ui, e2e 119/119, ручная проверка карточки в браузере. Не сделано: слабые места в Telegram-уведомлении (там работает THREADS-BOT-001) |
 | CRM-LIVE-001 | REVIEW | Claude Opus 5; ветка `claude/crm-live-kind-labels` | — | (1) CRM сама подтягивает новые лиды: опрос `/api/crm` раз в 20 с, пока вкладка видна, и сразу при возврате на вкладку. (2) Подписи уровня под результатом без сравнений «ниже/выше среднего»: Стартовая точка → Есть на что опереться → Хорошая основа → Уверенный → Сильный → Высокий уровень (`scoring.ts`). (3) Причина «ответы не сохранены» после деплоя PR #44: первый лид `result` без ответов (старая версия страницы) делал досылку с ответами «дублем» за 24 ч → ответы терялись. `computeDedupeKey` различает лид с ответами; в ленте CRM досылка не дублирует событие. Проверки: typecheck, lint, build, check:crm (+досылка), card-image-check, check:crm-ui, e2e 119/119, автообновление проверено в браузере |
 | CRM-DELETE-001 | REVIEW | Claude Opus 5; ветка `claude/crm-delete-activity` | — | (1) «Удалить запись» в карточке CRM (с подтверждением): событие `delete` в `crm_events`, запись и её лиды скрываются из списка и статистики; новая заявка с тем же runId возвращает запись. Строки в базе не стираются (у service_role нет права delete, SQL не нужен). (2) Под каждой заявкой в списке — последняя активность мелким шрифтом с датой. (3) Supabase-чтение CRM постранично: PostgREST отдаёт максимум 1000 строк, а CRM читала по возрастанию — после 1000 лидов новые заявки и ответы не появлялись. (4) В «Разборе ошибок» различаются случаи «результат диагностики не дошёл до CRM» и «ответы не сохранены». Проверки: typecheck, lint, build, check:crm (+удаление), check:crm-ui, env-check, e2e 119/119; в браузере: реальное прохождение SAT → разбор 6/16 виден, удаление, строка активности |
@@ -260,6 +267,23 @@ npx tsx scripts/season-visual-check.ts
 - owned championship slice: hardcoded colors `0`; токены совпадают с
   приложенным источником.
 
+- после CAREER-COMPASS-001, OG-картинки профилей (2026-09-17): e2e `128/128`
+  (+`program: ссылка на Компас перед диагностикой`), check:seo `21 canonical`
+  и три OG-картинки 1200×630 (`/opengraph-image`, `/career/opengraph-image`,
+  `/career/intj/opengraph-image`), check:tokens `9/9`, check:units,
+  a11y-perf `50 audits / 25 routes`, v3-visual overflow `0`, validate:bank,
+  lint/typecheck/build green; сборка пререндерит 16 страниц профилей и
+  16 их OG-картинок статически;
+- после CAREER-COMPASS-001 (2026-09-16): e2e `127/127` без `CRM_ADMIN_KEY`
+  (+11 career: интро, дисклеймер, refresh-персистентность, полный прогон на
+  40 утверждений, «почти монетка» при сплошном согласии, отдельный ключ
+  localStorage, серверная страница профиля, 404 на неизвестный код, возврат
+  к сохранённому результату, 16 ссылок с интро, точка входа с главной),
+  career-unit PASS, check:units PASS, check:seo `21 canonical` PASS,
+  check:tokens `9/9`, a11y-perf `50 audits / 25 routes` (a11y 100 на
+  `/career` и `/career/intj`), v3-visual 1440/390 overflow `0`,
+  validate:bank `0/0`, lint/typecheck/build green.
+
 После любого merge все проверки нужно повторить на объединённом `main` —
 результаты веток не заменяют интеграционный прогон.
 
@@ -275,6 +299,11 @@ npx tsx scripts/season-visual-check.ts
 - `src/lib/useDiagnostic.ts` — state machine и persistence диагностики.
 - `src/features/season/types.ts`, `fixture.ts` — заменяемая модель прототипа сезона.
 - `src/components/season/` — public season hub и Season HQ.
+- `src/lib/career.ts`, `src/data/career/` — движок и контент теста «Компас»;
+  баланс банка и полнота выдачи защищены `scripts/career-unit-check.ts`.
+- `src/lib/career-og.tsx` — общий макет OG-картинок «Компаса». Это разметка
+  для satori (next/og), а не для браузера: только flex-подмножество CSS и
+  шрифты `.woff` (woff2 satori не читает).
 - `scripts/e2e-check.ts` — главный регрессионный контракт.
 
 ## 8. Шаблон обновления задачи

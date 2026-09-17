@@ -120,7 +120,7 @@ export function FilterChip({ children, active = false, onClick }: { children: Re
 }
 
 const FOOTER_GROUPS = [
-  { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/program', label: 'Программа' }, { href: '/?start=ielts', label: 'Диагностика' }, { href: '/progress', label: 'Прогресс' }] },
+  { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/program', label: 'Программа' }, { href: '/?start=ielts', label: 'Диагностика' }, { href: '/career', label: 'Компас' }, { href: '/progress', label: 'Прогресс' }] },
   { title: 'ASHYQ', links: [{ href: '/about', label: 'О нас' }, { href: '/blog', label: 'Блог' },{ href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }, { href: '/contacts', label: 'Контакты' }] },
   { title: 'Документы', links: [{ href: '/privacy', label: 'Конфиденциальность' }, { href: '/terms', label: 'Условия' }] },
   { title: 'Соцсети', links: SOCIAL_LINKS.map((social) => ({ href: social.href, label: social.label })) },

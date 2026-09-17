@@ -27,6 +27,26 @@
   line-height: 1.55;
 }
 
+.asideLink {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.asideLink a {
+  color: var(--red-deep);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.asideLink a:hover {
+  color: var(--red);
+}
+
 .script {
   margin-top: 20px;
   color: var(--red);

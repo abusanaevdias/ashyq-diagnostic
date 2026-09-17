@@ -5,6 +5,8 @@ const CANONICAL_ROUTES = [
   '/',
   '/about',
   '/blog',
+  '/career',
+  '/career/intj',
   '/community',
   '/contacts',
   '/courses',
@@ -60,17 +62,31 @@ async function checkNoindex(route: string) {
   console.log(`PASS noindex ${route}`);
 }
 
-async function checkOgImage() {
-  const response = await fetch(`${BASE_URL}/opengraph-image`);
+async function checkOgImage(route = '/opengraph-image') {
+  const response = await fetch(`${BASE_URL}${route}`);
   const bytes = new Uint8Array(await response.arrayBuffer());
   const signature = [137, 80, 78, 71, 13, 10, 26, 10];
-  if (!response.ok || response.headers.get('content-type') !== 'image/png') throw new Error(`OG image: HTTP ${response.status} ${response.headers.get('content-type')}`);
-  if (!signature.every((value, index) => bytes[index] === value)) throw new Error('OG image: invalid PNG signature');
+  if (!response.ok || response.headers.get('content-type') !== 'image/png') throw new Error(`OG image ${route}: HTTP ${response.status} ${response.headers.get('content-type')}`);
+  if (!signature.every((value, index) => bytes[index] === value)) throw new Error(`OG image ${route}: invalid PNG signature`);
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const width = view.getUint32(16);
   const height = view.getUint32(20);
-  if (width !== 1200 || height !== 630) throw new Error(`OG image: ${width}x${height}, expected 1200x630`);
-  console.log(`PASS OG image ${width}x${height}, ${bytes.byteLength} bytes`);
+  if (width !== 1200 || height !== 630) throw new Error(`OG image ${route}: ${width}x${height}, expected 1200x630`);
+  console.log(`PASS OG image ${route} ${width}x${height}, ${bytes.byteLength} bytes`);
+}
+
+/**
+ * Профили «Компаса» переопределяют корневую картинку своей: результатом
+ * делятся ссылкой, и превью должно показывать конкретный профиль.
+ */
+async function checkCareerOgImage(route: string) {
+  const html = await (await fetch(`${BASE_URL}${route}`)).text();
+  const ogImage = tags(html, 'meta').find((tag) => attribute(tag, 'property') === 'og:image');
+  const src = ogImage ? attribute(ogImage, 'content') : null;
+  if (!src || !src.includes(`${route}/opengraph-image`)) {
+    throw new Error(`${route}: og:image ${src ?? '—'}, expected own image under ${route}`);
+  }
+  await checkOgImage(new URL(src).pathname);
 }
 
 /** JSON-LD Schema.org (SEO-SCHEMA-001): блок разбирается как JSON и содержит нужный @type. */
@@ -88,6 +104,8 @@ async function main() {
   for (const route of CANONICAL_ROUTES) await checkCanonical(route);
   for (const route of NOINDEX_ROUTES) await checkNoindex(route);
   await checkOgImage();
+  await checkCareerOgImage('/career');
+  await checkCareerOgImage('/career/intj');
   console.log(`PASS SEO metadata: ${CANONICAL_ROUTES.length} canonical routes`);
 }
 

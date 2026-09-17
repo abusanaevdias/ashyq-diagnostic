@@ -16,6 +16,7 @@ export const SITE_ROUTES = [
   '/about',
   '/contacts',
   '/diagnostic',
+  '/career',
   '/program',
   '/progress',
   '/community',

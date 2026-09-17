@@ -18,6 +18,8 @@ const PUBLIC_ROUTES = [
   '/blog',
   '/blog/ielts-true-false-not-given',
   '/blog/sat-math-module-time',
+  '/career',
+  '/career/intj',
   '/community',
   '/contacts',
   '/courses',

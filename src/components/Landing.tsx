@@ -93,13 +93,14 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
         <Reveal>
           <section id="directions" className={`${styles.container} ${styles.section}`}>
             <div className={styles.sectionHead}>
-              <div><MicroLabel>Три точки входа</MicroLabel><h2 className={styles.heading}>Выберите свой следующий шаг</h2></div>
-              <p className={styles.sectionIntro}>Можно сразу проверить уровень или сначала посмотреть, как устроена подготовка. В каждом направлении остаётся понятный следующий шаг.</p>
+              <div><MicroLabel>Четыре точки входа</MicroLabel><h2 className={styles.heading}>Выберите свой следующий шаг</h2></div>
+              <p className={styles.sectionIntro}>Можно сразу проверить уровень, а можно начать с вопроса «куда я вообще иду». В каждом направлении остаётся понятный следующий шаг.</p>
             </div>
             <div className={styles.directionGrid}>
               <DirectionCard href="/?start=ielts" icon="book" eyebrow="12 вопросов" title="IELTS">Reading и Listening в коротком формате. Результат — предварительная оценка, не официальный Band Score.</DirectionCard>
               <DirectionCard href="/?start=sat" icon="target" eyebrow="16 вопросов" title="SAT">Reading &amp; Writing и Math. Диапазон, разбор навыков и ближайший фокус.</DirectionCard>
-              <DirectionCard href="/program" icon="compass" eyebrow="Система ASHYQ" title="Подготовка">План, тренировки, Match Days и прогресс-трекинг в одном учебном маршруте.</DirectionCard>
+              <DirectionCard href="/career" icon="compass" eyebrow="6 минут" title="Компас">Профориентация: профиль, подходящие профессии и экзамен, который к ним ведёт. Для тех, кто ещё выбирает.</DirectionCard>
+              <DirectionCard href="/program" icon="chart" eyebrow="Система ASHYQ" title="Подготовка">План, тренировки, Match Days и прогресс-трекинг в одном учебном маршруте.</DirectionCard>
             </div>
           </section>
         </Reveal>
