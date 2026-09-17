@@ -10,6 +10,7 @@ import { ArrowIcon, Footer, IconChip, MicroLabel, NavBar } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import home from './HomeV3.module.css';
 import styles from './DiagnosticV3.module.css';
+import { AiBadge } from './AiBadge';
 
 /**
  * Интро /diagnostic по DESIGN_V3 §6.3. Только оболочка: запуск идёт через
@@ -76,7 +77,7 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
                 <ul className={styles.checklist}>{GAINS.map((gain) => <li key={gain.text}><IconChip name={gain.icon} />{gain.text}</li>)}</ul>
                 <div className={styles.gainAction}><button type="button" className={home.heroButtonRed} onClick={() => onSelect('ielts')}>Пройти диагностику<ArrowIcon /></button></div>
               </div>
-              <div className={styles.photo}><Image src={PHOTOS.diagnostic.src} alt={PHOTOS.diagnostic.alt} fill sizes="(max-width: 900px) 100vw, 45vw" /></div>
+              <div className={styles.photo}><Image src={PHOTOS.diagnostic.src} alt={PHOTOS.diagnostic.alt} fill sizes="(max-width: 900px) 100vw, 45vw" /><AiBadge /></div>
             </div>
           </section>
         </Reveal>

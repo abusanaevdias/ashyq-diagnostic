@@ -7,6 +7,7 @@ import SeasonForm from './SeasonForm';
 import { Footer, IconChip, MicroLabel, NavBar } from './ui/CleanUi';
 import home from './HomeV3.module.css';
 import styles from './ContactsV3.module.css';
+import { AiBadge } from './AiBadge';
 
 /**
  * /contacts по DESIGN_V3 §6.6. Контакты подтверждены пользователем 2026-09-13
@@ -74,7 +75,7 @@ export default function ContactsV3() {
               </ul>
             </div>
             <div>
-              <div className={styles.photo}><Image src={PHOTOS.contacts.src} alt={PHOTOS.contacts.alt} fill sizes="(max-width: 900px) 100vw, 40vw" /></div>
+              <div className={styles.photo}><Image src={PHOTOS.contacts.src} alt={PHOTOS.contacts.alt} fill sizes="(max-width: 900px) 100vw, 40vw" /><AiBadge /></div>
               <p className={styles.script}>let’s make it happen together</p>
             </div>
           </div>
