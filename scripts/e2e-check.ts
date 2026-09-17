@@ -644,6 +644,17 @@ async function main() {
           dupData.records.filter((record) => record.runId === dedupeRunId).length === 1,
       );
 
+      // Honeypot: заполненное скрытое поле website — сервер отвечает ok, но заявку не сохраняет (LEAD-RATELIMIT-001).
+      const honeypotRunId = `e2e-honeypot-${Date.now().toString(36)}`;
+      const honeypotPost = await p3.request.post(`${BASE}/api/lead`, {
+        data: { kind: 'contact', exam: 'ielts', runId: honeypotRunId, name: 'Bot', phone: '8 706 000 11 22', website: 'http://spam.example' },
+      });
+      const afterHoneypot = (await (await p3.request.get(`${BASE}/api/crm`, { headers })).json()) as { records: Array<{ runId: string }> };
+      check(
+        'leads: honeypot тихо отбрасывает бота',
+        honeypotPost.ok() && !afterHoneypot.records.some((record) => record.runId === honeypotRunId),
+      );
+
       // Доставка: если webhook настроен (CI указывает недостижимый URL),
       // лид должен попасть в ledger как failed и ретраиться вручную.
       if (process.env.ASHYQ_LEAD_WEBHOOK_URL) {

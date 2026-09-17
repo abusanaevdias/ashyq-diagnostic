@@ -22,7 +22,8 @@ export async function PATCH(request: Request) {
   if (!(await isAuthorized(request))) return denied();
 
   const raw = await request.text();
-  if (raw.length > 4_000) return NextResponse.json({ ok: false }, { status: 413 });
+  // удаление пачкой: до 200 runId
+  if (raw.length > 16_000) return NextResponse.json({ ok: false }, { status: 413 });
 
   let body: Record<string, unknown>;
   try {
@@ -31,6 +32,17 @@ export async function PATCH(request: Request) {
     body = parsed as Record<string, unknown>;
   } catch {
     return NextResponse.json({ ok: false }, { status: 400 });
+  }
+
+  // Удаление одной или нескольких записей (CRM-DELETE-001, CRM-BULK-001)
+  if (body.action === 'delete') {
+    const requested = Array.isArray(body.runIds) ? body.runIds : [body.runId];
+    const ids = [...new Set(requested.filter((id): id is string => typeof id === 'string').map((id) => id.trim().slice(0, 64)).filter(Boolean))].slice(0, 200);
+    if (ids.length === 0) return NextResponse.json({ ok: false }, { status: 400 });
+    const known = new Set((await readCrmSnapshot()).records.map((record) => record.runId));
+    const createdAt = new Date().toISOString();
+    await appendCrmEvents(ids.filter((id) => known.has(id)).map((id) => ({ id: randomUUID(), runId: id, type: 'delete', createdAt })));
+    return NextResponse.json({ ok: true });
   }
 
   const runId = typeof body.runId === 'string' ? body.runId.trim().slice(0, 64) : '';

@@ -36,23 +36,27 @@ export interface BandRule {
  * Пороги SAT. Настроены так, чтобы случайное угадывание (25%)
  * попадало в нижнюю часть FOUNDATION, а не в «средний».
  */
+/**
+ * levelTitleRu видит ученик под своим результатом: без сравнений «ниже/выше среднего»,
+ * только где он сейчас и что есть на что опереться (RESULT-TONE, CRM-LIVE-001).
+ */
 export const SAT_BANDS: BandRule[] = [
-  { min: 0.85, level: 'ADVANCED', levelTitleRu: 'Очень сильный', sat: { low: 1500, high: 1600, label: '1500+' } },
-  { min: 0.7, level: 'STRONG', levelTitleRu: 'Сильный', sat: { low: 1400, high: 1490, label: '1400–1490' } },
-  { min: 0.55, level: 'STRONG', levelTitleRu: 'Выше среднего', sat: { low: 1290, high: 1390, label: '1290–1390' } },
-  { min: 0.4, level: 'DEVELOPING', levelTitleRu: 'Средний', sat: { low: 1160, high: 1280, label: '1160–1280' } },
-  { min: 0.25, level: 'DEVELOPING', levelTitleRu: 'Ниже среднего', sat: { low: 1000, high: 1150, label: '1000–1150' } },
-  { min: 0, level: 'FOUNDATION', levelTitleRu: 'База', sat: { low: 800, high: 990, label: 'до 1000' } },
+  { min: 0.85, level: 'ADVANCED', levelTitleRu: 'Высокий уровень', sat: { low: 1500, high: 1600, label: '1500+' } },
+  { min: 0.7, level: 'STRONG', levelTitleRu: 'Сильный уровень', sat: { low: 1400, high: 1490, label: '1400–1490' } },
+  { min: 0.55, level: 'STRONG', levelTitleRu: 'Уверенный уровень', sat: { low: 1290, high: 1390, label: '1290–1390' } },
+  { min: 0.4, level: 'DEVELOPING', levelTitleRu: 'Хорошая основа', sat: { low: 1160, high: 1280, label: '1160–1280' } },
+  { min: 0.25, level: 'DEVELOPING', levelTitleRu: 'Есть на что опереться', sat: { low: 1000, high: 1150, label: '1000–1150' } },
+  { min: 0, level: 'FOUNDATION', levelTitleRu: 'Стартовая точка', sat: { low: 800, high: 990, label: 'до 1000' } },
 ];
 
 /** Пороги IELTS (только Reading + Listening). */
 export const IELTS_BANDS: BandRule[] = [
-  { min: 0.85, level: 'ADVANCED', levelTitleRu: 'Очень сильный', ielts: { low: 7.5, high: 9, label: '7.5–9.0' } },
-  { min: 0.7, level: 'STRONG', levelTitleRu: 'Сильный', ielts: { low: 7.0, high: 7.5, label: '7.0–7.5' } },
-  { min: 0.55, level: 'STRONG', levelTitleRu: 'Уверенный', ielts: { low: 6.5, high: 7.0, label: '6.5–7.0' } },
-  { min: 0.4, level: 'DEVELOPING', levelTitleRu: 'Развивающийся', ielts: { low: 6.0, high: 6.5, label: '6.0–6.5' } },
-  { min: 0.25, level: 'DEVELOPING', levelTitleRu: 'Ниже среднего', ielts: { low: 5.5, high: 6.0, label: '5.5–6.0' } },
-  { min: 0, level: 'FOUNDATION', levelTitleRu: 'База', ielts: { low: 4.0, high: 5.5, label: '4.0–5.5' } },
+  { min: 0.85, level: 'ADVANCED', levelTitleRu: 'Высокий уровень', ielts: { low: 7.5, high: 9, label: '7.5–9.0' } },
+  { min: 0.7, level: 'STRONG', levelTitleRu: 'Сильный уровень', ielts: { low: 7.0, high: 7.5, label: '7.0–7.5' } },
+  { min: 0.55, level: 'STRONG', levelTitleRu: 'Уверенный уровень', ielts: { low: 6.5, high: 7.0, label: '6.5–7.0' } },
+  { min: 0.4, level: 'DEVELOPING', levelTitleRu: 'Хорошая основа', ielts: { low: 6.0, high: 6.5, label: '6.0–6.5' } },
+  { min: 0.25, level: 'DEVELOPING', levelTitleRu: 'Есть на что опереться', ielts: { low: 5.5, high: 6.0, label: '5.5–6.0' } },
+  { min: 0, level: 'FOUNDATION', levelTitleRu: 'Стартовая точка', ielts: { low: 4.0, high: 5.5, label: '4.0–5.5' } },
 ];
 
 export function bandsFor(exam: ExamId): BandRule[] {

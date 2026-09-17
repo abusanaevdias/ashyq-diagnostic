@@ -20,7 +20,8 @@ export interface CrmAssignee {
 export interface CrmEvent {
   id: string;
   runId: string;
-  type: 'stage_change' | 'note' | 'assign';
+  /** delete — запись скрыта из CRM; новая заявка с тем же runId возвращает её */
+  type: 'stage_change' | 'note' | 'assign' | 'delete';
   stage?: CrmStage;
   body?: string;
   assignee?: CrmAssignee;
@@ -62,8 +63,9 @@ export interface DeliveryStatus {
 }
 
 /** Идемпотентность повторной отправки: ключ без receivedAt — клиентский ретрай не плодит дублей. */
-export function computeDedupeKey(lead: Pick<StoredLead, 'runId' | 'kind' | 'phone' | 'name'>): string {
-  return [lead.runId, lead.kind, lead.phone ?? '', lead.name ?? ''].join('|').slice(0, 200);
+export function computeDedupeKey(lead: Pick<StoredLead, 'runId' | 'kind' | 'phone' | 'name' | 'answers'>): string {
+  // ответы — отдельный ключ: лид без них (старая версия страницы) не должен блокировать досылку с ответами
+  return [lead.runId, lead.kind, lead.phone ?? '', lead.name ?? '', ...(lead.answers ? ['answers'] : [])].join('|').slice(0, 200);
 }
 
 const RETRY_MAX_ATTEMPTS = 5;
@@ -96,6 +98,8 @@ export interface CrmRecord {
   total?: number;
   strongest?: string;
   weakest?: string;
+  /** Ответы диагностики — разбор ошибок строится в карточке (src/lib/mistakes.ts) */
+  answers?: Record<string, string | null>;
   source?: string;
   campaign?: string;
   stage: CrmStage;
@@ -204,6 +208,20 @@ export function buildCrmSnapshot(
   events: CrmEvent[],
   deliveries: DeliveryLedgerEntry[] = [],
 ): CrmSnapshot {
+  // Удаление — событие, а не стирание строк: хранилище append-only (файл/Supabase без права delete).
+  // Запись скрыта, если удалена позже последней заявки по этому runId (CRM-DELETE-001).
+  const lastLeadAt = new Map<string, string>();
+  for (const lead of leads) {
+    if (lead.receivedAt > (lastLeadAt.get(lead.runId) ?? '')) lastLeadAt.set(lead.runId, lead.receivedAt);
+  }
+  const deleted = new Set(
+    events.filter((event) => event.type === 'delete' && event.createdAt >= (lastLeadAt.get(event.runId) ?? '')).map((event) => event.runId),
+  );
+  if (deleted.size > 0) {
+    leads = leads.filter((lead) => !deleted.has(lead.runId));
+    events = events.filter((event) => !deleted.has(event.runId));
+  }
+
   const grouped = new Map<string, StoredLead[]>();
   for (const lead of leads) {
     const list = grouped.get(lead.runId) ?? [];
@@ -242,8 +260,11 @@ export function buildCrmSnapshot(
       }
       if (lead.correct !== undefined) record.correct = lead.correct;
       if (lead.total !== undefined) record.total = lead.total;
+      if (lead.answers) record.answers = lead.answers;
       if (lead.utm?.utm_source) record.source = lead.utm.utm_source;
       if (lead.utm?.utm_campaign) record.campaign = lead.utm.utm_campaign;
+      // досылка ответов к той же диагностике — не новое событие в ленте
+      if (lead.kind === 'result' && record.activities.some((activity) => activity.type === 'result')) continue;
       record.activities.push({
         id: `${runId}:${lead.receivedAt}:${lead.kind}`,
         type: lead.kind,

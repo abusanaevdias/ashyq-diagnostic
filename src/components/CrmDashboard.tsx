@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CRM_STAGES, CRM_STAGE_LABELS, type CrmRecord, type CrmSnapshot, type CrmStage } from '@/lib/crm';
 import { EditorialLabel, RedStar, Wordmark } from '@/components/ui/Brand';
+import { analyzeAnswers } from '@/lib/mistakes';
 
 const SESSION_KEY = 'ashyq:crm:admin-key';
 /** Вход аккаунтом ASHYQ (CRM-PROD-001) — только когда сайт работает с Supabase Auth. */
@@ -41,6 +42,11 @@ function formatDate(value: string): string {
   }).format(new Date(value));
 }
 
+/** Для строки последней активности в списке: «17 сент., 14:05» без года. */
+function formatShortDate(value: string): string {
+  return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+}
+
 function recordName(record: CrmRecord): string {
   return record.name || record.phone || `Аноним · ${record.runId.slice(0, 8)}`;
 }
@@ -48,6 +54,60 @@ function recordName(record: CrmRecord): string {
 /** Конверсия шага воронки к предыдущему: N/prev в %, иначе прочерк. */
 function funnelConversion(value: number, prev: number): string {
   return prev > 0 ? `${Math.round((value / prev) * 100)}%` : '—';
+}
+
+/** Разбор диагностики: слабые места по сценариям + ответ на каждый вопрос (CRM-MISTAKES-001). */
+function MistakesPanel({ record }: { record: CrmRecord }) {
+  const report = useMemo(() => (record.answers ? analyzeAnswers(record.exam, record.answers) : null), [record.answers, record.exam]);
+  if (!report || report.total === 0) {
+    return (
+      <div className="lg:col-span-2">
+        <p className="label text-ink-faint">Разбор ошибок</p>
+        <p className="mt-2 text-[0.86rem] text-ink-soft">{!record.activities.some((activity) => activity.type === 'result')
+            ? (record.band ? 'Результат диагностики не дошёл до CRM — есть только обращение клиента.' : 'Клиент не проходил диагностику.')
+            : 'Ответы по вопросам не сохранены — диагностика пройдена до обновления CRM.'}</p>
+      </div>
+    );
+  }
+  const reviews = [...report.reviews].sort((a, b) => Number(a.correct) - Number(b.correct));
+  return (
+    <div className="lg:col-span-2">
+      <p className="label text-ink-faint">Разбор ошибок · верно {report.correct} из {report.total}</p>
+      {report.weakSpots.length === 0 ? (
+        <p className="mt-2 text-[0.86rem] text-ink">Ошибок нет — можно предлагать программу на высокий балл.</p>
+      ) : (
+        <ul className="mt-3 grid gap-3 md:grid-cols-2">
+          {report.weakSpots.map((spot) => (
+            <li key={spot.id} className={`border bg-paper-card p-3 ${spot.severity === 'high' ? 'border-red/60' : 'border-line'}`}>
+              <p className="text-[0.92rem] font-semibold text-ink">{spot.severity === 'high' ? <span className="text-red">● </span> : null}{spot.title}</p>
+              <p className="mt-1 text-[0.78rem] text-ink-faint">{spot.evidence}</p>
+              <p className="mt-2 text-[0.84rem] text-ink-soft">{spot.advice}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+      <details className="mt-4">
+        <summary className="cursor-pointer text-[0.86rem] font-semibold text-ink">Ответы по вопросам</summary>
+        <ol className="mt-3 space-y-2">
+          {reviews.map((item) => (
+            <li key={item.id} className={`border-l-2 pl-3 ${item.correct ? 'border-line' : 'border-red'}`}>
+              <p className="text-[0.86rem]"><span className={item.correct ? 'text-ink-faint' : 'font-semibold text-red'}>{item.correct ? 'Верно' : item.answer ? 'Ошибка' : 'Пропуск'}</span> · {item.skillLabel}</p>
+              {item.correct ? null : (
+                <>
+                  <p className="mt-1 text-[0.8rem] text-ink-soft">Ответ: {item.answer ?? '—'} · правильно: {item.correctAnswer}</p>
+                  <details className="mt-1">
+                    <summary className="cursor-pointer text-[0.76rem] text-ink-faint">Вопрос и решение</summary>
+                    <p className="mt-1 whitespace-pre-line text-[0.8rem] text-ink">{item.prompt}</p>
+                    <p className="mt-1 text-[0.8rem] text-ink-soft">{item.explanation}</p>
+                  </details>
+                </>
+              )}
+            </li>
+          ))}
+        </ol>
+      </details>
+    </div>
+  );
 }
 
 export default function CrmDashboard() {
@@ -63,6 +123,10 @@ export default function CrmDashboard() {
   const [selectedId, setSelectedId] = useState('');
   const [note, setNote] = useState('');
   const [savingId, setSavingId] = useState('');
+  /** Отмеченные галочкой записи для удаления пачкой */
+  const [checked, setChecked] = useState<Set<string>>(new Set());
+  /** Удалённые в этой сессии: на их месте остаётся заглушка той же высоты, чтобы список не прыгал */
+  const [removed, setRemoved] = useState<Map<string, { record: CrmRecord; height: number }>>(new Map());
 
   useEffect(() => {
     const initData = telegramInitData();
@@ -156,6 +220,23 @@ export default function CrmDashboard() {
     return () => window.clearInterval(timer);
   }, [accountMode]);
 
+  // новые лиды без перезагрузки: опрос раз в 20 с, пока вкладка видна, и сразу при возврате на неё
+  const authKey = JSON.stringify(auth);
+  useEffect(() => {
+    if (!auth) return;
+    const poll = () => {
+      if (document.visibilityState !== 'visible') return;
+      fetchSnapshot(auth).then(setSnapshot).catch(() => {});
+    };
+    const timer = window.setInterval(poll, 20_000);
+    document.addEventListener('visibilitychange', poll);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', poll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authKey]);
+
   async function refresh() {
     if (!auth) return;
     setSnapshot(await fetchSnapshot(auth));
@@ -178,6 +259,46 @@ export default function CrmDashboard() {
     } finally {
       setSavingId('');
     }
+  }
+
+  async function deleteRecords(targets: CrmRecord[]) {
+    if (targets.length === 0) return;
+    const question = targets.length === 1
+      ? `Удалить запись «${recordName(targets[0])}» из CRM?`
+      : `Удалить ${targets.length} записей из CRM?`;
+    if (!window.confirm(`${question} Если клиент снова оставит заявку, запись вернётся.`)) return;
+    // Сразу, не дожидаясь сервера: заглушка занимает место записи — страница не сдвигается
+    const added = new Map(removed);
+    for (const record of targets) {
+      added.set(record.runId, { record, height: document.getElementById(`crm-row-${record.runId}`)?.getBoundingClientRect().height ?? 0 });
+    }
+    setRemoved(added);
+    setChecked((prev) => new Set([...prev].filter((id) => !added.has(id))));
+    setError('');
+    try {
+      const response = await fetch('/api/crm', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', ...auth },
+        body: JSON.stringify({ action: 'delete', runIds: targets.map((record) => record.runId) }),
+      });
+      if (!response.ok) throw new Error('delete');
+    } catch {
+      setRemoved((prev) => {
+        const next = new Map(prev);
+        for (const record of targets) next.delete(record.runId);
+        return next;
+      });
+      setError('Не удалось удалить. Проверьте связь и попробуйте ещё раз.');
+    }
+  }
+
+  function toggleChecked(runId: string) {
+    setChecked((prev) => {
+      const next = new Set(prev);
+      if (next.has(runId)) next.delete(runId);
+      else next.add(runId);
+      return next;
+    });
   }
 
   async function retryDelivery(runId: string) {
@@ -204,19 +325,24 @@ export default function CrmDashboard() {
     setAuth(null);
     setSnapshot(null);
     setSelectedId('');
+    setChecked(new Set());
+    setRemoved(new Map());
   }
 
   const records = useMemo(() => {
     if (!snapshot) return [];
     const needle = search.trim().toLowerCase();
-    return snapshot.records.filter((record) => {
+    // удалённые остаются на своём месте заглушкой, даже когда опрос уже вернул список без них
+    const merged = [...snapshot.records.filter((record) => !removed.has(record.runId)), ...[...removed.values()].map((item) => item.record)]
+      .sort((a, b) => b.lastSeenAt.localeCompare(a.lastSeenAt));
+    return merged.filter((record) => {
       if (stage !== 'all' && record.stage !== stage) return false;
       if (!needle) return true;
       return [record.name, record.phone, record.grade, record.exam, record.band, record.source, record.campaign, record.runId]
         .filter(Boolean)
         .some((value) => String(value).toLowerCase().includes(needle));
     });
-  }, [search, snapshot, stage]);
+  }, [removed, search, snapshot, stage]);
 
   if (!snapshot || !auth) {
     return (
@@ -253,7 +379,8 @@ export default function CrmDashboard() {
         </div>
       </header>
 
-      <main className="shell-wide py-8 sm:py-10">
+      {/* pb-28 всегда: появление панели выбора не меняет высоту страницы */}
+      <main className="shell-wide pb-28 pt-8 sm:pt-10">
         <EditorialLabel>Обзор воронки</EditorialLabel>
         <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
@@ -354,10 +481,19 @@ export default function CrmDashboard() {
             <div className="card mt-6 p-8 text-center"><RedStar className="mx-auto h-4 w-4 text-red" /><h2 className="display mt-4 text-h3">Ничего не найдено</h2><p className="mt-2 text-ink-soft">Измените фильтр или дождитесь первой заявки.</p></div>
           ) : (
             <div className="mt-6 space-y-3">
-              {records.slice(0, visibleCount).map((record) => (
-                <article key={record.runId} className="card overflow-hidden">
+              {records.slice(0, visibleCount).map((record) => removed.has(record.runId) ? (
+                <div key={record.runId} className="card flex items-center justify-center px-4 text-[0.82rem] text-ink-faint" style={{ height: removed.get(record.runId)?.height || undefined }}>
+                  Запись «{recordName(record)}» удалена
+                </div>
+              ) : (
+                <article key={record.runId} id={`crm-row-${record.runId}`} className={`card overflow-hidden ${checked.has(record.runId) ? 'ring-2 ring-red/50' : ''}`}>
                   <div className="grid items-center gap-4 p-4 md:grid-cols-[minmax(0,1.5fr)_0.7fr_0.8fr_1fr_auto]">
-                    <div className="min-w-0"><p className="display truncate text-[1.05rem]">{recordName(record)}</p><p className="mt-1 truncate font-mono text-[0.68rem] text-ink-faint">{record.phone ? `+${record.phone}` : record.runId}</p>{record.assignee ? <p className="mt-1 truncate text-[0.7rem] text-ink-soft">Взял: {record.assignee.name}</p> : null}{record.delivery.some((item) => item.status === 'failed') ? <p className="mt-1 text-[0.7rem] font-semibold text-red">Не доставлено: {record.delivery.filter((item) => item.status === 'failed').map((item) => item.channel).join(', ')}</p> : null}</div>
+                    <div className="flex min-w-0 items-start gap-2">
+                    <label className="-my-2 -ml-2 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center">
+                      <input type="checkbox" className="h-4 w-4 cursor-pointer accent-red" checked={checked.has(record.runId)} onChange={() => toggleChecked(record.runId)} aria-label={`Выбрать ${recordName(record)}`} />
+                    </label>
+                    <div className="min-w-0"><p className="display truncate text-[1.05rem]">{recordName(record)}</p><p className="mt-1 truncate font-mono text-[0.68rem] text-ink-faint">{record.phone ? `+${record.phone}` : record.runId}</p>{record.activities[0] ? <p className="mt-1 line-clamp-2 text-[0.7rem] leading-snug text-ink-soft" title={record.activities[0].text}><span className="font-mono text-ink-faint">{formatShortDate(record.activities[0].createdAt)}</span> · {record.activities[0].text}</p> : null}{record.assignee ? <p className="mt-1 truncate text-[0.7rem] text-ink-soft">Взял: {record.assignee.name}</p> : null}{record.delivery.some((item) => item.status === 'failed') ? <p className="mt-1 text-[0.7rem] font-semibold text-red">Не доставлено: {record.delivery.filter((item) => item.status === 'failed').map((item) => item.channel).join(', ')}</p> : null}</div>
+                    </div>
                     <div><p className="label text-ink-faint">Экзамен</p><p className="mt-1 font-semibold uppercase">{record.exam}</p></div>
                     <div><p className="label text-ink-faint">Результат</p><p className="mt-1 font-semibold">{record.band ?? '—'}</p></div>
                     <div>
@@ -392,7 +528,10 @@ export default function CrmDashboard() {
                             ) : null}
                           </dd>
                         </dl>
-                        {record.phone ? <a className="btn btn-ink mt-5" href={`https://wa.me/${record.phone}`} target="_blank" rel="noopener noreferrer">Открыть WhatsApp</a> : null}
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {record.phone ? <a className="btn btn-ink" href={`https://wa.me/${record.phone}`} target="_blank" rel="noopener noreferrer">Открыть WhatsApp</a> : null}
+                          <button type="button" className="btn btn-outline" disabled={savingId === record.runId} onClick={() => void deleteRecords([record])}>Удалить запись</button>
+                        </div>
                       </div>
                       <div>
                         <p className="label text-ink-faint">Лента активности</p>
@@ -405,6 +544,7 @@ export default function CrmDashboard() {
                           <button type="submit" className="btn btn-primary btn-small mt-3" disabled={!note.trim() || savingId === record.runId}>Сохранить заметку</button>
                         </form>
                       </div>
+                      <MistakesPanel record={record} />
                     </div>
                   ) : null}
                 </article>
@@ -418,6 +558,17 @@ export default function CrmDashboard() {
           )}
         </section>
       </main>
+
+      {checked.size > 0 ? (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper-card shadow-[0_-8px_24px_rgba(22,19,17,0.08)]" role="region" aria-label="Выбранные записи">
+          <div className="shell-wide flex flex-wrap items-center gap-2 py-3">
+            <p className="mr-auto text-[0.9rem] font-semibold">Выбрано: {checked.size}</p>
+            <button type="button" className="btn btn-quiet btn-small" onClick={() => setChecked(new Set(records.slice(0, visibleCount).filter((record) => !removed.has(record.runId)).map((record) => record.runId)))}>Выбрать все показанные</button>
+            <button type="button" className="btn btn-outline btn-small" onClick={() => setChecked(new Set())}>Снять выбор</button>
+            <button type="button" className="btn btn-primary btn-small" onClick={() => void deleteRecords(snapshot.records.filter((record) => checked.has(record.runId) && !removed.has(record.runId)))}>Удалить выбранные</button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

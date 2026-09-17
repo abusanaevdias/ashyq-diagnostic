@@ -3,6 +3,8 @@ import { appendLead, findRecentDuplicate, type StoredLead } from '@/lib/lead-ser
 import { normalizePhone, toInternationalKz } from '@/lib/lead';
 import { deliverLead } from '@/lib/lead-delivery';
 import { computeDedupeKey } from '@/lib/crm';
+import { checkSupabaseRateLimit } from '@/lib/supabase-leads';
+import { isKnownQuestion } from '@/lib/mistakes';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -80,6 +82,17 @@ function parseUtm(value: unknown): Record<string, string> | undefined {
   return Object.keys(out).length > 0 ? out : undefined;
 }
 
+/** Ответы диагностики: только id из банка этого экзамена, короткие строки (CRM-MISTAKES-001). */
+function parseAnswers(value: unknown, exam: 'sat' | 'ielts'): Record<string, string | null> | undefined {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+  const out: Record<string, string | null> = {};
+  for (const [id, answer] of Object.entries(value as Record<string, unknown>).slice(0, 40)) {
+    if (!isKnownQuestion(exam, id)) continue;
+    out[id] = str(answer, 60) ?? null;
+  }
+  return Object.keys(out).length > 0 ? out : undefined;
+}
+
 export async function POST(req: Request) {
   const ip = clientIp(req);
   if (globallyFlooded() || rateLimited(ip)) {
@@ -98,6 +111,18 @@ export async function POST(req: Request) {
     body = parsed as Record<string, unknown>;
   } catch {
     return NextResponse.json({ ok: false }, { status: 400 });
+  }
+
+  // Honeypot: скрытое поле, которого человек не видит. Бот его заполняет —
+  // молча отвечаем «ок», не сохраняя и не уведомляя (LEAD-RATELIMIT-001).
+  if (typeof body.website === 'string' && body.website.trim()) {
+    return NextResponse.json({ ok: true });
+  }
+
+  // Общий лимит на все инстансы (в отличие от rateLimited выше, живущего в памяти одного).
+  // Только для форм с контактом — авто-события диагностики (result/whatsapp) не спамят менеджеров.
+  if ((body.kind === 'contact' || body.kind === 'season') && !(await checkSupabaseRateLimit(`lead:ip:${ip}`, RATE_LIMIT_WINDOW_MS / 1000, RATE_LIMIT_MAX))) {
+    return NextResponse.json({ ok: false }, { status: 429 });
   }
 
   const kind = body.kind;
@@ -137,6 +162,7 @@ export async function POST(req: Request) {
     strongest: str(body.strongest, 80),
     weakest: str(body.weakest, 80),
     elapsedMin: num(body.elapsedMin),
+    answers: parseAnswers(body.answers, exam),
     utm: parseUtm(body.utm),
     receivedAt: new Date().toISOString(),
     ip,
