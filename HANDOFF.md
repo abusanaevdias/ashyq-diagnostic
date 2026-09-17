@@ -152,7 +152,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Владелец | Зависимости | Scope / следующий шаг |
 |---|---|---|---|---|
-| CAREER-COMPASS-001 | REVIEW | Claude Opus 5; ветка `claude/career-test-website-a98uzk` | — | Профориентационный тест «Компас»: `/career` (интро + прохождение + свой результат) и 16 статических страниц профиля `/career/<код>`. Данные — `src/data/career/{questions,profiles,professions}.ts` (40 утверждений по 10 на шкалу и ровно по 5 на полюс, 16 профилей, 79 профессий в 6 сферах), движок — `src/lib/career.ts` + `src/lib/career-types.ts`, UI — `src/components/CareerV3.*` и `src/components/career/CareerResultView.tsx`. Точки входа: 4-я карточка на главной, aside на `/diagnostic`, футер «Учёба», `/search`, FAQ, sitemap. Своё хранилище `ashyq:v1:career` (`STORAGE_KEYS.career`), события `career_test_*`. Воронка Quick Diagnostic, её ключи и e2e-названия не менялись. Проверки: e2e `127/127`, career-unit, check:seo `21 canonical`, check:tokens `9/9`, check:units, a11y-perf `50 audits / 25 routes` (a11y 100 на `/career` и `/career/intj`), v3-visual, validate:bank, lint/typecheck/build green. Claim и работа лежат в ветке задачи: у сессии нет разрешения на push в `main` |
+| CAREER-COMPASS-001 | REVIEW | Claude Opus 5; ветка `claude/career-test-website-a98uzk` | — | Профориентационный тест «Компас»: `/career` (интро + прохождение + свой результат) и 16 статических страниц профиля `/career/<код>`. Данные — `src/data/career/{questions,profiles,professions}.ts` (40 утверждений по 10 на шкалу и ровно по 5 на полюс, 16 профилей, 79 профессий в 6 сферах), движок — `src/lib/career.ts` + `src/lib/career-types.ts`, UI — `src/components/CareerV3.*` и `src/components/career/CareerResultView.tsx`. Точки входа: 4-я карточка на главной, aside на `/diagnostic`, футер «Учёба», `/search`, FAQ, sitemap. Своё хранилище `ashyq:v1:career` (`STORAGE_KEYS.career`), события `career_test_*`. Воронка Quick Diagnostic, её ключи и e2e-названия не менялись. Плюс собственные OG-картинки (`src/lib/career-og.tsx` + метаданные-роуты `/career/opengraph-image` и `/career/<код>/opengraph-image`, 17 статических PNG 1200×630): результатом делятся ссылкой, и превью показывает конкретный профиль с его топ-3, а не общий баннер сайта. Точка входа добавлена и на `/program`. Проверки: e2e `128/128`, career-unit, check:seo `21 canonical` + 3 OG-картинки, check:tokens `9/9`, check:units, a11y-perf `50 audits / 25 routes` (a11y 100 на `/career` и `/career/intj`), v3-visual, validate:bank, lint/typecheck/build green. Claim и работа лежат в ветке задачи: у сессии нет разрешения на push в `main` |
 | PHOTO-SLOTS-001 | DONE (PR #39 слит) | Claude Opus 5; ветка `claude/photo-slots` | CLIENT-POLISH-001 | Бриф фотосъёмки `docs/PHOTO_BRIEF.md` + версия для фотографа https://claude.ai/artifact/3qqxFGfUpLXBKLKZx1ZFPF: 22 кадра (F-01…F-22) — слот, что снимать и чего избегать, пропорции по реальным замерам прода 1440/390, мастер-размер, имя файла, alt. Все фото сайта теперь из `src/data/media.ts` (`PHOTOS`, 16 слотов с кодами F-xx; пока указывают на два общих снимка): новое фото = файл в `public/brand/photos/` + правка `src`/`width`/`height` у слота. Компоненты: Landing, CoursesV3 (+`COURSES`/`COURSE_DETAILS`), DiagnosticV3, AboutV3, BlogV3, ContactsV3, `/community`. Визуально без изменений. **Нужно от владельца**: сама съёмка по брифу |
 | SEO-SCHEMA-001 | DONE (PR #39 слит) | Claude Opus 5; ветка `claude/photo-slots` | — | JSON-LD Schema.org (`src/components/JsonLd.tsx`, `src/lib/schema.ts`, экранирование `<` по доке Next): `EducationalOrganization` (Астана, WhatsApp, соцсети) в корневом layout, `Course` на `/courses/[slug]`, `FAQPage` на `/faq` из `src/data/faq.ts`. Только подтверждённые факты — без цен и рейтинга. Проверка: `scripts/seo-check.ts` разбирает JSON-LD и ждёт нужный `@type`. Следующий шаг: после деплоя прогнать https://search.google.com/test/rich-results |
 | LESSON-EDIT-001 | DONE (PR #37 слит) | Claude Opus 5; ветка `claude/lesson-edit` | CLASS-LOAD-FIX-001 | Учитель открывает созданный урок и исправляет его (`/teacher/lessons/[id]`: та же форма, «Сохранить изменения», «Удалить урок» с подтверждением; дата публикации не меняется) и исправляет задание (`/teacher/assignments/[id]`; максимум баллов не ниже уже выставленной оценки). Ссылки «Открыть и изменить» / «Изменить» в `/teacher/classes/[id]`. Репозитории: `lessons.get/update/remove`, `assignments.update` (demo + Supabase, RLS уже разрешает правку учителю класса — миграция не нужна; чужое → «Не найдено или относится к классу другого учителя»). Проверки: typecheck, lint, `check:units`, build, `e2e:lms` (сценарий h). Аудит «созданное нельзя исправить» — ещё нет: переименовать/удалить класс, убрать ученика из класса, удалить задание, править/удалять свои комментарии, удалить пост блога, сменить имя в профиле |
@@ -261,6 +261,13 @@ npx tsx scripts/season-visual-check.ts
 - owned championship slice: hardcoded colors `0`; токены совпадают с
   приложенным источником.
 
+- после CAREER-COMPASS-001, OG-картинки профилей (2026-09-17): e2e `128/128`
+  (+`program: ссылка на Компас перед диагностикой`), check:seo `21 canonical`
+  и три OG-картинки 1200×630 (`/opengraph-image`, `/career/opengraph-image`,
+  `/career/intj/opengraph-image`), check:tokens `9/9`, check:units,
+  a11y-perf `50 audits / 25 routes`, v3-visual overflow `0`, validate:bank,
+  lint/typecheck/build green; сборка пререндерит 16 страниц профилей и
+  16 их OG-картинок статически;
 - после CAREER-COMPASS-001 (2026-09-16): e2e `127/127` без `CRM_ADMIN_KEY`
   (+11 career: интро, дисклеймер, refresh-персистентность, полный прогон на
   40 утверждений, «почти монетка» при сплошном согласии, отдельный ключ
@@ -288,6 +295,9 @@ npx tsx scripts/season-visual-check.ts
 - `src/components/season/` — public season hub и Season HQ.
 - `src/lib/career.ts`, `src/data/career/` — движок и контент теста «Компас»;
   баланс банка и полнота выдачи защищены `scripts/career-unit-check.ts`.
+- `src/lib/career-og.tsx` — общий макет OG-картинок «Компаса». Это разметка
+  для satori (next/og), а не для браузера: только flex-подмножество CSS и
+  шрифты `.woff` (woff2 satori не читает).
 - `scripts/e2e-check.ts` — главный регрессионный контракт.
 
 ## 8. Шаблон обновления задачи

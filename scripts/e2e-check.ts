@@ -836,6 +836,13 @@ async function main() {
   const unknownProfile = await pc.goto(`${BASE}/career/zzzz`, { waitUntil: 'domcontentloaded' });
   check('career: неизвестный профиль отвечает 404', unknownProfile?.status() === 404, `HTTP ${unknownProfile?.status()}`);
 
+  // Программа зовёт в «Компас» до диагностики
+  await pc.goto(`${BASE}/program`, { waitUntil: 'domcontentloaded' });
+  check(
+    'program: ссылка на Компас перед диагностикой',
+    (await pc.getByRole('link', { name: 'Компас' }).count()) >= 1,
+  );
+
   // Возврат на /career показывает сохранённый результат, а не интро заново
   await pc.goto(`${BASE}/career`, { waitUntil: 'networkidle' });
   await pc.locator('h1').first().waitFor();

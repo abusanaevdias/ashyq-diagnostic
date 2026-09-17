@@ -106,6 +106,13 @@ export default function ProgramScreen() {
           Диагностика показывает точку А. Дальше работает система: прогресс
           в баллах, Match Days, рейтинг команд и чемпионат сезона с финалом.
         </p>
+        <p className="mt-4 max-w-md text-[0.95rem] leading-relaxed text-ink-soft">
+          Ещё не решили, куда поступать? Перед диагностикой пройдите{' '}
+          <Link className="link-underline font-semibold text-red-deep" href="/career">
+            Компас
+          </Link>{' '}
+          — шесть минут, и станет понятно, какой экзамен вам вообще нужен.
+        </p>
         <p className="label mt-6 flex flex-wrap gap-x-3 gap-y-1 text-ink-faint">
           <span>Astana, KZ</span>
           <span aria-hidden="true">·</span>
