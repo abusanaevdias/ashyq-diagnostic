@@ -110,6 +110,12 @@ export function leadToText(lead: StoredLead): string {
 }
 
 async function sendToTelegram(lead: StoredLead): Promise<void> {
+  // этапы и «Открыть в CRM»; кривая настройка даёт сообщение без кнопок, а не HTTP 400
+  await sendTelegramText(leadToText(lead), leadKeyboard(lead.runId));
+}
+
+/** Сообщение в чат заявок (и тему форума, если задана). Без настроек — ничего не делает. */
+export async function sendTelegramText(text: string, replyMarkup?: unknown): Promise<void> {
   const token = process.env.ASHYQ_TELEGRAM_BOT_TOKEN;
   const chatId = process.env.ASHYQ_TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
@@ -121,10 +127,9 @@ async function sendToTelegram(lead: StoredLead): Promise<void> {
       chat_id: chatId,
       // тема супергруппы-форума; без неё сообщение уходит в General
       message_thread_id: process.env.ASHYQ_TELEGRAM_THREAD_ID ? Number(process.env.ASHYQ_TELEGRAM_THREAD_ID) : undefined,
-      text: leadToText(lead),
+      text,
       disable_web_page_preview: true,
-      // этапы и «Открыть в CRM»; кривая настройка даёт сообщение без кнопок, а не HTTP 400
-      reply_markup: leadKeyboard(lead.runId),
+      reply_markup: replyMarkup,
     }),
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });

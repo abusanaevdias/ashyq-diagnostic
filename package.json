@@ -12,7 +12,7 @@
     "validate:bank": "tsx scripts/validate-questions.ts",
     "e2e": "tsx scripts/e2e-check.ts",
     "e2e:audio": "tsx scripts/audio-check.ts",
-    "check:crm": "tsx scripts/crm-check.ts",
+    "check:crm": "tsx scripts/crm-check.ts && tsx scripts/crm-enrolled-check.ts",
     "check:crm-ui": "tsx scripts/crm-ui-check.ts",
     "check:seo": "tsx scripts/seo-check.ts",
     "check:a11y-perf": "tsx scripts/a11y-perf-check.ts",

@@ -152,6 +152,46 @@ export interface CrmSnapshot {
   };
 }
 
+/** Случайная первая строка поздравления: чтобы «зачислен» в чате не приедался (CRM-ENROLLED-001). */
+export const ENROLLED_PHRASES = [
+  '🎉 Так держать, уроды ебанные!',
+  '👏 Молодцы, команда!',
+  '🇰🇿 Омайгош, қазақ елі +1 зачислен!',
+  '🚀 Хьюстон, у нас новый ученик!',
+  '💸 Касса сделала «дзынь». Продолжаем в том же духе!',
+  '🔥 Ещё один сдался. Сопротивление бесполезно!',
+  '🐎 Табун ASHYQ пополнился!',
+  '🍾 Открываем шампанское… ну ладно, кумыс!',
+  '🎯 Прямо в цель! Ученик пойман!',
+  '🥇 Минус один человек без высокого балла в Казахстане!',
+  '🧠 +1 мозг в копилку ASHYQ!',
+  '📈 График продаж: ↗️ как и должно быть',
+  '🦅 Беркут не промахивается. Зачислен!',
+  '🎓 Будущий 1500+ уже с нами!',
+  '😎 Кто молодец? Мы молодцы!',
+  '🫡 Задание выполнено, генерал!',
+  '🥳 Бауырсаки за счёт того, кто закрыл сделку!',
+  '💪 Ещё один — и ещё один. Не останавливаемся!',
+  '🏆 Гол! Счёт в пользу ASHYQ!',
+  '🤝 Сделка закрыта. Можно выдохнуть… на 5 минут',
+  '🌟 Новенький в семье ASHYQ — встречайте!',
+  '📣 Всем стоять! У нас зачисление!',
+];
+
+/** Сообщение в чат заявок, когда заявку перевели в «Зачислен». pick — для теста вместо Math.random. */
+export function enrolledText(record: CrmRecord, pick: () => number = Math.random): string {
+  const phrase = ENROLLED_PHRASES[Math.floor(pick() * ENROLLED_PHRASES.length)] ?? ENROLLED_PHRASES[0];
+  const lines = [
+    phrase,
+    '',
+    `👤 ${record.name ?? (record.phone ? `+${record.phone}` : 'Без имени')}`,
+    `📚 ${record.exam.toUpperCase()}${record.target ? ` · 🎯 цель ${record.target}` : ''}${record.band ? ` · 📊 старт ${record.band}` : ''}`,
+  ];
+  if (record.phone) lines.push(`📞 +${record.phone}`);
+  if (record.assignee) lines.push(`🙌 Привёл: ${record.assignee.name}`);
+  return lines.join('\n');
+}
+
 function leadActivityText(lead: StoredLead): string {
   if (lead.kind === 'contact') return 'Отправил обращение с сайта';
   if (lead.kind === 'season') return 'Оставил заявку на следующий сезон';
