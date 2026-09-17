@@ -2,8 +2,9 @@ import 'server-only';
 import { appendFile, mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { readStoredLeads } from './lead-server';
-import { buildCrmSnapshot, type CrmEvent, type CrmSnapshot } from './crm';
-import { readDeliveryLedger, retryFailedDeliveries } from './lead-delivery';
+import { buildCrmSnapshot, enrolledText, type CrmEvent, type CrmSnapshot } from './crm';
+import { readDeliveryLedger, retryFailedDeliveries, sendTelegramText } from './lead-delivery';
+import { crmLink } from './telegram-bot';
 import {
   appendSupabaseEvents,
   readSupabaseEvents,
@@ -60,6 +61,27 @@ export async function retryRunDeliveries(runId: string): Promise<void> {
 
 export async function appendCrmEvents(events: CrmEvent[]): Promise<void> {
   if (events.length === 0) return;
+  // Все смены этапа (CRM на сайте и кнопки в Telegram) идут сюда — одна точка для уведомления
+  const enrolledIds = new Set(events.filter((event) => event.type === 'stage_change' && event.stage === 'enrolled').map((event) => event.runId));
+  const before = enrolledIds.size > 0 ? await readCrmSnapshot() : null;
+  await writeCrmEvents(events);
+  if (!before) return;
+
+  const after = await readCrmSnapshot();
+  for (const record of after.records) {
+    if (!enrolledIds.has(record.runId)) continue;
+    // повторное нажатие «Зачислен» у уже зачисленного — не праздник второй раз
+    if (before.records.find((item) => item.runId === record.runId)?.stage === 'enrolled') continue;
+    const url = crmLink(record.runId);
+    try {
+      await sendTelegramText(enrolledText(record), url ? { inline_keyboard: [[{ text: 'Открыть в CRM', url }]] } : undefined);
+    } catch {
+      // уведомление не должно откатывать смену этапа
+    }
+  }
+}
+
+async function writeCrmEvents(events: CrmEvent[]): Promise<void> {
   if (usesSupabaseLeads()) {
     await appendSupabaseEvents(events);
     return;
