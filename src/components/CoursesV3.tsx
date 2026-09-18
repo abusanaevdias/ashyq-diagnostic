@@ -10,6 +10,7 @@ import { COURSES, type CourseFilter as Filter } from '@/data/courses';
 import { PHOTOS } from '@/data/media';
 import home from './HomeV3.module.css';
 import styles from './CoursesV3.module.css';
+import { AiBadge } from './AiBadge';
 
 /**
  * /courses — каталог v3 (DESIGN_V3 §6.2). Только реальные продукты ASHYQ,
@@ -43,8 +44,8 @@ export default function CoursesV3() {
               <p className={styles.script}>выберите свой маршрут</p>
             </div>
             <div className={styles.collage}>
-              <div className={styles.collageMain}><Image src={PHOTOS.coursesCollageMain.src} alt={PHOTOS.coursesCollageMain.alt} fill priority sizes="(max-width: 900px) 84vw, 38vw" /></div>
-              <div className={styles.collageSide}><Image src={PHOTOS.coursesCollageSide.src} alt={PHOTOS.coursesCollageSide.alt} fill sizes="(max-width: 900px) 58vw, 26vw" /></div>
+              <div className={styles.collageMain}><Image src={PHOTOS.coursesCollageMain.src} alt={PHOTOS.coursesCollageMain.alt} fill priority sizes="(max-width: 900px) 84vw, 38vw" /><AiBadge /></div>
+              <div className={styles.collageSide}><Image src={PHOTOS.coursesCollageSide.src} alt={PHOTOS.coursesCollageSide.alt} fill sizes="(max-width: 900px) 58vw, 26vw" /><AiBadge /></div>
             </div>
           </div>
         </section>
@@ -62,6 +63,7 @@ export default function CoursesV3() {
               <Link href={course.href} className={styles.card} key={course.title}>
                 <div className={styles.photo}>
                   <Image src={course.photo} alt={course.alt} fill sizes="(max-width: 900px) 100vw, 50vw" />
+                  <AiBadge />
                   {course.badge ? <span className={styles.badge}>{course.badge}</span> : null}
                 </div>
                 <div className={styles.cardBody}>

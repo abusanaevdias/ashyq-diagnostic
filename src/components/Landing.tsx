@@ -8,6 +8,7 @@ import type { ExamId, RunState } from '@/lib/types';
 import { ButtonLink, DirectionCard, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import styles from './HomeV3.module.css';
+import { AiBadge } from './AiBadge';
 
 type ValueStyle = CSSProperties & { '--value': string };
 
@@ -80,6 +81,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
               <span className={styles.scriptNote}>начните здесь</span>
               <div className={styles.photoFrame}>
                 <Image className={styles.heroPhoto} src={PHOTOS.homeHero.src} alt={PHOTOS.homeHero.alt} width={PHOTOS.homeHero.width} height={PHOTOS.homeHero.height} priority sizes="(max-width: 900px) 100vw, 42vw" />
+                <AiBadge />
               </div>
               <div className={styles.floatingCard}>
                 <IconChip name="spark" solid />

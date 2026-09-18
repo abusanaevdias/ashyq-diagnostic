@@ -4,6 +4,7 @@ import home from './HomeV3.module.css';
 import styles from './AboutV3.module.css';
 import { ButtonLink, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
+import { AiBadge } from './AiBadge';
 
 const STATS = [
   { value: '12 000+', label: 'учебных попыток' },
@@ -33,7 +34,7 @@ export default function AboutV3() {
               <p className={styles.script}>растём вместе</p>
             </div>
             <div className={styles.heroPhoto}>
-              <Image src={PHOTOS.aboutHero.src} alt={PHOTOS.aboutHero.alt} fill priority sizes="(max-width: 900px) 100vw, 42vw" />
+              <Image src={PHOTOS.aboutHero.src} alt={PHOTOS.aboutHero.alt} fill priority sizes="(max-width: 900px) 100vw, 42vw" /><AiBadge />
             </div>
           </div>
         </section>
@@ -71,7 +72,7 @@ export default function AboutV3() {
                 <div className={styles.quoteAction}><ButtonLink href="/program">Смотреть программу</ButtonLink></div>
               </figure>
               <div className={styles.quotePhoto}>
-                <Image src={PHOTOS.aboutQuote.src} alt={PHOTOS.aboutQuote.alt} fill sizes="(max-width: 900px) 100vw, 38vw" />
+                <Image src={PHOTOS.aboutQuote.src} alt={PHOTOS.aboutQuote.alt} fill sizes="(max-width: 900px) 100vw, 38vw" /><AiBadge />
               </div>
             </div>
           </section>

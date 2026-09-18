@@ -12,6 +12,7 @@ import { getRepos } from '@/lib/lms/repos';
 import { ButtonLink, FilterChip, Footer, MicroLabel, NavBar } from './ui/CleanUi';
 import home from './HomeV3.module.css';
 import styles from './BlogV3.module.css';
+import { AiBadge } from './AiBadge';
 
 /**
  * /blog по DESIGN_V3 §6.5. Статьи — опубликованные посты из BlogRepo (LMS-001);
@@ -51,7 +52,7 @@ export default function BlogV3() {
               <h1 className={styles.title}>Разборы, стратегии и жизнь сезона</h1>
               <p className={home.lead}>Короткие материалы о подготовке к IELTS и SAT, типичных ошибках и о том, как устроены Match Days.</p>
             </div>
-            <div className={styles.thumb}><Image src={PHOTOS.blogHero.src} alt={PHOTOS.blogHero.alt} fill priority sizes="(max-width: 900px) 100vw, 40vw" /></div>
+            <div className={styles.thumb}><Image src={PHOTOS.blogHero.src} alt={PHOTOS.blogHero.alt} fill priority sizes="(max-width: 900px) 100vw, 40vw" /><AiBadge /></div>
           </div>
         </section>
 

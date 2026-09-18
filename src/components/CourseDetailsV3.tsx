@@ -7,6 +7,7 @@ import ui from './ui/CleanUi.module.css';
 import { Reveal } from './ui/Reveal';
 import home from './HomeV3.module.css';
 import styles from './CourseDetailsV3.module.css';
+import { AiBadge } from './AiBadge';
 
 export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
   const free = freeLessons(course);
@@ -43,6 +44,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
                 preload
                 sizes="(max-width: 900px) 100vw, 42vw"
               />
+              <AiBadge />
             </div>
           </div>
         </section>
