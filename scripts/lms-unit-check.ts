@@ -25,6 +25,8 @@ async function main() {
     'blog.write': ['author'],
     'season.manage': ['teacher'],
     'season.play': ['student'],
+    'mock.attempt': ['student'],
+    'mock.review': ['teacher'],
   };
   for (const [action, roles] of Object.entries(table) as Array<[Action, Role[]]>) {
     for (const role of ['student', 'teacher', 'author'] as Role[]) {

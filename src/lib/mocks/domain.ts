@@ -54,16 +54,14 @@ export interface SkillStatusResult {
 export function calculateSkillStatus(input: SkillStatusInput): SkillStatusResult {
   const sampleSize = Math.max(0, input.questions);
   const accuracy = Number.isFinite(input.currentAccuracy) ? input.currentAccuracy : 0;
-  const previous = input.previousAccuracy ?? 0;
-  const errorRate = sampleSize > 0 ? input.errors / sampleSize : 1;
 
-  if (sampleSize >= 8 && input.attempts >= 2 && accuracy >= 85 && !input.repeatedCause) {
+  if (sampleSize >= 8 && input.attempts >= 2 && accuracy >= 80 && !input.repeatedCause) {
     return { status: 'consolidating', sampleSize };
   }
-  if (sampleSize >= 5 && accuracy > previous && accuracy >= 60 && !input.repeatedCause) {
+  if (input.attempts >= 2 && input.previousAccuracy !== null && accuracy >= input.previousAccuracy + 10 && accuracy < 80) {
     return { status: 'improving', sampleSize };
   }
-  if (sampleSize >= 5 && (accuracy < 70 || errorRate >= 0.3 || input.repeatedCause)) {
+  if (input.errors >= 2 || (sampleSize >= 5 && accuracy < 70)) {
     return { status: 'attention', sampleSize };
   }
   return { status: 'insufficient', sampleSize };
