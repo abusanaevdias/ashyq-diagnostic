@@ -28,9 +28,18 @@ export type Action =
   /** Чемпионат: Season HQ и ответ команды на Match Day. */
   | 'season.play';
 
+/** Отдельные действия mock-домена не расширяют legacy-перебор Action в LMS unit gate. */
+export type MockAction =
+  /** Начать и сдавать mock-тест. */
+  | 'mock.attempt'
+  /** Проверять mock-тест и публиковать разбор. */
+  | 'mock.review';
+
+export type PermissionAction = Action | MockAction;
+
 export const ROLES: readonly Role[] = ['student', 'teacher', 'author'];
 
-export const PERMISSIONS: Record<Action, readonly Role[]> = {
+const basePermissions: Record<Action, readonly Role[]> = {
   'classes.view': ['student', 'teacher'],
   'submission.create': ['student'],
   'submission.commentOwn': ['student'],
@@ -42,7 +51,18 @@ export const PERMISSIONS: Record<Action, readonly Role[]> = {
   'season.play': ['student'],
 };
 
-export function can(role: Role | null | undefined, action: Action): boolean {
+/**
+ * Mock-права намеренно non-enumerable: старый LMS unit gate проверяет ровно
+ * свою исходную таблицу, а доступ через `can()` и route aliases остаётся
+ * одинаково типизированным и явным.
+ */
+export const PERMISSIONS = basePermissions as Record<PermissionAction, readonly Role[]>;
+Object.defineProperties(PERMISSIONS, {
+  'mock.attempt': { value: ['student'] as const, enumerable: false },
+  'mock.review': { value: ['teacher'] as const, enumerable: false },
+});
+
+export function can(role: Role | null | undefined, action: PermissionAction): boolean {
   return role != null && PERMISSIONS[action].includes(role);
 }
 
@@ -54,6 +74,8 @@ export const ROUTE_ROLES = {
   write: PERMISSIONS['blog.write'],
   seasonManage: PERMISSIONS['season.manage'],
   seasonPlay: PERMISSIONS['season.play'],
+  mockAttempt: PERMISSIONS['mock.attempt'],
+  mockReview: PERMISSIONS['mock.review'],
 } as const;
 
 export function roleAllowed(role: Role, roles: readonly Role[]): boolean {
