@@ -1,0 +1,14 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+set local search_path = public, extensions;
+select plan(8);
+select has_table('public', 'mock_templates', 'metadata templates exist');
+select has_table('private', 'mock_answer_keys', 'answer keys stay private');
+select has_function('public', 'start_mock_attempt', 'student start RPC exists');
+select has_function('public', 'publish_mock_review', 'atomic publication RPC exists');
+select ok((select relrowsecurity from pg_class where oid = 'public.mock_attempts'::regclass), 'attempt RLS is enabled');
+select is((select count(*) from public.mock_templates), 48::bigint, 'only 48 safe template identities seeded');
+select is((select count(*) from private.mock_answer_keys), 0::bigint, 'no answer keys are seeded');
+select is((select count(*) from public.mock_band_scale_entries), 0::bigint, 'no Band entries are seeded');
+select * from finish();
+rollback;

@@ -120,6 +120,32 @@ npx --yes supabase@latest db lint --local
 npx --yes supabase@latest test db --local
 ```
 
+## Mock tests: private keys and rollout hold
+
+`20260921000100_mock_tests.sql` adds the isolated mock-test schema. Its 48
+Cambridge Academic 16–21 / Tests 1–4 / Reading-or-Listening rows are only
+source metadata. The repository deliberately contains no passages, scans,
+audio, URLs, answer keys, or Band-scale entries. `private.mock_answer_keys`
+and `private.mock_answer_evaluations` are not exposed through the API schema;
+only SECURITY DEFINER RPCs use them.
+
+Before any non-local rollout, take a database backup and run:
+
+```powershell
+npx --yes supabase@2.117.0 db reset --local
+npx --yes supabase@2.117.0 db lint --local
+npx --yes supabase@2.117.0 test db --local
+npx tsx scripts/mock-schema-check.ts
+```
+
+An existing migration is not authorization to publish a Cambridge template.
+An administrator must import a lawfully held key and a methodist must verify
+the corresponding Band scale before the template version can be published.
+`finalize_expired_mock_attempts()` is service-role-only: invoke it from a
+trusted server scheduler (or safely during a server-side request) so expired
+attempts submit their last server-confirmed answers. Do not expose either the
+service role or the private schema to browser code.
+
 Studio is available at `http://127.0.0.1:54323`. Stop only this project stack:
 
 ```powershell
