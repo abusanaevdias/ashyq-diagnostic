@@ -47,6 +47,40 @@
   line-height: 1.55;
 }
 
+.steps {
+  margin-top: 24px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  min-width: 0;
+  padding: 16px;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  counter-increment: step;
+}
+
+.steps strong {
+  color: var(--ink);
+}
+
+.steps strong::before {
+  content: counter(step) '. ';
+  color: var(--red-deep);
+}
+
 .fixturePicker {
   max-width: 30rem;
   margin-top: 24px;
@@ -295,6 +329,10 @@
 }
 
 @media (max-width: 760px) {
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .grid {
     grid-template-columns: minmax(0, 1fr);
   }

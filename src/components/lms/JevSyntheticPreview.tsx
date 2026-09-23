@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { MicroLabel } from '@/components/ui/CleanUi';
 import ui from '@/components/ui/CleanUi.module.css';
-import { JEV_SYNTHETIC_FIXTURES, deterministicLabel, syntheticFixture } from '@/lib/jev/fixtures';
+import { JEV_SYNTHETIC_FIXTURES, syntheticFixture } from '@/lib/jev/fixtures';
 import { isJevLabelCode, JEV_LABELS, JEV_TAXONOMY_VERSION, labelTitle, type JevLabelCode } from '@/lib/jev/taxonomy';
 import { getAuth } from '@/lib/lms/auth';
 import { ROUTE_ROLES } from '@/lib/lms/permissions';
@@ -20,6 +20,7 @@ const localPreview = process.env.NODE_ENV === 'development'
 function PreviewCard() {
   const [fixtureId, setFixtureId] = useState(JEV_SYNTHETIC_FIXTURES[0].id);
   const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
+  const [showIllustration, setShowIllustration] = useState(false);
   const [requesting, setRequesting] = useState(false);
   const [requestMessage, setRequestMessage] = useState('');
   const [decision, setDecision] = useState<Decision>(null);
@@ -34,11 +35,11 @@ function PreviewCard() {
 
   const fixture = syntheticFixture(fixtureId) ?? JEV_SYNTHETIC_FIXTURES[0];
   const activeSuggestion = suggestion?.fixtureId === fixtureId ? suggestion : null;
-  const applicableRule = deterministicLabel(fixture);
-  const suggestedCode = activeSuggestion?.code ?? applicableRule ?? fixture.illustrativeLabel;
+  const canRequest = process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' || localPreview;
+  const suggestedCode = activeSuggestion?.code ?? (showIllustration ? fixture.illustrativeLabel : null);
   const sourceTag = activeSuggestion?.source === 'jev'
     ? 'Ответ Jev · без оценки уверенности'
-    : activeSuggestion?.source === 'rule' || applicableRule
+    : activeSuggestion?.source === 'rule'
       ? 'Проверка правил · без Jev'
       : 'Ручной макет · без Jev';
   const alternatives = JEV_LABELS.filter((label) => label.code !== 'no_supported_label' && label.code !== suggestedCode);
@@ -61,6 +62,7 @@ function PreviewCard() {
     requestSequence.current += 1;
     setFixtureId(id);
     setSuggestion(null);
+    setShowIllustration(false);
     setRequesting(false);
     setRequestMessage('');
     setDecision(null);
@@ -72,6 +74,7 @@ function PreviewCard() {
     const sequence = ++requestSequence.current;
     setRequesting(true);
     setSuggestion(null);
+    setShowIllustration(false);
     setRequestMessage('');
     try {
       const token = localPreview ? null : await getAuth().accessToken?.();
@@ -105,7 +108,7 @@ function PreviewCard() {
           ? 'Дневной лимит запросов Jev для пилота исчерпан. Продолжите разбор вручную.'
         : error instanceof Error && error.message === 'auth'
           ? 'Для запроса нужен вход учителя через Supabase.'
-          : 'Jev сейчас недоступен. Можно продолжить разбор по ручному примеру.');
+        : 'Проверка сейчас недоступна. Можно открыть учебную подсказку.');
     } finally {
       if (sequence === requestSequence.current) setRequesting(false);
     }
@@ -116,10 +119,26 @@ function PreviewCard() {
       <Link href="/teacher" className={styles.backLink}>← К классам</Link>
       <MicroLabel>ПРОТОТИП · ВЫМЫШЛЕННЫЕ ПРИМЕРЫ</MicroLabel>
       <h1 className={styles.title}>Подсказка о типе ошибки</h1>
-      <p className={styles.lead}>
-        Система предлагает наблюдаемый тип ошибки. Учитель подтверждает его,
-        меняет или отмечает, что данных недостаточно.
-      </p>
+      <p className={styles.lead}>Попробуйте короткий разбор на придуманном ответе ученика.</p>
+
+      <div className={styles.fixturePicker}>
+        <label className={styles.fieldLabel} htmlFor="jev-fixture">Выберите вымышленный ответ</label>
+        <select
+          id="jev-fixture"
+          className={styles.select}
+          value={fixtureId}
+          onChange={(event) => chooseFixture(event.target.value)}
+        >
+          {JEV_SYNTHETIC_FIXTURES.map((item, index) => <option key={item.id} value={item.id}>Пример {index + 1}: {item.title}</option>)}
+        </select>
+        <span className={styles.version}>Первый пример уже выбран. Здесь меняется ситуация, а не тип ошибки.</span>
+      </div>
+
+      <ol className={styles.steps} aria-label="Как пользоваться проверкой">
+        <li><strong>Выберите пример</strong><span>Прочитайте задание и ответ.</span></li>
+        <li><strong>Нажмите «Проверить ответ»</strong><span>Увидите предложение Jev или результат простого правила.</span></li>
+        <li><strong>Примите решение</strong><span>Подтвердите тип, исправьте его или укажите, что данных мало.</span></li>
+      </ol>
 
       <aside className={styles.demoNotice} aria-label="Ограничения примера">
         <strong>Все ответы придуманы.</strong> Исходные предложения на странице заданы вручную.
@@ -128,19 +147,6 @@ function PreviewCard() {
           : ' Вызов Jev доступен только учителям закрытого Supabase-пилота после настройки серверного ключа. '}
         Здесь нет работ настоящих учеников.
       </aside>
-
-      <div className={styles.fixturePicker}>
-        <label className={styles.fieldLabel} htmlFor="jev-fixture">Пример для разбора</label>
-        <select
-          id="jev-fixture"
-          className={styles.select}
-          value={fixtureId}
-          onChange={(event) => chooseFixture(event.target.value)}
-        >
-          {JEV_SYNTHETIC_FIXTURES.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
-        </select>
-        <span className={styles.version}>Черновой справочник: {JEV_TAXONOMY_VERSION}</span>
-      </div>
 
       <div className={styles.grid}>
         <section className={styles.card} aria-labelledby="task-title">
@@ -160,25 +166,39 @@ function PreviewCard() {
 
         <section className={[styles.card, styles.suggestion].join(' ')} aria-labelledby="suggestion-title">
           <div className={styles.cardHead}>
-            <MicroLabel>ПРЕДПОЛОЖЕНИЕ СИСТЕМЫ</MicroLabel>
-            <span className={styles.fixtureTag}>{sourceTag}</span>
+            <MicroLabel>РЕЗУЛЬТАТ ПРОВЕРКИ</MicroLabel>
+            {suggestedCode ? <span className={styles.fixtureTag}>{sourceTag}</span> : null}
           </div>
-          <h2 id="suggestion-title" className={styles.suggestedType}>{labelTitle(suggestedCode)}</h2>
-          <p className={styles.explanation}>
-            {activeSuggestion?.source === 'jev'
-              ? 'Это категория из чернового справочника, а не объяснение модели. Проверьте её по ответу и критерию слева.'
-              : fixture.illustrativeNote}
-          </p>
-          <p className={styles.teacherControl}>
-            Учитель принимает решение. Подсказка не меняет оценку и не отправляется ученику.
-          </p>
+          {suggestedCode ? (
+            <>
+              <h2 id="suggestion-title" className={styles.suggestedType}>{labelTitle(suggestedCode)}</h2>
+              <p className={styles.explanation}>
+                {activeSuggestion?.source === 'jev'
+                  ? 'Это категория из чернового справочника, а не объяснение модели. Сверьте её с ответом и критерием.'
+                  : fixture.illustrativeNote}
+              </p>
+              <p className={styles.teacherControl}>Решение принимает учитель. Подсказка не меняет оценку и не отправляется ученику.</p>
+            </>
+          ) : (
+            <>
+              <h2 id="suggestion-title" className={styles.suggestedType}>Пока нет предложения</h2>
+              <p className={styles.explanation}>Нажмите кнопку ниже, чтобы проверить выбранный ответ.</p>
+            </>
+          )}
 
-          {process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' || localPreview ? (
+          {!suggestedCode ? (
             <div className={styles.pilotPanel}>
-              <button type="button" className={ui.buttonBlack} disabled={requesting || Boolean(decision) || editing} onClick={() => void askJev()}>
-                {requesting ? 'Jev проверяет пример…' : 'Запросить предложение Jev'}
-              </button>
-              <span>Сервер отправит Jev только этот придуманный материал.</span>
+              {canRequest ? (
+                <button type="button" className={ui.buttonBlack} disabled={requesting} onClick={() => void askJev()}>
+                  {requesting ? 'Проверяем ответ…' : 'Проверить ответ'}
+                </button>
+              ) : null}
+              {!canRequest || (requestMessage && !requesting) ? (
+                <button type="button" className={ui.buttonOutline} onClick={() => { setShowIllustration(true); setRequestMessage(''); }}>
+                  Показать учебную подсказку
+                </button>
+              ) : null}
+              {canRequest ? <span>Сервер отправит Jev только этот придуманный материал. Простые случаи проверяются правилом.</span> : null}
             </div>
           ) : null}
           {requestMessage ? <p className={styles.requestMessage} role="status">{requestMessage}</p> : null}
@@ -187,7 +207,7 @@ function PreviewCard() {
             <div ref={decisionRef} className={styles.decision} role="status" aria-live="polite" tabIndex={-1}>
               <strong>
                 {decision === 'confirmed'
-                  ? suggestedCode === 'no_supported_label' ? 'Учитель подтвердил: тип ошибки не определён.' : 'Предположение подтверждено в макете.'
+                  ? suggestedCode === 'no_supported_label' ? 'Учитель подтвердил: ошибку не удалось определить.' : 'Предположение подтверждено в макете.'
                   : decision === 'changed'
                     ? `В макете выбран тип: ${labelTitle(alternative as JevLabelCode)}.`
                     : 'В макете отмечено: данных недостаточно.'}
@@ -208,9 +228,6 @@ function PreviewCard() {
               >
                 <option value="" disabled>Выберите тип</option>
                 {alternatives.map((item) => <option key={item.code} value={item.code}>{item.title}</option>)}
-                {applicableRule && applicableRule !== suggestedCode ? (
-                  <option value={applicableRule}>{labelTitle(applicableRule)}</option>
-                ) : null}
               </select>
               <div className={styles.actions}>
                 <button type="button" className={ui.buttonBlack} disabled={!alternative} onClick={() => { setDecision('changed'); setEditing(false); }}>
@@ -221,10 +238,10 @@ function PreviewCard() {
             </div>
           ) : null}
 
-          {!decision && !editing ? (
+          {suggestedCode && !decision && !editing ? (
             <div className={styles.actions} role="group" aria-label="Оценка предположения учителем">
               <button ref={confirmButtonRef} type="button" className={ui.buttonRed} disabled={requesting} onClick={() => setDecision('confirmed')}>
-                {suggestedCode === 'no_supported_label' ? 'Да, без ярлыка' : 'Да, верно'}
+                {suggestedCode === 'no_supported_label' ? 'Подтвердить: тип не ясен' : 'Да, верно'}
               </button>
               <button ref={editButtonRef} type="button" className={ui.buttonOutline} disabled={requesting} onClick={() => { setAlternative(''); setEditing(true); }}>Нет, изменить</button>
               {suggestedCode !== 'no_supported_label' ? (
@@ -238,7 +255,7 @@ function PreviewCard() {
       </div>
 
       <p className={styles.footerNote}>
-        Страница не читает сдачи и не сохраняет решения. Учительская классификация причин в mock-тестах остаётся отдельным действием.
+        Страница не читает сдачи и не сохраняет решения. Учительская классификация причин в mock-тестах остаётся отдельным действием. Черновой справочник: {JEV_TAXONOMY_VERSION}.
       </p>
     </div>
   );

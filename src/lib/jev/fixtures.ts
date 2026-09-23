@@ -17,7 +17,7 @@ export interface JevSyntheticFixture {
 export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
   {
     id: 'museum-contrast',
-    title: 'Противопоставление',
+    title: 'Музей и отключение света',
     source: 'The museum stayed open, although the power had failed.',
     question: 'Что здесь показывает слово although?',
     rubric: 'The museum remained open despite the power failure; although marks contrast.',
@@ -27,7 +27,7 @@ export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
   },
   {
     id: 'sunday-hours',
-    title: 'Противоречие источнику',
+    title: 'Часы работы библиотеки',
     source: 'The library opens at 9 a.m. on weekdays and at 11 a.m. on Sundays.',
     question: 'Во сколько библиотека открывается в воскресенье?',
     rubric: '11 a.m. on Sundays.',
@@ -37,7 +37,7 @@ export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
   },
   {
     id: 'two-reasons',
-    title: 'Неполный ответ',
+    title: 'Почему выбрали поезд',
     source: 'Nora chose the train because it was cheaper and arrived earlier.',
     question: 'Назовите обе причины выбора поезда.',
     rubric: 'Both reasons: lower cost and earlier arrival.',
@@ -47,7 +47,7 @@ export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
   },
   {
     id: 'extra-detail',
-    title: 'Утверждение без опоры',
+    title: 'Публикация результатов',
     source: 'The results were published on Friday.',
     question: 'Когда опубликовали результаты?',
     rubric: 'Friday; do not infer a reason or approval process.',
@@ -57,7 +57,7 @@ export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
   },
   {
     id: 'empty-answer',
-    title: 'Пропуск ответа',
+    title: 'Начало занятия',
     source: 'The workshop begins at noon.',
     question: 'Когда начинается занятие?',
     rubric: 'At noon.',
@@ -67,7 +67,7 @@ export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
   },
   {
     id: 'word-limit',
-    title: 'Лимит слов',
+    title: 'Короткий ответ о событии',
     source: 'The event starts at noon.',
     question: 'Когда начинается событие? Ответьте не более чем двумя словами.',
     rubric: 'Noon; at most two words.',
@@ -78,7 +78,7 @@ export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
   },
   {
     id: 'acceptable-answer',
-    title: 'Нужен отказ от ярлыка',
+    title: 'Ответ про полдень',
     source: 'The workshop begins at noon.',
     question: 'Когда начинается занятие?',
     rubric: 'At noon.',
@@ -88,7 +88,7 @@ export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
   },
   {
     id: 'instruction-in-answer',
-    title: 'Инструкция внутри ответа',
+    title: 'Звонок и лишний текст',
     source: 'The bell rang twice.',
     question: 'Сколько раз прозвучал звонок?',
     rubric: 'Twice.',
