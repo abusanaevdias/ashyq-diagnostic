@@ -4,7 +4,7 @@
 
 **Goal:** Deliver a working browser prototype where a learner revises two invented IELTS Task 2 essays by criterion and sees an honest comparison of authored practice estimates.
 
-**Architecture:** Curated case data and a pure session reducer drive a client component. The route contains no server endpoint and no persistence. The UI reveals authored explanations only after an independent attempt.
+**Architecture:** Curated case data and pure session helpers drive a client component. The route contains no server endpoint and no persistence. The UI reveals authored explanations only after an independent attempt.
 
 **Tech Stack:** Next.js 16 App Router, React 19, TypeScript, CSS modules, ASHYQ v3 design tokens.
 

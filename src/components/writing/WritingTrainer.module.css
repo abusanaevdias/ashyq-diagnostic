@@ -37,9 +37,9 @@
 .roundHeading h2 { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.4rem); letter-spacing: -.035em; line-height: 1.15; margin: 10px 0; }
 .roundHeading p { color: var(--ink-soft); line-height: 1.6; margin: 0; max-width: 660px; }
 .essayPaper, .sourceBlock { border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 24px; background: var(--bg); }
-.essayPaper p, .sourceBlock p { font-size: 15px; line-height: 1.9; margin: 0 0 17px; }
+.essayPaper p, .sourceBlock p { font-size: 15px; line-height: 1.7; margin: 0 0 17px; }
 .essayPaper p:last-child, .sourceBlock p:last-child { margin-bottom: 0; }
-.sentence { display: inline; font: inherit; color: inherit; text-align: left; background: transparent; border: 0; border-radius: var(--r-xs); padding: 3px; margin: -3px 2px 0 -3px; cursor: pointer; box-decoration-break: clone; }
+.sentence { display: inline-block; min-height: 44px; max-width: 100%; font: inherit; color: inherit; text-align: left; background: transparent; border: 0; border-radius: var(--r-xs); padding: 9px 6px; margin: 0 2px 0 -6px; cursor: pointer; overflow-wrap: anywhere; vertical-align: middle; }
 .sentence:hover { background: var(--blush-soft); }
 .sentenceSelected { background: var(--blush); outline: 2px solid var(--red); }
 .sentenceTouched { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 4px; }
