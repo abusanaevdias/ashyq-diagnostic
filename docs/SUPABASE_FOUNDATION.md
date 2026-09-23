@@ -72,21 +72,33 @@ With `NEXT_PUBLIC_AUTH_PROVIDER=supabase` the learning layer reads and writes
 the foundation tables through `src/lib/lms/supabase-repos.ts` (same `Repos`
 interface as the demo, loaded as a separate chunk). Class joins and grading go
 through the `join_class` / `grade_submission` RPCs; every other rule is RLS.
+Profile rows are visible only to the user and people in a class they share.
+Teacher access follows the current database role, so changing a teacher to a
+student revokes access to classes they previously managed. A grade cannot be
+null, and an assignment's maximum cannot be lowered below a published grade.
 Until authors publish their own posts, the four demo articles from
 `src/data/blog.ts` stay visible as a fallback.
 
 Files live in the private Storage bucket `lms-files` (2 MB per file, like the
 LMS spec). Objects are stored under `<owner uid>/<id>-<ascii name>` — Storage
 rejects non-ASCII keys, so the original name is kept in the material title and
-restored on download. Owners can upload only into their own folder; reading is
-allowed to the owner and to teacher↔student pairs of a shared class, and the
-app hands out 10-minute signed links. The service role gets explicit table
-privileges for admin work (moderation, export, deletion on request).
+restored on download. Owners can upload only into their own folder. Other
+users can read a file only when that exact file is attached to a lesson in a
+class they belong to or to a submission in a class they teach; a shared teacher
+or student account does not expose files from its other classes. Referenced
+files cannot be deleted through Storage until detached. The app hands out
+10-minute signed links. These rules are enforced by migration
+`20260923000100_lms_group_access.sql`.
 
 ```powershell
-npx tsx scripts/supabase-lms-check.ts     # teacher/student/outsider/author/anon
-npx tsx scripts/supabase-files-check.ts   # owner folder, shared-class reads, 2 MB
+npx tsx scripts/supabase-lms-check.ts     # two teachers/students, profile and result isolation
+npx tsx scripts/supabase-files-check.ts   # linked files, cross-class denial, 2 MB
 ```
+
+The CI database job starts a fresh local Supabase project, reapplies every
+migration, runs `db lint` and pgTAP, then checks the LMS repositories and Storage
+policies using authenticated clients. Never point these integration checks at
+the production project.
 
 ## Championship (SUPABASE-SEASON-001)
 
