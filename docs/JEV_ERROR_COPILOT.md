@@ -3,12 +3,15 @@
 ## Current slice
 
 /teacher/jev-preview is an interaction prototype with the existing
-client-side teacher UI guard. The assignment, answer, and suggested label are
-invented, and the page stores a teacher choice only in component state. It does
-not read an LMS submission, contact TypeSafe, change a grade, write to a
-repository, or send anything to a student. The route is noindex; neither that
-metadata nor the client role guard is server authorization for a future
-data-bearing API.
+client-side teacher UI guard. Its eight examples and illustrative labels are
+invented, and the page stores a teacher choice only in component state. A
+separate, disabled-by-default `/api/jev/synthetic` endpoint can ask Jev about
+one of those fixed examples after Supabase teacher verification and an explicit
+teacher allowlist. It does not read an LMS submission, change a grade, write to
+a repository, or send anything to a student. See the
+[synthetic pilot design](superpowers/specs/2026-09-23-jev-synthetic-pilot-design.md).
+Paid requests use the existing Supabase `check_rate_limit` RPC for a shared
+20-call-per-teacher daily budget and fail closed if that RPC is unavailable.
 
 The preview demonstrates three useful teacher decisions:
 

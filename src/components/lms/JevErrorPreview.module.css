@@ -47,6 +47,18 @@
   line-height: 1.55;
 }
 
+.fixturePicker {
+  max-width: 30rem;
+  margin-top: 24px;
+}
+
+.version {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
 .grid {
   margin-top: 24px;
   display: grid;
@@ -113,6 +125,13 @@
   line-height: 1.55;
 }
 
+.rubric {
+  margin-top: 12px;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
 .answerBlock {
   margin-top: 28px;
   padding-top: 18px;
@@ -156,6 +175,30 @@
   color: var(--ink);
   font-size: 0.8125rem;
   line-height: 1.5;
+}
+
+.pilotPanel {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.pilotPanel span,
+.requestMessage {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.pilotPanel button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.requestMessage {
+  margin-top: 10px;
 }
 
 .actions {

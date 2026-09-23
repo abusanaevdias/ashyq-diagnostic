@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import LmsShell from '@/components/lms/LmsShell';
-import JevErrorPreview from '@/components/lms/JevErrorPreview';
+import JevSyntheticPreview from '@/components/lms/JevSyntheticPreview';
 
 export const metadata: Metadata = {
   title: 'Подсказка об ошибке — ASHYQ',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function JevPreviewPage() {
   return (
     <LmsShell>
-      <JevErrorPreview />
+      <JevSyntheticPreview />
     </LmsShell>
   );
 }
