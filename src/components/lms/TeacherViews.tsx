@@ -186,6 +186,16 @@ function ClassManage({ id, user }: { id: string; user: User }) {
         <Link href={`/teacher/lessons/new?class=${cls.id}`} className={ui.buttonOutline}>Новый урок</Link>
       </div>
 
+      <section className={`${styles.card} ${styles.section}`} aria-labelledby="jev-training-title">
+        <h2 id="jev-training-title" className={styles.cardTitle}>Jev: тренировка разбора</h2>
+        <p className={`${styles.muted} ${styles.spaced}`}>
+          Проверьте, как Jev предлагает тип ошибки на вымышленных ответах. Работы учеников этого класса не используются.
+        </p>
+        <div className={styles.actions}>
+          <Link href={`/teacher/classes/${cls.id}/jev-preview`} className={ui.buttonOutline}>Открыть тренировку Jev</Link>
+        </div>
+      </section>
+
       <div className={styles.feedGrid}>
         <section aria-labelledby="t-assignments-title">
           <h2 id="t-assignments-title" className={styles.sectionTitle}>Задания и сдачи</h2>
