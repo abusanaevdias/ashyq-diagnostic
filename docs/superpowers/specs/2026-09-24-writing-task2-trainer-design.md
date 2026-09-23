@@ -33,9 +33,11 @@ The four focus areas follow the IELTS Writing criteria: Task Response, Coherence
 ## Failure and edge states
 
 - Empty or unchanged revision: keep the input and explain what action is needed.
+- A learner who searched but found nothing can explicitly reveal the grammar review; this is recorded as zero independently found issues.
 - Edit of a clean sentence: record as an unnecessary change without reducing an IELTS estimate.
 - Text different from the authored example: show it as an unverified alternative, with no automatic penalty or reward.
 - Reload or leave: no persistence; the page warns that drafts are local to the open page.
+- Back navigation preserves the furthest stage and lets a learner revisit comparisons and apply examples after viewing the report.
 - Keyboard and mobile: all sentence controls are buttons, edit fields are labelled, feedback is announced, controls have 44 px targets, and the layout stacks at narrow widths.
 
 ## Pilot success signals

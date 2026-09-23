@@ -1,0 +1,27 @@
+# Writing trainer pilot: adversarial review
+
+Reviewed the synthetic IELTS Task 2 learner flow against the product promise: independent discovery, honest feedback, staged revision, and useful final comparison.
+
+| Failure hypothesis | Evidence and change |
+| --- | --- |
+| A learner can reveal the grammar answer immediately without attempting a search. | The first browser pass found an enabled check button. It now requires a changed sentence, with a separate explicit “I found no errors” exit so a learner who tried but found nothing is not trapped. |
+| A learner's valid alternative is treated as wrong or earns a fabricated score. | Exact authored variants are the only automatic matches. Other variants are labelled for teacher review and retained in the final report. Practice scores change only after an authored improvement is applied to the working essay. |
+| The report hides a learner's original work after advancing. | The browser pass exposed inaccessible prior drafts. The report now includes unapplied grammar and paragraph drafts. Back navigation also lets the learner revisit comparisons and apply a prepared example later. |
+| Going back makes a completed lesson appear to lose progress. | Session state now tracks the furthest stage separately from the current stage. The progress bar remains at the furthest stage while the current stage is named explicitly. |
+| A Task 2 example is too short to model the format. | The original essays were 213 and 178 words. Both are now above 250 words (262 and 261 words in the page UI). |
+| A score changes without an explanation of the relevant writing skill. | Each final criterion card now says which authored change caused the movement; grammar notes that range of structures was not separately assessed. |
+| The learner cannot see how to start without scrolling. | The opening section was shortened and gained a direct link to the active exercise. |
+| Real learner text is sent to an external provider or persisted. | The route is a static client exercise with two invented case files. No API route, browser storage, LMS read/write, or AI call was added. |
+
+## Design reference check
+
+- 21st.dev search surfaced [Onboarding Stepper Progress](https://21st.dev/@shadcnspace/components/progress-02), with a step count, progress bar, and back/next controls. We kept ASHYQ tokens and its existing shell, and added reversible navigation to the in-page exercise instead of installing the reference's additional UI dependencies.
+- Mobbin's MCP returned a paid-plan requirement, so no Mobbin flow screenshot was available for inspection. The [public pattern catalogue](https://mobbin.com/) lists progress indicators and starting/completing journeys; those broad patterns were considered, but no specific app flow is claimed as a source.
+- `21st review src/components/writing/WritingTrainer.tsx` returned zero deterministic findings before the last navigation refinements. Re-run it with final checks.
+
+## Remaining limits
+
+- Scores are authored practice estimates for these two cases, not live IELTS assessment. The band movement is a property of the revised case essay, not proof that a learner improved independently.
+- An unrecognized but valid free-text revision still requires a teacher. This pilot does not grade it.
+- Mobile stacking is implemented in CSS, but the available in-app browser did not expose a viewport override; a narrow-screen visual pass remains useful.
+- The learner's session is discarded on reload. A later class-integrated version needs consent, privacy rules, persistence, and teacher moderation before using real submissions.
