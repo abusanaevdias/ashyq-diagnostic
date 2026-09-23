@@ -35,40 +35,72 @@ const file = (name: string, text: string) => new File([text], name, { type: 'tex
 (async () => {
   try {
     const teacher = await account('teacher', 'teacher');
+    const otherTeacher = await account('other-teacher', 'teacher');
     const student = await account('student', 'student');
     const outsider = await account('outsider', 'student');
     const tFiles = createSupabaseFileStorage(() => teacher.client);
+    const t2Files = createSupabaseFileStorage(() => otherTeacher.client);
     const sFiles = createSupabaseFileStorage(() => student.client);
     const oFiles = createSupabaseFileStorage(() => outsider.client);
+    const teacherRepos = createSupabaseRepos(() => teacher.client);
+    const otherTeacherRepos = createSupabaseRepos(() => otherTeacher.client);
+    const studentRepos = createSupabaseRepos(() => student.client);
+    const outsiderRepos = createSupabaseRepos(() => outsider.client);
 
-    // Учитель и ученик — в одном классе
-    const cls = await createSupabaseRepos(() => teacher.client).classes.create({ title: 'SAT Math', subject: 'SAT', teacherId: teacher.id });
-    await createSupabaseRepos(() => student.client).classes.join(cls.inviteCode, student.id);
+    // Две группы одного учителя и соседняя группа второго учителя.
+    const clsA = await teacherRepos.classes.create({ title: 'SAT Math A', subject: 'SAT', teacherId: teacher.id });
+    const clsB = await teacherRepos.classes.create({ title: 'SAT Math B', subject: 'SAT', teacherId: teacher.id });
+    const clsC = await otherTeacherRepos.classes.create({ title: 'IELTS C', subject: 'IELTS', teacherId: otherTeacher.id });
+    await studentRepos.classes.join(clsA.inviteCode, student.id);
+    await studentRepos.classes.join(clsC.inviteCode, student.id);
+    await outsiderRepos.classes.join(clsB.inviteCode, outsider.id);
 
     // 1. Ученик прикрепляет файл к сдаче — учитель его класса скачивает по подписанной ссылке
-    const essay = await sFiles.upload(file('Эссе Task 2.txt', 'Итоговое эссе'));
-    assert.match(essay.url ?? '', new RegExp(`^sb-file:${student.id}/`), 'файл в папке ученика');
-    const teacherUrl = await tFiles.resolveUrl(essay);
-    assert.ok(teacherUrl, 'учитель получает ссылку на файл ученика');
-    assert.equal(await (await fetch(teacherUrl!)).text(), 'Итоговое эссе');
+    const assignmentA = await teacherRepos.assignments.create({ classId: clsA.id, teacherId: teacher.id, title: 'Essay A', brief: '', dueAt: new Date(Date.now() + 86_400_000).toISOString(), maxPoints: 10 });
+    const essayA = await sFiles.upload(file('Эссе A.txt', 'Работа ученика в группе A'));
+    assert.match(essayA.url ?? '', new RegExp(`^sb-file:${student.id}/`), 'файл в папке ученика');
+    await studentRepos.submissions.submit({ assignmentId: assignmentA.id, studentId: student.id, content: 'Ответ A', attachments: [essayA] });
+    const teacherUrl = await tFiles.resolveUrl(essayA);
+    assert.ok(teacherUrl, 'учитель получает ссылку на файл ученика из своей группы');
+    assert.equal(await (await fetch(teacherUrl!)).text(), 'Работа ученика в группе A');
 
     // 2. Материал урока учителя доступен ученику класса
-    const material = await tFiles.upload(file('formulas.txt', 'y = mx + b'));
-    assert.ok(await sFiles.resolveUrl(material), 'ученик получает материал своего учителя');
+    const materialA = await tFiles.upload(file('formulas-a.txt', 'Формулы для группы A'));
+    await teacherRepos.lessons.create({ classId: clsA.id, title: 'Формулы A', body: '', materials: [materialA] });
+    assert.ok(await sFiles.resolveUrl(materialA), 'ученик получает материал своего класса');
 
-    // 3. Посторонний не получает ссылку ни на сдачу, ни на материал
-    assert.equal(await oFiles.resolveUrl(essay), null, 'посторонний не видит сдачу');
-    assert.equal(await oFiles.resolveUrl(material), null, 'посторонний не видит материал');
+    // 3. Общий учитель не даёт ученику доступ к материалам другого его класса.
+    const materialB = await tFiles.upload(file('formulas-b.txt', 'Материал только группы B'));
+    await teacherRepos.lessons.create({ classId: clsB.id, title: 'Формулы B', body: '', materials: [materialB] });
+    assert.equal(await sFiles.resolveUrl(materialB), null, 'ученик A не видит файл из группы B того же учителя');
+    assert.ok(await oFiles.resolveUrl(materialB), 'ученик B видит свой учебный материал');
 
-    // 4. Загрузка в чужую папку запрещена политикой, а не только клиентом
+    // 4. Второй учитель может читать прикреплённую сдачу в своей группе,
+    // но первый учитель не получает доступ к файлам ученика из другой группы.
+    const assignmentC = await otherTeacherRepos.assignments.create({ classId: clsC.id, teacherId: otherTeacher.id, title: 'Essay C', brief: '', dueAt: new Date(Date.now() + 86_400_000).toISOString(), maxPoints: 10 });
+    const essayC = await sFiles.upload(file('Эссе C.txt', 'Работа ученика в группе C'));
+    await studentRepos.submissions.submit({ assignmentId: assignmentC.id, studentId: student.id, content: 'Ответ C', attachments: [essayC] });
+    assert.ok(await t2Files.resolveUrl(essayC), 'учитель C видит сдачу своего ученика');
+    assert.equal(await tFiles.resolveUrl(essayC), null, 'учитель A не видит файл той же ученицы в другой группе');
+    assert.equal(await t2Files.resolveUrl(essayA), null, 'учитель C не видит сдачу из группы A');
+
+    // Ученик не может удалить файл, пока он приложен к сдаче.
+    const essayAPath = essayA.url!.slice('sb-file:'.length);
+    await student.client.storage.from('lms-files').remove([essayAPath]);
+    const preserved = await admin.storage.from('lms-files').download(essayAPath);
+    assert.ok(preserved.data, 'прикреплённый файл нельзя удалить прямым запросом');
+
+    // 5. Посторонний не получает ссылку, а чужая папка защищена Storage RLS.
+    assert.equal(await oFiles.resolveUrl(essayA), null, 'посторонний не видит сдачу');
+    assert.equal(await oFiles.resolveUrl(materialA), null, 'посторонний не видит материал');
     const foreign = await outsider.client.storage.from('lms-files').upload(`${student.id}/fake.txt`, file('fake.txt', 'x'));
     assert.ok(foreign.error, 'нельзя положить файл в чужую папку');
 
-    // 5. Больше 2 МБ отсекается до загрузки; внешние ссылки не трогаем
+    // 6. Больше 2 МБ отсекается до загрузки; внешние ссылки не трогаем.
     await assert.rejects(sFiles.upload(file('big.txt', 'x'.repeat(2 * 1024 * 1024 + 1))), /больше 2 МБ/);
     assert.equal(await sFiles.resolveUrl({ id: 'l', kind: 'link', title: 'IELTS', url: 'https://ielts.org' }), 'https://ielts.org');
 
-    console.log('PASS supabase files: owner folder upload, teacher↔student signed links, outsider denied, foreign folder denied, 2 MB limit');
+    console.log('PASS supabase files: linked teacher↔student files, cross-class denial, referenced-file retention, outsider denial, 2 MB limit');
   } finally {
     const { data } = await admin.storage.from('lms-files').list('', { limit: 1000 });
     for (const folder of (data ?? []).filter((f) => created.includes(f.name))) {

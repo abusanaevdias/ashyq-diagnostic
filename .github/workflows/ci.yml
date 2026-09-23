@@ -124,3 +124,47 @@ jobs:
             artifacts/a11y-perf/
           if-no-files-found: ignore
           retention-days: 7
+
+  lms-database:
+    name: LMS Supabase RLS, Storage, and migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SUPABASE_TELEMETRY_DISABLED: 1
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.117.0
+
+      - name: Start local Supabase
+        run: supabase start --exclude studio,imgproxy,realtime,edge-runtime,logflare,vector,postgres-meta,mailpit,supavisor
+
+      - name: Rebuild local database from migrations
+        run: supabase db reset --local
+
+      - name: Check schema and migrations
+        run: |
+          npx tsx scripts/supabase-schema-check.ts
+          supabase db lint --local
+          supabase test db --local
+
+      - name: Check LMS repositories and Storage RLS
+        shell: bash
+        run: |
+          set -euo pipefail
+          eval "$(supabase status -o env)"
+          export SUPABASE_URL="$API_URL"
+          export SUPABASE_ANON_KEY="$ANON_KEY"
+          export SUPABASE_SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY"
+          npx tsx scripts/supabase-lms-check.ts
+          npx tsx scripts/supabase-files-check.ts
