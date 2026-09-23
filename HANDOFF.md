@@ -199,6 +199,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | JEV-UX-003 | REVIEW (draft PR #52; commits `b091c11`, `d7894c5`, `d374bba`) | Codex `/root` | `codex/jev-synthetic-pilot`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-jev-synthetic-pilot` | 2026-09-24; adversarial review found answer-revealing menu labels and an actionable suggestion before Jev ran. Preview now uses neutral example names, a clear three-step teacher flow, an empty result state, explicit rule/Jev/mock sources and teacher decisions only after a result. Browser reviewed live Jev, deterministic missing-answer rule, example reset and 390 px layout without horizontal overflow. Typecheck, targeted ESLint, `21st review` (0 findings) and diff check pass. CI/Vercel for latest PR head pending at closeout; prior CI baseline token findings remain separate. No real learner data or deployment. Next: review the flow with the owner, then obtain annotated examples and clear privacy/auth gates before any real learner pilot. |
 
+| JEV-CLASS-004 | IN_PROGRESS | Codex `/root` | `codex/jev-class-integration`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-jev-class-integration` | Started 2026-09-24; integrate the Jev teacher pilot into class and submission navigation, with teacher review UX. External transfer of real learner answers stays gated pending the owner's scope decision and privacy/auth readiness. |
+
 Блог ждёт настоящие статьи от пользователя (см. строку V3-BLOG-001).
 Контакты подтверждены и внесены (`CONTACTS-DATA-001`); почты и офиса у ASHYQ пока нет.
 
