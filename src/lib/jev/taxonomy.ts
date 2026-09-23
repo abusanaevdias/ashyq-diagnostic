@@ -1,30 +1,30 @@
 /** Draft labels for observable properties of a short written answer. */
-export const JEV_TAXONOMY_VERSION = 'synthetic-draft-1';
+export const JEV_TAXONOMY_VERSION = 'synthetic-draft-2';
 
 export const JEV_LABELS = [
   {
     code: 'relation_changed',
-    title: 'Изменена логическая связь',
+    title: 'Искажена связь между фактами',
     criterion: 'The answer changes an explicit contrast, cause, condition, or time relation in the source. Prefer this over source_contradiction when the relation itself is the error.',
   },
   {
     code: 'source_contradiction',
-    title: 'Ответ противоречит источнику',
+    title: 'Факт противоречит тексту',
     criterion: 'The answer states a fact opposite to the source, without changing an explicit logical relation.',
   },
   {
     code: 'missing_required_part',
-    title: 'Не хватает обязательной части ответа',
+    title: 'Пропущена часть ответа',
     criterion: 'The answer includes a correct part but omits another part explicitly required by the question and rubric.',
   },
   {
     code: 'unsupported_detail',
-    title: 'Добавлено утверждение без опоры на источник',
+    title: 'Деталь без опоры на текст',
     criterion: 'The answer adds a factual claim that the source does not support, without directly contradicting the source.',
   },
   {
     code: 'no_supported_label',
-    title: 'Нельзя надёжно определить тип',
+    title: 'Тип ошибки не определён',
     criterion: 'The answer is acceptable, the evidence is insufficient, or more than one of the other labels is equally plausible. Do not force a specific error.',
   },
 ] as const;

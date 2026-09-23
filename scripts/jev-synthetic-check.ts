@@ -88,7 +88,7 @@ async function main() {
   const modelCall = model.calls.find(({ url }) => url.includes('typesafe.ai'));
   assert.ok(modelCall);
   const payload = JSON.parse(String(modelCall.init?.body));
-  assert.equal(payload.state.answer, 'Музей закрылся из-за отключения электричества.');
+  assert.equal(payload.state.answer, 'Музей оставался открытым, потому что отключилось электричество.');
   assert.deepEqual(Object.keys(payload.questions.observable_error.criteria), JEV_LABELS.map((label) => label.code));
   assert.equal(JSON.stringify(payload).includes(teacherId), false, 'provider input must omit account IDs');
   assert.equal(JSON.stringify(modelData).includes('confidence'), false, 'unvalidated confidence must stay hidden');

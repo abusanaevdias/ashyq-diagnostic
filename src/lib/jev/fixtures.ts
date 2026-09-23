@@ -21,9 +21,9 @@ export const JEV_SYNTHETIC_FIXTURES: readonly JevSyntheticFixture[] = [
     source: 'The museum stayed open, although the power had failed.',
     question: 'Что здесь показывает слово although?',
     rubric: 'The museum remained open despite the power failure; although marks contrast.',
-    answer: 'Музей закрылся из-за отключения электричества.',
+    answer: 'Музей оставался открытым, потому что отключилось электричество.',
     illustrativeLabel: 'relation_changed',
-    illustrativeNote: 'Ответ меняет «продолжил работу вопреки отключению» на «закрылся из-за отключения».',
+    illustrativeNote: 'Факт сохранён, но «вопреки отключению» заменено на «из-за отключения».',
   },
   {
     id: 'sunday-hours',

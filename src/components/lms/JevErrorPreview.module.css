@@ -91,7 +91,7 @@
 
 .fixtureTag {
   padding: 4px 9px;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   background: var(--hairline);
   color: var(--ink);
   font-size: 0.75rem;
