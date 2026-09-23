@@ -164,7 +164,7 @@ function PreviewCard() {
           </div>
         </section>
 
-        <section className={[styles.card, styles.suggestion].join(' ')} aria-labelledby="suggestion-title">
+        <section className={[styles.card, suggestedCode ? styles.suggestion : ''].filter(Boolean).join(' ')} aria-labelledby="suggestion-title">
           <div className={styles.cardHead}>
             <MicroLabel>РЕЗУЛЬТАТ ПРОВЕРКИ</MicroLabel>
             {suggestedCode ? <span className={styles.fixtureTag}>{sourceTag}</span> : null}
@@ -241,7 +241,7 @@ function PreviewCard() {
           {suggestedCode && !decision && !editing ? (
             <div className={styles.actions} role="group" aria-label="Оценка предположения учителем">
               <button ref={confirmButtonRef} type="button" className={ui.buttonRed} disabled={requesting} onClick={() => setDecision('confirmed')}>
-                {suggestedCode === 'no_supported_label' ? 'Подтвердить: тип не ясен' : 'Да, верно'}
+                {suggestedCode === 'no_supported_label' ? 'Подтвердить без типа ошибки' : 'Да, верно'}
               </button>
               <button ref={editButtonRef} type="button" className={ui.buttonOutline} disabled={requesting} onClick={() => { setAlternative(''); setEditing(true); }}>Нет, изменить</button>
               {suggestedCode !== 'no_supported_label' ? (
