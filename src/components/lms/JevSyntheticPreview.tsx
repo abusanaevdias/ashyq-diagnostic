@@ -13,6 +13,9 @@ import styles from './JevErrorPreview.module.css';
 
 type Decision = 'confirmed' | 'changed' | 'unclear' | null;
 type Suggestion = { fixtureId: string; code: JevLabelCode; source: 'jev' | 'rule' };
+const localPreview = process.env.NODE_ENV === 'development'
+  && process.env.NEXT_PUBLIC_JEV_LOCAL_PREVIEW === '1'
+  && process.env.NEXT_PUBLIC_AUTH_PROVIDER !== 'supabase';
 
 function PreviewCard() {
   const [fixtureId, setFixtureId] = useState(JEV_SYNTHETIC_FIXTURES[0].id);
@@ -71,11 +74,12 @@ function PreviewCard() {
     setSuggestion(null);
     setRequestMessage('');
     try {
-      const token = await getAuth().accessToken?.();
-      if (!token) throw new Error('auth');
-      const response = await fetch(`/api/jev/synthetic?fixture=${encodeURIComponent(fixtureId)}`, {
+      const token = localPreview ? null : await getAuth().accessToken?.();
+      if (!localPreview && !token) throw new Error('auth');
+      const route = localPreview ? '/api/jev/local-preview' : '/api/jev/synthetic';
+      const response = await fetch(`${route}?fixture=${encodeURIComponent(fixtureId)}`, {
         method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
         cache: 'no-store',
       });
       if (!response.ok) throw new Error(response.status === 403 ? 'access' : response.status === 429 ? 'limit' : 'unavailable');
@@ -96,7 +100,7 @@ function PreviewCard() {
     } catch (error) {
       if (sequence !== requestSequence.current) return;
       setRequestMessage(error instanceof Error && error.message === 'access'
-        ? 'Этот аккаунт учителя не включён в закрытый пилот.'
+        ? localPreview ? 'Локальный запрос отклонён. Откройте страницу через 127.0.0.1 на этом компьютере.' : 'Этот аккаунт учителя не включён в закрытый пилот.'
         : error instanceof Error && error.message === 'limit'
           ? 'Дневной лимит запросов Jev для пилота исчерпан. Продолжите разбор вручную.'
         : error instanceof Error && error.message === 'auth'
@@ -119,7 +123,9 @@ function PreviewCard() {
 
       <aside className={styles.demoNotice} aria-label="Ограничения примера">
         <strong>Все ответы придуманы.</strong> Исходные предложения на странице заданы вручную.
-        Вызов Jev доступен только учителям закрытого Supabase-пилота после настройки серверного ключа.
+        {localPreview
+          ? ' Jev можно запросить только из локального режима на этом компьютере. '
+          : ' Вызов Jev доступен только учителям закрытого Supabase-пилота после настройки серверного ключа. '}
         Здесь нет работ настоящих учеников.
       </aside>
 
@@ -167,7 +173,7 @@ function PreviewCard() {
             Учитель принимает решение. Подсказка не меняет оценку и не отправляется ученику.
           </p>
 
-          {process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' ? (
+          {process.env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' || localPreview ? (
             <div className={styles.pilotPanel}>
               <button type="button" className={ui.buttonBlack} disabled={requesting || Boolean(decision) || editing} onClick={() => void askJev()}>
                 {requesting ? 'Jev проверяет пример…' : 'Запросить предложение Jev'}

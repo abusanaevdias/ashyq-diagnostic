@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { handleJevSyntheticRequest } from '../src/lib/jev/synthetic-server';
+import { handleJevLocalPreviewRequest, handleJevSyntheticRequest } from '../src/lib/jev/synthetic-server';
 import { JEV_LABELS, JEV_TAXONOMY_VERSION } from '../src/lib/jev/taxonomy';
 
 const teacherId = '11111111-1111-4111-8111-111111111111';
@@ -44,6 +44,13 @@ function request(fixture = 'museum-contrast', authorized = true): Request {
   return new Request(`http://localhost:3000/api/jev/synthetic?fixture=${fixture}`, {
     method: 'POST',
     headers: authorized ? { Authorization: `Bearer ${token}` } : {},
+  });
+}
+
+function localRequest(fixture = 'museum-contrast', origin = 'http://127.0.0.1:3000'): Request {
+  return new Request(`http://127.0.0.1:3000/api/jev/local-preview?fixture=${fixture}`, {
+    method: 'POST',
+    headers: { Origin: origin, Host: '127.0.0.1:3000', 'Sec-Fetch-Site': 'same-origin' },
   });
 }
 
@@ -125,6 +132,17 @@ async function main() {
   assert.equal((await handleJevSyntheticRequest(bodyRequest, env, withBody.fetchImpl)).status, 400);
   assert.equal(withBody.calls.length, 0, 'request body must be rejected before auth and provider calls');
 
+  const emptyPostStream = new ReadableStream<Uint8Array>({ start(controller) { controller.close(); } });
+  const nextEmptyPost = new Request('http://localhost:3000/api/jev/synthetic?fixture=museum-contrast', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Length': '0' },
+    body: emptyPostStream,
+    duplex: 'half',
+  } as RequestInit & { duplex: 'half' });
+  const nextEmpty = fakeFetch();
+  assert.equal((await handleJevSyntheticRequest(nextEmptyPost, env, nextEmpty.fetchImpl)).status, 200,
+    'Next.js empty POST stream must not block the browser pilot');
+
   const injected = fakeFetch({ choice: 'no_supported_label' });
   const injectionResponse = await handleJevSyntheticRequest(request('instruction-in-answer'), env, injected.fetchImpl);
   assert.equal((await injectionResponse.json() as { status: string }).status, 'unclear');
@@ -142,7 +160,68 @@ async function main() {
   assert.equal((await handleJevSyntheticRequest(request('someone-elses-submission'), env, unknownFixture.fetchImpl)).status, 404);
   assert.equal(unknownFixture.calls.filter(({ url }) => url.includes('typesafe.ai')).length, 0);
 
-  console.log('Jev synthetic checks: 17 scenarios PASS');
+  const localEnv = { ...env, NODE_ENV: 'development', NEXT_PUBLIC_AUTH_PROVIDER: 'demo', ASHYQ_JEV_LOCAL_PREVIEW: '1' };
+  const local = fakeFetch();
+  const localResponse = await handleJevLocalPreviewRequest(localRequest(), localEnv, local.fetchImpl, { windowStart: 0, used: 0 });
+  assert.equal(localResponse.status, 200);
+  assert.equal((await localResponse.json() as { code: string }).code, 'relation_changed');
+  assert.deepEqual(local.calls.map(({ url }) => url), ['https://api.typesafe.ai/v1/systemone'], 'local mode must not contact Supabase');
+
+  const localProduction = fakeFetch();
+  assert.equal((await handleJevLocalPreviewRequest(localRequest(), { ...localEnv, NODE_ENV: 'production' }, localProduction.fetchImpl)).status, 404);
+  assert.equal(localProduction.calls.length, 0);
+
+  const localDisabled = fakeFetch();
+  assert.equal((await handleJevLocalPreviewRequest(localRequest(), { ...localEnv, ASHYQ_JEV_LOCAL_PREVIEW: '0' }, localDisabled.fetchImpl)).status, 404);
+  assert.equal(localDisabled.calls.length, 0);
+
+  const crossOrigin = fakeFetch();
+  assert.equal((await handleJevLocalPreviewRequest(localRequest('museum-contrast', 'https://elsewhere.example'), localEnv, crossOrigin.fetchImpl)).status, 403);
+  assert.equal(crossOrigin.calls.length, 0);
+
+  const nonLoopback = fakeFetch();
+  const networkRequest = new Request('http://192.168.1.5:3000/api/jev/local-preview?fixture=museum-contrast', {
+    method: 'POST', headers: { Origin: 'http://192.168.1.5:3000', Host: '192.168.1.5:3000' },
+  });
+  assert.equal((await handleJevLocalPreviewRequest(networkRequest, localEnv, nonLoopback.fetchImpl)).status, 404);
+  assert.equal(nonLoopback.calls.length, 0);
+
+  const localBody = fakeFetch();
+  const localBodyRequest = new Request('http://127.0.0.1:3000/api/jev/local-preview?fixture=museum-contrast', {
+    method: 'POST', headers: { Origin: 'http://127.0.0.1:3000', Host: '127.0.0.1:3000' }, body: 'private answer',
+  });
+  assert.equal((await handleJevLocalPreviewRequest(localBodyRequest, localEnv, localBody.fetchImpl)).status, 400);
+  assert.equal(localBody.calls.length, 0);
+
+  const localLimited = fakeFetch();
+  assert.equal((await handleJevLocalPreviewRequest(localRequest(), localEnv, localLimited.fetchImpl, { windowStart: Date.now(), used: 20 })).status, 429);
+  assert.equal(localLimited.calls.length, 0);
+
+  const localEmptyPostStream = new ReadableStream<Uint8Array>({ start(controller) { controller.close(); } });
+  const localNextRequest = new Request('http://localhost:3000/api/jev/local-preview?fixture=museum-contrast', {
+    method: 'POST',
+    headers: { Origin: 'http://127.0.0.1:3000', Host: '127.0.0.1:3000', 'Content-Length': '0' },
+    body: localEmptyPostStream,
+    duplex: 'half',
+  } as RequestInit & { duplex: 'half' });
+  const localNext = fakeFetch();
+  assert.equal((await handleJevLocalPreviewRequest(localNextRequest, localEnv, localNext.fetchImpl, { windowStart: 0, used: 0 })).status, 200,
+    'local route must accept the framework empty POST stream with normalized URL');
+
+  const disguisedBodyStream = new ReadableStream<Uint8Array>({
+    start(controller) { controller.enqueue(new TextEncoder().encode('private answer')); controller.close(); },
+  });
+  const disguisedBodyRequest = new Request('http://localhost:3000/api/jev/local-preview?fixture=museum-contrast', {
+    method: 'POST',
+    headers: { Origin: 'http://127.0.0.1:3000', Host: '127.0.0.1:3000', 'Content-Length': '0' },
+    body: disguisedBodyStream,
+    duplex: 'half',
+  } as RequestInit & { duplex: 'half' });
+  const disguisedBody = fakeFetch();
+  assert.equal((await handleJevLocalPreviewRequest(disguisedBodyRequest, localEnv, disguisedBody.fetchImpl)).status, 400);
+  assert.equal(disguisedBody.calls.length, 0);
+
+  console.log('Jev synthetic checks: 27 scenarios PASS');
 }
 
 main().catch((error: unknown) => {

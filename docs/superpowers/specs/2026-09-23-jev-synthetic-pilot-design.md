@@ -26,6 +26,10 @@ TypeSafe's current [OpenAPI schema](https://api.typesafe.ai/openapi.json) docume
 
 An opt-in `scripts/jev-provider-smoke.ts` exercises the actual server payload with simulated Supabase teacher checks and only the fixed invented fixtures. The disposable key was supplied only as a process environment variable; it is absent from the repository and local env files. A first six-fixture run matched the illustrative labels in five cases. The museum example had two overlapping errors; after changing it to retain the factual event and alter only the causal relation, a live retry returned the intended `relation_changed` label. This is an integration smoke check, not an accuracy estimate or proof of reliability.
 
+## Local demonstration without Supabase
+
+For the owner to press the Jev button on this computer, start `next dev` bound to `127.0.0.1` with process-scoped `ASHYQ_JEV_API_KEY`, `ASHYQ_JEV_SYNTHETIC_PILOT=1`, `ASHYQ_JEV_LOCAL_PREVIEW=1`, and `NEXT_PUBLIC_JEV_LOCAL_PREVIEW=1`, leaving the auth provider in demo mode. Open the matching `http://127.0.0.1:<port>/teacher/jev-preview` origin and choose the demo teacher. The UI calls `/api/jev/local-preview` without a Supabase token. The route returns 404 outside development mode or when either local flag is off, checks a loopback Host and matching Origin, rejects request bodies, and uses the same fixed fixtures and provider validation. It permits up to 20 paid calls in a 24-hour in-memory window per dev process. This mode is only for a machine-local demonstration and does not prove teacher identity; it must not be enabled in a deployed environment. The production Supabase-gated route is separate and unchanged.
+
 ## Failure and misuse cases
 
 - A missing, expired, or non-teacher bearer token cannot reach Jev. Role is read on each request, so a revoked teacher role is not kept in an application cache.

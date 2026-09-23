@@ -17,6 +17,14 @@ const JWT = /^[\w-]+\.[\w-]+\.[\w-]+$/;
 const NO_STORE = { 'Cache-Control': 'no-store' };
 const PILOT_WINDOW_SECONDS = 24 * 60 * 60;
 const PILOT_MAX_CALLS = 20;
+const LOCAL_WINDOW_MS = PILOT_WINDOW_SECONDS * 1_000;
+
+export interface LocalPilotBudget {
+  windowStart: number;
+  used: number;
+}
+
+const localPilotBudget: LocalPilotBudget = { windowStart: 0, used: 0 };
 
 function providerConfig(env: Env): ProviderConfig | null {
   const key = env.ASHYQ_JEV_API_KEY;
@@ -26,6 +34,20 @@ function providerConfig(env: Env): ProviderConfig | null {
 
 function json(body: object, status = 200): Response {
   return Response.json(body, { status, headers: NO_STORE });
+}
+
+/** Next.js may expose an empty POST stream even when Content-Length is zero. */
+async function hasRequestPayload(request: Request): Promise<boolean> {
+  const length = request.headers.get('content-length');
+  if (request.headers.has('transfer-encoding') || (length !== null && (!/^\d+$/.test(length) || Number(length) > 0))) return true;
+  if (request.body === null) return false;
+  if (length !== '0') return true;
+  try {
+    const first = await request.body.getReader().read();
+    return !first.done;
+  } catch {
+    return true;
+  }
 }
 
 function supabaseOrigin(env: Env): string | null {
@@ -153,7 +175,7 @@ export async function handleJevSyntheticRequest(
     return json({ error: 'pilot_unavailable' }, 503);
   }
   if (!env.ASHYQ_JEV_PILOT_TEACHER_IDS?.trim()) return json({ error: 'pilot_unavailable' }, 503);
-  if (request.body !== null || Number(request.headers.get('content-length') ?? 0) > 0 || request.headers.has('transfer-encoding')) {
+  if (await hasRequestPayload(request)) {
     return json({ error: 'body_not_allowed' }, 400);
   }
 
@@ -179,6 +201,60 @@ export async function handleJevSyntheticRequest(
   const budget = await consumePilotBudget(auth.id, env, fetchImpl);
   if (budget === 'limited') return json({ error: 'pilot_limit_reached' }, 429);
   if (budget === 'unavailable') return json({ error: 'pilot_unavailable' }, 503);
+
+  const code = await jevChoice(fixture, config, fetchImpl);
+  if (!code) return json({ error: 'provider_unavailable' }, 503);
+  const result: PilotResult = {
+    status: code === 'no_supported_label' ? 'unclear' : 'suggested',
+    source: 'jev',
+    code,
+    taxonomyVersion: JEV_TAXONOMY_VERSION,
+  };
+  return json(result);
+}
+
+/** Loopback-only development preview. Production always returns 404. */
+export async function handleJevLocalPreviewRequest(
+  request: Request,
+  env: Env = process.env,
+  fetchImpl: Fetcher = fetch,
+  budget: LocalPilotBudget = localPilotBudget,
+): Promise<Response> {
+  const url = new URL(request.url);
+  const host = request.headers.get('host') ?? '';
+  const loopback = url.protocol === 'http:' && /^(localhost|127\.0\.0\.1)(:\d{1,5})?$/.test(host);
+  if (env.NODE_ENV !== 'development' || env.ASHYQ_JEV_LOCAL_PREVIEW !== '1'
+    || env.ASHYQ_JEV_SYNTHETIC_PILOT !== '1' || env.NEXT_PUBLIC_AUTH_PROVIDER === 'supabase' || !loopback) {
+    return json({ error: 'pilot_unavailable' }, 404);
+  }
+  if (request.headers.get('origin') !== `http://${host}`
+    || (request.headers.get('sec-fetch-site') && request.headers.get('sec-fetch-site') !== 'same-origin')) {
+    return json({ error: 'access_denied' }, 403);
+  }
+  if (await hasRequestPayload(request)) {
+    return json({ error: 'body_not_allowed' }, 400);
+  }
+  if (url.searchParams.size !== 1) return json({ error: 'unknown_fixture' }, 400);
+  const fixtureId = url.searchParams.get('fixture');
+  if (!fixtureId || fixtureId.length > 80) return json({ error: 'unknown_fixture' }, 400);
+  const fixture = syntheticFixture(fixtureId);
+  if (!fixture) return json({ error: 'unknown_fixture' }, 404);
+  const config = providerConfig(env);
+  if (!config) return json({ error: 'pilot_unavailable' }, 503);
+
+  const ruleCode = deterministicLabel(fixture);
+  if (ruleCode) {
+    const result: PilotResult = { status: 'suggested', source: 'rule', code: ruleCode, taxonomyVersion: JEV_TAXONOMY_VERSION };
+    return json(result);
+  }
+
+  const now = Date.now();
+  if (now - budget.windowStart >= LOCAL_WINDOW_MS) {
+    budget.windowStart = now;
+    budget.used = 0;
+  }
+  if (budget.used >= PILOT_MAX_CALLS) return json({ error: 'pilot_limit_reached' }, 429);
+  budget.used += 1;
 
   const code = await jevChoice(fixture, config, fetchImpl);
   if (!code) return json({ error: 'provider_unavailable' }, 503);
