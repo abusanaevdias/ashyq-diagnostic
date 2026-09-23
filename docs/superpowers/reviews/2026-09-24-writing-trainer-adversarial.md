@@ -12,6 +12,7 @@ Reviewed the synthetic IELTS Task 2 learner flow against the product promise: in
 | A score changes without an explanation of the relevant writing skill. | Each final criterion card now says which authored change caused the movement; grammar notes that range of structures was not separately assessed. |
 | The learner cannot see how to start without scrolling. | The opening section was shortened and gained a direct link to the active exercise. |
 | Sentence hit areas are too small for touch. | The first review only inspected the React component and missed the CSS geometry. Sentence buttons now have a 44px minimum height and wrap safely within the essay pane. |
+| The mobile step list hides later criteria behind a horizontal scrollbar. | A 390px browser pass found this. The five stages now form a two-column grid on narrow screens, with the report occupying the last full row. |
 | Real learner text is sent to an external provider or persisted. | The route is a static client exercise with two invented case files. No API route, browser storage, LMS read/write, or AI call was added. |
 
 ## Design reference check
@@ -24,5 +25,5 @@ Reviewed the synthetic IELTS Task 2 learner flow against the product promise: in
 
 - Scores are authored practice estimates for these two cases, not live IELTS assessment. The band movement is a property of the revised case essay, not proof that a learner improved independently.
 - An unrecognized but valid free-text revision still requires a teacher. This pilot does not grade it.
-- Mobile stacking is implemented in CSS, but the available in-app browser did not expose a viewport override; a narrow-screen visual pass remains useful.
+- A 390px browser pass covered the task, step list and grammar exercise. Other narrow-screen states remain worth a later dedicated pass.
 - The learner's session is discarded on reload. A later class-integrated version needs consent, privacy rules, persistence, and teacher moderation before using real submissions.
