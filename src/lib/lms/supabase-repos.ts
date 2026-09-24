@@ -216,7 +216,7 @@ export function createSupabaseRepos(client: () => SupabaseClient): Repos {
     },
   };
 
-  /** Демо-статьи из кода видны, пока в базе нет своих опубликованных постов (BLOG_IS_DEMO). */
+  /** Опубликованные статьи из кода остаются видны вместе с материалами CMS. */
   const fallbackPosts = () => defaultPosts().filter((p) => p.status === 'published');
 
   const posts = () => db().from('blog_posts');
@@ -232,7 +232,12 @@ export function createSupabaseRepos(client: () => SupabaseClient): Repos {
   const blog: Repos['blog'] = {
     async listPublished() {
       const rows = list(await posts().select('*').eq('status', 'published').order('published_at', { ascending: false }));
-      return rows.length ? rows.map((row) => toPost(row as PostRow)) : fallbackPosts();
+      const bySlug = new Map(fallbackPosts().map((post) => [post.slug, post]));
+      for (const row of rows) {
+        const post = toPost(row as PostRow);
+        bySlug.set(post.slug, post);
+      }
+      return [...bySlug.values()].sort((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''));
     },
     async listByAuthor(authorId) {
       return list(await posts().select('*').eq('author_id', authorId).order('created_at', { ascending: false })).map((row) => toPost(row as PostRow));

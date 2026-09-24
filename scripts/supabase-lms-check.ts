@@ -94,7 +94,7 @@ async function account(tag: string, role: 'student' | 'teacher' | 'author'): Pro
     await a.blog.publish(saved.id);
     assert.equal((await anon.blog.getPublishedBySlug(saved.slug))?.title, 'Қазақша: IELTS кеңестері');
     assert.ok((await anon.blog.listPublished()).some((p) => p.id === saved.id), 'опубликованный пост в ленте');
-    assert.ok(await anon.blog.getPublishedBySlug('ielts-true-false-not-given'), 'демо-статьи из кода остаются доступны');
+    assert.ok(await anon.blog.getPublishedBySlug('ielts-writing-task-2'), 'статья из кода остаётся доступна');
     await a.blog.unpublish(saved.id);
 
     // 7. Профили: имя и роль видны вошедшим, email — нет

@@ -108,7 +108,9 @@ export interface BlogPost {
   excerpt: string;
   body: string;
   coverUrl?: string;
+  coverAlt?: string;
   status: PostStatus;
   authorId: string;
   publishedAt?: string;
+  updatedAt?: string;
 }

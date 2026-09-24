@@ -200,7 +200,7 @@ async function clickUntil(target: Locator, next: Locator | string | RegExp, page
 
 const ROUTES = [
   '/', '/courses', '/diagnostic', '/program', '/progress', '/community', '/about', '/faq', '/privacy', '/terms',
-  '/blog', '/blog/ielts-true-false-not-given', '/contacts', '/season', '/season/current', '/search?q=IELTS',
+  '/blog', '/blog/ielts-writing-task-2', '/contacts', '/season', '/season/current', '/search?q=IELTS',
   '/crm', '/maintenance', '/login', '/token-audit-404',
 ];
 

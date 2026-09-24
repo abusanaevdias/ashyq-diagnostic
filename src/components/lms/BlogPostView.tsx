@@ -49,10 +49,11 @@ export default function BlogPostView({ slug, initialData }: { slug: string; init
               <h1 className={styles.title}>{data.post.title}</h1>
               <p className={styles.lead}>
                 {data.author?.name ?? 'Команда ASHYQ'}
-                {data.post.publishedAt ? ` · ${formatDay(data.post.publishedAt)}` : ''}
+                {data.post.publishedAt ? ` · Опубликовано ${formatDay(data.post.publishedAt)}` : ''}
+                {data.post.updatedAt ? ` · Обновлено ${formatDay(data.post.updatedAt)}` : ''}
               </p>
               <div className={styles.articleCover}>
-                <Image src={postCover(data.post.coverUrl)} alt="" fill priority sizes="(max-width: 900px) 100vw, 760px" />
+                <Image src={postCover(data.post.coverUrl)} alt={data.post.coverAlt ?? ''} fill priority sizes="(max-width: 900px) 100vw, 760px" />
               </div>
               <Markdown text={data.post.body} />
             </article>

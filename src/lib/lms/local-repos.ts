@@ -54,7 +54,7 @@ export function onGraded(submission: Submission): void {
   void submission;
 }
 
-/** Первые статьи демо-блога — текущие темы из src/data/blog.ts, пока автор не опубликовал свои. */
+/** Публикации из кода служат начальными данными блога и резервом для public feed. */
 export function defaultPosts(): BlogPost[] {
   return BLOG_POSTS.map((p) => ({
     id: `default-${p.slug}`,
@@ -64,9 +64,11 @@ export function defaultPosts(): BlogPost[] {
     excerpt: p.excerpt,
     body: p.body,
     coverUrl: p.photo,
+    coverAlt: p.coverAlt,
     status: 'published',
     authorId: 'ashyq-team',
-    publishedAt: '2026-09-13T00:00:00.000Z',
+    publishedAt: p.publishedAt,
+    updatedAt: p.updatedAt,
   }));
 }
 
