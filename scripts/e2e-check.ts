@@ -469,7 +469,8 @@ async function main() {
   await p3.goto(`${BASE}/blog`, { waitUntil: 'networkidle' });
   check('blog: статья IELTS видна и индексируется', has(await p3.locator('body').innerText(), 'IELTS Writing Task 2') && (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 0);
   await p3.getByRole('button', { name: 'IELTS', exact: true }).click();
-  check('blog: фильтр категорий', (await p3.locator('main article').count()) === 1);
+  const filteredIeltsTitles = await p3.locator('main article h2, main article h3').allTextContents();
+  check('blog: фильтр категорий показывает только IELTS', filteredIeltsTitles.length > 0 && filteredIeltsTitles.every((title) => title.includes('IELTS')));
   await p3.getByRole('button', { name: 'Все', exact: true }).click();
   await p3.getByRole('searchbox', { name: 'Поиск по статьям' }).fill('IELTS Writing Task 2');
   check('blog: поиск по статьям', (await p3.locator('main article').count()) === 1);
