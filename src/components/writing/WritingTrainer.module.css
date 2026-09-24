@@ -30,7 +30,7 @@
 .step b { font-size: 10px; }
 .stepCurrent { background: var(--dark); color: var(--on-dark); }
 .stepDone { background: var(--success-soft); color: var(--success); }
-.workCard { padding: 30px; }
+.workCard { padding: 30px; scroll-margin-top: 86px; }
 .roundHeading { margin-bottom: 25px; }
 .backButton { min-height: 44px; border: 0; padding: 0 0 12px; background: transparent; color: var(--red-deep); font-size: 13px; font-weight: 750; cursor: pointer; }
 .roundHeading .overline { color: var(--red-deep); }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { criterionLabels, writingCases, type Criterion } from '@/lib/writing-trainer/cases';
 import {
   canApplyGrammar,
@@ -41,6 +41,14 @@ function moveToPrevious(session: TrainerSession): TrainerSession {
 
 export default function WritingTrainer() {
   const [session, setSession] = useState<TrainerSession>(() => createSession(writingCases[0].id));
+  const previousStage = useRef(session.stage);
+  useEffect(() => {
+    if (previousStage.current === session.stage) return;
+    previousStage.current = session.stage;
+    const exercise = document.getElementById('exercise');
+    exercise?.scrollIntoView({ block: 'start', behavior: 'auto' });
+    exercise?.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true });
+  }, [session.stage]);
   const essay = writingCases.find((item) => item.id === session.caseId) ?? writingCases[0];
   const scores = practiceScores(essay, session);
   const currentStageIndex = stages.indexOf(session.stage);
@@ -104,7 +112,7 @@ export default function WritingTrainer() {
           </nav>
 
           {session.stage === 'grammar' && <section id="exercise" className={styles.workCard} aria-labelledby="grammar-title">
-            <div className={styles.roundHeading}><span className={styles.overline}>РАУНД 01 / 04</span><h2 id="grammar-title">Охота за ошибками</h2><p>Прочитай эссе. Нажми на предложение, в котором подозреваешь грамматическую ошибку, и перепиши его. Подсказки появятся после проверки.</p></div>
+            <div className={styles.roundHeading}><span className={styles.overline}>РАУНД 01 / 04</span><h2 id="grammar-title" tabIndex={-1}>Охота за ошибками</h2><p>Прочитай эссе. Нажми на предложение, в котором подозреваешь грамматическую ошибку, и перепиши его. Подсказки появятся после проверки.</p></div>
             <div className={styles.essayPaper} lang="en">
               {essay.paragraphs.map((paragraph) => <p key={paragraph.id}>{paragraph.sentences.map((sentence) => {
                 const touched = Boolean(session.grammarDrafts[sentence.id]?.trim());
@@ -156,7 +164,7 @@ export default function WritingTrainer() {
             const changed = Boolean(draft.trim()) && normalize(draft) !== normalize(original);
             return <section id="exercise" className={styles.workCard} aria-labelledby="round-title">
               <button type="button" className={styles.backButton} onClick={() => setSession(moveToPrevious)}>← Предыдущий этап</button>
-              <div className={styles.roundHeading}><span className={styles.overline}>РАУНД {String(currentStageIndex + 1).padStart(2, '0')} / 04</span><h2 id="round-title">{criterionLabels[criterion]}</h2><p>{target.instruction}</p></div>
+              <div className={styles.roundHeading}><span className={styles.overline}>РАУНД {String(currentStageIndex + 1).padStart(2, '0')} / 04</span><h2 id="round-title" tabIndex={-1}>{criterionLabels[criterion]}</h2><p>{target.instruction}</p></div>
               <div className={styles.sourceBlock}><span className={styles.overline}>ИСХОДНЫЙ АБЗАЦ</span><p lang="en">{original}</p></div>
               <label className={styles.fieldLabel} htmlFor="paragraph-edit">Твой переписанный абзац</label>
               <textarea id="paragraph-edit" className={styles.paragraphEditor} lang="en" rows={7} value={draft} disabled={revealed} placeholder="Напиши свой вариант до просмотра примера" onChange={(event) => setSession((current) => ({ ...current, revisionDrafts: { ...current.revisionDrafts, [criterion]: event.target.value } }))} />
@@ -176,7 +184,7 @@ export default function WritingTrainer() {
 
           {session.stage === 'report' && <section id="exercise" className={styles.workCard} aria-labelledby="report-title">
             <button type="button" className={styles.backButton} onClick={() => setSession(moveToPrevious)}>← Вернуться к лексике</button>
-            <div className={styles.roundHeading}><span className={styles.overline}>ИТОГ ПРАКТИКИ</span><h2 id="report-title">Что изменилось</h2><p>В рабочем эссе показаны только применённые проверенные правки. Твои другие варианты сохранены ниже для обсуждения с учителем.</p></div>
+            <div className={styles.roundHeading}><span className={styles.overline}>ИТОГ ПРАКТИКИ</span><h2 id="report-title" tabIndex={-1}>Что изменилось</h2><p>В рабочем эссе показаны только применённые проверенные правки. Твои другие варианты сохранены ниже для обсуждения с учителем.</p></div>
             <div className={styles.reportStats}><div><strong>{foundCount}/{essay.grammarIssues.length}</strong><span>ошибок найдено самостоятельно</span></div><div><strong>{Object.keys(session.appliedGrammar).length + Object.keys(session.appliedRevisions).length}</strong><span>проверенных изменений применено</span></div></div>
             <div className={styles.scoreGrid}>{criterionOrder.map((criterion) => <div key={criterion} className={styles.reportScore}><span>{criterionLabels[criterion]}</span><strong>{essay.baseline[criterion].toFixed(1)} <span aria-hidden="true">→</span> {scores[criterion].toFixed(1)}</strong><small>{scores[criterion] > essay.baseline[criterion] ? criterion === 'grammar' ? 'Применены обе размеченные грамматические правки. Диапазон конструкций отдельно не оценивался.' : essay.revisions[criterion].explanation : 'Без проверенной правки по этому критерию'}</small></div>)}</div>
             <h3 className={styles.diffHeading}>Исходное и рабочее эссе</h3>

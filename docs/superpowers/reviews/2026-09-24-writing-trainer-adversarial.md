@@ -13,6 +13,7 @@ Reviewed the synthetic IELTS Task 2 learner flow against the product promise: in
 | The learner cannot see how to start without scrolling. | The opening section was shortened and gained a direct link to the active exercise. |
 | Sentence hit areas are too small for touch. | The first review only inspected the React component and missed the CSS geometry. Sentence buttons now have a 44px minimum height and wrap safely within the essay pane. |
 | The mobile step list hides later criteria behind a horizontal scrollbar. | A 390px browser pass found this. The five stages now form a two-column grid on narrow screens, with the report occupying the last full row. |
+| Advancing from a long round lands halfway through the next one. | The browser stayed at the old document scroll position and showed the middle of the final diff. Stage changes now scroll to the exercise start and focus its heading. |
 | Real learner text is sent to an external provider or persisted. | The route is a static client exercise with two invented case files. No API route, browser storage, LMS read/write, or AI call was added. |
 
 ## Design reference check
