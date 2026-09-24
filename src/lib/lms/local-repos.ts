@@ -56,7 +56,7 @@ export function onGraded(submission: Submission): void {
 
 /** Публикации из кода служат начальными данными блога и резервом для public feed. */
 export function defaultPosts(): BlogPost[] {
-  return BLOG_POSTS.map((p) => ({
+  return BLOG_POSTS.map((p): BlogPost => ({
     id: `default-${p.slug}`,
     slug: p.slug,
     title: p.title,
@@ -69,7 +69,7 @@ export function defaultPosts(): BlogPost[] {
     authorId: 'ashyq-team',
     publishedAt: p.publishedAt,
     updatedAt: p.updatedAt,
-  }));
+  })).sort((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''));
 }
 
 /** Хвост заглушки, с которой демо-статьи сохранялись в localStorage до BLOG-DRAFTS-001. */
