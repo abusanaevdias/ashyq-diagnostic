@@ -12,7 +12,7 @@ const publishedPageData = cache(async (slug: string): Promise<BlogPostPageData |
   const defaults = defaultPosts();
   const defaultPost = defaults.find((item) => item.slug === slug);
   if (defaultPost) {
-    return { post: defaultPost, author: null, more: defaults.filter((item) => item.id !== defaultPost.id).slice(0, 3) };
+    return { post: defaultPost, author: null, more: defaults.filter((item) => item.id !== defaultPost.id && item.category === defaultPost.category).slice(0, 3) };
   }
 
   try {
@@ -20,7 +20,7 @@ const publishedPageData = cache(async (slug: string): Promise<BlogPostPageData |
     const post = await repos.blog.getPublishedBySlug(slug);
     if (!post) return null;
     const [author, all] = await Promise.all([repos.users.get(post.authorId), repos.blog.listPublished()]);
-    return { post, author, more: all.filter((item) => item.id !== post.id).slice(0, 3) };
+    return { post, author, more: all.filter((item) => item.id !== post.id && item.category === post.category).slice(0, 3) };
   } catch {
     return null;
   }

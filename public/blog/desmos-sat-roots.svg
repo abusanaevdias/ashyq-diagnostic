@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Корни функции x² − 5x + 6 в Desmos</title>
+  <desc id="desc">Парабола y равно x в квадрате минус 5x плюс 6 пересекает ось x в точках 2 и 3; это корни уравнения.</desc>
+  <rect width="1200" height="630" rx="28" fill="#FBF9F5"/>
+  <text x="64" y="75" fill="#A33A31" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="2">ОРИГИНАЛЬНЫЙ УЧЕБНЫЙ ПРИМЕР</text>
+  <text x="64" y="142" fill="#272523" font-family="Arial, sans-serif" font-size="43" font-weight="700">Найти корни: x² − 5x + 6 = 0</text>
+  <text x="64" y="191" fill="#625E5A" font-family="Arial, sans-serif" font-size="24">В Desmos сравните f(x) = x² − 5x + 6 с y = 0</text>
+  <g stroke="#D8D1C8" stroke-width="2">
+    <path d="M170 260H1070M170 330H1070M170 400H1070M170 470H1070M170 540H1070"/>
+    <path d="M350 230V550M530 230V550M710 230V550M890 230V550"/>
+  </g>
+  <path d="M170 515H1090" fill="none" stroke="#272523" stroke-width="4"/>
+  <path d="M170 540V230" fill="none" stroke="#272523" stroke-width="4"/>
+  <path d="M1057 502l33 13-33 13" fill="none" stroke="#272523" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M157 254l13-32 13 32" fill="none" stroke="#272523" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M170 260 Q620 792 1070 260" fill="none" stroke="#A33A31" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="530" cy="515" r="12" fill="#A33A31" stroke="#FFFFFF" stroke-width="4"/>
+  <circle cx="710" cy="515" r="12" fill="#A33A31" stroke="#FFFFFF" stroke-width="4"/>
+  <g fill="#272523" font-family="Arial, sans-serif" font-size="23" font-weight="700">
+    <text x="523" y="566">2</text><text x="703" y="566">3</text><text x="1095" y="525">x</text><text x="145" y="218">y</text>
+  </g>
+  <rect x="766" y="268" width="348" height="104" rx="18" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+  <text x="794" y="310" fill="#272523" font-family="Arial, sans-serif" font-size="23" font-weight="700">Ищи пересечения с y = 0</text>
+  <text x="794" y="346" fill="#625E5A" font-family="Arial, sans-serif" font-size="22">x = 2 и x = 3 — корни</text>
+</svg>

@@ -29,7 +29,7 @@ export default function BlogPostView({ slug, language = 'ru', initialData }: { s
     const post = await repos.blog.getPublishedBySlug(slug);
     if (!post) return null;
     const [author, all] = await Promise.all([repos.users.get(post.authorId), repos.blog.listPublished()]);
-    return { post, author, more: all.filter((p) => p.id !== post.id).slice(0, 3) };
+    return { post, author, more: all.filter((p) => p.id !== post.id && p.category === post.category).slice(0, 3) };
   }, `post:${slug}`, initialData);
 
   return (

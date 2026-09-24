@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Алгоритм работы с Desmos на SAT Math</title>
+  <desc id="desc">Определить искомую величину, ввести нужные графики, прочитать координату, проверить ответ.</desc>
+  <rect width="1200" height="630" rx="28" fill="#F6F1E9"/>
+  <text x="64" y="76" fill="#A33A31" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="2">ПАМЯТКА ДЛЯ DIGITAL SAT</text>
+  <text x="64" y="153" fill="#272523" font-family="Arial, sans-serif" font-size="54" font-weight="700">Desmos на SAT Math</text>
+  <text x="64" y="202" fill="#625E5A" font-family="Arial, sans-serif" font-size="25">График помогает, когда вы знаете, какую координату искать.</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="48" y="282" width="248" height="190" rx="20" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="84" cy="324" r="20" fill="#A33A31"/><text x="84" y="332" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">1</text>
+    <text x="72" y="380" fill="#272523" font-size="25" font-weight="700">Что ищет</text><text x="72" y="414" fill="#272523" font-size="25" font-weight="700">вопрос?</text>
+    <text x="72" y="449" fill="#625E5A" font-size="18">x · y · корень · вершина</text>
+    <path d="M307 377h24m-9-9 9 9-9 9" fill="none" stroke="#A33A31" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="344" y="282" width="248" height="190" rx="20" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="380" cy="324" r="20" fill="#A33A31"/><text x="380" y="332" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">2</text>
+    <text x="368" y="380" fill="#272523" font-size="25" font-weight="700">Введи только</text><text x="368" y="414" fill="#272523" font-size="25" font-weight="700">нужные графики</text>
+    <text x="368" y="449" fill="#625E5A" font-size="18">Функции и уравнения</text>
+    <path d="M603 377h24m-9-9 9 9-9 9" fill="none" stroke="#A33A31" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="640" y="282" width="248" height="190" rx="20" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="676" cy="324" r="20" fill="#A33A31"/><text x="676" y="332" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">3</text>
+    <text x="664" y="380" fill="#272523" font-size="25" font-weight="700">Прочитай</text><text x="664" y="414" fill="#272523" font-size="25" font-weight="700">координату</text>
+    <text x="664" y="449" fill="#625E5A" font-size="18">Не перепутай x и y</text>
+    <path d="M899 377h24m-9-9 9 9-9 9" fill="none" stroke="#A33A31" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="936" y="282" width="216" height="190" rx="20" fill="#272523"/>
+    <circle cx="972" cy="324" r="20" fill="#D95B4E"/><text x="972" y="332" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">4</text>
+    <text x="960" y="380" fill="#FFFFFF" font-size="25" font-weight="700">Сверь ответ</text><text x="960" y="414" fill="#FFFFFF" font-size="25" font-weight="700">с вопросом</text>
+    <text x="960" y="449" fill="#E7DDD2" font-size="18">Знак · единицы · формат</text>
+  </g>
+  <text x="64" y="555" fill="#625E5A" font-family="Arial, sans-serif" font-size="20">Для практики используйте Math preview или пробный тест в Bluebook.</text>
+</svg>
