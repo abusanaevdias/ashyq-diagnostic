@@ -560,7 +560,7 @@ export default function CrmDashboard() {
       </main>
 
       {checked.size > 0 ? (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper-card shadow-[0_-8px_24px_rgba(22,19,17,0.08)]" role="region" aria-label="Выбранные записи">
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper-card shadow-card" role="region" aria-label="Выбранные записи">
           <div className="shell-wide flex flex-wrap items-center gap-2 py-3">
             <p className="mr-auto text-[0.9rem] font-semibold">Выбрано: {checked.size}</p>
             <button type="button" className="btn btn-quiet btn-small" onClick={() => setChecked(new Set(records.slice(0, visibleCount).filter((record) => !removed.has(record.runId)).map((record) => record.runId)))}>Выбрать все показанные</button>
