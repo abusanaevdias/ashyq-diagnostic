@@ -111,9 +111,9 @@
 }
 
 .badge {
-  position: absolute;
-  top: 14px;
-  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
   padding: 5px 12px;
   border-radius: var(--r-pill);
   background: var(--blush);
@@ -127,6 +127,7 @@
 }
 
 .featuredTitle {
+  margin-top: 12px;
   font-family: var(--font-display);
   font-size: clamp(1.15rem, 2vw, 1.45rem);
   font-weight: 700;
