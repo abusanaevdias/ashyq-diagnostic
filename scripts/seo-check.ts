@@ -5,6 +5,7 @@ const CANONICAL_ROUTES = [
   '/',
   '/about',
   '/blog',
+  '/blog/ielts-writing-task-1-guide',
   '/blog/ielts-writing-task-2',
   '/career',
   '/career/intj',
@@ -98,11 +99,28 @@ async function checkJsonLd(route: string, type: string) {
   console.log(`PASS JSON-LD ${type} ${route}`);
 }
 
+async function checkEditorialArticle(route: string) {
+  const response = await fetch(`${BASE_URL}${route}`);
+  if (!response.ok) throw new Error(`${route}: HTTP ${response.status}`);
+  const html = await response.text();
+  const robots = tags(html, 'meta').find((tag) => attribute(tag, 'name') === 'robots');
+  if (attribute(robots ?? '', 'content')?.includes('noindex')) throw new Error(`${route}: published article is noindex`);
+  if (!tags(html, 'article').some((tag) => attribute(tag, 'lang') === 'en')) throw new Error(`${route}: article language is missing`);
+
+  const sitemap = await fetch(`${BASE_URL}/sitemap.xml`);
+  if (!sitemap.ok || !(await sitemap.text()).includes(route)) throw new Error(`${route}: sitemap entry is missing`);
+  const blog = await (await fetch(`${BASE_URL}/blog`)).text();
+  if (!blog.includes(`href="${route}"`)) throw new Error(`${route}: blog index link is missing`);
+  console.log(`PASS published article ${route}: indexable, English, linked from blog and in sitemap`);
+}
+
 async function main() {
   await checkJsonLd('/', 'EducationalOrganization');
   await checkJsonLd('/courses/ielts', 'Course');
   await checkJsonLd('/faq', 'FAQPage');
+  await checkJsonLd('/blog/ielts-writing-task-1-guide', 'BlogPosting');
   await checkJsonLd('/blog/ielts-writing-task-2', 'BlogPosting');
+  await checkEditorialArticle('/blog/ielts-writing-task-1-guide');
   for (const route of CANONICAL_ROUTES) await checkCanonical(route);
   for (const route of NOINDEX_ROUTES) await checkNoindex(route);
   await checkOgImage();

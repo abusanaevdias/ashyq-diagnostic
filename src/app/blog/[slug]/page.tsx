@@ -43,6 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const editorial = BLOG_POSTS.find((post) => post.slug === slug);
   const title = editorial?.seoTitle ?? data.post.title;
   const description = editorial?.metaDescription ?? data.post.excerpt;
+  const language = editorial?.language ?? 'ru';
   const url = `${SITE_URL}/blog/${slug}`;
   const coverUrl = data.post.coverUrl ? new URL(postCover(data.post.coverUrl), SITE_URL).toString() : undefined;
   const modifiedTime = editorial?.updatedAt ?? data.post.updatedAt ?? data.post.publishedAt;
@@ -58,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description,
       url,
       siteName: SITE_NAME,
-      locale: 'ru_RU',
+      locale: language === 'en' ? 'en_KZ' : 'ru_KZ',
       ...(coverUrl ? { images: [{ url: coverUrl, alt: data.post.coverAlt ?? data.post.title }] } : {}),
       ...(data.post.publishedAt ? { publishedTime: data.post.publishedAt } : {}),
       ...(modifiedTime ? { modifiedTime } : {}),
@@ -71,6 +72,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const data = await publishedPageData(slug);
   const editorial = BLOG_POSTS.find((post) => post.slug === slug);
   const articleUrl = `${SITE_URL}/blog/${slug}`;
+  const language = editorial?.language ?? 'ru';
   const coverUrl = data?.post.coverUrl ? new URL(postCover(data.post.coverUrl), SITE_URL).toString() : undefined;
   const modifiedTime = editorial?.updatedAt ?? data?.post.updatedAt ?? data?.post.publishedAt;
 
@@ -87,12 +89,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           ...(coverUrl ? { image: [coverUrl] } : {}),
           ...(data.post.publishedAt ? { datePublished: data.post.publishedAt } : {}),
           ...(modifiedTime ? { dateModified: modifiedTime } : {}),
-          inLanguage: 'ru',
+          inLanguage: language,
           publisher: { '@type': 'EducationalOrganization', '@id': `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL },
           ...(data.author?.name ? { author: { '@type': 'Person', name: data.author.name } } : {}),
         }} />
       ) : null}
-      <BlogPostView slug={slug} initialData={data ?? undefined} />
+      <BlogPostView slug={slug} language={language} initialData={data ?? undefined} />
     </>
   );
 }
