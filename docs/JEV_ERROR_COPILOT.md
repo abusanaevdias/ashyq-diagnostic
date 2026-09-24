@@ -13,6 +13,15 @@ a repository, or send anything to a student. See the
 Paid requests use the existing Supabase `check_rate_limit` RPC for a shared
 20-call-per-teacher daily budget and fail closed if that RPC is unavailable.
 
+The teacher can also open the same synthetic preview from a class at
+`/teacher` → `/teacher/classes/[id]` → **Jev: тренировка разбора**. The
+class-scoped page checks teacher ownership before showing the preview and
+provides a return link to the class. The class identifier and title are used
+only for navigation and display; the Jev request still contains only a fixed
+fixture identifier. No submissions or assignments are fetched for this preview,
+and no student names, grades, or answer text are sent to Jev. This matches the owner's
+synthetic-only pilot decision for the class integration.
+
 The preview demonstrates three useful teacher decisions:
 
 - confirm the proposed error type;

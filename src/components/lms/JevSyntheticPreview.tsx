@@ -17,7 +17,7 @@ const localPreview = process.env.NODE_ENV === 'development'
   && process.env.NEXT_PUBLIC_JEV_LOCAL_PREVIEW === '1'
   && process.env.NEXT_PUBLIC_AUTH_PROVIDER !== 'supabase';
 
-function PreviewCard() {
+export function JevPreviewContent({ classContext }: { classContext?: { id: string; title: string } }) {
   const [fixtureId, setFixtureId] = useState(JEV_SYNTHETIC_FIXTURES[0].id);
   const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
   const [showIllustration, setShowIllustration] = useState(false);
@@ -116,10 +116,15 @@ function PreviewCard() {
 
   return (
     <div className={styles.page}>
-      <Link href="/teacher" className={styles.backLink}>← К классам</Link>
+      <Link href={classContext ? `/teacher/classes/${classContext.id}` : '/teacher'} className={styles.backLink}>
+        ← {classContext ? `К классу «${classContext.title}»` : 'К классам'}
+      </Link>
       <MicroLabel>ПРОТОТИП · ВЫМЫШЛЕННЫЕ ПРИМЕРЫ</MicroLabel>
       <h1 className={styles.title}>Подсказка о типе ошибки</h1>
-      <p className={styles.lead}>Попробуйте короткий разбор на придуманном ответе ученика.</p>
+      <p className={styles.lead}>
+        {classContext ? `Тренировка для учителя класса «${classContext.title}». ` : ''}
+        Попробуйте короткий разбор на придуманном ответе ученика.
+      </p>
 
       <div className={styles.fixturePicker}>
         <label className={styles.fieldLabel} htmlFor="jev-fixture">Выберите вымышленный ответ</label>
@@ -145,7 +150,9 @@ function PreviewCard() {
         {localPreview
           ? ' Jev можно запросить только из локального режима на этом компьютере. '
           : ' Вызов Jev доступен только учителям закрытого Supabase-пилота после настройки серверного ключа. '}
-        Здесь нет работ настоящих учеников.
+        {classContext
+          ? ' Ответы учеников этого класса не загружаются на эту страницу и не отправляются Jev.'
+          : ' Здесь нет работ настоящих учеников.'}
       </aside>
 
       <div className={styles.grid}>
@@ -262,5 +269,5 @@ function PreviewCard() {
 }
 
 export default function JevSyntheticPreview() {
-  return <RequireRole roles={ROUTE_ROLES.teacher}>{() => <PreviewCard />}</RequireRole>;
+  return <RequireRole roles={ROUTE_ROLES.teacher}>{() => <JevPreviewContent />}</RequireRole>;
 }
