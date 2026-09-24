@@ -43,3 +43,18 @@ The four focus areas follow the IELTS Writing criteria: Task Response, Coherence
 ## Pilot success signals
 
 Observe whether a learner understands the sequence, finds issues before reveal, can explain the sample changes, and can make a better revision on a fresh prompt. Count independent discoveries separately from score movement. A later free-essay phase needs teacher-rated examples and evaluation against IELTS descriptors before any automatic criterion score is trusted.
+
+## Calibration gate for a later free-essay version
+
+The [official IELTS Writing Task 2 descriptors](https://ielts.org/cdn/ielts-guides/ielts-writing-band-descriptors.pdf) describe the complete response. A single corrected sentence or paragraph is useful practice evidence, but does not establish a new band for an entire criterion. The current `5.5 → 6.0` values are authored demonstration states for the two fixed essays; they are not calibrated predictions.
+
+Before evaluating a learner's own essay, ask a teacher to annotate the **whole original and revised response** for each area:
+
+| Area | Evidence to review beyond this pilot's marked span |
+| --- | --- |
+| Task Response | Both sides of the prompt, a relevant position, development and support across the complete essay. |
+| Coherence and Cohesion | Overall progression, paragraph structure, logical links, reference and substitution throughout. |
+| Lexical Resource | Range, precision, appropriacy, word formation and spelling across the response. |
+| Grammatical Range and Accuracy | Variety of simple and complex structures, accuracy and punctuation across the response. |
+
+Record the teacher's criterion judgment, cited text spans, and uncertainty separately from the learner's number of self-discovered issues and from any Jev suggestion. Review whether the fully revised response still meets the Task 2 minimum of 250 words. Compare the teacher's before/after judgments on held-out essays before proposing any automatic numeric change. If the evidence is insufficient or teachers disagree, show the explanation and request review without changing the estimate. Never derive an official Writing score from the four practice numbers, since Task 1 and Task 2 are assessed together and Task 2 has greater weight in the actual test.
