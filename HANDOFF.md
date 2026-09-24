@@ -1,6 +1,6 @@
 # ASHYQ — AI handoff and task ledger
 
-Последнее обновление: **2026-09-23**
+Последнее обновление: **2026-09-24**
 Источник истины: ветка `main` репозитория `abusanaevdias/ashyq-diagnostic`.
 
 Этот файл обязателен для любого ИИ или разработчика, продолжающего проект. Он
@@ -82,7 +82,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 | `/career/<код>` | 16 статических страниц профилей «Компаса» (`/career/intj` и т. д.): результат по ссылке открывается без JS, `dynamicParams = false` |
 | `/program`, `/progress`, `/community` | Публичные продуктовые страницы, v3 (`.v3` + NavBar/Footer) |
 | `/faq`, `/privacy`, `/terms` | v3 (`.v3`) |
-| `/blog` | v3, демо-темы до настоящих статей: плашка, noindex, не в sitemap |
+| `/blog` | Публичный индексируемый блог; исследованные материалы IELTS/SAT, карточки, фильтр/поиск и sitemap |
 | `/contacts` | v3, подтверждённые WhatsApp/Telegram/соцсети + форма заявки; индексируется, в sitemap |
 | `/season` | Публичный active-season hub, IELTS/SAT и team/participant rating |
 | `/season/current` | Noindex demo Season HQ: active, Live Arena, Journey report |
@@ -214,7 +214,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | SEO-ARTICLE-PUBLISH-001 | DONE (PR #56 merged as `d19c54d`) | Codex GPT-6 (`/root`) | `codex/seo-article-publish`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-article-publish` | 2026-09-24; published the researched Russian IELTS Writing Task 2 article at `/blog/ielts-writing-task-2`, activated the public blog, and added metadata, canonical, BlogPosting JSON-LD, sitemap and internal links. Changed `src/app/blog/[slug]/page.tsx`, `src/app/blog/page.tsx`, `src/app/search/page.tsx`, `src/app/sitemap.ts`, `src/components/BlogV3.tsx`, `src/components/lms/BlogPostView.tsx`, `src/components/lms/Markdown.tsx`, `src/data/blog.ts`, LMS blog repo/types and related E2E/SEO/a11y/token checks. Verified: `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`; GitHub CI run `36035291106` PASS (lint, typecheck, build, E2E, CRM, audio, card, LMS, season, tokens, a11y); Vercel production deploy PASS. Live `/blog` and article return 200, are indexable, canonical and BlogPosting are correct, article is linked from the index and present in sitemap. Article cites IELTS.org and contains no invented ASHYQ results or credentials. Remaining: URL submission/indexing status in Google Search Console and Yandex Webmaster not checked. Do not create a second page for the same Task 2 essay-planning intent; next safe step: research the next distinct IELTS/SAT cluster with Kazakhstan Wordstat and Google/Yandex SERPs, then check indexing and Search Console queries after publication. |
 
-| SEO-ARTICLE-PUBLISH-002 | IN_PROGRESS | Codex GPT-6 (`/root`) | `codex/seo-article-publish-002`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-article-publish-002` | started 2026-09-24; research and publish a distinct English IELTS Academic Writing Task 1 guide for Kazakhstan search demand, grounded in official IELTS sample-task/examiner evidence; activate the article in the public blog and connect it to the Task 2 page and IELTS course; use no unverified ASHYQ data or credentials |
+| SEO-ARTICLE-PUBLISH-002 | DONE (PR #57 merged as `d9224fc`; feature `32e0135`; main CI `36043153546` PASS) | Codex GPT-6 (`/root`) | `codex/seo-article-publish-002`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-article-publish-002` | 2026-09-24; published `/blog/ielts-writing-task-1-guide`, an English, 1,742-word Academic Task 1 guide selected from Kazakhstan Wordstat data (1,106 broad / 166 fixed-phrase searches for `IELTS Writing Task 1`; 30-day window 2026-08-24–09-22). SERP gap: connect official examiner evidence to feature selection and a clear overview instead of repeating generic templates. Article includes two original SVG diagrams, a responsive practice-time table, official IELTS citations, English metadata/lang, self-canonical, BlogPosting JSON-LD, sitemap/index link, and internal links to `/courses/ielts`, `/diagnostic` and the Task 2 guide. Changed `src/data/blog.ts`, localized article metadata/rendering, Markdown image/table support, default post ordering, SEO/E2E checks and `public/blog/*.svg`. Local lint, typecheck, build, check:seo, check:tokens and E2E 131/131 passed; PR CI `36041603996` and post-merge main CI `36043153546` passed; live production article, assets and linked routes return 200; canonical, indexability, schema, blog index and sitemap verified. No ASHYQ student outcomes, teacher credentials or named author invented; byline is ASHYQ Team. Remaining: Google Search Console and Yandex Webmaster indexing submission/status not checked; no teacher-specific review or first-party data supplied. Next safe step: research a different Kazakhstan IELTS/SAT query cluster in Wordstat plus Google/Yandex SERPs; do not split Task 1 variants into near-duplicate pages, and check indexing/query data when webmaster access is available. |
 
 ## 6. Проверки и команды
 
