@@ -14,13 +14,14 @@ Reviewed the synthetic IELTS Task 2 learner flow against the product promise: in
 | Sentence hit areas are too small for touch. | The first review only inspected the React component and missed the CSS geometry. Sentence buttons now have a 44px minimum height and wrap safely within the essay pane. |
 | The mobile step list hides later criteria behind a horizontal scrollbar. | A 390px browser pass found this. The five stages now form a two-column grid on narrow screens, with the report occupying the last full row. |
 | Advancing from a long round lands halfway through the next one. | The browser stayed at the old document scroll position and showed the middle of the final diff. Stage changes now scroll to the exercise start and focus its heading. |
+| A correct but unapplied grammar edit is labelled as an unrecognized alternative in the report. | Report labels now distinguish a recognized edit, an edit without a marked issue, and one requiring teacher review. |
 | Real learner text is sent to an external provider or persisted. | The route is a static client exercise with two invented case files. No API route, browser storage, LMS read/write, or AI call was added. |
 
 ## Design reference check
 
 - 21st.dev search surfaced [Onboarding Stepper Progress](https://21st.dev/@shadcnspace/components/progress-02), with a step count, progress bar, and back/next controls. We kept ASHYQ tokens and its existing shell, and added reversible navigation to the in-page exercise instead of installing the reference's additional UI dependencies.
 - Mobbin's MCP returned a paid-plan requirement, so no Mobbin flow screenshot was available for inspection. The [public pattern catalogue](https://mobbin.com/) lists progress indicators and starting/completing journeys; those broad patterns were considered, but no specific app flow is claimed as a source.
-- `21st review src/components/writing/WritingTrainer.tsx` returned zero deterministic findings before the last navigation refinements. Re-run it with final checks.
+- `21st review src/components/writing/WritingTrainer.tsx` returned zero deterministic findings after the navigation refinements.
 
 ## Remaining limits
 
