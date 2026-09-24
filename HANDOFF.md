@@ -212,6 +212,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 добавления своих строк, чужие строки не переписывать; перед push —
 `git fetch` + `git rebase origin/main`, при конфликте сохранять обе стороны.
 
+| SEO-ARTICLE-PUBLISH-001 | IN_PROGRESS | Codex GPT-6 (`/root`) | `codex/seo-article-publish`; worktree `C:\Users\Dias\Documents\ChatGPT\ashyq-article-publish` | started 2026-09-24; publish the researched Russian IELTS Writing Task 2 article, activate the public blog, and wire article metadata/indexing; use only verified author and first-party details |
+
 ## 6. Проверки и команды
 
 ```powershell
