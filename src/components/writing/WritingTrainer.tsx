@@ -61,6 +61,9 @@ export default function WritingTrainer() {
   const originalWordCount = essay.paragraphs.flatMap((paragraph) => paragraph.sentences).map((sentence) => sentence.text).join(' ').trim().split(/\s+/).length;
   const unverifiedGrammar = Object.entries(session.grammarDrafts).filter(([sentenceId, draft]) => draft.trim() && normalize(draft) !== normalize(originalSentence(essay, sentenceId)) && normalize(draft) !== normalize(session.appliedGrammar[sentenceId] ?? ''));
   const unverifiedRevisions = (criterionOrder.filter((criterion) => criterion !== 'grammar') as Exclude<Criterion, 'grammar'>[]).filter((criterion) => session.revisionDrafts[criterion] && normalize(session.revisionDrafts[criterion] ?? '') !== normalize(session.appliedRevisions[criterion] ?? ''));
+  const postFeedbackRevisions = (criterionOrder.filter((criterion) => criterion !== 'grammar') as Exclude<Criterion, 'grammar'>[]).filter((criterion) => session.postFeedbackDrafts[criterion]?.trim());
+  const revisionReportCriteria = (criterionOrder.filter((criterion) => criterion !== 'grammar') as Exclude<Criterion, 'grammar'>[]).filter((criterion) => unverifiedRevisions.includes(criterion) || postFeedbackRevisions.includes(criterion));
+  const hasUnappliedDrafts = unverifiedGrammar.length > 0 || unverifiedRevisions.length > 0 || postFeedbackRevisions.length > 0;
 
   function chooseCase(caseId: string) {
     if (caseId === session.caseId) return;
@@ -160,6 +163,7 @@ export default function WritingTrainer() {
             const criterion = session.stage;
             const target = essay.revisions[criterion];
             const draft = session.revisionDrafts[criterion] ?? '';
+            const postFeedbackDraft = session.postFeedbackDrafts[criterion] ?? '';
             const revealed = Boolean(session.revealed[criterion]);
             const applied = Boolean(session.appliedRevisions[criterion]);
             const original = originalParagraph(essay, target.paragraphId);
@@ -179,6 +183,13 @@ export default function WritingTrainer() {
                 <p className={styles.explanation}>{target.explanation}</p>
                 <p className={styles.hint}>Твой вариант может быть хорошим, но этот пилот узнаёт только подготовленный пример. Другую формулировку должен оценить учитель.</p>
                 {!applied ? <button type="button" className={styles.secondaryButton} onClick={() => setSession((current) => ({ ...current, appliedRevisions: { ...current.appliedRevisions, [criterion]: canApplyRevision(essay, current, criterion) ? current.revisionDrafts[criterion]?.trim() : target.example } }))}>{canApplyRevision(essay, session, criterion) ? 'Применить мою проверенную правку' : 'Применить пример к рабочему эссе'}</button> : <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>Учебный ориентир по критерию «{criterionLabels[criterion]}»: {essay.baseline[criterion].toFixed(1)} → {scores[criterion].toFixed(1)}. Это не официальный балл IELTS.</span></div>}
+                <div className={styles.secondAttempt}>
+                  <h3>Попробуй ещё раз после разбора</h3>
+                  <p>Перепиши свой абзац с учётом объяснения. Эта попытка останется для обсуждения с учителем и не изменит учебный ориентир автоматически.</p>
+                  <label className={styles.fieldLabel} htmlFor="post-feedback-edit">Твоя версия после разбора</label>
+                  <textarea id="post-feedback-edit" className={styles.paragraphEditor} lang="en" rows={6} value={postFeedbackDraft} placeholder="Новая версия абзаца" aria-describedby="post-feedback-note" onChange={(event) => setSession((current) => ({ ...current, postFeedbackDrafts: { ...current.postFeedbackDrafts, [criterion]: event.target.value } }))} />
+                  <p id="post-feedback-note" className={styles.hint}>{postFeedbackDraft.trim() ? 'Вторая попытка сохранена в этой вкладке и появится в итоговом отчёте.' : 'Необязательный шаг. Исходная попытка останется без изменений.'}</p>
+                </div>
                 <div className={styles.actionRow}><button type="button" className={styles.primaryButton} onClick={() => setSession(moveToNext)}>{criterion === 'lexical' ? 'Посмотреть итог →' : 'Следующий критерий →'}</button><span>Можно продолжить без применения примера</span></div>
               </>}
             </section>;
@@ -186,16 +197,16 @@ export default function WritingTrainer() {
 
           {session.stage === 'report' && <section id="exercise" className={styles.workCard} aria-labelledby="report-title">
             <button type="button" className={styles.backButton} onClick={() => setSession(moveToPrevious)}>← Вернуться к лексике</button>
-            <div className={styles.roundHeading}><span className={styles.overline}>ИТОГ ПРАКТИКИ</span><h2 id="report-title" tabIndex={-1}>Что изменилось</h2><p>В рабочем эссе показаны только применённые проверенные правки. Твои другие варианты сохранены ниже для обсуждения с учителем.</p></div>
+            <div className={styles.roundHeading}><span className={styles.overline}>ИТОГ ПРАКТИКИ</span><h2 id="report-title" tabIndex={-1}>Что изменилось</h2><p>В рабочем эссе показаны только применённые проверенные правки. {hasUnappliedDrafts ? 'Твои другие варианты сохранены ниже для обсуждения с учителем.' : 'Других вариантов для обсуждения пока нет.'}</p></div>
             <div className={styles.reportStats}><div><strong>{foundCount}/{essay.grammarIssues.length}</strong><span>ошибок найдено самостоятельно</span></div><div><strong>{Object.keys(session.appliedGrammar).length + Object.keys(session.appliedRevisions).length}</strong><span>проверенных изменений применено</span></div></div>
             <div className={styles.scoreGrid}>{criterionOrder.map((criterion) => <div key={criterion} className={styles.reportScore}><span>{criterionLabels[criterion]}</span><strong>{essay.baseline[criterion].toFixed(1)} <span aria-hidden="true">→</span> {scores[criterion].toFixed(1)}</strong><small>{scores[criterion] > essay.baseline[criterion] ? criterion === 'grammar' ? 'Применены обе размеченные грамматические правки. Диапазон конструкций отдельно не оценивался.' : essay.revisions[criterion].explanation : 'Без проверенной правки по этому критерию'}</small></div>)}</div>
             <h3 className={styles.diffHeading}>Исходное и рабочее эссе</h3>
             <div className={styles.diffGrid}><div><span className={styles.overline}>БЫЛО</span>{essay.paragraphs.map((paragraph) => <p key={paragraph.id} lang="en">{originalParagraph(essay, paragraph.id)}</p>)}</div><div><span className={styles.overline}>СТАЛО</span>{essay.paragraphs.map((paragraph) => <p key={paragraph.id} lang="en" className={workingParagraph(essay, session, paragraph.id) !== originalParagraph(essay, paragraph.id) ? styles.changedParagraph : ''}>{workingParagraph(essay, session, paragraph.id)}</p>)}</div></div>
-            {(unverifiedGrammar.length > 0 || unverifiedRevisions.length > 0) && <section className={styles.unverified}><h3>Твои неприменённые варианты</h3><p className={styles.hint}>Они не меняют ориентир автоматически. Покажи их учителю, чтобы обсудить качество текста.</p>{unverifiedGrammar.map(([sentenceId, draft]) => {
+            {hasUnappliedDrafts && <section className={styles.unverified}><h3>Твои неприменённые варианты</h3><p className={styles.hint}>Они не меняют ориентир автоматически. Покажи их учителю, чтобы обсудить качество текста.</p>{unverifiedGrammar.map(([sentenceId, draft]) => {
               const status = grammarAttemptStatus(essay, session, sentenceId);
               const label = status === 'found' ? 'найденная, но не применённая правка' : status === 'unnecessary' ? 'правка без размеченной ошибки' : 'вариант для проверки учителем';
               return <div key={sentenceId}><strong>Грамматика · {label}</strong><p lang="en">{draft}</p></div>;
-            })}{unverifiedRevisions.map((criterion) => <div key={criterion}><strong>{criterionLabels[criterion]}</strong><p lang="en">{session.revisionDrafts[criterion]}</p></div>)}</section>}
+            })}{revisionReportCriteria.map((criterion) => <div key={criterion}><strong>{criterionLabels[criterion]}</strong>{unverifiedRevisions.includes(criterion) && <><span className={styles.draftPhase}>До разбора</span><p lang="en">{session.revisionDrafts[criterion]}</p></>}{postFeedbackRevisions.includes(criterion) && <><span className={styles.draftPhase}>После разбора</span><p lang="en">{session.postFeedbackDrafts[criterion]}</p></>}</div>)}</section>}
             <div className={styles.nextPractice}><span className={styles.overline}>СЛЕДУЮЩИЙ ШАГ</span><p>{essay.nextPractice}</p></div>
             <button type="button" className={styles.secondaryButton} onClick={restart}>Начать это эссе заново</button>
           </section>}

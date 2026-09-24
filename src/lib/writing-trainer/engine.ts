@@ -13,6 +13,7 @@ export interface TrainerSession {
   grammarChecked: boolean;
   appliedGrammar: Record<string, string>;
   revisionDrafts: Partial<Record<RevisionCriterion, string>>;
+  postFeedbackDrafts: Partial<Record<RevisionCriterion, string>>;
   revealed: Partial<Record<RevisionCriterion, boolean>>;
   appliedRevisions: Partial<Record<RevisionCriterion, string>>;
 }
@@ -27,6 +28,7 @@ export function createSession(caseId: string): TrainerSession {
     grammarChecked: false,
     appliedGrammar: {},
     revisionDrafts: {},
+    postFeedbackDrafts: {},
     revealed: {},
     appliedRevisions: {},
   };
@@ -80,5 +82,6 @@ export function practiceScores(essay: WritingCase, session: TrainerSession): Rec
 
 export function hasWork(session: TrainerSession): boolean {
   return Object.values(session.grammarDrafts).some(Boolean) || Object.values(session.revisionDrafts).some(Boolean)
+    || Object.values(session.postFeedbackDrafts).some(Boolean)
     || Object.keys(session.appliedGrammar).length > 0 || Object.keys(session.appliedRevisions).length > 0;
 }

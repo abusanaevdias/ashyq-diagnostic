@@ -79,6 +79,10 @@
 .sourceBlock .overline { color: var(--ink-soft); }
 .sourceBlock p { margin-top: 12px; }
 .paragraphEditor { min-height: 180px; }
+.secondAttempt { margin-top: 25px; padding: 22px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: var(--bg); }
+.secondAttempt h3 { font: 800 1.15rem var(--font-display); margin: 0 0 8px; }
+.secondAttempt > p:not(.hint) { color: var(--ink-soft); font-size: 14px; line-height: 1.55; margin: 0 0 20px; }
+.secondAttempt .paragraphEditor { background: var(--surface); }
 .comparison, .diffGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 .comparison { margin-top: 25px; }
 .comparison > div, .diffGrid > div { min-width: 0; border: 1px solid var(--hairline); border-radius: var(--r-sm); padding: 18px; background: var(--bg); }
@@ -100,6 +104,7 @@
 .unverified h3 { font: 800 1.3rem var(--font-display); margin: 0; }
 .unverified > div { border: 1px solid var(--hairline); border-radius: var(--r-sm); padding: 17px; margin-top: 12px; }
 .unverified > div strong { font-size: 13px; }
+.draftPhase { display: block; margin-top: 12px; color: var(--ink-soft); font-size: 12px; font-weight: 750; }
 .unverified > div p { font-size: 14px; line-height: 1.7; margin: 8px 0 0; overflow-wrap: anywhere; }
 .nextPractice { background: var(--blush-soft); border-radius: var(--r-md); padding: 20px; margin: 26px 0; }
 .nextPractice .overline { color: var(--red-deep); }
@@ -116,5 +121,5 @@
 .scoreRow strong { font-family: var(--font-display); font-size: 17px; }
 .asideFoot { color: var(--ink-soft); font-size: 11px; line-height: 1.7; padding: 0 6px; }
 @media (max-width: 950px) { .layout { grid-template-columns: 1fr; } .aside { position: static; grid-template-columns: 1fr 1fr; } .asideFoot { grid-column: 1 / -1; } }
-@media (max-width: 650px) { .page { padding: 18px 14px 65px; } .topline { font-size: 9px; } .hero { padding: 34px 0 26px; } .heroNumber { display: none; } .notice { grid-template-columns: 1fr; gap: 4px; } .caseBar { display: block; } .caseChoices { margin-top: 15px; } .caseButton { min-width: 0; flex: 1; } .promptCard, .workCard { padding: 20px; } .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; } .step { white-space: normal; } .step:last-child { grid-column: 1 / -1; } .aside { grid-template-columns: 1fr; } .comparison, .diffGrid, .reportStats, .scoreGrid { grid-template-columns: 1fr; } }
+@media (max-width: 650px) { .page { padding: 18px 14px 65px; } .topline { font-size: 9px; } .hero { padding: 34px 0 26px; } .heroNumber { display: none; } .notice { grid-template-columns: 1fr; gap: 4px; } .caseBar { display: block; } .caseChoices { margin-top: 15px; } .caseButton { min-width: 0; flex: 1; } .promptCard, .workCard { padding: 20px; } .secondAttempt { padding: 16px; } .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; } .step { white-space: normal; } .step:last-child { grid-column: 1 / -1; } .aside { grid-template-columns: 1fr; } .comparison, .diffGrid, .reportStats, .scoreGrid { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .caseButton, .primaryButton, .secondaryButton { transition: none; } }
