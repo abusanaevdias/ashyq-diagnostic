@@ -11,6 +11,8 @@ Reviewed the synthetic IELTS Task 2 learner flow against the product promise: in
 | A Task 2 example is too short to model the format. | The original essays were 213 and 178 words. Both are now above 250 words (262 and 261 words in the page UI). |
 | The improved essay may fall below the Task 2 word target. | The second case dropped to 248 words after all authored examples were applied. Its lexical example now keeps the fully revised essay above 250 words while adding a concrete point about each student's role. |
 | A score changes without an explanation of the relevant writing skill. | Each final criterion card now says which authored change caused the movement; grammar notes that range of structures was not separately assessed. |
+| On a phone, the new practice estimate appears far below the action that changed it. | After applying a prepared change, the affected round now shows the criterion's before/after practice estimate beside that action, with an explicit non-official label. A partial grammar application explains that both marked fixes are needed for the authored estimate to move. |
+| Applying a prepared example silently removes the learner's different draft from the final report. | A 320px end-to-end pass reproduced this with three independently written paragraphs. The report now keeps any learner draft that differs from the text applied to the working essay, including after an example was applied. |
 | The learner cannot see how to start without scrolling. | The opening section was shortened and gained a direct link to the active exercise. |
 | Sentence hit areas are too small for touch. | The first review only inspected the React component and missed the CSS geometry. Sentence buttons now have a 44px minimum height and wrap safely within the essay pane. |
 | The mobile step list hides later criteria behind a horizontal scrollbar. | A 390px browser pass found this. The five stages now form a two-column grid on narrow screens, with the report occupying the last full row. |
@@ -28,5 +30,5 @@ Reviewed the synthetic IELTS Task 2 learner flow against the product promise: in
 
 - Scores are authored practice estimates for these two cases, not live IELTS assessment. The band movement is a property of the revised case essay, not proof that a learner improved independently.
 - An unrecognized but valid free-text revision still requires a teacher. This pilot does not grade it.
-- A 390px browser pass covered the task, step list and grammar exercise. Other narrow-screen states remain worth a later dedicated pass.
+- A 320px browser pass covered grammar, all three paragraph comparison/application stages and the final report. No horizontal overflow or sub-44px visible button/link target was found in those states. A 390px pass also covered the task and initial exercise.
 - The learner's session is discarded on reload. A later class-integrated version needs consent, privacy rules, persistence, and teacher moderation before using real submissions.

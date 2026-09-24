@@ -73,6 +73,8 @@
 .statusTag.positive { color: var(--success); background: var(--success-soft); }
 .textButton { min-height: 44px; margin-top: 12px; padding: 5px 0; border: 0; background: none; color: var(--red-deep); text-decoration: underline; text-underline-offset: 3px; font-size: 14px; font-weight: 750; cursor: pointer; }
 .applied { display: inline-block; margin-top: 12px; color: var(--success); font-size: 13px; font-weight: 750; }
+.applicationFeedback { display: grid; gap: 5px; margin-top: 12px; padding: 12px 15px; border-radius: var(--r-sm); background: var(--success-soft); font-size: 13px; line-height: 1.5; }
+.applicationFeedback .applied { margin-top: 0; }
 .sourceBlock { margin-bottom: 22px; }
 .sourceBlock .overline { color: var(--ink-soft); }
 .sourceBlock p { margin-top: 12px; }

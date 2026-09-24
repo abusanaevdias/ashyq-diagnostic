@@ -55,10 +55,12 @@ export default function WritingTrainer() {
   const furthestStageIndex = Math.max(currentStageIndex, stages.indexOf(session.furthestStage));
   const issueIds = new Set(essay.grammarIssues.map((issue) => issue.sentenceId));
   const foundCount = essay.grammarIssues.filter((issue) => grammarAttemptStatus(essay, session, issue.sentenceId) === 'found').length;
+  const appliedGrammarCount = essay.grammarIssues.filter((issue) => Boolean(session.appliedGrammar[issue.sentenceId])).length;
+  const latestAppliedGrammarId = Object.keys(session.appliedGrammar).at(-1);
   const hasGrammarAttempt = Object.entries(session.grammarDrafts).some(([sentenceId, draft]) => draft.trim() && normalize(draft) !== normalize(originalSentence(essay, sentenceId)));
   const originalWordCount = essay.paragraphs.flatMap((paragraph) => paragraph.sentences).map((sentence) => sentence.text).join(' ').trim().split(/\s+/).length;
-  const unverifiedGrammar = Object.entries(session.grammarDrafts).filter(([sentenceId, draft]) => draft.trim() && normalize(draft) !== normalize(originalSentence(essay, sentenceId)) && !session.appliedGrammar[sentenceId]);
-  const unverifiedRevisions = (criterionOrder.filter((criterion) => criterion !== 'grammar') as Exclude<Criterion, 'grammar'>[]).filter((criterion) => session.revisionDrafts[criterion] && !session.appliedRevisions[criterion]);
+  const unverifiedGrammar = Object.entries(session.grammarDrafts).filter(([sentenceId, draft]) => draft.trim() && normalize(draft) !== normalize(originalSentence(essay, sentenceId)) && normalize(draft) !== normalize(session.appliedGrammar[sentenceId] ?? ''));
+  const unverifiedRevisions = (criterionOrder.filter((criterion) => criterion !== 'grammar') as Exclude<Criterion, 'grammar'>[]).filter((criterion) => session.revisionDrafts[criterion] && normalize(session.revisionDrafts[criterion] ?? '') !== normalize(session.appliedRevisions[criterion] ?? ''));
 
   function chooseCase(caseId: string) {
     if (caseId === session.caseId) return;
@@ -145,7 +147,7 @@ export default function WritingTrainer() {
                     {session.grammarDrafts[sentence.id]?.trim() && <p lang="en"><b>Твой вариант:</b> {session.grammarDrafts[sentence.id]}</p>}
                     {issue && <><p lang="en"><b>Пример:</b> {issue.accepted[0]}</p><p>{issue.explanation}</p>
                       {!session.appliedGrammar[sentence.id] && <button type="button" className={styles.textButton} onClick={() => setSession((current) => ({ ...current, appliedGrammar: { ...current.appliedGrammar, [sentence.id]: canApplyGrammar(essay, current, sentence.id) ? current.grammarDrafts[sentence.id].trim() : issue.accepted[0] } }))}>{status === 'found' ? 'Применить мою проверенную правку' : 'Применить пример к эссе'}</button>}
-                      {session.appliedGrammar[sentence.id] && <span className={styles.applied}>✓ Применено к рабочей версии</span>}
+                      {session.appliedGrammar[sentence.id] && (latestAppliedGrammarId === sentence.id ? <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>{appliedGrammarCount === essay.grammarIssues.length ? `Учебный ориентир по грамматике: ${essay.baseline.grammar.toFixed(1)} → ${scores.grammar.toFixed(1)}. Это не официальный балл IELTS.` : `Применено ${appliedGrammarCount} из ${essay.grammarIssues.length} размеченных правок. Ориентир изменится после обеих.`}</span></div> : <span className={styles.applied}>✓ Применено к рабочей версии</span>)}
                     </>}
                   </article>;
                 })}
@@ -176,7 +178,7 @@ export default function WritingTrainer() {
                 </div>
                 <p className={styles.explanation}>{target.explanation}</p>
                 <p className={styles.hint}>Твой вариант может быть хорошим, но этот пилот узнаёт только подготовленный пример. Другую формулировку должен оценить учитель.</p>
-                {!applied ? <button type="button" className={styles.secondaryButton} onClick={() => setSession((current) => ({ ...current, appliedRevisions: { ...current.appliedRevisions, [criterion]: canApplyRevision(essay, current, criterion) ? current.revisionDrafts[criterion]?.trim() : target.example } }))}>{canApplyRevision(essay, session, criterion) ? 'Применить мою проверенную правку' : 'Применить пример к рабочему эссе'}</button> : <span className={styles.applied}>✓ Применено к рабочей версии</span>}
+                {!applied ? <button type="button" className={styles.secondaryButton} onClick={() => setSession((current) => ({ ...current, appliedRevisions: { ...current.appliedRevisions, [criterion]: canApplyRevision(essay, current, criterion) ? current.revisionDrafts[criterion]?.trim() : target.example } }))}>{canApplyRevision(essay, session, criterion) ? 'Применить мою проверенную правку' : 'Применить пример к рабочему эссе'}</button> : <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>Учебный ориентир по критерию «{criterionLabels[criterion]}»: {essay.baseline[criterion].toFixed(1)} → {scores[criterion].toFixed(1)}. Это не официальный балл IELTS.</span></div>}
                 <div className={styles.actionRow}><button type="button" className={styles.primaryButton} onClick={() => setSession(moveToNext)}>{criterion === 'lexical' ? 'Посмотреть итог →' : 'Следующий критерий →'}</button><span>Можно продолжить без применения примера</span></div>
               </>}
             </section>;
