@@ -26,7 +26,7 @@ const PAGES: Array<{ title: string; text: string; href: string }> = [
   { title: 'Сообщество', text: 'Клуб ASHYQ: люди, события и поддержка.', href: '/community' },
   { title: 'Сезон', text: 'Активный сезон: рейтинг команд и участников, IELTS и SAT раздельно.', href: '/season' },
   { title: 'FAQ', text: 'Ответы о диагностике, сезонах, прогрессе, формате и заявках.', href: '/faq' },
-  { title: 'Блог', text: 'Разборы и материалы для подготовки. Пока — демо-темы.', href: '/blog' },
+  { title: 'Блог', text: 'Практические разборы и материалы для подготовки к IELTS и Digital SAT.', href: '/blog' },
   { title: 'Конфиденциальность', text: 'Как ASHYQ обращается с данными: согласие, телефон, localStorage.', href: '/privacy' },
   { title: 'Условия использования', text: 'Правила пользования сайтом и диагностикой.', href: '/terms' },
 ];
@@ -50,7 +50,7 @@ function buildEntries(): SearchEntry[] {
       section: 'Статьи' as const,
       title: post.title,
       text: post.excerpt,
-      href: '/blog',
+      href: `/blog/${post.slug}`,
       demo: BLOG_IS_DEMO,
     })),
   ];

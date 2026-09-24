@@ -4,9 +4,9 @@ import { BLOG_IS_DEMO } from '@/data/blog';
 
 export const metadata: Metadata = {
   title: 'Блог ASHYQ',
-  description: 'Разборы заданий IELTS и SAT, стратегии подготовки и жизнь сезона ASHYQ.',
+  description: 'Практические разборы IELTS и Digital SAT: структура заданий, критерии оценки, планы подготовки и типичные ошибки.',
   alternates: { canonical: '/blog' },
-  // демо-темы не индексируем, пока нет настоящих статей
+  // В демо-режиме закрываем тестовый список от индексации.
   robots: BLOG_IS_DEMO ? { index: false, follow: false } : undefined,
 };
 

@@ -5,6 +5,7 @@ const CANONICAL_ROUTES = [
   '/',
   '/about',
   '/blog',
+  '/blog/ielts-writing-task-2',
   '/career',
   '/career/intj',
   '/community',
@@ -25,7 +26,7 @@ const CANONICAL_ROUTES = [
   '/terms',
 ] as const;
 
-const NOINDEX_ROUTES = ['/blog', '/season/current', '/crm'] as const;
+const NOINDEX_ROUTES = ['/season/current', '/crm'] as const;
 
 function attribute(tag: string, name: string): string | null {
   return tag.match(new RegExp(`${name}="([^"]+)"`, 'i'))?.[1] ?? null;
@@ -101,6 +102,7 @@ async function main() {
   await checkJsonLd('/', 'EducationalOrganization');
   await checkJsonLd('/courses/ielts', 'Course');
   await checkJsonLd('/faq', 'FAQPage');
+  await checkJsonLd('/blog/ielts-writing-task-2', 'BlogPosting');
   for (const route of CANONICAL_ROUTES) await checkCanonical(route);
   for (const route of NOINDEX_ROUTES) await checkNoindex(route);
   await checkOgImage();
