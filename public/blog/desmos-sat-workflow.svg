@@ -26,5 +26,5 @@
     <text x="936" y="380" fill="#FFFFFF" font-size="25" font-weight="700">Сверь ответ</text><text x="936" y="414" fill="#FFFFFF" font-size="25" font-weight="700">с вопросом</text>
     <text x="936" y="449" fill="#E7DDD2" font-size="17">Знак · единицы · формат</text>
   </g>
-  <text x="64" y="555" fill="#625E5A" font-family="Arial, sans-serif" font-size="20">Для практики используйте Math preview или пробный тест в Bluebook.</text>
+  <text x="64" y="555" fill="#625E5A" font-family="Arial, sans-serif" font-size="20">Для знакомства с интерфейсом откройте Test Preview в Bluebook.</text>
 </svg>
