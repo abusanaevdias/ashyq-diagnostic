@@ -11,10 +11,10 @@
     <text x="200" y="293" fill="#18745D" font-size="26" font-weight="700" letter-spacing="1">WHERE</text><text x="200" y="338" fill="#173343" font-size="37" font-weight="700">Turkistan</text>
     <rect x="620" y="245" width="490" height="125" rx="22" fill="#FFFFFF" stroke="#D8E3E0" stroke-width="3"/>
     <circle cx="675" cy="307" r="31" fill="#18745D"/><text x="675" y="319" text-anchor="middle" fill="#FFFFFF" font-size="31" font-weight="700">2</text>
-    <text x="730" y="293" fill="#18745D" font-size="26" font-weight="700" letter-spacing="1">VISIT</text><text x="730" y="338" fill="#173343" font-size="37" font-weight="700">Family trip</text>
+    <text x="730" y="293" fill="#18745D" font-size="26" font-weight="700" letter-spacing="1">VISIT</text><text x="730" y="338" fill="#173343" font-size="37" font-weight="700">Family visit</text>
     <rect x="90" y="393" width="490" height="125" rx="22" fill="#FFFFFF" stroke="#D8E3E0" stroke-width="3"/>
     <circle cx="145" cy="455" r="31" fill="#18745D"/><text x="145" y="467" text-anchor="middle" fill="#FFFFFF" font-size="31" font-weight="700">3</text>
-    <text x="200" y="441" fill="#18745D" font-size="26" font-weight="700" letter-spacing="1">DETAIL</text><text x="200" y="486" fill="#173343" font-size="34" font-weight="700">Building and courtyard</text>
+    <text x="200" y="441" fill="#18745D" font-size="26" font-weight="700" letter-spacing="1">DETAIL</text><text x="200" y="486" fill="#173343" font-size="34" font-weight="700">Building details</text>
     <rect x="620" y="393" width="490" height="125" rx="22" fill="#173343"/>
     <circle cx="675" cy="455" r="31" fill="#18745D"/><text x="675" y="467" text-anchor="middle" fill="#FFFFFF" font-size="31" font-weight="700">4</text>
     <text x="730" y="441" fill="#B8DCCE" font-size="26" font-weight="700" letter-spacing="1">WHY IT MATTERS</text><text x="730" y="486" fill="#FFFFFF" font-size="34" font-weight="700">History feels close</text>
