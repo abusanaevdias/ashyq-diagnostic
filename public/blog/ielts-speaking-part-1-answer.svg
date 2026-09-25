@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1080" viewBox="0 0 900 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Простая опора для ответа IELTS Speaking Part 1</title>
+  <desc id="desc">Три шага: дать прямой ответ, добавить одну уместную деталь и остановиться, когда мысль завершена.</desc>
+  <rect width="900" height="1080" rx="32" fill="#F4F7F5"/>
+  <circle cx="818" cy="82" r="108" fill="#E4F2ED"/>
+  <text x="68" y="92" fill="#18745D" font-family="Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="2">IELTS SPEAKING PART 1</text>
+  <text x="68" y="160" fill="#173343" font-family="Arial, sans-serif" font-size="42" font-weight="700">Короткий ответ с одной деталью</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="62" y="218" width="776" height="216" rx="28" fill="#FFFFFF" stroke="#B8DCCE" stroke-width="3"/>
+    <circle cx="128" cy="284" r="34" fill="#18745D"/>
+    <text x="128" y="296" text-anchor="middle" fill="#FFFFFF" font-size="34" font-weight="700">1</text>
+    <text x="186" y="296" fill="#173343" font-size="38" font-weight="700">Ответь на вопрос прямо</text>
+    <text x="112" y="367" fill="#526674" font-size="33">“I usually study at home.”</text>
+    <path d="M450 446v36m-13-13 13 13 13-13" fill="none" stroke="#18745D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="62" y="498" width="776" height="216" rx="28" fill="#E8F4EF" stroke="#B8DCCE" stroke-width="3"/>
+    <circle cx="128" cy="564" r="34" fill="#18745D"/>
+    <text x="128" y="576" text-anchor="middle" fill="#FFFFFF" font-size="34" font-weight="700">2</text>
+    <text x="186" y="576" fill="#173343" font-size="38" font-weight="700">Добавь одну полезную деталь</text>
+    <text x="112" y="648" fill="#526674" font-size="33">“It is quieter, so I can focus.”</text>
+    <path d="M450 726v36m-13-13 13 13 13-13" fill="none" stroke="#18745D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="62" y="778" width="776" height="216" rx="28" fill="#173343"/>
+    <circle cx="128" cy="844" r="34" fill="#B8DCCE"/>
+    <text x="128" y="856" text-anchor="middle" fill="#173343" font-size="34" font-weight="700">3</text>
+    <text x="186" y="856" fill="#FFFFFF" font-size="38" font-weight="700">Закончи, когда мысль ясна</text>
+    <text x="112" y="928" fill="#D7E6E1" font-size="32">Не повторяй ответ и не добавляй</text>
+    <text x="112" y="971" fill="#D7E6E1" font-size="32">детали, не связанные с вопросом.</text>
+  </g>
+</svg>
