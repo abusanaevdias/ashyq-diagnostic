@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">SAT Reading &amp; Writing: план по отчёту Bluebook</title>
+  <desc id="desc">Карта четырёх доменов Reading and Writing с их приблизительной долей вопросов: понимание информации, структура текста, развитие идей и правила английского языка.</desc>
+  <rect width="1200" height="675" rx="32" fill="#F6F1E9"/>
+  <circle cx="1118" cy="58" r="172" fill="#ECE4D8"/>
+  <circle cx="18" cy="664" r="120" fill="#F0DED8"/>
+  <text x="64" y="82" fill="#A33A31" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="2">DIGITAL SAT · READING &amp; WRITING</text>
+  <text x="64" y="168" fill="#272523" font-family="Arial, sans-serif" font-size="62" font-weight="700">Отчёт Bluebook</text>
+  <text x="64" y="224" fill="#272523" font-family="Arial, sans-serif" font-size="38" font-weight="700">→ точная практика</text>
+  <text x="64" y="276" fill="#625E5A" font-family="Arial, sans-serif" font-size="25">Начните с домена, затем найдите навык</text>
+  <text x="64" y="312" fill="#625E5A" font-family="Arial, sans-serif" font-size="25">и подберите задания нужной сложности.</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="64" y="376" width="252" height="196" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <rect x="64" y="376" width="252" height="12" rx="6" fill="#286B5A"/>
+    <text x="88" y="434" fill="#625E5A" font-size="19" font-weight="700">INFORMATION &amp; IDEAS</text>
+    <text x="88" y="482" fill="#272523" font-size="26" font-weight="700">Смысл</text>
+    <text x="88" y="534" fill="#286B5A" font-size="34" font-weight="700">≈26%</text>
+    <rect x="336" y="376" width="252" height="196" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <rect x="336" y="376" width="252" height="12" rx="6" fill="#486C98"/>
+    <text x="360" y="434" fill="#625E5A" font-size="19" font-weight="700">CRAFT &amp; STRUCTURE</text>
+    <text x="360" y="482" fill="#272523" font-size="26" font-weight="700">Текст</text>
+    <text x="360" y="534" fill="#486C98" font-size="34" font-weight="700">≈28%</text>
+    <rect x="608" y="376" width="252" height="196" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <rect x="608" y="376" width="252" height="12" rx="6" fill="#B36A24"/>
+    <text x="632" y="434" fill="#625E5A" font-size="19" font-weight="700">EXPRESSION OF IDEAS</text>
+    <text x="632" y="482" fill="#272523" font-size="26" font-weight="700">Развитие идей</text>
+    <text x="632" y="534" fill="#A35D1E" font-size="34" font-weight="700">≈20%</text>
+    <rect x="880" y="376" width="252" height="196" rx="22" fill="#272523"/>
+    <rect x="880" y="376" width="252" height="12" rx="6" fill="#D95B4E"/>
+    <text x="904" y="425" fill="#E7DDD2" font-size="18" font-weight="700">STANDARD ENGLISH</text>
+    <text x="904" y="450" fill="#E7DDD2" font-size="18" font-weight="700">CONVENTIONS</text>
+    <text x="904" y="492" fill="#FFFFFF" font-size="24" font-weight="700">Грамматика</text>
+    <text x="904" y="540" fill="#F29A8F" font-size="34" font-weight="700">≈26%</text>
+  </g>
+  <text x="64" y="625" fill="#625E5A" font-family="Arial, sans-serif" font-size="19">Доли приблизительные. Полоса отчёта помогает выбрать практику, а не предсказывает балл.</text>
+</svg>
