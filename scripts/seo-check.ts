@@ -1,12 +1,12 @@
+import { BLOG_POSTS, type BlogPost } from '../src/data/blog';
+
 const BASE_URL = (process.env.BASE_URL ?? 'http://127.0.0.1:3000').replace(/\/$/, '');
 const EXPECTED_ORIGIN = (process.env.EXPECTED_ORIGIN ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 
-const CANONICAL_ROUTES = [
+const STATIC_CANONICAL_ROUTES = [
   '/',
   '/about',
   '/blog',
-  '/blog/ielts-writing-task-1-guide',
-  '/blog/ielts-writing-task-2',
   '/career',
   '/career/intj',
   '/community',
@@ -26,6 +26,11 @@ const CANONICAL_ROUTES = [
   '/season/current',
   '/terms',
 ] as const;
+
+const CANONICAL_ROUTES = [...new Set([
+  ...STATIC_CANONICAL_ROUTES,
+  ...BLOG_POSTS.map((post) => `/blog/${post.slug}`),
+])];
 
 const NOINDEX_ROUTES = ['/season/current', '/crm'] as const;
 
@@ -99,28 +104,55 @@ async function checkJsonLd(route: string, type: string) {
   console.log(`PASS JSON-LD ${type} ${route}`);
 }
 
-async function checkEditorialArticle(route: string) {
+async function checkEditorialArticle(post: BlogPost) {
+  const route = `/blog/${post.slug}`;
   const response = await fetch(`${BASE_URL}${route}`);
   if (!response.ok) throw new Error(`${route}: HTTP ${response.status}`);
   const html = await response.text();
   const robots = tags(html, 'meta').find((tag) => attribute(tag, 'name') === 'robots');
   if (attribute(robots ?? '', 'content')?.includes('noindex')) throw new Error(`${route}: published article is noindex`);
-  if (!tags(html, 'article').some((tag) => attribute(tag, 'lang') === 'en')) throw new Error(`${route}: article language is missing`);
+  const language = post.language ?? 'ru';
+  if (!tags(html, 'article').some((tag) => attribute(tag, 'lang') === language)) {
+    throw new Error(`${route}: article language is missing or not ${language}`);
+  }
+
+  const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
+  if (!title?.trim()) throw new Error(`${route}: title metadata is missing`);
+  const description = tags(html, 'meta').find((tag) => attribute(tag, 'name') === 'description');
+  if (!description || !attribute(description, 'content')?.trim()) throw new Error(`${route}: description metadata is missing`);
+
+  const jsonLd = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    .map((match) => JSON.parse(match[1]) as { '@type'?: string; headline?: string; inLanguage?: string });
+  const blogPosting = jsonLd.find((block) => block['@type'] === 'BlogPosting');
+  if (!blogPosting) throw new Error(`${route}: BlogPosting JSON-LD is missing`);
+  if (blogPosting.inLanguage !== language) throw new Error(`${route}: BlogPosting language ${blogPosting.inLanguage ?? '—'}, expected ${language}`);
+  if (blogPosting.headline !== post.title) throw new Error(`${route}: BlogPosting headline does not match the published title`);
+
+  const editorialImages = tags(html, 'img').filter((tag) => attribute(tag, 'src')?.includes('/blog/'));
+  for (const image of editorialImages) {
+    const src = attribute(image, 'src');
+    if (!attribute(image, 'alt')?.trim()) throw new Error(`${route}: editorial image has no descriptive alt text (${src ?? 'unknown source'})`);
+    const assetPath = new URL(src!, BASE_URL).pathname;
+    const assetResponse = await fetch(`${BASE_URL}${assetPath}`);
+    if (!assetResponse.ok) throw new Error(`${route}: editorial image ${assetPath} returned HTTP ${assetResponse.status}`);
+  }
 
   const sitemap = await fetch(`${BASE_URL}/sitemap.xml`);
   if (!sitemap.ok || !(await sitemap.text()).includes(route)) throw new Error(`${route}: sitemap entry is missing`);
   const blog = await (await fetch(`${BASE_URL}/blog`)).text();
   if (!blog.includes(`href="${route}"`)) throw new Error(`${route}: blog index link is missing`);
-  console.log(`PASS published article ${route}: indexable, English, linked from blog and in sitemap`);
+  console.log(`PASS published article ${route}: indexable, ${language}, metadata, BlogPosting, ${editorialImages.length} image(s), linked from blog and in sitemap`);
 }
 
 async function main() {
   await checkJsonLd('/', 'EducationalOrganization');
   await checkJsonLd('/courses/ielts', 'Course');
   await checkJsonLd('/faq', 'FAQPage');
-  await checkJsonLd('/blog/ielts-writing-task-1-guide', 'BlogPosting');
-  await checkJsonLd('/blog/ielts-writing-task-2', 'BlogPosting');
-  await checkEditorialArticle('/blog/ielts-writing-task-1-guide');
+  for (const post of BLOG_POSTS) {
+    const route = `/blog/${post.slug}`;
+    await checkJsonLd(route, 'BlogPosting');
+    await checkEditorialArticle(post);
+  }
   for (const route of CANONICAL_ROUTES) await checkCanonical(route);
   for (const route of NOINDEX_ROUTES) await checkNoindex(route);
   await checkOgImage();
