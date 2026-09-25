@@ -25,9 +25,9 @@ export const PHOTOS = {
   /** F-07 карточка Quick Diagnostic · 16:10 */
   courseCardDiagnostic: { src: '/brand/photos/f-07.jpg', width: 1586, height: 992, alt: 'Иллюстрация, создано ИИ: ученик дома проходит диагностику на ноутбуке' },
   /** F-08 /courses/ielts, первый экран · 1:1 */
-  courseHeroIelts: { src: '/brand/photos/f-08.jpg', width: 1584, height: 993, alt: 'Иллюстрация, создано ИИ: ученики обсуждают задания IELTS за общим столом' },
+  courseHeroIelts: { src: '/brand/photos/f-08-online.jpg', width: 1254, height: 1254, alt: 'Иллюстрация, создано ИИ: ученица готовится к IELTS дома с преподавателем по видеосвязи' },
   /** F-09 /courses/sat, первый экран · 1:1 */
-  courseHeroSat: { src: '/brand/photos/f-09.jpg', width: 1254, height: 1254, alt: 'Иллюстрация, создано ИИ: тренер объясняет формулы у доски, ученик слушает' },
+  courseHeroSat: { src: '/brand/photos/f-09-online.jpg', width: 1254, height: 1254, alt: 'Иллюстрация, создано ИИ: ученик готовится к Digital SAT дома с преподавателем по видеосвязи' },
   /** F-10 /diagnostic, «Что вы получите?» · 16:10 */
   diagnostic: { src: '/brand/photos/f-10.jpg', width: 1586, height: 992, alt: 'Иллюстрация, создано ИИ: ученик с мамой смотрят результат диагностики на ноутбуке' },
   /** F-11 /about, первый экран · 1:1 */
