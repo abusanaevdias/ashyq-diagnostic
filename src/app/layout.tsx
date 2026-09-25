@@ -10,7 +10,10 @@ import { ORGANIZATION } from '@/lib/schema';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   verification: {
-    google: 'etn7ANJicuDcb9Skg6U127SssWEfIAheuKTozqrAmnI',
+    google: [
+      'etn7ANJicuDcb9Skg6U127SssWEfIAheuKTozqrAmnI',
+      'GEXhZPM9edu9qIcpBE4_T7Ont-TLH2qD8VnYFxdmwfU',
+    ],
   },
   title: { default: 'ASHYQ — Быстрая диагностика IELTS / SAT', template: '%s' },
   description: SITE_DESCRIPTION,
