@@ -27,7 +27,10 @@ export default function BlogPostView({ slug, language = 'ru', initialData }: { s
   const repos = getRepos();
   const { data, loading } = useLmsData(async () => {
     const post = await repos.blog.getPublishedBySlug(slug);
-    if (!post) return null;
+    // Published editorial routes are also seeded in the current build. A
+    // reader's older localStorage snapshot may not contain a newly added post.
+    // Keep the server-provided editorial entry visible without rewriting it.
+    if (!post) return initialData ?? null;
     const [author, all] = await Promise.all([repos.users.get(post.authorId), repos.blog.listPublished()]);
     return { post, author, more: all.filter((p) => p.id !== post.id && p.category === post.category).slice(0, 3) };
   }, `post:${slug}`, initialData);

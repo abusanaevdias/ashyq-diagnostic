@@ -416,4 +416,146 @@ College Board предоставляет встроенный Desmos в секц
 
 Если вы готовитесь к SAT в Казахстане и хотите понять, с каких тем начать, пройдите [предварительную SAT-диагностику ASHYQ](/?start=sat). Она помогает выбрать направление подготовки, но не является официальным результатом SAT. Описание формата занятий есть на странице [подготовки к SAT в ASHYQ](/courses/sat). ASHYQ — образовательный бренд Казахстана с онлайн-подготовкой к IELTS и Digital SAT.`
   },
+  {
+    slug: 'ielts-speaking-part-2-guide',
+    language: 'en',
+    category: 'ielts',
+    title: 'IELTS Speaking Part 2: Plan a Clear 1–2 Minute Answer',
+    seoTitle: 'IELTS Speaking Part 2: Plan a Clear 1–2 Minute Answer',
+    metaDescription: 'Learn IELTS Speaking Part 2 timing, plan notes in one minute, and practise with an original Kazakhstan example linked to official IELTS criteria.',
+    excerpt: 'A practical IELTS Speaking Part 2 method: understand the timing, make useful one-minute notes, develop a coherent answer and review it against official criteria.',
+    photo: '/blog/ielts-speaking-part-2-plan.svg',
+    coverAlt: 'IELTS Speaking Part 2 timing: one minute to prepare and up to two minutes to speak from short personal notes.',
+    publishedAt: '2026-09-25T12:00:00.000Z',
+    updatedAt: '2026-09-25T12:00:00.000Z',
+    body: `In IELTS Speaking Part 2, you get one minute to prepare and then speak about a topic for up to two minutes. Use the cue card to choose a clear story or description, jot down short prompts in its order, and develop those prompts in your own words. You do not need to memorize a model answer or force yourself to speak for exactly two minutes. [IELTS's official Speaking format](https://ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-speaking) explains the timing and task.
+
+This guide focuses on IELTS Speaking Part 2. The examples below are original practice material, not official IELTS cards or ASHYQ student answers. The local example uses verified facts about the Mausoleum of Khoja Ahmed Yasawi in Turkistan, Kazakhstan.
+
+# What happens in IELTS Speaking Part 2?
+
+The examiner gives you a topic card, paper and pencil. You have one minute to prepare, then you speak for one to two minutes. The examiner stops you when the time is up and may ask one or two brief questions before Part 3. IELTS describes Part 2 as a three-to-four-minute section, including preparation.
+
+You are assessed across the Speaking test, not given a separate official band for this one card. IELTS uses four equally weighted criteria: Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy, and Pronunciation. The criteria describe qualities of your speaking; they are not a checklist of impressive words or accents to imitate. See the [official IELTS Speaking assessment criteria](https://ielts.org/cdn/ielts-guides/ielts-speaking-key-assessment-criteria.pdf).
+
+# Use the one-minute preparation time well
+
+Do not try to write a script. A few words are easier to scan while speaking and leave you room to phrase the answer naturally. Practise this four-part routine; the seconds are a flexible practice aid, not an IELTS rule.
+
+![IELTS Speaking Part 2 timing: one minute to prepare with short notes and up to two minutes to speak.](/blog/ielts-speaking-part-2-plan.svg)
+This is one practice routine. Follow the task card in front of you and adjust the notes to its topic.
+
+## 1. Choose one central idea
+
+Read the whole card once. Choose one person, place, event, object or experience that you can describe with specific details. A familiar example is usually easier to develop than an ambitious topic you know very little about.
+
+## 2. Note the cue-card points in order
+
+Write one or two key words beside each point. If the card asks where and when, note a place and a time. If it asks what happened, add the main event. Keep the order visible: it gives you a simple route through the answer.
+
+## 3. Add details that help you continue
+
+Write a name, small observation, reason or reaction that you can explain. A useful note should trigger a sentence, not contain the sentence itself. For example, “turquoise dome — courtyard — family visit” is more practical than drafting a complete paragraph.
+
+## 4. Decide how to close
+
+Choose a final thought that answers the card's last prompt or explains why the topic matters to you. This gives the talk a natural ending and helps you avoid repeating the introduction when you run out of ideas.
+
+# Practice card: a historic place in Kazakhstan
+
+The following is an original practice prompt, not an official IELTS question:
+
+**Describe a historic place in your country that you find interesting.**
+
+- Where it is
+- How you learned about it or visited it
+- What a visitor might see there
+- Explain why it interests you
+
+For a concrete example, this guide uses the Mausoleum of Khoja Ahmed Yasawi in Turkistan. UNESCO identifies the mausoleum as being in southern Kazakhstan, associates it with the 12th-century Sufi master Yasawi, and records that construction was commissioned by Timur in 1389 and remained unfinished when work stopped in 1405. Check these details in the [UNESCO World Heritage record](https://whc.unesco.org/en/list/1103).
+
+![Example IELTS Speaking Part 2 notes about a place in Kazakhstan: where it is, a visit, a detail to describe and why it matters.](/blog/ielts-speaking-part-2-notes.svg)
+These are example prompts, not a script. Replace the visit and reaction with details you can describe honestly.
+
+| Cue-card point | Brief note |
+| --- | --- |
+| Where it is | Turkistan, southern Kazakhstan |
+| How I know it | A family visit |
+| What I remember | The scale and decorated surfaces |
+| Why it matters to me | A historic place in my country |
+
+## Sample answer
+
+This is an invented practice model, not a real student's story. Replace its visit, memories and opinions with your own experience.
+
+“I’d like to describe the Mausoleum of Khoja Ahmed Yasawi, which is in Turkistan in southern Kazakhstan. I first heard about it at school, and later I visited it with my family. What I remember most is the scale of the building and the decorated surfaces around the courtyard. Walking through the complex made the history feel more tangible than it had in a textbook.
+
+I was also interested in the story behind the construction. The UNESCO World Heritage record says that work began in 1389 on Timur's order and stopped in 1405, so the mausoleum was never completed. That detail surprised me because the building still feels like a complete place to visit, even though its history was interrupted.
+
+It is memorable to me because it connects a historic figure and an architectural landmark with a city I can visit in my own country. I would like to return and learn more about the details I probably missed the first time.”
+
+The response moves from location, to visit, to observations, to a historical detail, and finally to a personal reason. That sequence follows the practice card without sounding like four disconnected answers. Do not reuse the sample's first-person details if they are not yours.
+
+# Review the answer using the four IELTS criteria
+
+After practising, listen to a recording once for meaning and once for language. The four questions below translate the official assessment criteria into a learner's review. They cannot predict your band score.
+
+| IELTS criterion | A useful review question |
+| --- | --- |
+| Fluency and Coherence | Did I keep a clear line of thought, connect details logically and recover when I paused? |
+| Lexical Resource | Did I use words that fit the topic and explain ideas when I could not recall a word? |
+| Grammatical Range and Accuracy | Did I vary sentence structures while keeping the meaning clear and accurate? |
+| Pronunciation | Were my words understandable, with stress and intonation that helped the listener follow the meaning? |
+
+The [official IELTS band descriptors](https://ielts.org/cdn/ielts-guides/ielts-speaking-key-assessment-criteria.pdf) explain the criteria in detail. The examiner considers performance across the Speaking test. A single practice recording or a polished Part 2 answer cannot establish an official IELTS band.
+
+# Common Part 2 mistakes to avoid
+
+- **Writing full sentences during the minute.** There is too little time, and reading a script can make the talk sound less spontaneous. Keep short prompts.
+- **Treating every cue as a separate mini-answer.** Connect the points into one account with a beginning, development and ending.
+- **Using memorized sample answers word for word.** The card may ask about a different angle, and prepared wording can stop fitting the question. IELTS advises candidates to respond naturally and draw on their own experiences; see [IELTS guidance on memorized Speaking answers](https://ielts.org/news-and-insights/dont-overdo-it-how-to-ace-your-ielts-speaking-test).
+- **Adding details you cannot explain.** A specific detail helps only when you can talk about it clearly and respond if the examiner asks a follow-up.
+- **Chasing difficult vocabulary.** Clear, accurate language that expresses the point is more useful than a rare word used incorrectly.
+- **Assuming that a pause ruins the answer.** A brief pause to think is normal. Practise extending a point with a reason, an example or a reaction instead of repeating the same sentence.
+
+# A short practice routine
+
+- **1. Choose:** an original cue-card topic and set a one-minute timer.
+- **2. Note:** short prompts, following the card's order.
+- **3. Record:** one answer and develop the topic naturally for one to two minutes.
+- **4. Review:** listen back and note one strength and one change under the four criteria.
+- **5. Repeat:** use different notes instead of memorizing the recording.
+
+IELTS recommends practising with cue-card prompts and organizing notes in the order of the points. Its overview of the test also explains how the examiner uses follow-up questions. Read [IELTS's guide to the Speaking test](https://ielts.org/news-and-insights/demystifying-the-ielts-speaking-test) for further preparation advice.
+
+# Questions candidates ask about Part 2
+
+## Do I have to speak for exactly two minutes?
+
+No. You speak for one to two minutes, and the examiner stops you when the time is up. Develop your answer clearly; do not add repetition just to reach the upper limit.
+
+## Can I take notes during the preparation minute?
+
+Yes. The examiner provides paper and a pencil for the one-minute preparation period. Use brief prompts that help you remember the order and details of your talk, rather than writing a script.
+
+## Should I answer every point on the cue card?
+
+Use the points to understand and organize the task. Build a connected answer around the topic and include relevant details for the prompts. If you are short on time, continue the central description instead of rushing through unrelated memorized lines.
+
+## Can I use a personal story that is not true?
+
+IELTS does not publish a separate truthfulness score for the story. The assessment concerns your spoken English, and the official guidance recommends natural answers based on your own experience. A familiar experience is easier to extend and discuss if the examiner asks a follow-up.
+
+# Continue your IELTS preparation
+
+ASHYQ is a Kazakhstan-based education brand offering online IELTS and Digital SAT preparation. Its IELTS course includes speaking practice and feedback. If you want to see how the wider preparation plan works, explore the [ASHYQ IELTS course format and next steps](/courses/ielts).
+
+# Sources
+
+- [IELTS Academic Speaking test format](https://ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-speaking)
+- [IELTS Speaking key assessment criteria](https://ielts.org/cdn/ielts-guides/ielts-speaking-key-assessment-criteria.pdf)
+- [IELTS: Demystifying the Speaking test](https://ielts.org/news-and-insights/demystifying-the-ielts-speaking-test)
+- [IELTS: Guidance on memorized Speaking answers](https://ielts.org/news-and-insights/dont-overdo-it-how-to-ace-your-ielts-speaking-test)
+- [UNESCO World Heritage record: Mausoleum of Khoja Ahmed Yasawi](https://whc.unesco.org/en/list/1103)`
+  },
 ];
