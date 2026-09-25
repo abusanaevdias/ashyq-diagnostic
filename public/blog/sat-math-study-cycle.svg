@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1720" viewBox="0 0 760 1720" role="img" aria-labelledby="title desc">
+  <title id="title">Как практиковать SAT Math после пробного теста</title>
+  <desc id="desc">Четыре шага: выбрать домен для разбора в Bluebook, определить конкретный навык и причину ошибки, выбрать адресные задания и проверить объяснение.</desc>
+  <rect width="760" height="1720" rx="28" fill="#F6F1E9"/>
+  <text x="48" y="76" fill="#A33A31" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="1">ПАМЯТКА ДЛЯ DIGITAL SAT</text>
+  <text x="48" y="140" fill="#272523" font-family="Arial, sans-serif" font-size="40" font-weight="700">От пробника к плану SAT Math</text>
+  <text x="48" y="190" fill="#625E5A" font-family="Arial, sans-serif" font-size="27">Используйте ошибку, чтобы выбрать</text>
+  <text x="48" y="226" fill="#625E5A" font-family="Arial, sans-serif" font-size="27">следующее упражнение.</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="48" y="264" width="664" height="278" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="100" cy="322" r="30" fill="#A33A31"/>
+    <text x="100" y="333" text-anchor="middle" fill="#FFFFFF" font-size="30" font-weight="700">1</text>
+    <text x="150" y="334" fill="#272523" font-size="38" font-weight="700">Выбери домен</text>
+    <text x="84" y="406" fill="#272523" font-size="32">Открой результат в My Practice</text>
+    <text x="84" y="450" fill="#272523" font-size="32">и выбери область для повтора.</text>
+
+    <path d="M380 558v40m-16-16 16 16 16-16" fill="none" stroke="#A33A31" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="48" y="608" width="664" height="278" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="100" cy="666" r="30" fill="#A33A31"/>
+    <text x="100" y="677" text-anchor="middle" fill="#FFFFFF" font-size="30" font-weight="700">2</text>
+    <text x="150" y="678" fill="#272523" font-size="38" font-weight="700">Назови причину</text>
+    <text x="84" y="750" fill="#272523" font-size="32">Не хватило знания, неверно</text>
+    <text x="84" y="794" fill="#272523" font-size="32">составил модель или поторопился?</text>
+
+    <path d="M380 902v40m-16-16 16 16 16-16" fill="none" stroke="#A33A31" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="48" y="952" width="664" height="278" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="100" cy="1010" r="30" fill="#A33A31"/>
+    <text x="100" y="1021" text-anchor="middle" fill="#FFFFFF" font-size="30" font-weight="700">3</text>
+    <text x="150" y="1022" fill="#272523" font-size="38" font-weight="700">Выбери практику</text>
+    <text x="84" y="1094" fill="#272523" font-size="32">Отфильтруй вопросы по домену</text>
+    <text x="84" y="1138" fill="#272523" font-size="32">и навыку в Student Question Bank.</text>
+
+    <path d="M380 1246v40m-16-16 16 16 16-16" fill="none" stroke="#A33A31" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="48" y="1296" width="664" height="278" rx="24" fill="#272523"/>
+    <circle cx="100" cy="1354" r="30" fill="#D95B4E"/>
+    <text x="100" y="1365" text-anchor="middle" fill="#FFFFFF" font-size="30" font-weight="700">4</text>
+    <text x="150" y="1366" fill="#FFFFFF" font-size="38" font-weight="700">Объясни ответ</text>
+    <text x="84" y="1438" fill="#FFFFFF" font-size="32">Проверь ход решения и реши</text>
+    <text x="84" y="1482" fill="#FFFFFF" font-size="32">новый вопрос того же навыка.</text>
+  </g>
+  <text x="48" y="1634" fill="#625E5A" font-family="Arial, sans-serif" font-size="23">Результат пробника становится планом занятий.</text>
+</svg>
