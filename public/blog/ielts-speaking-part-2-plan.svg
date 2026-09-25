@@ -9,14 +9,10 @@
   <text x="600" y="228" text-anchor="middle" fill="#526674" font-family="Arial, sans-serif" font-size="36">1 minute to prepare · speak for up to 2 minutes</text>
   <g font-family="Arial, sans-serif">
     <rect x="118" y="292" width="400" height="210" rx="28" fill="#E8F4EF" stroke="#B8DCCE" stroke-width="3"/>
-    <path d="M173 362l84-84 33 33-84 84-43 10z" fill="#18745D"/>
-    <path d="M173 362l-10 43 43-10" fill="#173343"/>
     <text x="375" y="388" text-anchor="middle" fill="#173343" font-size="76" font-weight="700">1 MIN</text>
     <text x="375" y="444" text-anchor="middle" fill="#18745D" font-size="34" font-weight="700" letter-spacing="1">PREPARE</text>
     <path d="M545 397h88m-27-27 27 27-27 27" fill="none" stroke="#18745D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
     <rect x="682" y="292" width="400" height="210" rx="28" fill="#173343"/>
-    <path d="M740 307h82a22 22 0 0 1 22 22v51a22 22 0 0 1-22 22h-29l-28 23v-23h-25a22 22 0 0 1-22-22v-51a22 22 0 0 1 22-22z" fill="#18745D"/>
-    <path d="M761 349h40m-40 15h27" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
     <text x="895" y="388" text-anchor="middle" fill="#FFFFFF" font-size="70" font-weight="700">1–2 MIN</text>
     <text x="895" y="444" text-anchor="middle" fill="#B8DCCE" font-size="34" font-weight="700" letter-spacing="1">SPEAK</text>
   </g>
