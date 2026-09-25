@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Как оценить пробный IELTS Listening и понять Overall</title>
+  <desc id="desc">Сначала считают правильные ответы из 40, затем получают примерный Listening band с учётом версии теста, после чего среднее четырёх секционных баллов округляют до ближайшей половины для Overall.</desc>
+  <rect width="1200" height="630" rx="28" fill="#F4F7F5"/>
+  <text x="600" y="96" text-anchor="middle" fill="#173343" font-family="Arial, sans-serif" font-size="42" font-weight="700">Raw score, band секции и Overall</text>
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(58 160)">
+      <rect width="310" height="280" rx="22" fill="#FFFFFF" stroke="#D8E3E0" stroke-width="2"/>
+      <text x="25" y="72" fill="#18745D" font-size="38" font-weight="700" letter-spacing="1">ПРОБНИК</text>
+      <text x="24" y="166" fill="#173343" font-size="66" font-weight="700">30 / 40</text>
+      <text x="25" y="224" fill="#526674" font-size="36">ответов верно</text>
+    </g>
+    <path d="M384 300h45m-14-14 14 14-14 14" fill="none" stroke="#18745D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="translate(445 160)">
+      <rect width="310" height="280" rx="22" fill="#E8F4EF" stroke="#B8DCCE" stroke-width="2"/>
+      <text x="25" y="72" fill="#18745D" font-size="38" font-weight="700" letter-spacing="1">LISTENING</text>
+      <text x="24" y="166" fill="#173343" font-size="45" font-weight="700">≈ Band 7.0</text>
+      <text x="25" y="224" fill="#526674" font-size="36">средний ориентир</text>
+    </g>
+    <path d="M771 300h45m-14-14 14 14-14 14" fill="none" stroke="#18745D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="translate(832 160)">
+      <rect width="310" height="280" rx="22" fill="#FFFFFF" stroke="#D8E3E0" stroke-width="2"/>
+      <text x="25" y="72" fill="#18745D" font-size="38" font-weight="700" letter-spacing="1">OVERALL</text>
+      <text x="20" y="162" fill="#173343" font-size="38" font-weight="700">L + R + W + S</text>
+      <text x="25" y="211" fill="#173343" font-size="38" font-weight="700">÷ 4</text>
+      <text x="25" y="255" fill="#526674" font-size="31">округлить до 0.5</text>
+    </g>
+  </g>
+</svg>
