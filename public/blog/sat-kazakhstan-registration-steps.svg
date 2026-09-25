@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Три проверки перед регистрацией на SAT в Казахстане</title>
+  <desc id="desc">Сначала выберите дату и проверьте дедлайн, затем найдите доступный тест-центр в аккаунте College Board, после чего проверьте полную сумму перед оплатой.</desc>
+  <rect width="1200" height="675" rx="28" fill="#F6F1E9"/>
+  <text x="64" y="78" fill="#A33A31" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="2">ПЕРЕД ОПЛАТОЙ SAT</text>
+  <text x="64" y="142" fill="#272523" font-family="Arial, sans-serif" font-size="42" font-weight="700">Сначала проверьте три вещи</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="64" y="200" width="330" height="340" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="112" cy="254" r="28" fill="#A33A31"/>
+    <text x="112" y="263" fill="#FFFFFF" font-size="24" font-weight="700" text-anchor="middle">1</text>
+    <text x="94" y="328" fill="#272523" font-size="29" font-weight="700">Дата и</text>
+    <text x="94" y="366" fill="#272523" font-size="29" font-weight="700">дедлайн</text>
+    <text x="94" y="426" fill="#625E5A" font-size="21">Сверьте сессию</text>
+    <text x="94" y="458" fill="#625E5A" font-size="21">и срок в календаре</text>
+    <text x="94" y="490" fill="#625E5A" font-size="21">College Board.</text>
+
+    <path d="M404 370h34m-13-13 13 13-13 13" fill="none" stroke="#A33A31" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="435" y="200" width="330" height="340" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="483" cy="254" r="28" fill="#A33A31"/>
+    <text x="483" y="263" fill="#FFFFFF" font-size="24" font-weight="700" text-anchor="middle">2</text>
+    <text x="463" y="328" fill="#272523" font-size="29" font-weight="700">Центр и</text>
+    <text x="463" y="366" fill="#272523" font-size="29" font-weight="700">свободное место</text>
+    <text x="463" y="426" fill="#625E5A" font-size="21">Проверьте доступность</text>
+    <text x="463" y="458" fill="#625E5A" font-size="21">в текущей регистрации,</text>
+    <text x="463" y="490" fill="#625E5A" font-size="21">не в старом списке.</text>
+
+    <path d="M775 370h34m-13-13 13 13-13 13" fill="none" stroke="#A33A31" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="806" y="200" width="330" height="340" rx="22" fill="#272523"/>
+    <circle cx="854" cy="254" r="28" fill="#D95B4E"/>
+    <text x="854" y="263" fill="#FFFFFF" font-size="24" font-weight="700" text-anchor="middle">3</text>
+    <text x="834" y="328" fill="#FFFFFF" font-size="29" font-weight="700">Полная</text>
+    <text x="834" y="366" fill="#FFFFFF" font-size="29" font-weight="700">сумма</text>
+    <text x="834" y="426" fill="#E6DED5" font-size="21">$111 — базовая</text>
+    <text x="834" y="458" fill="#E6DED5" font-size="21">международная цена;</text>
+    <text x="834" y="490" fill="#E6DED5" font-size="21">центр может добавить сбор.</text>
+  </g>
+  <text x="64" y="605" fill="#625E5A" font-family="Arial, sans-serif" font-size="21">Проверьте точный итог в аккаунте College Board до оплаты.</text>
+</svg>
