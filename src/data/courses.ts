@@ -17,6 +17,8 @@ export type CourseDetail = {
   exam: 'IELTS' | 'SAT';
   title: string;
   lead: string;
+  seoTitle: string;
+  metaDescription: string;
   photo: string;
   alt: string;
   /** provisional: true — ещё не подтверждено; такие факты не показываются, вместо них — «узнать в WhatsApp». */
@@ -45,8 +47,8 @@ export type CourseLesson = {
 export type FreeLesson = CourseLesson & { free: NonNullable<CourseLesson['free']> };
 
 export const COURSES: Array<{ title: string; text: string; meta: string; href: string; photo: string; alt: string; tags: Array<Exclude<CourseFilter, 'all'>>; badge?: string }> = [
-  { title: 'Подготовка к IELTS', text: 'Reading, Listening, Writing и Speaking по плану из диагностики. Пробные тесты, домашние задания и Speaking Battles.', meta: '4 секции · онлайн и в Астане', href: '/courses/ielts', photo: PHOTOS.courseCardIelts.src, alt: PHOTOS.courseCardIelts.alt, tags: ['ielts'] },
-  { title: 'Подготовка к SAT', text: 'Reading & Writing и Math: навыки, стратегия времени и регулярные пробные тесты с разбором.', meta: '2 секции · онлайн и в Астане', href: '/courses/sat', photo: PHOTOS.courseCardSat.src, alt: PHOTOS.courseCardSat.alt, tags: ['sat'] },
+  { title: 'Подготовка к IELTS', text: 'Reading, Listening, Writing и Speaking по плану из диагностики. Пробные тесты, домашние задания и Speaking Battles.', meta: 'Онлайн · для учеников из Астаны и Казахстана', href: '/courses/ielts', photo: PHOTOS.courseCardIelts.src, alt: PHOTOS.courseCardIelts.alt, tags: ['ielts'] },
+  { title: 'Подготовка к SAT', text: 'Reading & Writing и Math: навыки, стратегия времени и регулярные пробные тесты с разбором.', meta: 'Онлайн · для учеников из Астаны и Казахстана', href: '/courses/sat', photo: PHOTOS.courseCardSat.src, alt: PHOTOS.courseCardSat.alt, tags: ['sat'] },
   { title: 'Сезон и Match Days', text: 'Командные задания, рейтинг и Championship сезона. IELTS и SAT считаются раздельно.', meta: 'команды и участники · финал в Астане', href: '/season', photo: PHOTOS.courseCardSeason.src, alt: PHOTOS.courseCardSeason.alt, tags: ['team', 'ielts', 'sat'] },
   { title: 'Quick Diagnostic', text: 'Предварительная оценка IELTS или SAT и понятный следующий шаг. Это не официальный балл.', meta: '12–20 минут · без регистрации', href: '/?start=ielts', photo: PHOTOS.courseCardDiagnostic.src, alt: PHOTOS.courseCardDiagnostic.alt, tags: ['ielts', 'sat'], badge: 'Бесплатно' },
 ];
@@ -63,12 +65,14 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
   ielts: {
     slug: 'ielts',
     exam: 'IELTS',
-    title: 'Подготовка к IELTS',
-    lead: 'Четыре секции экзамена, практика по плану из диагностики и понятный трекинг прогресса.',
+    title: 'Подготовка к IELTS онлайн в Астане',
+    lead: 'Четыре секции экзамена, план после диагностики и онлайн-занятия для школьников и абитуриентов из Астаны и других городов Казахстана.',
+    seoTitle: 'Курсы IELTS онлайн в Астане — ASHYQ',
+    metaDescription: 'Онлайн-курсы IELTS для школьников и абитуриентов из Астаны и Казахстана: Reading, Listening, Writing, Speaking, диагностика и план подготовки.',
     photo: PHOTOS.courseHeroIelts.src,
     alt: PHOTOS.courseHeroIelts.alt,
     facts: [
-      { label: 'Формат', value: 'Онлайн и в Астане' },
+      { label: 'Формат', value: 'Онлайн для учеников из Астаны и Казахстана' },
       ...provisionalFacts,
     ],
     curriculum: [
@@ -92,7 +96,7 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
     faq: [
       { question: 'С какого уровня можно начать?', answer: 'Начните с бесплатной диагностики. Она даст предварительную оценку Reading и Listening и подскажет ближайший фокус.' },
       { question: 'Входит ли Speaking и Writing в диагностику?', answer: 'Нет. Автоматическая диагностика проверяет Reading и Listening. Writing и Speaking требуют отдельной проверки с тренером.' },
-      { question: 'Где проходят занятия?', answer: 'Формат курса — онлайн и в Астане. Конкретное расписание пока уточняется.' },
+      { question: 'Где проходят занятия?', answer: 'Занятия проходят онлайн. К курсу можно присоединиться из Астаны и других городов Казахстана; актуальное расписание уточняется для каждого набора.' },
     ],
     modules: [
       {
@@ -170,12 +174,14 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
   sat: {
     slug: 'sat',
     exam: 'SAT',
-    title: 'Подготовка к SAT',
-    lead: 'Reading & Writing и Math: навыки, стратегия времени и регулярная практика с разбором.',
+    title: 'Подготовка к SAT онлайн в Астане',
+    lead: 'Reading & Writing и Math: подготовка к Digital SAT онлайн для абитуриентов из Астаны и других городов Казахстана, с диагностикой и разбором практики.',
+    seoTitle: 'Курсы Digital SAT онлайн в Астане — ASHYQ',
+    metaDescription: 'Онлайн-курсы Digital SAT для абитуриентов из Астаны и Казахстана: Math, Reading & Writing, диагностика, учебный план, практика и разбор ошибок.',
     photo: PHOTOS.courseHeroSat.src,
     alt: PHOTOS.courseHeroSat.alt,
     facts: [
-      { label: 'Формат', value: 'Онлайн и в Астане' },
+      { label: 'Формат', value: 'Онлайн для учеников из Астаны и Казахстана' },
       ...provisionalFacts,
     ],
     curriculum: [
@@ -197,7 +203,7 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
     faq: [
       { question: 'С какого уровня можно начать?', answer: 'Начните с бесплатной диагностики. Она даст предварительную оценку и покажет ближайший учебный фокус.' },
       { question: 'Какие секции проверяет диагностика?', answer: 'Диагностика проверяет Reading & Writing и Math. Результат предварительный и не является официальным баллом SAT.' },
-      { question: 'Где проходят занятия?', answer: 'Формат курса — онлайн и в Астане. Конкретное расписание пока уточняется.' },
+      { question: 'Где проходят занятия?', answer: 'Занятия проходят онлайн. К курсу можно присоединиться из Астаны и других городов Казахстана; актуальное расписание уточняется для каждого набора.' },
     ],
     modules: [
       {
