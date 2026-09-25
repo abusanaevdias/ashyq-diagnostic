@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="810" viewBox="0 0 1200 810" role="img" aria-labelledby="title desc">
+  <title id="title">Чек-лист требований IELTS перед поступлением</title>
+  <desc id="desc">Шесть проверок перед регистрацией на IELTS: программа и категория абитуриента, маршрут ЕНТ или требование вуза, общий балл, минимумы по секциям, тип и формат экзамена, срок действия и дедлайн подачи.</desc>
+  <rect width="1200" height="810" rx="32" fill="#F6F1E9"/>
+  <circle cx="1150" cy="30" r="180" fill="#ECE4D8"/>
+  <text x="64" y="76" fill="#A33A31" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="2">ПЕРЕД РЕГИСТРАЦИЕЙ НА IELTS</text>
+  <text x="64" y="145" fill="#272523" font-family="Arial, sans-serif" font-size="42" font-weight="700">Проверьте шесть условий</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="64" y="194" width="520" height="158" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="112" cy="250" r="27" fill="#A33A31"/>
+    <text x="112" y="259" text-anchor="middle" fill="#FFFFFF" font-size="23" font-weight="700">1</text>
+    <text x="158" y="246" fill="#272523" font-size="30" font-weight="700">Программа и набор</text>
+    <text x="158" y="286" fill="#625E5A" font-size="22">Уровень обучения и год</text>
+    <text x="158" y="317" fill="#625E5A" font-size="22">поступления</text>
+
+    <rect x="616" y="194" width="520" height="158" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="664" cy="250" r="27" fill="#286B5A"/>
+    <text x="664" y="259" text-anchor="middle" fill="#FFFFFF" font-size="23" font-weight="700">2</text>
+    <text x="710" y="246" fill="#272523" font-size="30" font-weight="700">Маршрут поступления</text>
+    <text x="710" y="286" fill="#625E5A" font-size="22">Зачёт ЕНТ или минимум</text>
+    <text x="710" y="317" fill="#625E5A" font-size="22">по языку вуза</text>
+
+    <rect x="64" y="376" width="520" height="158" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="112" cy="432" r="27" fill="#486C98"/>
+    <text x="112" y="441" text-anchor="middle" fill="#FFFFFF" font-size="23" font-weight="700">3</text>
+    <text x="158" y="428" fill="#272523" font-size="30" font-weight="700">Общий балл IELTS</text>
+    <text x="158" y="468" fill="#625E5A" font-size="22">Сверьте установленный</text>
+    <text x="158" y="499" fill="#625E5A" font-size="22">балл overall</text>
+
+    <rect x="616" y="376" width="520" height="158" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="664" cy="432" r="27" fill="#B36A24"/>
+    <text x="664" y="441" text-anchor="middle" fill="#FFFFFF" font-size="23" font-weight="700">4</text>
+    <text x="710" y="428" fill="#272523" font-size="30" font-weight="700">Минимум по секциям</text>
+    <text x="710" y="468" fill="#625E5A" font-size="22">Listening · Reading · Writing</text>
+    <text x="710" y="499" fill="#625E5A" font-size="22">· Speaking</text>
+
+    <rect x="64" y="558" width="520" height="158" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="112" cy="614" r="27" fill="#286B5A"/>
+    <text x="112" y="623" text-anchor="middle" fill="#FFFFFF" font-size="23" font-weight="700">5</text>
+    <text x="158" y="610" fill="#272523" font-size="30" font-weight="700">Тип и формат теста</text>
+    <text x="158" y="650" fill="#625E5A" font-size="22">Academic / General</text>
+    <text x="158" y="681" fill="#625E5A" font-size="22">личная сдача / онлайн</text>
+
+    <rect x="616" y="558" width="520" height="158" rx="22" fill="#272523"/>
+    <circle cx="664" cy="614" r="27" fill="#D95B4E"/>
+    <text x="664" y="623" text-anchor="middle" fill="#FFFFFF" font-size="23" font-weight="700">6</text>
+    <text x="710" y="610" fill="#FFFFFF" font-size="30" font-weight="700">Срок и подача</text>
+    <text x="710" y="650" fill="#E6DED5" font-size="22">Срок действия сертификата</text>
+    <text x="710" y="681" fill="#E6DED5" font-size="22">дедлайн подачи</text>
+  </g>
+  <text x="64" y="770" fill="#625E5A" font-family="Arial, sans-serif" font-size="21">Сверяйте каждый пункт на официальной странице НЦТ или выбранного университета.</text>
+</svg>
