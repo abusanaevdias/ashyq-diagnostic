@@ -1,7 +1,7 @@
 export const SITE_NAME = 'ASHYQ';
 
 export const SITE_DESCRIPTION =
-  'Диагностика IELTS и SAT, система прогресса, Match Days и чемпионаты сезона ASHYQ.';
+  'Онлайн-подготовка к IELTS и Digital SAT для школьников и абитуриентов в Казахстане. ASHYQ помогает определить стартовый уровень и план подготовки.';
 
 export const SITE_URL = (
   // || а не ??: пустая строка из панели хостинга ломает new URL() при сборке
