@@ -28,6 +28,10 @@ const statusText = {
   clean: 'В этом предложении нет размеченной ошибки.',
 };
 
+function isLearnerDraftApplied(draft: string | undefined, applied: string | undefined): boolean {
+  return Boolean(draft?.trim() && applied && normalize(draft) === normalize(applied));
+}
+
 function moveToNext(session: TrainerSession): TrainerSession {
   const current = stages.indexOf(session.stage);
   const nextIndex = Math.min(current + 1, stages.length - 1);
@@ -56,6 +60,7 @@ export default function WritingTrainer() {
   const issueIds = new Set(essay.grammarIssues.map((issue) => issue.sentenceId));
   const foundCount = essay.grammarIssues.filter((issue) => grammarAttemptStatus(essay, session, issue.sentenceId) === 'found').length;
   const appliedGrammarCount = essay.grammarIssues.filter((issue) => Boolean(session.appliedGrammar[issue.sentenceId])).length;
+  const appliedLearnerGrammarCount = essay.grammarIssues.filter((issue) => isLearnerDraftApplied(session.grammarDrafts[issue.sentenceId], session.appliedGrammar[issue.sentenceId])).length;
   const latestAppliedGrammarId = Object.keys(session.appliedGrammar).at(-1);
   const hasGrammarAttempt = Object.entries(session.grammarDrafts).some(([sentenceId, draft]) => draft.trim() && normalize(draft) !== normalize(originalSentence(essay, sentenceId)));
   const originalWordCount = essay.paragraphs.flatMap((paragraph) => paragraph.sentences).map((sentence) => sentence.text).join(' ').trim().split(/\s+/).length;
@@ -150,7 +155,7 @@ export default function WritingTrainer() {
                     {session.grammarDrafts[sentence.id]?.trim() && <p lang="en"><b>Твой вариант:</b> {session.grammarDrafts[sentence.id]}</p>}
                     {issue && <><p lang="en"><b>Пример:</b> {issue.accepted[0]}</p><p>{issue.explanation}</p>
                       {!session.appliedGrammar[sentence.id] && <button type="button" className={styles.textButton} onClick={() => setSession((current) => ({ ...current, appliedGrammar: { ...current.appliedGrammar, [sentence.id]: canApplyGrammar(essay, current, sentence.id) ? current.grammarDrafts[sentence.id].trim() : issue.accepted[0] } }))}>{status === 'found' ? 'Применить мою проверенную правку' : 'Применить пример к эссе'}</button>}
-                      {session.appliedGrammar[sentence.id] && (latestAppliedGrammarId === sentence.id ? <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>{appliedGrammarCount === essay.grammarIssues.length ? `Учебный ориентир по грамматике: ${essay.baseline.grammar.toFixed(1)} → ${scores.grammar.toFixed(1)}. Это не официальный балл IELTS.` : `Применено ${appliedGrammarCount} из ${essay.grammarIssues.length} размеченных правок. Ориентир изменится после обеих.`}</span></div> : <span className={styles.applied}>✓ Применено к рабочей версии</span>)}
+                      {session.appliedGrammar[sentence.id] && (latestAppliedGrammarId === sentence.id ? <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>Источник: {isLearnerDraftApplied(session.grammarDrafts[sentence.id], session.appliedGrammar[sentence.id]) ? 'твоя проверенная правка' : 'подготовленный пример'}.</span><span>{appliedGrammarCount === essay.grammarIssues.length ? `Учебный ориентир по грамматике: ${essay.baseline.grammar.toFixed(1)} → ${scores.grammar.toFixed(1)}. Это не официальный балл IELTS.` : `Применено ${appliedGrammarCount} из ${essay.grammarIssues.length} размеченных правок. Ориентир изменится после обеих.`}</span></div> : <span className={styles.applied}>✓ Применено к рабочей версии</span>)}
                     </>}
                   </article>;
                 })}
@@ -182,7 +187,7 @@ export default function WritingTrainer() {
                 </div>
                 <p className={styles.explanation}>{target.explanation}</p>
                 <p className={styles.hint}>Твой вариант может быть хорошим, но этот пилот узнаёт только подготовленный пример. Другую формулировку должен оценить учитель.</p>
-                {!applied ? <button type="button" className={styles.secondaryButton} onClick={() => setSession((current) => ({ ...current, appliedRevisions: { ...current.appliedRevisions, [criterion]: canApplyRevision(essay, current, criterion) ? current.revisionDrafts[criterion]?.trim() : target.example } }))}>{canApplyRevision(essay, session, criterion) ? 'Применить мою проверенную правку' : 'Применить пример к рабочему эссе'}</button> : <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>Учебный ориентир по критерию «{criterionLabels[criterion]}»: {essay.baseline[criterion].toFixed(1)} → {scores[criterion].toFixed(1)}. Это не официальный балл IELTS.</span></div>}
+                {!applied ? <button type="button" className={styles.secondaryButton} onClick={() => setSession((current) => ({ ...current, appliedRevisions: { ...current.appliedRevisions, [criterion]: canApplyRevision(essay, current, criterion) ? current.revisionDrafts[criterion]?.trim() : target.example } }))}>{canApplyRevision(essay, session, criterion) ? 'Применить мою проверенную правку' : 'Применить пример к рабочему эссе'}</button> : <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>Источник: {isLearnerDraftApplied(draft, session.appliedRevisions[criterion]) ? 'твоя проверенная правка' : 'подготовленный пример'}.</span><span>Учебный ориентир по критерию «{criterionLabels[criterion]}»: {essay.baseline[criterion].toFixed(1)} → {scores[criterion].toFixed(1)}. Это не официальный балл IELTS.</span></div>}
                 <div className={styles.secondAttempt}>
                   <h3>Попробуй ещё раз после разбора</h3>
                   <p>Перепиши свой абзац с учётом объяснения. Эта попытка останется для обсуждения с учителем и не изменит учебный ориентир автоматически.</p>
@@ -199,7 +204,17 @@ export default function WritingTrainer() {
             <button type="button" className={styles.backButton} onClick={() => setSession(moveToPrevious)}>← Вернуться к лексике</button>
             <div className={styles.roundHeading}><span className={styles.overline}>ИТОГ ПРАКТИКИ</span><h2 id="report-title" tabIndex={-1}>Что изменилось</h2><p>В рабочем эссе показаны только применённые проверенные правки. {hasUnappliedDrafts ? 'Твои другие варианты сохранены ниже для обсуждения с учителем.' : 'Других вариантов для обсуждения пока нет.'}</p></div>
             <div className={styles.reportStats}><div><strong>{foundCount}/{essay.grammarIssues.length}</strong><span>ошибок найдено самостоятельно</span></div><div><strong>{Object.keys(session.appliedGrammar).length + Object.keys(session.appliedRevisions).length}</strong><span>проверенных изменений применено</span></div></div>
-            <div className={styles.scoreGrid}>{criterionOrder.map((criterion) => <div key={criterion} className={styles.reportScore}><span>{criterionLabels[criterion]}</span><strong>{essay.baseline[criterion].toFixed(1)} <span aria-hidden="true">→</span> {scores[criterion].toFixed(1)}</strong><small>{scores[criterion] > essay.baseline[criterion] ? criterion === 'grammar' ? 'Применены обе размеченные грамматические правки. Диапазон конструкций отдельно не оценивался.' : essay.revisions[criterion].explanation : 'Без проверенной правки по этому критерию'}</small></div>)}</div>
+            <div className={styles.scoreGrid}>{criterionOrder.map((criterion) => {
+              const appliedRevision = criterion === 'grammar' ? undefined : session.appliedRevisions[criterion];
+              const detail = criterion === 'grammar'
+                ? appliedGrammarCount > 0
+                  ? `Применено ${appliedGrammarCount} из ${essay.grammarIssues.length} размеченных правок. Свои правки: ${appliedLearnerGrammarCount}; подготовленные примеры: ${appliedGrammarCount - appliedLearnerGrammarCount}. ${appliedGrammarCount === essay.grammarIssues.length ? 'Диапазон конструкций отдельно не оценивался.' : 'Учебный ориентир пока не изменился.'}`
+                  : 'Нет применённых размеченных правок.'
+                : appliedRevision
+                  ? `${isLearnerDraftApplied(session.revisionDrafts[criterion], appliedRevision) ? 'Применена твоя правка, совпавшая с подготовленным вариантом.' : 'Применён подготовленный пример.'} ${essay.revisions[criterion].explanation}`
+                  : 'Нет применённой проверенной правки по этому критерию.';
+              return <div key={criterion} className={styles.reportScore}><span>{criterionLabels[criterion]}</span><strong>{essay.baseline[criterion].toFixed(1)} <span aria-hidden="true">→</span> {scores[criterion].toFixed(1)}</strong><small>{detail}</small></div>;
+            })}</div>
             <h3 className={styles.diffHeading}>Исходное и рабочее эссе</h3>
             <div className={styles.diffGrid}><div><span className={styles.overline}>БЫЛО</span>{essay.paragraphs.map((paragraph) => <p key={paragraph.id} lang="en">{originalParagraph(essay, paragraph.id)}</p>)}</div><div><span className={styles.overline}>СТАЛО</span>{essay.paragraphs.map((paragraph) => <p key={paragraph.id} lang="en" className={workingParagraph(essay, session, paragraph.id) !== originalParagraph(essay, paragraph.id) ? styles.changedParagraph : ''}>{workingParagraph(essay, session, paragraph.id)}</p>)}</div></div>
             {hasUnappliedDrafts && <section className={styles.unverified}><h3>Твои версии для разбора</h3><p className={styles.hint}>Неприменённые и повторные варианты не меняют ориентир автоматически. Покажи их учителю, чтобы обсудить качество текста.</p>{unverifiedGrammar.map(([sentenceId, draft]) => {
