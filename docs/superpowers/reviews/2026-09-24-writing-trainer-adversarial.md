@@ -1,0 +1,39 @@
+# Writing trainer pilot: adversarial review
+
+Reviewed the synthetic IELTS Task 2 learner flow against the product promise: independent discovery, honest feedback, staged revision, and useful final comparison.
+
+| Failure hypothesis | Evidence and change |
+| --- | --- |
+| A learner can reveal the grammar answer immediately without attempting a search. | The first browser pass found an enabled check button. It now requires a changed sentence, with a separate explicit “I found no errors” exit so a learner who tried but found nothing is not trapped. |
+| A learner's valid alternative is treated as wrong or earns a fabricated score. | Exact authored variants are the only automatic matches. Other variants are labelled for teacher review and retained in the final report. Practice scores change only after an authored improvement is applied to the working essay. |
+| The report hides a learner's original work after advancing. | The browser pass exposed inaccessible prior drafts. The report now includes unapplied grammar and paragraph drafts. Back navigation also lets the learner revisit comparisons and apply a prepared example later. |
+| Going back makes a completed lesson appear to lose progress. | Session state now tracks the furthest stage separately from the current stage. The progress bar remains at the furthest stage while the current stage is named explicitly. |
+| A Task 2 example is too short to model the format. | The original essays were 213 and 178 words. Both are now above 250 words (262 and 261 words in the page UI). |
+| The improved essay may fall below the Task 2 word target. | The second case dropped to 248 words after all authored examples were applied. Its lexical example now keeps the fully revised essay above 250 words while adding a concrete point about each student's role. |
+| A score changes without an explanation of the relevant writing skill. | Each final criterion card now says which authored change caused the movement; grammar notes that range of structures was not separately assessed. |
+| On a phone, the new practice estimate appears far below the action that changed it. | After applying a prepared change, the affected round now shows the criterion's before/after practice estimate beside that action, with an explicit non-official label. A partial grammar application explains that both marked fixes are needed for the authored estimate to move. |
+| Applying a prepared example silently removes the learner's different draft from the final report. | A 320px end-to-end pass reproduced this with three independently written paragraphs. The report now keeps any learner draft that differs from the text applied to the working essay, including after an example was applied. |
+| After seeing feedback, the learner can only copy the example or advance. | Added an optional, editable second attempt for each paragraph criterion. The first attempt stays fixed; the second is grouped with it in the report for teacher discussion. Browser review confirmed that writing a second attempt leaves the practice estimate unchanged, while explicitly applying the authored example changes only its criterion. |
+| The report loses the first attempt when it matched and applied the prepared example before a second attempt. | The report now includes both attempts whenever a second exists and labels whether the first entered the working essay. The section heading covers applied and unapplied versions. A browser pass confirmed both versions together in the report, with only the applied first attempt moving Task Response from 5.5 to 6.0. |
+| A practice estimate rises after a prepared example, but the report makes it look like the learner earned the change independently. | Each applied change now names its source beside the action and in the final criterion card. Grammar reports how many applied fixes were the learner's accepted wording versus prepared examples. A browser pass confirmed one prepared grammar fix kept 5.5 unchanged, while a prepared Task Response paragraph moved its authored estimate to 6.0 and was clearly attributed to the example. |
+| The final report claims there are other drafts even when none exist. | Its introduction now follows the actual presence of unverified drafts. The report groups before/after paragraphs by criterion; Russian stage labels sit outside English-language text spans for assistive technology. |
+| The learner cannot see how to start without scrolling. | The opening section was shortened and gained a direct link to the active exercise. |
+| Sentence hit areas are too small for touch. | The first review only inspected the React component and missed the CSS geometry. Sentence buttons now have a 44px minimum height and wrap safely within the essay pane. |
+| The mobile step list hides later criteria behind a horizontal scrollbar. | A 390px browser pass found this. The five stages now form a two-column grid on narrow screens, with the report occupying the last full row. |
+| Advancing from a long round lands halfway through the next one. | The browser stayed at the old document scroll position and showed the middle of the final diff. Stage changes now scroll to the exercise start and focus its heading. |
+| A correct but unapplied grammar edit is labelled as an unrecognized alternative in the report. | Report labels now distinguish a recognized edit, an edit without a marked issue, and one requiring teacher review. |
+| Real learner text is sent to an external provider or persisted. | The route is a static client exercise with two invented case files. No API route, browser storage, LMS read/write, or AI call was added. |
+
+## Design reference check
+
+- 21st.dev search surfaced [Onboarding Stepper Progress](https://21st.dev/@shadcnspace/components/progress-02), with a step count, progress bar, and back/next controls. We kept ASHYQ tokens and its existing shell, and added reversible navigation to the in-page exercise instead of installing the reference's additional UI dependencies.
+- Mobbin's MCP returned a paid-plan requirement, so no Mobbin flow screenshot was available for inspection. The [public pattern catalogue](https://mobbin.com/) lists progress indicators and starting/completing journeys; those broad patterns were considered, but no specific app flow is claimed as a source.
+- `21st review src/components/writing/WritingTrainer.tsx` returned zero deterministic findings after the navigation refinements.
+
+## Remaining limits
+
+- Scores are authored practice estimates for these two cases, not live IELTS assessment. The band movement is a property of the revised case essay, not proof that a learner improved independently.
+- An unrecognized but valid free-text revision still requires a teacher. This pilot does not grade it.
+- A second attempt after feedback is practice evidence, not a validated replacement in the working essay; it remains in the open page only and needs teacher review.
+- A 320px browser pass covered grammar, all three paragraph comparison/application stages and the final report. No horizontal overflow or sub-44px visible button/link target was found in those states. A 390px pass also covered the task and initial exercise.
+- The learner's session is discarded on reload. A later class-integrated version needs consent, privacy rules, persistence, and teacher moderation before using real submissions.
