@@ -41,10 +41,10 @@ export const BLOG_POSTS: BlogPost[] = [
     photo: '/blog/ielts-reading-score-anchors.svg',
     coverAlt: 'Официальные средние ориентиры IELTS Reading: для Academic 15, 23, 30 и 35 ответов соответствуют Band 5–8; для General Training — Band 4–7.',
     publishedAt: '2026-09-25T12:00:00.000Z',
-    updatedAt: '2026-09-25T12:00:00.000Z',
-    body: `Короткий ответ: в IELTS Academic Reading официальный средний ориентир для Band 7.0 — 30 правильных ответов из 40; в General Training Reading — 35 из 40. Это не гарантированные границы: IELTS предупреждает, что точное число ответов может немного меняться от версии теста к версии. Ниже — опубликованные ориентиры для обоих форматов и способ аккуратно использовать их после пробника.
+    updatedAt: '2026-09-26T12:00:00.000Z',
+    body: `Для IELTS Reading Band 7.0 официальный средний ориентир — 30 правильных ответов из 40 в Academic и 35 из 40 в General Training. Это не гарантированные пороги: IELTS предупреждает, что точное число ответов может немного меняться от версии теста к версии. Ниже — опубликованные ориентиры для обоих форматов и способ аккуратно использовать их после пробника.
 
-# Официальные средние ориентиры Reading
+# IELTS Reading: официальные средние ориентиры
 
 За каждый правильный ответ в Reading начисляется один балл, всего в секции 40 вопросов. IELTS переводит эту сумму в секционный результат по шкале от 0 до 9. На официальной странице опубликованы средние ориентиры для отдельных целых band scores:
 
@@ -237,16 +237,16 @@ ASHYQ — образовательный бренд Казахстана с он
     language: 'en',
     category: 'ielts',
     title: 'IELTS Academic Writing Task 1: A Step-by-Step Report Guide',
-    seoTitle: 'IELTS Writing Task 1: Structure and Example Report',
+    seoTitle: 'IELTS Academic Writing Task 1: Structure & Example',
     metaDescription: 'Learn the IELTS Academic Writing Task 1 structure, choose key features, write a clear overview and check your report using official IELTS criteria and examples.',
     excerpt: 'A practical method for analysing an Academic Task 1 visual, selecting the main features, writing an overview and checking your report against official IELTS guidance.',
     photo: '/blog/ielts-task-1-workflow.svg',
     coverAlt: 'Five-step IELTS Academic Writing Task 1 report workflow, from reading the visual to checking accuracy.',
     publishedAt: '2026-09-24T18:19:00.000Z',
-    updatedAt: '2026-09-24T18:19:00.000Z',
+    updatedAt: '2026-09-26T12:00:00.000Z',
     body: `For IELTS Academic Writing Task 1, describe the main features of the visual, give a clear overview, and support it with a few accurate details. You have about 20 minutes and must write at least 150 words. A four-paragraph layout can help, but IELTS does not require an exact number of paragraphs or a fixed place for the overview. [IELTS's official Academic Writing format](https://ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-writing) sets the task requirements.
 
-# First, check which Task 1 you have
+# IELTS Academic Writing Task 1: check which test type you have
 
 This guide covers **IELTS Academic Writing Task 1**: you may need to report information from a graph, chart, table, map, process or object. The General Training test has a different Task 1: a letter. Check the test type you are taking before you practise.
 
@@ -899,10 +899,10 @@ Part 1 длится 4–5 минут. В этой части экзаменат�
     photo: '/blog/ielts-listening-score-anchors.svg',
     coverAlt: '30 правильных ответов из 40 — опубликованный IELTS средний ориентир для Listening Band 7.0; точный порог зависит от версии теста.',
     publishedAt: '2026-09-25T06:42:00.000Z',
-    updatedAt: '2026-09-25T06:42:00.000Z',
-    body: `Если в пробном IELTS Listening вы ответили правильно на 30 вопросов из 40, официальный IELTS приводит 30 как средний ориентир для Band 7.0. Это не гарантированный порог для каждого теста: IELTS предупреждает, что точное число ответов немного меняется от версии к версии. [Официальная шкала IELTS](https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail) прямо указывает и средние баллы, и эту оговорку.
+    updatedAt: '2026-09-26T12:00:00.000Z',
+    body: `Для IELTS Listening Band 7.0 официальный средний ориентир — 30 правильных ответов из 40. Это не гарантированный порог для каждого теста: IELTS предупреждает, что точное число ответов немного меняется от версии к версии. [Официальная шкала IELTS](https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail) прямо указывает и средние баллы, и эту оговорку.
 
-# Что означает результат 30/40
+# IELTS Listening: что означает результат 30/40
 
 В Listening 40 вопросов, за каждый правильный ответ дают один балл. Сумма правильных ответов из 40 переводится в секционный band score; результат сообщается целым или половинным баллом. Поэтому 30/40 — это raw score, а не band score по шкале IELTS от 0 до 9 и не итоговый Overall. Его можно сопоставить со средним ориентиром секции.
 
@@ -999,10 +999,10 @@ Overall — среднее баллов Listening, Reading, Writing и Speaking 
     photo: '/blog/ielts-mock-test-kazakhstan-cover.svg',
     coverAlt: 'Четыре варианта подготовки к IELTS: sample questions, знакомство с компьютерным интерфейсом, полный mock и короткая предварительная диагностика.',
     publishedAt: '2026-09-25T14:00:00.000Z',
-    updatedAt: '2026-09-25T14:00:00.000Z',
-    body: `Если вам нужен пробный IELTS в Казахстане, сначала уточните, что именно вы хотите проверить. Бесплатные sample questions помогают потренировать отдельные задания; ознакомительный тест показывает компьютерный интерфейс; полный mock проходит по всем четырём навыкам и может включать оценку с комментариями. Условия и цены ниже проверены 25 сентября 2026 года.
+    updatedAt: '2026-09-26T12:00:00.000Z',
+    body: `IELTS mock test в Казахстане может означать три разных формата: бесплатные sample questions для отдельных заданий, знакомство с компьютерным интерфейсом или полный пробный экзамен по четырём навыкам. Выбирайте вариант под свою задачу; условия и цены ниже проверены 25 сентября 2026 года.
 
-# Какой вариант выбрать
+# Как выбрать IELTS mock test в Казахстане
 
 - **Потренировать типы заданий и проверить ответы** — бесплатные официальные IELTS sample questions.
 - **Привыкнуть к экрану и навигации** — бесплатный ознакомительный тест British Council.
@@ -1091,10 +1091,10 @@ Writing и Speaking нельзя надёжно оценить только ко
     photo: '/blog/sat-kazakhstan-dates-cover.svg',
     coverAlt: 'Регистрация SAT в Казахстане: международный сбор 111 долларов, дата 7 ноября 2026 года и дедлайн 23 октября.',
     publishedAt: '2026-09-25',
-    updatedAt: '2026-09-25',
-    body: `На 25 сентября 2026 года ближайшая дата SAT Weekend, до которой ещё не закрыт обычный срок регистрации, — 7 ноября. Стандартная регистрация доступна до 23 октября; поздняя — до 27 октября, если остаётся место. Базовая международная стоимость — $111: $68 регистрационный сбор и $43 международный сбор. Сам календарь не гарантирует свободное место в нужном центре, поэтому проверяйте доступность и окончательную сумму в аккаунте College Board перед оплатой. [Даты и дедлайны College Board](https://satsuite.collegeboard.org/sat/dates-deadlines) и [официальная таблица сборов](https://satsuite.collegeboard.org/sat/registration/international-testing/fees) — источники для окончательной проверки.
+    updatedAt: '2026-09-26',
+    body: `Для сдающих SAT из Казахстана на 26 сентября 2026 года ближайшая дата с открытой регистрацией — 7 ноября; обычный дедлайн — 23 октября, поздний — 27 октября при наличии мест. Базовый международный сбор составляет $111 ($68 + $43). Свободные места и итоговую сумму перед оплатой проверьте в аккаунте College Board: [официальный календарь](https://satsuite.collegeboard.org/sat/dates-deadlines) и [таблица международных сборов](https://satsuite.collegeboard.org/sat/registration/international-testing/fees) — первоисточники.
 
-Информация о датах и тарифах ниже проверена 25 сентября 2026 года. У College Board сроки указаны по Eastern Time (ET), а дополнительные сборы могут обновляться; перед регистрацией откройте официальные страницы ещё раз.
+Информация о датах и тарифах ниже проверена 26 сентября 2026 года. У College Board сроки указаны по Eastern Time (ET), а дополнительные сборы могут обновляться; перед регистрацией откройте официальные страницы ещё раз.
 
 # Сколько стоит регистрация на SAT из Казахстана
 
@@ -1298,12 +1298,12 @@ College Board предлагает использовать семь ячеек 
     photo: '/blog/ielts-admission-paths.svg',
     coverAlt: 'Три способа, которыми IELTS может учитываться при поступлении в Казахстане: зачёт предмета английский по ЕНТ, требования вуза и отдельные правила категории абитуриента.',
     publishedAt: '2026-09-25T16:47:35.000Z',
-    updatedAt: '2026-09-25T16:47:35.000Z',
-    body: `Если у вас IELTS 5.5 или 6.0, одного числа недостаточно, чтобы понять, подходит ли результат для поступления. В Казахстане сертификат может использоваться по двум разным правилам: для зачёта профильного предмета «Иностранный язык (английский)» в ЕНТ и для подтверждения английского по требованиям конкретного вуза или программы. У этих процедур разные шкалы и условия.
+    updatedAt: '2026-09-26T12:00:00.000Z',
+    body: `IELTS для поступления в вуз Казахстана нельзя оценить по одному числу: сертификат может засчитываться за профильный предмет «Иностранный язык (английский)» в ЕНТ или подтверждать английский по требованиям конкретного вуза или программы. У этих маршрутов разные шкалы и условия, поэтому сначала определите, для какой процедуры вы используете результат — особенно если у вас IELTS 5.5 или 6.0.
 
-Поэтому сначала определите маршрут поступления, а потом проверяйте балл. Национальный центр тестирования публикует шкалу зачёта сертификатов в ЕНТ, а требования к отдельным программам университеты устанавливают сами. [Официальная страница НЦТ](https://prod.testcenter.kz/?lang=ru&page_id=15575) и [правила приёма на 2026 год](https://www.gov.kz/memleket/entities/sci/press/news/details/1243733?lang=ru) описывают эти части отдельно.
+Проверьте обе части по первоисточникам: Национальный центр тестирования публикует шкалу зачёта сертификатов в ЕНТ, а требования к конкретным программам устанавливают сами университеты. [Официальная страница НЦТ](https://prod.testcenter.kz/?lang=ru&page_id=15575) и [правила приёма на 2026 год](https://www.gov.kz/memleket/entities/sci/press/news/details/1243733?lang=ru) описывают эти процедуры отдельно.
 
-# Два разных сценария, которые часто путают
+# IELTS для поступления: два разных сценария
 
 На телефоне таблицу можно прокрутить по горизонтали, чтобы увидеть все колонки.
 
