@@ -65,10 +65,10 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
   ielts: {
     slug: 'ielts',
     exam: 'IELTS',
-    title: 'Подготовка к IELTS онлайн в Астане',
-    lead: 'Четыре секции экзамена, план после диагностики и онлайн-занятия для школьников и абитуриентов из Астаны и других городов Казахстана.',
-    seoTitle: 'Курсы IELTS онлайн в Астане — ASHYQ',
-    metaDescription: 'Онлайн-курсы IELTS для школьников и абитуриентов из Астаны и Казахстана: Reading, Listening, Writing, Speaking, диагностика и план подготовки.',
+    title: 'Курсы IELTS онлайн в Астане',
+    lead: 'Ищете IELTS курсы в Астане? В ASHYQ подготовка проходит онлайн для школьников и абитуриентов по всему Казахстану. После диагностики студент получает план для Reading, Listening, Writing и Speaking.',
+    seoTitle: 'IELTS курсы онлайн в Астане — ASHYQ',
+    metaDescription: 'IELTS курсы онлайн для школьников и абитуриентов из Астаны и Казахстана: Reading, Listening, Writing, Speaking, диагностика и план подготовки.',
     photo: PHOTOS.courseHeroIelts.src,
     alt: PHOTOS.courseHeroIelts.alt,
     facts: [
@@ -174,10 +174,10 @@ export const COURSE_DETAILS: Record<CourseSlug, CourseDetail> = {
   sat: {
     slug: 'sat',
     exam: 'SAT',
-    title: 'Подготовка к SAT онлайн в Астане',
-    lead: 'Reading & Writing и Math: подготовка к Digital SAT онлайн для абитуриентов из Астаны и других городов Казахстана, с диагностикой и разбором практики.',
-    seoTitle: 'Курсы Digital SAT онлайн в Астане — ASHYQ',
-    metaDescription: 'Онлайн-курсы Digital SAT для абитуриентов из Астаны и Казахстана: Math, Reading & Writing, диагностика, учебный план, практика и разбор ошибок.',
+    title: 'Курсы SAT онлайн в Астане',
+    lead: 'Ищете SAT курсы в Астане? В ASHYQ подготовка к Digital SAT проходит онлайн для абитуриентов по всему Казахстану. Диагностика помогает выбрать ближайший фокус по Math и Reading & Writing.',
+    seoTitle: 'SAT курсы онлайн в Астане — ASHYQ',
+    metaDescription: 'SAT курсы онлайн для абитуриентов из Астаны и Казахстана: Digital SAT Math, Reading & Writing, диагностика, практика и разбор ошибок.',
     photo: PHOTOS.courseHeroSat.src,
     alt: PHOTOS.courseHeroSat.alt,
     facts: [

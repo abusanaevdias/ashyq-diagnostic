@@ -54,7 +54,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
             <div className={styles.provisionalPanel}>
               <div className={styles.panelIntro}>
                 <MicroLabel>Условия набора</MicroLabel>
-                <h2 id="course-format-title" className={styles.panelTitle}>Стоимость и расписание</h2>
+                <h2 id="course-format-title" className={styles.panelTitle}>Стоимость и расписание онлайн-курсов {course.exam}</h2>
                 <p>
                   {pending.length
                     ? 'Цена, расписание и дата старта зависят от набора и вашей цели. Напишите нам — пришлём актуальные условия.'
