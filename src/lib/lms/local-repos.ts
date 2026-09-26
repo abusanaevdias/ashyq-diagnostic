@@ -79,8 +79,14 @@ function allPosts(): BlogPost[] {
   const stored = readJson<BlogPost[] | null>('posts', null);
   if (!stored) return defaultPosts();
   // сохранённые копии демо-статей с заглушкой получают текст; правки автора не трогаем
-  const bodies = new Map(defaultPosts().map((p) => [p.id, p.body]));
-  return stored.map((p) => (p.body.endsWith(OLD_STUB) && bodies.has(p.id) ? { ...p, body: bodies.get(p.id)! } : p));
+  const defaults = defaultPosts();
+  const bodies = new Map(defaults.map((p) => [p.id, p.body]));
+  const migrated = stored.map((p) => (p.body.endsWith(OLD_STUB) && bodies.has(p.id) ? { ...p, body: bodies.get(p.id)! } : p));
+  const storedIds = new Set(migrated.map((p) => p.id));
+  const storedSlugs = new Set(migrated.map((p) => p.slug));
+  // Existing browsers may have a saved blog list from before a new editorial post shipped.
+  // Add missing defaults without overwriting author edits or reviving an explicitly saved draft.
+  return [...defaults.filter((p) => !storedIds.has(p.id) && !storedSlugs.has(p.slug)), ...migrated];
 }
 
 const TRANSLIT: Record<string, string> = {
