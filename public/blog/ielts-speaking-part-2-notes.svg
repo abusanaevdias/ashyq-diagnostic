@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Example IELTS Speaking Part 2 notes about a place in Kazakhstan</title>
+  <desc id="desc">A short four-part cue-card outline: where the place is, how the speaker knows it, one detail to describe, and why it matters to the speaker.</desc>
+  <rect width="1200" height="630" rx="36" fill="#F4F7F5"/>
+  <text x="600" y="82" text-anchor="middle" fill="#18745D" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="2">ORIGINAL PRACTICE NOTES</text>
+  <text x="600" y="153" text-anchor="middle" fill="#173343" font-family="Arial, sans-serif" font-size="50" font-weight="700">A place in your country</text>
+  <text x="600" y="199" text-anchor="middle" fill="#526674" font-family="Arial, sans-serif" font-size="30">Example: Turkistan, Kazakhstan</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="90" y="245" width="490" height="125" rx="22" fill="#E8F4EF" stroke="#B8DCCE" stroke-width="3"/>
+    <circle cx="145" cy="307" r="31" fill="#18745D"/><text x="145" y="319" text-anchor="middle" fill="#FFFFFF" font-size="31" font-weight="700">1</text>
+    <text x="200" y="293" fill="#18745D" font-size="26" font-weight="700" letter-spacing="1">WHERE</text><text x="200" y="338" fill="#173343" font-size="37" font-weight="700">Turkistan</text>
+    <rect x="620" y="245" width="490" height="125" rx="22" fill="#FFFFFF" stroke="#D8E3E0" stroke-width="3"/>
+    <circle cx="675" cy="307" r="31" fill="#18745D"/><text x="675" y="319" text-anchor="middle" fill="#FFFFFF" font-size="31" font-weight="700">2</text>
+    <text x="730" y="293" fill="#18745D" font-size="26" font-weight="700" letter-spacing="1">VISIT</text><text x="730" y="338" fill="#173343" font-size="37" font-weight="700">Family visit</text>
+    <rect x="90" y="393" width="490" height="125" rx="22" fill="#FFFFFF" stroke="#D8E3E0" stroke-width="3"/>
+    <circle cx="145" cy="455" r="31" fill="#18745D"/><text x="145" y="467" text-anchor="middle" fill="#FFFFFF" font-size="31" font-weight="700">3</text>
+    <text x="200" y="441" fill="#18745D" font-size="26" font-weight="700" letter-spacing="1">DETAIL</text><text x="200" y="486" fill="#173343" font-size="34" font-weight="700">Building details</text>
+    <rect x="620" y="393" width="490" height="125" rx="22" fill="#173343"/>
+    <circle cx="675" cy="455" r="31" fill="#18745D"/><text x="675" y="467" text-anchor="middle" fill="#FFFFFF" font-size="31" font-weight="700">4</text>
+    <text x="730" y="441" fill="#B8DCCE" font-size="26" font-weight="700" letter-spacing="1">WHY IT MATTERS</text><text x="730" y="486" fill="#FFFFFF" font-size="34" font-weight="700">History feels close</text>
+  </g>
+  <text x="600" y="575" text-anchor="middle" fill="#173343" font-family="Arial, sans-serif" font-size="30" font-weight="700">Short prompts help you build one connected answer.</text>
+</svg>

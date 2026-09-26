@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Как IELTS учитывается при поступлении в Казахстане</title>
+  <desc id="desc">Три отдельных маршрута: перевод IELTS в баллы ЕНТ по английскому предмету, требования английского конкретного вуза и отдельные правила Foundation, перевода или иной категории абитуриента.</desc>
+  <rect width="1200" height="675" rx="32" fill="#F6F1E9"/>
+  <circle cx="1120" cy="30" r="170" fill="#ECE4D8"/>
+  <circle cx="10" cy="675" r="130" fill="#F0DED8"/>
+  <text x="64" y="76" fill="#A33A31" font-family="Arial, sans-serif" font-size="23" font-weight="700" letter-spacing="2">IELTS · ПОСТУПЛЕНИЕ В КАЗАХСТАНЕ</text>
+  <text x="64" y="148" fill="#272523" font-family="Arial, sans-serif" font-size="46" font-weight="700">Сначала выберите маршрут</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="64" y="204" width="330" height="336" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <rect x="64" y="204" width="330" height="14" rx="7" fill="#286B5A"/>
+    <circle cx="108" cy="270" r="27" fill="#286B5A"/>
+    <text x="108" y="279" text-anchor="middle" fill="#FFFFFF" font-size="24" font-weight="700">1</text>
+    <text x="91" y="342" fill="#272523" font-size="29" font-weight="700">Зачёт через ЕНТ</text>
+    <text x="91" y="397" fill="#625E5A" font-size="23">Профильный предмет</text>
+    <text x="91" y="433" fill="#625E5A" font-size="23">«Английский язык»</text>
+    <text x="91" y="484" fill="#286B5A" font-size="25" font-weight="700">Шкала НЦТ</text>
+
+    <rect x="435" y="204" width="330" height="336" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <rect x="435" y="204" width="330" height="14" rx="7" fill="#486C98"/>
+    <circle cx="479" cy="270" r="27" fill="#486C98"/>
+    <text x="479" y="279" text-anchor="middle" fill="#FFFFFF" font-size="24" font-weight="700">2</text>
+    <text x="462" y="342" fill="#272523" font-size="29" font-weight="700">Правило вуза</text>
+    <text x="462" y="397" fill="#625E5A" font-size="23">Общий IELTS и</text>
+    <text x="462" y="433" fill="#625E5A" font-size="23">минимум по секциям</text>
+    <text x="462" y="484" fill="#486C98" font-size="23" font-weight="700">Правила программы</text>
+
+    <rect x="806" y="204" width="330" height="336" rx="24" fill="#272523"/>
+    <rect x="806" y="204" width="330" height="14" rx="7" fill="#D95B4E"/>
+    <circle cx="850" cy="270" r="27" fill="#D95B4E"/>
+    <text x="850" y="279" text-anchor="middle" fill="#FFFFFF" font-size="24" font-weight="700">3</text>
+    <text x="833" y="342" fill="#FFFFFF" font-size="29" font-weight="700">Особый маршрут</text>
+    <text x="833" y="397" fill="#E6DED5" font-size="22">Foundation / перевод</text>
+    <text x="833" y="433" fill="#E6DED5" font-size="22">магистратура / иностранцы</text>
+    <text x="833" y="484" fill="#F29A8F" font-size="22" font-weight="700">Уточняйте отдельно</text>
+  </g>
+  <text x="64" y="612" fill="#625E5A" font-family="Arial, sans-serif" font-size="22">Зачёт IELTS не отменяет остальные требования и сам по себе не гарантирует грант.</text>
+</svg>

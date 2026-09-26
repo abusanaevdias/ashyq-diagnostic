@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Средние ориентиры IELTS Reading для Academic и General Training</title>
+  <desc id="desc">Официальные средние ориентиры из 40 вопросов: Academic Reading — 15 ответов для Band 5, 23 для Band 6, 30 для Band 7 и 35 для Band 8; General Training Reading — 15 ответов для Band 4, 23 для Band 5, 30 для Band 6 и 35 для Band 7. Пороги могут меняться между версиями теста.</desc>
+  <rect width="1200" height="630" rx="34" fill="#F4F7F5"/>
+  <circle cx="1110" cy="72" r="150" fill="#E4F2ED"/>
+  <circle cx="32" cy="590" r="150" fill="#E7EFF5"/>
+  <text x="64" y="68" fill="#18745D" font-family="Arial, sans-serif" font-size="31" font-weight="700" letter-spacing="1">IELTS READING · СРЕДНИЕ ОРИЕНТИРЫ</text>
+  <text x="64" y="130" fill="#173343" font-family="Arial, sans-serif" font-size="48" font-weight="700">Сколько ответов из 40?</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="64" y="164" width="520" height="376" rx="24" fill="#FFFFFF" stroke="#D8E3E0" stroke-width="2"/>
+    <text x="94" y="210" fill="#18745D" font-size="30" font-weight="700" letter-spacing="1">ACADEMIC READING</text>
+    <text x="96" y="258" fill="#526674" font-size="24" font-weight="700">ОТВЕТЫ</text>
+    <text x="422" y="258" fill="#526674" font-size="24" font-weight="700">BAND</text>
+    <path d="M94 278h460M94 338h460M94 398h460M94 458h460" stroke="#D8E3E0" stroke-width="2"/>
+    <text x="98" y="321" fill="#173343" font-size="33" font-weight="700">15 / 40</text>
+    <text x="428" y="321" fill="#173343" font-size="31" font-weight="700">5.0</text>
+    <text x="98" y="381" fill="#173343" font-size="33" font-weight="700">23 / 40</text>
+    <text x="428" y="381" fill="#173343" font-size="31" font-weight="700">6.0</text>
+    <text x="98" y="441" fill="#173343" font-size="33" font-weight="700">30 / 40</text>
+    <text x="428" y="441" fill="#173343" font-size="31" font-weight="700">7.0</text>
+    <text x="98" y="501" fill="#173343" font-size="33" font-weight="700">35 / 40</text>
+    <text x="428" y="501" fill="#173343" font-size="31" font-weight="700">8.0</text>
+    <rect x="616" y="164" width="520" height="376" rx="24" fill="#173343"/>
+    <text x="646" y="210" fill="#B9DCCE" font-size="30" font-weight="700" letter-spacing="1">GENERAL TRAINING</text>
+    <text x="648" y="258" fill="#E7EFF5" font-size="24" font-weight="700">ОТВЕТЫ</text>
+    <text x="974" y="258" fill="#E7EFF5" font-size="24" font-weight="700">BAND</text>
+    <path d="M646 278h460M646 338h460M646 398h460M646 458h460" stroke="#48616E" stroke-width="2"/>
+    <text x="650" y="321" fill="#FFFFFF" font-size="33" font-weight="700">15 / 40</text>
+    <text x="980" y="321" fill="#FFFFFF" font-size="31" font-weight="700">4.0</text>
+    <text x="650" y="381" fill="#FFFFFF" font-size="33" font-weight="700">23 / 40</text>
+    <text x="980" y="381" fill="#FFFFFF" font-size="31" font-weight="700">5.0</text>
+    <text x="650" y="441" fill="#FFFFFF" font-size="33" font-weight="700">30 / 40</text>
+    <text x="980" y="441" fill="#FFFFFF" font-size="31" font-weight="700">6.0</text>
+    <text x="650" y="501" fill="#FFFFFF" font-size="33" font-weight="700">35 / 40</text>
+    <text x="980" y="501" fill="#FFFFFF" font-size="31" font-weight="700">7.0</text>
+  </g>
+  <text x="600" y="591" text-anchor="middle" fill="#526674" font-family="Arial, sans-serif" font-size="25">Средние значения IELTS; точные границы меняются между версиями теста</text>
+</svg>

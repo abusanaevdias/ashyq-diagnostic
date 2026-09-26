@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Как использовать отчёт Bluebook для SAT Reading &amp; Writing</title>
+  <desc id="desc">Четыре шага подготовки: проверить домен в отчёте, определить навык по ошибкам, решить целевые задания в Student Question Bank, затем проверить прогресс на новом тесте.</desc>
+  <rect width="1200" height="630" rx="28" fill="#F6F1E9"/>
+  <text x="64" y="77" fill="#A33A31" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="2">ОТЧЁТ → ПЛАН ПРАКТИКИ</text>
+  <text x="64" y="150" fill="#272523" font-family="Arial, sans-serif" font-size="48" font-weight="700">Четыре шага после Bluebook</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="48" y="224" width="242" height="224" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="88" cy="274" r="24" fill="#286B5A"/><text x="88" y="282" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">1</text>
+    <text x="72" y="340" fill="#272523" font-size="27" font-weight="700">Отчёт</text>
+    <text x="72" y="379" fill="#625E5A" font-size="21">Найдите домен</text>
+    <text x="72" y="410" fill="#625E5A" font-size="21">для разбора</text>
+    <path d="M299 336h24m-9-9 9 9-9 9" fill="none" stroke="#A33A31" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="336" y="224" width="242" height="224" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="376" cy="274" r="24" fill="#486C98"/><text x="376" y="282" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">2</text>
+    <text x="360" y="340" fill="#272523" font-size="27" font-weight="700">Навык</text>
+    <text x="360" y="379" fill="#625E5A" font-size="21">Разберите ответы</text>
+    <text x="360" y="410" fill="#625E5A" font-size="21">и причину ошибки</text>
+    <path d="M587 336h24m-9-9 9 9-9 9" fill="none" stroke="#A33A31" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="624" y="224" width="242" height="224" rx="22" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="2"/>
+    <circle cx="664" cy="274" r="24" fill="#B36A24"/><text x="664" y="282" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">3</text>
+    <text x="648" y="340" fill="#272523" font-size="27" font-weight="700">Практика</text>
+    <text x="648" y="379" fill="#625E5A" font-size="21">Фильтр навыка</text>
+    <text x="648" y="410" fill="#625E5A" font-size="21">в Question Bank</text>
+    <path d="M875 336h24m-9-9 9 9-9 9" fill="none" stroke="#A33A31" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="912" y="224" width="242" height="224" rx="22" fill="#272523"/>
+    <circle cx="952" cy="274" r="24" fill="#D95B4E"/><text x="952" y="282" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">4</text>
+    <text x="936" y="340" fill="#FFFFFF" font-size="27" font-weight="700">Проверка</text>
+    <text x="936" y="379" fill="#E7DDD2" font-size="21">Новые вопросы</text>
+    <text x="936" y="410" fill="#E7DDD2" font-size="21">и повторный тест</text>
+  </g>
+  <text x="64" y="526" fill="#625E5A" font-family="Arial, sans-serif" font-size="22">Полоса — ориентир для выбора сложности, не проценты и не прогноз балла.</text>
+</svg>

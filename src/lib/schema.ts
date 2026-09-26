@@ -18,9 +18,12 @@ export const ORGANIZATION = {
   url: SITE_URL,
   logo: `${SITE_URL}/brand/logo-icon.png`,
   description: SITE_DESCRIPTION,
-  address: { '@type': 'PostalAddress', addressLocality: 'Астана', addressCountry: 'KZ' },
+  areaServed: [
+    { '@type': 'City', name: 'Астана' },
+    { '@type': 'Country', name: 'Казахстан' },
+  ],
   sameAs: SOCIAL_LINKS.map((social) => social.href),
-  contactPoint: { '@type': 'ContactPoint', telephone: `+${WHATSAPP_NUMBER}`, contactType: 'customer service', availableLanguage: ['ru'] },
+  contactPoint: { '@type': 'ContactPoint', telephone: `+${WHATSAPP_NUMBER}`, contactType: 'customer service', availableLanguage: ['ru', 'kk', 'en'] },
 };
 
 export function courseSchema(course: CourseDetail) {
@@ -32,7 +35,7 @@ export function courseSchema(course: CourseDetail) {
     url: `${SITE_URL}/courses/${course.slug}`,
     inLanguage: 'ru',
     provider: { '@type': 'EducationalOrganization', '@id': ORGANIZATION_ID, name: SITE_NAME, url: SITE_URL },
-    hasCourseInstance: { '@type': 'CourseInstance', courseMode: ['online', 'onsite'], location: 'Астана' },
+    hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online' },
   };
 }
 

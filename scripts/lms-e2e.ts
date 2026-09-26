@@ -291,7 +291,7 @@ async function privateMode(browser: Browser) {
   ctx.on('weberror', (e) => errors.push(e.error().message.slice(0, 200)));
   const page = await ctx.newPage();
   page.setDefaultTimeout(20_000);
-  for (const path of ['/login', '/me', '/classes', '/teacher', '/write', '/blog', '/blog/ielts-true-false-not-given']) {
+  for (const path of ['/login', '/me', '/classes', '/teacher', '/write', '/blog', '/blog/ielts-writing-task-2']) {
     await page.goto(`${BASE}${path}`, { waitUntil: 'load' });
     await page.waitForTimeout(400);
   }

@@ -39,8 +39,8 @@ export default function CoursesV3() {
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
               <MicroLabel>Курсы ASHYQ</MicroLabel>
-              <h1 className={styles.title}>Курсы с понятным маршрутом к цели</h1>
-              <p className={home.lead}>IELTS и SAT онлайн и в Астане. Каждый курс начинается с диагностики, дальше — план, практика и прогресс, который видно в цифрах.</p>
+              <h1 className={styles.title}>Онлайн-курсы IELTS и Digital SAT в Казахстане</h1>
+              <p className={home.lead}>Ищете онлайн-курсы IELTS и Digital SAT в Казахстане? В ASHYQ подготовка к обоим экзаменам проходит дистанционно: выберите направление и начните с предварительной диагностики.</p>
               <p className={styles.script}>выберите свой маршрут</p>
             </div>
             <div className={styles.collage}>
@@ -52,8 +52,8 @@ export default function CoursesV3() {
 
         <section className={`${home.container} ${home.section}`}>
           <div className={home.sectionHead}>
-            <div><MicroLabel>Направления</MicroLabel><h2 className={home.heading}>Выберите курс</h2></div>
-            <p className={home.sectionIntro}>Все курсы стартуют с диагностики: так план строится от вашей реальной точки А, а не от среднего ученика.</p>
+            <div><MicroLabel>Направления</MicroLabel><h2 className={home.heading}>Выберите онлайн-курс: IELTS или Digital SAT</h2></div>
+            <p className={home.sectionIntro}>Курс IELTS охватывает Reading, Listening, Writing и Speaking, а Digital SAT — Reading &amp; Writing и Math. Предварительная диагностика помогает определить учебный фокус.</p>
           </div>
           <div className={styles.filters} role="group" aria-label="Фильтр курсов">
             {FILTERS.map((item) => <FilterChip key={item.id} active={filter === item.id} onClick={() => setFilter(item.id)}>{item.label}</FilterChip>)}

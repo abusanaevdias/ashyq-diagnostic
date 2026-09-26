@@ -465,14 +465,19 @@ async function main() {
   const coursesScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('courses: нет горизонтального скролла', coursesScroll <= 0, `${coursesScroll}px`);
 
-  // blog: демо-контент честно помечен и закрыт от индексации
+  // blog: реальная статья опубликована, доступна в категориях и индексируется
   await p3.goto(`${BASE}/blog`, { waitUntil: 'networkidle' });
-  check('blog: демо-плашка и noindex', has(await p3.locator('body').innerText(), 'Демо-контент') && (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 1);
-  await p3.getByRole('button', { name: 'SAT', exact: true }).click();
-  check('blog: фильтр категорий', (await p3.locator('main article').count()) === 1);
+  check('blog: статья IELTS видна и индексируется', has(await p3.locator('body').innerText(), 'IELTS Writing Task 2') && (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 0);
+  await p3.getByRole('button', { name: 'IELTS', exact: true }).click();
+  const filteredIeltsTitles = await p3.locator('main article h2, main article h3').allTextContents();
+  check('blog: фильтр категорий показывает только IELTS', filteredIeltsTitles.length > 0 && filteredIeltsTitles.every((title) => title.includes('IELTS')));
   await p3.getByRole('button', { name: 'Все', exact: true }).click();
-  await p3.getByRole('searchbox', { name: 'Поиск по статьям' }).fill('Listening');
+  await p3.getByRole('searchbox', { name: 'Поиск по статьям' }).fill('IELTS Writing Task 2');
   check('blog: поиск по статьям', (await p3.locator('main article').count()) === 1);
+  check('blog: карточка ведёт на статью', (await p3.locator('main a[href="/blog/ielts-writing-task-2"]').count()) === 1);
+  await p3.goto(`${BASE}/blog/ielts-writing-task-2`, { waitUntil: 'networkidle' });
+  check('blog article: содержание и официальные источники SSR', has(await p3.locator('main').innerText(), 'Task Response') && (await p3.locator('main a[href^="https://ielts.org/"]').count()) >= 4);
+  check('blog article: BlogPosting schema', (await p3.locator('script[type="application/ld+json"]').allTextContents()).some((value) => value.includes('"@type":"BlogPosting"')));
   const blogScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('blog: нет горизонтального скролла', blogScroll <= 0, `${blogScroll}px`);
 
@@ -597,7 +602,7 @@ async function main() {
   check('search: находит курс сезона и FAQ', searchHits >= 2, `${searchHits} ссылок`);
   await searchInput.fill('ielts');
   await p3.waitForTimeout(250);
-  check('search: демо-статьи помечены', has(await p3.locator('main').innerText(), 'демо'));
+  check('search: находит опубликованную IELTS-статью', (await p3.locator('main a[href="/blog/ielts-writing-task-2"]').count()) === 1);
   await searchInput.fill('вапржолз');
   await p3.waitForTimeout(250);
   check('search: честное пустое состояние', has(await p3.locator('main').innerText(), 'Ничего не нашлось'));

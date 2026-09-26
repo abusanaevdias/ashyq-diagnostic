@@ -16,7 +16,7 @@ import { AiBadge } from './AiBadge';
 
 /**
  * /blog по DESIGN_V3 §6.5. Статьи — опубликованные посты из BlogRepo (LMS-001);
- * на сервере и до загрузки — стартовые темы, чтобы разметка не была пустой.
+ * на сервере и до загрузки показываем публикации из кода.
  * Подписка без бэкенда — ведём в заявку сезона.
  */
 
@@ -70,9 +70,9 @@ export default function BlogV3() {
                 <Link href={`/blog/${featured.slug}`} className={styles.postLink}>
                   <div className={styles.featuredPhoto}>
                     <Image src={postCover(featured.coverUrl)} alt="" fill sizes="(max-width: 900px) 100vw, 58vw" />
-                    <span className={styles.badge}>{categoryLabel(featured.category)}</span>
                   </div>
                   <div className={styles.featuredBody}>
+                    <span className={styles.badge}>{categoryLabel(featured.category)}</span>
                     <h2 className={styles.featuredTitle}>{featured.title}</h2>
                     <p className={styles.excerpt}>{featured.excerpt}</p>
                     <div className={styles.metaRow}><span>{day(featured.publishedAt)}</span><span className={styles.soon}>Читать →</span></div>

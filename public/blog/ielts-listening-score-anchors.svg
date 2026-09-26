@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">IELTS Listening: 30 правильных ответов из 40 — средний ориентир Band 7.0</title>
+  <desc id="desc">IELTS публикует средние ориентиры Listening: 16 правильных ответов для Band 5, 23 для Band 6, 30 для Band 7 и 35 для Band 8. Точные границы меняются между версиями теста.</desc>
+  <rect width="1200" height="630" rx="34" fill="#F4F7F5"/>
+  <circle cx="1100" cy="60" r="150" fill="#E4F2ED"/>
+  <circle cx="35" cy="575" r="145" fill="#E7EFF5"/>
+  <text x="72" y="82" fill="#18745D" font-family="Arial, sans-serif" font-size="36" font-weight="700" letter-spacing="1">IELTS LISTENING · СРЕДНИЕ ОРИЕНТИРЫ</text>
+  <text x="72" y="220" fill="#173343" font-family="Arial, sans-serif" font-size="82" font-weight="700">30 / 40</text>
+  <text x="78" y="267" fill="#526674" font-family="Arial, sans-serif" font-size="34">правильных ответов</text>
+  <rect x="535" y="125" width="590" height="245" rx="28" fill="#173343"/>
+  <text x="578" y="184" fill="#B9DCCE" font-family="Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="1">СРЕДНИЙ ОРИЕНТИР IELTS</text>
+  <text x="575" y="275" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="68" font-weight="700">Band 7.0</text>
+  <text x="580" y="316" fill="#E7EFF5" font-family="Arial, sans-serif" font-size="31">Порог может немного меняться</text>
+  <text x="580" y="351" fill="#E7EFF5" font-family="Arial, sans-serif" font-size="31">между версиями теста</text>
+  <text x="600" y="486" text-anchor="middle" fill="#18745D" font-family="Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="1">СРЕДНИЕ ОРИЕНТИРЫ ПО ЧИСЛУ ОТВЕТОВ</text>
+  <text x="600" y="552" text-anchor="middle" fill="#173343" font-family="Arial, sans-serif" font-size="42" font-weight="700">16 → 5  ·  23 → 6  ·  30 → 7  ·  35 → 8</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">SAT в Казахстане: стоимость и даты 2026–2027</title>
+  <desc id="desc">Базовая международная регистрация стоит 111 долларов. Ближайший SAT Weekend — 7 ноября 2026 года, обычный дедлайн — 23 октября.</desc>
+  <rect width="1200" height="675" rx="28" fill="#F6F1E9"/>
+  <circle cx="1120" cy="40" r="230" fill="#A33A31" opacity="0.07"/>
+  <circle cx="68" cy="655" r="180" fill="#D95B4E" opacity="0.06"/>
+  <text x="68" y="82" fill="#A33A31" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="2">SAT • КАЗАХСТАН</text>
+  <text x="68" y="205" fill="#272523" font-family="Arial, sans-serif" font-size="64" font-weight="700">Стоимость и даты</text>
+  <text x="68" y="282" fill="#272523" font-family="Arial, sans-serif" font-size="64" font-weight="700">экзамена 2026–27</text>
+  <text x="70" y="355" fill="#625E5A" font-family="Arial, sans-serif" font-size="30">Проверьте дедлайн и наличие места</text>
+  <text x="70" y="396" fill="#625E5A" font-family="Arial, sans-serif" font-size="30">перед оплатой регистрации</text>
+  <line x1="68" y1="462" x2="632" y2="462" stroke="#D9D2C9" stroke-width="4" stroke-linecap="round"/>
+  <text x="70" y="516" fill="#625E5A" font-family="Arial, sans-serif" font-size="23">Данные College Board сверены 26.09.2026</text>
+  <rect x="720" y="92" width="410" height="494" rx="28" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+  <rect x="720" y="92" width="410" height="14" rx="7" fill="#A33A31"/>
+  <text x="766" y="158" fill="#625E5A" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="1">МЕЖДУНАРОДНАЯ РЕГИСТРАЦИЯ</text>
+  <text x="760" y="257" fill="#272523" font-family="Arial, sans-serif" font-size="82" font-weight="700">$111</text>
+  <text x="766" y="299" fill="#625E5A" font-family="Arial, sans-serif" font-size="22">$68 экзамен + $43 сбор</text>
+  <line x1="766" y1="334" x2="1084" y2="334" stroke="#D9D2C9" stroke-width="2"/>
+  <text x="766" y="385" fill="#A33A31" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="1">БЛИЖАЙШАЯ СЕССИЯ</text>
+  <text x="766" y="428" fill="#272523" font-family="Arial, sans-serif" font-size="30" font-weight="700">7 ноября 2026</text>
+  <text x="766" y="474" fill="#625E5A" font-family="Arial, sans-serif" font-size="22">Регистрация до 23 октября</text>
+  <text x="766" y="527" fill="#625E5A" font-family="Arial, sans-serif" font-size="17">Без возможных сборов центра</text>
+</svg>

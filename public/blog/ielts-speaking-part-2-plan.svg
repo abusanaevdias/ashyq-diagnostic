@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">IELTS Speaking Part 2 timing and preparation</title>
+  <desc id="desc">The candidate has one minute to prepare and speaks for up to two minutes. A clear answer starts with short notes and develops the candidate's own idea.</desc>
+  <rect width="1200" height="630" rx="36" fill="#F4F7F5"/>
+  <circle cx="1090" cy="75" r="120" fill="#E4F2ED"/>
+  <circle cx="85" cy="570" r="145" fill="#E7EFF5"/>
+  <text x="600" y="82" text-anchor="middle" fill="#18745D" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="2">IELTS SPEAKING PART 2</text>
+  <text x="600" y="170" text-anchor="middle" fill="#173343" font-family="Arial, sans-serif" font-size="68" font-weight="700">Plan. Then speak naturally.</text>
+  <text x="600" y="228" text-anchor="middle" fill="#526674" font-family="Arial, sans-serif" font-size="36">1 minute to prepare · speak for up to 2 minutes</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="118" y="292" width="400" height="210" rx="28" fill="#E8F4EF" stroke="#B8DCCE" stroke-width="3"/>
+    <text x="375" y="388" text-anchor="middle" fill="#173343" font-size="76" font-weight="700">1 MIN</text>
+    <text x="375" y="444" text-anchor="middle" fill="#18745D" font-size="34" font-weight="700" letter-spacing="1">PREPARE</text>
+    <path d="M545 397h88m-27-27 27 27-27 27" fill="none" stroke="#18745D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="682" y="292" width="400" height="210" rx="28" fill="#173343"/>
+    <text x="895" y="388" text-anchor="middle" fill="#FFFFFF" font-size="70" font-weight="700">1–2 MIN</text>
+    <text x="895" y="444" text-anchor="middle" fill="#B8DCCE" font-size="34" font-weight="700" letter-spacing="1">SPEAK</text>
+  </g>
+  <text x="600" y="565" text-anchor="middle" fill="#173343" font-family="Arial, sans-serif" font-size="31" font-weight="700">Cue card · short notes · your own experience</text>
+</svg>

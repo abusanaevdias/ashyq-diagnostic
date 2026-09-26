@@ -23,13 +23,16 @@ export interface BlogPostPageData {
 }
 
 /** /blog/[slug]: только опубликованные посты; черновик по прямой ссылке — «не найдена». */
-export default function BlogPostView({ slug, initialData }: { slug: string; initialData?: BlogPostPageData }) {
+export default function BlogPostView({ slug, language = 'ru', initialData }: { slug: string; language?: 'en' | 'ru'; initialData?: BlogPostPageData }) {
   const repos = getRepos();
   const { data, loading } = useLmsData(async () => {
     const post = await repos.blog.getPublishedBySlug(slug);
-    if (!post) return null;
+    // Published editorial routes are also seeded in the current build. A
+    // reader's older localStorage snapshot may not contain a newly added post.
+    // Keep the server-provided editorial entry visible without rewriting it.
+    if (!post) return initialData ?? null;
     const [author, all] = await Promise.all([repos.users.get(post.authorId), repos.blog.listPublished()]);
-    return { post, author, more: all.filter((p) => p.id !== post.id).slice(0, 3) };
+    return { post, author, more: all.filter((p) => p.id !== post.id && p.category === post.category).slice(0, 3) };
   }, `post:${slug}`, initialData);
 
   return (
@@ -43,23 +46,24 @@ export default function BlogPostView({ slug, initialData }: { slug: string; init
           <Unavailable title="Статья не найдена" text="Возможно, её сняли с публикации или адрес изменился." href="/blog" label="Все статьи" />
         ) : (
           <>
-            <article className={styles.article}>
-              <Link href="/blog" className={styles.backLink}>← Блог</Link>
+            <article className={styles.article} lang={language}>
+              <Link href="/blog" className={styles.backLink}>{language === 'en' ? '← Blog' : '← Блог'}</Link>
               <div className={styles.chipsRow}><span className={styles.chip}>{categoryLabel(data.post.category)}</span></div>
               <h1 className={styles.title}>{data.post.title}</h1>
               <p className={styles.lead}>
-                {data.author?.name ?? 'Команда ASHYQ'}
-                {data.post.publishedAt ? ` · ${formatDay(data.post.publishedAt)}` : ''}
+                {data.author?.name ?? (language === 'en' ? 'ASHYQ Team' : 'Команда ASHYQ')}
+                {data.post.publishedAt ? ` · ${language === 'en' ? 'Published' : 'Опубликовано'} ${formatArticleDay(data.post.publishedAt, language)}` : ''}
+                {data.post.updatedAt ? ` · ${language === 'en' ? 'Updated' : 'Обновлено'} ${formatArticleDay(data.post.updatedAt, language)}` : ''}
               </p>
               <div className={styles.articleCover}>
-                <Image src={postCover(data.post.coverUrl)} alt="" fill priority sizes="(max-width: 900px) 100vw, 760px" />
+                <Image src={postCover(data.post.coverUrl)} alt={data.post.coverAlt ?? ''} fill priority sizes="(max-width: 900px) 100vw, 760px" />
               </div>
               <Markdown text={data.post.body} />
             </article>
 
             {data.more.length ? (
               <section className={styles.moreSection} aria-labelledby="more-title">
-                <h2 id="more-title" className={styles.sectionTitle}>Другие статьи</h2>
+                <h2 id="more-title" className={styles.sectionTitle}>{language === 'en' ? 'More articles' : 'Другие статьи'}</h2>
                 <div className={styles.grid3}>
                   {data.more.map((p) => (
                     <Link key={p.id} href={`/blog/${p.slug}`} className={`${styles.card} ${styles.cardLink}`}>
@@ -77,4 +81,10 @@ export default function BlogPostView({ slug, initialData }: { slug: string; init
       <Footer />
     </div>
   );
+}
+
+function formatArticleDay(iso: string, language: 'en' | 'ru'): string {
+  return language === 'en'
+    ? new Intl.DateTimeFormat('en', { day: 'numeric', month: 'short' }).format(new Date(iso))
+    : formatDay(iso);
 }

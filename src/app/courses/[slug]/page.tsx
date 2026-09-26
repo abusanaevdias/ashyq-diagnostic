@@ -25,9 +25,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const course = COURSE_DETAILS[slug];
 
   return {
-    title: `${course.title} — ASHYQ`,
-    description: course.lead,
+    title: course.seoTitle,
+    description: course.metaDescription,
     alternates: { canonical: `/courses/${course.slug}` },
+    openGraph: {
+      title: course.seoTitle,
+      description: course.metaDescription,
+      url: `/courses/${course.slug}`,
+      siteName: 'ASHYQ',
+      locale: 'ru_RU',
+      type: 'website',
+      images: ['/opengraph-image'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: course.seoTitle,
+      description: course.metaDescription,
+      images: ['/opengraph-image'],
+    },
   };
 }
 
