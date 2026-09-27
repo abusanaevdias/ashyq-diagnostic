@@ -28,7 +28,7 @@ The four focus areas follow the IELTS Writing criteria: Task Response, Coherence
 - `cases.ts` contains only original authored prompts, essays, targets, explanations, and baseline/ceiling estimates. No Cambridge passage, exam answer, real learner data, or provider key.
 - `engine.ts` contains pure session helpers for stages, revisions, reveals, and applied improvements. It never reads browser storage or network state.
 - `WritingTrainer.tsx` owns page-local state, input, focus, and presentation. The route is noindex and clearly labelled as a prototype.
-- The first entry point is a direct `/writing/trainer` page. Future integration with class assignments requires a separate privacy and scoring design.
+- The public `/writing/trainer` page now explains the three demo steps with real interface captures and links to `/writing/trainer/practice`, where the original exercise runs. The IELTS course preview links to the introduction. Future integration with class assignments and own essays requires a separate privacy and scoring design.
 
 ## Failure and edge states
 

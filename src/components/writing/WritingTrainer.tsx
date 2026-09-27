@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { criterionLabels, writingCases, type Criterion } from '@/lib/writing-trainer/cases';
 import {
   canApplyGrammar,
@@ -96,7 +97,10 @@ export default function WritingTrainer() {
           <p className={styles.eyebrow}>УЧЕБНЫЙ ТРЕНАЖЁР · ПИЛОТ</p>
           <h1>Перепиши сильнее.</h1>
           <p className={styles.lead}>Сначала найди слабые места сам. Потом сравни правку с разбором и посмотри, как меняется рабочая версия эссе.</p>
-          <a className={styles.jumpLink} href="#exercise">К текущему этапу ↓</a>
+          <div className={styles.heroLinks}>
+            <Link className={styles.jumpLink} href="/writing/trainer">← Как пользоваться</Link>
+            <a className={styles.jumpLink} href="#exercise">К текущему этапу ↓</a>
+          </div>
         </div>
         <div className={styles.heroNumber} aria-hidden="true">02<span>кейса</span></div>
       </header>

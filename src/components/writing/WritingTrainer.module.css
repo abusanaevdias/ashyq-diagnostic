@@ -6,6 +6,7 @@
 .hero h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 800; letter-spacing: -.055em; line-height: 1; margin: 0; }
 .lead { max-width: 640px; color: var(--ink-soft); font-size: 1.06rem; line-height: 1.55; margin: 15px 0 0; }
 .jumpLink { display: inline-flex; align-items: center; min-height: 44px; margin-top: 4px; color: var(--red-deep); font-size: 13px; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.heroLinks { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; }
 .heroNumber { font-family: var(--font-display); font-size: 4rem; line-height: .85; font-weight: 800; letter-spacing: -.07em; color: var(--red); white-space: nowrap; }
 .heroNumber span { display: block; font: 700 12px var(--font-body); letter-spacing: .12em; text-transform: uppercase; text-align: right; color: var(--ink-soft); margin-top: 12px; }
 .notice { display: grid; grid-template-columns: 180px 1fr; gap: 20px; background: var(--blush-soft); border-left: 3px solid var(--red); border-radius: var(--r-sm); padding: 17px 20px; font-size: 14px; line-height: 1.55; }

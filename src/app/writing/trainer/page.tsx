@@ -1,17 +1,17 @@
 import type { Metadata } from 'next';
-import WritingTrainer from '@/components/writing/WritingTrainer';
+import WritingTrainerLanding from '@/components/writing/WritingTrainerLanding';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
 
 export const metadata: Metadata = {
-  title: 'Тренажёр IELTS Writing Task 2 — ASHYQ',
-  description: 'Учебный тренажёр самостоятельной правки вымышленных эссе IELTS Academic Task 2.',
+  title: 'Как работает тренажёр IELTS Writing Task 2 — ASHYQ',
+  description: 'Посмотрите три шага тренажёра и попробуйте самостоятельно улучшить одно из двух учебных эссе.',
   robots: { index: false, follow: false },
 };
 
-export default function WritingTrainerPage() {
+export default function WritingTrainerLandingPage() {
   return <>
     <NavBar />
-    <WritingTrainer />
+    <WritingTrainerLanding />
     <Footer />
   </>;
 }
