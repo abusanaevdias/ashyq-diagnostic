@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState, type ChangeEvent } from 'react';
 import { writingCases, type Criterion } from '@/lib/writing-trainer/cases';
 import {
   calibrationCriteria,
@@ -9,6 +9,7 @@ import {
   essayParagraphs,
   excerptMatches,
   judgmentComplete,
+  parseWorksheetExport,
   wordCount,
   worksheetHasWork,
   type CalibrationBand,
@@ -25,6 +26,7 @@ function directionLabel(value: ReturnType<typeof direction>): string {
 }
 
 export default function WritingCalibration() {
+  const importInput = useRef<HTMLInputElement>(null);
   const [caseId, setCaseId] = useState(writingCases[0].id);
   const [version, setVersion] = useState<CalibrationVersion>('A');
   const [worksheet, setWorksheet] = useState(createWorksheet);
@@ -38,7 +40,7 @@ export default function WritingCalibration() {
     caseId: essay.id,
     versionKey: { A: 'original', B: 'fully-authored-revision' },
     teacher: worksheet,
-    authoredPracticeEstimates: { original: essay.baseline, revised: essay.ceiling },
+    ...(revealed ? { authoredPracticeEstimates: { original: essay.baseline, revised: essay.ceiling } } : {}),
     limitation: 'Synthetic case review only; not an official IELTS score or calibrated assessment.',
   }, null, 2);
 
@@ -91,6 +93,29 @@ export default function WritingCalibration() {
     }
   }
 
+  async function importWorksheet(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+    if (file.size > 64 * 1024) {
+      setCopyStatus('Файл слишком большой. Выбери JSON разметки размером до 64 КБ.');
+      return;
+    }
+    try {
+      const restored = parseWorksheetExport(await file.text(), essay.id);
+      if (worksheetHasWork(worksheet) && !window.confirm('Заменить текущую разметку данными из файла?')) {
+        setCopyStatus('Загрузка отменена. Текущая разметка сохранена на странице.');
+        return;
+      }
+      setWorksheet(restored);
+      setVersion('A');
+      setRevealed(false);
+      setCopyStatus('Черновик загружен. Проверь разметку; ориентиры откроются после восьми суждений.');
+    } catch (error) {
+      setCopyStatus(error instanceof SyntaxError ? 'Не удалось прочитать JSON. Проверь файл разметки.' : error instanceof Error ? error.message : 'Не удалось загрузить разметку.');
+    }
+  }
+
   return <main className={styles.page}>
     <div className={styles.topline}><span>ASHYQ / WRITING LAB</span><span>ЛИСТ ДЛЯ ПРЕПОДАВАТЕЛЯ</span></div>
     <header className={styles.hero}>
@@ -102,7 +127,7 @@ export default function WritingCalibration() {
 
     <div className={styles.notice}>
       <strong>Граница пилота</strong>
-      <p>Здесь нет ответов учеников, AI, отправки текста или сохранения на сервере. Не вставляй реальные работы. Разметка исчезнет после закрытия страницы; готовый лист можно скачать. Один отзыв учителя помогает найти спорные примеры, но не подтверждает точность IELTS band.</p>
+      <p>Здесь нет ответов учеников, AI, отправки текста или сохранения на сервере. Не вставляй реальные работы. Разметка исчезнет после закрытия страницы; даже незавершённый черновик можно сохранить в JSON и позже загрузить. Один отзыв учителя помогает найти спорные примеры, но не подтверждает точность IELTS band.</p>
     </div>
 
     <section className={styles.protocol} aria-label="Порядок проверки">
@@ -174,10 +199,10 @@ export default function WritingCalibration() {
           const signal = teacherDirection === 'unknown' ? 'Нет вывода' : teacherDirection === authoredDirection ? 'Направление совпало' : 'Пересмотреть кейс';
           return <div key={id} className={styles.comparisonCard}><h3>{label}</h3><p><span>Учитель</span><strong>{worksheet.A[id].band === 'insufficient' ? '—' : worksheet.A[id].band} → {worksheet.B[id].band === 'insufficient' ? '—' : worksheet.B[id].band}</strong><small>{directionLabel(teacherDirection)}</small></p><p><span>Ориентир кейса</span><strong>{essay.baseline[id].toFixed(1)} → {essay.ceiling[id].toFixed(1)}</strong><small>{directionLabel(authoredDirection)}</small></p><div className={teacherDirection === 'unknown' ? styles.neutralSignal : teacherDirection === authoredDirection ? styles.matchSignal : styles.reviewSignal}>{signal}</div></div>;
         })}</div>
-        <div className={styles.actionRow}><button type="button" className={styles.primaryButton} onClick={downloadWorksheet}>Скачать разметку JSON</button><button type="button" className={styles.secondaryButton} onClick={copyWorksheet}>Скопировать JSON</button><span>Файл и копия создаются на твоём устройстве без отправки.</span></div>
-        {copyStatus && <p className={styles.copyStatus} role="status">{copyStatus}</p>}
-        <details className={styles.jsonDetails}><summary>Показать JSON для ручного сохранения</summary><label htmlFor="calibration-json">Разметка этого вымышленного кейса</label><textarea id="calibration-json" readOnly rows={10} value={exportJson} onFocus={(event) => event.currentTarget.select()} /></details>
       </>}
+      <div className={styles.actionRow}><button type="button" className={styles.primaryButton} onClick={downloadWorksheet}>Сохранить JSON</button><button type="button" className={styles.secondaryButton} onClick={copyWorksheet}>Скопировать JSON</button><button type="button" className={styles.secondaryButton} onClick={() => importInput.current?.click()}>Загрузить JSON</button><input ref={importInput} type="file" accept=".json,application/json" hidden onChange={importWorksheet} aria-label="Файл разметки JSON" /><span>Черновик остаётся на твоём устройстве; до сравнения ориентиры в JSON не включаются.</span></div>
+      {copyStatus && <p className={styles.copyStatus} role="status">{copyStatus}</p>}
+      <details className={styles.jsonDetails}><summary>Показать JSON для ручного сохранения</summary><label htmlFor="calibration-json">Разметка этого вымышленного кейса</label><textarea id="calibration-json" readOnly rows={10} value={exportJson} onFocus={(event) => event.currentTarget.select()} /></details>
       <button type="button" className={styles.clearButton} onClick={clearWorksheet}>Очистить разметку кейса</button>
     </section>
   </main>;

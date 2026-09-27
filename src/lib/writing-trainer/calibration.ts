@@ -29,6 +29,33 @@ export function createWorksheet(): CalibrationWorksheet {
   return { A: emptyVersion(), B: emptyVersion() };
 }
 
+export function parseWorksheetExport(text: string, caseId: string): CalibrationWorksheet {
+  const saved: unknown = JSON.parse(text);
+  if (!saved || typeof saved !== 'object') throw new Error('Файл не похож на разметку ASHYQ.');
+  const data = saved as Record<string, unknown>;
+  if (data.format !== 'ashyq-writing-calibration-v1') throw new Error('Неподдерживаемый формат разметки.');
+  if (data.caseId !== caseId) throw new Error('Выбери тот же кейс, для которого сохранён файл.');
+  if (!data.teacher || typeof data.teacher !== 'object') throw new Error('В файле нет разметки.');
+
+  const teacher = data.teacher as Record<string, unknown>;
+  const result = createWorksheet();
+  for (const version of ['A', 'B'] as const) {
+    const entries = teacher[version];
+    if (!entries || typeof entries !== 'object') throw new Error('В файле не хватает версии эссе.');
+    for (const { id } of calibrationCriteria) {
+      const judgment = (entries as Record<string, unknown>)[id];
+      if (!judgment || typeof judgment !== 'object') throw new Error('В файле не хватает одного из критериев.');
+      const { band, excerpt, rationale } = judgment as Record<string, unknown>;
+      const validBand = band === '' || band === 'insufficient' || (typeof band === 'string' && /^(?:[0-8](?:\.0|\.5)|9\.0)$/.test(band));
+      if (!validBand || typeof excerpt !== 'string' || typeof rationale !== 'string' || excerpt.length > 4000 || rationale.length > 8000) {
+        throw new Error('В файле есть повреждённые или слишком длинные поля.');
+      }
+      result[version][id] = { band: band as CalibrationBand, excerpt, rationale };
+    }
+  }
+  return result;
+}
+
 export function essayParagraphs(essay: WritingCase, version: CalibrationVersion): string[] {
   if (version === 'A') return essay.paragraphs.map((paragraph) => originalParagraph(essay, paragraph.id));
 
