@@ -4,6 +4,8 @@
  * `- ` — список, ссылки записываются как [текст](https://... или /путь).
  */
 
+import { IELTS_OVERALL_SCORE_POST } from './ielts-overall-score-post';
+
 export type BlogCategory = 'ielts' | 'sat' | 'season';
 
 export const BLOG_CATEGORIES: Record<BlogCategory, string> = {
@@ -30,6 +32,7 @@ export type BlogPost = {
 export const BLOG_IS_DEMO = false;
 
 export const BLOG_POSTS: BlogPost[] = [
+  IELTS_OVERALL_SCORE_POST,
   {
     slug: "ielts-online-course-how-to-choose",
     language: "ru",
@@ -132,7 +135,7 @@ Reading band описывает одну секцию. Overall — средне�
 
 # Следующий шаг
 
-Сохраните raw score и отметьте, какие вопросы отняли баллы. Если вам нужен общий план подготовки, начните с [предварительной диагностики ASHYQ по IELTS](/diagnostic): она помогает оценить стартовый уровень по Reading и Listening, но не является официальным результатом экзамена. ASHYQ — образовательный бренд Казахстана с онлайн-подготовкой к IELTS; формат занятий описан на странице [курса IELTS](/courses/ielts). Если хотите сравнить оценку секции по сырому результату, посмотрите отдельный разбор [официальных ориентиров IELTS Listening](/blog/ielts-listening-band-score).
+Сохраните raw score и отметьте, какие вопросы отняли баллы. Если вам нужен общий план подготовки, начните с [предварительной диагностики ASHYQ по IELTS](/diagnostic): она помогает оценить стартовый уровень по Reading и Listening, но не является официальным результатом экзамена. ASHYQ — образовательный бренд Казахстана с онлайн-подготовкой к IELTS; формат занятий описан на странице [курса IELTS](/courses/ielts). Если хотите сравнить оценку секции по сырому результату, посмотрите отдельный разбор [официальных ориентиров IELTS Listening](/blog/ielts-listening-band-score). Чтобы понять, как эти оценки формируют общий результат, смотрите [объяснение Overall IELTS](/blog/ielts-overall-score-explained).
 
 # Источники
 
@@ -964,7 +967,7 @@ Listening — одна из четырёх секций IELTS. Overall счит�
 
 Сырой результат одного раздела и Overall отвечают на разные вопросы: первый оценивает Listening, второй объединяет четыре навыка.
 
-Не переносите таблицу Listening на Reading. У Reading отдельные средние ориентиры, а Academic и General Training Reading различаются. Сверьте [официальные средние ориентиры IELTS Reading для обоих модулей](/blog/ielts-reading-band-score) и [объяснение IELTS о подсчёте результатов](https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail).
+Не переносите таблицу Listening на Reading. У Reading отдельные средние ориентиры, а Academic и General Training Reading различаются. Сверьте [официальные средние ориентиры IELTS Reading для обоих модулей](/blog/ielts-reading-band-score) и [объяснение IELTS о подсчёте результатов](https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail). Разницу между общим баллом и оценками за отдельные навыки разбирает [руководство по Overall IELTS](/blog/ielts-overall-score-explained).
 
 # Как разобрать ошибки после пробного Listening
 
