@@ -109,10 +109,12 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
                 <MicroLabel>Уроки</MicroLabel>
                 <h2 id="course-lessons-title" className={styles.heading}>Попробуйте до записи</h2>
               </div>
-              <p className={styles.sectionIntro}>Вступительные уроки открыты всем. Основные уроки, задания и разборы — для учеников ASHYQ в их классе.</p>
+              <p className={styles.sectionIntro}>{course.slug === 'ielts'
+                ? 'Вступительные уроки и демо тренажёра Writing открыты всем. Основные уроки, задания и разборы — для учеников ASHYQ в их классе.'
+                : 'Вступительные уроки открыты всем. Основные уроки, задания и разборы — для учеников ASHYQ в их классе.'}</p>
             </div>
 
-            <div className={styles.lessons}>
+            <div className={[styles.lessons, course.slug === 'ielts' ? styles.lessonsFour : ''].join(' ')}>
               {free.map((lesson) => (
                 <Link href={`${lessonsHref}/${lesson.slug}`} className={`${styles.lessonCard} ${styles.lessonLink}`} key={lesson.slug}>
                   <span className={styles.lessonMeta}>Бесплатно · {lesson.free.minutes} мин</span>
@@ -120,6 +122,13 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
                   <p>{lesson.summary}</p>
                 </Link>
               ))}
+              {course.slug === 'ielts' && (
+                <Link href="/writing/trainer" className={[styles.lessonCard, styles.lessonLink].join(' ')} aria-label="Открыть демо тренажёра IELTS Writing Task 2">
+                  <span className={styles.lessonMeta}>Бесплатно · 2 эссе</span>
+                  <span className={styles.lessonTitle}>Writing Task 2: тренажёр</span>
+                  <p>Найди ошибки и сравни правки с разбором на готовых эссе. Свой текст пока не загружается.</p>
+                </Link>
+              )}
               <div className={`${styles.lessonCard} ${styles.lessonLocked}`}>
                 <span className={styles.lessonMeta}><LineIcon name="lock" size={14} />Для учеников ASHYQ</span>
                 <span className={styles.lessonTitle}>Ещё {lessonsWord(locked.length)}</span>
