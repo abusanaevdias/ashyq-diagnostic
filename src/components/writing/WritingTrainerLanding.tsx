@@ -33,7 +33,7 @@ export default function WritingTrainerLanding() {
       <header className={styles.hero}>
         <p className={styles.eyebrow}>ОТКРЫТАЯ УЧЕБНАЯ ПРАКТИКА</p>
         <h1>Сначала попробуй сам. Потом смотри разбор.</h1>
-        <p className={styles.lead}>Сейчас это демо на двух готовых эссе: сначала ищешь слабые места, потом переписываешь текст по шагам. Своё эссе пока загрузить нельзя.</p>
+        <p className={styles.lead}>Без входа попробуй тренажёр на двух готовых эссе: сначала ищешь слабые места, потом переписываешь текст по шагам. Ученики IELTS-класса ASHYQ могут также работать со своим текстом.</p>
         <a className={styles.jumpLink} href="#how-it-works">Посмотреть три шага ↓</a>
       </header>
 
@@ -67,9 +67,13 @@ export default function WritingTrainerLanding() {
           <p className={styles.startEyebrow}>МОЖНО НАЧАТЬ БЕЗ РЕГИСТРАЦИИ</p>
           <h2 id="start-title">Попробуй на двух готовых эссе</h2>
           <p>Грамматика, ответ на вопрос, связность и лексика — по одному шагу за раз. Правки остаются только в открытой вкладке.</p>
-          <p className={styles.limit}>Своё эссе пока добавить нельзя. Числа в разборе — учебные ориентиры для этих примеров, не оценка твоего текста или официальный балл IELTS.</p>
+          <p className={styles.limit}>Числа в разборе — учебные ориентиры для готовых примеров, не оценка твоего текста или официальный балл IELTS.</p>
         </div>
         <Link href="/writing/trainer/practice" className={styles.startButton}>Попробовать тренажёр <span aria-hidden="true">→</span></Link>
+      </section>
+      <section className={styles.own} aria-labelledby="own-title">
+        <div><p className={styles.eyebrow}>ДЛЯ УЧЕНИКОВ ASHYQ</p><h2 id="own-title">Есть своё эссе?</h2><p>Если ты состоишь в IELTS-классе, добавь задание и текст, а затем перепиши эссе по четырём критериям. Черновик останется в этой вкладке. Автоматический разбор и балл для своего текста пока недоступны.</p></div>
+        <Link className={styles.ownLink} href="/writing/trainer/own">Работать со своим эссе →</Link>
       </section>
     </main>
   );

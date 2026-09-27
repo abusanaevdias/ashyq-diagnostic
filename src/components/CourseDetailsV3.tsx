@@ -126,7 +126,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
                 <Link href="/writing/trainer" className={[styles.lessonCard, styles.lessonLink].join(' ')} aria-label="Открыть демо тренажёра IELTS Writing Task 2">
                   <span className={styles.lessonMeta}>Бесплатно · 2 эссе</span>
                   <span className={styles.lessonTitle}>Writing Task 2: тренажёр</span>
-                  <p>Найди ошибки и сравни правки с разбором на готовых эссе. Свой текст пока не загружается.</p>
+                  <p>Попробуй на двух готовых эссе. Ученики IELTS-класса могут добавить свой текст для самостоятельной правки.</p>
                 </Link>
               )}
               <div className={`${styles.lessonCard} ${styles.lessonLocked}`}>

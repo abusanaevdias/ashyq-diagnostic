@@ -72,6 +72,7 @@ export function roleAllowed(role: Role, roles: readonly Role[]): boolean {
 export function roleLinks(role: Role): Array<{ href: string; label: string; text: string }> {
   const links: Array<{ href: string; label: string; text: string }> = [];
   if (can(role, 'submission.create')) links.push({ href: '/classes', label: 'Мой класс', text: 'Уроки, материалы и задания ваших классов.' });
+  if (can(role, 'submission.create')) links.push({ href: '/writing/trainer/own', label: 'Моё эссе IELTS', text: 'Самостоятельная правка Writing Task 2 для участников IELTS-класса.' });
   if (can(role, 'content.create')) links.push({ href: '/teacher', label: 'Учителю', text: 'Классы, уроки, задания и проверка сдач.' });
   if (can(role, 'blog.write')) links.push({ href: '/write', label: 'Редактору', text: 'Черновики и публикации блога.' });
   if (can(role, 'season.play')) links.push({ href: '/season/current', label: 'Мой сезон', text: 'Команда, баллы недели и Match Day.' });
