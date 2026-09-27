@@ -5,6 +5,7 @@
 .eyebrow { color: var(--red-deep); margin: 0 0 16px; }
 .hero h1 { font: 800 clamp(2.4rem, 5vw, 3.8rem)/1.05 var(--font-display); letter-spacing: -.05em; margin: 0; }
 .hero > p:not(.eyebrow) { max-width: 720px; margin: 16px 0 0; color: var(--ink-soft); font-size: 1.05rem; line-height: 1.6; }
+.heroLinks { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 12px; }
 .backLink { display: inline-flex; align-items: center; min-height: 44px; color: var(--red-deep); font-size: 13px; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
 .notice { display: grid; grid-template-columns: 170px 1fr; gap: 22px; padding: 18px 20px; border-left: 3px solid var(--red); border-radius: var(--r-sm); background: var(--blush-soft); }
 .notice strong { font-size: 14px; }

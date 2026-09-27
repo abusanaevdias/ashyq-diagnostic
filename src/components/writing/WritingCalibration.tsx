@@ -122,7 +122,10 @@ export default function WritingCalibration() {
       <p className={styles.eyebrow}>СИНТЕТИЧЕСКИЙ ПИЛОТ · IELTS ACADEMIC TASK 2</p>
       <h1>Проверь учебные ориентиры.</h1>
       <p>Оцени два полных варианта вымышленного эссе по четырём критериям. Сначала запиши собственное суждение и фрагменты текста; ориентиры тренажёра откроются после разметки.</p>
-      <a href="/writing/trainer" className={styles.backLink}>← К тренажёру ученика</a>
+      <nav className={styles.heroLinks} aria-label="Навигация пилота">
+        <a href="/teacher" className={styles.backLink}>← К классам</a>
+        <a href="/writing/trainer" className={styles.backLink}>К тренажёру ученика →</a>
+      </nav>
     </header>
 
     <div className={styles.notice}>
