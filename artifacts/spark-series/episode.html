@@ -67,6 +67,25 @@ body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: anti
 .wc b { font: 800 84px/1 var(--display); letter-spacing: -0.03em; }
 .wc span { font: 600 32px/1 var(--body); color: var(--ink-soft); }
 
+/* spelling / number */
+.box.wavy { text-decoration: underline wavy var(--red); text-decoration-thickness: 3px; text-underline-offset: 10px; color: var(--red); }
+.box ins { text-decoration: none; color: var(--success); font-size: 1.2em; }
+.heard.on { color: var(--ink); }
+
+/* tfng */
+.passage { font: 500 38px/1.35 var(--body); margin-top: 12px; }
+.stmt { font: 800 44px/1.2 var(--display); letter-spacing: -0.015em; margin-top: 12px; }
+.opts { display: flex; gap: 14px; margin-top: 28px; }
+.opt { height: 100px; border-radius: 999px; border: 4px solid #e2e0da; display: flex; align-items: center; justify-content: center; font: 800 34px/1 var(--display); flex: 1; }
+.opt.n { flex: 1.5; }
+
+/* timing */
+.clock { font: 800 96px/1 var(--display); letter-spacing: -0.03em; margin-top: 24px; }
+.trow { display: grid; grid-template-columns: 150px 1fr 150px; align-items: center; gap: 18px; margin-top: 22px; font: 600 32px/1 var(--body); }
+.trow .bar { height: 26px; border-radius: 13px; background: var(--hairline); overflow: hidden; }
+.trow .bar b { display: block; height: 100%; border-radius: 13px; background: var(--ink); transform-origin: 0 50%; }
+.trow em { white-space: nowrap; font-style: normal; text-align: right; font-weight: 800; font-family: var(--display); }
+
 /* sat */
 .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
 .cell { height: 150px; border-radius: 26px; border: 4px solid #e2e0da; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
@@ -153,7 +172,7 @@ function kt(el, t, tin, tout) {
 }
 
 // ---------- cards, one renderer per exam section ----------
-const STAMP = { listening: 'НЕВЕРНО', writing: 'МАЛО СЛОВ', sat: '0 БАЛЛОВ' };
+const STAMP = { listening: 'НЕВЕРНО', spelling: 'ОШИБКА', number: 'НЕВЕРНО', tfng: 'НЕВЕРНО', timing: 'НЕ УСПЕЛА', writing: 'МАЛО СЛОВ', sat: '0 БАЛЛОВ' };
 const headphones = '<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#6e6d6b" stroke-width="2.2" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="1.5" fill="#6e6d6b"/><rect x="17" y="14" width="4" height="7" rx="1.5" fill="#6e6d6b"/></svg>';
 const C = E.card;
 const CARDS = {
@@ -176,6 +195,95 @@ const CARDS = {
       $('count').style.background = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--hairline)';
       $('count').style.color = fixed || bad ? '#fff' : 'var(--ink)';
       $('box').style.borderColor = fixed ? 'var(--success)' : bad ? 'var(--red)' : '#e2e0da';
+    },
+  },
+  spelling: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <p class="instr">${esc(C.instruction)}</p>
+      <div class="heard">${headphones}<span>“${esc(C.heard)}”</span></div>
+      <div class="field"><span class="lab">${esc(C.prompt)}</span><div class="box" id="box"></div><span class="count" id="count">1 слово</span></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const n = Math.round(C.wrong.length * prog(t, ...T.typing));
+      $('box').innerHTML = fixed
+        ? `<span>${esc(C.right.slice(0, C.mark))}<ins>${esc(C.right[C.mark])}</ins>${esc(C.right.slice(C.mark + 1))}</span>`
+        : `<span>${esc(C.wrong.slice(0, n))}${t < T.done && Math.floor(t * 3) % 2 ? '|' : ''}</span>`;
+      $('box').classList.toggle('wavy', bad);
+      $('box').style.borderColor = fixed ? 'var(--success)' : bad ? 'var(--red)' : '#e2e0da';
+      $('count').textContent = fixed ? 'верно ✓' : bad ? 'орфография ✕' : '1 слово';
+      $('count').style.background = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--hairline)';
+      $('count').style.color = fixed || bad ? '#fff' : 'var(--ink)';
+    },
+  },
+  number: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <p class="instr">${esc(C.instruction)}</p>
+      <div class="heard" id="h0">${headphones}<span>${esc(C.heard[0])}</span></div>
+      <div class="heard" id="h1" style="padding-left:62px">${esc(C.heard[1])}</div>
+      <div class="field"><span class="lab">${esc(C.prompt)}</span><div class="box" id="box"></div><span class="count" id="count"></span></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      $('h1').style.opacity = prog(t, C.correctionAt, C.correctionAt + 0.3);
+      $('h1').classList.toggle('on', t >= T.rule);
+      $('h1').style.fontWeight = t >= T.rule ? '600' : '500';
+      const typed = t >= T.typing[0] + 0.6 ? C.wrong : '';
+      $('box').textContent = fixed ? C.right : typed;
+      $('box').style.color = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      $('box').style.borderColor = fixed ? 'var(--success)' : bad ? 'var(--red)' : '#e2e0da';
+      $('count').textContent = fixed ? 'верно ✓' : bad ? `сказали ${C.right}` : '';
+      $('count').style.visibility = bad || fixed ? 'visible' : 'hidden';
+      $('count').style.background = fixed ? 'var(--success)' : 'var(--red)';
+      $('count').style.color = '#fff';
+    },
+  },
+  tfng: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="cap" style="margin-top:26px">Текст</div><p class="passage">${esc(C.passage)}</p>
+      <div class="cap" style="margin-top:26px">Утверждение</div><p class="stmt">${esc(C.statement)}</p>
+      <div class="opts">${['TRUE', 'FALSE', 'NOT GIVEN'].map((o) => `<div class="opt${o === 'NOT GIVEN' ? ' n' : ''}" data-o="${o}">${o}</div>`).join('')}</div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const hover = ['TRUE', 'FALSE', 'NOT GIVEN'][Math.floor(prog(t, ...T.typing) * 5) % 3];
+      document.querySelectorAll('.opt').forEach((el) => {
+        const o = el.dataset.o;
+        const picked = t >= T.done && o === C.wrong;
+        const right = fixed && o === C.right;
+        let bg = 'transparent', col = 'var(--ink)', bd = '#e2e0da', op = 1;
+        if (t >= T.typing[0] && t < T.done && o === hover) bd = 'var(--ink)';
+        if (picked) { bg = bad ? 'var(--red)' : 'var(--ink)'; col = '#fff'; bd = bg; }
+        if (fixed && o === C.wrong) { bg = 'transparent'; col = 'var(--red)'; bd = '#e2e0da'; op = 0.45; }
+        if (right) { bg = 'var(--success)'; col = '#fff'; bd = bg; }
+        el.style.background = bg; el.style.color = col; el.style.borderColor = bd; el.style.opacity = op;
+        el.style.textDecoration = fixed && o === C.wrong ? 'line-through' : 'none';
+        el.textContent = right ? `✓ ${o}` : picked && bad ? `✕ ${o}` : o;
+      });
+    },
+  },
+  timing: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="clock" id="clock">60:00</div>
+      ${[1, 2, 3].map((i) => `<div class="trow"><span>Текст ${i}</span><div class="bar"><b id="tb${i}"></b></div><em id="tm${i}"></em></div>`).join('')}
+      <div style="margin-top:28px"><span class="chip" id="tnote" style="background:var(--hairline)"></span></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, ...T.typing);
+      const spentW = [C.wrong[0] * clamp(p / 0.55), C.wrong[1] * clamp((p - 0.55) / 0.4), p >= 1 ? C.wrong[2] : 0];
+      const f = eInOut(prog(t, T.fix, T.fix + 0.8));
+      const mins = fixed ? C.wrong.map((w, i) => lerp(w, C.right[i], f)) : spentW;
+      const used = fixed ? 0 : mins[0] + mins[1];
+      const left = Math.max(0, 60 - used);
+      $('clock').textContent = fixed ? '60:00' : `${String(Math.floor(left)).padStart(2, '0')}:${String(Math.floor((left % 1) * 60)).padStart(2, '0')}`;
+      $('clock').style.color = bad ? 'var(--red)' : fixed ? 'var(--success)' : 'var(--ink)';
+      mins.forEach((m, i) => {
+        $(`tb${i + 1}`).style.transform = `scaleX(${m / 30})`;
+        $(`tb${i + 1}`).style.background = fixed ? 'var(--success)' : bad && i === 2 ? 'var(--red)' : 'var(--ink)';
+        $(`tm${i + 1}`).textContent = m > 0.2 ? `${Math.round(m)} мин` : '';
+        $(`tm${i + 1}`).style.color = bad && i === 2 ? 'var(--red)' : 'var(--ink)';
+      });
+      const note = $('tnote');
+      note.textContent = fixed ? 'Сначала вопросы → потом поиск по тексту' : bad ? `5 минут на ${C.questions}` : 'Читаю всё внимательно…';
+      note.style.background = fixed ? 'var(--success-soft)' : bad ? 'var(--blush)' : 'var(--hairline)';
+      note.style.color = fixed ? 'var(--success)' : bad ? 'var(--red-deep)' : 'var(--ink)';
     },
   },
   writing: {
@@ -279,7 +387,7 @@ function seek(t) {
   bub.style.visibility = say ? 'visible' : 'hidden';
   const since = t >= T.fail ? t - T.fail : t - T.done;
   bub.style.transform = `scale(${eBack(prog(since, 0, 0.25))})`;
-  bub.style.left = (x - 190) + 'px'; bub.style.top = (y - 20) + 'px';
+  bub.style.left = (x - 250) + 'px'; bub.style.top = (y + 150) + 'px';
 }
 window.seek = seek;
 

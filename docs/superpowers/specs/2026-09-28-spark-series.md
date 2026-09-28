@@ -44,7 +44,7 @@ Reading — bg, Writing — success-soft, Speaking — blush-soft, SAT — dark)
 | 1 | «Два слова, Искра!» | Listening | Задание: NO MORE THAN TWO WORDS. Пишет «large wooden table» — ответ засчитан как неверный | Превысил лимит слов — ответ неверный, даже если смысл правильный |
 | 2 | «Акомодейшн» | Listening | Всё услышала верно, но пишет «acommodation» | Орфография считается: ошибка в слове = 0 за вопрос |
 | 3 | «Пятнадцать… то есть пятьдесят» | Listening | Говорящий поправляется: «fifteen — sorry, fifty», Искра уже записала 15 | Дослушай фразу до конца: в заданиях на цифры часто бывают поправки |
-| 4 | «Лондон ≠ English» | Reading | Отвечает TRUE, потому что «ну логично же» | Только текст: если в тексте этого нет — это NOT GIVEN |
+| 4 | «Ну логично же — TRUE!» | Reading | «The library opened a new reading room in 2019» → «The reading room is popular with students»: отвечает TRUE, потому что «ну логично же» | Только текст: если в тексте этого нет — это NOT GIVEN |
 | 5 | «Полчаса на первый текст» | Reading | Читает первый текст целиком, на третий остаётся 5 минут | 60 минут на 3 текста: сначала вопросы, потом поиск по тексту |
 | 6 | «190 слов — и так сойдёт» | Writing Task 2 | Гордо сдаёт короткое эссе | Task 2 — минимум 250 слов, меньше — теряешь баллы |
 | 7 | «Все цифры графика» | Writing Task 1 | Переписывает каждую цифру из графика | Сначала обзор: главный тренд, а не пересказ всех чисел |
@@ -96,6 +96,9 @@ ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-writi
 - `node render.mjs --ep 1,6,9` — звук (`audio.py <ep>`) и видео `ep-NN.mp4`.
 
 Готово: эп. 1 (Listening — «the wooden table» при лимите в два слова:
-артикль тоже слово), эп. 6 (Writing Task 2 — 190 → 265 слов), эп. 9
-(Digital SAT — пустые ответы против угадывания). Новый эпизод = запись в
+артикль тоже слово), эп. 2 (Listening — «acommodation»), эп. 3
+(Listening — «fifteen… sorry, fifty»), эп. 4 (Reading — NOT GIVEN), эп. 5
+(Reading — 30/25/5 минут против ~20/20/20), эп. 6 (Writing Task 2 — 190 → 265
+слов), эп. 9 (Digital SAT — пустые ответы против угадывания). Типы карточек:
+`listening`, `spelling`, `number`, `tfng`, `timing`, `writing`, `sat`. Новый эпизод = запись в
 `episodes.js` + при необходимости новый `kind` в шаблоне.
