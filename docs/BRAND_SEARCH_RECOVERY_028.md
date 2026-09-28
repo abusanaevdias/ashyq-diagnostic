@@ -14,7 +14,6 @@ Public root before this patch: HTTP 200, self-canonical, no noindex, root in sit
 - Put ASHYQ visibly in home H1 and clarify the actual educational offering.
 - Render one WebSite node on the root, with ASHYQ, the already-used alternative name, canonical URL and the existing organization publisher ID.
 - Add server-HTML regression checks for name, H1/title, indexability, canonical/sitemap, free entry links and both existing Google ownership tokens.
-- Run the existing SEO check in the live-server CI gate, so the identity contract protects later releases as well as this manual verification.
 - No host migration, fabricated reputation, backlink campaign, private-route indexing, diagnostic-state changes or rollback of truthful offer/library work.
 
 Official source: [Google Search Central: site names](https://developers.google.com/search/docs/appearance/site-names). Google considers home headings/title/og:site_name alongside WebSite structured data; site-name processing is automated and may require recrawling. This source does not promise higher ranking.
