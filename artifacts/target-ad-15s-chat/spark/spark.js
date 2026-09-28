@@ -37,7 +37,7 @@
   }
 
   // ----- limbs (monoline, like the flame reference) -----
-  const P = (o) => Object.assign({ name: 'stand', phase: 0, blink: 0, lookX: 0, lookY: 0 }, o || {});
+  const P = (o) => Object.assign({ name: 'stand', phase: 0, blink: 0, lookX: 0, lookY: 0, mood: null, squash: 1 }, o || {});
   const line = (pts, w, col) => {
     const [s, m, e] = pts;
     return `<path d="M${s[0]} ${s[1]} Q${m[0]} ${m[1]} ${e[0]} ${e[1]}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
@@ -95,13 +95,15 @@
   // ----- faces -----
   function bigEyes(p, eyeCol, pupilCol) {
     const s = Math.max(0.08, 1 - p.blink);
-    if (p.name === 'cheer') {
+    if (p.name === 'cheer' && p.mood !== 'wow') {
       return [-26, 26].map((dx) => `<path d="M${C.x + dx - 14} ${C.y - 2} q14 -18 28 0" fill="none" stroke="${pupilCol}" stroke-width="8" stroke-linecap="round"/>`).join('') +
         `<path d="M${C.x - 16} ${C.y + 18} q16 22 32 0 z" fill="${pupilCol}"/>`;
     }
     const lx = p.name === 'think' ? -5 : p.lookX, ly = p.name === 'think' ? -8 : p.lookY;
     const eyes = [-26, 26].map((dx) => `<g transform="translate(${C.x + dx} ${C.y - 6}) scale(1 ${s})"><ellipse rx="17" ry="22" fill="${eyeCol}"/><ellipse cx="${lx}" cy="${ly + 3}" rx="8" ry="11" fill="${pupilCol}"/></g>`).join('');
-    const mouth = p.name === 'think'
+    const mouth = p.mood === 'wow'
+      ? `<ellipse cx="${C.x}" cy="${C.y + 28}" rx="9" ry="12" fill="${pupilCol}"/>`
+      : p.name === 'think'
       ? `<path d="M${C.x - 8} ${C.y + 26} h16" stroke="${pupilCol}" stroke-width="6" stroke-linecap="round"/>`
       : p.name === 'run' || p.name === 'fly'
         ? `<path d="M${C.x - 12} ${C.y + 22} q12 16 24 0 z" fill="${pupilCol}"/>`
@@ -123,13 +125,15 @@
     return eyes + brows + mouth;
   }
 
-  function spark(variant, pose) {
+  // opts: { limb: colour of arms and legs (on dark panels), trail: force the comet trail }
+  function spark(variant, pose, opts) {
+    const o = Object.assign({ limb: INK, trail: null }, opts || {});
     const p = P(pose);
     const b = BODIES[variant];
     const tilt = p.name === 'run' ? 10 : p.name === 'fly' ? -14 : p.name === 'think' ? -6 : 0;
     const lift = p.name === 'cheer' ? -16 : 0;
     const body = starPath(b);
-    const withTrail = p.name === 'fly' || p.name === 'run';
+    const withTrail = o.trail ?? (p.name === 'fly' || p.name === 'run');
     let inner;
     if (variant === 'sticker') {
       const halo = `<g stroke="${PAPER}" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" fill="${PAPER}"><path d="${body}"/>${limbs(p, PAPER, 30).replace(/stroke="#fdfdfd" stroke-width="\d+"/g, '')}</g>`;
@@ -139,10 +143,11 @@
       inner = (withTrail ? trail(b, RED) : '') + limbs(p, INK, 9) +
         `<path d="${body}" fill="${RED}" stroke="${RED}" stroke-width="${b.round}" stroke-linejoin="round"/>` + lineFace(p, INK);
     } else {
-      inner = (withTrail ? trail(b, RED) : '') + limbs(p, INK, 9) +
+      inner = (withTrail ? trail(b, RED) : '') + limbs(p, o.limb, 9) +
         `<path d="${body}" fill="${RED}" stroke="${RED}" stroke-width="${b.round}" stroke-linejoin="round"/>` + bigEyes(p, PAPER, INK);
     }
-    return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 ${lift}) rotate(${tilt} ${C.x} ${C.y + 60})">${inner}</g></svg>`;
+    const sq = `translate(${C.x} 362) scale(${1 / Math.sqrt(p.squash)} ${p.squash}) translate(${-C.x} -362)`;
+    return `<svg viewBox="0 0 400 400" overflow="visible" xmlns="http://www.w3.org/2000/svg"><g transform="${sq} translate(0 ${lift}) rotate(${tilt} ${C.x} ${C.y + 60})">${inner}</g></svg>`;
   }
 
   window.SPARK = { spark, BODIES };

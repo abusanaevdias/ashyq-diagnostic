@@ -70,11 +70,12 @@ body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: anti
 #typing { position: absolute; left: 30px; width: 150px; height: 88px; border-radius: 40px; border-bottom-left-radius: 12px; background: #f1efea; display: flex; align-items: center; justify-content: center; gap: 14px; transform-origin: 0 100%; }
 #typing i { width: 16px; height: 16px; border-radius: 50%; background: var(--ink-soft); }
 
-/* mascot */
-.cv { position: absolute; }
-#avatarWrap { position: absolute; left: 34px; top: 1270px; width: 196px; height: 196px; border-radius: 50%; background: var(--surface); box-shadow: 0 14px 34px rgba(22, 19, 17, 0.12); overflow: hidden; border: 6px solid var(--surface); }
+/* mascot: «Искра» from the ASHYQ logo (spark/spark.js) */
+.spk svg { width: 100%; height: 100%; display: block; overflow: visible; }
+#big { width: 760px; height: 760px; }
+#mini { left: -20px; top: 1200px; width: 300px; height: 300px; transform-origin: 50% 90%; }
 #bubble { position: absolute; left: 64px; top: 330px; max-width: 900px; background: var(--surface); border: 5px solid var(--ink); border-radius: 56px; padding: 36px 48px; font: 800 70px/1.08 var(--display); letter-spacing: -0.02em; transform-origin: 30% 100%; }
-#bubble::after { content: ''; position: absolute; left: 400px; bottom: -44px; width: 60px; height: 60px; background: var(--surface); border-right: 5px solid var(--ink); border-bottom: 5px solid var(--ink); transform: skewX(35deg) rotate(45deg); transform-origin: 0 0; }
+#bubble::after { content: ''; position: absolute; left: 110px; bottom: -44px; width: 60px; height: 60px; background: var(--surface); border-right: 5px solid var(--ink); border-bottom: 5px solid var(--ink); transform: skewX(35deg) rotate(45deg); transform-origin: 0 0; }
 
 /* end card */
 #wordmark { position: absolute; left: 0; right: 0; top: 880px; text-align: center; }
@@ -101,8 +102,6 @@ body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: anti
   <div class="head" id="h4"><div class="kt" data-kt="Новый поток —"></div><div><span class="kt" data-kt="новая" style="display:inline-block"></span><span class="acc">цена</span></div></div>
   <div class="head" id="h5" style="top:300px; font-size:104px; color:var(--on-dark)"><div class="kt" data-kt="Ты пишешь —"></div><div class="kt" data-kt="мы подбираем"></div><div><span class="acc" style="color:var(--blush); font-size:150px; margin-left:0">твою группу</span></div></div>
 
-  <!-- big mascot (hook, dark beat, end card) -->
-  <div class="abs" id="bigWrap" style="left:0; top:0; width:1080px; height:1920px; overflow:hidden"><canvas class="cv" id="big" width="900" height="1080"></canvas></div>
   <div id="bubble">а реально поднять<br>IELTS до 7? 😬</div>
 
   <!-- phone -->
@@ -124,13 +123,16 @@ body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: anti
       </div></div>
     </div>
   </div>
-  <div id="avatarWrap"><canvas class="cv" id="avatar" width="196" height="196" style="left:-6px; top:-6px"></canvas></div>
+  <div class="abs spk" id="mini"></div>
 
   <!-- end card -->
   <div id="wordmark"><img src="../../public/brand/wordmark-ink.png" alt="ASHYQ"></div>
   <div class="center kt" id="cta1" style="top:1130px; font-size:84px; line-height:1.05" data-kt="Напиши нам|в WhatsApp"></div>
   <p class="center" id="cta2" style="top:1340px; font:500 40px/1.35 var(--body); color:var(--ink-soft)">подберём группу под твоё расписание<br>IELTS · SAT · онлайн по Казахстану</p>
   <div class="center" id="arrow" style="top:1452px">↓</div>
+
+  <!-- the spark mascot: hook, dark beat, end card -->
+  <div class="abs spk" id="big"></div>
 </div>
 
 <!-- Single source of truth for timing: audio.py parses this block too. -->
@@ -161,6 +163,7 @@ body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: anti
   "pops": [0.05, 13.4]
 }
 </script>
+<script src="spark/spark.js"></script>
 <script>
 const TL = JSON.parse(document.getElementById('timeline').textContent);
 const $ = (id) => document.getElementById(id);
@@ -199,131 +202,9 @@ function head(id, t, tin, tout) {
   el.querySelectorAll('.acc').forEach((a) => acc(a, t, tin + blocks.length * 0.12 + 0.05, tout));
 }
 
-// ---------- original halftone mascot ----------
-// Drawn in grayscale on an offscreen canvas, then re-rendered as a dot screen.
-const CW = 600, CH = 720;
-const shade = document.createElement('canvas'); shade.width = CW; shade.height = CH;
-const g = shade.getContext('2d', { willReadFrequently: true });
-const LOGO = new Image(); LOGO.src = '../../public/brand/logo-icon.png';
-
-function grayRad(x, y, r0, x1, y1, r1, c0, c1) {
-  const gr = g.createRadialGradient(x, y, r0, x1, y1, r1);
-  gr.addColorStop(0, `rgb(${c0},${c0},${c0})`); gr.addColorStop(1, `rgb(${c1},${c1},${c1})`);
-  return gr;
-}
-function armPoints(p) {
-  if (p.arm === 'wave') {
-    const a = 0.25 + 0.4 * Math.sin(p.phase * Math.PI * 2);
-    return [[450, 600], [555, 450], [555 + 150 * Math.sin(a), 450 - 150 * Math.cos(a)]];
-  }
-  if (p.arm === 'scratch') {
-    const k = 8 * Math.sin(p.phase * Math.PI * 4);
-    return [[450, 600], [560, 430], [470 + k, 190]];
-  }
-  return null;
-}
-function drawShade(p) {
-  g.clearRect(0, 0, CW, CH);
-  // hoodie
-  g.fillStyle = grayRad(250, 560, 20, 300, 640, 330, 235, 120);
-  g.beginPath(); g.moveTo(40, 720); g.bezierCurveTo(40, 590, 120, 505, 300, 500); g.bezierCurveTo(480, 505, 560, 590, 560, 720); g.fill();
-  // headphones resting on the neck
-  g.lineWidth = 34; g.strokeStyle = 'rgb(70,70,70)';
-  g.beginPath(); g.ellipse(300, 505, 150, 58, 0, 0.05 * Math.PI, 0.95 * Math.PI); g.stroke();
-  g.fillStyle = grayRad(150, 500, 5, 160, 515, 60, 150, 40);
-  g.beginPath(); g.ellipse(160, 515, 48, 58, -0.3, 0, Math.PI * 2); g.fill();
-  g.fillStyle = grayRad(430, 500, 5, 440, 515, 60, 150, 40);
-  g.beginPath(); g.ellipse(440, 515, 48, 58, 0.3, 0, Math.PI * 2); g.fill();
-  // head
-  g.save(); g.translate(300 + p.headX, 300); g.rotate(p.tilt);
-  g.fillStyle = grayRad(-20, 30, 5, 0, 30, 50, 225, 185);
-  g.beginPath(); g.ellipse(-150, 40, 34, 42, 0, 0, Math.PI * 2); g.ellipse(150, 40, 34, 42, 0, 0, Math.PI * 2); g.fill();
-  g.fillStyle = grayRad(-60, -40, 10, 0, 10, 200, 252, 175);
-  g.beginPath(); g.ellipse(0, 20, 158, 168, 0, 0, Math.PI * 2); g.fill();
-  // cheeks
-  g.fillStyle = 'rgba(0,0,0,0.13)';
-  g.beginPath(); g.ellipse(-92, 88, 32, 20, 0, 0, Math.PI * 2); g.ellipse(92, 88, 32, 20, 0, 0, Math.PI * 2); g.fill();
-  // straight bob with blunt bangs
-  g.fillStyle = grayRad(-60, -150, 10, 0, -40, 230, 105, 30);
-  g.beginPath();
-  g.moveTo(-178, 110); g.bezierCurveTo(-200, -60, -140, -175, 0, -178); g.bezierCurveTo(140, -175, 200, -60, 178, 110);
-  g.lineTo(140, 110); g.bezierCurveTo(150, 20, 140, -40, 120, -52);
-  g.lineTo(-120, -52); g.bezierCurveTo(-140, -40, -150, 20, -140, 110); g.closePath(); g.fill();
-  g.fillStyle = 'rgba(255,255,255,0.18)';
-  g.beginPath(); g.ellipse(-70, -130, 60, 16, -0.3, 0, Math.PI * 2); g.fill();
-  g.restore();
-  // arm
-  const pts = armPoints(p);
-  if (pts) {
-    g.lineCap = 'round'; g.lineJoin = 'round'; g.lineWidth = 92; g.strokeStyle = 'rgb(175,175,175)';
-    g.beginPath(); g.moveTo(...pts[0]); g.lineTo(...pts[1]); g.lineTo(...pts[2]); g.stroke();
-    g.fillStyle = grayRad(pts[2][0] - 15, pts[2][1] - 20, 4, pts[2][0], pts[2][1], 64, 250, 185);
-    g.beginPath(); g.ellipse(pts[2][0], pts[2][1], 56, 62, 0, 0, Math.PI * 2); g.fill();
-  }
-}
-// crisp ink features on top of the dots: glasses, eyes, brows, mouth
-function drawInk(c, p, ink) {
-  c.save(); c.translate(300 + p.headX, 300); c.rotate(p.tilt);
-  c.fillStyle = ink; c.strokeStyle = ink; c.lineCap = 'round';
-  const blink = clamp(1 - p.blink, 0.08, 1);
-  [-60, 60].forEach((x) => {
-    c.save(); c.translate(x + p.lookX, 26 + p.lookY); c.scale(1, blink);
-    c.beginPath(); c.ellipse(0, 0, 19, 25, 0, 0, Math.PI * 2); c.fill();
-    c.fillStyle = '#fff'; c.beginPath(); c.arc(6, -8, 6.5, 0, Math.PI * 2); c.fill(); c.restore();
-  });
-  c.lineWidth = 7;
-  c.beginPath(); c.arc(-60, 26, 48, 0, Math.PI * 2); c.stroke();
-  c.beginPath(); c.arc(60, 26, 48, 0, Math.PI * 2); c.stroke();
-  c.beginPath(); c.moveTo(-14, 20); c.quadraticCurveTo(0, 10, 14, 20); c.stroke();
-  c.lineWidth = 11;
-  const br = p.brow;
-  c.beginPath(); c.moveTo(-88, -44 - br); c.lineTo(-36, -50 + br * 0.6); c.stroke();
-  c.beginPath(); c.moveTo(36, -50 + br * 0.6); c.lineTo(88, -44 - br); c.stroke();
-  if (p.mouth === 'open') {
-    c.beginPath(); c.moveTo(-34, 96); c.quadraticCurveTo(0, 158, 34, 96); c.closePath(); c.fill();
-  } else if (p.mouth === 'hmm') {
-    c.lineWidth = 9; c.beginPath(); c.moveTo(-26, 112); c.bezierCurveTo(-10, 100, 8, 122, 26, 106); c.stroke();
-  } else {
-    c.lineWidth = 10; c.beginPath(); c.moveTo(-36, 100); c.quadraticCurveTo(0, 132, 36, 100); c.stroke();
-  }
-  c.restore();
-}
-// render the shaded figure as a halftone dot screen onto an output canvas
-function mascot(canvas, p, opt) {
-  drawShade(p);
-  const data = g.getImageData(0, 0, CW, CH).data;
-  const ctx = canvas.getContext('2d');
-  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const s = opt.scale, ox = opt.x, oy = opt.y, step = opt.step;
-  // paper-coloured silhouette underneath the dots
-  ctx.drawImage(shade, ox, oy, CW * s, CH * s);
-  ctx.globalCompositeOperation = 'source-in'; ctx.fillStyle = opt.paper; ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.fillStyle = opt.ink; ctx.beginPath();
-  for (let y = 0, row = 0; y < canvas.height; y += step * 0.866, row++) {
-    for (let x = (row % 2) * step / 2; x < canvas.width; x += step) {
-      const cx = Math.round((x - ox) / s), cy = Math.round((y - oy) / s);
-      if (cx < 0 || cy < 0 || cx >= CW || cy >= CH) continue;
-      const i = (cy * CW + cx) * 4, a = data[i + 3] / 255;
-      if (a < 0.05) continue;
-      const d = (1 - data[i] / 255) * a;
-      const r = step * 0.62 * Math.sqrt(d);
-      if (r < 0.35) continue;
-      ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, Math.PI * 2);
-    }
-  }
-  ctx.fill();
-  ctx.setTransform(s, 0, 0, s, ox, oy);
-  drawInk(ctx, p, opt.ink);
-  // ASHYQ patch on the hoodie: the only colour on the figure
-  ctx.save(); ctx.translate(360, 610); ctx.rotate(-0.08);
-  ctx.beginPath(); ctx.roundRect(-40, -40, 80, 80, 18); ctx.clip();
-  if (LOGO.complete) ctx.drawImage(LOGO, -65, -65, 130, 130);
-  ctx.restore();
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-}
-const pose = (o) => Object.assign({ tilt: 0, headX: 0, arm: 'none', phase: 0, blink: 0, lookX: 0, lookY: 0, mouth: 'smile', brow: 0 }, o);
+// ---------- mascot ----------
 const blinkAt = (t, times) => Math.max(0, ...times.map((b) => 1 - Math.abs(t - b) / 0.09));
+const drawSpark = (el, pose, opts) => { el.innerHTML = SPARK.spark('logo', pose, opts); };
 
 // ---------- chat layout ----------
 // measured after fonts load, so bubble heights are final
@@ -372,34 +253,32 @@ function seek(t) {
   $('bubble').style.transform = `translate(${bOut * 330}px, ${bOut * 520}px) scale(${lerp(0.85, 1, bIn) * lerp(1, 0.45, bOut)}) rotate(${lerp(-3, 0, bIn)}deg)`;
   $('bubble').style.opacity = t < 2.3 ? 1 - prog(t, 2.2, 2.3) : 0;
 
-  // big mascot: hook → dark beat → end card
+  // the spark: thinks over the hook question → waves on the dark beat → flies into the end card
   const big = $('big');
-  let bigPose, bigOpt, bigY;
+  let bx, by, size, bp, bo = {};
   if (t < S.s5.start) {
     const out = eInOut(prog(t, 1.9, 2.4));
-    bigY = 640 + out * 1300 + Math.sin(t * 3) * 6;
-    bigPose = pose({ arm: 'scratch', phase: t, tilt: -0.08 + Math.sin(t * 2.4) * 0.03, lookX: 6, lookY: -6, mouth: 'hmm', brow: 6, blink: blinkAt(t, [1.2]) });
-    bigOpt = { scale: 1.45, x: 0, y: 0, step: 6, paper: '#fdfdfd', ink: '#161311' };
-    big.style.left = '90px';
+    size = 1000; bx = 120; by = 700 + out * 1400 + Math.sin(t * 3) * 8;
+    bp = { name: 'think', lookY: -9, lookX: -4, blink: blinkAt(t, [1.2]) };
   } else if (t < S.s6.start) {
-    const a = eOut(prog(t, S.s5.start + 0.1, S.s5.start + 0.7));
+    const a = eOut(prog(t, S.s5.start + 0.1, S.s5.start + 0.6));
     const b = eInOut(prog(t, S.s6.start - 0.35, S.s6.start));
-    bigY = 1920 - a * 1080 + b * 900;
-    bigPose = pose({ arm: 'wave', phase: (t - S.s5.start) * 1.6, tilt: 0.06 * Math.sin(t * 5), mouth: 'open', blink: blinkAt(t, [11.9]) });
-    bigOpt = { scale: 1.45, x: 0, y: 0, step: 6, paper: '#f8f7f3', ink: '#1b1512' };
-    big.style.left = '140px';
+    size = 820; bx = 150; by = 1920 - a * 1080 + b * 1100;
+    bp = { name: 'wave', phase: (t - S.s5.start) * 1.8, blink: blinkAt(t, [11.9]) };
+    bo = { limb: '#f8f7f3' };
   } else {
-    // peeks over the wordmark
-    const a = eBack(prog(t, S.s6.start + 0.2, S.s6.start + 0.75));
-    bigY = lerp(940, 520, a);
-    bigPose = pose({ tilt: 0.05 * Math.sin(t * 2), mouth: 'smile', lookY: 4, blink: blinkAt(t, [14.1]) });
-    bigOpt = { scale: 0.9, x: 180, y: 0, step: 5, paper: '#fdfdfd', ink: '#161311' };
-    big.style.left = '90px';
+    const e = S.s6.start;
+    const f = eInOut(prog(t, e + 0.05, e + 0.75));
+    const land = prog(t, e + 0.75, e + 1.15);
+    size = 380;
+    bx = lerp(-560, 350, f); by = lerp(240, 556, f) - Math.sin(Math.PI * f) * 150;
+    if (t < e + 0.75) bp = { name: 'fly' };
+    else bp = { name: t < e + 1.6 ? 'cheer' : 'wave', phase: (t - e) * 1.6, squash: 1 - 0.18 * Math.sin(Math.PI * land) * (1 - land), blink: blinkAt(t, [14.2]) };
   }
-  big.style.top = bigY + 'px';
-  if (bigY < 1920) mascot(big, bigPose, bigOpt);
-  // end card: hide the mascot's body behind the wordmark line
-  $('bigWrap').style.height = t >= S.s6.start ? '930px' : '1920px';
+  big.style.width = big.style.height = size + 'px';
+  big.style.left = bx + 'px'; big.style.top = by + 'px';
+  big.style.visibility = by < 1900 ? 'visible' : 'hidden';
+  if (by < 1900) drawSpark(big, bp, bo);
 
   // headlines
   head('h2', t, S.s2.start + 0.15, S.s2.end - 0.3);
@@ -432,14 +311,19 @@ function seek(t) {
   $('newp').style.opacity = prog(t, TL.newPrice, TL.newPrice + 0.1);
   $('newp').style.transform = `scale(${lerp(0.7, 1, np)})`; $('newp').style.transformOrigin = '0 80%';
 
-  // avatar of the student next to the phone
+  // mini spark next to the phone reacts to ASHYQ's answers
   const avIn = eBack(prog(t, S.s2.start + 0.35, S.s2.start + 0.7));
   const avOut = prog(t, S.s4.end - 0.35, S.s4.end - 0.1);
-  $('avatarWrap').style.transform = `scale(${avIn * (1 - avOut)})`;
+  $('mini').style.transform = `scale(${avIn * (1 - avOut)})`;
   if (t > S.s2.start && t < S.s4.end) {
-    const mood = t >= TL.newPrice ? 'open' : t >= TL.messages[2].t ? 'smile' : 'hmm';
-    mascot($('avatar'), pose({ mouth: mood, tilt: Math.sin(t * 2.2) * 0.05, blink: blinkAt(t, [4.4, 7.2, 10.1]), lookX: 8, brow: mood === 'open' ? 12 : 0 }),
-      { scale: 0.52, x: -58, y: -46, step: 4.5, paper: '#fdfdfd', ink: '#161311' });
+    const M = Object.fromEntries(TL.messages.map((m) => [m.id, m.t]));
+    let mp = { name: 'stand' };
+    if (t >= TL.newPrice) mp = { name: 'cheer', mood: 'wow' };
+    else if (t >= M.m7) mp = { name: 'think', lookY: -6 };
+    else if (t >= M.m5) mp = { name: 'wave', phase: t * 1.6 };
+    else if (t >= M.m3) mp = { name: 'cheer' };
+    mp.blink = blinkAt(t, [4.4, 7.2, 10.1]);
+    drawSpark($('mini'), mp);
   }
 
   // end card
@@ -461,7 +345,7 @@ window.seek = seek;
 const stage = $('stage');
 window.ready = Promise.all([
   document.fonts.ready,
-  ...[...document.images, LOGO].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))),
+  ...[...document.images].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))),
 ]);
 if (!new URLSearchParams(location.search).has('render')) {
   const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `scale(${s})`; stage.style.left = (innerWidth - 1080 * s) / 2 + 'px'; };
