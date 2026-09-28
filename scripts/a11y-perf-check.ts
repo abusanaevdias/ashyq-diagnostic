@@ -21,6 +21,7 @@ const PUBLIC_ROUTES = [
   '/career/intj',
   '/community',
   '/contacts',
+  '/mentoring',
   '/courses',
   '/courses/ielts',
   '/courses/sat',

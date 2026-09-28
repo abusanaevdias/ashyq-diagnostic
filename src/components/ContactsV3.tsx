@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { PHOTOS } from '@/data/media';
 import { WHATSAPP_NUMBER } from '@/lib/config';
 import { formatPhoneForDisplay } from '@/lib/lead';
-import { SOCIAL_LINKS, TELEGRAM_CONTACT } from '@/lib/site';
+import { CONTACT_EMAIL, SOCIAL_LINKS, TELEGRAM_CONTACT } from '@/lib/site';
 import SeasonForm from './SeasonForm';
 import { Footer, IconChip, MicroLabel, NavBar } from './ui/CleanUi';
 import home from './HomeV3.module.css';
@@ -11,8 +11,8 @@ import { AiBadge } from './AiBadge';
 
 /**
  * /contacts по DESIGN_V3 §6.6. Контакты подтверждены пользователем 2026-09-13
- * (src/lib/site.ts). Почты и офиса у ASHYQ пока нет — поэтому нет строки
- * e-mail и карты; появятся — добавить сюда.
+ * (src/lib/site.ts). Почта предоставлена владельцем в этом чате;
+ * постоянный офис не указан, поэтому карты и выдуманного адреса нет.
  */
 export default function ContactsV3() {
   return (
@@ -37,15 +37,22 @@ export default function ContactsV3() {
               <div className={styles.row}>
                 <IconChip name="send" solid />
                 <div>
-                  <p className={styles.rowTitle}>Telegram</p>
+                  <p className={styles.rowTitle}>Telegram — связь с командой</p>
                   <a className={styles.rowLink} href={`https://t.me/${TELEGRAM_CONTACT}`} target="_blank" rel="noopener noreferrer">@{TELEGRAM_CONTACT}</a>
+                </div>
+              </div>
+              <div className={styles.row}>
+                <IconChip name="mail" solid />
+                <div>
+                  <p className={styles.rowTitle}>Электронная почта</p>
+                  <a className={styles.rowLink} href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
                 </div>
               </div>
               <div className={styles.row}>
                 <IconChip name="pin" solid />
                 <div>
                   <p className={styles.rowTitle}>Формат</p>
-                  <p className={styles.rowText}>Занятия онлайн. Финал сезона — офлайн в Астане.</p>
+                  <p className={styles.rowText}>Занятия онлайн по Казахстану. Команда работает Пн–Сб, 19:00–23:00 по Астане (UTC+5). Это часы работы, не расписание каждой группы. Офлайн-финал сезона планируется; дату и место уточняйте у команды.</p>
                 </div>
               </div>
             </div>

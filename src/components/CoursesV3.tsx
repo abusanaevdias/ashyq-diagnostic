@@ -17,6 +17,10 @@ import { PHOTOS } from '@/data/media';
 import home from './HomeV3.module.css';
 import styles from './CoursesV3.module.css';
 import { AiBadge } from './AiBadge';
+import EnrollmentPlanner from './EnrollmentPlanner';
+import { CLUB_OFFER } from '@/data/club-offer';
+import ClubOffer from './ClubOffer';
+import CohortResults from './CohortResults';
 
 type ExamFilter = 'all' | 'ielts' | 'sat';
 const FILTERS: Array<{ id: ExamFilter; label: string }> = [
@@ -156,7 +160,6 @@ export default function CoursesV3() {
                   <Link
                     href={course.href}
                     className={styles.courseLink}
-                    aria-labelledby={`course-title-${slug}`}
                   >
                     <div className={styles.photo}>
                       <Image
@@ -199,11 +202,14 @@ export default function CoursesV3() {
               );
             })}
           </div>
-          <p className={styles.conditions}>
-            Стоимость, расписание и преподавателя ближайшего набора уточняйте у
-            команды. <Link href="/contacts">Узнать условия →</Link>
-          </p>
+          <p className={styles.conditions}>Работаем Пн–Сб, {CLUB_OFFER.workingHours} по Астане. Выберите вариант группы ниже — команда подтвердит уровень и полные условия.</p>
+          <p className={styles.conditions}>Нужна стратегия поступления и помощь с документами? <Link href="/mentoring">Менторство ASHYQ →</Link></p>
         </section>
+        <section className={`${home.container} ${home.section}`}><ClubOffer /></section>
+        <section id="enrolment" className={`${home.container} ${home.section}`}>
+          <EnrollmentPlanner fixedProgram={filter === 'all' ? undefined : filter} />
+        </section>
+        <div className={`${home.container} ${home.section}`}><CohortResults /></div>
         <section
           id="free-practice"
           className={`${home.container} ${styles.resourceSection}`}

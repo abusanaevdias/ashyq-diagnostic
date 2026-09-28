@@ -118,7 +118,7 @@ export default function ProgramScreen() {
           <span aria-hidden="true">·</span>
           <span>Online, worldwide</span>
           <span aria-hidden="true">·</span>
-          <span>Est. 2024</span>
+          <span>IELTS / Digital SAT</span>
         </p>
       </section>
 

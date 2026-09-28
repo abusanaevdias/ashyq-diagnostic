@@ -1,12 +1,15 @@
 import type { Metadata } from 'next';
 import AboutV3 from '@/components/AboutV3';
+import JsonLd from '@/components/JsonLd';
+import { ABOUT_PAGE_SCHEMA } from '@/lib/schema';
+import { SITE_DESCRIPTION } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'О нас — ASHYQ',
-  description: 'Миссия и ценности ASHYQ: подготовка к IELTS и SAT, видимый прогресс и сообщество студентов.',
+  title: 'ASHYQ — образовательный клуб IELTS и SAT в Казахстане',
+  description: SITE_DESCRIPTION,
   alternates: { canonical: '/about' },
 };
 
 export default function AboutPage() {
-  return <AboutV3 />;
+  return <><JsonLd data={ABOUT_PAGE_SCHEMA} /><AboutV3 /></>;
 }

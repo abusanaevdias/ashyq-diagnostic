@@ -11,6 +11,7 @@ const STATIC_CANONICAL_ROUTES = [
   '/career/intj',
   '/community',
   '/contacts',
+  '/mentoring',
   '/courses',
   '/courses/ielts',
   '/courses/sat',
@@ -146,6 +147,7 @@ async function checkEditorialArticle(post: BlogPost) {
 
 async function main() {
   await checkJsonLd('/', 'EducationalOrganization');
+  await checkJsonLd('/about', 'AboutPage');
   await checkJsonLd('/courses/ielts', 'Course');
   await checkJsonLd('/faq', 'FAQPage');
   for (const post of BLOG_POSTS) {

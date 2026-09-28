@@ -4,11 +4,14 @@ import type { CSSProperties } from 'react';
 import Image from 'next/image';
 import { PHOTOS } from '@/data/media';
 import { EXAMS } from '@/lib/config';
+import { CLUB_FACTS } from '@/lib/site';
 import type { ExamId, RunState } from '@/lib/types';
 import { ButtonLink, DirectionCard, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import styles from './HomeV3.module.css';
 import { AiBadge } from './AiBadge';
+import ClubOffer from './ClubOffer';
+import CohortResults from './CohortResults';
 
 type ValueStyle = CSSProperties & { '--value': string };
 
@@ -21,12 +24,6 @@ export function continueLabel(run: RunState): string | null {
   if (run.stage === 'onboarding' && (run.target || run.plannedWhen)) return 'Продолжить настройку';
   return null;
 }
-
-const STATS = [
-  { value: '12 000+', label: 'учебных попыток' },
-  { value: '4.8', label: 'средняя оценка опыта' },
-  { value: '90%', label: 'видят следующий шаг' },
-];
 
 const STEPS = [
   { number: '01', title: 'Проверяем точку А', text: 'Короткая диагностика показывает текущий диапазон и сильные навыки.' },
@@ -58,7 +55,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
             <div className={styles.heroCopy}>
               <MicroLabel>Образование открывает двери</MicroLabel>
               <h1 className={styles.title}>Больше, чем подготовка.<span className={styles.titleAccent}>Реальные возможности.</span></h1>
-              <p className={styles.lead}>Узнайте, какой балл вы получили бы сегодня. Затем соберите маршрут к IELTS или SAT вместе с тренерами и сообществом ASHYQ. Около 20 минут, результат сразу.</p>
+              <p className={styles.lead}>ASHYQ — образовательный клуб Казахстана: онлайн IELTS и Digital SAT. Бесплатная диагностика за ≈20 минут: предварительная оценка навыков и следующий шаг, не официальный балл.</p>
               <div className={styles.actions}>
                 {(['ielts', 'sat'] as const).map((exam) => {
                   const saved = runs[exam];
@@ -73,7 +70,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
                   );
                 })}
               </div>
-              <div className={styles.statsWrap}><StatsRow items={STATS} /></div>
+              <div className={styles.statsWrap}><StatsRow items={[CLUB_FACTS[0], CLUB_FACTS[2], CLUB_FACTS[3]]} /></div>
             </div>
 
             <div className={styles.heroVisual}>
@@ -107,6 +104,9 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
           </section>
         </Reveal>
 
+        <section className={`${styles.container} ${styles.section}`}><ClubOffer enrolmentHref="/courses#enrolment" /></section>
+        <div className={`${styles.container} ${styles.section}`}><CohortResults /></div>
+
         <Reveal>
           <section id="process" className={styles.stepsSection}>
             <div className={`${styles.container} ${styles.section}`}>
@@ -135,6 +135,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
               </div>
 
               <div className={styles.progressCard} role="group" aria-label="Пример карточки прогресса">
+                <MicroLabel>Иллюстративный пример, не результат ученика</MicroLabel>
                 <div className={styles.progressTop}><div><MicroLabel>Общий прогресс</MicroLabel><p className={styles.progressStat}>78%</p></div><span className={styles.delta}>↗ +12% за 4 месяца</span></div>
                 <svg className={styles.graph} viewBox="0 0 560 150" role="img" aria-label="Линейный график показывает устойчивый рост">
                   <path d="M12 126H548M12 78H548M12 30H548" stroke="var(--hairline)" strokeWidth="1" />

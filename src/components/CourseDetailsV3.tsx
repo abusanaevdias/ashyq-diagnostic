@@ -8,6 +8,9 @@ import { Reveal } from './ui/Reveal';
 import home from './HomeV3.module.css';
 import styles from './CourseDetailsV3.module.css';
 import { AiBadge } from './AiBadge';
+import EnrollmentPlanner from './EnrollmentPlanner';
+import ClubOffer from './ClubOffer';
+import CohortResults from './CohortResults';
 
 export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
   const free = freeLessons(course);
@@ -56,9 +59,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
                 <MicroLabel>Условия набора</MicroLabel>
                 <h2 id="course-format-title" className={styles.panelTitle}>Стоимость и расписание онлайн-курсов {course.exam}</h2>
                 <p>
-                  {pending.length
-                    ? 'Цена, расписание и дата старта зависят от набора и вашей цели. Напишите нам — пришлём актуальные условия.'
-                    : 'Условия ближайшего набора.'}
+                  Условия набора: вечерние занятия и выбор группы ниже. Период оплаты, применимость акции, дату старта и преподавателя подтвердим до записи.
                 </p>
               </div>
               <div className={styles.factsSide}>
@@ -72,7 +73,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
                 </dl>
                 {pending.length ? (
                   <div className={styles.askActions}>
-                    <a className={ui.buttonRed} href={whatsappHref} target="_blank" rel="noopener noreferrer">Узнать цену в WhatsApp<ArrowIcon /></a>
+                    <a className={ui.buttonRed} href={whatsappHref} target="_blank" rel="noopener noreferrer">Подтвердить условия в WhatsApp<ArrowIcon /></a>
                     <ButtonLink href="/contacts" tone="outline">Оставить заявку</ButtonLink>
                   </div>
                 ) : null}
@@ -80,6 +81,10 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
             </div>
           </section>
         </Reveal>
+
+        <section className={`${home.container} ${home.section}`}><ClubOffer enrolmentHref="#course-enrolment" /></section>
+        <section id="course-enrolment" className={`${home.container} ${home.section}`}><EnrollmentPlanner fixedProgram={course.slug} /></section>
+        {course.slug === 'ielts' ? <div className={`${home.container} ${home.section}`}><CohortResults /></div> : null}
 
         <Reveal>
           <section className={`${home.container} ${home.section}`} aria-labelledby="course-program-title">
