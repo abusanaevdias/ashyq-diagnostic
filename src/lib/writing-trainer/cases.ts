@@ -19,6 +19,7 @@ export interface Paragraph {
 
 export interface GrammarIssue {
   sentenceId: string;
+  errorFragment: string;
   accepted: string[];
   explanation: string;
 }
@@ -84,8 +85,8 @@ export const writingCases: WritingCase[] = [
       ] },
     ],
     grammarIssues: [
-      { sentenceId: 'i2', accepted: ['Some people believe that buses and trains should be free, while others want passengers to cover the whole cost.'], explanation: 'После множественного подлежащего “people” нужна форма “believe”.' },
-      { sentenceId: 'e2', accepted: ['A shared funding system gives cities a more practical choice.'], explanation: 'Единственное число “system” требует “gives”.' },
+      { sentenceId: 'i2', errorFragment: 'believes', accepted: ['Some people believe that buses and trains should be free, while others want passengers to cover the whole cost.'], explanation: 'После множественного подлежащего “people” нужна форма “believe”.' },
+      { sentenceId: 'e2', errorFragment: 'give', accepted: ['A shared funding system gives cities a more practical choice.'], explanation: 'Единственное число “system” требует “gives”.' },
     ],
     revisions: {
       task: { paragraphId: 'task', instruction: 'Покажи, почему бесплатный проезд полезен, и оцени конкретную проблему финансирования. Не ограничивайся общим выводом.', example: 'Free transport could help people on low incomes reach jobs and schools, and it might persuade some drivers to leave their cars at home. Yet the service would still need funding for staff, repairs and new vehicles. If the city paid for every journey through general taxes, residents who rarely use public transport would also bear that cost. This makes targeted discounts more convincing to me than a universal free service.', explanation: 'Пример развивает обе стороны аргумента и прямо связывает их с позицией автора.' },
@@ -136,8 +137,8 @@ export const writingCases: WritingCase[] = [
       ] },
     ],
     grammarIssues: [
-      { sentenceId: 'i2', accepted: ['Each method has supporters because students need different skills.'], explanation: '“Each method” — единственное число, поэтому “has”.' },
-      { sentenceId: 'e2', accepted: ['A balanced programme helps students develop both abilities.'], explanation: 'Единственное число “programme” требует “helps”.' },
+      { sentenceId: 'i2', errorFragment: 'have', accepted: ['Each method has supporters because students need different skills.'], explanation: '“Each method” — единственное число, поэтому “has”.' },
+      { sentenceId: 'e2', errorFragment: 'help', accepted: ['A balanced programme helps students develop both abilities.'], explanation: 'Единственное число “programme” требует “helps”.' },
     ],
     revisions: {
       task: { paragraphId: 'task', instruction: 'Уточни пользу группового проекта и оцени риск несправедливой оценки. Свяжи вывод со своей позицией.', example: 'Group projects can teach students to explain ideas, divide tasks and solve disagreements. For example, a science presentation requires both research and clear communication. However, a shared mark may hide the fact that one student did most of the work. In my view, group tasks are valuable only when teachers can also assess each person’s contribution.', explanation: 'Пример показывает конкретный механизм обучения и условие, при котором автор поддерживает групповые задания.' },
