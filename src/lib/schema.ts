@@ -1,7 +1,7 @@
 import type { CourseDetail } from '@/data/courses';
 import { FAQ } from '@/data/faq';
 import { WHATSAPP_NUMBER } from '@/lib/config';
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, SOCIAL_LINKS } from '@/lib/site';
+import { CONTACT_EMAIL, SITE_DESCRIPTION, SITE_FULL_NAME, SITE_NAME, SITE_URL, SOCIAL_LINKS } from '@/lib/site';
 
 /**
  * Schema.org для поисковиков (SEO-SCHEMA-001): только подтверждённые факты —
@@ -15,6 +15,8 @@ export const ORGANIZATION = {
   '@type': 'EducationalOrganization',
   '@id': ORGANIZATION_ID,
   name: SITE_NAME,
+  alternateName: SITE_FULL_NAME,
+  email: CONTACT_EMAIL,
   url: SITE_URL,
   logo: `${SITE_URL}/brand/logo-icon.png`,
   description: SITE_DESCRIPTION,
@@ -23,7 +25,18 @@ export const ORGANIZATION = {
     { '@type': 'Country', name: 'Казахстан' },
   ],
   sameAs: SOCIAL_LINKS.map((social) => social.href),
-  contactPoint: { '@type': 'ContactPoint', telephone: `+${WHATSAPP_NUMBER}`, contactType: 'customer service', availableLanguage: ['ru', 'kk', 'en'] },
+  contactPoint: { '@type': 'ContactPoint', telephone: `+${WHATSAPP_NUMBER}`, email: CONTACT_EMAIL, url: `${SITE_URL}/contacts`, contactType: 'customer service' },
+};
+
+export const ABOUT_PAGE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  '@id': `${SITE_URL}/about#page`,
+  url: `${SITE_URL}/about`,
+  name: `О клубе ${SITE_FULL_NAME}`,
+  description: SITE_DESCRIPTION,
+  inLanguage: 'ru',
+  mainEntity: { '@id': ORGANIZATION_ID },
 };
 
 export function courseSchema(course: CourseDetail) {

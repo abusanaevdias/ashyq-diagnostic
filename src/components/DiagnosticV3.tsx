@@ -42,7 +42,7 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
             <div className={home.heroCopy}>
               <MicroLabel>Quick Diagnostic</MicroLabel>
               <h1 className={home.title}>Узнайте свой уровень до старта</h1>
-              <p className={home.lead}>Короткий тест покажет, какой балл вы получили бы сегодня и что тренировать в первую очередь. Около 20 минут, бесплатно, без регистрации.</p>
+              <p className={home.lead}>Короткий тест поможет определить стартовый фокус подготовки. Около 20 минут, бесплатно, без регистрации. Результат — предварительная оценка по выбранным заданиям, не прогноз официального экзаменационного балла.</p>
               <div className={home.actions}>
                 {(['ielts', 'sat'] as const).map((exam) => {
                   const saved = runs[exam];
@@ -97,7 +97,7 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
         <Reveal>
           <section className={`${home.container} ${home.section}`}>
             <div className={styles.proof}>
-              <div className={styles.card}><p className={styles.statValue}>90%</p><p className={styles.statText}>видят свой следующий шаг после диагностики</p></div>
+              <div className={styles.card}><p className={styles.statValue}>Разбор</p><p className={styles.statText}>ответов и следующий шаг после диагностики — без обещания экзаменационного балла</p></div>
               <figure className={styles.card}>
                 <blockquote className={styles.quote}>«Мы показываем честную точку А: без официального балла, но с понятным планом, что делать дальше.»</blockquote>
                 <figcaption className={styles.caption}>Команда ASHYQ</figcaption>

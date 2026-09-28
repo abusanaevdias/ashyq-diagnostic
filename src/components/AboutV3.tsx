@@ -1,17 +1,13 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { PHOTOS } from '@/data/media';
+import { CLUB_FACTS, CLUB_MANAGER, CONTACT_EMAIL, SITE_DESCRIPTION } from '@/lib/site';
+import { CLUB_OFFER } from '@/data/club-offer';
 import home from './HomeV3.module.css';
 import styles from './AboutV3.module.css';
 import { ButtonLink, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import { AiBadge } from './AiBadge';
-
-const STATS = [
-  { value: '12 000+', label: 'учебных попыток' },
-  { value: '4.8', label: 'средняя оценка опыта' },
-  { value: '90%', label: 'видят следующий шаг' },
-  { value: '2024', label: 'год основания' },
-];
 
 const VALUES = [
   { icon: 'spark', title: 'Команда', text: 'Задачи решаются вместе: вклад каждого виден в общем результате.' },
@@ -30,7 +26,7 @@ export default function AboutV3() {
             <div className={styles.heroCopy}>
               <MicroLabel>Наша миссия</MicroLabel>
               <h1 className={styles.title}>Открывать возможности через знания и людей.</h1>
-              <p className={styles.lead}>ASHYQ помогает студентам готовиться к IELTS и SAT, видеть свой прогресс и учиться работать в команде. Онлайн и в Астане.</p>
+              <p className={styles.lead}>{SITE_DESCRIPTION} Занятия проходят онлайн; ASHYQ — образовательный клуб, а не официальный оператор экзаменов.</p>
               <p className={styles.script}>растём вместе</p>
             </div>
             <div className={styles.heroPhoto}>
@@ -40,10 +36,34 @@ export default function AboutV3() {
         </section>
 
         <Reveal>
-          <section className={`${home.container} ${styles.statsSection}`} aria-label="ASHYQ в цифрах">
-            <div className={styles.statsFrame}><StatsRow items={STATS} /></div>
+          <section className={`${home.container} ${styles.statsSection}`} aria-label="Формат ASHYQ">
+            <div className={styles.statsFrame}><StatsRow items={CLUB_FACTS} /></div>
           </section>
         </Reveal>
+
+        <section className={`${home.container} ${home.section}`} aria-labelledby="club-facts-heading">
+          <MicroLabel>О клубе</MicroLabel>
+          <h2 id="club-facts-heading" className={styles.heading}>ASHYQ: формат и следующий шаг</h2>
+          <p className={styles.lead}>По данным команды на 28 сентября 2026: {CLUB_OFFER.students} ученика в новом потоке и {CLUB_OFFER.teachers} преподавателя. Это сведения самого клуба, не независимый рейтинг или гарантия результата.</p>
+          <div className={styles.values}>
+            <article className={styles.value}>
+              <IconChip name="book" />
+              <div><h3>Два направления подготовки</h3><p><Link className="link-underline" href="/courses/ielts">IELTS</Link> и <Link className="link-underline" href="/courses/sat">Digital SAT</Link> для школьников и абитуриентов Казахстана. Программа и бесплатные вводные уроки доступны на страницах курсов.</p></div>
+            </article>
+            <article className={styles.value}>
+              <IconChip name="target" />
+              <div><h3>Диагностика — не официальный балл</h3><p>IELTS: 12 вопросов Reading и Listening, без оценки Writing и Speaking. SAT: 16 вопросов Reading &amp; Writing и Math, не полный адаптивный экзамен. <Link className="link-underline" href="/diagnostic">Короткий тест</Link> помогает выбрать стартовый фокус, но не гарантирует результат на экзамене.</p></div>
+            </article>
+            <article className={styles.value}>
+              <IconChip name="compass" />
+              <div><h3>Условия перед записью</h3><p>Занятия проходят онлайн. Команда работает Пн–Сб, 19:00–23:00 по Астане. Точное расписание группы и условия уточняются до записи. <Link className="link-underline" href="/courses#enrolment">Выбрать удобное время</Link> или <Link className="link-underline" href="/mentoring">обсудить менторство по поступлению</Link>.</p></div>
+            </article>
+            <article className={styles.value}>
+              <IconChip name="chat" />
+              <div><h3>Контактное лицо клуба</h3><p>{CLUB_MANAGER}, CEO ASHYQ. Почта для вопросов о клубе и сотрудничестве: <a className="link-underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Официальные социальные каналы указаны на <Link className="link-underline" href="/contacts">странице контактов</Link>.</p></div>
+            </article>
+          </div>
+        </section>
 
         <Reveal>
           <section className={`${home.container} ${home.section}`}>
@@ -51,7 +71,7 @@ export default function AboutV3() {
               <div><MicroLabel>Что нас объединяет</MicroLabel><h2 className={styles.heading}>Наши ценности</h2></div>
               <p className={styles.sectionIntro}>Подготовка становится сильнее, когда рядом есть команда, пространство для голоса и понятный способ увидеть рост.</p>
             </div>
-            <div className={styles.values}>
+            <div className={styles.values} data-club-values>
               {VALUES.map((value) => (
                 <article className={styles.value} key={value.title}>
                   <IconChip name={value.icon} />

@@ -16,14 +16,13 @@ export const metadata: Metadata = {
       'GEXhZPM9edu9qIcpBE4_T7Ont-TLH2qD8VnYFxdmwfU',
     ],
   },
-  title: { default: 'ASHYQ — Быстрая диагностика IELTS / SAT', template: '%s' },
+  title: { default: 'ASHYQ — образовательный клуб IELTS и SAT в Казахстане', template: '%s' },
   description: SITE_DESCRIPTION,
   applicationName: 'ASHYQ Quick Diagnostic',
   keywords: ['IELTS', 'SAT', 'диагностика', 'Ashyq', 'Казахстан', 'подготовка'],
   openGraph: {
-    title: 'ASHYQ Quick Diagnostic — какой балл вы получили бы сегодня?',
-    description:
-      '≈20 минут. Ваша текущая точка. Ваши сильные стороны. Следующий шаг.',
+    title: 'ASHYQ — онлайн-подготовка к IELTS и Digital SAT',
+    description: SITE_DESCRIPTION,
     type: 'website',
     locale: 'ru_RU',
     siteName: SITE_NAME,

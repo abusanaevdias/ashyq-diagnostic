@@ -171,7 +171,7 @@ async function main() {
   const page = await ctx.newPage();
   await page.goto(`${BASE}/${UTM}`, { waitUntil: 'networkidle' });
   const landing = await page.locator('body').innerText();
-  check('landing: hook на месте', has(landing, 'Какой балл'));
+  check('landing: точное позиционирование и предварительная оценка', has(landing, 'образовательный клуб Казахстана') && has(landing, 'предварительная оценка навыков'));
   check('landing: 20 минут', has(landing, '20 минут'));
   check('landing: обе кнопки экзамена', has(landing, 'IELTS') && has(landing, 'SAT'));
   // CTA должна быть видна без скролла на телефоне (above the fold)
@@ -448,11 +448,12 @@ async function main() {
   check('community: ценности и CTA на месте', has(communityText, 'Люди делают знания живыми') && has(communityText, 'Следующий сезон'));
   check('community: изображения имеют alt', (await p3.locator('main img[alt]').count()) >= 2);
 
-  // about: v3 mission, confirmed metrics and accessible media
+  // about: v3 mission, verifiable product facts and accessible media
   await p3.goto(`${BASE}/about`, { waitUntil: 'networkidle' });
   const aboutText = await p3.locator('body').innerText();
-  check('about: миссия и четыре ценности', has(aboutText, 'Наша миссия') && (await p3.locator('main h3').count()) === 4);
-  check('about: подтверждённые четыре метрики', has(aboutText, '12 000+') && has(aboutText, '4.8') && has(aboutText, '90%') && has(aboutText, '2024'));
+  check('about: миссия и четыре ценности', has(aboutText, 'Наша миссия') && (await p3.locator('[data-club-values] h3').count()) === 4);
+  check('about: факты о формате вместо неподтверждённых метрик', has(aboutText, 'направления: IELTS и SAT') && has(aboutText, 'подготовка по Казахстану') && !['12 000+', '4.8', '90%', 'год основания'].some((claim) => has(aboutText, claim)));
+  check('about: ограничения диагностики и контактное лицо', has(aboutText, 'без оценки Writing и Speaking') && has(aboutText, 'Алишер Нурсаин') && (await p3.locator('main a[href="mailto:ashyqhub@gmail.com"]').count()) === 1);
   check('about: изображения имеют alt', (await p3.locator('main img[alt]').count()) === 2);
   const aboutScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('about: нет горизонтального скролла', aboutScroll <= 0, `${aboutScroll}px`);
@@ -477,6 +478,31 @@ async function main() {
   check('nav: клик вне меню закрывает панель', await p3.locator('header details').getAttribute('open') === null);
   const coursesScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('courses: нет горизонтального скролла', coursesScroll <= 0, `${coursesScroll}px`);
+  // Owner-supplied offers, proposed slots and user-confirmed WhatsApp hand-off. No external submission.
+  const planner = p3.getByRole('form', { name: 'Выбор времени для заявки' });
+  const offerText = await p3.getByRole('region', { name: 'Предложения ASHYQ' }).innerText();
+  check('offers: цена курса без выдуманного периода оплаты', /68\s*000/.test(offerText) && /84\s*000/.test(offerText) && offerText.includes('Период оплаты, применимость цены') && offerText.includes('84 ученика') && offerText.includes('4 преподавателя'));
+  check('enrolment: восемь вариантов двухчасовых групп, без воскресенья', (await planner.locator('select option').count()) === 8 && (await planner.locator('input[type="checkbox"]').count()) === 6 && !has(await planner.innerText(), 'Воскресенье'));
+  await planner.getByRole('button', { name: 'Открыть заявку в WhatsApp' }).click();
+  check('enrolment: без дня заявка не открывается', await planner.getByRole('alert').isVisible());
+  await planner.getByLabel('Понедельник', { exact: true }).check();
+  await planner.getByLabel('Суббота', { exact: true }).check();
+  await planner.getByLabel('Вариант группы, Астана (UTC+5)').selectOption('group-8');
+  const prepared = await planner.locator('input[name="text"]').inputValue();
+  check('enrolment: выбранные дни, группа и двухчасовой слот в заявке', prepared.includes('Понедельник, Суббота') && prepared.includes('Группа 08 (21:00–23:00)') && prepared.includes('не бронирует место'));
+  check('enrolment: WhatsApp GET без автоматической отправки и оплаты', (await planner.getAttribute('method')) === 'get' && (await planner.getAttribute('action'))?.startsWith('https://wa.me/') === true);
+  const cohort = p3.locator('section[aria-labelledby="cohort-results-title"]');
+  check('cohort: четыре профиля вместо дублирования скриншота', (await cohort.locator('article').count()) === 4 && has(await cohort.innerText(), '112') && has(await cohort.innerText(), 'Средний балл — по данным ASHYQ') && has(await cohort.innerText(), 'не подтверждают среднее'));
+  await cohort.getByText('Посмотреть скриншот результата', { exact: true }).first().click();
+  await cohort.locator('img').first().evaluate((image: HTMLImageElement) => image.decode());
+  check('cohort: доказательство раскрывается и изображение загружается', await cohort.locator('details').first().getAttribute('open') !== null && await cohort.locator('img').first().evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0));
+  await p3.setViewportSize({ width: 320, height: 720 });
+  check('offers: нет переполнения на 320px', await p3.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
+  await p3.setViewportSize({ width: 390, height: 844 });
+  await p3.goto(`${BASE}/mentoring`, { waitUntil: 'networkidle' });
+  const mentoringText = await p3.locator('main').innerText();
+  check('mentoring: месячная цена и состав без гарантии поступления', /127\s*000/.test(mentoringText) && /180\s*000/.test(mentoringText) && mentoringText.includes('/ месяц') && mentoringText.includes('Personal Statement') && mentoringText.includes('не обещание оффера'));
+  check('mentoring: время связи не выдаётся за расписание группы', (await p3.getByLabel('Предпочтительное время для связи, Астана (UTC+5)').count()) === 1 && (await p3.getByLabel('Вариант группы, Астана (UTC+5)').count()) === 0);
 
   // blog: реальная статья опубликована, доступна в категориях и индексируется
   await p3.goto(`${BASE}/blog`, { waitUntil: 'networkidle' });
@@ -497,6 +523,7 @@ async function main() {
   // contacts: подтверждённые контакты, рабочая форма, страница индексируется
   await p3.goto(`${BASE}/contacts`, { waitUntil: 'networkidle' });
   check('contacts: WhatsApp, Telegram и форма', (await p3.locator('main a[href^="https://wa.me/"]').count()) >= 1 && (await p3.locator('main a[href="https://t.me/ashyqeducation"]').count()) === 1 && (await p3.locator('#contact-phone').count()) === 1);
+  check('contacts: предоставленная владельцем почта', (await p3.locator('main a[href="mailto:ashyqhub@gmail.com"]').count()) === 1);
   const socials = p3.locator('main a[href="https://www.instagram.com/ashyqedu/"], main a[href="https://www.threads.net/@ashyqedu"], main a[href="https://t.me/ashyqedu"]');
   check('contacts: соцсети @ashyqedu', (await socials.count()) === 3);
   check('contacts: страница индексируется', (await p3.locator('meta[name="robots"][content*="noindex"]').count()) === 0);

@@ -1,4 +1,16 @@
 export const SITE_NAME = 'ASHYQ';
+export const SITE_FULL_NAME = 'ASHYQ — образовательный клуб';
+/** Provided by the owner in this chat; not a claim about legal registration. */
+export const CONTACT_EMAIL = 'ashyqhub@gmail.com';
+export const CLUB_MANAGER = 'Алишер Нурсаин';
+
+/** Product facts, not aggregate outcomes, ratings or a founding date. */
+export const CLUB_FACTS = [
+  { value: '2', label: 'направления: IELTS и SAT' },
+  { value: 'Онлайн', label: 'подготовка по Казахстану' },
+  { value: 'Тест', label: 'предварительная диагностика' },
+  { value: 'План', label: 'разбор и следующий шаг' },
+];
 
 export const SITE_DESCRIPTION =
   'Онлайн-подготовка к IELTS и Digital SAT для школьников и абитуриентов в Казахстане. ASHYQ помогает определить стартовый уровень и план подготовки.';
@@ -15,6 +27,7 @@ export const SITE_ROUTES = [
   '/courses/sat',
   '/about',
   '/contacts',
+  '/mentoring',
   '/diagnostic',
   '/blog',
   '/career',
@@ -27,7 +40,7 @@ export const SITE_ROUTES = [
   '/terms',
 ] as const;
 
-/** Подтверждены пользователем 2026-09-13. Почты и офиса у ASHYQ пока нет. */
+/** Соцсети подтверждены пользователем. Постоянный офис не указан. */
 export const TELEGRAM_CONTACT = 'ashyqeducation';
 
 export const SOCIAL_LINKS = [

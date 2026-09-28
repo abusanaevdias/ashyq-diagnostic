@@ -1,0 +1,15 @@
+.panel { padding-block: 16px; }
+.header h2 { margin-top: 16px; max-width: 22ch; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.1rem); font-weight: 800; line-height: 1.1; }
+.header p { margin-top: 20px; color: var(--ink-soft); line-height: 1.6; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 28px; }
+.card { padding: 28px; border: 1px solid var(--hairline); border-radius: var(--r-lg); background: var(--surface); }
+.card:first-child { background: var(--blush); --ink-soft: var(--ink); }
+.card h3 { margin-top: 14px; font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
+.old { margin-top: 24px; color: var(--ink-soft); font-size: .9375rem; }
+.price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-top: 8px; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.2; }
+.price span { font-family: var(--font-body); font-size: .9375rem; font-weight: 400; color: var(--ink-soft); }
+.saving { margin-top: 14px; color: var(--red-deep); font-weight: 600; font-size: .875rem; }
+.description { margin-block: 20px; color: var(--ink-soft); line-height: 1.65; }
+.note, .source { margin-top: 18px; color: var(--ink-soft); font-size: .8125rem; line-height: 1.65; }
+.source { max-width: 95ch; }
+@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } .card { padding: 22px; } }
