@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { drillModes, writingDrills, type DrillMode } from '@/lib/writing-trainer/drills';
 import styles from './WritingDrills.module.css';
 
@@ -18,6 +18,10 @@ export default function WritingDrills() {
 
   const items = writingDrills.filter((item) => item.mode === mode);
   const item = items[index];
+
+  useEffect(() => {
+    if (mode) document.getElementById('exercise-title')?.scrollIntoView({ block: 'start' });
+  }, [mode, index]);
 
   function clearAttempt() {
     setDraft('');
@@ -44,6 +48,7 @@ export default function WritingDrills() {
       setMode(null);
       setIndex(0);
       clearAttempt();
+      window.scrollTo({ top: 0 });
     }
   }
 
