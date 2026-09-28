@@ -245,6 +245,98 @@ window.EPISODES = {
         "minimum": 250
       }
     },
+    "7": {
+      "series": "Искра vs IELTS",
+      "kind": "chart",
+      "panel": "#e8efe2",
+      "title": {
+        "lines": [
+          "Все цифры"
+        ],
+        "acc": "графика"
+      },
+      "fail": {
+        "lines": [
+          "Цифры есть —"
+        ],
+        "acc": "обзора нет"
+      },
+      "rule": {
+        "lines": [
+          "Task 1: сначала обзор —",
+          "главный тренд, а не"
+        ],
+        "acc": "все цифры"
+      },
+      "bubble": {
+        "done": "Ничего не упустила! 😎",
+        "fail": "Какой обзор?"
+      },
+      "card": {
+        "chip": "Writing Task 1 · график",
+        "title": "Students using online courses, %",
+        "labels": [
+          "2016",
+          "2018",
+          "2020",
+          "2022",
+          "2024"
+        ],
+        "values": [
+          12,
+          18,
+          25,
+          34,
+          47
+        ],
+        "wrong": [
+          "In 2016 it was 12%.",
+          "In 2018 it was 18%.",
+          "In 2020 it was 25%…"
+        ],
+        "right": "Overall, the share rose steadily and almost quadrupled."
+      }
+    },
+    "8": {
+      "series": "Искра vs IELTS",
+      "kind": "speaking",
+      "panel": "#fcf3f0",
+      "title": {
+        "lines": [
+          "Идеальная"
+        ],
+        "acc": "первая фраза"
+      },
+      "fail": {
+        "lines": [
+          "Минута прошла —"
+        ],
+        "acc": "а плана нет"
+      },
+      "rule": {
+        "lines": [
+          "План — 3–4 слова.",
+          "Говори, пока не"
+        ],
+        "acc": "остановят"
+      },
+      "bubble": {
+        "done": "Шедевр! 😎",
+        "fail": "Э-э-э…"
+      },
+      "card": {
+        "chip": "Speaking · Part 2",
+        "cue": "Describe a place you like to visit.",
+        "points": "where it is · when you go · what you do · why you like it",
+        "wrong": "Well, the place that I would like to describe today is a truly remarkable",
+        "right": [
+          "Бурабай",
+          "летом",
+          "озеро, походы",
+          "природа"
+        ]
+      }
+    },
     "9": {
       "series": "Искра vs SAT",
       "kind": "sat",
@@ -291,6 +383,98 @@ window.EPISODES = {
           "A",
           "D"
         ]
+      }
+    },
+    "10": {
+      "series": "Искра vs SAT",
+      "kind": "calc",
+      "panel": "#1b1512",
+      "dark": true,
+      "title": {
+        "lines": [
+          "Калькулятор?"
+        ],
+        "acc": "Какой калькулятор?"
+      },
+      "fail": {
+        "lines": [
+          "5 минут на задачу —"
+        ],
+        "acc": "а в модуле их 22"
+      },
+      "rule": {
+        "lines": [
+          "Встроенный Desmos —",
+          "во всей секции"
+        ],
+        "acc": "Math"
+      },
+      "bubble": {
+        "done": "Почти посчитала! 😎",
+        "fail": "Сколько времени?!"
+      },
+      "card": {
+        "chip": "Digital SAT · Math",
+        "question": "What is the positive solution of x² − 5x − 14 = 0?",
+        "scratch": [
+          "x² − 5x − 14 = 0",
+          "D = 25 + 56 = 81",
+          "x = (5 ± 9) / 2 …"
+        ],
+        "root": 7,
+        "other": -2
+      }
+    },
+    "11": {
+      "series": "Искра vs IELTS",
+      "kind": "band",
+      "panel": "#f9e0db",
+      "title": {
+        "lines": [
+          "6.25 —"
+        ],
+        "acc": "это провал?"
+      },
+      "fail": {
+        "lines": [
+          "Думаешь, вниз до 6.0?"
+        ],
+        "acc": "не спеши"
+      },
+      "rule": {
+        "lines": [
+          "Overall округляется:",
+          "6.25 → 6.5, 6.75 → 7.0 —"
+        ],
+        "acc": "в твою пользу"
+      },
+      "bubble": {
+        "done": "Всё, 6.0 😭",
+        "fail": "Правда?!"
+      },
+      "card": {
+        "chip": "IELTS · итоговый балл",
+        "scores": [
+          [
+            "Listening",
+            "6.5"
+          ],
+          [
+            "Reading",
+            "6.0"
+          ],
+          [
+            "Writing",
+            "6.0"
+          ],
+          [
+            "Speaking",
+            "6.5"
+          ]
+        ],
+        "avg": "6.25",
+        "wrong": "6.0",
+        "right": "6.5"
       }
     }
   }

@@ -99,6 +99,10 @@ ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-writi
 артикль тоже слово), эп. 2 (Listening — «acommodation»), эп. 3
 (Listening — «fifteen… sorry, fifty»), эп. 4 (Reading — NOT GIVEN), эп. 5
 (Reading — 30/25/5 минут против ~20/20/20), эп. 6 (Writing Task 2 — 190 → 265
-слов), эп. 9 (Digital SAT — пустые ответы против угадывания). Типы карточек:
-`listening`, `spelling`, `number`, `tfng`, `timing`, `writing`, `sat`. Новый эпизод = запись в
+слов), эп. 7 (Task 1 — обзор вместо пересказа цифр), эп. 8 (Speaking Part 2 —
+план «Бурабай · летом · озеро, походы · природа»), эп. 9 (Digital SAT —
+пустые ответы против угадывания), эп. 10 (SAT — встроенный Desmos,
+x² − 5x − 14 = 0 → x = 7), эп. 11 (6.25 → 6.5). Весь сезон 1 отрендерен.
+Типы карточек: `listening`, `spelling`, `number`, `tfng`, `timing`,
+`writing`, `chart`, `speaking`, `sat`, `calc`, `band`. Новый эпизод = запись в
 `episodes.js` + при необходимости новый `kind` в шаблоне.

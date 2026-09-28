@@ -86,6 +86,38 @@ body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: anti
 .trow .bar b { display: block; height: 100%; border-radius: 13px; background: var(--ink); transform-origin: 0 50%; }
 .trow em { white-space: nowrap; font-style: normal; text-align: right; font-weight: 800; font-family: var(--display); }
 
+/* chart */
+.chart { margin-top: 18px; }
+.sent { font: 500 32px/1.4 var(--body); margin-top: 8px; }
+.over { margin-top: 16px; border-radius: 22px; padding: 18px 22px; font: 600 32px/1.35 var(--body); background: var(--success-soft); color: var(--success); }
+
+/* speaking */
+.cue { margin-top: 20px; border: 3px dashed #d6d3cc; border-radius: 26px; padding: 22px 26px; }
+.cue b { display: block; font: 800 40px/1.2 var(--display); }
+.cue span { display: block; margin-top: 10px; font: 500 28px/1.35 var(--body); color: var(--ink-soft); }
+.timers { display: flex; gap: 18px; margin-top: 22px; }
+.timer { flex: 1; border-radius: 24px; background: var(--hairline); padding: 18px 22px; }
+.timer small { display: block; font: 600 24px/1 var(--body); color: var(--ink-soft); }
+.timer b { display: block; margin-top: 8px; font: 800 58px/1 var(--display); letter-spacing: -0.02em; }
+.notes { margin-top: 20px; min-height: 96px; font: 500 32px/1.4 var(--body); font-style: italic; }
+.kw { display: flex; flex-wrap: wrap; gap: 12px; }
+.kw span { font: 800 32px/1 var(--display); font-style: normal; border-radius: 999px; padding: 14px 22px; background: var(--success-soft); color: var(--success); }
+
+/* calc */
+.row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.q { margin-top: 20px; font: 800 40px/1.25 var(--display); letter-spacing: -0.01em; }
+.scratch { margin-top: 18px; font: 500 34px/1.5 var(--body); font-style: italic; color: var(--ink-soft); min-height: 150px; }
+.elapsed { font: 800 44px/1 var(--display); }
+
+/* band */
+.bands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+.band { border-radius: 24px; background: var(--hairline); padding: 18px 10px; text-align: center; }
+.band small { display: block; font: 600 22px/1 var(--body); color: var(--ink-soft); }
+.band b { display: block; margin-top: 10px; font: 800 52px/1 var(--display); }
+.avg { margin-top: 22px; font: 600 32px/1.3 var(--body); color: var(--ink-soft); }
+.overall { display: flex; align-items: center; gap: 22px; margin-top: 18px; }
+.overall b { font: 800 120px/1 var(--display); letter-spacing: -0.04em; }
+
 /* sat */
 .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
 .cell { height: 150px; border-radius: 26px; border: 4px solid #e2e0da; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
@@ -172,7 +204,7 @@ function kt(el, t, tin, tout) {
 }
 
 // ---------- cards, one renderer per exam section ----------
-const STAMP = { listening: 'НЕВЕРНО', spelling: 'ОШИБКА', number: 'НЕВЕРНО', tfng: 'НЕВЕРНО', timing: 'НЕ УСПЕЛА', writing: 'МАЛО СЛОВ', sat: '0 БАЛЛОВ' };
+const STAMP = { listening: 'НЕВЕРНО', spelling: 'ОШИБКА', number: 'НЕВЕРНО', tfng: 'НЕВЕРНО', timing: 'НЕ УСПЕЛА', writing: 'МАЛО СЛОВ', sat: '0 БАЛЛОВ', chart: 'НЕТ ОБЗОРА', speaking: 'ТИШИНА', calc: 'ДОЛГО', band: 'НЕ ТАК' };
 const headphones = '<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#6e6d6b" stroke-width="2.2" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="1.5" fill="#6e6d6b"/><rect x="17" y="14" width="4" height="7" rx="1.5" fill="#6e6d6b"/></svg>';
 const C = E.card;
 const CARDS = {
@@ -284,6 +316,111 @@ const CARDS = {
       note.textContent = fixed ? 'Сначала вопросы → потом поиск по тексту' : bad ? `5 минут на ${C.questions}` : 'Читаю всё внимательно…';
       note.style.background = fixed ? 'var(--success-soft)' : bad ? 'var(--blush)' : 'var(--hairline)';
       note.style.color = fixed ? 'var(--success)' : bad ? 'var(--red-deep)' : 'var(--ink)';
+    },
+  },
+  chart: {
+    html: () => {
+      const max = Math.max(...C.values), w = 800, h = 190, bw = 110, gap = (w - bw * C.values.length) / (C.values.length - 1);
+      const bars = C.values.map((v, i) => { const bh = h * v / max, x = i * (bw + gap); return `<rect class="cbar" x="${x}" y="${h - bh + 30}" width="${bw}" height="${bh}" rx="12" fill="#161311"/><text x="${x + bw / 2}" y="${h - bh + 20}" text-anchor="middle" font-family="Manrope" font-weight="800" font-size="30" fill="#161311">${v}%</text><text x="${x + bw / 2}" y="${h + 64}" text-anchor="middle" font-family="Inter" font-weight="600" font-size="24" fill="#6e6d6b">${C.labels[i]}</text>`; }).join('');
+      return `<span class="chip" style="background:var(--success-soft); color:var(--success)">${esc(C.chip)}</span>
+      <p class="cap" style="margin-top:22px">${esc(C.title)}</p>
+      <svg class="chart" width="800" height="${h + 72}" viewBox="0 0 800 ${h + 72}">${bars}<path id="trend" d="M${bw / 2} ${h + 30 - h * C.values[0] / max - 44} L${w - bw / 2} ${30 - 44 + 0}" stroke="#2e5e3a" stroke-width="8" stroke-linecap="round" fill="none"/></svg>
+      <div id="sents">${C.wrong.map((x) => `<p class="sent">${esc(x)}</p>`).join('')}</div>
+      <p class="over" id="over">${esc(C.right)}</p>`;
+    },
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, ...T.typing);
+      [...document.querySelectorAll('.sent')].forEach((el, i) => {
+        const a = clamp(p * C.wrong.length - i);
+        el.style.opacity = fixed ? lerp(1, 0.25, prog(t, T.fix, T.fix + 0.4)) : a > 0 ? 1 : 0;
+        el.style.clipPath = `inset(0 ${(1 - a) * 100}% 0 0)`;
+        el.style.color = bad ? 'var(--red)' : 'var(--ink)';
+        el.style.textDecoration = fixed ? 'line-through' : 'none';
+      });
+      $('sents').style.display = t >= T.fix + 0.45 ? 'none' : 'block';
+      const ov = eBack(prog(t, T.fix + 0.45, T.fix + 0.8));
+      $('over').style.display = t >= T.fix + 0.45 ? 'block' : 'none';
+      $('over').style.transform = `scale(${lerp(0.85, 1, ov)})`;
+      const tr = $('trend'), L = tr.getTotalLength();
+      tr.style.strokeDasharray = L; tr.style.strokeDashoffset = L * (1 - eInOut(prog(t, T.fix, T.fix + 0.6)));
+    },
+  },
+  speaking: {
+    html: () => `<span class="chip" style="background:var(--blush); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="cue"><b>${esc(C.cue)}</b><span>${esc(C.points)}</span></div>
+      <div class="timers"><div class="timer"><small>Подготовка</small><b id="prep">1:00</b></div><div class="timer"><small>Говорю</small><b id="talk">0:00</b></div></div>
+      <div class="notes" id="notes"></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, T.typing[0], T.fail);
+      const prepLeft = fixed ? 0 : Math.round(60 * (1 - p));
+      $('prep').textContent = `0:${String(Math.min(59, prepLeft)).padStart(2, '0')}`.replace('0:59', p === 0 ? '1:00' : '0:59');
+      $('prep').style.color = bad ? 'var(--red)' : 'var(--ink)';
+      const talk = fixed ? Math.min(119, Math.round((t - T.fix) * 30)) : 0;
+      $('talk').textContent = `${Math.floor(talk / 60)}:${String(talk % 60).padStart(2, '0')}`;
+      $('talk').style.color = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      if (bad) $('talk').textContent = '…';
+      if (fixed) {
+        const k = Math.floor(clamp((t - T.fix) / 0.25, 0, C.right.length));
+        $('notes').innerHTML = `<div class="kw">${C.right.slice(0, k).map((w) => `<span>${esc(w)}</span>`).join('')}</div>`;
+      } else {
+        const n = Math.round(C.wrong.length * prog(t, ...T.typing));
+        $('notes').textContent = C.wrong.slice(0, n) + (n >= C.wrong.length ? '…' : '');
+        $('notes').style.color = bad ? 'var(--red)' : 'var(--ink-soft)';
+      }
+    },
+  },
+  calc: {
+    html: () => {
+      const xs = Array.from({ length: 61 }, (_, i) => -4 + i * 13 / 60);
+      const X = (x) => 40 + (x + 4) * 720 / 13, Y = (y) => 170 - y * 3.3;
+      const d = xs.map((x, i) => `${i ? 'L' : 'M'}${X(x).toFixed(1)} ${Y(x * x - 5 * x - 14).toFixed(1)}`).join(' ');
+      return `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <p class="q">${esc(C.question)}</p>
+      <div class="row" style="margin-top:18px"><span class="cap">Прошло на задачу</span><span class="elapsed" id="elapsed">0:00</span></div>
+      <div class="scratch" id="scratch"></div>
+      <div id="graph" style="display:none; margin-top:10px">
+        <svg width="800" height="250" viewBox="0 0 800 250"><rect width="800" height="250" rx="22" fill="#f4f6fb"/>
+          <line x1="20" y1="170" x2="780" y2="170" stroke="#b8bcc8" stroke-width="3"/><line x1="${X(0)}" y1="10" x2="${X(0)}" y2="240" stroke="#b8bcc8" stroke-width="3"/>
+          <path id="parab" d="${d}" stroke="#2d70b3" stroke-width="6" fill="none" clip-path="inset(0 round 22px)"/>
+          <circle cx="${X(C.other)}" cy="170" r="10" fill="#6e6d6b"/><circle id="rootDot" cx="${X(C.root)}" cy="170" r="14" fill="#2e5e3a"/>
+          <text x="${X(C.root) - 10}" y="215" text-anchor="middle" font-family="Manrope" font-weight="800" font-size="34" fill="#2e5e3a">(${C.root}, 0)</text></svg>
+        <p style="margin-top:12px; font:600 30px/1 var(--body); color:var(--success)">x = ${C.root} · за несколько секунд</p>
+      </div>`;
+    },
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, ...T.typing);
+      const lines = C.scratch.map((l, i) => l.slice(0, Math.round(l.length * clamp(p * C.scratch.length - i)))).filter(Boolean);
+      $('scratch').innerHTML = lines.map(esc).join('<br>');
+      $('scratch').style.display = fixed ? 'none' : 'block';
+      $('graph').style.display = fixed ? 'block' : 'none';
+      const secs = fixed ? 8 : Math.round(lerp(0, 298, prog(t, T.typing[0], T.fail)));
+      $('elapsed').textContent = `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`;
+      $('elapsed').style.color = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      if (fixed) { const pa = $('parab'), L = pa.getTotalLength(); pa.style.strokeDasharray = L; pa.style.strokeDashoffset = L * (1 - eInOut(prog(t, T.fix, T.fix + 0.8))); }
+    },
+  },
+  band: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="bands">${C.scores.map(([k, v]) => `<div class="band"><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join('')}</div>
+      <p class="avg" id="avg"></p>
+      <div class="overall"><span class="cap">Overall</span><b id="ov"></b><span class="chip" id="ovNote"></span></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, ...T.typing);
+      const sum = `(${C.scores.map((x) => x[1]).join(' + ')}) / 4 = `;
+      $('avg').textContent = p > 0 ? (sum + C.avg).slice(0, Math.round((sum + C.avg).length * p)) : '';
+      const ov = $('ov');
+      ov.textContent = t >= T.done ? (fixed ? C.right : C.wrong + '?') : '';
+      ov.style.color = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      ov.style.transform = fixed ? `scale(${lerp(1.3, 1, eBack(prog(t, T.fix, T.fix + 0.35)))})` : 'none';
+      const note = $('ovNote');
+      note.textContent = fixed ? '↑ округление в твою пользу' : bad ? 'так не округляют' : '';
+      note.style.visibility = bad || fixed ? 'visible' : 'hidden';
+      note.style.background = fixed ? 'var(--success-soft)' : 'var(--blush)';
+      note.style.color = fixed ? 'var(--success)' : 'var(--red-deep)';
     },
   },
   writing: {
