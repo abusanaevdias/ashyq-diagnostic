@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Цикл самостоятельной подготовки к IELTS</title>
+  <desc id="desc">Решите новое задание, разберите ошибку, найдите её причину и повторите навык на другом задании.</desc>
+  <rect width="1200" height="630" rx="28" fill="#F6F1E9"/>
+  <text x="64" y="142" fill="#272523" font-family="Arial, sans-serif" font-size="58" font-weight="700">Рабочий цикл после ошибки</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="48" y="200" width="250" height="322" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="173" cy="300" r="58" fill="#F7E7E2"/>
+    <path d="M153 269h40a9 9 0 0 1 9 9v47h-58v-47a9 9 0 0 1 9-9Z" fill="none" stroke="#8E3029" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M162 285h21M162 298h27M162 311h18" stroke="#8E3029" stroke-width="5" stroke-linecap="round"/>
+    <text x="173" y="445" fill="#272523" font-size="44" font-weight="700" text-anchor="middle">Реши</text>
+
+    <rect x="348" y="200" width="250" height="322" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="473" cy="300" r="58" fill="#F7E7E2"/>
+    <path d="M473 260 515 334h-84l42-74Z" fill="none" stroke="#8E3029" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M473 285v22M473 321v1" stroke="#8E3029" stroke-width="6" stroke-linecap="round"/>
+    <text x="473" y="445" fill="#272523" font-size="44" font-weight="700" text-anchor="middle">Разбери</text>
+
+    <rect x="648" y="200" width="250" height="322" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="773" cy="300" r="58" fill="#F7E7E2"/>
+    <circle cx="765" cy="291" r="25" fill="none" stroke="#8E3029" stroke-width="6"/>
+    <path d="m784 310 23 23" stroke="#8E3029" stroke-width="7" stroke-linecap="round"/>
+    <text x="773" y="445" fill="#272523" font-size="44" font-weight="700" text-anchor="middle">Найди</text>
+
+    <rect x="948" y="200" width="250" height="322" rx="24" fill="#FFFFFF" stroke="#D9D2C9" stroke-width="3"/>
+    <circle cx="1073" cy="300" r="58" fill="#F7E7E2"/>
+    <path d="M1041 301a33 33 0 0 1 58-21l8 10M1107 289v-20M1107 289h-20M1105 302a33 33 0 0 1-58 21l-8-10M1039 314v20M1039 314h20" fill="none" stroke="#8E3029" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1073" y="445" fill="#272523" font-size="44" font-weight="700" text-anchor="middle">Повтори</text>
+  </g>
+  <g fill="none" stroke="#A33A31" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M307 350h31m-10-10 10 10-10 10"/>
+    <path d="M607 350h31m-10-10 10 10-10 10"/>
+    <path d="M907 350h31m-10-10 10 10-10 10"/>
+  </g>
+</svg>
