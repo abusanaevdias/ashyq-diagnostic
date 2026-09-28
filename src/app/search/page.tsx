@@ -5,6 +5,7 @@ import SearchV3, { type SearchEntry } from '@/components/SearchV3';
 import { COURSES } from '@/data/courses';
 import { BLOG_IS_DEMO, BLOG_POSTS } from '@/data/blog';
 import { FAQ } from '@/data/faq';
+import { LIBRARY_CHAPTERS } from '@/data/free-library';
 
 export const metadata: Metadata = {
   title: 'Поиск по сайту — ASHYQ',
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 /** Служебная страница: служебные страницы поиска принято закрывать от индексации. */
 
 const PAGES: Array<{ title: string; text: string; href: string }> = [
+  { title: 'Бесплатная библиотека IELTS', text: 'Writing Upgrade Lab, полные эссе, Reading, Listening, Speaking и языковые упражнения с объяснениями.', href: '/library' },
   { title: 'Менторство по поступлению', text: 'Стратегия поступления, документы, CV, Personal Statement, дедлайны и онлайн-сопровождение ASHYQ.', href: '/mentoring' },
   { title: 'Главная', text: 'Диагностика IELTS и SAT, направления клуба и статистика подготовки.', href: '/' },
   { title: 'Диагностика', text: 'Предварительная оценка IELTS или SAT: 12–20 минут, без регистрации, не официальный балл.', href: '/diagnostic' },
@@ -35,6 +37,7 @@ const PAGES: Array<{ title: string; text: string; href: string }> = [
 function buildEntries(): SearchEntry[] {
   return [
     ...PAGES.map((page) => ({ section: 'Страницы' as const, ...page })),
+    ...LIBRARY_CHAPTERS.map((chapter) => ({ section: 'Страницы' as const, title: `${chapter.code} · ${chapter.title}`, text: `${chapter.category} ${chapter.description}`, href: `/library/${chapter.slug}` })),
     ...COURSES.map((course) => ({
       section: 'Курсы' as const,
       title: course.title,

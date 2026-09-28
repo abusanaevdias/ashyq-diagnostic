@@ -3,6 +3,7 @@ import { COURSE_DETAILS, COURSE_SLUGS, freeLessons } from '@/data/courses';
 import { CAREER_CODES } from '@/data/career/profiles';
 import { BLOG_POSTS } from '@/data/blog';
 import { SITE_ROUTES, SITE_URL } from '@/lib/site';
+import { LIBRARY_CHAPTERS } from '@/data/free-library';
 
 // программа курса и бесплатные уроки; закрытые уроки своих страниц не имеют
 const LESSON_ROUTES = COURSE_SLUGS.flatMap((slug) => [
@@ -26,5 +27,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'yearly' as const,
     priority: 0.65,
   }));
-  return [...routes, ...articles];
+  const library = LIBRARY_CHAPTERS.map((chapter) => ({ url: `${SITE_URL}/library/${chapter.slug}`, lastModified: new Date('2026-09-28'), changeFrequency: 'yearly' as const, priority: 0.6 }));
+  return [...routes, ...articles, ...library];
 }

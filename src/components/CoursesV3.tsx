@@ -35,6 +35,13 @@ const PROGRAMS = COURSES.filter(
 const PRACTICE = [
   {
     exam: 'IELTS',
+    title: 'Бесплатная библиотека IELTS',
+    text: 'Полные эссе, Writing Lab, Reading, Speaking и упражнения с объяснениями. Практикуйтесь прямо на сайте.',
+    href: '/library',
+    note: 'Авторские материалы · без регистрации',
+  },
+  {
+    exam: 'IELTS',
     title: 'Как устроен IELTS',
     text: 'Знакомство с четырьмя секциями, форматом и шкалой баллов.',
     href: '/courses/ielts/lessons/how-ielts-works',
