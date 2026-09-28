@@ -55,6 +55,10 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
               <MicroLabel>ASHYQ · образовательный клуб Казахстана</MicroLabel>
               <h1 className={styles.title}>IELTS и SAT.<span className={styles.titleAccent}>Начните бесплатно.</span></h1>
               <p className={styles.lead}>Открытые материалы, практика и диагностика — без регистрации. Занятия с преподавателем и менторство — отдельные платные программы.</p>
+              <nav className={styles.entryChoices} aria-label="Первые шаги: диагностика и библиотека">
+                <Link href="/diagnostic"><strong>Бесплатная диагностика <HeroArrow /></strong><span>IELTS или SAT · узнайте свой уровень</span></Link>
+                <Link href="/library"><strong>Бесплатная библиотека <HeroArrow /></strong><span>Материалы, задания и разборы · 0 ₸</span></Link>
+              </nav>
               <div className={styles.actions}>
                 {(['ielts', 'sat'] as const).map((exam) => {
                   const saved = runs[exam];
@@ -75,7 +79,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
 
             <aside className={styles.heroResources} aria-labelledby="home-free-title">
               <MicroLabel>0 ₸ · без регистрации</MicroLabel>
-              <h2 id="home-free-title">Бесплатные материалы</h2>
+              <h2 id="home-free-title">Бесплатная библиотека</h2>
               <p>Выберите навык — начните сразу.</p>
               <FreeStarters compact />
               <Link className={styles.allResources} href="/library">Все материалы: Listening, грамматика, SAT и 42 раздела IELTS <HeroArrow /></Link>

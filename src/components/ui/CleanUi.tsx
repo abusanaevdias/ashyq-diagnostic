@@ -55,12 +55,10 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic' }: { onStart?: 
           <Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} priority />
         </Link>
         <div className={styles.navLinks}>
-          <Link className={`${styles.navLink} ${styles.freeNavLink}`} href="/library">Бесплатно</Link>
+          <Link className={`${styles.navLink} ${styles.freeNavLink}`} href="/library">Бесплатная библиотека</Link>
           <Link className={styles.navLink} href="/courses">Курсы</Link>
           <Link className={styles.navLink} href="/season">Чемпионат</Link>
           <Link className={styles.navLink} href="/about">О нас</Link>{BLOG_IS_DEMO ? null : <Link className={styles.navLink} href="/blog">Блог</Link>}
-          <Link className={styles.navLink} href="/community">Сообщество</Link>
-          <Link className={styles.navLink} href="/faq">FAQ</Link>
           <Link className={styles.navLink} href="/contacts">Контакты</Link>
         </div>
         <MobileNavMenu>
@@ -85,7 +83,7 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic' }: { onStart?: 
           <ButtonLink href={diagnosticHref}>Диагностика</ButtonLink>
         )}
       </nav>
-      <Link className={styles.freeMobileLink} href="/library"><strong>Бесплатные материалы</strong><span>IELTS · SAT</span><ArrowIcon /></Link>
+      <Link className={styles.freeMobileLink} href="/library"><strong>Бесплатная библиотека</strong><span>IELTS · SAT</span><ArrowIcon /></Link>
     </header>
   );
 }

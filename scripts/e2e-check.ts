@@ -174,17 +174,20 @@ async function main() {
   check('landing: точное позиционирование и предварительная оценка', has(landing, 'образовательный клуб Казахстана') && has(landing, 'предварительная оценка навыков'));
   check('landing: 20 минут', has(landing, '20 минут'));
   check('landing: обе кнопки экзамена', has(landing, 'IELTS') && has(landing, 'SAT'));
-  // Owner prioritizes immediate free practice over a diagnostic-only landing.
+  // Owner wants diagnosis and the full named library as the first two choices.
   const vp = page.viewportSize() ?? { width: 390, height: 844 };
   const ctaBox = await page
     .locator('#hero')
-    .getByRole('link', { name: /IELTS Writing Lab/ })
+    .getByRole('navigation', { name: 'Первые шаги: диагностика и библиотека' })
+    .getByRole('link', { name: /Бесплатная библиотека/ })
     .boundingBox();
   check(
-    'landing: прямая бесплатная практика выше сгиба',
+    'landing: бесплатная библиотека выше сгиба',
     Boolean(ctaBox) && (ctaBox!.y + ctaBox!.height) <= vp.height,
     ctaBox ? `низ кнопки ${Math.round(ctaBox.y + ctaBox.height)}px при viewport ${vp.height}px` : 'кнопка не найдена',
   );
+  const diagnosticBox = await page.getByRole('navigation', { name: 'Первые шаги: диагностика и библиотека' }).getByRole('link', { name: /Бесплатная диагностика/ }).boundingBox();
+  check('landing: бесплатная диагностика выше сгиба', Boolean(diagnosticBox) && diagnosticBox!.y + diagnosticBox!.height <= vp.height);
   check('landing: четыре прямые бесплатные карточки без поиска', (await page.getByRole('navigation', { name: 'Начать бесплатную практику' }).getByRole('link').count()) === 4);
   check('nav: бесплатные материалы видны без открытия меню', await page.locator('header > a[href="/library"]').isVisible());
   check('landing: секции лендинга на месте', has(landing, 'Что вы узнаете') && has(landing, 'Как это работает'));

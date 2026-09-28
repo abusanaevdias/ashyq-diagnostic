@@ -51,6 +51,16 @@
 .boundaries a,.related a{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid var(--hairline);border-radius:var(--r-sm);text-decoration:underline;text-underline-offset:3px;font-size:.87rem}
 .breadcrumb{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:28px;font-size:.8rem;color:var(--ink-soft)}.breadcrumb a{display:flex;align-items:center;min-height:44px;color:var(--ink)}
 .chapterHero{padding:40px 0;max-width:58em}.chapterHero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(2rem,4.5vw,3.65rem);letter-spacing:-.035em;line-height:1.12;margin:20px 0;text-wrap:balance}
+.lessonGuide{scroll-margin-top:152px;padding:24px 0 32px;border-top:1px solid var(--hairline)}
+.lessonGuide h2{font-family:var(--font-display);font-weight:800;font-size:1.5rem;line-height:1.3}
+.lessonGuide>p{font-size:.85rem;color:var(--ink-soft);line-height:1.7;margin:10px 0 20px}
+.stageGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stageGrid>div{min-width:0;border:1px solid var(--hairline);border-radius:var(--r-md);background:var(--surface);padding:18px}
+.stageGrid h3{font-size:1rem;font-weight:700;color:var(--red-deep)}
+.stageGrid p{font-size:.76rem;color:var(--ink-soft);line-height:1.6;margin:10px 0}
+.stageGrid a{display:grid;align-content:center;gap:3px;min-height:44px;font-size:.78rem;line-height:1.6;padding:8px 0;border-top:1px solid var(--hairline)}
+.stageGrid a span{font-size:.65rem;color:var(--ink-soft);font-weight:600}
+.backToStages{display:inline-flex;align-items:center;min-height:44px;font-size:.78rem;font-weight:600;color:var(--red-deep);text-decoration:underline;text-underline-offset:3px;margin-top:8px}
 .reader{display:grid;grid-template-columns:230px minmax(0,1fr);gap:52px;align-items:start;padding:20px 0 48px}
 .contents{position:sticky;top:100px;max-height:calc(100dvh - 124px);overflow-y:auto;padding-right:12px}.contents nav{display:grid;gap:5px}.contents nav>p{margin-bottom:12px}
 .contents nav a{display:grid;gap:3px;padding:10px 0;min-height:44px;font-size:.78rem;line-height:1.5;border-bottom:1px solid var(--hairline)}.contents nav a span{color:var(--ink-soft);font-size:.66rem;font-weight:600}.contents nav a:hover{color:var(--red-deep)}
@@ -78,6 +88,7 @@
 .related{padding:24px 0 64px;border-top:1px solid var(--hairline)}.page :is(a,button,input,textarea,summary):focus-visible{outline:2px solid var(--red-deep);outline-offset:4px}
 @media(max-width:1000px){.hero{gap:32px}.heroCard{padding:28px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reader{gap:28px;grid-template-columns:190px minmax(0,1fr)}}
 @media(max-width:760px){
+.stageGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.stageGrid>div{padding:14px}
 .quickHeader{padding-top:24px}.quickHeader>p:last-child{font-size:.9rem}.quickLinks{gap:4px 12px}
 .hero{grid-template-columns:1fr;padding:40px 0 32px;gap:32px}.hero h1{font-size:clamp(2.35rem,8vw,3.4rem)}.heroCard h2{font-size:2rem;max-width:10em}.heroCard h2 br{display:none}
 .stats{grid-template-columns:1fr 1fr;gap:28px;padding-block:24px}.stats strong{font-size:2rem}.method{grid-template-columns:1fr;gap:28px;padding:40px 0}
