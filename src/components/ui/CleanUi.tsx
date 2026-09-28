@@ -55,15 +55,14 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic' }: { onStart?: 
           <Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} priority />
         </Link>
         <div className={styles.navLinks}>
+          <Link className={`${styles.navLink} ${styles.freeNavLink}`} href="/library">Бесплатная библиотека</Link>
           <Link className={styles.navLink} href="/courses">Курсы</Link>
           <Link className={styles.navLink} href="/season">Чемпионат</Link>
-          <Link className={styles.navLink} href="/program">Программа</Link>
           <Link className={styles.navLink} href="/about">О нас</Link>{BLOG_IS_DEMO ? null : <Link className={styles.navLink} href="/blog">Блог</Link>}
-          <Link className={styles.navLink} href="/community">Сообщество</Link>
-          <Link className={styles.navLink} href="/faq">FAQ</Link>
           <Link className={styles.navLink} href="/contacts">Контакты</Link>
         </div>
         <MobileNavMenu>
+            <Link className={styles.navLink} href="/library">Бесплатная библиотека</Link>
             <Link className={styles.navLink} href="/courses">Курсы</Link>
             <Link className={styles.navLink} href="/season">Чемпионат</Link>
             <Link className={styles.navLink} href="/program">Программа</Link>
@@ -84,6 +83,7 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic' }: { onStart?: 
           <ButtonLink href={diagnosticHref}>Диагностика</ButtonLink>
         )}
       </nav>
+      <Link className={styles.freeMobileLink} href="/library"><strong>Бесплатная библиотека</strong><span>IELTS · SAT</span><ArrowIcon /></Link>
     </header>
   );
 }
@@ -116,7 +116,7 @@ export function FilterChip({ children, active = false, onClick }: { children: Re
 }
 
 const FOOTER_GROUPS = [
-  { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/mentoring', label: 'Менторство' }, { href: '/program', label: 'Программа' }, { href: '/diagnostic', label: 'Диагностика' }, { href: '/career', label: 'Компас' }, { href: '/progress', label: 'Прогресс' }] },
+  { title: 'Учёба', links: [{ href: '/library', label: 'Бесплатная библиотека' }, { href: '/courses', label: 'Курсы' }, { href: '/mentoring', label: 'Менторство' }, { href: '/program', label: 'Программа' }, { href: '/diagnostic', label: 'Диагностика' }, { href: '/career', label: 'Компас' }, { href: '/progress', label: 'Прогресс' }] },
   { title: 'ASHYQ', links: [{ href: '/about', label: 'О нас' }, { href: '/blog', label: 'Блог' },{ href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }, { href: '/contacts', label: 'Контакты' }] },
   { title: 'Документы', links: [{ href: '/privacy', label: 'Конфиденциальность' }, { href: '/terms', label: 'Условия' }] },
   { title: 'Соцсети', links: SOCIAL_LINKS.map((social) => ({ href: social.href, label: social.label })) },

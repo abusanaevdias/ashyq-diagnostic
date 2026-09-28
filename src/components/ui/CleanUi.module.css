@@ -54,6 +54,9 @@
   color: var(--ink);
 }
 
+.freeNavLink{color:var(--red-deep);font-weight:700}
+.freeMobileLink{display:none}
+
 .searchLink {
   width: 44px;
   height: 44px;
@@ -89,7 +92,7 @@
   display: none;
 }
 
-.mobilePanel {
+  .mobilePanel {
   position: absolute;
   top: 64px;
   right: var(--pad);
@@ -353,6 +356,7 @@
 .navLink:focus-visible,
 .footerLink:focus-visible,
 .searchLink:focus-visible,
+.freeMobileLink:focus-visible,
 .logoLink:focus-visible,
 .mobileMenuTrigger:focus-visible,
 .direction:focus-visible,
@@ -378,6 +382,12 @@
     min-height: 64px;
     gap: 12px;
   }
+
+  .freeMobileLink{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px var(--pad);background:var(--blush-soft);border-top:1px solid var(--hairline);color:var(--red-deep);font-size:.8rem}
+  .freeMobileLink strong{font-weight:700;flex-grow:1}
+  .freeMobileLink>span{font-size:.7rem;color:var(--ink-soft)}
+  .freeMobileLink svg{flex-shrink:0}
+  .mobilePanel{top:108px}
 
   .navLinks,
   .searchLink {

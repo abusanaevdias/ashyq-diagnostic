@@ -174,29 +174,34 @@ async function main() {
   check('landing: точное позиционирование и предварительная оценка', has(landing, 'образовательный клуб Казахстана') && has(landing, 'предварительная оценка навыков'));
   check('landing: 20 минут', has(landing, '20 минут'));
   check('landing: обе кнопки экзамена', has(landing, 'IELTS') && has(landing, 'SAT'));
-  // CTA должна быть видна без скролла на телефоне (above the fold)
+  // Owner wants diagnosis and the full named library as the first two choices.
   const vp = page.viewportSize() ?? { width: 390, height: 844 };
   const ctaBox = await page
     .locator('#hero')
-    .getByRole('button', { name: 'Начать диагностику IELTS' })
+    .getByRole('navigation', { name: 'Первые шаги: диагностика и библиотека' })
+    .getByRole('link', { name: /Бесплатная библиотека/ })
     .boundingBox();
   check(
-    'landing: CTA выше сгиба',
+    'landing: бесплатная библиотека выше сгиба',
     Boolean(ctaBox) && (ctaBox!.y + ctaBox!.height) <= vp.height,
     ctaBox ? `низ кнопки ${Math.round(ctaBox.y + ctaBox.height)}px при viewport ${vp.height}px` : 'кнопка не найдена',
   );
+  const diagnosticBox = await page.getByRole('navigation', { name: 'Первые шаги: диагностика и библиотека' }).getByRole('link', { name: /Бесплатная диагностика/ }).boundingBox();
+  check('landing: бесплатная диагностика выше сгиба', Boolean(diagnosticBox) && diagnosticBox!.y + diagnosticBox!.height <= vp.height);
+  check('landing: четыре прямые бесплатные карточки без поиска', (await page.getByRole('navigation', { name: 'Начать бесплатную практику' }).getByRole('link').count()) === 4);
+  check('nav: бесплатные материалы видны без открытия меню', await page.locator('header > a[href="/library"]').isVisible());
   check('landing: секции лендинга на месте', has(landing, 'Что вы узнаете') && has(landing, 'Как это работает'));
   const landingScroll = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );
   check('landing: нет горизонтального скролла', landingScroll <= 0, `${landingScroll}px`);
-  await page.screenshot({ path: 'screenshots/landing-mobile.png', fullPage: true });
+  await page.screenshot({ path: 'screenshots/landing-mobile.png', fullPage: false });
 
   // desktop
   const desktop = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const dpage = await desktop.newPage();
   await dpage.goto(`${BASE}/${UTM}`, { waitUntil: 'networkidle' });
-  await dpage.screenshot({ path: 'screenshots/landing-desktop.png', fullPage: true });
+  await dpage.screenshot({ path: 'screenshots/landing-desktop.png', fullPage: false });
   check('landing desktop: рендерится', (await dpage.locator('h1').innerText()).length > 10);
   await desktop.close();
 
@@ -460,7 +465,7 @@ async function main() {
 
   // courses: v3 каталог и рабочий фильтр
   await p3.goto(`${BASE}/courses`, { waitUntil: 'networkidle' });
-  check('courses: два курса отдельно от бесплатной практики', (await p3.locator('#programs article').count()) === 2 && (await p3.locator('#free-practice h3').count()) === 3 && has(await p3.locator('body').innerText(), 'Не знаете, с чего начать?'));
+  check('courses: два курса отдельно от бесплатной практики', (await p3.locator('#programs article').count()) === 2 && (await p3.locator('#free-practice h3').count()) === 4 && has(await p3.locator('body').innerText(), 'Не знаете, с чего начать?'));
   check('courses: общий вход даёт выбор экзамена', await p3.getByRole('link', { name: 'Пройти диагностику', exact: true }).getAttribute('href') === '/diagnostic');
   await p3.getByRole('button', { name: 'SAT', exact: true }).click();
   check('courses: фильтр SAT показывает только программу SAT', (await p3.locator('#programs article').count()) === 1 && (await p3.getByRole('heading', { name: 'Подготовка к IELTS' }).count()) === 0);

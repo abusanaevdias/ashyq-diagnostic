@@ -1,15 +1,14 @@
 'use client';
 
 import type { CSSProperties } from 'react';
-import Image from 'next/image';
-import { PHOTOS } from '@/data/media';
+import Link from 'next/link';
 import { EXAMS } from '@/lib/config';
 import { CLUB_FACTS } from '@/lib/site';
 import type { ExamId, RunState } from '@/lib/types';
 import { ButtonLink, DirectionCard, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import styles from './HomeV3.module.css';
-import { AiBadge } from './AiBadge';
+import FreeStarters from './library/FreeStarters';
 import ClubOffer from './ClubOffer';
 import CohortResults from './CohortResults';
 
@@ -53,9 +52,13 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
         <section id="hero" className={`${styles.container} ${styles.hero}`}>
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
-              <MicroLabel>Образование открывает двери</MicroLabel>
-              <h1 className={styles.title}>Больше, чем подготовка.<span className={styles.titleAccent}>Реальные возможности.</span></h1>
-              <p className={styles.lead}>ASHYQ — образовательный клуб Казахстана: онлайн IELTS и Digital SAT. Бесплатная диагностика за ≈20 минут: предварительная оценка навыков и следующий шаг, не официальный балл.</p>
+              <MicroLabel>ASHYQ · образовательный клуб Казахстана</MicroLabel>
+              <h1 className={styles.title}>IELTS и SAT.<span className={styles.titleAccent}>Начните бесплатно.</span></h1>
+              <p className={styles.lead}>Открытые материалы, практика и диагностика — без регистрации. Занятия с преподавателем и менторство — отдельные платные программы.</p>
+              <nav className={styles.entryChoices} aria-label="Первые шаги: диагностика и библиотека">
+                <Link href="/diagnostic"><strong>Бесплатная диагностика <HeroArrow /></strong><span>IELTS или SAT · узнайте свой уровень</span></Link>
+                <Link href="/library"><strong>Бесплатная библиотека <HeroArrow /></strong><span>Материалы, задания и разборы · 0 ₸</span></Link>
+              </nav>
               <div className={styles.actions}>
                 {(['ielts', 'sat'] as const).map((exam) => {
                   const saved = runs[exam];
@@ -70,22 +73,17 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
                   );
                 })}
               </div>
+              <p className={styles.diagnosticNote}>Диагностика: ≈20 минут. Предварительная оценка навыков, не официальный балл IELTS или SAT.</p>
               <div className={styles.statsWrap}><StatsRow items={[CLUB_FACTS[0], CLUB_FACTS[2], CLUB_FACTS[3]]} /></div>
             </div>
 
-            <div className={styles.heroVisual}>
-              <span className={styles.verticalNote}>People · Knowledge · Progress</span>
-              <span className={styles.scriptNote}>начните здесь</span>
-              <div className={styles.photoFrame}>
-                <Image className={styles.heroPhoto} src={PHOTOS.homeHero.src} alt={PHOTOS.homeHero.alt} width={PHOTOS.homeHero.width} height={PHOTOS.homeHero.height} priority sizes="(max-width: 900px) 100vw, 42vw" />
-                <AiBadge />
-              </div>
-              <div className={styles.floatingCard}>
-                <IconChip name="spark" solid />
-                <p className={styles.floatingTitle}>Запишитесь сегодня</p>
-                <p className={styles.floatingText}>Начните с быстрой диагностики. Регистрация для результата не нужна.</p>
-              </div>
-            </div>
+            <aside className={styles.heroResources} aria-labelledby="home-free-title">
+              <MicroLabel>0 ₸ · без регистрации</MicroLabel>
+              <h2 id="home-free-title">Бесплатная библиотека</h2>
+              <p>Выберите навык — начните сразу.</p>
+              <FreeStarters compact />
+              <Link className={styles.allResources} href="/library">Все материалы: Listening, грамматика, SAT и 42 раздела IELTS <HeroArrow /></Link>
+            </aside>
           </div>
         </section>
 
