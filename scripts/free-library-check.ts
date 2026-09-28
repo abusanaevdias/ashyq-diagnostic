@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import raw from '../src/data/free-library-content.json';
 import { LIBRARY_CHAPTERS, LIBRARY_DOWNLOADS } from '../src/data/free-library';
+import { FREE_STARTERS } from '../src/data/free-starters';
 
 async function main() {
 assert.equal(raw.sections.length, 198);
@@ -33,6 +34,12 @@ for (let i = 0; i < LIBRARY_DOWNLOADS.length; i++) {
 const base = (process.env.BASE_URL || 'http://127.0.0.1:3032').replace(/\/$/, '');
 const canonicalBase = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
 const sitemap = await (await fetch(`${base}/sitemap.xml`)).text();
+const home = await (await fetch(`${base}/`)).text();
+assert.ok(home.includes('Бесплатные материалы'));
+for (const entry of FREE_STARTERS) {
+  assert.equal((await fetch(`${base}${entry.href}`)).status, 200, `direct start: ${entry.id}`);
+  if (entry.home) assert.ok(home.includes(`href="${entry.href}"`), `home direct link: ${entry.id}`);
+}
 for (const slug of ['', ...LIBRARY_CHAPTERS.map((chapter) => `/${chapter.slug}`)]) {
   const response = await fetch(`${base}/library${slug}`);
   assert.equal(response.status, 200, slug);
@@ -40,6 +47,7 @@ for (const slug of ['', ...LIBRARY_CHAPTERS.map((chapter) => `/${chapter.slug}`)
   assert.ok(!/<meta[^>]+content="[^"]*noindex/.test(html), `indexable ${slug}`);
   assert.ok(html.includes(`<link rel="canonical" href="${canonicalBase}/library${slug}"`), `canonical ${slug}`);
   assert.ok(html.includes('application/ld+json'));
+  if (!slug) for (const entry of FREE_STARTERS) assert.ok(html.includes(`href="${entry.href}"`), `catalog direct link: ${entry.id}`);
   assert.ok(sitemap.includes(`/library${slug}<`), `sitemap ${slug}`);
 }
 for (const file of LIBRARY_DOWNLOADS) {

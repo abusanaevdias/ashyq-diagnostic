@@ -34,3 +34,11 @@ Python migration/audit needs `pdfplumber`; importer also uses `pypdf`. They run 
 The TypeScript check also verifies all 43 page responses, actual canonical tags, indexability, structured data, sitemap membership, three PDF response types and invalid-chapter 404. It is added to CI. The shared axe/Lighthouse gate includes eight representative library routes on desktop/mobile. Chrome manual checks cover responsive views (390/320 px), search/category filtering, native lesson content, closed/open keys, word counts/copying, reload-loss behavior and console errors. No production lead forms, CRM or external source accounts are mutated by these checks.
 
 The owned writing drills, blog redesign and Search Console work are not modified. Shared course catalog, mobile menu, footer and site search only receive discoverability links.
+
+## First-screen discoverability expansion
+
+The owner explicitly expanded the task after finding the existing materials difficult to discover. The homepage now has a named free-resource panel with four direct starts, rather than a decorative hero photograph. The mobile layout prioritizes those practice cards; diagnostic buttons remain in the hero and the diagnostic flow is unchanged. The shared desktop navigation exposes `Бесплатно`, while mobile has a visible free-materials strip outside the closed menu. The program link remains in the menu/footer.
+
+`/library` now opens with eight direct, unfiltered entry cards: Writing Lab, Reading, Speaking, SAT introduction, Listening, grammar, SAT Math and the existing Writing trainer. Links also expose Task 1, the 21-day route, diagnostic and offline downloads. Topic search is optional. The 322 exercise count is explicitly IELTS-only; existing SAT open lessons are separate.
+
+The E2E first-fold contract was intentionally updated to assert the direct free Writing Lab card and always-visible mobile free entry, reflecting the owner's new priority. Diagnostic and course flow checks are retained, not bypassed. Link integrity additionally checks every direct start and the four homepage links. Visibility is a measured layout/property, not a claim about traffic or increased brand awareness.
