@@ -264,6 +264,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | WRITING-DRILLS-010 | IN_PROGRESS | Codex `/root` | `codex/writing-drills-010`; worktree `C:\Users\Dias\.codex\worktrees\writing-calibration\ashyq-diagnostic` | started 2026-09-28; add original, public, synthetic IELTS Task 2 micro-exercises inspired by Quill Connect/Grammar patterns: sentence combining, focused grammar revision, and argument development with retry and explanatory feedback. Integrate a drill hub into the writing trainer landing. No copied Quill content/design, no real student essays, server AI, scoring or private data. Owned: new writing drill route, components/data/styles, trainer landing link, focused documentation. |
 
+| BLOG-REDESIGN-001 | IN_PROGRESS | Codex `/root` | `codex/blog-editorial-redesign`; worktree `C:\\Users\\Dias\\.codex\\worktrees\\blog-index-redesign\\ashyq-diagnostic` | started 2026-09-28; implement the user-approved hybrid of blog concepts 1 and 2 on public `/blog`: oversized editorial masthead, featured article, consistent article grid, functional category/search and responsive layout. Owned: `src/components/BlogV3.tsx`, `src/components/BlogV3.module.css` and focused `/blog` visual/behavior checks. Preserve published articles, routes and SEO metadata. |
+
 ## 6. Проверки и команды
 
 ```powershell
