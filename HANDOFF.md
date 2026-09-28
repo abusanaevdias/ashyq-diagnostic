@@ -98,6 +98,10 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 ## 4. Реестр выполненной работы
 
+| Task | Status | Owner | Branch / worktree | Scope |
+|---|---|---|---|---|
+| COURSES-UX-022 | IN_PROGRESS | Codex `/root` (Alisher Mac) | `codex/courses-ux-polish`; worktree `/Users/wpalish/Documents/Codex/2026-09-27/files-mentioned-by-the-user-role/work/ashyq-courses-polish` | started 2026-09-28. User-requested improvement of course catalog: compact actionable hero, separate exam programs from club/tools, free practice entry, exam-correct links, responsive/accessibility polish; scoped `CoursesV3` and CSS, mobile menu Escape in `CleanUi`, contact heading accuracy, regression checks. No Search Console actions, Threads, writing trainer, backend or commercial claims. Independent on-page split allowed by SEO-GSC-INDEX-015. |
+
 | ID | Статус | Исполнитель | Ветка / worktree | Результат |
 |---|---|---|---|---|
 | MERGE-001 | DONE | Codex `/root` | `main` | Объединены исходные workspace и diagnostic варианты; merge `86bf5a2` |
