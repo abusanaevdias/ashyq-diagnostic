@@ -50,7 +50,7 @@ export const COURSES: Array<{ title: string; text: string; meta: string; href: s
   { title: 'Подготовка к IELTS', text: 'Reading, Listening, Writing и Speaking по плану из диагностики. Пробные тесты, домашние задания и Speaking Battles.', meta: 'Онлайн · для учеников из Астаны и Казахстана', href: '/courses/ielts', photo: PHOTOS.courseCardIelts.src, alt: PHOTOS.courseCardIelts.alt, tags: ['ielts'] },
   { title: 'Подготовка к SAT', text: 'Reading & Writing и Math: навыки, стратегия времени и регулярные пробные тесты с разбором.', meta: 'Онлайн · для учеников из Астаны и Казахстана', href: '/courses/sat', photo: PHOTOS.courseCardSat.src, alt: PHOTOS.courseCardSat.alt, tags: ['sat'] },
   { title: 'Сезон и Match Days', text: 'Командные задания, рейтинг и Championship сезона. IELTS и SAT считаются раздельно.', meta: 'команды и участники · финал в Астане', href: '/season', photo: PHOTOS.courseCardSeason.src, alt: PHOTOS.courseCardSeason.alt, tags: ['team', 'ielts', 'sat'] },
-  { title: 'Quick Diagnostic', text: 'Предварительная оценка IELTS или SAT и понятный следующий шаг. Это не официальный балл.', meta: '12–20 минут · без регистрации', href: '/?start=ielts', photo: PHOTOS.courseCardDiagnostic.src, alt: PHOTOS.courseCardDiagnostic.alt, tags: ['ielts', 'sat'], badge: 'Бесплатно' },
+  { title: 'Quick Diagnostic', text: 'Предварительная оценка IELTS или SAT и понятный следующий шаг. Это не официальный балл.', meta: '12–20 минут · без регистрации', href: '/diagnostic', photo: PHOTOS.courseCardDiagnostic.src, alt: PHOTOS.courseCardDiagnostic.alt, tags: ['ielts', 'sat'], badge: 'Бесплатно' },
 ];
 
 const provisionalFacts = [

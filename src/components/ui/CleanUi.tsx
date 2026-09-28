@@ -4,6 +4,7 @@ import NavAccount from '@/components/lms/NavAccount';
 import { BLOG_IS_DEMO } from '@/data/blog';
 import { SOCIAL_LINKS } from '@/lib/site';
 import styles from './CleanUi.module.css';
+import { MobileNavMenu } from './MobileNavMenu';
 
 type IconName = 'book' | 'chart' | 'chat' | 'compass' | 'lock' | 'mail' | 'pin' | 'search' | 'send' | 'spark' | 'target';
 
@@ -46,7 +47,7 @@ export function ButtonLink({ href, children, tone = 'red', ariaLabel }: { href: 
   return <Link href={href} className={className} aria-label={ariaLabel}>{children}<ArrowIcon /></Link>;
 }
 
-export function NavBar({ onStart }: { onStart?: () => void }) {
+export function NavBar({ onStart, diagnosticHref = '/diagnostic' }: { onStart?: () => void; diagnosticHref?: string }) {
   return (
     <header className={styles.navWrap}>
       <nav className={styles.nav} aria-label="Основная навигация">
@@ -62,11 +63,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
           <Link className={styles.navLink} href="/faq">FAQ</Link>
           <Link className={styles.navLink} href="/contacts">Контакты</Link>
         </div>
-        <details className={styles.mobileMenu}>
-          <summary className={styles.mobileMenuTrigger} aria-label="Открыть меню">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
-          </summary>
-          <div className={styles.mobilePanel}>
+        <MobileNavMenu>
             <Link className={styles.navLink} href="/courses">Курсы</Link>
             <Link className={styles.navLink} href="/season">Чемпионат</Link>
             <Link className={styles.navLink} href="/program">Программа</Link>
@@ -76,8 +73,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
             <Link className={styles.navLink} href="/search">Поиск</Link>
             <Link className={styles.navLink} href="/contacts">Контакты</Link>
             <NavAccount variant="panel" />
-          </div>
-        </details>
+        </MobileNavMenu>
         <Link className={styles.searchLink} href="/search" aria-label="Открыть поиск по сайту">
           <LineIcon name="search" />
         </Link>
@@ -85,7 +81,7 @@ export function NavBar({ onStart }: { onStart?: () => void }) {
         {onStart ? (
           <button type="button" className={styles.buttonRed} onClick={onStart}>Диагностика<ArrowIcon /></button>
         ) : (
-          <ButtonLink href="/?start=ielts">Диагностика</ButtonLink>
+          <ButtonLink href={diagnosticHref}>Диагностика</ButtonLink>
         )}
       </nav>
     </header>
@@ -120,7 +116,7 @@ export function FilterChip({ children, active = false, onClick }: { children: Re
 }
 
 const FOOTER_GROUPS = [
-  { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/program', label: 'Программа' }, { href: '/?start=ielts', label: 'Диагностика' }, { href: '/career', label: 'Компас' }, { href: '/progress', label: 'Прогресс' }] },
+  { title: 'Учёба', links: [{ href: '/courses', label: 'Курсы' }, { href: '/program', label: 'Программа' }, { href: '/diagnostic', label: 'Диагностика' }, { href: '/career', label: 'Компас' }, { href: '/progress', label: 'Прогресс' }] },
   { title: 'ASHYQ', links: [{ href: '/about', label: 'О нас' }, { href: '/blog', label: 'Блог' },{ href: '/community', label: 'Сообщество' }, { href: '/season', label: 'Следующий сезон' }, { href: '/faq', label: 'FAQ' }, { href: '/contacts', label: 'Контакты' }] },
   { title: 'Документы', links: [{ href: '/privacy', label: 'Конфиденциальность' }, { href: '/terms', label: 'Условия' }] },
   { title: 'Соцсети', links: SOCIAL_LINKS.map((social) => ({ href: social.href, label: social.label })) },

@@ -19,7 +19,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
   const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Здравствуйте! Хочу узнать стоимость и расписание курса ${course.exam} в ASHYQ.`)}`;
   return (
     <div className={home.page}>
-      <NavBar />
+      <NavBar diagnosticHref={course.diagnosticHref} />
 
       <main>
         <section className={`${home.container} ${styles.hero}`}>
