@@ -1,0 +1,57 @@
+.page { max-width: 1160px; margin: 0 auto; padding: 24px 24px 96px; color: var(--ink); }
+.topline { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline); color: var(--ink-soft); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+.topline a { color: var(--ink); letter-spacing: 0; }
+.hero { max-width: 800px; padding: 60px 0 48px; }
+.eyebrow, .modeSkill { margin: 0 0 14px; color: var(--red-deep); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+.hero h1 { margin: 0; font: 800 clamp(2.5rem, 5vw, 4.5rem)/1.06 var(--font-display); letter-spacing: -.055em; }
+.hero > p:last-child { margin: 20px 0 0; color: var(--ink-soft); font-size: 1.1rem; line-height: 1.6; }
+.sectionHeading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 24px; }
+.sectionHeading h2 { margin: 0; font: 800 clamp(1.8rem, 3vw, 2.5rem) var(--font-display); letter-spacing: -.04em; }
+.sectionHeading p { max-width: 390px; margin: 0; color: var(--ink-soft); line-height: 1.5; }
+.modeGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.modeCard { display: flex; flex-direction: column; min-width: 0; padding: 26px; border: 1px solid var(--hairline); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-card); }
+.modeCard h3 { margin: 4px 0 0; font: 800 1.7rem/1.18 var(--font-display); letter-spacing: -.035em; }
+.modeCard > p { margin: 14px 0 24px; color: var(--ink-soft); line-height: 1.55; }
+.modeFooter { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--hairline); }
+.modeFooter > span { color: var(--ink-soft); font-size: 13px; }
+.modeFooter button, .primary { min-height: 46px; padding: 10px 18px; border: 0; border-radius: var(--r-pill); background: var(--dark); color: var(--on-dark); font: 800 14px var(--font-body); cursor: pointer; }
+.modeFooter button:hover, .primary:hover { background: var(--ink-soft); }
+.essayCallout { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 24px; padding: 26px 30px; border-radius: var(--r-lg); background: var(--blush-soft); }
+.essayCallout h2 { margin: 0; font: 800 1.5rem var(--font-display); }
+.essayCallout p { max-width: 650px; margin: 8px 0 0; line-height: 1.55; }
+.essayCallout a { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 18px; border: 1px solid var(--ink); border-radius: var(--r-pill); font-weight: 800; }
+.exercise { max-width: 850px; margin: 0 auto; }
+.exerciseTop { display: flex; align-items: center; justify-content: space-between; gap: 16px; font-weight: 750; }
+.back { min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
+.progress { height: 7px; margin: 10px 0 34px; overflow: hidden; border-radius: var(--r-pill); background: var(--hairline); }
+.progress span { display: block; height: 100%; background: var(--red); }
+.exerciseHead h2 { margin: 0; font: 800 clamp(2rem, 4vw, 3rem)/1.1 var(--font-display); letter-spacing: -.05em; }
+.exerciseHead > p:last-child { margin: 14px 0 25px; color: var(--ink-soft); font-size: 1.05rem; line-height: 1.55; }
+.source { padding: 22px 26px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: var(--surface); }
+.source > span, .compare span { display: block; margin-bottom: 12px; color: var(--red-deep); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+.source p { margin: 7px 0; font: 750 1.1rem/1.5 var(--font-body); }
+.draftLabel { display: flex; justify-content: space-between; gap: 10px; margin: 28px 0 10px; font-weight: 800; }
+.draftLabel span { color: var(--ink-soft); font-weight: 500; }
+.exercise textarea { display: block; width: 100%; min-height: 110px; padding: 15px 18px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: 1rem/1.55 var(--font-body); resize: vertical; }
+.exercise textarea:focus-visible, .choice:focus-within, .choiceSelected:focus-within { outline: 2px solid var(--red); outline-offset: 2px; }
+.note { margin: 9px 0 27px; color: var(--ink-soft); font-size: 13px; line-height: 1.5; }
+.choices { display: grid; gap: 10px; margin: 0; padding: 0; border: 0; }
+.choices legend { margin-bottom: 14px; font-weight: 800; line-height: 1.45; }
+.choice, .choiceSelected { display: flex; align-items: flex-start; gap: 13px; padding: 16px 18px; border: 1px solid var(--hairline); border-radius: var(--r-sm); background: var(--surface); line-height: 1.5; cursor: pointer; }
+.choiceSelected { border: 2px solid var(--red-deep); padding: 15px 17px; background: var(--blush-soft); }
+.choice input, .choiceSelected input { flex: 0 0 auto; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--red-deep); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.secondary { min-height: 46px; padding: 10px 18px; border: 1px solid var(--ink); border-radius: var(--r-pill); background: transparent; color: var(--ink); font: 750 14px var(--font-body); cursor: pointer; }
+.feedback, .feedbackGood { margin: 20px 0 0; padding: 16px 18px; border-left: 4px solid var(--red-deep); border-radius: var(--r-sm); background: var(--blush-soft); line-height: 1.55; }
+.feedbackGood { border-left-color: var(--success); background: var(--surface); }
+.reveal { margin-top: 28px; padding: 28px; border: 1px solid var(--hairline); border-radius: var(--r-lg); background: var(--surface); }
+.reveal h3 { margin: 2px 0 18px; font: 800 1.6rem var(--font-display); }
+.compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.compare > div { min-width: 0; padding: 17px; border-radius: var(--r-sm); background: var(--bg); }
+.compare p { margin: 0; overflow-wrap: anywhere; line-height: 1.55; }
+.reveal > p { line-height: 1.6; }
+.revealNote { color: var(--ink-soft); font-size: 14px; }
+.reveal .primary { margin-top: 8px; }
+.page button:focus-visible, .page a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+@media (max-width: 850px) { .modeGrid { grid-template-columns: 1fr; } .sectionHeading { align-items: start; flex-direction: column; } }
+@media (max-width: 600px) { .page { padding: 20px 16px 72px; } .hero { padding: 42px 0 38px; } .topline { flex-wrap: wrap; } .essayCallout { flex-direction: column; align-items: stretch; padding: 24px; } .essayCallout a { align-self: start; } .compare { grid-template-columns: 1fr; } .reveal { padding: 22px; } .draftLabel { display: block; } .draftLabel span { display: block; margin-top: 3px; } }
