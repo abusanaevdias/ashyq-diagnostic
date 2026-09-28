@@ -15,6 +15,7 @@ teacher access, landing instructions, and Vercel Web Analytics.
 | Model assigns a confident IELTS score to a free essay | Prompt forbids numerical bands; response schema has no score field and server sends only sanitized fields. Teacher-annotated whole-essay calibration remains a release prerequisite for free-essay scores. |
 | Two serverless instances each accept many calls | A shared Supabase `check_rate_limit` RPC enforces 4/user and 12 total per UTC day. On RPC failure the AI request fails closed. An in-process lock limits parallel calls on one instance, but the shared RPC is the cross-instance control. |
 | Someone enters a query parameter or visits a class ID page | Vercel Analytics `beforeSend` accepts only listed public routes and public blog slugs, strips query and fragment, and drops class, account and own-essay pages. No custom events contain essays. |
+| GitHub CI runs a production build outside Vercel | The analytics component is rendered only when `VERCEL=1`; otherwise its Vercel-hosted script route would return 404 and fail console checks. |
 | Teacher opens the student-only own-essay page | Teachers with an IELTS class now pass the role and membership checks. The teacher dashboard links directly to the personal practice; no student submissions are loaded. |
 | 390px mobile visitor tries to understand the three steps | Text names the actual controls and action order. Each screenshot is scrollable with a cue and can be opened at full size. Desktop and 390px views were inspected visually. |
 

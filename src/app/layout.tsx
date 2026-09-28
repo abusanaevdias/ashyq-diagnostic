@@ -56,7 +56,7 @@ export default function RootLayout({
       <body className="min-h-dvh antialiased">
         <JsonLd data={ORGANIZATION} />
         {children}
-        <PublicAnalytics />
+        {process.env.VERCEL === '1' ? <PublicAnalytics /> : null}
       </body>
     </html>
   );
