@@ -82,6 +82,8 @@ jobs:
           fi
 
           npm run e2e
+          # Keep public brand/canonical/indexability checks in every release gate.
+          npm run check:seo
           npm run check:crm
           npm run check:crm-ui
           npm run e2e:audio
