@@ -5,23 +5,32 @@ import styles from './WritingTrainerLanding.module.css';
 const steps = [
   {
     number: '01',
-    title: 'Выбери готовое эссе',
-    description: 'Прочитай задание и один из двух учебных текстов. Ошибки заранее не подсвечены.',
+    title: 'Открой одно из двух эссе',
+    description: 'Нажми «Попробовать тренажёр» и выбери тему: городской транспорт или обучение. Прочитай вопрос Task 2 и эссе целиком — ошибки пока скрыты.',
+    outcome: 'Твоя задача: сначала самому заметить слабые места.',
     image: '/writing/step-choose.png',
+    width: 1068,
+    height: 402,
     alt: 'Экран выбора учебного эссе и задание IELTS Writing Task 2',
   },
   {
     number: '02',
-    title: 'Исправь самостоятельно',
-    description: 'Найди подозрительное предложение и запиши свою правку до появления подсказок.',
+    title: 'Перепиши подозрительное предложение',
+    description: 'Нажми на предложение в эссе, напиши свой вариант в поле «Твоя правка» и выбери «Проверить мои правки». Можно исправить несколько предложений.',
+    outcome: 'Подсказки появятся только после твоей попытки.',
     image: '/writing/step-edit.png',
+    width: 975,
+    height: 423,
     alt: 'Поле, где ученик переписывает выбранное предложение',
   },
   {
     number: '03',
-    title: 'Сравни с разбором',
-    description: 'Посмотри пропущенные ошибки, объяснения и пример. Затем постепенно улучши эссе по другим критериям.',
+    title: 'Сравни и реши, что применить',
+    description: 'Посмотри, что нашёл и что пропустил. Прочитай объяснение, сравни свой вариант с примером и сам выбери, какую проверенную правку применить к рабочему эссе.',
+    outcome: 'Затем так же пройди ответ на вопрос, связность и лексику.',
     image: '/writing/step-feedback.png',
+    width: 975,
+    height: 470,
     alt: 'Разбор грамматической правки с объяснением и примером',
   },
 ] as const;
@@ -33,7 +42,7 @@ export default function WritingTrainerLanding() {
       <header className={styles.hero}>
         <p className={styles.eyebrow}>ОТКРЫТАЯ УЧЕБНАЯ ПРАКТИКА</p>
         <h1>Сначала попробуй сам. Потом смотри разбор.</h1>
-        <p className={styles.lead}>Без входа попробуй тренажёр на двух готовых эссе: сначала ищешь слабые места, потом переписываешь текст по шагам. Ученики IELTS-класса ASHYQ могут также работать со своим текстом.</p>
+        <p className={styles.lead}>Без входа попробуй тренажёр на двух готовых эссе: сначала ищешь слабые места, потом переписываешь текст по шагам. Ученики и учителя IELTS-класса ASHYQ могут также работать со своим текстом.</p>
         <a className={styles.jumpLink} href="#how-it-works">Посмотреть три шага ↓</a>
       </header>
 
@@ -41,21 +50,23 @@ export default function WritingTrainerLanding() {
         <div className={styles.sectionHeading}>
           <div>
             <p className={styles.eyebrow}>КАК ЭТО РАБОТАЕТ</p>
-            <h2 id="how-title">От своей правки к разбору</h2>
+            <h2 id="how-title">Три действия в тренажёре</h2>
           </div>
-          <p>Снимки сделаны внутри действующего тренажёра. Ты увидишь те же экраны после старта.</p>
+          <p>Сначала работаешь сам. Разбор открывается после твоей попытки. Ниже показаны настоящие экраны готового примера.</p>
         </div>
         <div className={styles.steps}>
           {steps.map((step) => (
             <article className={styles.step} key={step.number}>
               <div className={styles.imageFrame}>
-                <Image src={step.image} alt={step.alt} fill sizes="(max-width: 850px) 100vw, 33vw" />
+                <Image src={step.image} alt={step.alt} width={step.width} height={step.height} sizes="(max-width: 850px) 620px, 56vw" />
               </div>
+              <p className={styles.mobileHint}>Листай снимок в сторону →</p>
               <div className={styles.stepCopy}>
                 <span className={styles.number}>{step.number}</span>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
-                <a className={styles.enlargeLink} href={step.image} target="_blank" rel="noopener noreferrer" aria-label={'Рассмотреть снимок шага ' + step.number + ' в новой вкладке'}>Рассмотреть снимок ↗</a>
+                <p className={styles.outcome}>{step.outcome}</p>
+                <a className={styles.enlargeLink} href={step.image} target="_blank" rel="noopener noreferrer" aria-label={'Открыть крупно снимок шага ' + step.number + ' в новой вкладке'}>Открыть снимок крупно ↗</a>
               </div>
             </article>
           ))}
@@ -72,7 +83,7 @@ export default function WritingTrainerLanding() {
         <Link href="/writing/trainer/practice" className={styles.startButton}>Попробовать тренажёр <span aria-hidden="true">→</span></Link>
       </section>
       <section className={styles.own} aria-labelledby="own-title">
-        <div><p className={styles.eyebrow}>ДЛЯ УЧЕНИКОВ ASHYQ</p><h2 id="own-title">Есть своё эссе?</h2><p>Если ты состоишь в IELTS-классе, добавь задание и текст, а затем перепиши эссе по четырём критериям. Черновик останется в этой вкладке. Автоматический разбор и балл для своего текста пока недоступны.</p></div>
+        <div><p className={styles.eyebrow}>ДЛЯ УЧЕНИКОВ И УЧИТЕЛЕЙ ASHYQ</p><h2 id="own-title">Есть своё эссе?</h2><p>Если ты учишься в IELTS-классе или ведёшь его, добавь задание и текст, а затем перепиши эссе по четырём критериям. Черновик останется в этой вкладке. {process.env.NEXT_PUBLIC_WRITING_AI_ENABLED === '1' ? 'В закрытом пилоте можно запросить AI-подсказки после своей правки, по отдельному согласию. Оценка IELTS пока недоступна.' : 'AI-разбор и оценка для своего текста пока недоступны.'}</p></div>
         <Link className={styles.ownLink} href="/writing/trainer/own">Работать со своим эссе →</Link>
       </section>
     </main>
