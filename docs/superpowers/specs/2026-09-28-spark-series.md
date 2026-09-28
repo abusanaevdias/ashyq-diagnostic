@@ -87,7 +87,15 @@ ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-writi
 
 ## 7. Производство
 
-Конвейер VIDEO-AD-15-002/003: HTML-композиция с `seek(t)` → Playwright →
-ffmpeg, звук через `audio.py`. Один шаблон эпизода + JSON с текстами и
-таймингами на каждый эпизод → рендер всех 11 одной командой. Папка
-`artifacts/spark-series/`.
+Папка `artifacts/spark-series/`:
+
+- `episode.html` — общий шаблон (заставка → уверенная ошибка → штамп →
+  правило и исправление → финал); карточка задания рисуется по `kind`
+  (`listening`, `writing`, `sat`).
+- `episodes.js` — тексты и общий таймлайн (14 с) для всех эпизодов.
+- `node render.mjs --ep 1,6,9` — звук (`audio.py <ep>`) и видео `ep-NN.mp4`.
+
+Готово: эп. 1 (Listening — «the wooden table» при лимите в два слова:
+артикль тоже слово), эп. 6 (Writing Task 2 — 190 → 265 слов), эп. 9
+(Digital SAT — пустые ответы против угадывания). Новый эпизод = запись в
+`episodes.js` + при необходимости новый `kind` в шаблоне.
