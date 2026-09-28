@@ -77,12 +77,17 @@ function Dashboard({ user }: { user: User }) {
 
       <section className={styles.section} aria-labelledby="writing-pilot-title">
         <h2 id="writing-pilot-title" className={styles.sectionTitle}>Пилот райтинга</h2>
-        <p className={styles.muted}>Только вымышленные эссе IELTS Academic Task 2. Ответы учеников и оценки класса сюда не передаются.</p>
+        <p className={styles.muted}>Готовые учебные эссе и отдельная практика со своим текстом IELTS Academic Task 2. Работы учеников и оценки класса сюда не подгружаются.</p>
         <div className={styles.grid2}>
           <Link href="/writing/trainer" className={`${styles.card} ${styles.cardLink}`}>
             <span className={`${styles.chip} ${styles.chipBlush}`}>Путь ученика</span>
             <h3 className={`${styles.cardTitle} ${styles.spaced}`}>Открыть тренажёр</h3>
             <p className={styles.muted}>Пройди поиск ошибок и переписывание вымышленного эссе.</p>
+          </Link>
+          <Link href="/writing/trainer/own" className={`${styles.card} ${styles.cardLink}`}>
+            <span className={`${styles.chip} ${styles.chipBlush}`}>Твоя практика</span>
+            <h3 className={`${styles.cardTitle} ${styles.spaced}`}>Работать со своим эссе</h3>
+            <p className={styles.muted}>Добавь задание и свой текст, затем перепиши его по четырём критериям.</p>
           </Link>
           <Link href="/writing/calibration" className={`${styles.card} ${styles.cardLink}`}>
             <span className={`${styles.chip} ${styles.chipBlush}`}>Лист преподавателя</span>

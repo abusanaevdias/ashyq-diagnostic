@@ -6,6 +6,7 @@ import { COLOR } from '@/lib/design-tokens';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
 import JsonLd from '@/components/JsonLd';
 import { ORGANIZATION } from '@/lib/schema';
+import PublicAnalytics from '@/components/analytics/PublicAnalytics';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -55,6 +56,7 @@ export default function RootLayout({
       <body className="min-h-dvh antialiased">
         <JsonLd data={ORGANIZATION} />
         {children}
+        <PublicAnalytics />
       </body>
     </html>
   );
