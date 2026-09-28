@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASHYQ — Начни с точки А</title>
+<style>
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../public/fonts/manrope-800-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../public/fonts/manrope-800-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../public/fonts/inter-500-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../public/fonts/inter-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Inter'; font-weight: 600; src: url('../../public/fonts/inter-600-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-weight: 600; src: url('../../public/fonts/inter-600-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Caveat'; font-weight: 700; src: url('../../public/fonts/caveat-700-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Caveat'; font-weight: 700; src: url('../../public/fonts/caveat-700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+
+/* Design v3 tokens (design/tokens.css) */
+:root {
+  --bg: #f8f7f3; --surface: #fdfdfd; --blush: #f9e0db; --blush-soft: #fcf3f0;
+  --red: #de0b1b; --red-deep: #b60916; --ink: #161311; --ink-soft: #6e6d6b;
+  --hairline: #efeeea; --dark: #1b1512; --on-red: #fff; --on-dark: #f8f7f3;
+  --success: #2e5e3a; --success-soft: #e8efe2;
+  --display: 'Manrope', system-ui, sans-serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --script: 'Caveat', cursive;
+  --shadow: 0 24px 72px rgba(22, 19, 17, 0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #0d0b0a; overflow: hidden; }
+body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+#stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); transform-origin: 0 0; }
+.preview #stage { box-shadow: 0 0 0 1px #333; }
+.layer, .scene { position: absolute; inset: 0; }
+.scene { opacity: 0; }
+.abs { position: absolute; }
+
+#glow { position: absolute; width: 1500px; height: 1500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(249, 224, 219, 0.95) 0%, rgba(249, 224, 219, 0) 65%); }
+
+/* chrome */
+#bars { position: absolute; left: 64px; right: 64px; top: 72px; display: flex; gap: 10px; }
+#bars i { flex: 1; height: 6px; border-radius: 3px; background: rgba(22, 19, 17, 0.1); overflow: hidden; position: relative; }
+#bars i b { position: absolute; inset: 0; background: var(--ink); transform-origin: 0 50%; transform: scaleX(0); }
+#brandrow { position: absolute; left: 64px; right: 64px; top: 112px; display: flex; align-items: center; justify-content: space-between; }
+#brandrow .ic { width: 64px; height: 64px; border-radius: 16px; overflow: hidden; }
+#brandrow .ic img { width: 100%; height: 100%; transform: scale(1.62); display: block; }
+.micro { font: 600 26px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+.ondark #bars i { background: rgba(248, 247, 243, 0.18); }
+.ondark #bars i b { background: var(--on-dark); }
+.ondark .micro { color: rgba(248, 247, 243, 0.8); }
+
+/* kinetic type: each word sits in a mask and rises in */
+.kt { font-family: var(--display); font-weight: 800; letter-spacing: -0.025em; color: var(--ink); }
+.kt .ln { display: block; white-space: nowrap; }
+.kt .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.04em 0.12em; margin: 0 -0.04em -0.12em; }
+.kt .wi { display: inline-block; will-change: transform; }
+.kt .dot { display: inline-block; color: var(--red); transform-origin: 50% 80%; }
+.head { position: absolute; left: 80px; top: 268px; font-size: 96px; line-height: 1.02; }
+
+/* cards */
+.card { position: absolute; left: 64px; right: 64px; background: var(--surface); border-radius: 48px; box-shadow: var(--shadow); padding: 56px; }
+.row { display: flex; align-items: center; justify-content: space-between; }
+.lbl { font: 600 36px/1.2 var(--body); color: var(--ink-soft); }
+.hr { height: 2px; background: var(--hairline); margin: 44px 0; }
+.pill { display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 3px solid #e2e0da; font: 800 56px/1 var(--display); color: var(--ink); background: var(--surface); }
+.chip { display: inline-flex; align-items: center; gap: 12px; border-radius: 999px; padding: 16px 28px; font: 600 32px/1 var(--body); }
+
+/* touch indicator */
+.touch { position: absolute; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%; pointer-events: none; opacity: 0; }
+.touch::before { content: ''; position: absolute; inset: 22px; border-radius: 50%; background: rgba(22, 19, 17, 0.22); }
+.touch::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(22, 19, 17, 0.35); transform: scale(var(--ring, 0.4)); opacity: var(--ringo, 0); }
+
+/* scene 2 */
+#s2 .pills { display: flex; gap: 28px; margin-top: 40px; }
+#s2 .pills .pill { flex: 1; height: 140px; }
+.stepper { display: flex; align-items: center; gap: 36px; }
+.stepper .btn { width: 96px; height: 96px; border-radius: 50%; border: 3px solid #e2e0da; display: grid; place-items: center; font: 600 56px/1 var(--body); color: var(--ink); }
+.stepper .val { font: 800 96px/1 var(--display); min-width: 170px; text-align: center; letter-spacing: -0.02em; }
+.chips3 { display: flex; gap: 20px; }
+.chips3 .pill { height: 96px; padding: 0 36px; font-size: 38px; }
+.cta { margin-top: 52px; height: 148px; border-radius: 999px; background: var(--dark); color: var(--on-dark); display: flex; align-items: center; justify-content: center; gap: 20px; font: 800 48px/1 var(--display); }
+
+/* scene 3 */
+.bar { height: 14px; border-radius: 7px; background: var(--hairline); overflow: hidden; position: relative; }
+.bar b { position: absolute; inset: 0; background: var(--red); transform-origin: 0 50%; }
+.skel { height: 22px; border-radius: 11px; background: var(--hairline); margin-top: 20px; }
+.q { font: 600 48px/1.3 var(--body); margin: 44px 0 36px; }
+.opt { display: flex; align-items: center; gap: 28px; border: 3px solid #e2e0da; border-radius: 32px; padding: 26px 30px; margin-top: 20px; font: 500 38px/1.2 var(--body); }
+.opt .l { width: 64px; height: 64px; border-radius: 50%; border: 3px solid #d6d3cc; display: grid; place-items: center; font: 800 32px/1 var(--display); flex: none; }
+.saved { display: flex; align-items: center; gap: 18px; margin-top: 40px; font: 600 34px/1 var(--body); color: var(--success); }
+.saved svg { flex: none; }
+
+/* scene 4 */
+.big { font: 800 196px/0.95 var(--display); letter-spacing: -0.035em; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 44px; }
+.stat { background: var(--bg); border-radius: 32px; padding: 32px 36px; }
+.stat .v { font: 800 72px/1 var(--display); margin-top: 16px; letter-spacing: -0.02em; }
+.meter { margin-top: 40px; }
+.meter .row { font: 600 38px/1 var(--body); margin-bottom: 18px; }
+.meter .row span:last-child { font-weight: 500; color: var(--ink-soft); font-size: 32px; }
+.meter .bar { height: 22px; border-radius: 11px; }
+.meter .bar b { background: var(--ink); }
+.foot { position: absolute; left: 80px; right: 80px; font: 500 30px/1.4 var(--body); color: var(--ink-soft); }
+
+/* scene 5 */
+#pt { position: absolute; left: 510px; top: 930px; width: 60px; height: 60px; border-radius: 50%; background: var(--red); transform: scale(0); }
+#dark { position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--dark); }
+#s5 .kt { color: var(--on-dark); position: absolute; left: 80px; top: 660px; font-size: 116px; line-height: 1.06; }
+#s5 .sub { position: absolute; left: 80px; top: 1260px; font: 500 46px/1.35 var(--body); color: rgba(248, 247, 243, 0.78); }
+
+/* scene 6 */
+.check { display: flex; align-items: center; gap: 28px; font: 500 40px/1.2 var(--body); margin-top: 30px; }
+.box { width: 60px; height: 60px; border-radius: 18px; border: 3px solid #d6d3cc; display: grid; place-items: center; flex: none; }
+.box svg { opacity: 0; }
+
+/* scene 7 */
+#s7 .center { position: absolute; left: 0; right: 0; text-align: center; }
+.ctaRed { display: inline-flex; align-items: center; gap: 20px; height: 150px; padding: 0 72px; border-radius: 999px; background: var(--red); color: var(--on-red); font: 800 50px/1 var(--display); box-shadow: 0 16px 40px rgba(222, 11, 27, 0.28); }
+.script { font: 700 76px/1 var(--script); color: var(--red-deep); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="glow"></div>
+
+  <!-- 1 · hook -->
+  <section class="scene" id="s1">
+    <div class="kt abs" id="h1a" style="left:80px; top:620px; font-size:156px; line-height:1.02" data-kt="Готовишься|к IELTS|или SAT?"></div>
+    <div class="kt abs" id="h1b" style="left:80px; top:700px; font-size:176px; line-height:1.0" data-kt="Начни|с точки А" data-dot></div>
+  </section>
+
+  <!-- 2 · exam and goal -->
+  <section class="scene" id="s2">
+    <div class="kt head" data-kt="Выбери экзамен|и цель"></div>
+    <div class="card" id="c2" style="top:620px">
+      <div class="micro">Шаг 1 из 3 · экзамен</div>
+      <div class="pills"><div class="pill" id="pIelts">IELTS</div><div class="pill">SAT</div></div>
+      <div class="hr"></div>
+      <div class="row"><span class="lbl">Цель, Band</span>
+        <div class="stepper"><div class="btn">−</div><div class="val" id="goal">6.0</div><div class="btn" id="plus">+</div></div></div>
+      <div class="hr"></div>
+      <div class="row"><span class="lbl">Срок</span>
+        <div class="chips3"><div class="pill">1 мес</div><div class="pill" id="m3">3 мес</div><div class="pill">6 мес</div></div></div>
+      <div class="cta" id="start">Начать диагностику <span>→</span></div>
+    </div>
+  </section>
+
+  <!-- 3 · questions -->
+  <section class="scene" id="s3">
+    <div class="kt head" data-kt="12 вопросов.|~20 минут" data-dot></div>
+    <div class="card" id="c3" style="top:620px">
+      <div class="row">
+        <span class="chip" id="secChip" style="background:var(--blush-soft); color:var(--red-deep)">Reading</span>
+        <span class="lbl" style="font-size:32px">≈ 20 мин</span>
+      </div>
+      <div class="row" style="margin:40px 0 18px"><span class="lbl" style="font-size:32px" id="qn">Вопрос 3 из 12</span></div>
+      <div class="bar"><b id="qbar"></b></div>
+      <div id="qbody">
+        <div class="skel" style="margin-top:44px; width:100%"></div>
+        <div class="skel" style="width:92%"></div>
+        <div class="skel" style="width:64%"></div>
+        <p class="q">Which statement best matches paragraph B?</p>
+        <div class="opt"><span class="l">A</span>The writer changes her view</div>
+        <div class="opt" id="optB"><span class="l">B</span>Two methods are compared</div>
+        <div class="opt"><span class="l">C</span>A new study is announced</div>
+      </div>
+      <div class="saved" id="saved"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m7.5 12.5 3 3 6-6.5"/></svg>Прогресс сохраняется сам</div>
+    </div>
+  </section>
+
+  <!-- 4 · result -->
+  <section class="scene" id="s4">
+    <div class="kt head" data-kt="Увидь свою|точку А" data-dot></div>
+    <div class="card" id="c4" style="top:620px">
+      <div class="micro">Твоя точка А · IELTS</div>
+      <div class="kt big" style="margin-top:28px" id="range" data-kt="5.5–6.0"></div>
+      <div class="lbl" style="font-size:32px; margin-top:14px">предварительный диапазон</div>
+      <div class="stats">
+        <div class="stat"><div class="micro">Цель</div><div class="v">7.0</div></div>
+        <div class="stat"><div class="micro">До цели</div><div class="v" style="color:var(--red-deep)">+1.0</div></div>
+      </div>
+      <div class="meter"><div class="row"><span>Listening</span><span>5 / 6 верно</span></div><div class="bar"><b id="mL"></b></div></div>
+      <div class="meter"><div class="row"><span>Reading</span><span>3 / 6 верно</span></div><div class="bar"><b id="mR"></b></div></div>
+      <div style="display:flex; gap:18px; margin-top:44px; flex-wrap:wrap">
+        <span class="chip" id="chS" style="background:var(--success-soft); color:var(--success)">Сильнее: Listening</span>
+        <span class="chip" id="chF" style="background:var(--blush); color:var(--red-deep)">Фокус: Reading</span>
+      </div>
+    </div>
+    <p class="foot" id="foot4" style="top:1680px">Пример интерфейса. Предварительная оценка, не официальный IELTS Band Score.</p>
+  </section>
+
+  <!-- 5 · honest promise -->
+  <div id="dark"></div>
+  <div id="pt"></div>
+  <section class="scene" id="s5">
+    <div class="kt" id="h5" data-kt="Бесплатно.|Без регистрации.|Честно" data-dot></div>
+    <p class="sub" id="sub5">Не обещаем балл —<br>показываем, с чего начать.</p>
+  </section>
+
+  <!-- 6 · plan and progress -->
+  <section class="scene" id="s6">
+    <div class="kt head" data-kt="Дальше —|план и прогресс"></div>
+    <div class="card" id="c6a" style="top:620px">
+      <div class="micro">Следующий шаг</div>
+      <p style="font:800 54px/1.15 var(--display); margin:26px 0 10px; letter-spacing:-0.01em">Reading: True / False /<br>Not Given</p>
+      <div class="check"><span class="box" id="b1"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Разбор каждого ответа</div>
+      <div class="check"><span class="box" id="b2"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Практика по слабому навыку</div>
+      <div class="check"><span class="box" id="b3"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Повторный замер</div>
+    </div>
+    <div class="card" id="c6b" style="top:1270px; padding-bottom:40px">
+      <div class="row"><span class="micro">Прогресс по замерам</span><span class="chip" id="md" style="background:var(--dark); color:var(--on-dark); font-size:28px; padding:12px 24px">+ Match Days</span></div>
+      <svg width="952" height="250" viewBox="0 0 952 250" style="margin:18px -56px 0; display:block">
+        <line x1="56" y1="210" x2="896" y2="210" stroke="#efeeea" stroke-width="3"/>
+        <polyline id="spark" points="80,190 330,150 580,120 860,48" fill="none" stroke="#161311" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle id="sparkDot" cx="860" cy="48" r="16" fill="#de0b1b"/>
+      </svg>
+      <p class="script" id="grow" style="font-size:58px; margin-top:-6px">рост важнее стартовой точки ↗</p>
+    </div>
+  </section>
+
+  <!-- 7 · end card -->
+  <section class="scene" id="s7">
+    <div class="center" id="wm" style="top:520px"><img src="../../public/brand/wordmark-ink.png" width="600" alt="ASHYQ" style="mix-blend-mode:multiply"></div>
+    <div class="center" style="top:720px"><span class="script" id="sc7" style="display:inline-block">20 минут — и план готов</span></div>
+    <div class="center kt" id="h7" style="top:900px; font-size:96px; line-height:1.04" data-kt="Бесплатная|диагностика|IELTS · SAT"></div>
+    <div class="center" id="cta7" style="top:1300px"><span class="ctaRed" id="ctaRed">Ссылка в профиле <span>→</span></span></div>
+    <div class="center" id="handle" style="top:1500px; font:800 60px/1 var(--display); letter-spacing:-0.01em">@ashyqedu</div>
+  </section>
+
+  <!-- chrome -->
+  <div class="layer" id="chrome">
+    <div id="bars"></div>
+    <div id="brandrow"><span class="ic"><img src="../../public/brand/logo-icon.png" alt=""></span><span class="micro">Quick Diagnostic</span></div>
+  </div>
+  <div class="touch" id="touch"></div>
+</div>
+
+<!-- Single source of truth for timing: audio.py parses this block too. -->
+<script id="timeline" type="application/json">
+{
+  "fps": 30,
+  "duration": 30,
+  "scenes": [
+    { "id": "s1", "start": 0.0,  "end": 3.2 },
+    { "id": "s2", "start": 3.2,  "end": 7.4 },
+    { "id": "s3", "start": 7.4,  "end": 11.8 },
+    { "id": "s4", "start": 11.8, "end": 16.6 },
+    { "id": "s5", "start": 16.6, "end": 20.6 },
+    { "id": "s6", "start": 20.6, "end": 25.4 },
+    { "id": "s7", "start": 25.4, "end": 30.0 }
+  ],
+  "taps": [
+    { "target": "pIelts", "t": 4.55 },
+    { "target": "plus",   "t": 5.25 },
+    { "target": "plus",   "t": 5.7 },
+    { "target": "m3",     "t": 6.25 },
+    { "target": "start",  "t": 6.85 },
+    { "target": "optB",   "t": 8.75 },
+    { "target": "b1",     "t": 21.9 },
+    { "target": "b2",     "t": 22.4 },
+    { "target": "b3",     "t": 22.9 },
+    { "target": "ctaRed", "t": 28.1 }
+  ],
+  "pops": [2.55, 5.05, 9.9, 13.05, 16.6, 17.9, 20.3, 24.3, 26.1],
+  "ticks": { "from": 9.3, "to": 10.8, "count": 9 }
+}
+</script>
+<script>
+const TL = JSON.parse(document.getElementById('timeline').textContent);
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, x) => a + (b - a) * x;
+const eOut = (x) => 1 - Math.pow(1 - x, 3);
+const eInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const eBack = (x) => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const scene = (id) => TL.scenes.find((s) => s.id === id);
+
+// ---------- kinetic type setup ----------
+document.querySelectorAll('[data-kt]').forEach((el) => {
+  const lines = el.dataset.kt.split('|');
+  el.innerHTML = lines.map((line) => '<span class="ln">' +
+    line.split(' ').map((w) => `<span class="w"><span class="wi">${w}</span></span>`).join(' ') + '</span>').join('');
+  if ('dot' in el.dataset) el.querySelector('.ln:last-child').insertAdjacentHTML('beforeend', '<span class="dot">.</span>');
+  el._w = [...el.querySelectorAll('.wi')];
+  el._dot = el.querySelector('.dot');
+});
+
+// words rise in from their masks, then leave upward
+function kt(el, t, tin, tout, stagger = 0.07) {
+  el._w.forEach((w, i) => {
+    const a = eOut(prog(t, tin + i * stagger, tin + i * stagger + 0.55));
+    const b = tout == null ? 0 : eInOut(prog(t, tout + i * 0.03, tout + i * 0.03 + 0.35));
+    w.style.transform = `translateY(${(1 - a) * 115 - b * 115}%)`;
+  });
+  if (el._dot) {
+    const d0 = tin + el._w.length * stagger + 0.25;
+    const a = eBack(prog(t, d0, d0 + 0.4));
+    const b = tout == null ? 0 : prog(t, tout, tout + 0.2);
+    el._dot.style.transform = `scale(${a * (1 - b)})`;
+  }
+}
+
+// cards: rise with a slight tilt that settles
+function card(el, t, tin, tout) {
+  const a = eOut(prog(t, tin, tin + 0.7));
+  const b = tout == null ? 0 : eInOut(prog(t, tout, tout + 0.4));
+  el.style.transform = `perspective(2400px) translateY(${(1 - a) * 260 - b * 180}px) rotateX(${(1 - a) * 10}deg) scale(${lerp(0.94, 1, a) - b * 0.04})`;
+  el.style.opacity = a * (1 - b);
+}
+
+function fade(el, t, tin, tout, dy = 30) {
+  const a = eOut(prog(t, tin, tin + 0.45));
+  const b = tout == null ? 0 : prog(t, tout, tout + 0.3);
+  el.style.opacity = a * (1 - b);
+  el.style.transform = `translateY(${(1 - a) * dy}px)`;
+}
+
+const pressed = (t, tap) => t >= tap;
+const press = (el, t, tap) => {
+  const k = prog(t, tap - 0.05, tap + 0.05) * (1 - prog(t, tap + 0.08, tap + 0.28));
+  el.style.transform = `scale(${1 - 0.05 * k})`;
+};
+
+// ---------- chrome ----------
+$('bars').innerHTML = TL.scenes.map(() => '<i><b></b></i>').join('');
+const bars = [...document.querySelectorAll('#bars b')];
+
+// ---------- touch indicator ----------
+const stage = $('stage');
+function touch(t) {
+  const el = $('touch');
+  const tap = TL.taps.find((x) => t > x.t - 0.3 && t < x.t + 0.4);
+  if (!tap) { el.style.opacity = 0; return; }
+  const target = $(tap.target);
+  const sr = stage.getBoundingClientRect();
+  const r = target.getBoundingClientRect();
+  const s = sr.width / 1080;
+  el.style.left = ((r.left + r.width / 2 - sr.left) / s) + 'px';
+  el.style.top = ((r.top + r.height / 2 - sr.top) / s) + 'px';
+  const inA = prog(t, tap.t - 0.3, tap.t - 0.1);
+  const out = prog(t, tap.t + 0.15, tap.t + 0.4);
+  el.style.opacity = inA * (1 - out);
+  el.style.transform = `scale(${lerp(1.3, 1, eOut(inA)) * (t > tap.t ? lerp(0.85, 1, prog(t, tap.t, tap.t + 0.15)) : 1)})`;
+  const ring = prog(t, tap.t, tap.t + 0.35);
+  el.style.setProperty('--ring', lerp(0.4, 1.35, eOut(ring)));
+  el.style.setProperty('--ringo', t > tap.t ? 1 - ring : 0);
+}
+
+// ---------- the frame function ----------
+function seek(t) {
+  // background glow drifts slowly
+  $('glow').style.transform = `translate(${lerp(-80, 220, t / 30)}px, ${lerp(-620, 380, (Math.sin(t / 5) + 1) / 2)}px)`;
+
+  TL.scenes.forEach((s, i) => {
+    bars[i].style.transform = `scaleX(${prog(t, s.start, s.end)})`;
+    $(s.id).style.opacity = t >= s.start - 0.01 && t < s.end + 0.01 ? 1 : 0;
+  });
+
+  // 1 · hook
+  kt($('h1a'), t, 0.15, 1.55, 0.09);
+  kt($('h1b'), t, 1.75, 2.9, 0.1);
+
+  // 2 · exam and goal
+  const s2 = scene('s2');
+  kt($('s2').querySelector('.head'), t, s2.start + 0.05, s2.end - 0.4);
+  card($('c2'), t, s2.start + 0.3, s2.end - 0.45);
+  const ielts = $('pIelts');
+  const on = pressed(t, TL.taps[0].t);
+  ielts.style.background = on ? 'var(--red)' : 'var(--surface)';
+  ielts.style.color = on ? 'var(--on-red)' : 'var(--ink)';
+  ielts.style.borderColor = on ? 'var(--red)' : '#e2e0da';
+  ielts.style.boxShadow = on ? '0 12px 32px rgba(222,11,27,.25)' : 'none';
+  press(ielts, t, TL.taps[0].t);
+  $('goal').textContent = t >= TL.taps[2].t ? '7.0' : t >= TL.taps[1].t ? '6.5' : '6.0';
+  press($('plus'), t, TL.taps[1].t); if (t > TL.taps[1].t + 0.3) press($('plus'), t, TL.taps[2].t);
+  const m3 = $('m3'); const m3on = pressed(t, TL.taps[3].t);
+  m3.style.background = m3on ? 'var(--ink)' : 'var(--surface)';
+  m3.style.color = m3on ? 'var(--on-dark)' : 'var(--ink)';
+  m3.style.borderColor = m3on ? 'var(--ink)' : '#e2e0da';
+  press(m3, t, TL.taps[3].t);
+  press($('start'), t, TL.taps[4].t);
+
+  // 3 · questions
+  const s3 = scene('s3');
+  kt($('s3').querySelector('.head'), t, s3.start + 0.05, s3.end - 0.4);
+  card($('c3'), t, s3.start + 0.3, s3.end - 0.45);
+  const tk = TL.ticks;
+  const n = Math.round(lerp(3, 12, prog(t, tk.from, tk.to)));
+  $('qn').textContent = `Вопрос ${n} из 12`;
+  $('qbar').style.transform = `scaleX(${n / 12})`;
+  $('secChip').textContent = n >= 7 ? 'Listening' : 'Reading';
+  const flick = t > tk.from && t < tk.to ? 0.55 + 0.45 * Math.abs(Math.cos((t - tk.from) * Math.PI * tk.count / (tk.to - tk.from))) : 1;
+  $('qbody').style.opacity = flick;
+  const optB = $('optB'); const bon = pressed(t, TL.taps[5].t) && t < tk.from;
+  optB.style.borderColor = bon ? 'var(--ink)' : '#e2e0da';
+  optB.style.background = bon ? 'var(--bg)' : 'transparent';
+  optB.querySelector('.l').style.background = bon ? 'var(--ink)' : 'transparent';
+  optB.querySelector('.l').style.color = bon ? 'var(--on-dark)' : 'var(--ink)';
+  optB.querySelector('.l').style.borderColor = bon ? 'var(--ink)' : '#d6d3cc';
+  press(optB, t, TL.taps[5].t);
+  fade($('saved'), t, tk.to - 0.1, null, 20);
+
+  // 4 · result
+  const s4 = scene('s4');
+  kt($('s4').querySelector('.head'), t, s4.start + 0.05, s4.end - 0.4);
+  card($('c4'), t, s4.start + 0.3, s4.end - 0.45);
+  kt($('range'), t, s4.start + 0.8, null);
+  $('mL').style.transform = `scaleX(${eOut(prog(t, s4.start + 1.5, s4.start + 2.4)) * 5 / 6})`;
+  $('mR').style.transform = `scaleX(${eOut(prog(t, s4.start + 1.8, s4.start + 2.7)) * 3 / 6})`;
+  fade($('chS'), t, s4.start + 2.6, null, 16);
+  fade($('chF'), t, s4.start + 2.8, null, 16);
+  fade($('foot4'), t, s4.start + 1.2, s4.end - 0.45, 12);
+
+  // 5 · dark flip grows from a single red point
+  const s5 = scene('s5');
+  const grow = eInOut(prog(t, s5.start + 0.1, s5.start + 0.75)) * (1 - eInOut(prog(t, s5.end - 0.45, s5.end - 0.02)));
+  const R = 2300 * grow;
+  const dk = $('dark');
+  dk.style.width = dk.style.height = (2 * R) + 'px';
+  dk.style.left = (540 - R) + 'px'; dk.style.top = (960 - R) + 'px';
+  document.body.classList.toggle('ondark', grow > 0.35);
+  const ptIn = eBack(prog(t, s5.start - 0.05, s5.start + 0.2)) * (1 - prog(t, s5.end - 0.12, s5.end));
+  $('pt').style.transform = `scale(${ptIn})`;
+  $('pt').style.opacity = t < s5.start - 0.05 || t > s5.end ? 0 : 1 - prog(R, 80, 420);
+  kt($('h5'), t, s5.start + 0.55, s5.end - 0.6, 0.11);
+  fade($('sub5'), t, s5.start + 1.9, s5.end - 0.6, 24);
+
+  // 6 · plan and progress
+  const s6 = scene('s6');
+  kt($('s6').querySelector('.head'), t, s6.start + 0.05, s6.end - 0.4);
+  card($('c6a'), t, s6.start + 0.3, s6.end - 0.45);
+  card($('c6b'), t, s6.start + 0.5, s6.end - 0.4);
+  ['b1', 'b2', 'b3'].forEach((id, i) => {
+    const tap = TL.taps[6 + i].t; const k = eBack(prog(t, tap, tap + 0.25));
+    const b = $(id);
+    b.style.background = t >= tap ? 'var(--ink)' : 'transparent';
+    b.style.borderColor = t >= tap ? 'var(--ink)' : '#d6d3cc';
+    b.querySelector('svg').style.opacity = t >= tap ? 1 : 0;
+    b.querySelector('svg').style.transform = `scale(${k})`;
+  });
+  const sp = $('spark'); const L = sp.getTotalLength();
+  sp.style.strokeDasharray = L;
+  sp.style.strokeDashoffset = L * (1 - eInOut(prog(t, s6.start + 2.4, s6.start + 3.6)));
+  $('sparkDot').style.transform = `scale(${eBack(prog(t, s6.start + 3.55, s6.start + 3.9))})`;
+  $('sparkDot').style.transformOrigin = '860px 48px';
+  fade($('md'), t, s6.start + 3.1, null, 12);
+  fade($('grow'), t, s6.start + 3.4, null, 12);
+
+  // 7 · end card
+  const s7 = scene('s7');
+  const wm = eBack(prog(t, s7.start + 0.1, s7.start + 0.7));
+  $('wm').style.transform = `scale(${lerp(0.7, 1, wm)})`; $('wm').style.opacity = prog(t, s7.start + 0.1, s7.start + 0.35);
+  const sc = eOut(prog(t, s7.start + 0.6, s7.start + 1.1));
+  $('sc7').style.opacity = sc; $('sc7').style.transform = `rotate(-3deg) translateY(${(1 - sc) * 20}px)`;
+  kt($('h7'), t, s7.start + 0.85, null, 0.08);
+  const c7 = eBack(prog(t, s7.start + 1.9, s7.start + 2.4));
+  $('cta7').style.opacity = prog(t, s7.start + 1.9, s7.start + 2.05);
+  $('cta7').style.transform = `scale(${lerp(0.8, 1, c7)})`;
+  press($('ctaRed'), t, TL.taps[9].t);
+  fade($('handle'), t, s7.start + 2.3, null, 16);
+
+  touch(t);
+}
+window.seek = seek;
+
+// ---------- boot ----------
+window.ready = Promise.all([
+  document.fonts.ready,
+  ...[...document.images].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))),
+]);
+
+if (!new URLSearchParams(location.search).has('render')) {
+  document.body.classList.add('preview');
+  const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `scale(${s})`; stage.style.left = (innerWidth - 1080 * s) / 2 + 'px'; };
+  addEventListener('resize', fit); fit();
+  let t0 = performance.now(), paused = false, at = 0;
+  addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { paused = !paused; t0 = performance.now() - at * 1000; }
+    if (e.code === 'ArrowRight') { at = Math.min(TL.duration, at + 1); t0 -= 1000; }
+    if (e.code === 'ArrowLeft') { at = Math.max(0, at - 1); t0 += 1000; }
+    seek(at);
+  });
+  window.ready.then(() => {
+    t0 = performance.now();
+    const loop = (now) => { if (!paused) { at = ((now - t0) / 1000) % TL.duration; seek(at); } requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  });
+} else {
+  seek(0);
+}
+</script>
+</body>
+</html>
