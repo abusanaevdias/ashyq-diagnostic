@@ -94,6 +94,7 @@ export default function WritingTrainerLanding() {
         </div>
         <Link href="/writing/trainer/drills" className={styles.drillsLink}>Открыть упражнения <span aria-hidden="true">→</span></Link>
       </section>
+      <Link className={styles.moreTrainersLink} href="/trainers">Смотреть тренажёры IELTS и SAT →</Link>
       <section className={styles.start} aria-labelledby="start-title">
         <div>
           <p className={styles.startEyebrow}>МОЖНО НАЧАТЬ БЕЗ РЕГИСТРАЦИИ</p>
