@@ -105,6 +105,41 @@ async function checkJsonLd(route: string, type: string) {
   console.log(`PASS JSON-LD ${type} ${route}`);
 }
 
+/** Public brand contract: assert server HTML, not client-only hydrated content. */
+async function checkHomeBrand() {
+  const response = await fetch(`${BASE_URL}/`);
+  if (!response.ok) throw new Error(`home brand: HTTP ${response.status}`);
+  const html = await response.text();
+  if (/noindex/i.test(response.headers.get('x-robots-tag') ?? '')) throw new Error('home brand: X-Robots-Tag noindex');
+  const robots = tags(html, 'meta').filter((tag) => ['robots', 'googlebot'].includes(attribute(tag, 'name') ?? ''));
+  if (robots.some((tag) => /noindex/i.test(attribute(tag, 'content') ?? ''))) throw new Error('home brand: robots noindex');
+  const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
+  if (title !== 'ASHYQ — образовательный клуб IELTS и SAT в Казахстане') throw new Error(`home brand: unexpected title ${title}`);
+  const headings = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
+  if (headings.length !== 1 || !headings[0][1].includes('ASHYQ')) throw new Error('home brand: expected one visible ASHYQ H1');
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    .map((match) => JSON.parse(match[1]));
+  const websites = blocks.filter((block) => block['@type'] === 'WebSite');
+  const website = websites[0];
+  const normalize = (value: string) => value.replace(/\/$/, '');
+  if (websites.length !== 1 || website.name !== 'ASHYQ' || website.alternateName !== 'ASHYQ — образовательный клуб'
+      || normalize(website.url) !== EXPECTED_ORIGIN || website['@id'] !== `${EXPECTED_ORIGIN}/#website`
+      || website.publisher?.['@id'] !== `${EXPECTED_ORIGIN}/#organization`) throw new Error('home brand: invalid or duplicate WebSite identity');
+  const siteName = tags(html, 'meta').find((tag) => attribute(tag, 'property') === 'og:site_name');
+  if (attribute(siteName ?? '', 'content') !== website.name) throw new Error('home brand: og:site_name differs from WebSite');
+  for (const path of ['/diagnostic', '/library']) {
+    if (!html.includes(`href="${path}"`)) throw new Error(`home brand: first-step link missing ${path}`);
+  }
+  for (const token of ['etn7ANJicuDcb9Skg6U127SssWEfIAheuKTozqrAmnI', 'GEXhZPM9edu9qIcpBE4_T7Ont-TLH2qD8VnYFxdmwfU']) {
+    if (!tags(html, 'meta').some((tag) => attribute(tag, 'name') === 'google-site-verification' && attribute(tag, 'content') === token)) {
+      throw new Error('home brand: existing Google verification tag missing');
+    }
+  }
+  const sitemap = await fetch(`${BASE_URL}/sitemap.xml`);
+  if (!sitemap.ok || !(await sitemap.text()).includes(`<loc>${EXPECTED_ORIGIN}/</loc>`)) throw new Error('home brand: canonical root missing from sitemap');
+  console.log('PASS home brand: indexable server HTML, branded H1/title, one WebSite, consistent name, entry links, verification tags and sitemap root');
+}
+
 async function checkEditorialArticle(post: BlogPost) {
   const route = `/blog/${post.slug}`;
   const response = await fetch(`${BASE_URL}${route}`);
@@ -146,6 +181,7 @@ async function checkEditorialArticle(post: BlogPost) {
 }
 
 async function main() {
+  await checkHomeBrand();
   await checkJsonLd('/', 'EducationalOrganization');
   await checkJsonLd('/about', 'AboutPage');
   await checkJsonLd('/courses/ielts', 'Course');
