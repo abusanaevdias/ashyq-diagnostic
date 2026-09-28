@@ -51,6 +51,8 @@
 .drillsLink { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: 12px; min-height: 48px; padding: 10px 20px; border-radius: var(--r-pill); background: var(--dark); color: var(--on-dark); font-weight: 800; text-align: center; }
 .drillsLink:hover { background: var(--ink-soft); }
 .drillsLink:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.moreTrainersLink { display: inline-flex; align-items: center; min-height: 44px; margin-top: 12px; color: var(--ink); font-size: 14px; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.moreTrainersLink:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 .start { display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-top: 22px; padding: 38px 42px; border-radius: var(--r-lg); background: var(--dark); color: var(--on-dark); }
 .start > div { max-width: 680px; }
 .startEyebrow { margin: 0 0 12px; font-size: 11px; font-weight: 800; letter-spacing: .13em; }
