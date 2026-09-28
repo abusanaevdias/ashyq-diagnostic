@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASHYQ — Тест за 5 секунд</title>
+<style>
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../public/fonts/manrope-800-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../public/fonts/manrope-800-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../public/fonts/inter-500-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../public/fonts/inter-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Inter'; font-weight: 600; src: url('../../public/fonts/inter-600-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-weight: 600; src: url('../../public/fonts/inter-600-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Caveat'; font-weight: 700; src: url('../../public/fonts/caveat-700-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Caveat'; font-weight: 700; src: url('../../public/fonts/caveat-700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+
+/* Design v3 tokens (design/tokens.css) */
+:root {
+  --bg: #f8f7f3; --surface: #fdfdfd; --blush: #f9e0db; --blush-soft: #fcf3f0;
+  --red: #de0b1b; --red-deep: #b60916; --ink: #161311; --ink-soft: #6e6d6b;
+  --hairline: #efeeea; --dark: #1b1512; --on-dark: #f8f7f3;
+  --success: #2e5e3a; --success-soft: #e8efe2;
+  --display: 'Manrope', system-ui, sans-serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --script: 'Caveat', cursive;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #0d0b0a; overflow: hidden; }
+body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: antialiased; }
+#stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); transform-origin: 0 0; }
+.abs { position: absolute; }
+.panel { position: absolute; inset: 0; }
+
+/* kinetic type */
+.kt { font-family: var(--display); font-weight: 800; letter-spacing: -0.025em; }
+.kt .ln { display: block; white-space: nowrap; }
+.kt .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.04em 0.14em; margin: 0 -0.04em -0.14em; }
+.kt .wi { display: inline-block; }
+.head { position: absolute; left: 72px; top: 284px; font-size: 80px; line-height: 1.04; color: var(--ink); }
+.acc { display: inline-block; font: 700 118px/0.8 var(--script); color: var(--red-deep); margin-left: 14px; }
+.acc.lat { font: 800 80px/1 var(--display); letter-spacing: -0.02em; }
+
+/* question card */
+#card { position: absolute; left: 64px; right: 64px; top: 500px; background: var(--surface); border-radius: 48px; box-shadow: 0 24px 72px rgba(22, 19, 17, 0.09); padding: 44px 48px 48px; transform-origin: 50% 0; }
+.row { display: flex; align-items: center; justify-content: space-between; }
+.chip { display: inline-flex; align-items: center; border-radius: 999px; padding: 14px 26px; font: 600 30px/1 var(--body); }
+.cap { font: 600 24px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+#passage { position: relative; font: 500 42px/1.35 var(--body); margin-top: 16px; }
+#passage span { border-radius: 8px; }
+.hr { height: 2px; background: var(--hairline); margin: 30px 0; }
+#statement { font: 800 50px/1.18 var(--display); letter-spacing: -0.015em; margin-top: 14px; }
+.opts { display: flex; gap: 16px; margin-top: 34px; }
+.opt { position: relative; height: 112px; border-radius: 999px; border: 4px solid #e2e0da; display: flex; align-items: center; justify-content: center; gap: 12px; font: 800 38px/1 var(--display); letter-spacing: -0.01em; color: var(--ink); background: var(--surface); }
+.opt.t, .opt.f { flex: 1; }
+.opt.n { flex: 1.55; }
+.opt .x { position: absolute; left: 18%; right: 18%; top: 50%; height: 7px; margin-top: -3px; border-radius: 4px; background: var(--red); transform-origin: 0 50%; transform: scaleX(0); }
+.opt svg { display: none; }
+
+/* timer */
+#timer { position: relative; width: 132px; height: 132px; }
+#timer svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+#timer b { position: absolute; inset: 0; display: grid; place-items: center; font: 800 60px/1 var(--display); }
+
+/* magnifier + verdict */
+#lens { position: absolute; width: 120px; height: 120px; pointer-events: none; }
+#lensTag { position: absolute; white-space: nowrap; }
+#nope { position: absolute; }
+#rule { position: absolute; left: 72px; top: 1150px; transform-origin: 0 50%; font: 700 76px/1 var(--script); color: var(--red-deep); }
+
+/* scene 5 */
+.skills { position: absolute; left: 72px; right: 72px; top: 690px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.skill { background: var(--surface); border-radius: 36px; padding: 34px 36px; font: 800 48px/1 var(--display); letter-spacing: -0.015em; box-shadow: 0 14px 40px rgba(22, 19, 17, 0.07); }
+.skill small { display: block; font: 500 28px/1.2 var(--body); color: var(--ink-soft); margin-top: 12px; letter-spacing: 0; }
+
+/* end card */
+.center { position: absolute; left: 0; right: 0; text-align: center; }
+#wordmark img { width: 600px; mix-blend-mode: multiply; }
+#arrow { font: 800 84px/1 var(--display); color: var(--red); }
+.spk svg { width: 100%; height: 100%; display: block; overflow: visible; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="panel" id="p1" style="background:var(--bg)"></div>
+  <div class="panel" id="p5" style="background:var(--blush)"></div>
+  <div class="panel" id="p6" style="background:var(--bg)"></div>
+
+  <!-- headlines -->
+  <div class="head" id="h1"><div class="kt" data-kt="IELTS Reading:"></div><div><span class="kt" data-kt="успеешь за" style="display:inline-block"></span><span class="acc">5 секунд?</span></div></div>
+  <div class="head" id="h3"><div class="kt" data-kt="Кажется, что"></div><div><span class="acc lat" style="margin-left:0">TRUE?</span></div></div>
+  <div class="head" id="h4"><div class="kt" data-kt="Ответ —"></div><div><span class="acc lat" style="margin-left:0; color:var(--success)">NOT GIVEN</span></div></div>
+  <div class="head" id="h5"><div class="kt" data-kt="Такие ловушки"></div><div><span class="kt" data-kt="разбираем на" style="display:inline-block"></span><span class="acc">занятиях</span></div></div>
+
+  <!-- the question -->
+  <div id="card">
+    <div class="row">
+      <span class="chip" id="cat" style="background:var(--blush-soft); color:var(--red-deep)">True / False / Not Given</span>
+      <div id="timer">
+        <svg viewBox="0 0 132 132"><circle cx="66" cy="66" r="56" fill="none" stroke="#efeeea" stroke-width="12"/><circle id="ring" cx="66" cy="66" r="56" fill="none" stroke="#de0b1b" stroke-width="12" stroke-linecap="round" stroke-dasharray="351.9" stroke-dashoffset="0"/></svg>
+        <b id="sec">5</b>
+      </div>
+    </div>
+    <div class="cap" style="margin-top:10px">Текст</div>
+    <p id="passage"><span>Aru</span> <span>moved</span> <span>to</span> <span>London</span> <span>to</span> <span>study</span> <span>medicine.</span></p>
+    <div class="hr"></div>
+    <div class="cap">Утверждение</div>
+    <p id="statement">Aru's course is taught in&nbsp;English.</p>
+    <div class="opts">
+      <div class="opt t" id="oT">TRUE<i class="x"></i></div>
+      <div class="opt f" id="oF">FALSE</div>
+      <div class="opt n" id="oN"><svg id="check" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 12.5 5 5L19.5 7"/></svg>NOT GIVEN</div>
+    </div>
+  </div>
+  <div id="lens"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="48" cy="48" r="34" fill="rgba(249,224,219,0.35)" stroke="#161311" stroke-width="9"/><path d="M73 73 L106 106" stroke="#161311" stroke-width="13" stroke-linecap="round"/></svg></div>
+  <span class="chip" id="lensTag" style="background:var(--dark); color:var(--on-dark)">English?</span>
+  <span class="chip" id="nope" style="background:var(--blush); color:var(--red-deep)">в тексте нет</span>
+  <p id="rule">не додумывай за автора</p>
+
+  <!-- scene 5 -->
+  <div class="skills" id="skills">
+    <div class="skill">Reading<small>ловушки и тайминг</small></div>
+    <div class="skill">Listening<small>цифры и имена</small></div>
+    <div class="skill">Writing<small>эссе под критерии</small></div>
+    <div class="skill">Speaking<small>Speaking Battles</small></div>
+  </div>
+  <p class="center" id="format" style="top:1110px; font:600 36px/1 var(--body); color:var(--ink-soft)">онлайн · по вечерам · IELTS и SAT</p>
+
+  <!-- end card -->
+  <div class="center" id="wordmark" style="top:600px"><img src="../../public/brand/wordmark-ink.png" alt="ASHYQ"></div>
+  <div class="center" id="cta1" style="top:830px"><div class="kt" data-kt="Проверь свой уровень" style="font-size:78px; line-height:1.05"></div><span class="acc" style="margin-left:0; font-size:128px">бесплатно</span></div>
+  <p class="center" id="cta2" style="top:1060px; font:500 38px/1.35 var(--body); color:var(--ink-soft)">Диагностика IELTS · ~20 минут · без регистрации</p>
+  <div class="center" id="arrow" style="top:1140px">↓</div>
+
+  <div class="abs spk" id="spark"></div>
+</div>
+
+<!-- Single source of truth for timing: audio.py parses this block too. -->
+<script id="timeline" type="application/json">
+{
+  "fps": 30,
+  "duration": 15,
+  "scenes": [
+    { "id": "s1", "start": 0.0,  "end": 1.6 },
+    { "id": "s2", "start": 1.6,  "end": 6.6 },
+    { "id": "s3", "start": 6.6,  "end": 7.4 },
+    { "id": "s4", "start": 7.4,  "end": 10.6 },
+    { "id": "s5", "start": 10.6, "end": 12.6 },
+    { "id": "s6", "start": 12.6, "end": 15.0 }
+  ],
+  "countdown": { "from": 1.6, "to": 6.6 },
+  "buzzer": 6.6,
+  "strikeTrue": 8.0,
+  "scan": { "from": 8.2, "to": 8.95 },
+  "reveal": 9.15,
+  "pops": [0.05, 10.95, 11.1, 11.25, 11.4, 13.4]
+}
+</script>
+<script src="../target-ad-15s-chat/spark/spark.js"></script>
+<script>
+const TL = JSON.parse(document.getElementById('timeline').textContent);
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, x) => a + (b - a) * x;
+const eOut = (x) => 1 - Math.pow(1 - x, 3);
+const eInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const eBack = (x) => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const S = Object.fromEntries(TL.scenes.map((s) => [s.id, s]));
+const blinkAt = (t, times) => Math.max(0, ...times.map((b) => 1 - Math.abs(t - b) / 0.09));
+
+// ---------- kinetic type ----------
+document.querySelectorAll('[data-kt]').forEach((el) => {
+  el.innerHTML = el.dataset.kt.split('|').map((line) => '<span class="ln">' +
+    line.split(' ').map((w) => `<span class="w"><span class="wi">${w}</span></span>`).join(' ') + '</span>').join('');
+});
+function kt(el, t, tin, tout, stagger = 0.05) {
+  el.querySelectorAll('.wi').forEach((w, i) => {
+    const a = eOut(prog(t, tin + i * stagger, tin + i * stagger + 0.4));
+    const b = tout == null ? 0 : eInOut(prog(t, tout + i * 0.02, tout + i * 0.02 + 0.28));
+    w.style.transform = `translateY(${(1 - a) * 118 - b * 118}%)`;
+  });
+}
+function acc(el, t, tin, tout) {
+  const a = eOut(prog(t, tin, tin + 0.4));
+  const b = tout == null ? 0 : prog(t, tout, tout + 0.22);
+  el.style.clipPath = `inset(-30% ${(1 - a) * 100}% -30% -5%)`;
+  el.style.opacity = a > 0 ? 1 - b : 0;
+  el.style.transform = `rotate(-3deg) translateY(${-b * 36}px)`;
+}
+function head(id, t, tin, tout) {
+  const el = $(id);
+  const blocks = el.querySelectorAll('.kt');
+  blocks.forEach((k, i) => kt(k, t, tin + i * 0.1, tout));
+  el.querySelectorAll('.acc').forEach((a) => acc(a, t, tin + blocks.length * 0.1 + 0.05, tout));
+}
+const pop = (el, t, tin, tout, from = 0.7) => {
+  const a = eBack(prog(t, tin, tin + 0.35));
+  const b = tout == null ? 0 : prog(t, tout, tout + 0.25);
+  el.style.opacity = prog(t, tin, tin + 0.08) * (1 - b);
+  el.style.transform = `scale(${lerp(from, 1, a) * (1 - 0.1 * b)})`;
+};
+const drawSpark = (pose, opts) => { $('spark').innerHTML = SPARK.spark('logo', pose, opts); };
+
+// ---------- the frame function ----------
+function seek(t) {
+  const panel = (id, tin) => { $(id).style.transform = `translateY(${(1 - eInOut(prog(t, tin - 0.05, tin + 0.4))) * 100}%)`; };
+  panel('p5', S.s5.start); panel('p6', S.s6.start);
+
+  // headlines: the question is readable from the very first frame
+  head('h1', t, -1, S.s3.start + 0.2);
+  head('h3', t, S.s4.start, TL.reveal - 0.3);
+  head('h4', t, TL.reveal, S.s5.start - 0.3);
+  head('h5', t, S.s5.start + 0.2, S.s6.start - 0.3);
+
+  // card: on screen at t=0, options pop in, leaves upward before the skills beat
+  const cOut = eInOut(prog(t, S.s5.start - 0.25, S.s5.start + 0.2));
+  $('card').style.transform = `translateY(${lerp(40, 0, eOut(prog(t, -0.2, 0.35))) - cOut * 1500}px) scale(${lerp(0.97, 1, eOut(prog(t, -0.2, 0.35)))})`;
+  ['oT', 'oF', 'oN'].forEach((id, i) => pop($(id), t, -1, null, 0.6));
+
+  // countdown ring 5 → 0
+  const cd = TL.countdown;
+  const left = clamp(cd.to - t, 0, 5);
+  $('sec').textContent = t < cd.from ? '5' : String(Math.ceil(left - 1e-6));
+  $('ring').setAttribute('stroke-dashoffset', String(351.9 * (1 - left / 5)));
+  const tick = t >= cd.from && t < cd.to ? 1 + 0.08 * Math.max(0, 1 - ((t - cd.from) % 1) / 0.2) : 1;
+  const buzz = eBack(prog(t, TL.buzzer, TL.buzzer + 0.3));
+  $('timer').style.transform = `scale(${t >= TL.buzzer ? lerp(1.3, 1, buzz) : tick}) rotate(${t >= TL.buzzer && t < TL.buzzer + 0.4 ? Math.sin((t - TL.buzzer) * 60) * 8 : 0}deg)`;
+  if (t >= TL.buzzer) $('sec').textContent = '0';
+  // clear the top row for the lens verdict
+  const clear = 1 - prog(t, TL.strikeTrue - 0.2, TL.strikeTrue + 0.1);
+  $('timer').style.opacity = clear; $('cat').style.opacity = clear;
+
+  // the tempting wrong answer pulses near the end of the countdown
+  const lure = t > 4.3 && t < cd.to ? 0.5 + 0.5 * Math.sin((t - 4.3) * 9) : 0;
+  const oT = $('oT');
+  oT.style.borderColor = lure > 0 ? `rgba(22,19,17,${0.25 + 0.6 * lure})` : '#e2e0da';
+
+  // reveal: TRUE struck out, lens scans the text, NOT GIVEN turns green
+  const st = eOut(prog(t, TL.strikeTrue, TL.strikeTrue + 0.25));
+  oT.querySelector('.x').style.transform = `scaleX(${st})`;
+  if (t >= TL.strikeTrue) oT.style.opacity = String(lerp(1, 0.4, prog(t, TL.strikeTrue + 0.2, TL.strikeTrue + 0.5)));
+  if (t >= TL.reveal) $('oF').style.opacity = String(lerp(1, 0.4, prog(t, TL.reveal, TL.reveal + 0.3)));
+  const oN = $('oN');
+  const rv = t >= TL.reveal;
+  oN.style.background = rv ? 'var(--success)' : 'var(--surface)';
+  oN.style.borderColor = rv ? 'var(--success)' : '#e2e0da';
+  oN.style.color = rv ? 'var(--on-dark)' : 'var(--ink)';
+  $('check').style.display = rv ? 'block' : 'none';
+  if (rv) oN.style.transform = `scale(${lerp(1.18, 1, eBack(prog(t, TL.reveal, TL.reveal + 0.35)))})`;
+
+  const words = [...document.querySelectorAll('#passage span')];
+  const sc = TL.scan;
+  const pr = $('passage').getBoundingClientRect(), stg = $('stage').getBoundingClientRect(), k = stg.width / 1080;
+  const px = (pr.left - stg.left) / k, py = (pr.top - stg.top) / k, pw = pr.width / k;
+  const lx = lerp(px - 40, px + pw - 40, eInOut(prog(t, sc.from, sc.to)));
+  const lensOn = prog(t, sc.from - 0.2, sc.from) * (1 - prog(t, TL.reveal + 0.2, TL.reveal + 0.45));
+  $('lens').style.left = lx + 'px'; $('lens').style.top = (py - 30) + 'px';
+  $('lens').style.opacity = lensOn;
+  $('lensTag').style.left = (lx + 70) + 'px'; $('lensTag').style.top = (py - 104) + 'px';
+  $('lensTag').style.opacity = lensOn * (1 - prog(t, sc.to, sc.to + 0.15));
+  words.forEach((w) => {
+    const r = w.getBoundingClientRect();
+    const wx = (r.left - stg.left) / k;
+    const under = t > sc.from && t < TL.reveal + 0.4 && wx < lx + 90 && wx > lx - 60;
+    w.style.background = under ? 'rgba(249,224,219,0.9)' : 'transparent';
+  });
+  $('nope').style.left = (px + pw - 260) + 'px'; $('nope').style.top = (py - 104) + 'px';
+  pop($('nope'), t, sc.to + 0.05, S.s5.start - 0.35);
+  pop($('rule'), t, TL.reveal + 0.35, S.s5.start - 0.3, 0.8);
+  $('rule').style.transform += ' rotate(-2deg)';
+
+  // skills beat
+  [...document.querySelectorAll('.skill')].forEach((el, i) => pop(el, t, S.s5.start + 0.35 + i * 0.15, S.s6.start - 0.25, 0.6));
+  pop($('format'), t, S.s5.start + 1.0, S.s6.start - 0.25, 0.9);
+
+  // end card
+  const e = S.s6.start;
+  const endOn = t >= e;
+  ['wordmark', 'cta1', 'cta2', 'arrow'].forEach((id) => { $(id).style.visibility = endOn ? 'visible' : 'hidden'; });
+  $('wordmark').style.opacity = prog(t, e + 0.05, e + 0.2);
+  $('wordmark').style.transform = `scale(${lerp(0.8, 1, eBack(prog(t, e + 0.05, e + 0.5)))})`;
+  kt($('cta1').querySelector('.kt'), t, e + 0.45, null, 0.06);
+  acc($('cta1').querySelector('.acc'), t, e + 0.8, null);
+  $('cta2').style.opacity = prog(t, e + 1.1, e + 1.4);
+  $('arrow').style.opacity = prog(t, e + 1.35, e + 1.5);
+  $('arrow').style.transform = `translateY(${Math.abs(Math.sin((t - e) * 5)) * 24}px)`;
+
+  // the spark: waves → nervous during the countdown → shocked → happy → flies onto the wordmark
+  const sp = $('spark');
+  let size = 300, x = 730, y = 1130, pose, opts = {};
+  if (t < S.s5.start) {
+    const cdOn = t >= cd.from && t < cd.to;
+    if (t < cd.from) pose = { name: 'wave', phase: t * 1.6 };
+    else if (cdOn) pose = { name: 'think', lookX: Math.sin((t - cd.from) * 2.5) > 0 ? 7 : -7, lookY: 4 };
+    else if (t < TL.reveal) pose = { name: 'cheer', mood: 'wow' };
+    else pose = { name: 'cheer' };
+    if (cdOn) x += Math.sin(t * 40) * 2 * prog(t, 4, cd.to);
+    y += t < 0.3 ? (1 - eOut(prog(t, 0, 0.3))) * 300 : 0;
+    y += eInOut(prog(t, S.s5.start - 0.3, S.s5.start)) * 700;
+  } else if (t < e) {
+    size = 320; x = 700; y = lerp(1920, 1180, eOut(prog(t, S.s5.start + 0.3, S.s5.start + 0.8))) + eInOut(prog(t, e - 0.3, e)) * 700;
+    pose = { name: 'wave', phase: t * 1.6 };
+  } else {
+    const f = eInOut(prog(t, e + 0.05, e + 0.75)), land = prog(t, e + 0.75, e + 1.15);
+    size = 330; x = lerp(-560, 375, f); y = lerp(160, 318, f) - Math.sin(Math.PI * f) * 130;
+    pose = t < e + 0.75 ? { name: 'fly' } : { name: t < e + 1.6 ? 'cheer' : 'wave', phase: (t - e) * 1.6, squash: 1 - 0.18 * Math.sin(Math.PI * land) * (1 - land) };
+  }
+  pose.blink = blinkAt(t, [1.3, 5.2, 11.6, 14.2]);
+  sp.style.width = sp.style.height = size + 'px';
+  sp.style.left = x + 'px'; sp.style.top = y + 'px';
+  sp.style.visibility = y < 1900 ? 'visible' : 'hidden';
+  if (y < 1900) drawSpark(pose, opts);
+}
+window.seek = seek;
+
+// ---------- boot ----------
+const stage = $('stage');
+window.ready = Promise.all([
+  document.fonts.ready,
+  ...[...document.images].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))),
+]);
+if (!new URLSearchParams(location.search).has('render')) {
+  const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `scale(${s})`; stage.style.left = (innerWidth - 1080 * s) / 2 + 'px'; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => {
+    const t0 = performance.now();
+    const loop = (now) => { seek(((now - t0) / 1000) % TL.duration); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  });
+} else window.ready = window.ready.then(() => seek(0));
+</script>
+</body>
+</html>
