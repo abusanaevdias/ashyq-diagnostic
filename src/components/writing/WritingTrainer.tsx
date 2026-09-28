@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { criterionLabels, writingCases, type Criterion } from '@/lib/writing-trainer/cases';
+import { criterionLabels, writingCases, type Criterion, type GrammarIssue } from '@/lib/writing-trainer/cases';
 import {
   canApplyGrammar,
   canApplyRevision,
@@ -33,6 +33,14 @@ function isLearnerDraftApplied(draft: string | undefined, applied: string | unde
   return Boolean(draft?.trim() && applied && normalize(draft) === normalize(applied));
 }
 
+function highlightedError(text: string, issue: GrammarIssue | undefined) {
+  if (!issue) return text;
+  const start = text.indexOf(issue.errorFragment);
+  if (start < 0) return text;
+  const end = start + issue.errorFragment.length;
+  return <>{text.slice(0, start)}<mark className={styles.errorWord}>{text.slice(start, end)}</mark>{text.slice(end)}</>;
+}
+
 function moveToNext(session: TrainerSession): TrainerSession {
   const current = stages.indexOf(session.stage);
   const nextIndex = Math.min(current + 1, stages.length - 1);
@@ -47,6 +55,7 @@ function moveToPrevious(session: TrainerSession): TrainerSession {
 export default function WritingTrainer() {
   const [session, setSession] = useState<TrainerSession>(() => createSession(writingCases[0].id));
   const previousStage = useRef(session.stage);
+  const previousGrammarChecked = useRef(session.grammarChecked);
   useEffect(() => {
     if (previousStage.current === session.stage) return;
     previousStage.current = session.stage;
@@ -54,6 +63,16 @@ export default function WritingTrainer() {
     exercise?.scrollIntoView({ block: 'start', behavior: 'auto' });
     exercise?.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true });
   }, [session.stage]);
+  useEffect(() => {
+    const justRevealed = session.grammarChecked && !previousGrammarChecked.current;
+    previousGrammarChecked.current = session.grammarChecked;
+    if (!justRevealed) return;
+    const firstResult = document.querySelector<HTMLElement>('[data-grammar-result="missed"]')
+      ?? document.querySelector<HTMLElement>('[data-grammar-result="review"]')
+      ?? document.querySelector<HTMLElement>('[data-grammar-result="found"]');
+    firstResult?.focus({ preventScroll: true });
+    firstResult?.scrollIntoView({ block: 'center', behavior: 'auto' });
+  }, [session.grammarChecked]);
   const essay = writingCases.find((item) => item.id === session.caseId) ?? writingCases[0];
   const scores = practiceScores(essay, session);
   const currentStageIndex = stages.indexOf(session.stage);
@@ -131,7 +150,8 @@ export default function WritingTrainer() {
               {essay.paragraphs.map((paragraph) => <p key={paragraph.id}>{paragraph.sentences.map((sentence) => {
                 const touched = Boolean(session.grammarDrafts[sentence.id]?.trim());
                 const status = session.grammarChecked ? grammarAttemptStatus(essay, session, sentence.id) : null;
-                return <button key={sentence.id} type="button" className={`${styles.sentence} ${session.selectedSentenceId === sentence.id ? styles.sentenceSelected : ''} ${touched && !session.grammarChecked ? styles.sentenceTouched : ''} ${status === 'found' ? styles.sentenceFound : ''} ${status === 'missed' ? styles.sentenceMissed : ''}`} aria-pressed={session.selectedSentenceId === sentence.id} onClick={() => selectSentence(sentence.id)}>{sentence.text}</button>;
+                const issue = session.grammarChecked ? essay.grammarIssues.find((item) => item.sentenceId === sentence.id) : undefined;
+                return <button key={sentence.id} type="button" className={`${styles.sentence} ${session.selectedSentenceId === sentence.id ? styles.sentenceSelected : ''} ${touched && !session.grammarChecked ? styles.sentenceTouched : ''} ${status === 'found' ? styles.sentenceFound : ''} ${status === 'missed' ? styles.sentenceMissed : ''} ${status === 'review' && issue ? styles.sentenceReview : ''}`} data-grammar-result={issue ? status : undefined} aria-pressed={session.selectedSentenceId === sentence.id} onClick={() => selectSentence(sentence.id)}>{issue && <span className={`${styles.sentenceBadge} ${status === 'found' ? styles.sentenceBadgeFound : ''} ${status === 'review' ? styles.sentenceBadgeReview : ''}`} lang="ru">{status === 'found' ? 'Найдено' : status === 'review' ? 'Нужен учитель' : 'Пропущено'}</span>}{highlightedError(sentence.text, issue)}</button>;
               })}</p>)}
             </div>
             <div className={styles.editPanel}>
@@ -153,9 +173,9 @@ export default function WritingTrainer() {
                 {essay.paragraphs.flatMap((paragraph) => paragraph.sentences).filter((sentence) => issueIds.has(sentence.id) || session.grammarDrafts[sentence.id]?.trim()).map((sentence) => {
                   const issue = essay.grammarIssues.find((item) => item.sentenceId === sentence.id);
                   const status = grammarAttemptStatus(essay, session, sentence.id);
-                  return <article key={sentence.id} className={styles.feedbackItem}>
+                  return <article key={sentence.id} className={`${styles.feedbackItem} ${status === 'missed' ? styles.feedbackMissed : ''} ${status === 'found' ? styles.feedbackFound : ''}`}>
                     <div className={styles.feedbackTitle}><span className={`${styles.statusTag} ${status === 'found' ? styles.positive : ''}`}>{status === 'found' ? 'НАЙДЕНО' : status === 'missed' ? 'ПРОПУЩЕНО' : status === 'review' ? 'НУЖЕН УЧИТЕЛЬ' : 'БЕЗ РАЗМЕТКИ'}</span><span>{statusText[status]}</span></div>
-                    <p lang="en"><b>Было:</b> {sentence.text}</p>
+                    <p lang="en"><b>Было:</b> {highlightedError(sentence.text, issue)}</p>
                     {session.grammarDrafts[sentence.id]?.trim() && <p lang="en"><b>Твой вариант:</b> {session.grammarDrafts[sentence.id]}</p>}
                     {issue && <><p lang="en"><b>Пример:</b> {issue.accepted[0]}</p><p>{issue.explanation}</p>
                       {!session.appliedGrammar[sentence.id] && <button type="button" className={styles.textButton} onClick={() => setSession((current) => ({ ...current, appliedGrammar: { ...current.appliedGrammar, [sentence.id]: canApplyGrammar(essay, current, sentence.id) ? current.grammarDrafts[sentence.id].trim() : issue.accepted[0] } }))}>{status === 'found' ? 'Применить мою проверенную правку' : 'Применить пример к эссе'}</button>}

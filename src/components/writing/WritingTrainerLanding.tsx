@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import styles from './WritingTrainerLanding.module.css';
 
@@ -8,32 +7,49 @@ const steps = [
     title: 'Открой одно из двух эссе',
     description: 'Нажми «Попробовать тренажёр» и выбери тему: городской транспорт или обучение. Прочитай вопрос Task 2 и эссе целиком — ошибки пока скрыты.',
     outcome: 'Твоя задача: сначала самому заметить слабые места.',
-    image: '/writing/step-choose.png',
-    width: 1068,
-    height: 402,
-    alt: 'Экран выбора учебного эссе и задание IELTS Writing Task 2',
+    illustration: 'choose',
   },
   {
     number: '02',
     title: 'Перепиши подозрительное предложение',
     description: 'Нажми на предложение в эссе, напиши свой вариант в поле «Твоя правка» и выбери «Проверить мои правки». Можно исправить несколько предложений.',
     outcome: 'Подсказки появятся только после твоей попытки.',
-    image: '/writing/step-edit.png',
-    width: 975,
-    height: 423,
-    alt: 'Поле, где ученик переписывает выбранное предложение',
+    illustration: 'edit',
   },
   {
     number: '03',
     title: 'Сравни и реши, что применить',
     description: 'Посмотри, что нашёл и что пропустил. Прочитай объяснение, сравни свой вариант с примером и сам выбери, какую проверенную правку применить к рабочему эссе.',
     outcome: 'Затем так же пройди ответ на вопрос, связность и лексику.',
-    image: '/writing/step-feedback.png',
-    width: 975,
-    height: 470,
-    alt: 'Разбор грамматической правки с объяснением и примером',
+    illustration: 'feedback',
   },
 ] as const;
+
+function StepIllustration({ kind }: { kind: (typeof steps)[number]['illustration'] }) {
+  return <div className={styles.illustration} aria-hidden="true">
+    <span className={styles.illustrationLabel}>УПРОЩЁННАЯ СХЕМА</span>
+    {kind === 'choose' && <div className={styles.illustrationCard}>
+      <span className={styles.miniLabel}>ШАГ 1 · ВЫБЕРИ ТЕМУ</span>
+      <div className={styles.topicRow}><span className={styles.topicActive}>Городской транспорт <b>✓</b></span><span>Обучение в школе</span></div>
+      <div className={styles.illustrationPrompt}><span>ЗАДАНИЕ IELTS TASK 2</span><strong>Should public transport be free for everyone?</strong></div>
+      <p className={styles.illustrationFoot}>Сначала прочитай вопрос и эссе целиком.</p>
+    </div>}
+    {kind === 'edit' && <div className={styles.illustrationCard}>
+      <span className={styles.miniLabel}>ШАГ 2 · ТВОЯ ПОПЫТКА</span>
+      <div className={styles.selectedSentence}>The bus go every ten minutes.<span className={styles.pointer}>← нажми на предложение</span></div>
+      <div className={styles.illustrationArrow}>↓</div>
+      <div className={styles.editExample}><span>ТВОЯ ПРАВКА</span><strong>The bus goes every ten minutes.</strong></div>
+      <span className={styles.fakeAction}>Проверить мои правки →</span>
+    </div>}
+    {kind === 'feedback' && <div className={styles.illustrationCard}>
+      <span className={styles.miniLabel}>ШАГ 3 · РАЗБОР ПОСЛЕ ПРОВЕРКИ</span>
+      <div className={styles.resultExample}><span className={styles.resultBadge}>ПРОПУЩЕНО</span><p>The bus <mark>go</mark> every ten minutes.</p></div>
+      <div className={styles.illustrationArrow}>↓</div>
+      <div className={styles.fixExample}><span>ПРИМЕР ИСПРАВЛЕНИЯ</span><strong>The bus <u>goes</u> every ten minutes.</strong></div>
+      <p className={styles.illustrationFoot}>Увидишь ошибку, объяснение и вариант правки.</p>
+    </div>}
+  </div>;
+}
 
 export default function WritingTrainerLanding() {
   return (
@@ -52,21 +68,17 @@ export default function WritingTrainerLanding() {
             <p className={styles.eyebrow}>КАК ЭТО РАБОТАЕТ</p>
             <h2 id="how-title">Три действия в тренажёре</h2>
           </div>
-          <p>Сначала работаешь сам. Разбор открывается после твоей попытки. Ниже показаны настоящие экраны готового примера.</p>
+          <p>Сначала работаешь сам. Разбор открывается после твоей попытки. На схемах увеличены важные элементы; пример фразы на них не взят из учебных эссе.</p>
         </div>
         <div className={styles.steps}>
           {steps.map((step) => (
             <article className={styles.step} key={step.number}>
-              <div className={styles.imageFrame}>
-                <Image src={step.image} alt={step.alt} width={step.width} height={step.height} sizes="(max-width: 850px) 620px, 56vw" />
-              </div>
-              <p className={styles.mobileHint}>Листай снимок в сторону →</p>
+              <StepIllustration kind={step.illustration} />
               <div className={styles.stepCopy}>
                 <span className={styles.number}>{step.number}</span>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
                 <p className={styles.outcome}>{step.outcome}</p>
-                <a className={styles.enlargeLink} href={step.image} target="_blank" rel="noopener noreferrer" aria-label={'Открыть крупно снимок шага ' + step.number + ' в новой вкладке'}>Открыть снимок крупно ↗</a>
               </div>
             </article>
           ))}
