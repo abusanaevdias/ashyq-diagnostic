@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Analytics, type BeforeSendEvent } from '@vercel/analytics/next';
 
 const publicPages = new Set([
@@ -20,5 +21,14 @@ function publicPageView(event: BeforeSendEvent): BeforeSendEvent | null {
 }
 
 export default function PublicAnalytics() {
-  return <Analytics beforeSend={publicPageView} />;
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    const host = window.location.hostname;
+    const configured = process.env.NEXT_PUBLIC_SITE_URL;
+    let canonicalHost = '';
+    try { if (configured?.startsWith('https://')) canonicalHost = new URL(configured).hostname; }
+    catch { /* Invalid site URL must not load the script on an arbitrary host. */ }
+    setEnabled(host === 'ashyq-diagnostic.vercel.app' || /^ashyq-diagnostic-[a-z0-9-]+\.vercel\.app$/.test(host) || Boolean(canonicalHost && host === canonicalHost));
+  }, []);
+  return enabled ? <Analytics beforeSend={publicPageView} /> : null;
 }

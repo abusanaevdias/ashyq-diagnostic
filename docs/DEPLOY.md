@@ -217,8 +217,9 @@ email, роль и членство в IELTS-классе. Отправляют�
 
 ## Vercel Web Analytics
 
-В корневом layout подключён `@vercel/analytics` при `VERCEL=1` (системная
-переменная Vercel). Отправляются только просмотры
+В корневом layout подключён `@vercel/analytics` только на production/preview
+доменах Vercel этого проекта или на HTTPS-домене `NEXT_PUBLIC_SITE_URL`.
+Отправляются только просмотры
 открытых страниц; параметры URL, страницы кабинета/классов и эссе отфильтрованы
 через `beforeSend`. Custom events пока не используются. После деплоя в панели
 проекта Vercel открыть **Analytics** (если видна кнопка **Enable**, включить),
