@@ -7,6 +7,8 @@ import LibraryContent from '@/components/library/LibraryContent';
 import StudyPad from '@/components/library/StudyPad';
 import ListeningAudio from '@/components/library/ListeningAudio';
 import LessonGuide from '@/components/library/LessonGuide';
+import InteractivePractice from '@/components/library/InteractivePractice';
+import { buildLibraryPractice } from '@/lib/library-practice';
 import { LIBRARY_CHAPTERS, LIBRARY_DOWNLOADS } from '@/data/free-library';
 import { chapterSections, libraryChapter } from '@/lib/free-library';
 import { SITE_URL } from '@/lib/site';
@@ -24,6 +26,7 @@ export default async function LibraryChapterPage({ params }: Props) {
   const { slug } = await params;
   const chapter = libraryChapter(slug); if (!chapter) notFound();
   const sections = chapterSections(slug);
+  const practice = new Map(buildLibraryPractice(sections).filter((set) => set.questions.length).map((set) => [set.code, set]));
   const blockLabel = sections.length % 10 === 1 && sections.length % 100 !== 11 ? 'блок' : sections.length % 10 >= 2 && sections.length % 10 <= 4 && !(sections.length % 100 >= 12 && sections.length % 100 <= 14) ? 'блока' : 'блоков';
   const index = LIBRARY_CHAPTERS.findIndex((entry) => entry.slug === slug);
   const next = LIBRARY_CHAPTERS[index + 1];
@@ -40,7 +43,7 @@ export default async function LibraryChapterPage({ params }: Props) {
     <LessonGuide sections={sections} />
     <div className={styles.reader}><aside className={styles.contents}><details><summary>Оглавление · {sections.length} {blockLabel}</summary><nav aria-label="Внутри раздела"><p className={styles.kicker}>Внутри раздела</p>{sections.map((section) => <a href={`#${section.code.toLowerCase()}`} key={section.code}><span>{section.code}</span>{section.title}{section.answer ? ' · ответы' : ''}</a>)}</nav></details><a className={styles.inlineLink} href={LIBRARY_DOWNLOADS[chapter.source === 'lab' ? 1 : 0].href} download>Этот том в PDF ↓</a></aside>
     <article className={styles.article}>{sections.map((section) => <section id={section.code.toLowerCase()} className={section.answer ? styles.answerSection : styles.lessonSection} key={section.code}>
-      {section.answer ? <details className={styles.answers}><summary><span className={styles.kicker}>{section.code} · откройте после попытки</span><h2>{section.title}</h2><span className={styles.answerAction}>Открыть / закрыть объяснения +</span></summary><div className={styles.answerBody}><p className={styles.small}>{section.subtitle}</p><LibraryContent blocks={section.blocks} title={section.title} /><p className={styles.small}>Для открытых вопросов сравнивайте смысл и критерии, не требуйте дословного совпадения с образцом.</p></div></details> : <><div className={styles.lessonHead}><p className={styles.kicker}>{section.code}</p><h2>{section.title}</h2>{section.subtitle && <p className={styles.small}>{section.subtitle}</p>}</div><LibraryContent blocks={section.blocks} title={section.title} />{section.exercise && <StudyPad code={section.code} />}</>}
+      {section.answer ? <details className={styles.answers}><summary><span className={styles.kicker}>{section.code} · откройте после попытки</span><h2>{section.title}</h2><span className={styles.answerAction}>Открыть / закрыть объяснения +</span></summary><div className={styles.answerBody}><p className={styles.small}>{section.subtitle}</p><LibraryContent blocks={section.blocks} title={section.title} /><p className={styles.small}>Для открытых вопросов сравнивайте смысл и критерии, не требуйте дословного совпадения с образцом.</p></div></details> : <><div className={styles.lessonHead}><p className={styles.kicker}>{section.code}</p><h2>{section.title}</h2>{section.subtitle && <p className={styles.small}>{section.subtitle}</p>}</div>{practice.has(section.code) ? <><InteractivePractice set={practice.get(section.code)!} /><details className={styles.quizInstructions}><summary>Все задания в исходном виде</summary><LibraryContent blocks={section.blocks} title={section.title} /></details></> : <><LibraryContent blocks={section.blocks} title={section.title} />{section.exercise && <StudyPad code={section.code} />}</>}</>}
       <p className={styles.provenance}>Источник: {section.source === 'lab' ? 'Writing Upgrade Lab V3' : 'Free Library V3, часть V2'}, страница файла {section.page}. Код сохранён из PDF.</p><a className={styles.backToStages} href="#lesson-stages">К этапам занятия ↑</a>
     </section>)}</article></div>
     <section className={styles.related}><h2>Продолжить практику</h2><div className={styles.actions}>{next && <Link href={`/library/${next.slug}`}>Следующий раздел: {next.title} →</Link>}{related.map((entry) => <Link key={entry.slug} href={`/library/${entry.slug}`}>{entry.code} · {entry.title}</Link>)}<Link href="/library#chapters">Все разделы</Link></div></section>

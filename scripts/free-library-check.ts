@@ -4,6 +4,8 @@ import { createHash } from 'node:crypto';
 import raw from '../src/data/free-library-content.json';
 import { LIBRARY_CHAPTERS, LIBRARY_DOWNLOADS } from '../src/data/free-library';
 import { FREE_STARTERS } from '../src/data/free-starters';
+import { buildLibraryPractice } from '../src/lib/library-practice';
+import type { LibrarySection } from '../src/lib/free-library';
 
 async function main() {
 assert.equal(raw.sections.length, 198);
@@ -51,6 +53,9 @@ for (const slug of ['', ...LIBRARY_CHAPTERS.map((chapter) => `/${chapter.slug}`)
   if (!slug) for (const entry of FREE_STARTERS) assert.ok(html.includes(`href="${entry.href}"`), `catalog direct link: ${entry.id}`);
   if (slug) {
     const chapter = LIBRARY_CHAPTERS.find((chapter) => `/${chapter.slug}` === slug)!;
+    for (const set of buildLibraryPractice((raw.sections as LibrarySection[]).filter((section) => section.source === chapter.source && section.page >= chapter.start && section.page <= chapter.end)).filter((set) => set.questions.length)) {
+      assert.ok(html.includes(`Интерактивная практика ${set.code}`), `practice SSR ${set.code}`);
+    }
     assert.ok(html.includes('Этапы занятия'), `visible lesson stages ${slug}`);
     for (const section of raw.sections.filter((section) => section.source === chapter.source && section.page >= chapter.start && section.page <= chapter.end)) {
       assert.ok(html.includes(`href="#${section.code.toLowerCase()}"`), `direct block link ${section.code}`);
