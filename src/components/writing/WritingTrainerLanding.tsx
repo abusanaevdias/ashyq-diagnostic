@@ -85,6 +85,15 @@ export default function WritingTrainerLanding() {
         </div>
       </section>
 
+      <section className={styles.drills} aria-labelledby="drills-title">
+        <div>
+          <p className={styles.eyebrow}>КОРОТКИЕ УПРАЖНЕНИЯ</p>
+          <h2 id="drills-title">Потренируй один навык перед целым эссе</h2>
+          <p>Соединяй мысли, исправляй грамматику и усиливай аргументы. В каждом задании сначала напиши свой вариант, а затем сравни решения и прочитай объяснение.</p>
+          <p className={styles.drillsNote}>Три вида упражнений по два задания · вымышленные примеры · без регистрации</p>
+        </div>
+        <Link href="/writing/trainer/drills" className={styles.drillsLink}>Открыть упражнения <span aria-hidden="true">→</span></Link>
+      </section>
       <section className={styles.start} aria-labelledby="start-title">
         <div>
           <p className={styles.startEyebrow}>МОЖНО НАЧАТЬ БЕЗ РЕГИСТРАЦИИ</p>

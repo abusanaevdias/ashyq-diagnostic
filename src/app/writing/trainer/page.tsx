@@ -4,7 +4,7 @@ import { Footer, NavBar } from '@/components/ui/CleanUi';
 
 export const metadata: Metadata = {
   title: 'Как работает тренажёр IELTS Writing Task 2 — ASHYQ',
-  description: 'Посмотрите три шага тренажёра и попробуйте самостоятельно улучшить одно из двух учебных эссе.',
+  description: 'Посмотрите три шага тренажёра, попробуйте короткие упражнения и самостоятельно улучшите одно из двух учебных эссе.',
   robots: { index: false, follow: false },
 };
 
