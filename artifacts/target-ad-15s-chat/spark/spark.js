@@ -150,5 +150,5 @@
     return `<svg viewBox="0 0 400 400" overflow="visible" xmlns="http://www.w3.org/2000/svg"><g transform="${sq} translate(0 ${lift}) rotate(${tilt} ${C.x} ${C.y + 60})">${inner}</g></svg>`;
   }
 
-  window.SPARK = { spark, BODIES };
+  window.SPARK = { spark, BODIES, starPath, limbs, trail, C };
 })();

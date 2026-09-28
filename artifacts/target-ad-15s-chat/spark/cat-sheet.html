@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ASHYQ — Кот и Искра</title>
+<style>
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../../public/fonts/manrope-800-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F; }
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../../public/fonts/manrope-800-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../../public/fonts/inter-500-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../../public/fonts/inter-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2192; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1080px; background: #f8f7f3; color: #161311; font-family: Inter, sans-serif; padding: 52px 56px; }
+h1 { font: 800 52px/1.1 Manrope, sans-serif; letter-spacing: -0.02em; }
+.row { background: #fdfdfd; border-radius: 36px; padding: 28px 30px 18px; margin-top: 30px; }
+.row h2 { font: 800 36px/1 Manrope, sans-serif; }
+.row h2 span { color: #b60916; }
+.row p { font: 500 21px/1.4 Inter, sans-serif; color: #6e6d6b; margin-top: 10px; }
+.poses { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 6px; }
+figure { text-align: center; }
+svg { width: 230px; height: 230px; }
+figcaption { font: 500 18px/1 Inter, sans-serif; color: #6e6d6b; margin-top: -6px; }
+</style>
+</head>
+<body>
+<h1>Кот + Искра — 3 варианта</h1>
+<div id="rows"></div>
+<script src="spark.js"></script>
+<script src="cat.js"></script>
+<script>
+const rows = [
+  ['sparkcat', '1 · <span>Кот-искра</span>', 'Та же искра, повёрнутая на 45°: верхние лучи — уши, нижние — щёки. Поворот обратно превращает кота в знак ASHYQ — готовый переход для финала.',
+    [['искра', { turn: 0 }], ['превращается', { turn: 0.55, name: 'stand' }], ['кот', { turn: 1 }], ['машет', { turn: 1, name: 'wave', phase: 0.25 }]]],
+  ['kitty', '2 · <span>Котик ASHYQ</span>', 'Отдельный кот в полный рост: уши вогнутые, как лучи искры, на лбу — белая искра, на хвосте — красная. Самый «персонажный».',
+    [['стоит', {}], ['машет', { name: 'wave', phase: 0.25 }], ['радуется', { name: 'cheer' }], ['думает', { name: 'think' }]]],
+  ['eared', '3 · <span>Искра с ушками</span>', 'Утверждённая искра A плюс кошачьи ушки, усы, носик и хвост с искрой. Минимальное изменение того, что уже в ролике.',
+    [['стоит', {}], ['машет', { name: 'wave', phase: 0.25 }], ['радуется', { name: 'cheer' }], ['летит', { name: 'fly' }]]],
+];
+document.getElementById('rows').innerHTML = rows.map(([k, name, text, poses]) => `<div class="row"><h2>${name}</h2><p>${text}</p><div class="poses">${
+  poses.map(([label, p]) => `<figure>${CAT.cat(k, p)}<figcaption>${label}</figcaption></figure>`).join('')}</div></div>`).join('');
+</script>
+</body>
+</html>
