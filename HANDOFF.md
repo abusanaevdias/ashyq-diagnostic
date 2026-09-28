@@ -75,7 +75,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 | Route | Состояние |
 |---|---|
 | `/` | Главная v3; CTA сохраняют вход в IELTS/SAT диагностику |
-| `/courses` | Каталог v3: фильтр IELTS/SAT/командный формат, 4 карточки, blush CTA в диагностику |
+| `/courses` | Каталог v3: два курса с фильтром IELTS/SAT, компактный hero с выбором экзамена, отдельные бесплатные уроки/Writing demo и клубный формат; диагностика учитывает выбранный экзамен |
 | `/courses/ielts`, `/courses/sat` | Индексируемые v3-страницы курсов: программа, маршрут подготовки, FAQ и CTA в соответствующую диагностику; коммерческие условия честно помечены как предварительные до подтверждения |
 | `/diagnostic` | v3-интро (DESIGN_V3 §6.3) → та же воронка диагностики; `/` сохраняет свой Landing |
 | `/career` | «Компас»: профориентационный тест на 40 утверждений → профиль, топ-3 направления, разбор по сферам и мост в диагностику. Интро рендерится на сервере, индексируется |
@@ -100,7 +100,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | Task | Status | Owner | Branch / worktree | Scope |
 |---|---|---|---|---|
-| COURSES-UX-022 | IN_PROGRESS | Codex `/root` (Alisher Mac) | `codex/courses-ux-polish`; worktree `/Users/wpalish/Documents/Codex/2026-09-27/files-mentioned-by-the-user-role/work/ashyq-courses-polish` | started 2026-09-28. User-requested improvement of course catalog: compact actionable hero, separate exam programs from club/tools, free practice entry, exam-correct links, responsive/accessibility polish; scoped `CoursesV3` and CSS, mobile menu Escape in `CleanUi`, contact heading accuracy, regression checks. No Search Console actions, Threads, writing trainer, backend or commercial claims. Independent on-page split allowed by SEO-GSC-INDEX-015. |
+| COURSES-UX-022 | REVIEW | Codex `/root` (Alisher Mac) | `codex/courses-ux-polish`; worktree `/Users/wpalish/Documents/Codex/2026-09-27/files-mentioned-by-the-user-role/work/ashyq-courses-polish`; [PR #89](https://github.com/abusanaevdias/ashyq-diagnostic/pull/89) | started 2026-09-28; feature `2b87441`. Compact actionable catalog hero, two exam programs separated from club/tools, three free practice entries, exam-correct catalog/course-header links, generic search/footer diagnostic selection; native mobile menu Escape/focus/outside/link/blur dismissal; accurate contact heading. Changed CoursesV3/CSS, CourseDetailsV3 navbar prop, CleanUi/new MobileNavMenu, one COURSES diagnostic href, ContactsV3 heading, e2e assertions. Local build/lint/typecheck/units/SEO passed; E2E 147/147, tokens 9/9 across 80 screens; Lighthouse catalog 98 performance/100 accessibility; Chrome desktop/390px visual and 320px overflow check. Remote CI pending; Vercel preview passed. No Search Console, Threads, writing trainer logic, backend or invented prices/results changes. Independent on-page split allowed by SEO-GSC-INDEX-015. Next safe step: merge only after full CI passes, verify production; then owner verification of prices/teachers/schedule, public statistics, operator details and actual student photos before commercial/trust additions. |
 
 | ID | Статус | Исполнитель | Ветка / worktree | Результат |
 |---|---|---|---|---|

@@ -459,9 +459,22 @@ async function main() {
 
   // courses: v3 каталог и рабочий фильтр
   await p3.goto(`${BASE}/courses`, { waitUntil: 'networkidle' });
-  check('courses: четыре курса и CTA диагностики', (await p3.locator('main h3').count()) === 4 && has(await p3.locator('body').innerText(), 'Не знаете, с чего начать?'));
+  check('courses: два курса отдельно от бесплатной практики', (await p3.locator('#programs article').count()) === 2 && (await p3.locator('#free-practice h3').count()) === 3 && has(await p3.locator('body').innerText(), 'Не знаете, с чего начать?'));
+  check('courses: общий вход даёт выбор экзамена', await p3.getByRole('link', { name: 'Пройти диагностику', exact: true }).getAttribute('href') === '/diagnostic');
   await p3.getByRole('button', { name: 'SAT', exact: true }).click();
-  check('courses: фильтр SAT работает', (await p3.locator('main h3').count()) === 3 && (await p3.getByRole('heading', { name: 'Подготовка к IELTS' }).count()) === 0);
+  check('courses: фильтр SAT показывает только программу SAT', (await p3.locator('#programs article').count()) === 1 && (await p3.getByRole('heading', { name: 'Подготовка к IELTS' }).count()) === 0);
+  check('courses: SAT CTA ведёт в SAT', await p3.getByRole('link', { name: 'Пройти диагностику SAT', exact: true }).getAttribute('href') === '/?start=sat');
+  await p3.getByRole('button', { name: 'IELTS', exact: true }).click();
+  check('courses: IELTS CTA ведёт в IELTS', await p3.getByRole('link', { name: 'Пройти диагностику IELTS', exact: true }).getAttribute('href') === '/?start=ielts');
+  const menuTrigger = p3.getByLabel('Открыть меню');
+  await menuTrigger.click();
+  check('nav: мобильное меню открывается', await p3.locator('header details').getAttribute('open') !== null);
+  await p3.keyboard.press('Escape');
+  check('nav: Escape закрывает меню и возвращает фокус', await p3.locator('header details').getAttribute('open') === null && await menuTrigger.evaluate((element) => element === document.activeElement));
+  await menuTrigger.click();
+  // The menu covers the hero: click the empty outer gutter, not an obscured heading.
+  await p3.mouse.click(5, (p3.viewportSize()?.height ?? 664) - 5);
+  check('nav: клик вне меню закрывает панель', await p3.locator('header details').getAttribute('open') === null);
   const coursesScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('courses: нет горизонтального скролла', coursesScroll <= 0, `${coursesScroll}px`);
 

@@ -51,7 +51,7 @@ export default function ContactsV3() {
             </div>
 
             <div>
-              <h2 className={home.heading}>Задайте вопрос</h2>
+              <h2 className={home.heading}>Оставьте заявку на консультацию</h2>
               <div className={styles.formWrap}><SeasonForm context="contact" /></div>
               <p className={styles.formNote}>Ответим в WhatsApp или по телефону, который вы укажете.</p>
             </div>
