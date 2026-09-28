@@ -10,6 +10,18 @@ import { CONTACT_EMAIL, SITE_DESCRIPTION, SITE_FULL_NAME, SITE_NAME, SITE_URL, S
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 
+/** Google site-name preference, not a promise of ranking or endorsement. */
+export const WEBSITE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  name: SITE_NAME,
+  alternateName: SITE_FULL_NAME,
+  url: SITE_URL,
+  inLanguage: 'ru',
+  publisher: { '@id': ORGANIZATION_ID },
+};
+
 export const ORGANIZATION = {
   '@context': 'https://schema.org',
   '@type': 'EducationalOrganization',
