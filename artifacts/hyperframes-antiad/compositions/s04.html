@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>04 evening</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+.cond{position:absolute;left:72px;right:200px;top:432px;font:600 54px/1.22 'Inter';color:#161311}
+.ans{position:absolute;left:72px;right:60px;top:1010px;font:700 92px/1.05 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%}
+.pill{position:absolute;display:inline-block;padding:18px 34px;border-radius:999px;font:600 40px/1 'Inter';white-space:nowrap}
+.pill.soft{background:#fcf3f0;color:#b60916}
+.pill.red{background:#de0b1b;color:#fff}
+
+#s04-clock{position:absolute;left:72px;top:560px;width:460px;height:460px}
+#s04-hand{position:absolute;left:295px;top:655px;width:14px;height:135px;border-radius:7px;background:#161311;transform-origin:50% 100%}
+#s04-dot{position:absolute;left:287px;top:775px;width:30px;height:30px;border-radius:50%;background:#161311}
+.s04-t{position:absolute;left:590px;font:800 110px/1 'Manrope';letter-spacing:-.03em}
+#s04-do{position:absolute;left:600px;top:772px;font:600 50px/1 'Inter';color:#6e6d6b}
+
+      </style>
+      <div id="root" data-composition-id="s04" data-width="1080" data-height="1920">
+
+        <div class="cond" id="s04-cond"><span class="m"><span class="w">вечером</span></span> <span class="m"><span class="w">ты</span></span> <span class="m"><span class="w">занят</span></span></div>
+        <svg id="s04-clock" viewBox="0 0 520 520"><circle cx="260" cy="260" r="236" fill="#fdfdfd" stroke="#161311" stroke-width="8"/><line x1="260.0" y1="40.0" x2="260.0" y2="64.0" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="370.0" y1="69.5" x2="358.0" y2="90.3" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="450.5" y1="150.0" x2="429.7" y2="162.0" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="480.0" y1="260.0" x2="456.0" y2="260.0" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="450.5" y1="370.0" x2="429.7" y2="358.0" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="370.0" y1="450.5" x2="358.0" y2="429.7" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="260.0" y1="480.0" x2="260.0" y2="456.0" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="150.0" y1="450.5" x2="162.0" y2="429.7" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="69.5" y1="370.0" x2="90.3" y2="358.0" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="40.0" y1="260.0" x2="64.0" y2="260.0" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="69.5" y1="150.0" x2="90.3" y2="162.0" stroke="#161311" stroke-width="8" stroke-linecap="round"/><line x1="150.0" y1="69.5" x2="162.0" y2="90.3" stroke="#161311" stroke-width="8" stroke-linecap="round"/><path id="s04-arc" d="M175.0 407.2 A170 170 0 0 1 175.0 112.8" pathLength="1" stroke="#de0b1b" stroke-width="44" fill="none" stroke-linecap="round" stroke-dasharray="1"/></svg>
+        <div id="s04-hand"></div><div id="s04-dot"></div>
+        <div class="s04-t" id="s04-t1" style="top:640px">19:00</div>
+        <div id="s04-do">до</div>
+        <div class="s04-t" id="s04-t2" style="top:842px">23:00</div>
+        <div class="pill soft" id="s04-pill" style="left:590px;top:985px">пн–сб · по Астане</div>
+        <div class="ans" id="s04-ans" style="top:1080px">как раз после школы</div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 100% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+const S = document.querySelector('[data-composition-id="s04"]');
+const tl = gsap.timeline({ paused: true });
+
+// voice at 0.15: вечером@0.50 ты@1.11 занят@1.28 · занятия@1.95 с 7@2.75 до@3.05 11@3.25–3.83 · как раз после школы@4.13–5.47
+rise(tl, S, '#s04-cond .w', [0.50, 1.11, 1.28]);
+tl.fromTo('#s04-clock', {scale: 0.85, opacity: 0}, {scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(1.6)'}, 0.7);
+tl.fromTo(['#s04-hand', '#s04-dot'], {opacity: 0}, {opacity: 1, duration: 0.3}, 0.8);
+// the hand sweeps to seven, then drags the red arc to eleven with the spoken numbers
+tl.fromTo('#s04-hand', {rotation: 60}, {rotation: 210, duration: 0.8, ease: 'power2.inOut'}, 1.95);
+tl.fromTo('#s04-arc', {strokeDashoffset: 1}, {strokeDashoffset: 0, duration: 1.08, ease: 'power1.inOut'}, 2.75);
+tl.to('#s04-hand', {rotation: 330, duration: 1.08, ease: 'power1.inOut'}, 2.75);
+tl.fromTo('#s04-t1', {y: 40, opacity: 0}, {y: 0, opacity: 1, duration: 0.35, ease: 'back.out(2)'}, 2.75);
+tl.fromTo('#s04-do', {opacity: 0}, {opacity: 1, duration: 0.25}, 3.05);
+tl.fromTo('#s04-t2', {y: 40, opacity: 0}, {y: 0, opacity: 1, duration: 0.35, ease: 'back.out(2)'}, 3.25);
+tl.fromTo('#s04-pill', {scale: 0.6, opacity: 0}, {scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2.2)'}, 3.6);
+wipe(tl, '#s04-ans', 4.13, 5.45);
+window.__timelines['s04'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>

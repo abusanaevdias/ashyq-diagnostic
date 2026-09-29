@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>02 promise</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+.cond{position:absolute;left:72px;right:200px;top:432px;font:600 54px/1.22 'Inter';color:#161311}
+.ans{position:absolute;left:72px;right:60px;top:1010px;font:700 92px/1.05 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%}
+.pill{position:absolute;display:inline-block;padding:18px 34px;border-radius:999px;font:600 40px/1 'Inter';white-space:nowrap}
+.pill.soft{background:#fcf3f0;color:#b60916}
+.pill.red{background:#de0b1b;color:#fff}
+
+#s02-st{position:absolute;left:270px;top:590px;width:420px;height:420px;border-radius:50%;border:10px dashed #de0b1b;background:#fdfdfd;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#s02-st .k{font:600 34px/1 'Inter';letter-spacing:.2em}
+#s02-st .v{font:800 190px/1 'Manrope';letter-spacing:-.04em}
+#s02-strike{position:absolute;left:200px;top:560px;width:680px;height:500px;overflow:visible}
+
+      </style>
+      <div id="root" data-composition-id="s02" data-width="1080" data-height="1920">
+
+        <div class="cond" id="s02-cond"><span class="m"><span class="w">тебе</span></span> <span class="m"><span class="w">нужно</span></span> <span class="m"><span class="w">обещание</span></span> <span class="m"><span class="w">«восьмёрки»</span></span></div>
+        <div id="s02-st"><div class="k">ГАРАНТИЯ</div><div class="v">8.0</div></div>
+        <svg id="s02-strike" viewBox="0 0 680 500"><path id="s02-path" d="M40 440 C220 330 420 170 640 60" pathLength="1" stroke="#de0b1b" stroke-width="22" stroke-linecap="round" fill="none" stroke-dasharray="1"/></svg>
+        <div class="ans" id="s02-ans">баллы мы не обещаем</div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 100% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+const S = document.querySelector('[data-composition-id="s02"]');
+const tl = gsap.timeline({ paused: true });
+
+// voice at 0.15: тебе@1.53 нужно@1.90 обещание@2.36 восьмёрки@3.09 · баллы@4.04 не обещаем@4.61–5.63
+rise(tl, S, '#s02-cond .w', [1.53, 1.90, 2.36, 3.09]);
+tl.fromTo('#s02-st', {y: -520, rotation: -34, opacity: 0}, {y: 0, rotation: -8, opacity: 1, duration: 0.55, ease: 'back.out(1.7)'}, 3.05);
+tl.fromTo('#s02-path', {strokeDashoffset: 1}, {strokeDashoffset: 0, duration: 0.34, ease: 'power2.in'}, 4.6);
+tl.to('#s02-st', {rotation: -4, scale: 0.96, duration: 0.2, ease: 'power2.out'}, 4.94);
+wipe(tl, '#s02-ans', 4.04, 5.6);
+window.__timelines['s02'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>

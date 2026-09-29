@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>05 level</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+.cond{position:absolute;left:72px;right:200px;top:432px;font:600 54px/1.22 'Inter';color:#161311}
+.ans{position:absolute;left:72px;right:60px;top:1010px;font:700 92px/1.05 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%}
+.pill{position:absolute;display:inline-block;padding:18px 34px;border-radius:999px;font:600 40px/1 'Inter';white-space:nowrap}
+.pill.soft{background:#fcf3f0;color:#b60916}
+.pill.red{background:#de0b1b;color:#fff}
+
+#s05-bar{position:absolute;left:72px;right:72px;top:820px;display:flex;gap:12px}
+#s05-bar .seg{flex:1;height:64px;border-radius:14px;background:#e6e4de;display:flex;align-items:center;justify-content:center;font:800 34px/1 'Manrope';color:#6e6d6b}
+#s05-bar .seg.lit{background:#f9e0db}
+#s05-ptr{position:absolute;left:0;top:600px;width:170px;height:200px}
+#s05-bub{position:absolute;left:0;top:0;width:170px;height:170px;border-radius:50%;background:#161311;color:#f8f7f3;display:flex;align-items:center;justify-content:center;font:800 120px/1 'Manrope'}
+#s05-tri{position:absolute;left:67px;top:165px;width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:26px solid #161311}
+
+      </style>
+      <div id="root" data-composition-id="s05" data-width="1080" data-height="1920">
+
+        <div class="cond" id="s05-cond"><span class="m"><span class="w">не</span></span> <span class="m"><span class="w">хочешь</span></span> <span class="m"><span class="w">знать</span></span> <span class="m"><span class="w">свой</span></span> <span class="m"><span class="w">уровень</span></span></div>
+        <div id="s05-ptr"><div id="s05-bub">?</div><div id="s05-tri"></div></div>
+        <div id="s05-bar"><div class="seg lit">A1</div><div class="seg lit">A2</div><div class="seg lit">B1</div><div class="seg">B2</div><div class="seg">C1</div><div class="seg">C2</div></div>
+        <div class="pill red" id="s05-pill" style="left:72px;top:935px">бесплатно · ~20 минут</div>
+        <div class="ans" id="s05-ans" style="top:1062px">диагностика — бесплатно</div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 100% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+const S = document.querySelector('[data-composition-id="s05"]');
+const tl = gsap.timeline({ paused: true });
+
+// voice at 0.15: не@0.50 хочешь@0.63 знать@1.10 свой@1.49 уровень@1.81 · диагностика@2.51 … бесплатная@3.68 двадцать минут@4.65–5.75
+rise(tl, S, '#s05-cond .w', [0.50, 0.63, 1.10, 1.49, 1.81]);
+tl.fromTo('#s05-bar', {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.4, ease: 'power3.out'}, 0.7);
+const centers = [145.0, 303.0, 461.0, 619.0, 777.0, 935.0];
+const jumps = [[0.9, 3], [1.25, 0], [1.6, 4], [1.95, 1], [2.3, 5], [2.65, 2]];
+tl.fromTo('#s05-ptr', {x: centers[3] - 85, scale: 0, opacity: 0}, {x: centers[3] - 85, scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2)'}, 0.8);
+// the «?» darts around the scale without landing — you don't know your level
+jumps.slice(1).forEach(([at, i]) => tl.to('#s05-ptr', {x: centers[i] - 85, duration: 0.22, ease: 'power3.out'}, at));
+// «бесплатная»: it settles between B1 and B2 and the free-diagnostic pill drops in
+tl.to('#s05-ptr', {x: (centers[2] + centers[3]) / 2 - 85, duration: 0.5, ease: 'power2.inOut'}, 3.0);
+tl.to('#s05-bub', {backgroundColor: '#de0b1b', duration: 0.25}, 3.68);
+tl.fromTo('#s05-pill', {y: -30, scale: 0.7, opacity: 0}, {y: 0, scale: 1, opacity: 1, duration: 0.35, ease: 'back.out(2.2)'}, 3.68);
+wipe(tl, '#s05-ans', 2.51, 4.6);
+window.__timelines['s05'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>03 guess</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+.cond{position:absolute;left:72px;right:200px;top:432px;font:600 54px/1.22 'Inter';color:#161311}
+.ans{position:absolute;left:72px;right:60px;top:1010px;font:700 92px/1.05 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%}
+.pill{position:absolute;display:inline-block;padding:18px 34px;border-radius:999px;font:600 40px/1 'Inter';white-space:nowrap}
+.pill.soft{background:#fcf3f0;color:#b60916}
+.pill.red{background:#de0b1b;color:#fff}
+
+#s03-card{position:absolute;left:72px;top:560px;width:600px;padding:40px 44px;background:#fdfdfd;border-radius:32px;box-shadow:0 20px 60px rgba(22,19,17,.1)}
+#s03-card .row{display:flex;align-items:center;gap:24px;margin-top:20px}
+#s03-card .row:first-child{margin-top:0}
+#s03-card .num{font:800 44px/1 'Manrope';width:60px}
+#s03-card .b{width:66px;height:66px;border-radius:50%;border:4px solid #161311;display:flex;align-items:center;justify-content:center;font:600 30px/1 'Inter';color:#6e6d6b}
+#s03-die{position:absolute;left:740px;top:600px;width:220px;height:220px;border-radius:40px;border:8px solid #161311;background:#fdfdfd}
+#s03-die i{position:absolute;width:40px;height:40px;border-radius:50%;background:#161311}
+#s03-q{position:absolute;left:790px;top:850px;font:800 120px/1 'Manrope';color:#de0b1b}
+
+      </style>
+      <div id="root" data-composition-id="s03" data-width="1080" data-height="1920">
+
+        <div class="cond" id="s03-cond"><span class="m"><span class="w">любишь</span></span> <span class="m"><span class="w">угадывать</span></span> <span class="m"><span class="w">ответы</span></span> <span class="m"><span class="w">в</span></span> <span class="m"><span class="w">Listening</span></span></div>
+        <div id="s03-card"><div class="row"><span class="num">1</span><span class="b" id="s03-b00">A</span><span class="b" id="s03-b01">B</span><span class="b" id="s03-b02">C</span><span class="b" id="s03-b03">D</span></div><div class="row"><span class="num">2</span><span class="b" id="s03-b10">A</span><span class="b" id="s03-b11">B</span><span class="b" id="s03-b12">C</span><span class="b" id="s03-b13">D</span></div><div class="row"><span class="num">3</span><span class="b" id="s03-b20">A</span><span class="b" id="s03-b21">B</span><span class="b" id="s03-b22">C</span><span class="b" id="s03-b23">D</span></div><div class="row"><span class="num">4</span><span class="b" id="s03-b30">A</span><span class="b" id="s03-b31">B</span><span class="b" id="s03-b32">C</span><span class="b" id="s03-b33">D</span></div></div>
+        <div id="s03-die"><i style="top:30px;left:30px"></i><i style="top:30px;right:30px"></i><i style="top:82px;left:82px"></i><i style="bottom:30px;left:30px"></i><i style="bottom:30px;right:30px"></i></div>
+        <div id="s03-q">?</div>
+        <div class="ans" id="s03-ans">на занятиях разбираем ловушки</div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 100% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+const S = document.querySelector('[data-composition-id="s03"]');
+const tl = gsap.timeline({ paused: true });
+
+// voice at 0.15: любишь@0.49 угадывать@1.03 ответы@1.72 в@2.19 Listening@2.27 · на занятиях@3.30 … ловушки@4.73–5.29
+rise(tl, S, '#s03-cond .w', [0.49, 1.03, 1.72, 2.19, 2.27]);
+tl.fromTo('#s03-card', {x: -60, opacity: 0}, {x: 0, opacity: 1, duration: 0.45, ease: 'power3.out'}, 0.75);
+tl.fromTo('#s03-die', {y: -300, rotation: -200, opacity: 0}, {y: 0, rotation: 14, opacity: 1, duration: 0.6, ease: 'back.out(1.4)'}, 0.85);
+// the die keeps tumbling while answers get guessed, then freezes on «на занятиях»
+tl.to('#s03-die', {rotation: 14 + 360 * 3, duration: 2.0, ease: 'none'}, 1.45);
+tl.to('#s03-die', {rotation: 14 + 360 * 3 + 20, duration: 0.35, ease: 'back.out(3)'}, 3.45);
+tl.fromTo('#s03-q', {scale: 0, opacity: 0}, {scale: 1, opacity: 1, duration: 0.35, ease: 'back.out(2.5)'}, 1.2);
+const picks = [1, 1, 2, 3];
+picks.forEach((p, r) => tl.fromTo('#s03-b' + r + p, {backgroundColor: 'rgba(22,19,17,0)', color: '#6e6d6b', scale: 1}, {backgroundColor: '#161311', color: '#f8f7f3', scale: 1.12, duration: 0.12, ease: 'power2.out'}, 1.1 + r * 0.5));
+wipe(tl, '#s03-ans', 3.3, 5.2);
+window.__timelines['s03'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>01 hook</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+#s01-ne{position:absolute;left:62px;top:300px;font:800 300px/.9 'Manrope';letter-spacing:-.04em;color:#de0b1b;transform-origin:0 60%}
+#s01-l2{position:absolute;left:72px;top:600px;font:800 124px/1 'Manrope';letter-spacing:-.03em;white-space:nowrap}
+#s01-l3{position:absolute;left:72px;top:752px;font:800 210px/1 'Manrope';letter-spacing:-.04em;white-space:nowrap}
+#s01-rule{position:absolute;left:72px;top:1010px;width:300px;height:10px;background:#de0b1b;transform-origin:0 50%}
+
+      </style>
+      <div id="root" data-composition-id="s01" data-width="1080" data-height="1920">
+
+        <div id="s01-ne">НЕ</div>
+        <div id="s01-l2"><span class="m"><span class="w">ЗАПИСЫВАЙСЯ</span></span></div>
+        <div id="s01-l3"><span class="m"><span class="w">В</span></span> <span class="m"><span class="w">ASHYQ.</span></span></div>
+        <div id="s01-rule"></div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 100% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+const S = document.querySelector('[data-composition-id="s01"]');
+const tl = gsap.timeline({ paused: true });
+
+// voice starts at 0.10: «Не»@0.15 «записывайся»@0.23 «Ашык»@1.08
+tl.fromTo('#s01-ne', {scale: 1.7, opacity: 0}, {scale: 1, opacity: 1, duration: 0.24, ease: 'power4.out'}, 0.12);
+rise(tl, S, '#s01-l2 .w', [0.24], 0.42);
+rise(tl, S, '#s01-l3 .w', [1.02, 1.12], 0.4, 'back.out(1.6)');
+tl.fromTo('#s01-rule', {scaleX: 0}, {scaleX: 1, duration: 0.45, ease: 'power3.out'}, 1.45);
+window.__timelines['s01'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>

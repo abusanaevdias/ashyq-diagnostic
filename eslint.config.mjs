@@ -22,5 +22,7 @@ export default defineConfig([
     'dist/**',
     'coverage/**',
     'next-env.d.ts',
+    // third-party minified runtimes vendored into video projects (e.g. GSAP for HyperFrames)
+    'artifacts/**/assets/vendor/**',
   ]),
 ]);
