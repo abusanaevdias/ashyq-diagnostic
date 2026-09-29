@@ -1,0 +1,29 @@
+{
+  "model": "s2.1-pro-free",
+  "voices": {
+    "ru": "7312c38557eb4fb384e3874e8e9cea67",
+    "en": "536d3a5e000945adb7038665781a4aca"
+  },
+  "voiceNames": {
+    "ru": "Мужской Профессиональный213 (RU, Fish Audio library)",
+    "en": "Ethan (EN, Fish Audio library)"
+  },
+  "note": "English words inside Russian lines are written phonetically so the RU voice reads them cleanly.",
+  "lines": {
+    "s01-en":  { "voice": "en", "text": "I have seventeen years." },
+    "s01-ru":  { "voice": "ru", "text": "Звучит знакомо? Это калька с русского." },
+    "s02-ru":  { "voice": "ru", "text": "Возраст — через ту би." },
+    "s02-en":  { "voice": "en", "text": "I'm seventeen." },
+    "s03-en1": { "voice": "en", "text": "I am agree." },
+    "s03-ru":  { "voice": "ru", "text": "Эгри — уже глагол. Эм здесь лишнее." },
+    "s03-en2": { "voice": "en", "text": "I agree." },
+    "s04-en1": { "voice": "en", "text": "It depends from you." },
+    "s04-ru":  { "voice": "ru", "text": "После дипендс — всегда он." },
+    "s04-en2": { "voice": "en", "text": "It depends on you." },
+    "s05-en1": { "voice": "en", "text": "Let's discuss about it." },
+    "s05-ru":  { "voice": "ru", "text": "Дискас — без эбаут." },
+    "s05-en2": { "voice": "en", "text": "Let's discuss it." },
+    "s06-ru":  { "voice": "ru", "text": "На экзамене это слышно сразу." },
+    "s07-ru":  { "voice": "ru", "text": "Такие ошибки мы разбираем на занятиях Ашык. Начни с бесплатной диагностики — ссылка в профиле." }
+  }
+}

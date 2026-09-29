@@ -19,7 +19,7 @@ mode: collaborative
 - scene: Сразу крупно «I have 17 years.» — голос «ученика»; над ней мелко «ДУМАЕШЬ: Мне 17 лет»
 - duration: 4s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "[EN] I have seventeen years. [RU] Звучит знакомо? Это калька с русского."
 - src: compositions/s01.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, asr-keyword-glow)
@@ -29,7 +29,7 @@ mode: collaborative
 - scene: «have» и «years» зачёркиваются, встаёт «I'm 17.»; подпись «возраст — через to be»; счётчик 1/4
 - duration: 4.5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "[RU] Возраст — через to be. [EN] I'm seventeen."
 - src: compositions/s02.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, svg-path-draw)
@@ -39,7 +39,7 @@ mode: collaborative
 - scene: ДУМАЕШЬ «Я согласен» → «I am agree.» → «am» зачёркнут → «I agree.»; подпись «agree — уже глагол»; 2/4
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "[EN] I am agree. [RU] Agree — уже глагол, am не нужен. [EN] I agree."
 - src: compositions/s03.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, svg-path-draw)
@@ -49,7 +49,7 @@ mode: collaborative
 - scene: «Это зависит от тебя» → «It depends from you.» → «from» → «on»; подпись «depends — всегда on»; 3/4
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "[EN] It depends from you. [RU] После depends — всегда on. [EN] It depends on you."
 - src: compositions/s04.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, svg-path-draw)
@@ -59,7 +59,7 @@ mode: collaborative
 - scene: «Давай обсудим это» → «Let's discuss about it.» → «about» вычёркивается и строка схлопывается → «Let's discuss it.»; 4/4
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "[EN] Let's discuss about it. [RU] Discuss — без about. [EN] Let's discuss it."
 - src: compositions/s05.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, svg-path-draw)
@@ -69,7 +69,7 @@ mode: collaborative
 - scene: Четыре исправленные строки стопкой, мелко зачёркнутые кальки рядом; рукописно «экзаменатор это слышит»
 - duration: 3.5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "[RU] На экзамене это слышно сразу."
 - src: compositions/s06.html
 - blueprint: grid-card-assemble
@@ -79,7 +79,7 @@ mode: collaborative
 - scene: Вордмарк, Искра; «Разбираем такие ошибки на занятиях»; «Начни с бесплатной диагностики · ссылка в профиле»; «Голоса в ролике созданы ИИ»
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "[RU] Такие ошибки мы разбираем на занятиях Ашык. Начни с бесплатной диагностики — ссылка в профиле."
 - src: compositions/s07.html
 - blueprint: logo-assemble-lockup
