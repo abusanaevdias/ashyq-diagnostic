@@ -7,6 +7,11 @@ audience: школьники 15–18, Казахстан, IELTS/SAT
 mode: collaborative
 ---
 
+## Sketch sheet
+
+`storyboard.html` v1 (2026-09-29), превью `storyboard-v1.png`: 7 статичных эскизов 1080×1440; дорога и холмы в общей мировой системе,
+бледные «Искры» по краям показывают стык между слайдами. План подтверждён владельцем («Делай»).
+
 ## Spine
 
 Одна дорога через все семь слайдов (общий путь, окно слайда i = мир со сдвигом −i×1080).
@@ -20,7 +25,7 @@ mode: collaborative
 
 - scene: Большая «А» в круге на дороге, «От точки А» и рукописью «пять остановок», Искра стоит у А и машет
 - duration: 6s
-- status: outline
+- status: built
 - src: compositions/s01.html
 - blueprint: kinetic-type-beats (rules: kinetic-beat-slam, svg-path-draw)
 
@@ -30,7 +35,7 @@ mode: collaborative
 
 - scene: «Узнай, откуда стартуешь»; «Бесплатная предварительная оценка за 20 минут: диапазон балла, навыки, следующий шаг»; иконка-шкала со стрелкой
 - duration: 6s
-- status: outline
+- status: built
 - src: compositions/s02.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, counting-dynamic-scale)
 
@@ -40,7 +45,7 @@ mode: collaborative
 
 - scene: «Выбери направление»; «40 утверждений · 6 минут · 16 профилей»; иконка-компас; сноска «ориентир, а не диагноз и не официальный MBTI®»
 - duration: 6s
-- status: outline
+- status: built
 - src: compositions/s03.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, counting-dynamic-scale)
 
@@ -50,7 +55,7 @@ mode: collaborative
 
 - scene: «Занимайся сам — бесплатно»; «42 главы · 24 эссе Task 2 · 6 отчётов Task 1 · 322 упражнения»; иконка-полка с книгами
 - duration: 6s
-- status: outline
+- status: built
 - src: compositions/s04.html
 - blueprint: grid-card-assemble (rules: counting-dynamic-scale)
 
@@ -60,7 +65,7 @@ mode: collaborative
 
 - scene: «Проверь своё эссе»; «Три шага · два учебных эссе · четыре критерия»; иконка-лист с красным подчёркиванием и четыре чипа критериев
 - duration: 6s
-- status: outline
+- status: built
 - src: compositions/s05.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, dynamic-content-sequencing)
 
@@ -70,7 +75,7 @@ mode: collaborative
 
 - scene: «Иди с командой»; «Пн–сб · 19:00–23:00 по Астане»; иконка-часы с дугой вечера
 - duration: 6s
-- status: outline
+- status: built
 - src: compositions/s06.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw)
 
@@ -80,7 +85,7 @@ mode: collaborative
 
 - scene: Флаг «твоя цель» на дороге (без цифры), Искра радуется; «Дорога начинается с точки А»; «Бесплатная диагностика · ~20 минут»; «ссылка в профиле»; «сохрани карту пути»
 - duration: 6s
-- status: outline
+- status: built
 - src: compositions/s07.html
 - blueprint: logo-assemble-lockup
 
