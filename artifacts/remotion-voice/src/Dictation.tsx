@@ -1,8 +1,9 @@
 import {loadFont} from '@remotion/fonts';
-import {useAudioData, visualizeAudio} from '@remotion/media-utils';
+import {Audio} from '@remotion/media';
+import {useWindowedAudioData, visualizeAudio} from '@remotion/media-utils';
 import React from 'react';
 import {
-  AbsoluteFill, Audio, Easing, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig,
+  AbsoluteFill, Easing, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig,
 } from 'remotion';
 import {makePlan, PAUSE_SECONDS, type Timeline} from './plan';
 import {sparkSvg, type SparkPose} from './spark';
@@ -68,19 +69,23 @@ const Spark: React.FC<{pose: SparkPose; x: number; y: number; size: number}> = (
 );
 
 // ---------- live waveform from the English recording ----------
-const Wave: React.FC<{src: string; startSec: number; active: boolean}> = ({src, startSec, active}) => {
-  const frame = useCurrentFrame();
+// `frame` comes from the parent (not useCurrentFrame here) so the bars stay continuous
+const Wave: React.FC<{src: string; frame: number; startSec: number; active: boolean}> = ({src, frame, startSec, active}) => {
   const {fps} = useVideoConfig();
-  const audioData = useAudioData(src);
   const bars = 36;
-  const local = frame - Math.round(startSec * fps);
-  const values = audioData && active && local >= 0
-    ? visualizeAudio({fps, frame: local, audioData, numberOfSamples: 64, optimizeFor: 'speed'}).slice(0, bars)
-    : new Array(bars).fill(0);
+  const local = Math.max(0, frame - Math.round(startSec * fps));
+  const {audioData, dataOffsetInSeconds} = useWindowedAudioData({src, frame: local, fps, windowInSeconds: 10});
+  // raw magnitudes are tiny and bass-heavy: map them to dB for an even, readable waveform
+  const toLevel = (v: number) => interpolate(20 * Math.log10(Math.max(v, 1e-6)), [-56, -17], [0, 1], clamp);
+  // speech energy sits in the low bins: mirror them around the centre like a voice meter
+  const half = audioData && active
+    ? visualizeAudio({fps, frame: local, audioData, numberOfSamples: 64, optimizeFor: 'speed', dataOffsetInSeconds}).slice(0, bars / 2).map(toLevel)
+    : new Array(bars / 2).fill(0);
+  const values = [...half.slice().reverse(), ...half];
   return (
-    <div style={{display: 'flex', alignItems: 'center', gap: 8, height: 120, marginTop: 20}}>
+    <div style={{display: 'flex', alignItems: 'center', gap: 8, height: '100%'}}>
       {values.map((v, i) => (
-        <div key={i} style={{flex: 1, borderRadius: 6, background: active ? T.red : '#e2e0da', height: `${Math.max(8, Math.min(1, v * 6) * 120)}px`}} />
+        <div key={i} style={{flex: 1, borderRadius: 6, background: active ? T.red : '#e2e0da', height: `${8 + v * 112}px`}} />
       ))}
     </div>
   );
@@ -95,11 +100,15 @@ export const Dictation: React.FC<{timeline: Timeline | null}> = ({timeline}) => 
   const t = frame / fps;
   const f = (s: number) => Math.round(s * fps);
 
-  // key beats inside the reveal voice line («пятнадцать» … «пятьдесят»)
+  // key beats inside the reveal voice line, synced to its phrases (scripts/tts.mjs):
+  // first phrase «Если записал пятнадцать —», last phrase «пятьдесят»
   const rv = P.voice.reveal;
-  const strikeAt = rv + L.reveal.duration * 0.3;
-  const fiftyAt = rv + L.reveal.duration * 0.62;
-  const fixAt = rv + L.reveal.duration * 0.78;
+  const seg = L.reveal.segments ?? [];
+  const first = seg[0] ?? [0, L.reveal.duration * 0.3];
+  const last = seg[seg.length - 1] ?? [L.reveal.duration * 0.8, L.reveal.duration];
+  const strikeAt = rv + first[0] + (first[1] - first[0]) * 0.6;
+  const fiftyAt = rv + last[0];
+  const fixAt = rv + last[0] + 0.35;
 
   const inRecord = t >= P.voice.record && t < P.voice.record + L.record.duration;
   const pauseLeft = Math.max(0, P.pause[1] - t);
@@ -111,9 +120,9 @@ export const Dictation: React.FC<{timeline: Timeline | null}> = ({timeline}) => 
 
   // the spark
   let pose: SparkPose = {headphones: true};
-  let sx = 760;
-  let sy = 1190;
-  let size = 300;
+  let sx = 800;
+  let sy = 1020;
+  let size = 240;
   if (t < P.record[0]) pose = {...pose, name: 'wave', phase: t * 1.6};
   else if (t < P.pause[0]) pose = {...pose, name: 'think', lookX: -6, lookY: -4};
   else if (t < P.reveal[0]) {
@@ -152,7 +161,7 @@ export const Dictation: React.FC<{timeline: Timeline | null}> = ({timeline}) => 
       <Audio src={staticFile('sfx/bed.wav')} volume={bed} />
       {(['hook', 'record', 'reveal', 'cta'] as const).map((k) => (
         <Sequence key={k} from={f(P.voice[k])} durationInFrames={f(L[k].duration + 0.3)}>
-          <Audio src={staticFile(L[k].file)} volume={k === 'record' ? 1 : 1} />
+          <Audio src={staticFile(L[k].file)} />
         </Sequence>
       ))}
       {Array.from({length: PAUSE_SECONDS}, (_, i) => (
@@ -169,26 +178,55 @@ export const Dictation: React.FC<{timeline: Timeline | null}> = ({timeline}) => 
       <Head lines={['5 секунд —']} acc="твой ответ?" tIn={P.pause[0] + 0.1} tOut={P.pause[1] - 0.3} />
       <Head lines={['Это была']} acc="ловушка" tIn={P.reveal[0] + 0.1} tOut={P.cta[0] - 0.3} />
 
-      {/* ---------- the enrolment form ---------- */}
+      {/* ---------- the enrolment form; its middle slot shows waveform → countdown → transcript ---------- */}
       <div style={{
-        position: 'absolute', left: 64, right: 64, top: 600, background: T.surface, borderRadius: 44, padding: '40px 44px 44px',
+        position: 'absolute', left: 64, right: 64, top: 510, background: T.surface, borderRadius: 44, padding: '34px 40px 36px',
         boxShadow: '0 24px 72px rgba(22,19,17,0.1)', transform: `translateY(${(1 - cardIn) * 60 - cardOut * 1400}px)`,
       }}>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
           <span style={{borderRadius: 999, padding: '12px 22px', font: `600 28px/1 ${BODY}`, background: T.blushSoft, color: T.redDeep}}>IELTS Listening · Part 1</span>
-          <span style={{font: `600 26px/1 ${BODY}`, color: inRecord ? T.red : T.inkSoft}}>{inRecord ? '● идёт запись' : 'Write ONE WORD AND/OR A NUMBER'}</span>
+          <span style={{font: `600 26px/1 ${BODY}`, color: inRecord ? T.red : T.inkSoft}}>{inRecord ? '● идёт запись' : 'ONE WORD AND/OR A NUMBER'}</span>
         </div>
-        <div style={{font: `800 46px/1.2 ${DISPLAY}`, marginTop: 24, letterSpacing: '-0.01em'}}>Course enrolment form</div>
-        <Wave src={staticFile(L.record.file)} startSec={P.voice.record} active={inRecord} />
+        <div style={{font: `800 44px/1.15 ${DISPLAY}`, marginTop: 18, letterSpacing: '-0.01em'}}>Course enrolment form</div>
+        <div style={{position: 'relative', height: 150, marginTop: 16}}>
+          <div style={{position: 'absolute', inset: 0, opacity: 1 - range(t, P.pause[0] - 0.2, P.pause[0])}}>
+            <Wave src={staticFile(L.record.file)} frame={frame} startSec={P.voice.record} active={inRecord} />
+          </div>
+          {t >= P.pause[0] - 0.2 && t < P.reveal[0] + 0.3 ? (
+            <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', gap: 28,
+              opacity: range(t, P.pause[0] - 0.2, P.pause[0]) * (1 - range(t, P.reveal[0], P.reveal[0] + 0.3))}}>
+              <svg width="118" height="118" viewBox="0 0 96 96" style={{transform: 'rotate(-90deg)'}}>
+                <circle cx="48" cy="48" r="40" fill="none" stroke={T.hairline} strokeWidth="10" />
+                <circle cx="48" cy="48" r="40" fill="none" stroke={T.red} strokeWidth="10" strokeLinecap="round" strokeDasharray={251.3} strokeDashoffset={251.3 * (1 - pauseLeft / PAUSE_SECONDS)} />
+              </svg>
+              <span style={{font: `800 88px/1 ${DISPLAY}`, width: 70}}>{Math.max(1, Math.ceil(pauseLeft))}</span>
+              <span style={{font: `500 32px/1.3 ${BODY}`, color: T.inkSoft}}>впиши сумму<br />в поле ниже</span>
+            </div>
+          ) : null}
+          {t >= P.reveal[0] ? (
+            <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', borderRadius: 24, padding: '0 26px', background: T.bg,
+              font: `500 33px/1.4 ${BODY}`,
+              opacity: range(t, P.reveal[0] + 0.2, P.reveal[0] + 0.5),
+              transform: `translateY(${(1 - easeOut(range(t, P.reveal[0] + 0.2, P.reveal[0] + 0.5))) * 24}px)`}}>
+              <div>
+                “…the course fee is{' '}
+                <span style={{color: t >= strikeAt ? T.red : T.ink, textDecoration: t >= strikeAt ? 'line-through' : 'none', textDecorationThickness: 4}}>fifteen</span>…
+                sorry, I mean{' '}
+                <span style={{color: t >= fiftyAt ? T.success : T.ink, fontWeight: t >= fiftyAt ? 700 : 500, background: t >= fiftyAt ? T.successSoft : 'transparent', borderRadius: 8, padding: '0 6px'}}>fifty</span>{' '}
+                pounds”
+              </div>
+            </div>
+          ) : null}
+        </div>
         {[['Name', 'Aru Serik'], ['Start date', '14 October']].map(([k, v]) => (
-          <div key={k} style={{display: 'flex', gap: 18, marginTop: 20, font: `500 34px/1.3 ${BODY}`}}>
+          <div key={k} style={{display: 'flex', gap: 18, marginTop: 14, font: `500 32px/1.3 ${BODY}`}}>
             <span style={{color: T.inkSoft, width: 230}}>{k}:</span><span>{v}</span>
           </div>
         ))}
-        <div style={{display: 'flex', alignItems: 'center', gap: 18, marginTop: 22}}>
-          <span style={{font: `600 34px/1 ${BODY}`, width: 230}}>Course fee: £</span>
+        <div style={{display: 'flex', alignItems: 'center', gap: 18, marginTop: 20}}>
+          <span style={{font: `600 32px/1 ${BODY}`, width: 230}}>Course fee: £</span>
           <div style={{
-            flex: 1, height: 92, borderRadius: 22, border: `4px solid ${fieldOk ? T.success : t >= P.pause[0] ? T.ink : '#e2e0da'}`,
+            flex: 1, height: 88, borderRadius: 22, border: `4px solid ${fieldOk ? T.success : t >= P.pause[0] ? T.ink : '#e2e0da'}`,
             display: 'flex', alignItems: 'center', padding: '0 24px', font: `800 50px/1 ${DISPLAY}`, color: fieldOk ? T.success : T.ink,
             transform: `scale(${fieldOk ? interpolate(spring({frame: frame - f(fixAt), fps, config: {damping: 10}}), [0, 1], [1.12, 1]) : 1})`,
           }}>
@@ -196,32 +234,6 @@ export const Dictation: React.FC<{timeline: Timeline | null}> = ({timeline}) => 
           </div>
         </div>
       </div>
-
-      {/* ---------- pause countdown ---------- */}
-      {t >= P.pause[0] - 0.2 && t < P.pause[1] + 0.3 ? (
-        <div style={{position: 'absolute', left: 72, top: 1150, display: 'flex', alignItems: 'center', gap: 24,
-          opacity: range(t, P.pause[0] - 0.2, P.pause[0]) * (1 - range(t, P.pause[1], P.pause[1] + 0.3))}}>
-          <svg width="96" height="96" viewBox="0 0 96 96" style={{transform: 'rotate(-90deg)'}}>
-            <circle cx="48" cy="48" r="40" fill="none" stroke={T.surface} strokeWidth="10" />
-            <circle cx="48" cy="48" r="40" fill="none" stroke={T.red} strokeWidth="10" strokeLinecap="round" strokeDasharray={251.3} strokeDashoffset={251.3 * (1 - pauseLeft / PAUSE_SECONDS)} />
-          </svg>
-          <span style={{font: `800 64px/1 ${DISPLAY}`}}>{Math.ceil(pauseLeft)}</span>
-        </div>
-      ) : null}
-
-      {/* ---------- reveal: what the speaker actually said ---------- */}
-      {t >= P.reveal[0] && t < P.cta[0] + 0.3 ? (
-        <div style={{position: 'absolute', left: 64, right: 64, top: 1150, borderRadius: 32, padding: '24px 30px', background: T.surface,
-          boxShadow: '0 14px 40px rgba(22,19,17,0.08)', font: `500 34px/1.4 ${BODY}`,
-          opacity: range(t, P.reveal[0] + 0.2, P.reveal[0] + 0.5) * (1 - cardOut),
-          transform: `translateY(${(1 - easeOut(range(t, P.reveal[0] + 0.2, P.reveal[0] + 0.5))) * 30}px)`}}>
-          “…the course fee is{' '}
-          <span style={{color: t >= strikeAt ? T.red : T.ink, textDecoration: t >= strikeAt ? 'line-through' : 'none'}}>fifteen</span>…
-          sorry, I mean{' '}
-          <span style={{color: t >= fiftyAt ? T.success : T.ink, fontWeight: t >= fiftyAt ? 700 : 500, background: t >= fiftyAt ? T.successSoft : 'transparent', borderRadius: 8, padding: '0 6px'}}>fifty</span>{' '}
-          pounds”
-        </div>
-      ) : null}
 
       {/* ---------- end card ---------- */}
       {t >= P.cta[0] ? (

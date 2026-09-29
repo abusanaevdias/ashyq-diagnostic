@@ -1,6 +1,7 @@
 // Scene plan derived from the real voice-over durations (public/voice/timeline.json,
 // written by scripts/tts.mjs). Everything is in seconds; the composition converts.
-export type VoiceLine = {file: string; duration: number; text: string};
+// segments: speech phrases [start, end] inside the file, from silence detection
+export type VoiceLine = {file: string; duration: number; text: string; segments?: [number, number][]};
 export type Timeline = {lines: Record<'hook' | 'record' | 'reveal' | 'cta', VoiceLine>};
 
 export type Plan = {
@@ -24,7 +25,8 @@ export function makePlan(tl: Timeline): Plan {
   const recordEnd = recordVoice + L.record.duration + 0.4;
   const pauseEnd = recordEnd + PAUSE_SECONDS;
   const revealVoice = pauseEnd + 0.3;
-  const revealEnd = revealVoice + L.reveal.duration + 0.5;
+  // hold the correct answer (50 ✓) on screen before the end card
+  const revealEnd = revealVoice + L.reveal.duration + 1.3;
   const ctaVoice = revealEnd + 0.4;
   const duration = ctaVoice + L.cta.duration + 1.4;
   return {

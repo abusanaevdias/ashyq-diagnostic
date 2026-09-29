@@ -1,7 +1,12 @@
 {
+  "model": "s2.1-pro-free",
   "voices": {
-    "narrator": "",
-    "speaker": ""
+    "narrator": "7312c38557eb4fb384e3874e8e9cea67",
+    "speaker": "933563129e564b19a115bedd57b7406a"
+  },
+  "voiceNames": {
+    "narrator": "Мужской Профессиональный213 (RU, Fish Audio library)",
+    "speaker": "Sarah (EN, Fish Audio library)"
   },
   "lines": {
     "hook":   { "voice": "narrator", "speed": 1.05, "text": "Проверим твой листенинг? Слушай и запиши, сколько стоит курс." },
