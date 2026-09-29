@@ -1,0 +1,26 @@
+[
+  {
+    "text": "Let's",
+    "start": 0.04,
+    "end": 0.25,
+    "id": "w0"
+  },
+  {
+    "text": "discuss",
+    "start": 0.25,
+    "end": 0.6,
+    "id": "w1"
+  },
+  {
+    "text": "about",
+    "start": 0.6,
+    "end": 0.84,
+    "id": "w2"
+  },
+  {
+    "text": "it.",
+    "start": 0.84,
+    "end": 1.1,
+    "id": "w3"
+  }
+]

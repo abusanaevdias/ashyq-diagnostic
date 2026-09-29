@@ -7,6 +7,11 @@ audience: школьники 15–18, Казахстан, IELTS/SAT
 mode: collaborative
 ---
 
+## Sketch sheet
+
+`storyboard.html` v1 (2026-09-29), превью `storyboard-v1.png`. Озвучка готова: `assets/voice/*.mp3`, тайминги слов `*.words.json`;
+русские реплики без английских слов (RU голос их искажает), английское — только на экране и у EN «ученика».
+
 ## Spine
 
 Постоянный «подстрочник»: сверху мелко «ДУМАЕШЬ» + русская фраза, ниже
@@ -30,7 +35,7 @@ mode: collaborative
 - duration: 4.5s
 - transition_in: cut
 - status: built
-- voiceover: "[RU] Возраст — через to be. [EN] I'm seventeen."
+- voiceover: "[RU] Возраст — через глагол «быть». [EN] I'm seventeen."
 - src: compositions/s02.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, svg-path-draw)
 
@@ -40,7 +45,7 @@ mode: collaborative
 - duration: 5s
 - transition_in: cut
 - status: built
-- voiceover: "[EN] I am agree. [RU] Agree — уже глагол, am не нужен. [EN] I agree."
+- voiceover: "[EN] I am agree. [RU] В английском «согласен» — уже глагол. Лишнее слово убираем. [EN] I agree."
 - src: compositions/s03.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, svg-path-draw)
 
@@ -50,7 +55,7 @@ mode: collaborative
 - duration: 5s
 - transition_in: cut
 - status: built
-- voiceover: "[EN] It depends from you. [RU] После depends — всегда on. [EN] It depends on you."
+- voiceover: "[EN] It depends from you. [RU] После «дипендс» — всегда «он». [EN] It depends on you."
 - src: compositions/s04.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, svg-path-draw)
 
@@ -60,7 +65,7 @@ mode: collaborative
 - duration: 5s
 - transition_in: cut
 - status: built
-- voiceover: "[EN] Let's discuss about it. [RU] Discuss — без about. [EN] Let's discuss it."
+- voiceover: "[EN] Let's discuss about it. [RU] Обсуждать — без предлога. [EN] Let's discuss it."
 - src: compositions/s05.html
 - blueprint: kinetic-type-beats (rules: discrete-text-sequence, svg-path-draw)
 
