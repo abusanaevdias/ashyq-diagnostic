@@ -38,7 +38,7 @@ try { durations = JSON.parse(readFileSync(durFile, 'utf8')); } catch { /* first 
 for (const [id, line] of Object.entries(cfg.lines)) {
   if (only && id !== only) continue;
   const file = join(outDir, `${id}.mp3`);
-  if (!reprocess) writeFileSync(file, await tts({ text: line.text, voice: cfg.voices[line.voice], speed: line.speed || 1, model: process.env.FISH_MODEL || cfg.model }));
+  if (!reprocess) writeFileSync(file, await tts({ text: line.text, voice: cfg.voices[line.voice], speed: line.speed || (cfg.speed && cfg.speed[line.voice]) || 1, model: process.env.FISH_MODEL || cfg.model }));
   polish(file);
   durations[id] = duration(file);
   console.log(`${id}: ${durations[id]}s`);

@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <title>01 hook</title>
+    <title>bg</title>
   </head>
   <body>
     <template>
@@ -21,18 +21,14 @@
 .w{display:inline-block}
 
 
-#s01-ne{position:absolute;left:62px;top:300px;font:800 300px/.9 'Manrope';letter-spacing:-.04em;color:#de0b1b;transform-origin:0 60%}
-#s01-l2{position:absolute;left:72px;top:600px;font:800 124px/1 'Manrope';letter-spacing:-.03em;white-space:nowrap}
-#s01-l3{position:absolute;left:72px;top:752px;font:800 210px/1 'Manrope';letter-spacing:-.04em;white-space:nowrap}
-#s01-rule{position:absolute;left:72px;top:1010px;width:300px;height:10px;background:#de0b1b;transform-origin:0 50%}
+#bg-grid{position:absolute;inset:0;background-color:#f8f7f3;background-image:linear-gradient(#e9e6df 2px,transparent 2px),linear-gradient(90deg,#e9e6df 2px,transparent 2px);background-size:54px 54px}
+#bg-margin{position:absolute;top:0;bottom:0;left:40px;width:3px;background:#f3c9c2}
 
       </style>
-      <div id="root" data-composition-id="s01" data-width="1080" data-height="1920">
+      <div id="root" data-composition-id="bg" data-width="1080" data-height="1920">
 
-        <div id="s01-ne">НЕ</div>
-        <div id="s01-l2"><span class="m"><span class="w">ЗАПИСЫВАЙСЯ</span></span></div>
-        <div id="s01-l3"><span class="m"><span class="w">В</span></span> <span class="m"><span class="w">ASHYQ.</span></span></div>
-        <div id="s01-rule"></div>
+        <div id="bg-grid"></div>
+        <div id="bg-margin"></div>
 
       </div>
       <script>
@@ -45,15 +41,11 @@ function wipe(tl, el, from, to){
   tl.fromTo(el, {clipPath: 'inset(-30% 104% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
 }
 
-const S = document.querySelector('[data-composition-id="s01"]');
 const tl = gsap.timeline({ paused: true });
-
-// voice starts at 0.10: «Не»@0.15 «записывайся»@0.23 «Ашык»@1.08
-tl.fromTo('#s01-ne', {scale: 1.7, opacity: 0}, {scale: 1, opacity: 1, duration: 0.24, ease: 'power4.out'}, 0.12);
-rise(tl, S, '#s01-l2 .w', [0.24], 0.42);
-rise(tl, S, '#s01-l3 .w', [1.02, 1.12], 0.4, 'back.out(1.6)');
-tl.fromTo('#s01-rule', {scaleX: 0}, {scaleX: 1, duration: 0.45, ease: 'power3.out'}, 1.45);
-window.__timelines['s01'] = tl;
+// the grid breathes very slowly so the static frames never read as frozen
+const cycles = Math.max(0, Math.floor(37.52 / 8) - 1);
+tl.fromTo('#bg-grid', {backgroundPosition: '0px 0px'}, {backgroundPosition: '0px 54px', duration: 8, ease: 'none', repeat: cycles}, 0);
+window.__timelines['bg'] = tl;
 
       </script>
     </template>

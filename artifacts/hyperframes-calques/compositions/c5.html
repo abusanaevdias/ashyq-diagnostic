@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <title>01 hook</title>
+    <title>cheat sheet</title>
   </head>
   <body>
     <template>
@@ -21,18 +21,18 @@
 .w{display:inline-block}
 
 
-#s01-ne{position:absolute;left:62px;top:300px;font:800 300px/.9 'Manrope';letter-spacing:-.04em;color:#de0b1b;transform-origin:0 60%}
-#s01-l2{position:absolute;left:72px;top:600px;font:800 124px/1 'Manrope';letter-spacing:-.03em;white-space:nowrap}
-#s01-l3{position:absolute;left:72px;top:752px;font:800 210px/1 'Manrope';letter-spacing:-.04em;white-space:nowrap}
-#s01-rule{position:absolute;left:72px;top:1010px;width:300px;height:10px;background:#de0b1b;transform-origin:0 50%}
+#c5-lbl{position:absolute;left:72px;top:292px;font:600 30px/1 'Inter';letter-spacing:.14em;color:#6e6d6b}
+.c5-row{position:absolute;left:72px;right:72px;display:flex;align-items:center;gap:22px;font:800 58px/1.1 'Manrope';letter-spacing:-.02em;white-space:nowrap}
+.c5-ck{width:64px;height:64px;border-radius:50%;background:#2e5e3a;color:#fff;display:flex;align-items:center;justify-content:center;font:800 36px/1 'Manrope';flex:none}
+.c5-row s{color:#6e6d6b;font:600 36px/1.2 'Inter';text-decoration-thickness:4px}
+#c5-rule{position:absolute;left:72px;right:300px;top:1000px;font:700 84px/1.05 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%}
 
       </style>
-      <div id="root" data-composition-id="s01" data-width="1080" data-height="1920">
+      <div id="root" data-composition-id="c5" data-width="1080" data-height="1920">
 
-        <div id="s01-ne">НЕ</div>
-        <div id="s01-l2"><span class="m"><span class="w">ЗАПИСЫВАЙСЯ</span></span></div>
-        <div id="s01-l3"><span class="m"><span class="w">В</span></span> <span class="m"><span class="w">ASHYQ.</span></span></div>
-        <div id="s01-rule"></div>
+        <div id="c5-lbl">ШПАРГАЛКА</div>
+        <div class="c5-row" style="top:360px"><span class="c5-ck">✓</span><b>I’m 17.</b><s>I have 17 years</s></div><div class="c5-row" style="top:510px"><span class="c5-ck">✓</span><b>I agree.</b><s>I am agree</s></div><div class="c5-row" style="top:660px"><span class="c5-ck">✓</span><b>It depends on you.</b><s>depends from</s></div><div class="c5-row" style="top:810px"><span class="c5-ck">✓</span><b>Let’s discuss it.</b><s>discuss about</s></div>
+        <div id="c5-rule">экзаменатор это слышит</div>
 
       </div>
       <script>
@@ -45,15 +45,16 @@ function wipe(tl, el, from, to){
   tl.fromTo(el, {clipPath: 'inset(-30% 104% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
 }
 
-const S = document.querySelector('[data-composition-id="s01"]');
+document.fonts.ready.then(() => {
+const S = document.querySelector('[data-composition-id="c5"]');
 const tl = gsap.timeline({ paused: true });
 
-// voice starts at 0.10: «Не»@0.15 «записывайся»@0.23 «Ашык»@1.08
-tl.fromTo('#s01-ne', {scale: 1.7, opacity: 0}, {scale: 1, opacity: 1, duration: 0.24, ease: 'power4.out'}, 0.12);
-rise(tl, S, '#s01-l2 .w', [0.24], 0.42);
-rise(tl, S, '#s01-l3 .w', [1.02, 1.12], 0.4, 'back.out(1.6)');
-tl.fromTo('#s01-rule', {scaleX: 0}, {scaleX: 1, duration: 0.45, ease: 'power3.out'}, 1.45);
-window.__timelines['s01'] = tl;
+tl.fromTo('#c5-lbl', {opacity: 0}, {opacity: 1, duration: 0.3}, 0.05);
+S.querySelectorAll('.c5-row').forEach((el, i) => tl.fromTo(el, {x: -80, opacity: 0}, {x: 0, opacity: 1, duration: 0.4, ease: 'power3.out'}, 0.1 + i * 0.14));
+wipe(tl, '#c5-rule', 1.76, 3.0);
+
+window.__timelines['c5'] = tl;
+});
 
       </script>
     </template>

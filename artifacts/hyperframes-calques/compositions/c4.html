@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>c4</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+.ru{position:absolute;left:72px;right:72px;top:350px;font:600 62px/1.15 'Inter';color:#161311}
+.en{position:absolute;left:72px;right:60px;top:620px;font:800 128px/1.04 'Manrope';letter-spacing:-.03em;color:#161311}
+.en.sm{font-size:118px}
+.t{display:inline-block;white-space:pre;vertical-align:top;position:relative;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.t > .w{display:inline-block;position:relative}
+.t.ls > .w{margin-left:.26em}
+.t.ts > .w{margin-right:.26em}
+.w > .st{position:absolute;left:-.02em;right:-.02em;top:50%;height:14px;margin-top:-4px;border-radius:7px;background:#de0b1b;transform-origin:0 50%}
+.t.good > .w{color:#2e5e3a;background:#e8efe2;border-radius:18px;padding:0 .08em}
+.rule{position:absolute;left:72px;right:300px;top:960px;font:700 84px/1.05 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%}
+
+      </style>
+      <div id="root" data-composition-id="c4" data-width="1080" data-height="1920">
+
+        <div class="ru" id="c4-ru">«Давай обсудим это»</div>
+        <div class="en sm" id="c4-en"><span class="t ts"><span class="w">Let’s</span></span><span class="t ts"><span class="w">discuss</span></span><span class="t bad ts"><span class="w">about<i class="st"></i></span></span><span class="t "><span class="w">it</span></span><span class="t "><span class="w">.</span></span></div>
+        <div class="rule" id="c4-rule">discuss — без about</div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 104% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+document.fonts.ready.then(() => {
+const S = document.querySelector('[data-composition-id="c4"]');
+const tl = gsap.timeline({ paused: true });
+
+// width of a token measured off a canvas (pretext), so it works while the scene is still hidden
+function tokWidth(el) {
+  const w = el.querySelector('.w');
+  const cs = getComputedStyle(w);
+  const font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const px = parseFloat(cs.fontSize);
+  const text = w.textContent;
+  const pt = window.__hyperframes && window.__hyperframes.pretext;
+  const tw = pt ? pt.measureNaturalWidth(pt.prepareWithSegments(text, font)) : text.length * 0.62 * px;
+  const gaps = (el.classList.contains('ls') ? 0.26 : 0) + (el.classList.contains('ts') ? 0.26 : 0);
+  return Math.ceil(tw + (gaps + 0.2) * px);
+}
+// in-place calque fix: bad tokens get struck, then collapse; good tokens grow into the gap
+function fixLine(tl, scope, strikeAt, swapAt) {
+  scope.querySelectorAll('.t.bad').forEach((el) => {
+    const w = tokWidth(el);
+    tl.fromTo(el.querySelector('.st'), {scaleX: 0}, {scaleX: 1, duration: 0.3, ease: 'power2.in'}, strikeAt);
+    tl.fromTo(el.querySelector('.w'), {color: '#161311'}, {color: '#de0b1b', duration: 0.15}, strikeAt + 0.1);
+    tl.fromTo(el, {maxWidth: w, opacity: 1}, {maxWidth: 0, opacity: 0, duration: 0.35, ease: 'power3.inOut', immediateRender: false}, swapAt);
+  });
+  scope.querySelectorAll('.t.good').forEach((el) => {
+    const w = tokWidth(el);
+    tl.fromTo(el, {maxWidth: 0, opacity: 0}, {maxWidth: w, opacity: 1, duration: 0.35, ease: 'power3.out'}, swapAt + 0.05);
+    tl.fromTo(el.querySelector('.w'), {yPercent: 100}, {yPercent: 0, duration: 0.4, ease: 'back.out(1.8)'}, swapAt + 0.05);
+  });
+}
+
+tl.fromTo('#c4-ru', {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.4, ease: 'power3.out'}, 0.05);
+rise(tl, S, '#c4-en .t:not(.good) > .w', [0.19, 0.4, 0.75, 0.99, 0.99], 0.34);
+
+wipe(tl, '#c4-rule', 1.6300000000000001, 3.38);
+fixLine(tl, S, 2.7, 3.79);
+
+window.__timelines['c4'] = tl;
+});
+
+      </script>
+    </template>
+  </body>
+</html>
