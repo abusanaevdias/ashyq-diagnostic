@@ -1,0 +1,5 @@
+node_modules/
+out/*.png
+public/fonts/
+public/brand/
+public/sfx/

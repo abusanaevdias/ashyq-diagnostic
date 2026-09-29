@@ -1,0 +1,12 @@
+{
+  "voices": {
+    "narrator": "",
+    "speaker": ""
+  },
+  "lines": {
+    "hook":   { "voice": "narrator", "speed": 1.05, "text": "Проверим твой листенинг? Слушай и запиши, сколько стоит курс." },
+    "record": { "voice": "speaker",  "speed": 1.0,  "text": "Okay, so the course fee is fifteen... sorry, I mean fifty pounds, and that includes all the materials." },
+    "reveal": { "voice": "narrator", "speed": 1.05, "text": "Если записал пятнадцать — это ловушка. Говорящий поправился. Правильный ответ — пятьдесят." },
+    "cta":    { "voice": "narrator", "speed": 1.05, "text": "Такие ловушки мы разбираем на занятиях Ашык. Проверь свой уровень бесплатно — ссылка в профиле." }
+  }
+}
