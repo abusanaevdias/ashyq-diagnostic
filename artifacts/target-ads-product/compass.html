@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASHYQ — Компас</title>
+<link rel="stylesheet" href="kit.css">
+<style>
+#qcard { top: 590px; }
+.prog { height: 12px; border-radius: 6px; background: var(--hairline); margin-top: 18px; overflow: hidden; }
+.prog b { display: block; height: 100%; background: var(--red); transform-origin: 0 50%; }
+.stmt { font: 800 44px/1.22 var(--display); letter-spacing: -0.01em; margin-top: 26px; min-height: 108px; }
+.scale { display: grid; gap: 10px; margin-top: 26px; }
+.opt { height: 62px; border-radius: 999px; border: 3px solid #e2e0da; display: flex; align-items: center; padding: 0 28px; font: 600 28px/1 var(--body); }
+#profile { top: 600px; text-align: center; padding: 56px 44px; }
+#pname { font: 800 150px/1 var(--display); letter-spacing: -0.04em; margin-top: 18px; }
+#pcode { font: 600 30px/1 var(--body); color: var(--ink-soft); letter-spacing: 0.2em; margin-top: 16px; }
+#parch { font: 500 34px/1.35 var(--body); color: var(--ink-soft); margin-top: 22px; }
+#bubble { position: absolute; background: var(--surface); border: 4px solid var(--ink); border-radius: 30px; padding: 14px 24px; font: 800 38px/1 var(--display); white-space: nowrap; }
+#chain { top: 600px; }
+.prof { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.prof span { font: 800 32px/1 var(--display); border-radius: 999px; padding: 16px 24px; background: var(--hairline); }
+.hint { margin-top: 26px; border-radius: 26px; padding: 22px 26px; background: var(--success-soft); color: var(--success); font: 600 30px/1.4 var(--body); }
+#disc { position: absolute; left: 72px; right: 72px; top: 1090px; font: 500 26px/1.35 var(--body); color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="panel" id="p1" style="background:var(--bg)"></div>
+  <div class="panel" id="p3" style="background:var(--blush)"></div>
+  <div class="panel" id="p4" style="background:var(--success-soft)"></div>
+  <div class="panel" id="p5" style="background:var(--bg)"></div>
+
+  <div class="head" id="h1"></div>
+  <div class="head" id="h2"></div>
+  <div class="head" id="h3"></div>
+  <div class="head" id="h4"></div>
+
+  <div class="card" id="qcard">
+    <div class="row" style="display:flex; justify-content:space-between; align-items:center">
+      <span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">Компас · профориентация</span>
+      <span class="cap" id="qn">1 / 40</span>
+    </div>
+    <div class="prog"><b id="qbar"></b></div>
+    <p class="stmt" id="stmt"></p>
+    <div class="scale" id="scale"></div>
+  </div>
+
+  <div class="card" id="profile">
+    <span class="cap">Твой профиль</span>
+    <div id="pname"></div>
+    <div id="pcode"></div>
+    <p id="parch"></p>
+  </div>
+
+  <div class="card" id="chain">
+    <span class="cap">Профиль «Искра» · примеры направлений</span>
+    <div class="prof" id="prof"></div>
+    <p class="hint" id="hint"></p>
+  </div>
+  <p id="disc">Компас — ориентир по склонностям, а не психологический диагноз и не официальный тест MBTI®.</p>
+
+  <div class="center" id="wm" style="top:600px"><img class="end-wordmark" src="../../public/brand/wordmark-ink.png" alt="ASHYQ"></div>
+  <div class="center" id="cta1" style="top:820px; font-size:80px; line-height:1.05"></div>
+  <p class="center end-sub" id="cta2" style="top:1060px">40 утверждений · 6 минут · без регистрации</p>
+  <div class="center end-arrow" id="arrow" style="top:1140px">↓</div>
+
+  <div class="abs spk" id="spark"></div>
+  <div id="bubble"></div>
+</div>
+
+<!-- Single source of truth for timing: audio.py parses this block too. -->
+<script id="timeline" type="application/json">
+{
+  "fps": 30,
+  "duration": 15,
+  "scenes": [
+    { "id": "hook",     "start": 0.0,  "end": 2.2 },
+    { "id": "test",     "start": 2.2,  "end": 6.2 },
+    { "id": "profile",  "start": 6.2,  "end": 10.0 },
+    { "id": "path",     "start": 10.0, "end": 12.4 },
+    { "id": "end",      "start": 12.4, "end": 15.0 }
+  ],
+  "taps": [2.9, 4.1, 5.3],
+  "roulette": { "from": 6.5, "to": 8.7, "steps": 26 },
+  "sfx": {
+    "pop": [0.05, 2.9, 4.1, 5.3, 9.0, 10.4, 10.6, 10.8, 13.4],
+    "chime": [8.7],
+    "quiet": [[6.5, 8.7]]
+  }
+}
+</script>
+<script src="../target-ad-15s-chat/spark/spark.js"></script>
+<script src="kit.js"></script>
+<script>
+const TL = K.timeline();
+const S = Object.fromEntries(TL.scenes.map((s) => [s.id, s]));
+const { $, prog, lerp, eOut, eInOut, eBack } = K;
+
+// Real content from the product: statements from src/data/career/questions.ts,
+// answer scale CAREER_ANSWERS, profile names from src/data/career/profiles.ts.
+const STATEMENTS = [
+  { n: 1, text: 'Мне легче разобраться в теме, когда я обсуждаю её вслух с кем-то.', pick: 0 },
+  { n: 17, text: 'Выступление перед аудиторией меня скорее заводит, чем пугает.', pick: 1 },
+  { n: 40, text: 'Мне нравятся занятия, где много спорят и перебивают друг друга.', pick: 0 },
+];
+const ANSWERS = ['Точно про меня', 'Скорее про меня', 'Как когда', 'Скорее не про меня', 'Совсем не про меня'];
+const PROFILES = [['Опора', 'ISTJ'], ['Хранитель', 'ISFJ'], ['Проводник', 'INFJ'], ['Архитектор', 'INTJ'], ['Мастер', 'ISTP'], ['Автор', 'ISFP'], ['Идеалист', 'INFP'], ['Исследователь', 'INTP'], ['Игрок', 'ESTP'], ['Ведущий', 'ESFP'], ['Искра', 'ENFP'], ['Спорщик', 'ENTP'], ['Управляющий', 'ESTJ'], ['Связной', 'ESFJ'], ['Наставник', 'ENFJ'], ['Стратег', 'ENTJ']];
+
+K.head($('h1'), { lines: ['Не знаешь,', 'куда'], acc: 'поступать?' });
+K.head($('h2'), { lines: ['40 утверждений —'], acc: 'шесть минут' });
+K.head($('h3'), { lines: ['16 профилей —'], acc: 'какой твой?' });
+K.head($('h4'), { lines: ['Потом — профессии'], acc: 'и нужный экзамен' });
+K.head($('cta1'), { lines: ['Пройди Компас'], acc: 'бесплатно' });
+$('scale').innerHTML = ANSWERS.map((a) => `<div class="opt">${a}</div>`).join('');
+$('prof').innerHTML = ['UX/UI-дизайнер', 'Журналист', 'Основатель бизнеса'].map((p) => `<span>${p}</span>`).join('');
+$('hint').textContent = 'Экзамен · гипотеза: Speaking и Writing на свободную тему часто даются легче, зона роста — точность и формат';
+
+function seek(t) {
+  K.panel($('p3'), t, S.profile.start); K.panel($('p4'), t, S.path.start); K.panel($('p5'), t, S.end.start);
+
+  K.kt($('h1'), t, -1, S.test.start - 0.3);
+  K.kt($('h2'), t, S.test.start, S.profile.start - 0.3);
+  K.kt($('h3'), t, S.profile.start + 0.1, S.path.start - 0.3);
+  K.kt($('h4'), t, S.path.start + 0.1, S.end.start - 0.3);
+
+  // statements: visible from the first frame, flipped by taps
+  const k = TL.taps.filter((x) => t >= x + 0.35).length;
+  const st = STATEMENTS[Math.min(k, STATEMENTS.length - 1)];
+  $('stmt').textContent = st.text;
+  $('qn').textContent = `${st.n} / 40`;
+  $('qbar').style.transform = `scaleX(${st.n / 40})`;
+  const tapNow = TL.taps.find((x) => t >= x && t < x + 0.35);
+  [...$('scale').children].forEach((o, i) => {
+    const on = tapNow != null && i === STATEMENTS[TL.taps.indexOf(tapNow)].pick;
+    o.style.background = on ? 'var(--ink)' : 'transparent';
+    o.style.color = on ? 'var(--on-dark)' : 'var(--ink)';
+    o.style.borderColor = on ? 'var(--ink)' : '#e2e0da';
+  });
+  const flip = TL.taps.map((x) => prog(t, x + 0.25, x + 0.35) * (1 - prog(t, x + 0.35, x + 0.5))).reduce((a, b) => Math.max(a, b), 0);
+  const qOut = eInOut(prog(t, S.profile.start - 0.3, S.profile.start + 0.1));
+  $('qcard').style.transform = `translateX(${-flip * 60}px) translateY(${lerp(30, 0, eOut(prog(t, -0.2, 0.3))) - qOut * 1400}px)`;
+  $('qcard').style.opacity = 1 - flip * 0.6;
+
+  // profile roulette lands on «Искра»
+  const rl = TL.roulette;
+  const step = Math.floor(eOut(prog(t, rl.from, rl.to)) * rl.steps + 1e-6);
+  const [name, code] = PROFILES[step % 16];
+  $('pname').textContent = name;
+  $('pcode').textContent = code;
+  const landed = t >= rl.to;
+  $('pname').style.color = landed ? 'var(--red-deep)' : 'var(--ink)';
+  $('parch').textContent = landed ? 'Вдохновляющий · идейный · лёгкий на подъём' : '';
+  $('pname').style.transform = landed ? `scale(${lerp(1.25, 1, eBack(prog(t, rl.to, rl.to + 0.35)))})` : 'none';
+  K.rise($('profile'), t, S.profile.start + 0.1, S.path.start - 0.3, 80);
+
+  // the path: professions and an exam hypothesis
+  K.rise($('chain'), t, S.path.start + 0.2, S.end.start - 0.3, 60);
+  [...$('prof').children].forEach((el, i) => K.pop(el, t, S.path.start + 0.4 + i * 0.2, null, 0.6));
+  K.rise($('hint'), t, S.path.start + 1.1, null, 20);
+  K.rise($('disc'), t, S.path.start + 0.6, S.end.start - 0.3, 10);
+
+  // end card
+  const e = S.end.start, endOn = t >= e;
+  ['wm', 'cta1', 'cta2', 'arrow'].forEach((id) => { $(id).style.visibility = endOn ? 'visible' : 'hidden'; });
+  $('wm').style.opacity = prog(t, e + 0.05, e + 0.2);
+  $('wm').style.transform = `scale(${lerp(0.8, 1, eBack(prog(t, e + 0.05, e + 0.5)))})`;
+  K.kt($('cta1'), t, e + 0.45, null);
+  K.rise($('cta2'), t, e + 1.1, null, 20);
+  $('arrow').style.opacity = prog(t, e + 1.35, e + 1.5);
+  $('arrow').style.transform = `translateY(${Math.abs(Math.sin((t - e) * 5)) * 24}px)`;
+
+  // the spark: wonders → answers → recognises itself in the «Искра» profile → lands on the wordmark
+  const sp = $('spark');
+  let size = 300, x = 740, y = 1100, pose;
+  if (t < S.profile.start) pose = t < S.test.start ? { name: 'think', lookY: -8 } : { name: 'stand', lookX: -6 };
+  else if (t < S.path.start) {
+    pose = landed ? { name: 'cheer' } : { name: 'think', lookY: -6, lookX: Math.sin(t * 12) * 6 };
+    y = landed ? lerp(1100, 1060, eBack(prog(t, rl.to, rl.to + 0.3))) : 1100;
+  } else if (t < e) { pose = { name: 'wave', phase: t * 1.6 }; y = 1180; }
+  else {
+    const f = eInOut(prog(t, e + 0.05, e + 0.75)), land = prog(t, e + 0.75, e + 1.15);
+    x = lerp(-520, 390, f); y = lerp(200, 340, f) - Math.sin(Math.PI * f) * 130;
+    pose = t < e + 0.75 ? { name: 'fly' } : { name: t < e + 1.6 ? 'cheer' : 'wave', phase: t * 1.6, squash: 1 - 0.18 * Math.sin(Math.PI * land) * (1 - land) };
+  }
+  y += t < 0.3 ? (1 - eOut(prog(t, 0, 0.3))) * 300 : 0;
+  if (t > e - 0.35 && t < e) y += eInOut(prog(t, e - 0.35, e)) * 900;
+  pose.blink = K.blink(t, [1.2, 5.6, 11.3, 14.2]);
+  sp.style.width = sp.style.height = size + 'px'; sp.style.left = x + 'px'; sp.style.top = y + 'px';
+  K.spark(sp, pose);
+
+  const bub = $('bubble');
+  const say = landed && t < S.path.start - 0.2 ? 'Это же я! ✨' : '';
+  bub.textContent = say; bub.style.visibility = say ? 'visible' : 'hidden';
+  bub.style.left = (x - 260) + 'px'; bub.style.top = (y + 150) + 'px';
+  bub.style.transform = `scale(${eBack(prog(t, rl.to + 0.2, rl.to + 0.45))})`;
+}
+K.boot(seek);
+</script>
+</body>
+</html>

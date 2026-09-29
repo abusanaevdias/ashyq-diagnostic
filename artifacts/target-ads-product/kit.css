@@ -1,0 +1,46 @@
+/* Shared look for the product ads (Компас, Writing trainer, library). Design v3 tokens. */
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../public/fonts/manrope-800-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../public/fonts/manrope-800-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../public/fonts/inter-500-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../public/fonts/inter-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Inter'; font-weight: 600; src: url('../../public/fonts/inter-600-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-weight: 600; src: url('../../public/fonts/inter-600-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Caveat'; font-weight: 700; src: url('../../public/fonts/caveat-700-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Caveat'; font-weight: 700; src: url('../../public/fonts/caveat-700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+
+:root {
+  --bg: #f8f7f3; --surface: #fdfdfd; --blush: #f9e0db; --blush-soft: #fcf3f0;
+  --red: #de0b1b; --red-deep: #b60916; --ink: #161311; --ink-soft: #6e6d6b;
+  --hairline: #efeeea; --dark: #1b1512; --on-dark: #f8f7f3;
+  --success: #2e5e3a; --success-soft: #e8efe2;
+  --display: 'Manrope', system-ui, sans-serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --script: 'Caveat', cursive;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #0d0b0a; overflow: hidden; }
+body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: antialiased; }
+#stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); transform-origin: 0 0; }
+.abs { position: absolute; }
+.panel { position: absolute; inset: 0; }
+
+/* headlines: words rise from masks, the accent is handwritten; keep numbers out of Caveat (its 0 reads as С) */
+.kt { font-family: var(--display); font-weight: 800; letter-spacing: -0.025em; }
+.kt .ln { display: block; white-space: nowrap; }
+.kt .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.04em 0.14em; margin: 0 -0.04em -0.14em; }
+.kt .wi { display: inline-block; }
+.head { position: absolute; left: 72px; top: 290px; font-size: 76px; line-height: 1.05; color: var(--ink); }
+.acc { display: inline-block; font: 700 112px/0.85 var(--script); color: var(--red-deep); }
+.dark .head { color: var(--on-dark); }
+.dark .acc { color: var(--blush); }
+
+.card { position: absolute; left: 64px; right: 64px; background: var(--surface); border-radius: 44px; box-shadow: 0 24px 72px rgba(22, 19, 17, 0.1); padding: 40px 44px 44px; }
+.chip { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 12px 22px; font: 600 28px/1 var(--body); }
+.cap { font: 600 22px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+.center { position: absolute; left: 0; right: 0; text-align: center; }
+.spk svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* end card */
+.end-wordmark { width: 520px; mix-blend-mode: multiply; }
+.end-sub { font: 500 38px/1.35 var(--body); color: var(--ink-soft); }
+.end-arrow { font: 800 84px/1 var(--display); color: var(--red); }
