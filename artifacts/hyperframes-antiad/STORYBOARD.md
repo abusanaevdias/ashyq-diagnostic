@@ -7,12 +7,17 @@ audience: школьники 15–18, Казахстан, IELTS/SAT
 mode: collaborative
 ---
 
+## Sketch sheet
+
+`storyboard.html` v1 (2026-09-29): статичные эскизы 7 кадров, пунктир — safe zone Reels.
+Озвучка уже сгенерирована (`assets/voice/*.mp3`), тайминги слов — `assets/voice/*.words.json`.
+
 ## Frame 1 — Анти-хук
 
 - scene: На кремовом фоне огромное «НЕ ЗАПИСЫВАЙСЯ В ASHYQ.», «НЕ» красным; слова бьют в такт голосу
 - duration: 2.5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "Не записывайся в Ашык."
 - src: compositions/01-hook.html
 - blueprint: kinetic-type-beats (rules: kinetic-beat-slam, asr-keyword-glow)
@@ -25,7 +30,7 @@ mode: collaborative
 - scene: Шапка «НЕ ПРИХОДИ, ЕСЛИ…» (постоянный якорь, счётчик 1/4); ниже стикер «8.0 гарантия!», его перечёркивает красная линия; рукописный ответ Caveat «баллы мы не обещаем»
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "Не приходи, если тебе нужно обещание восьмёрки. Баллы мы не обещаем."
 - src: compositions/02-promise.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, asr-keyword-glow)
@@ -37,7 +42,7 @@ mode: collaborative
 - scene: Якорь «НЕ ПРИХОДИ, ЕСЛИ…» 2/4; бланк ответов, кружочки A/B/C заполняются наугад (кубик), затем Caveat «на занятиях разбираем ловушки»
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "Если любишь угадывать ответы в листенинге. На занятиях мы разбираем ловушки."
 - src: compositions/03-guess.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, asr-keyword-glow)
@@ -49,7 +54,7 @@ mode: collaborative
 - scene: Якорь 3/4; циферблат, дуга 19:00–23:00 заливается красным; «пн–сб · по Астане»; Caveat «как раз после школы»
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "Если вечером ты занят. Занятия с семи до одиннадцати — как раз после школы."
 - src: compositions/04-evening.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, asr-keyword-glow)
@@ -61,7 +66,7 @@ mode: collaborative
 - scene: Якорь 4/4; шкала уровня с «?» вместо стрелки; плашка «бесплатно · ~20 минут»
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "Если не хочешь знать свой уровень. Диагностика у нас бесплатная, двадцать минут."
 - src: compositions/05-level.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, asr-keyword-glow)
@@ -73,7 +78,7 @@ mode: collaborative
 - scene: Возвращается «НЕ ЗАПИСЫВАЙСЯ В ASHYQ.»; рукописная красная линия зачёркивает «НЕ» → «ЗАПИСЫВАЙСЯ В ASHYQ.»
 - duration: 3s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "Всё ещё смотришь? Похоже, тебе к нам."
 - src: compositions/06-turn.html
 - blueprint: kinetic-type-beats (rules: svg-path-draw)
@@ -85,7 +90,7 @@ mode: collaborative
 - scene: Вордмарк ashyq, Искра выпрыгивает и машет; «Начни с бесплатной диагностики»; «ссылка в профиле»; мелко «Голос в ролике создан ИИ»
 - duration: 4.5s
 - transition_in: cut
-- status: outline
+- status: built
 - voiceover: "Начни с бесплатной диагностики — ссылка в профиле."
 - src: compositions/07-cta.html
 - blueprint: logo-assemble-lockup
