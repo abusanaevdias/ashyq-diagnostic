@@ -7,6 +7,14 @@ audience: школьники 15–18, Казахстан, IELTS/SAT
 mode: collaborative
 ---
 
+## Build
+
+Семь слайдов по 6 с лежат подряд в `index.html` (слоты `s01…s07` на 0, 6, …, 36 с), фон-клетка — `bg`.
+`scripts/build.py` генерирует все композиции; `scripts/export.sh` режет рендер на `export/slide-01…07.mp4`
+(180 кадров, 1080×1440, без звука) и снимает `export/slide-01…07.png` — собранный кадр за 0,1 с до конца слайда.
+Ритм каждого слайда 2–6: 0,25 с миф по словам → 1,05 печать «МИФ» → 1,55 зачёркивание → 2,1 карточка → 2,45 «ФАКТ» →
+2,6 текст факта → 3–4,9 наглядный пример; последние ≥1 с кадр стоит собранным. `npx hyperframes check` — passed.
+
 ## Sketch sheet
 
 `storyboard.html` v1 (2026-09-29), превью `storyboard-v1.png`: 7 статичных эскизов 1080×1440 с полями 90 px (пунктир).
@@ -25,7 +33,7 @@ mode: collaborative
 
 - scene: Огромное «5» + «мифов об IELTS»; рукописно «сколько из них ты знал?»; Искра выглядывает из угла; подсказка «листай →»
 - duration: 6s
-- status: built
+- status: animated
 - src: compositions/s01.html
 - blueprint: kinetic-type-beats (rules: kinetic-beat-slam, discrete-text-sequence)
 
@@ -35,7 +43,7 @@ mode: collaborative
 
 - scene: Миф «Нужно набрать проходной балл» → зачёркнут → ФАКТ «В IELTS нет «сдал / не сдал»: вуз или организация сами решают, какой балл им нужен» + шкала 0–9 (без отметки «проходной»)
 - duration: 6s
-- status: built
+- status: animated
 - src: compositions/s02.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, spring-pop-entrance)
 - source: IDP IELTS
@@ -46,7 +54,7 @@ mode: collaborative
 
 - scene: Миф «Оба задания Writing одинаково важны» → зачёркнут → ФАКТ «Task 2 вносит в оценку за Writing вдвое больше, чем Task 1»; два столбика 1× и 2×, под ними «≥150 слов» и «≥250 слов»
 - duration: 6s
-- status: built
+- status: animated
 - src: compositions/s03.html
 - blueprint: dataviz-countup (rules: counting-dynamic-scale)
 - source: ielts.org · Academic Writing
@@ -57,7 +65,7 @@ mode: collaborative
 
 - scene: Миф «Запись в Listening можно переслушать» → зачёркнут → ФАКТ «Запись звучит один раз»; волна звука проходит один раз, значок «▶ 1×»; чипы «4 части · 40 вопросов · ~30 минут»
 - duration: 6s
-- status: built
+- status: animated
 - src: compositions/s04.html
 - blueprint: fixed-anchor-cycle (rules: svg-path-draw, dynamic-content-sequencing)
 - source: ielts.org · Academic Listening
@@ -68,7 +76,7 @@ mode: collaborative
 
 - scene: Миф «Средний балл 6.25 округлят вниз до 6.0» → зачёркнут → ФАКТ «Среднее из четырёх секций округляют до ближайшей половины: .25 → вверх до .5, .75 → вверх до целого»; два примера с расчётом: 6.0 · 6.0 · 6.5 · 6.5 → 25 ÷ 4 = 6.25 → **6.5**; 6.5 · 7.0 · 7.0 · 6.5 → 27 ÷ 4 = 6.75 → **7.0**
 - duration: 6s
-- status: built
+- status: animated
 - src: compositions/s05.html
 - blueprint: dataviz-countup (rules: counting-dynamic-scale, vertical-spring-ticker)
 - source: ielts.org · IELTS scoring in detail
@@ -79,7 +87,7 @@ mode: collaborative
 
 - scene: Миф «Результат IELTS действует всегда» → зачёркнут → ФАКТ «Рекомендуют считать результат действительным 2 года после экзамена»; календарь с двумя годовыми делениями, «2 года» считается
 - duration: 6s
-- status: built
+- status: animated
 - src: compositions/s06.html
 - blueprint: dataviz-countup (rules: svg-path-draw)
 - source: ielts.org · IELTS scoring in detail
@@ -90,7 +98,7 @@ mode: collaborative
 
 - scene: Вордмарк, Искра на нём; «А какой у тебя уровень?»; «Бесплатная диагностика · ~20 минут · ссылка в профиле»; «Сохрани, чтобы не потерять»; мелко «Факты: ielts.org, IDP IELTS»
 - duration: 6s
-- status: built
+- status: animated
 - src: compositions/s07.html
 - blueprint: logo-assemble-lockup
 
