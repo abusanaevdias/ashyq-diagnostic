@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1440" />
+    <title>ASHYQ — Speaking Part 2 (карусель)</title>
+    <!-- GSAP 3.14.2 vendored: renders must not depend on a CDN -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1440px; overflow: hidden; background: #f8f7f3; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #f8f7f3; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      #el-bg { z-index: 0; }
+      #root > div[data-composition-src][data-track-index="1"] { z-index: 1; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1440" data-duration="42.0">
+      <div id="el-bg" data-composition-id="bg" data-composition-src="compositions/bg.html" data-start="0" data-duration="42.0" data-track-index="0" data-width="1080" data-height="1440"></div>
+      <div id="el-s01" data-composition-id="s01" data-composition-src="compositions/s01.html" data-start="0.0" data-duration="6.0" data-track-index="1" data-width="1080" data-height="1440"></div>
+      <div id="el-s02" data-composition-id="s02" data-composition-src="compositions/s02.html" data-start="6.0" data-duration="6.0" data-track-index="1" data-width="1080" data-height="1440"></div>
+      <div id="el-s03" data-composition-id="s03" data-composition-src="compositions/s03.html" data-start="12.0" data-duration="6.0" data-track-index="1" data-width="1080" data-height="1440"></div>
+      <div id="el-s04" data-composition-id="s04" data-composition-src="compositions/s04.html" data-start="18.0" data-duration="6.0" data-track-index="1" data-width="1080" data-height="1440"></div>
+      <div id="el-s05" data-composition-id="s05" data-composition-src="compositions/s05.html" data-start="24.0" data-duration="6.0" data-track-index="1" data-width="1080" data-height="1440"></div>
+      <div id="el-s06" data-composition-id="s06" data-composition-src="compositions/s06.html" data-start="30.0" data-duration="6.0" data-track-index="1" data-width="1080" data-height="1440"></div>
+      <div id="el-s07" data-composition-id="s07" data-composition-src="compositions/s07.html" data-start="36.0" data-duration="6.0" data-track-index="1" data-width="1080" data-height="1440"></div>
+    </div>
+    <script>
+      // each slide animates on its own timeline; the root stays empty
+      window.__timelines['main'] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
