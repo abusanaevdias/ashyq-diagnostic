@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>cheat sheet</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+#c5-lbl{position:absolute;left:72px;top:292px;font:600 30px/1 'Inter';letter-spacing:.14em;color:#6e6d6b}
+.c5-row{position:absolute;left:72px;right:72px;display:flex;align-items:center;gap:22px;font:800 58px/1.1 'Manrope';letter-spacing:-.02em;white-space:nowrap}
+.c5-ck{width:64px;height:64px;border-radius:50%;background:#2e5e3a;color:#fff;display:flex;align-items:center;justify-content:center;font:800 36px/1 'Manrope';flex:none}
+.c5-row s{color:#6e6d6b;font:600 36px/1.2 'Inter';text-decoration-thickness:4px}
+#c5-rule{position:absolute;left:72px;right:300px;top:1000px;font:700 84px/1.05 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%}
+
+      </style>
+      <div id="root" data-composition-id="c5" data-width="1080" data-height="1920">
+
+        <div id="c5-lbl">ШПАРГАЛКА</div>
+        <div class="c5-row" style="top:360px"><span class="c5-ck">✓</span><b>I’m 17.</b><s>I have 17 years</s></div><div class="c5-row" style="top:510px"><span class="c5-ck">✓</span><b>I agree.</b><s>I am agree</s></div><div class="c5-row" style="top:660px"><span class="c5-ck">✓</span><b>It depends on you.</b><s>depends from</s></div><div class="c5-row" style="top:810px"><span class="c5-ck">✓</span><b>Let’s discuss it.</b><s>discuss about</s></div>
+        <div id="c5-rule">экзаменатор это слышит</div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 104% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+document.fonts.ready.then(() => {
+const S = document.querySelector('[data-composition-id="c5"]');
+const tl = gsap.timeline({ paused: true });
+
+tl.fromTo('#c5-lbl', {opacity: 0}, {opacity: 1, duration: 0.3}, 0.05);
+S.querySelectorAll('.c5-row').forEach((el, i) => tl.fromTo(el, {x: -80, opacity: 0}, {x: 0, opacity: 1, duration: 0.4, ease: 'power3.out'}, 0.1 + i * 0.14));
+wipe(tl, '#c5-rule', 1.76, 3.0);
+
+window.__timelines['c5'] = tl;
+});
+
+      </script>
+    </template>
+  </body>
+</html>

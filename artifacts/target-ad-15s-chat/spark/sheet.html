@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ASHYQ — Искра</title>
+<style>
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../../public/fonts/manrope-800-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F; }
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../../public/fonts/manrope-800-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../../public/fonts/inter-500-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../../public/fonts/inter-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1080px; font-family: Inter, sans-serif; padding: 56px; }
+h1 { font: 800 52px/1.1 Manrope, sans-serif; letter-spacing: -0.02em; }
+h1 span { font-weight: 800; }
+p.lead { font: 500 24px/1.4 Inter, sans-serif; margin-top: 12px; max-width: 900px; opacity: 0.7; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 0; margin-top: 28px; }
+figure { text-align: center; }
+svg { width: 300px; height: 300px; }
+figcaption { font: 500 20px/1 Inter, sans-serif; opacity: 0.6; margin-top: -8px; }
+</style>
+</head>
+<body>
+<h1 id="t"></h1><p class="lead" id="d"></p><div class="grid" id="g"></div>
+<script src="spark.js"></script>
+<script>
+const V = {
+  logo: ['A · Искра из логотипа', 'Пропорции искры как в знаке ASHYQ: высокие лучи, длинный правый. Большие белые глаза, тонкие чёрные ручки-ножки. В движении появляется хвост кометы из логотипа.', '#f8f7f3', '#161311'],
+  chubby: ['B · Пухлая искра', 'Симметричная искра с мягкими скруглёнными лучами и крупным ядром. Линейное лицо — прищур, «хмм», улыбка — даёт больше характера и иронии.', '#f8f7f3', '#161311'],
+  sticker: ['C · Искра-стикер', 'Белое тело с красным контуром и белой обводкой-стикером. Работает поверх любого фона и фото, похоже на наклейку.', '#de0b1b', '#fdfdfd'],
+};
+const v = new URLSearchParams(location.search).get('v') || 'logo';
+const [title, desc, bg, fg] = V[v];
+document.body.style.background = bg; document.body.style.color = fg;
+document.getElementById('t').textContent = title; document.getElementById('d').textContent = desc;
+const poses = [['stand', 'стоит'], ['wave', 'машет'], ['cheer', 'радуется'], ['think', 'думает'], ['run', 'бежит'], ['fly', 'летит']];
+document.getElementById('g').innerHTML = poses.map(([n, l]) => `<figure>${SPARK.spark(v, { name: n, phase: 0.25 })}<figcaption>${l}</figcaption></figure>`).join('');
+</script>
+</body>
+</html>

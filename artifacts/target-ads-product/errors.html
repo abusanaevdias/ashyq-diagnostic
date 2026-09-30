@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASHYQ — Найди ошибку</title>
+<link rel="stylesheet" href="kit.css">
+<style>
+#essay { top: 580px; }
+.top { display: flex; justify-content: space-between; align-items: center; }
+.q { font: 500 26px/1.35 var(--body); color: var(--ink-soft); margin-top: 18px; }
+.sent { font: 500 34px/1.45 var(--body); margin-top: 16px; }
+.sent mark { background: transparent; color: inherit; border-radius: 8px; }
+.sent ins { text-decoration: none; color: var(--success); font-weight: 700; margin-left: 8px; }
+.sent ins:empty { display: none; }
+#timer { position: relative; width: 116px; height: 116px; }
+#timer svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+#timer b { position: absolute; inset: 0; display: grid; place-items: center; font: 800 52px/1 var(--display); }
+.note { position: absolute; font: 600 26px/1 var(--body); border-radius: 999px; padding: 10px 18px; background: var(--success-soft); color: var(--success); white-space: nowrap; }
+#lens { position: absolute; width: 110px; height: 110px; }
+#steps { top: 600px; }
+.step { display: flex; gap: 20px; align-items: center; margin-top: 20px; font: 600 34px/1.3 var(--body); }
+.step b { flex: none; width: 60px; height: 60px; border-radius: 50%; background: var(--ink); color: var(--on-dark); display: grid; place-items: center; font: 800 30px/1 var(--display); }
+.crit { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.crit span { font: 600 26px/1 var(--body); border-radius: 999px; padding: 12px 18px; background: var(--success-soft); color: var(--success); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="panel" id="p1" style="background:var(--bg)"></div>
+  <div class="panel" id="p4" style="background:var(--success-soft)"></div>
+  <div class="panel" id="p5" style="background:var(--bg)"></div>
+
+  <div class="head" id="h1"></div>
+  <div class="head" id="h2"></div>
+  <div class="head" id="h3"></div>
+  <div class="head" id="h4"></div>
+
+  <div class="card" id="essay">
+    <div class="top">
+      <span class="chip" style="background:var(--success-soft); color:var(--success)">IELTS Writing Task 2 · фрагмент</span>
+      <div id="timer"><svg viewBox="0 0 116 116"><circle cx="58" cy="58" r="48" fill="none" stroke="#efeeea" stroke-width="11"/><circle id="ring" cx="58" cy="58" r="48" fill="none" stroke="#de0b1b" stroke-width="11" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="0"/></svg><b id="sec">6</b></div>
+    </div>
+    <p class="q">Should public transport be free for everyone?</p>
+    <div id="sents"></div>
+  </div>
+  <div id="lens"><svg width="110" height="110" viewBox="0 0 120 120"><circle cx="48" cy="48" r="34" fill="rgba(249,224,219,0.35)" stroke="#161311" stroke-width="9"/><path d="M73 73 L106 106" stroke="#161311" stroke-width="13" stroke-linecap="round"/></svg></div>
+  <span class="note" id="n1">people → мн. число</span>
+  <span class="note" id="n2">system → ед. число</span>
+
+  <div class="card" id="steps">
+    <span class="cap">Как устроен тренажёр</span>
+    <div class="step"><b>1</b><span>Открой одно из двух эссе и найди слабые места сам</span></div>
+    <div class="step"><b>2</b><span>Перепиши подозрительное предложение</span></div>
+    <div class="step"><b>3</b><span>Сравни с разбором и реши, что применить</span></div>
+    <div class="crit"><span>Грамматика</span><span>Ответ на вопрос</span><span>Связность</span><span>Лексика</span></div>
+  </div>
+
+  <div class="center" id="wm" style="top:600px"><img class="end-wordmark" src="../../public/brand/wordmark-ink.png" alt="ASHYQ"></div>
+  <div class="center" id="cta1" style="top:820px; font-size:80px; line-height:1.05"></div>
+  <p class="center end-sub" id="cta2" style="top:1060px">2 эссе · без регистрации</p>
+  <div class="center end-arrow" id="arrow" style="top:1140px">↓</div>
+
+  <div class="abs spk" id="spark"></div>
+</div>
+
+<!-- Single source of truth for timing: audio.py parses this block too. -->
+<script id="timeline" type="application/json">
+{
+  "fps": 30,
+  "duration": 15,
+  "scenes": [
+    { "id": "hook",    "start": 0.0,  "end": 1.6 },
+    { "id": "hunt",    "start": 1.6,  "end": 7.6 },
+    { "id": "reveal",  "start": 7.6,  "end": 11.2 },
+    { "id": "trainer", "start": 11.2, "end": 12.8 },
+    { "id": "end",     "start": 12.8, "end": 15.0 }
+  ],
+  "fix1": 8.1,
+  "fix2": 9.1,
+  "sfx": {
+    "pop": [0.05, 11.5, 11.7, 11.9, 13.8],
+    "tick": [1.6, 2.6, 3.6, 4.6, 5.6, 6.6],
+    "buzz": [7.6],
+    "swoosh": [8.05, 9.05],
+    "chime": [10.0],
+    "quiet": [[1.6, 7.6]]
+  }
+}
+</script>
+<script src="../target-ad-15s-chat/spark/spark.js"></script>
+<script src="kit.js"></script>
+<script>
+const TL = K.timeline();
+const S = Object.fromEntries(TL.scenes.map((s) => [s.id, s]));
+const { $, prog, lerp, clamp, eOut, eInOut, eBack } = K;
+
+// Sentences and both grammar issues come from the free trainer case «city-transport»
+// (src/lib/writing-trainer/cases.ts): «believes» → «believe», «give» → «gives».
+const SENTS = [
+  { text: 'The cost of public transport is a common problem in many growing cities.' },
+  { text: 'Some people ¦believes¦ that buses and trains should be free, while others want passengers to cover the whole cost.', fix: 'believe', at: 'fix1', note: 'n1' },
+  { text: 'A shared funding system ¦give¦ cities a more practical choice.', fix: 'gives', at: 'fix2', note: 'n2' },
+];
+$('sents').innerHTML = SENTS.map((s, i) => `<p class="sent" id="s${i}">${s.text.replace(/¦(.+?)¦/, '<mark>$1</mark><ins></ins>')}</p>`).join('');
+
+K.head($('h1'), { lines: ['Найдёшь 2 ошибки'], acc: 'за 6 секунд?' });
+K.head($('h2'), { lines: ['Две ошибки —'], acc: 'в согласовании' });
+K.head($('h3'), { lines: ['В тренажёре так —'], acc: 'с каждым эссе' });
+K.head($('cta1'), { lines: ['Тренажёр Writing'], acc: 'бесплатно' });
+
+function seek(t) {
+  K.panel($('p4'), t, S.trainer.start); K.panel($('p5'), t, S.end.start);
+  K.kt($('h1'), t, -1, S.reveal.start + 0.1);
+  K.kt($('h2'), t, S.reveal.start + 0.3, S.trainer.start - 0.3);
+  K.kt($('h3'), t, S.trainer.start + 0.1, S.end.start - 0.3);
+
+  const eOutT = eInOut(prog(t, S.trainer.start - 0.3, S.trainer.start + 0.1));
+  $('essay').style.transform = `translateY(${lerp(30, 0, eOut(prog(t, -0.2, 0.3))) - eOutT * 1400}px)`;
+
+  // countdown 6 → 0
+  const hunt = S.hunt;
+  const left = clamp(hunt.end - t, 0, 6);
+  $('sec').textContent = t < hunt.start ? '6' : String(Math.ceil(left - 1e-6));
+  $('ring').setAttribute('stroke-dashoffset', String(301.6 * (1 - left / 6)));
+  $('timer').style.opacity = 1 - prog(t, S.reveal.start + 0.2, S.reveal.start + 0.4);
+  const tick = t >= hunt.start && t < hunt.end ? 1 + 0.08 * Math.max(0, 1 - ((t - hunt.start) % 1) / 0.2) : 1;
+  $('timer').style.transform = `scale(${tick})`;
+
+  // the lens sweeps the sentences during the hunt
+  const stg = $('stage').getBoundingClientRect(), k = stg.width / 1080;
+  const rel = (el) => { const r = el.getBoundingClientRect(); return { x: (r.left - stg.left) / k, y: (r.top - stg.top) / k, w: r.width / k, h: r.height / k }; };
+  const sweep = prog(t, hunt.start, hunt.end) * SENTS.length;
+  const si = Math.min(SENTS.length - 1, Math.floor(sweep));
+  const box = rel($(`s${si}`));
+  const lensOn = t >= hunt.start - 0.2 && t < hunt.end ? prog(t, hunt.start - 0.2, hunt.start) : 0;
+  $('lens').style.opacity = lensOn;
+  $('lens').style.left = (box.x + (sweep % 1) * (box.w - 100)) + 'px';
+  $('lens').style.top = (box.y + box.h / 2 - 50 + Math.sin(t * 7) * 6) + 'px';
+
+  // reveal: each error is marked red, struck and corrected in green
+  SENTS.forEach((s, i) => {
+    const p = $(`s${i}`);
+    p.style.opacity = t >= S.reveal.start && !s.fix ? 0.45 : 1;
+    if (!s.fix) return;
+    const at = TL[s.at];
+    const m = p.querySelector('mark'), ins = p.querySelector('ins');
+    const on = t >= at;
+    m.style.background = t >= S.reveal.start ? 'rgba(222,11,27,0.12)' : 'transparent';
+    m.style.color = t >= S.reveal.start ? 'var(--red)' : 'inherit';
+    m.style.textDecoration = on ? 'line-through' : 'none';
+    ins.textContent = on ? s.fix : '';
+    ins.style.opacity = prog(t, at, at + 0.2);
+    const note = $(s.note);
+    note.style.right = '110px'; note.style.top = (s.note === 'n1' ? 624 : 690) + 'px';
+    K.pop(note, t, at + 0.15, S.trainer.start - 0.35);
+  });
+
+  K.rise($('steps'), t, S.trainer.start + 0.2, S.end.start - 0.3, 60);
+  [...document.querySelectorAll('.step')].forEach((el, i) => K.rise(el, t, S.trainer.start + 0.3 + i * 0.18, null, 20));
+
+  // end card
+  const e = S.end.start, endOn = t >= e;
+  ['wm', 'cta1', 'cta2', 'arrow'].forEach((id) => { $(id).style.visibility = endOn ? 'visible' : 'hidden'; });
+  $('wm').style.opacity = prog(t, e + 0.05, e + 0.2);
+  $('wm').style.transform = `scale(${lerp(0.8, 1, eBack(prog(t, e + 0.05, e + 0.5)))})`;
+  K.kt($('cta1'), t, e + 0.45, null);
+  K.rise($('cta2'), t, e + 1.0, null, 20);
+  $('arrow').style.opacity = prog(t, e + 1.2, e + 1.35);
+  $('arrow').style.transform = `translateY(${Math.abs(Math.sin((t - e) * 5)) * 24}px)`;
+
+  // the spark: squints at the essay → shocked at the buzzer → pleased with the fixes → lands on the wordmark
+  const sp = $('spark');
+  let x = 760, y = 1190, pose;
+  if (t < hunt.start) pose = { name: 'wave', phase: t * 1.6 };
+  else if (t < hunt.end) { pose = { name: 'think', lookX: Math.sin(t * 3) * 7, lookY: -4 }; x += Math.sin(t * 40) * 2 * prog(t, 5, hunt.end); }
+  else if (t < TL.fix2 + 0.3) pose = { name: 'cheer', mood: 'wow' };
+  else if (t < e) pose = { name: 'cheer' };
+  else {
+    const f = eInOut(prog(t, e + 0.05, e + 0.75)), land = prog(t, e + 0.75, e + 1.15);
+    x = lerp(-520, 390, f); y = lerp(200, 340, f) - Math.sin(Math.PI * f) * 130;
+    pose = t < e + 0.75 ? { name: 'fly' } : { name: t < e + 1.5 ? 'cheer' : 'wave', phase: t * 1.6, squash: 1 - 0.18 * Math.sin(Math.PI * land) * (1 - land) };
+  }
+  y += t < 0.3 ? (1 - eOut(prog(t, 0, 0.3))) * 300 : 0;
+  if (t > e - 0.35 && t < e) y += eInOut(prog(t, e - 0.35, e)) * 900;
+  pose.blink = K.blink(t, [1.1, 4.4, 10.6, 14.3]);
+  sp.style.width = sp.style.height = '300px'; sp.style.left = x + 'px'; sp.style.top = y + 'px';
+  K.spark(sp, pose);
+}
+K.boot(seek);
+</script>
+</body>
+</html>

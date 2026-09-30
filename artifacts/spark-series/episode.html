@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Искра vs IELTS</title>
+<style>
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../public/fonts/manrope-800-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../public/fonts/manrope-800-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../public/fonts/inter-500-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../public/fonts/inter-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Inter'; font-weight: 600; src: url('../../public/fonts/inter-600-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Inter'; font-weight: 600; src: url('../../public/fonts/inter-600-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: 'Caveat'; font-weight: 700; src: url('../../public/fonts/caveat-700-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Caveat'; font-weight: 700; src: url('../../public/fonts/caveat-700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+
+/* Design v3 tokens (design/tokens.css) */
+:root {
+  --bg: #f8f7f3; --surface: #fdfdfd; --blush: #f9e0db; --blush-soft: #fcf3f0;
+  --red: #de0b1b; --red-deep: #b60916; --ink: #161311; --ink-soft: #6e6d6b;
+  --hairline: #efeeea; --dark: #1b1512; --on-dark: #f8f7f3;
+  --success: #2e5e3a; --success-soft: #e8efe2;
+  --display: 'Manrope', system-ui, sans-serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --script: 'Caveat', cursive;
+  --head: var(--ink);
+}
+.dark { --head: var(--on-dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #0d0b0a; overflow: hidden; }
+body { font-family: var(--body); color: var(--ink); -webkit-font-smoothing: antialiased; }
+#stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); transform-origin: 0 0; }
+.abs { position: absolute; }
+.panel { position: absolute; inset: 0; }
+
+.kt { font-family: var(--display); font-weight: 800; letter-spacing: -0.025em; }
+.kt .ln { display: block; white-space: nowrap; }
+.kt .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.04em 0.14em; margin: 0 -0.04em -0.14em; }
+.kt .wi { display: inline-block; }
+.head { position: absolute; left: 72px; top: 360px; font-size: 72px; line-height: 1.05; color: var(--head); }
+.acc { display: inline-block; font: 700 108px/0.85 var(--script); color: var(--red-deep); }
+.dark .acc { color: var(--blush); }
+#hEnd .acc { color: var(--red-deep); }
+#plate { position: absolute; left: 72px; top: 284px; display: inline-flex; align-items: center; gap: 14px; border-radius: 999px; padding: 12px 24px 12px 14px; background: var(--dark); color: var(--on-dark); font: 600 28px/1 var(--body); }
+.dark #plate { background: var(--on-dark); color: var(--ink); }
+#plate i { width: 40px; height: 40px; display: block; }
+
+#card { position: absolute; left: 64px; right: 64px; top: 640px; background: var(--surface); border-radius: 44px; box-shadow: 0 24px 72px rgba(22, 19, 17, 0.1); padding: 40px 44px 44px; }
+.chip { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 12px 22px; font: 600 28px/1 var(--body); }
+.cap { font: 600 22px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+#stamp { position: absolute; left: 50%; top: 690px; transform-origin: 50% 50%; border: 8px solid var(--red); color: var(--red); border-radius: 24px; padding: 14px 34px; font: 800 72px/1 var(--display); letter-spacing: 0.04em; white-space: nowrap; background: rgba(253, 253, 253, 0.85); }
+
+/* listening */
+.instr { margin-top: 26px; font: 800 38px/1.2 var(--display); color: var(--red-deep); }
+.heard { display: flex; gap: 16px; align-items: center; margin-top: 24px; font: 500 34px/1.35 var(--body); color: var(--ink-soft); font-style: italic; }
+.field { display: flex; align-items: center; gap: 18px; margin-top: 28px; }
+.field .lab { font: 600 34px/1 var(--body); white-space: nowrap; }
+.box { flex: 1; min-height: 92px; border: 4px solid #e2e0da; border-radius: 22px; padding: 0 24px; display: flex; align-items: center; gap: 14px; font: 800 44px/1 var(--display); }
+.box s { color: var(--red); }
+.count { font: 800 34px/1 var(--display); border-radius: 999px; padding: 14px 20px; background: var(--hairline); white-space: nowrap; }
+
+/* writing */
+.prompt { margin-top: 22px; font: 500 32px/1.4 var(--body); color: var(--ink-soft); }
+.lines { margin-top: 26px; }
+.lines i { display: block; height: 16px; border-radius: 8px; background: #e6e3dc; margin-top: 16px; transform-origin: 0 50%; }
+.wc { display: flex; align-items: baseline; gap: 14px; margin-top: 30px; }
+.wc b { font: 800 84px/1 var(--display); letter-spacing: -0.03em; }
+.wc span { font: 600 32px/1 var(--body); color: var(--ink-soft); }
+
+/* spelling / number */
+.box.wavy { text-decoration: underline wavy var(--red); text-decoration-thickness: 3px; text-underline-offset: 10px; color: var(--red); }
+.box ins { text-decoration: none; color: var(--success); font-size: 1.2em; }
+.heard.on { color: var(--ink); }
+
+/* tfng */
+.passage { font: 500 38px/1.35 var(--body); margin-top: 12px; }
+.stmt { font: 800 44px/1.2 var(--display); letter-spacing: -0.015em; margin-top: 12px; }
+.opts { display: flex; gap: 14px; margin-top: 28px; }
+.opt { height: 100px; border-radius: 999px; border: 4px solid #e2e0da; display: flex; align-items: center; justify-content: center; font: 800 34px/1 var(--display); flex: 1; }
+.opt.n { flex: 1.5; }
+
+/* timing */
+.clock { font: 800 96px/1 var(--display); letter-spacing: -0.03em; margin-top: 24px; }
+.trow { display: grid; grid-template-columns: 150px 1fr 150px; align-items: center; gap: 18px; margin-top: 22px; font: 600 32px/1 var(--body); }
+.trow .bar { height: 26px; border-radius: 13px; background: var(--hairline); overflow: hidden; }
+.trow .bar b { display: block; height: 100%; border-radius: 13px; background: var(--ink); transform-origin: 0 50%; }
+.trow em { white-space: nowrap; font-style: normal; text-align: right; font-weight: 800; font-family: var(--display); }
+
+/* chart */
+.chart { margin-top: 18px; }
+.sent { font: 500 32px/1.4 var(--body); margin-top: 8px; }
+.over { margin-top: 16px; border-radius: 22px; padding: 18px 22px; font: 600 32px/1.35 var(--body); background: var(--success-soft); color: var(--success); }
+
+/* speaking */
+.cue { margin-top: 20px; border: 3px dashed #d6d3cc; border-radius: 26px; padding: 22px 26px; }
+.cue b { display: block; font: 800 40px/1.2 var(--display); }
+.cue span { display: block; margin-top: 10px; font: 500 28px/1.35 var(--body); color: var(--ink-soft); }
+.timers { display: flex; gap: 18px; margin-top: 22px; }
+.timer { flex: 1; border-radius: 24px; background: var(--hairline); padding: 18px 22px; }
+.timer small { display: block; font: 600 24px/1 var(--body); color: var(--ink-soft); }
+.timer b { display: block; margin-top: 8px; font: 800 58px/1 var(--display); letter-spacing: -0.02em; }
+.notes { margin-top: 20px; min-height: 96px; font: 500 32px/1.4 var(--body); font-style: italic; }
+.kw { display: flex; flex-wrap: wrap; gap: 12px; }
+.kw span { font: 800 32px/1 var(--display); font-style: normal; border-radius: 999px; padding: 14px 22px; background: var(--success-soft); color: var(--success); }
+
+/* calc */
+.row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.q { margin-top: 20px; font: 800 40px/1.25 var(--display); letter-spacing: -0.01em; }
+.scratch { margin-top: 18px; font: 500 34px/1.5 var(--body); font-style: italic; color: var(--ink-soft); min-height: 150px; }
+.elapsed { font: 800 44px/1 var(--display); }
+
+/* band */
+.bands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+.band { border-radius: 24px; background: var(--hairline); padding: 18px 10px; text-align: center; }
+.band small { display: block; font: 600 22px/1 var(--body); color: var(--ink-soft); }
+.band b { display: block; margin-top: 10px; font: 800 52px/1 var(--display); }
+.avg { margin-top: 22px; font: 600 32px/1.3 var(--body); color: var(--ink-soft); }
+.overall { display: flex; align-items: center; gap: 22px; margin-top: 18px; }
+.overall b { font: 800 120px/1 var(--display); letter-spacing: -0.04em; }
+
+/* sat */
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+.cell { height: 150px; border-radius: 26px; border: 4px solid #e2e0da; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.cell small { font: 600 24px/1 var(--body); color: var(--ink-soft); }
+.cell b { font: 800 56px/1 var(--display); }
+.note { margin-top: 26px; }
+
+#bubble { position: absolute; background: var(--surface); border: 4px solid var(--ink); border-radius: 30px; padding: 16px 26px; font: 800 38px/1 var(--display); white-space: nowrap; transform-origin: 90% 100%; }
+.spk svg { width: 100%; height: 100%; display: block; overflow: visible; }
+#endCta { position: absolute; left: 72px; top: 610px; font: 500 40px/1.35 var(--body); color: var(--ink-soft); }
+#save { position: absolute; left: 72px; top: 1150px; }
+#wordmark { position: absolute; left: 72px; top: 770px; width: 400px; mix-blend-mode: multiply; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="panel" id="pMain"></div>
+  <div class="panel" id="pEnd" style="background:var(--bg)"></div>
+
+  <div id="plate"><i id="plateIcon"></i><span id="plateText"></span></div>
+  <div class="head" id="hTitle"></div>
+  <div class="head" id="hFail"></div>
+  <div class="head" id="hRule"></div>
+  <div class="head" id="hEnd" style="top:330px; color:var(--ink)"></div>
+
+  <div id="card"></div>
+  <div id="stamp"></div>
+
+  <p id="endCta">Разбираем такие ловушки<br>на занятиях ASHYQ</p>
+  <img id="wordmark" src="../../public/brand/wordmark-ink.png" alt="ASHYQ">
+  <span class="chip" id="save" style="background:var(--dark); color:var(--on-dark)">Сохрани, чтобы не ошибиться</span>
+
+  <div class="abs spk" id="spark"></div>
+  <div id="bubble"></div>
+</div>
+
+<script src="episodes.js"></script>
+<script src="../target-ad-15s-chat/spark/spark.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const ID = params.get('ep') || '1';
+const E = window.EPISODES.episodes[ID];
+const T = window.EPISODES.timeline;
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, x) => a + (b - a) * x;
+const eOut = (x) => 1 - Math.pow(1 - x, 3);
+const eInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const eBack = (x) => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const blinkAt = (t, times) => Math.max(0, ...times.map((b) => 1 - Math.abs(t - b) / 0.09));
+const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+// ---------- setup from the episode data ----------
+document.title = `${E.series} · эп. ${ID}`;
+$('pMain').style.background = E.panel;
+if (E.dark) document.body.classList.add('dark');
+$('plateText').textContent = `${E.series} · эп. ${ID}`;
+$('plateIcon').innerHTML = SPARK.spark('logo', { name: 'stand' });
+
+const kWords = (text) => text.split(' ').map((w) => `<span class="w"><span class="wi">${esc(w)}</span></span>`).join(' ');
+function makeHead(el, h) {
+  el.innerHTML = h.lines.map((l) => `<div class="kt"><span class="ln">${kWords(l)}</span></div>`).join('') +
+    `<div><span class="acc">${esc(h.acc)}</span></div>`;
+}
+makeHead($('hTitle'), E.title);
+makeHead($('hFail'), E.fail);
+makeHead($('hRule'), E.rule);
+makeHead($('hEnd'), { lines: ['Искра ошиблась —'], acc: 'ты не ошибёшься' });
+
+function kt(el, t, tin, tout) {
+  el.querySelectorAll('.wi').forEach((w, i) => {
+    const a = eOut(prog(t, tin + i * 0.05, tin + i * 0.05 + 0.4));
+    const b = tout == null ? 0 : eInOut(prog(t, tout + i * 0.02, tout + i * 0.02 + 0.28));
+    w.style.transform = `translateY(${(1 - a) * 118 - b * 118}%)`;
+  });
+  const acc = el.querySelector('.acc');
+  const n = el.querySelectorAll('.wi').length;
+  const a = eOut(prog(t, tin + n * 0.05 + 0.1, tin + n * 0.05 + 0.5));
+  const b = tout == null ? 0 : prog(t, tout, tout + 0.22);
+  acc.style.clipPath = `inset(-30% ${(1 - a) * 100}% -30% -5%)`;
+  acc.style.opacity = a > 0 ? 1 - b : 0;
+  acc.style.transform = `rotate(-3deg) translateY(${-b * 36}px)`;
+}
+
+// ---------- cards, one renderer per exam section ----------
+const STAMP = { listening: 'НЕВЕРНО', spelling: 'ОШИБКА', number: 'НЕВЕРНО', tfng: 'НЕВЕРНО', timing: 'НЕ УСПЕЛА', writing: 'МАЛО СЛОВ', sat: '0 БАЛЛОВ', chart: 'НЕТ ОБЗОРА', speaking: 'ТИШИНА', calc: 'ДОЛГО', band: 'НЕ ТАК' };
+const headphones = '<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#6e6d6b" stroke-width="2.2" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="1.5" fill="#6e6d6b"/><rect x="17" y="14" width="4" height="7" rx="1.5" fill="#6e6d6b"/></svg>';
+const C = E.card;
+const CARDS = {
+  listening: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <p class="instr">${esc(C.instruction)}</p>
+      <div class="heard">${headphones}<span>“${esc(C.heard)}”</span></div>
+      <div class="field"><span class="lab">${esc(C.prompt)}</span><div class="box" id="box"></div><span class="count" id="count"></span></div>`,
+    update(t) {
+      const full = C.wrong.join(' ');
+      const n = Math.round(full.length * prog(t, ...T.typing));
+      const fixed = t >= T.fix;
+      const typed = full.slice(0, n).split(' ').filter(Boolean);
+      $('box').innerHTML = fixed
+        ? C.wrong.map((w, i) => (i === 0 ? `<s style="opacity:${lerp(1, 0.35, prog(t, T.fix + 0.3, T.fix + 0.6))}">${esc(w)}</s>` : esc(w))).join(' ')
+        : esc(full.slice(0, n)) + (t < T.done && Math.floor(t * 3) % 2 ? '|' : '');
+      const words = fixed ? C.limit : typed.length;
+      const bad = t >= T.fail && !fixed;
+      $('count').textContent = `${words} / ${C.limit}${fixed ? ' ✓' : bad ? ' ✕' : ''}`;
+      $('count').style.background = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--hairline)';
+      $('count').style.color = fixed || bad ? '#fff' : 'var(--ink)';
+      $('box').style.borderColor = fixed ? 'var(--success)' : bad ? 'var(--red)' : '#e2e0da';
+    },
+  },
+  spelling: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <p class="instr">${esc(C.instruction)}</p>
+      <div class="heard">${headphones}<span>“${esc(C.heard)}”</span></div>
+      <div class="field"><span class="lab">${esc(C.prompt)}</span><div class="box" id="box"></div><span class="count" id="count">1 слово</span></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const n = Math.round(C.wrong.length * prog(t, ...T.typing));
+      $('box').innerHTML = fixed
+        ? `<span>${esc(C.right.slice(0, C.mark))}<ins>${esc(C.right[C.mark])}</ins>${esc(C.right.slice(C.mark + 1))}</span>`
+        : `<span>${esc(C.wrong.slice(0, n))}${t < T.done && Math.floor(t * 3) % 2 ? '|' : ''}</span>`;
+      $('box').classList.toggle('wavy', bad);
+      $('box').style.borderColor = fixed ? 'var(--success)' : bad ? 'var(--red)' : '#e2e0da';
+      $('count').textContent = fixed ? 'верно ✓' : bad ? 'орфография ✕' : '1 слово';
+      $('count').style.background = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--hairline)';
+      $('count').style.color = fixed || bad ? '#fff' : 'var(--ink)';
+    },
+  },
+  number: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <p class="instr">${esc(C.instruction)}</p>
+      <div class="heard" id="h0">${headphones}<span>${esc(C.heard[0])}</span></div>
+      <div class="heard" id="h1" style="padding-left:62px">${esc(C.heard[1])}</div>
+      <div class="field"><span class="lab">${esc(C.prompt)}</span><div class="box" id="box"></div><span class="count" id="count"></span></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      $('h1').style.opacity = prog(t, C.correctionAt, C.correctionAt + 0.3);
+      $('h1').classList.toggle('on', t >= T.rule);
+      $('h1').style.fontWeight = t >= T.rule ? '600' : '500';
+      const typed = t >= T.typing[0] + 0.6 ? C.wrong : '';
+      $('box').textContent = fixed ? C.right : typed;
+      $('box').style.color = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      $('box').style.borderColor = fixed ? 'var(--success)' : bad ? 'var(--red)' : '#e2e0da';
+      $('count').textContent = fixed ? 'верно ✓' : bad ? `сказали ${C.right}` : '';
+      $('count').style.visibility = bad || fixed ? 'visible' : 'hidden';
+      $('count').style.background = fixed ? 'var(--success)' : 'var(--red)';
+      $('count').style.color = '#fff';
+    },
+  },
+  tfng: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="cap" style="margin-top:26px">Текст</div><p class="passage">${esc(C.passage)}</p>
+      <div class="cap" style="margin-top:26px">Утверждение</div><p class="stmt">${esc(C.statement)}</p>
+      <div class="opts">${['TRUE', 'FALSE', 'NOT GIVEN'].map((o) => `<div class="opt${o === 'NOT GIVEN' ? ' n' : ''}" data-o="${o}">${o}</div>`).join('')}</div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const hover = ['TRUE', 'FALSE', 'NOT GIVEN'][Math.floor(prog(t, ...T.typing) * 5) % 3];
+      document.querySelectorAll('.opt').forEach((el) => {
+        const o = el.dataset.o;
+        const picked = t >= T.done && o === C.wrong;
+        const right = fixed && o === C.right;
+        let bg = 'transparent', col = 'var(--ink)', bd = '#e2e0da', op = 1;
+        if (t >= T.typing[0] && t < T.done && o === hover) bd = 'var(--ink)';
+        if (picked) { bg = bad ? 'var(--red)' : 'var(--ink)'; col = '#fff'; bd = bg; }
+        if (fixed && o === C.wrong) { bg = 'transparent'; col = 'var(--red)'; bd = '#e2e0da'; op = 0.45; }
+        if (right) { bg = 'var(--success)'; col = '#fff'; bd = bg; }
+        el.style.background = bg; el.style.color = col; el.style.borderColor = bd; el.style.opacity = op;
+        el.style.textDecoration = fixed && o === C.wrong ? 'line-through' : 'none';
+        el.textContent = right ? `✓ ${o}` : picked && bad ? `✕ ${o}` : o;
+      });
+    },
+  },
+  timing: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="clock" id="clock">60:00</div>
+      ${[1, 2, 3].map((i) => `<div class="trow"><span>Текст ${i}</span><div class="bar"><b id="tb${i}"></b></div><em id="tm${i}"></em></div>`).join('')}
+      <div style="margin-top:28px"><span class="chip" id="tnote" style="background:var(--hairline)"></span></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, ...T.typing);
+      const spentW = [C.wrong[0] * clamp(p / 0.55), C.wrong[1] * clamp((p - 0.55) / 0.4), p >= 1 ? C.wrong[2] : 0];
+      const f = eInOut(prog(t, T.fix, T.fix + 0.8));
+      const mins = fixed ? C.wrong.map((w, i) => lerp(w, C.right[i], f)) : spentW;
+      const used = fixed ? 0 : mins[0] + mins[1];
+      const left = Math.max(0, 60 - used);
+      $('clock').textContent = fixed ? '60:00' : `${String(Math.floor(left)).padStart(2, '0')}:${String(Math.floor((left % 1) * 60)).padStart(2, '0')}`;
+      $('clock').style.color = bad ? 'var(--red)' : fixed ? 'var(--success)' : 'var(--ink)';
+      mins.forEach((m, i) => {
+        $(`tb${i + 1}`).style.transform = `scaleX(${m / 30})`;
+        $(`tb${i + 1}`).style.background = fixed ? 'var(--success)' : bad && i === 2 ? 'var(--red)' : 'var(--ink)';
+        $(`tm${i + 1}`).textContent = m > 0.2 ? `${Math.round(m)} мин` : '';
+        $(`tm${i + 1}`).style.color = bad && i === 2 ? 'var(--red)' : 'var(--ink)';
+      });
+      const note = $('tnote');
+      note.textContent = fixed ? 'Сначала вопросы → потом поиск по тексту' : bad ? `5 минут на ${C.questions}` : 'Читаю всё внимательно…';
+      note.style.background = fixed ? 'var(--success-soft)' : bad ? 'var(--blush)' : 'var(--hairline)';
+      note.style.color = fixed ? 'var(--success)' : bad ? 'var(--red-deep)' : 'var(--ink)';
+    },
+  },
+  chart: {
+    html: () => {
+      const max = Math.max(...C.values), w = 800, h = 190, bw = 110, gap = (w - bw * C.values.length) / (C.values.length - 1);
+      const bars = C.values.map((v, i) => { const bh = h * v / max, x = i * (bw + gap); return `<rect class="cbar" x="${x}" y="${h - bh + 30}" width="${bw}" height="${bh}" rx="12" fill="#161311"/><text x="${x + bw / 2}" y="${h - bh + 20}" text-anchor="middle" font-family="Manrope" font-weight="800" font-size="30" fill="#161311">${v}%</text><text x="${x + bw / 2}" y="${h + 64}" text-anchor="middle" font-family="Inter" font-weight="600" font-size="24" fill="#6e6d6b">${C.labels[i]}</text>`; }).join('');
+      return `<span class="chip" style="background:var(--success-soft); color:var(--success)">${esc(C.chip)}</span>
+      <p class="cap" style="margin-top:22px">${esc(C.title)}</p>
+      <svg class="chart" width="800" height="${h + 72}" viewBox="0 0 800 ${h + 72}">${bars}<path id="trend" d="M${bw / 2} ${h + 30 - h * C.values[0] / max - 44} L${w - bw / 2} ${30 - 44 + 0}" stroke="#2e5e3a" stroke-width="8" stroke-linecap="round" fill="none"/></svg>
+      <div id="sents">${C.wrong.map((x) => `<p class="sent">${esc(x)}</p>`).join('')}</div>
+      <p class="over" id="over">${esc(C.right)}</p>`;
+    },
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, ...T.typing);
+      [...document.querySelectorAll('.sent')].forEach((el, i) => {
+        const a = clamp(p * C.wrong.length - i);
+        el.style.opacity = fixed ? lerp(1, 0.25, prog(t, T.fix, T.fix + 0.4)) : a > 0 ? 1 : 0;
+        el.style.clipPath = `inset(0 ${(1 - a) * 100}% 0 0)`;
+        el.style.color = bad ? 'var(--red)' : 'var(--ink)';
+        el.style.textDecoration = fixed ? 'line-through' : 'none';
+      });
+      $('sents').style.display = t >= T.fix + 0.45 ? 'none' : 'block';
+      const ov = eBack(prog(t, T.fix + 0.45, T.fix + 0.8));
+      $('over').style.display = t >= T.fix + 0.45 ? 'block' : 'none';
+      $('over').style.transform = `scale(${lerp(0.85, 1, ov)})`;
+      const tr = $('trend'), L = tr.getTotalLength();
+      tr.style.strokeDasharray = L; tr.style.strokeDashoffset = L * (1 - eInOut(prog(t, T.fix, T.fix + 0.6)));
+    },
+  },
+  speaking: {
+    html: () => `<span class="chip" style="background:var(--blush); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="cue"><b>${esc(C.cue)}</b><span>${esc(C.points)}</span></div>
+      <div class="timers"><div class="timer"><small>Подготовка</small><b id="prep">1:00</b></div><div class="timer"><small>Говорю</small><b id="talk">0:00</b></div></div>
+      <div class="notes" id="notes"></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, T.typing[0], T.fail);
+      const prepLeft = fixed ? 0 : Math.round(60 * (1 - p));
+      $('prep').textContent = `0:${String(Math.min(59, prepLeft)).padStart(2, '0')}`.replace('0:59', p === 0 ? '1:00' : '0:59');
+      $('prep').style.color = bad ? 'var(--red)' : 'var(--ink)';
+      const talk = fixed ? Math.min(119, Math.round((t - T.fix) * 30)) : 0;
+      $('talk').textContent = `${Math.floor(talk / 60)}:${String(talk % 60).padStart(2, '0')}`;
+      $('talk').style.color = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      if (bad) $('talk').textContent = '…';
+      if (fixed) {
+        const k = Math.floor(clamp((t - T.fix) / 0.25, 0, C.right.length));
+        $('notes').innerHTML = `<div class="kw">${C.right.slice(0, k).map((w) => `<span>${esc(w)}</span>`).join('')}</div>`;
+      } else {
+        const n = Math.round(C.wrong.length * prog(t, ...T.typing));
+        $('notes').textContent = C.wrong.slice(0, n) + (n >= C.wrong.length ? '…' : '');
+        $('notes').style.color = bad ? 'var(--red)' : 'var(--ink-soft)';
+      }
+    },
+  },
+  calc: {
+    html: () => {
+      const xs = Array.from({ length: 61 }, (_, i) => -4 + i * 13 / 60);
+      const X = (x) => 40 + (x + 4) * 720 / 13, Y = (y) => 170 - y * 3.3;
+      const d = xs.map((x, i) => `${i ? 'L' : 'M'}${X(x).toFixed(1)} ${Y(x * x - 5 * x - 14).toFixed(1)}`).join(' ');
+      return `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <p class="q">${esc(C.question)}</p>
+      <div class="row" style="margin-top:18px"><span class="cap">Прошло на задачу</span><span class="elapsed" id="elapsed">0:00</span></div>
+      <div class="scratch" id="scratch"></div>
+      <div id="graph" style="display:none; margin-top:10px">
+        <svg width="800" height="250" viewBox="0 0 800 250"><rect width="800" height="250" rx="22" fill="#f4f6fb"/>
+          <line x1="20" y1="170" x2="780" y2="170" stroke="#b8bcc8" stroke-width="3"/><line x1="${X(0)}" y1="10" x2="${X(0)}" y2="240" stroke="#b8bcc8" stroke-width="3"/>
+          <path id="parab" d="${d}" stroke="#2d70b3" stroke-width="6" fill="none" clip-path="inset(0 round 22px)"/>
+          <circle cx="${X(C.other)}" cy="170" r="10" fill="#6e6d6b"/><circle id="rootDot" cx="${X(C.root)}" cy="170" r="14" fill="#2e5e3a"/>
+          <text x="${X(C.root) - 10}" y="215" text-anchor="middle" font-family="Manrope" font-weight="800" font-size="34" fill="#2e5e3a">(${C.root}, 0)</text></svg>
+        <p style="margin-top:12px; font:600 30px/1 var(--body); color:var(--success)">x = ${C.root} · за несколько секунд</p>
+      </div>`;
+    },
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, ...T.typing);
+      const lines = C.scratch.map((l, i) => l.slice(0, Math.round(l.length * clamp(p * C.scratch.length - i)))).filter(Boolean);
+      $('scratch').innerHTML = lines.map(esc).join('<br>');
+      $('scratch').style.display = fixed ? 'none' : 'block';
+      $('graph').style.display = fixed ? 'block' : 'none';
+      const secs = fixed ? 8 : Math.round(lerp(0, 298, prog(t, T.typing[0], T.fail)));
+      $('elapsed').textContent = `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`;
+      $('elapsed').style.color = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      if (fixed) { const pa = $('parab'), L = pa.getTotalLength(); pa.style.strokeDasharray = L; pa.style.strokeDashoffset = L * (1 - eInOut(prog(t, T.fix, T.fix + 0.8))); }
+    },
+  },
+  band: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="bands">${C.scores.map(([k, v]) => `<div class="band"><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join('')}</div>
+      <p class="avg" id="avg"></p>
+      <div class="overall"><span class="cap">Overall</span><b id="ov"></b><span class="chip" id="ovNote"></span></div>`,
+    update(t) {
+      const fixed = t >= T.fix, bad = t >= T.fail && !fixed;
+      const p = prog(t, ...T.typing);
+      const sum = `(${C.scores.map((x) => x[1]).join(' + ')}) / 4 = `;
+      $('avg').textContent = p > 0 ? (sum + C.avg).slice(0, Math.round((sum + C.avg).length * p)) : '';
+      const ov = $('ov');
+      ov.textContent = t >= T.done ? (fixed ? C.right : C.wrong + '?') : '';
+      ov.style.color = fixed ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      ov.style.transform = fixed ? `scale(${lerp(1.3, 1, eBack(prog(t, T.fix, T.fix + 0.35)))})` : 'none';
+      const note = $('ovNote');
+      note.textContent = fixed ? '↑ округление в твою пользу' : bad ? 'так не округляют' : '';
+      note.style.visibility = bad || fixed ? 'visible' : 'hidden';
+      note.style.background = fixed ? 'var(--success-soft)' : 'var(--blush)';
+      note.style.color = fixed ? 'var(--success)' : 'var(--red-deep)';
+    },
+  },
+  writing: {
+    html: () => `<span class="chip" style="background:var(--success-soft); color:var(--success)">${esc(C.chip)}</span>
+      <p class="prompt">${esc(C.prompt)}</p>
+      <div class="lines" id="lines">${Array.from({ length: 10 }, (_, i) => `<i style="width:${[100, 96, 99, 88, 100, 94, 72, 97, 100, 64][i]}%"></i>`).join('')}</div>
+      <div class="wc"><b id="wcN">0</b><span id="wcL">слов</span></div>`,
+    update(t) {
+      const fixP = eInOut(prog(t, T.fix, T.fix + 1.2));
+      const words = Math.round(t < T.fix ? C.wrong * prog(t, ...T.typing) : lerp(C.wrong, C.right, fixP));
+      const lines = [...$('lines').children];
+      lines.forEach((l, i) => {
+        const per = C.right / lines.length;
+        const fill = clamp((words - i * per) / per);
+        l.style.transform = `scaleX(${fill})`;
+        l.style.background = i >= Math.floor(C.wrong / per) && t >= T.fix ? '#b9d0b3' : '#e6e3dc';
+      });
+      const bad = t >= T.fail && t < T.fix;
+      const ok = t >= T.fix + 1.2;
+      $('wcN').textContent = words;
+      $('wcN').style.color = ok ? 'var(--success)' : bad ? 'var(--red)' : 'var(--ink)';
+      $('wcL').textContent = t >= T.fail ? `слов · минимум ${C.minimum}${ok ? ' ✓' : ''}` : 'слов';
+    },
+  },
+  sat: {
+    html: () => `<span class="chip" style="background:var(--blush-soft); color:var(--red-deep)">${esc(C.chip)}</span>
+      <div class="grid">${C.answers.map((a, i) => `<div class="cell" id="c${i}"><small>№ ${C.from + i}</small><b></b></div>`).join('')}</div>
+      <div class="note"><span class="chip" id="satNote" style="background:var(--hairline)"></span></div>`,
+    update(t) {
+      const shown = Math.floor(C.answers.length * prog(t, ...T.typing) + 1e-6);
+      let g = 0;
+      C.answers.forEach((a, i) => {
+        const cell = $(`c${i}`), b = cell.querySelector('b');
+        const guess = a === null ? C.guesses[g++] : null;
+        if (i >= shown) { b.textContent = ''; cell.style.borderColor = '#e2e0da'; cell.style.background = 'transparent'; return; }
+        if (a !== null) { b.textContent = a; b.style.color = 'var(--ink)'; cell.style.background = 'var(--hairline)'; cell.style.borderColor = 'var(--hairline)'; return; }
+        const fixed = t >= T.fix + 0.2 * (g - 1);
+        b.textContent = fixed ? guess : '—';
+        b.style.color = fixed ? 'var(--success)' : t >= T.fail ? 'var(--red)' : 'var(--ink-soft)';
+        cell.style.borderColor = fixed ? 'var(--success)' : t >= T.fail ? 'var(--red)' : '#e2e0da';
+        cell.style.background = fixed ? 'var(--success-soft)' : 'transparent';
+      });
+      const note = $('satNote');
+      const empty = C.answers.filter((a) => a === null).length;
+      note.textContent = t >= T.fix ? 'Наугад — есть шанс на балл' : t >= T.fail ? `${empty} пустых = 0 баллов за них` : 'Пропускаю сложные…';
+      note.style.background = t >= T.fix ? 'var(--success-soft)' : t >= T.fail ? 'var(--blush)' : 'var(--hairline)';
+      note.style.color = t >= T.fix ? 'var(--success)' : t >= T.fail ? 'var(--red-deep)' : 'var(--ink)';
+    },
+  },
+};
+const CARD = CARDS[E.kind];
+$('card').innerHTML = CARD.html();
+$('stamp').textContent = STAMP[E.kind];
+
+// ---------- the frame function ----------
+function seek(t) {
+  $('pEnd').style.transform = `translateY(${(1 - eInOut(prog(t, T.end - 0.05, T.end + 0.4))) * 100}%)`;
+  $('plate').style.opacity = 1 - prog(t, T.end - 0.3, T.end);
+
+  kt($('hTitle'), t, -1, T.fail - 0.3);
+  kt($('hFail'), t, T.fail, T.rule - 0.3);
+  kt($('hRule'), t, T.rule, T.end - 0.3);
+  kt($('hEnd'), t, T.end + 0.2, null);
+
+  const cIn = eOut(prog(t, -0.2, 0.3)), cOut = eInOut(prog(t, T.end - 0.3, T.end + 0.1));
+  const shake = t > T.fail && t < T.fail + 0.4 ? Math.sin((t - T.fail) * 70) * 10 * (1 - prog(t, T.fail, T.fail + 0.4)) : 0;
+  $('card').style.transform = `translate(${shake}px, ${lerp(40, 0, cIn) - cOut * 1400}px)`;
+  CARD.update(t);
+
+  const st = eBack(prog(t, T.fail + 0.05, T.fail + 0.35));
+  $('stamp').style.opacity = prog(t, T.fail + 0.05, T.fail + 0.12) * (1 - prog(t, T.rule - 0.3, T.rule));
+  $('stamp').style.transform = `translateX(-50%) rotate(-10deg) scale(${lerp(2.2, 1, st)})`;
+
+  // end card
+  const endOn = t >= T.end;
+  ['endCta', 'wordmark', 'save'].forEach((id, i) => {
+    const a = eOut(prog(t, T.end + 0.8 + i * 0.25, T.end + 1.2 + i * 0.25));
+    $(id).style.visibility = endOn ? 'visible' : 'hidden';
+    $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * 24}px)`;
+  });
+
+  // the spark: waves → thinks while answering → proud → shocked → gets it → cheers at the end
+  let pose, x = 790, y = 1070, size = 260;
+  if (t < T.act) pose = { name: 'wave', phase: t * 1.6 };
+  else if (t < T.done) pose = { name: 'think', lookX: -7, lookY: 2 };
+  else if (t < T.fail) pose = { name: 'cheer' };
+  else if (t < T.rule) pose = { name: 'cheer', mood: 'wow' };
+  else if (t < T.end) pose = { name: t < T.fix + 0.6 ? 'think' : 'stand', lookX: -6 };
+  else { pose = { name: t < T.end + 1.4 ? 'cheer' : 'wave', phase: t * 1.6 }; size = 340; x = 640; y = lerp(1920, 860, eOut(prog(t, T.end + 0.3, T.end + 0.8))); }
+  if (t > T.fail && t < T.fail + 0.5) x += Math.sin(t * 60) * 6;
+  y += t < 0.3 ? (1 - eOut(prog(t, 0, 0.3))) * 300 : 0;
+  if (t > T.end - 0.4 && t < T.end + 0.3) y += eInOut(prog(t, T.end - 0.4, T.end)) * 900;
+  pose.blink = blinkAt(t, [1.1, 7.2, 10.4, 13.3]);
+  const sp = $('spark');
+  sp.style.width = sp.style.height = size + 'px'; sp.style.left = x + 'px'; sp.style.top = y + 'px';
+  sp.innerHTML = SPARK.spark('logo', pose, E.dark && t < T.end ? { limb: '#f8f7f3' } : {});
+
+  const bub = $('bubble');
+  const say = t >= T.done && t < T.fail ? E.bubble.done : t >= T.fail && t < T.fail + 1.6 ? E.bubble.fail : '';
+  bub.textContent = say;
+  bub.style.visibility = say ? 'visible' : 'hidden';
+  const since = t >= T.fail ? t - T.fail : t - T.done;
+  bub.style.transform = `scale(${eBack(prog(since, 0, 0.25))})`;
+  bub.style.left = (x - 250) + 'px'; bub.style.top = (y + 150) + 'px';
+}
+window.seek = seek;
+
+// ---------- boot ----------
+const stage = $('stage');
+window.ready = Promise.all([
+  document.fonts.ready,
+  ...[...document.images].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))),
+]);
+if (!params.has('render')) {
+  const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `scale(${s})`; stage.style.left = (innerWidth - 1080 * s) / 2 + 'px'; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => {
+    const t0 = performance.now();
+    const loop = (now) => { seek(((now - t0) / 1000) % T.duration); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  });
+} else window.ready = window.ready.then(() => seek(0));
+</script>
+</body>
+</html>

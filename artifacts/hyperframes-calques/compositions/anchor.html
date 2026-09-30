@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>anchor</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+.lbl{position:absolute;left:72px;font:600 30px/1 'Inter';letter-spacing:.14em;color:#6e6d6b;white-space:nowrap}
+#an-think{top:292px}
+#an-say{top:560px}
+#an-chip{letter-spacing:0;margin-left:16px;padding:8px 16px;border-radius:999px;background:#efeeea;font:600 24px/1 'Inter'}
+#an-stem{position:absolute;left:72px;top:460px;width:4px;height:70px;background:#161311}
+#an-head{position:absolute;left:52px;top:524px;width:0;height:0;border-left:22px solid transparent;border-right:22px solid transparent;border-top:26px solid #161311}
+#an-count{position:absolute;right:72px;top:292px;font:800 40px/1 'Manrope';color:#6e6d6b;white-space:nowrap}
+#an-count span{color:#8c8b8a}
+#an-n{display:inline-block}
+
+      </style>
+      <div id="root" data-composition-id="anchor" data-width="1080" data-height="1920">
+
+        <div class="lbl" id="an-think">ДУМАЕШЬ</div>
+        <div id="an-stem"></div><div id="an-head"></div>
+        <div class="lbl" id="an-say">ГОВОРИШЬ<span id="an-chip">голос ученика · EN</span></div>
+        <div id="an-count"><b id="an-n">1</b><span>/4</span></div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 104% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+const tl = gsap.timeline({ paused: true });
+tl.fromTo(['#an-think', '#an-say'], {opacity: 0}, {opacity: 1, duration: 0.3}, 0);
+tl.fromTo('#an-stem', {scaleY: 0}, {scaleY: 1, duration: 0.3, ease: 'power2.out', transformOrigin: '50% 0%'}, 0.15);
+tl.fromTo('#an-head', {opacity: 0}, {opacity: 1, duration: 0.2}, 0.4);
+// counter appears with the first fix and hard-cuts 1→4 at each correction scene
+const counts = [[4.91, "1"], [8.71, "2"], [15.68, "3"], [21.04, "4"]];
+const n = document.getElementById('an-n');
+tl.fromTo('#an-count', {opacity: 0}, {opacity: 1, duration: 0.3}, counts[0][0]);
+tl.to({}, {duration: 26.37, ease: 'none', onUpdate() {
+  const t = this.time();
+  let v = counts[0][1];
+  for (const [at, label] of counts) if (t >= at) v = label;
+  if (n.textContent !== v) n.textContent = v;
+}}, 0);
+counts.slice(1).forEach(([at]) => tl.fromTo('#an-n', {scale: 1.5}, {scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false}, at));
+window.__timelines['anchor'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>06 turn</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+#s06-all{position:absolute;inset:0}
+#s06-ne{position:absolute;left:62px;top:300px;font:800 300px/.9 'Manrope';letter-spacing:-.04em;color:#de0b1b}
+#s06-strike{position:absolute;left:30px;top:330px;width:560px;height:260px;overflow:visible}
+#s06-l2{position:absolute;left:72px;top:600px;font:800 124px/1 'Manrope';letter-spacing:-.03em;white-space:nowrap}
+#s06-l3{position:absolute;left:72px;top:752px;font:800 210px/1 'Manrope';letter-spacing:-.04em;white-space:nowrap}
+#s06-dot{color:#161311}
+#s06-ans{position:absolute;left:72px;top:1040px;font:700 104px/1 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%;white-space:nowrap}
+
+      </style>
+      <div id="root" data-composition-id="s06" data-width="1080" data-height="1920">
+
+        <div id="s06-all">
+          <div id="s06-ne">НЕ</div>
+          <svg id="s06-strike" viewBox="0 0 560 260"><path id="s06-p1" d="M20 190 C140 120 300 150 540 40" pathLength="1" stroke="#de0b1b" stroke-width="30" stroke-linecap="round" fill="none" stroke-dasharray="1"/><path id="s06-p2" d="M60 225 C200 170 360 170 520 110" pathLength="1" stroke="#de0b1b" stroke-width="18" stroke-linecap="round" fill="none" stroke-dasharray="1" opacity=".85"/></svg>
+          <div id="s06-l2">ЗАПИСЫВАЙСЯ</div>
+          <div id="s06-l3">В ASHYQ<span id="s06-dot">.</span></div>
+          <div id="s06-ans">похоже, тебе к нам</div>
+        </div>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 104% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+const S = document.querySelector('[data-composition-id="s06"]');
+const tl = gsap.timeline({ paused: true });
+
+// voice at 0.15: всё ещё смотришь@0.27–1.55 · похоже@1.61 тебе к нам@2.16–2.83. Hard cut back to the hook frame.
+tl.fromTo('#s06-p1', {strokeDashoffset: 1}, {strokeDashoffset: 0, duration: 0.3, ease: 'power2.in'}, 0.72);
+tl.fromTo('#s06-p2', {strokeDashoffset: 1}, {strokeDashoffset: 0, duration: 0.25, ease: 'power2.in'}, 1.02);
+tl.fromTo('#s06-ne', {color: '#de0b1b'}, {color: '#b9b7b2', duration: 0.3}, 1.0);
+tl.fromTo('#s06-dot', {color: '#161311'}, {color: '#de0b1b', duration: 0.2}, 2.54);
+wipe(tl, '#s06-ans', 1.61, 2.8);
+// push up into the end card
+tl.fromTo('#s06-all', {y: 0, opacity: 1}, {y: -520, opacity: 0, duration: 0.4, ease: 'power3.in'}, 3.3);
+window.__timelines['s06'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>

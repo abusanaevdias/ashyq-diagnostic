@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ASHYQ — варианты маскота</title>
+<style>
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../../public/fonts/manrope-800-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F; }
+@font-face { font-family: 'Manrope'; font-weight: 800; src: url('../../../public/fonts/manrope-800-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../../public/fonts/inter-500-cyrillic.woff2') format('woff2'); unicode-range: U+0400-045F; }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../../../public/fonts/inter-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1080px; background: #f8f7f3; font-family: Inter, sans-serif; color: #161311; padding: 56px 56px 40px; }
+h1 { font: 800 56px/1.1 Manrope, sans-serif; letter-spacing: -0.02em; }
+.row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; align-items: center; margin-top: 40px; background: #fdfdfd; border-radius: 36px; padding: 28px 32px; }
+.row h2 { font: 800 40px/1 Manrope, sans-serif; }
+.row h2 span { color: #b60916; }
+.row p { font: 500 22px/1.4 Inter, sans-serif; color: #6e6d6b; margin-top: 12px; }
+.poses { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.poses figure { text-align: center; }
+.poses svg { width: 220px; height: 220px; }
+.poses figcaption { font: 500 20px/1 Inter, sans-serif; color: #6e6d6b; }
+</style>
+</head>
+<body>
+<h1>Маскот ASHYQ — 3 варианта</h1>
+<div id="rows"></div>
+<script src="mascots.js"></script>
+<script>
+const rows = [
+  ['dot', '1 · <span>Точка</span>', 'Сама «точка А» из диагностики в выпускной шапочке. Самый простой и узнаваемый силуэт, работает даже в 40 px.'],
+  ['leopard', '2 · <span>Барыс</span>', 'Детёныш снежного барса — символа Казахстана — в худи ASHYQ. Самый тёплый и «свой», сильнее всех цепляет эмоцию.'],
+  ['bubble', '3 · <span>Хабар</span>', 'Сообщение-чат с бейджем «1». Персонаж и есть переписка — напрямую ведёт к «напиши нам».'],
+];
+const poses = [['думает', { mood: 'hmm', arm: 'think', lookX: 6, lookY: -6, phase: 0.1 }], ['радуется', { mood: 'happy', arm: 'up' }], ['машет', { mood: 'wow', arm: 'wave', phase: 0.25 }]];
+document.getElementById('rows').innerHTML = rows.map(([k, name, text]) => `<div class="row"><div><h2>${name}</h2><p>${text}</p></div><div class="poses">${
+  poses.map(([label, p]) => `<figure>${MASCOTS[k](p)}<figcaption>${label}</figcaption></figure>`).join('')}</div></div>`).join('');
+</script>
+</body>
+</html>

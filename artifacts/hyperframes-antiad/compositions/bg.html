@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>bg</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+#bg-ghost{position:absolute;left:236px;top:1110px;width:1004px;height:696px;opacity:.6}
+#bg-grain{position:absolute;inset:0;opacity:.07}
+
+      </style>
+      <div id="root" data-composition-id="bg" data-width="1080" data-height="1920">
+
+        <img id="bg-ghost" data-layout-allow-overflow src="assets/brand/ghost-ne.png" alt="" />
+        <svg id="bg-grain" viewBox="0 0 1080 1920" preserveAspectRatio="none"><filter id="bg-n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .09 0 0 0 0 .07 0 0 0 0 .06 0 0 0 .9 0"/></filter><rect width="1080" height="1920" filter="url(#bg-n)"/></svg>
+
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 104% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+const S = document.querySelector('[data-composition-id="bg"]');
+const tl = gsap.timeline({ paused: true });
+
+// slow bounded drift of the ghost word: 30.4 s window, 6 s per cycle
+const cycles = Math.max(0, Math.floor(30.4 / 6) - 1);
+tl.fromTo('#bg-ghost', {y: 0, x: 0}, {y: -46, x: -18, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: cycles * 2 + 1}, 0);
+window.__timelines['bg'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>

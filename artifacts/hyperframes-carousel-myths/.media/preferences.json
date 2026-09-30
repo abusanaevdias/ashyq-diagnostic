@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "preferences": {
+    "storyboard": {
+      "value": "yes",
+      "confirmed_in": [
+        "hyperframes-carousel-myths"
+      ],
+      "updated_at": "2026-09-29T15:15:33.139Z"
+    },
+    "aspect": {
+      "value": "1080x1440",
+      "confirmed_in": [
+        "hyperframes-carousel-myths"
+      ],
+      "updated_at": "2026-09-29T15:15:33.205Z"
+    },
+    "language": {
+      "value": "ru",
+      "confirmed_in": [
+        "hyperframes-carousel-myths"
+      ],
+      "updated_at": "2026-09-29T15:15:33.266Z"
+    }
+  },
+  "sightings": {}
+}
