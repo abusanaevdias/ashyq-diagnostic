@@ -6,6 +6,14 @@ arc: Правила игры → 5 × (фраза → таймер 3 с → ош
 mode: collaborative
 ---
 
+## Build
+
+`scripts/build.py` → `compositions/s01…s07`; `scripts/export.sh` → `export/slide-01…07.mp4` (6-кадровый постер + 180 кадров, 1080×1440,
+без звука) и `slide-01…07.png`. В раундах: 0,15 карточка → 0,3–0,8 фраза по словам → 0,9–3,9 кольцо-таймер 3→0 → 4,0 неверные слова
+краснеют и зачёркиваются → 4,3 зелёная строка с исправленным предложением целиком → 4,7 правило. Исправление показано целым
+предложением под фразой, а не плашкой над словом: так не ломается перенос строк. `npx hyperframes check` — passed.
+Эскизы не делались: владелец 2026-09-30 разрешил собирать без промежуточных согласований («можешь уже не спрашивать»).
+
 ## Spine
 
 Одна раскладка на пять раундов (fixed-anchor): чип «ОШИБКА n/5», вордмарк; большая карточка с фразой (Manrope 64);
@@ -15,7 +23,7 @@ mode: collaborative
 
 ## Slide 1 — Правила
 - scene: «Найди ошибку за 3 секунды»; три шага: читай → ищи → листай; Искра с секундомером; «считай, сколько нашёл»
-- status: planned
+- status: animated
 
 ## Slides 2–6 — Раунды
 - 2: She don't like maths → doesn't · «3-е лицо: does + not»
@@ -23,8 +31,8 @@ mode: collaborative
 - 4: He explained me the rule → explained the rule to me · «explain что-то to кому-то»
 - 5: Can you give me an advice? → some advice · «advice — неисчисляемое»
 - 6: I look forward to see you → seeing · «look forward to + -ing»
-- status: planned
+- status: animated
 
 ## Slide 7 — Счёт и призыв
 - scene: «Сколько из 5?» + шкала 0–5; «Напиши в комментариях»; «Проверь уровень: бесплатная диагностика · ~20 минут · ссылка в профиле»
-- status: planned
+- status: animated

@@ -28,5 +28,6 @@ the animation plays from the start.
 
 ## Workflow
 
-Intent → `BRIEF.md` → plan in chat (owner: «Делай») → `storyboard.html` sketches (owner: «Делай») → `scripts/build.py` →
+Since 2026-09-30 the owner no longer needs to approve the plan or sketches («можешь уже не спрашивать»): pick the concept with
+the owner, then go straight through. Intent → `BRIEF.md` / `STORYBOARD.md` → `scripts/build.py` →
 `npx hyperframes check` → render → `bash scripts/export.sh` → review first and last frames → ledger row in `HANDOFF.md` → commit.
