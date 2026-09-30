@@ -7,6 +7,15 @@ audience: школьники 15–18, Казахстан, IELTS/SAT
 mode: collaborative
 ---
 
+## Build
+
+Семь слайдов по 6 с лежат подряд в `index.html` (слоты `s01…s07` на 0, 6, …, 36 с), фон-клетка — `bg`.
+`scripts/build.py` генерирует все композиции; `scripts/export.sh` режет рендер на `export/slide-01…07.mp4`
+(180 кадров, 1080×1440, без звука) и снимает `export/slide-01…07.png` — кадр за 0,1 с до конца слайда (всё собрано).
+Ритм слайдов 2–5: 0,4 с число-таймер считается → 0,9 название секции → 1,15 чипы фактов → 1,35 карточка → 1,8–3,6 иллюстрация
+(волна, страницы, столбики, пузыри) → шкала внизу заливает сегмент секции с 1,0 с. Слайд 6: три блока выезжают, скобка рисуется,
+«2 ч 44 мин» считается. `npx hyperframes check` — passed (0 ошибок, контраст 71/71).
+
 ## Sketch sheet
 
 `storyboard.html` v1 (2026-09-30), превью `storyboard-v1.png`: 7 статичных эскизов 1080×1440 с полями 90 px (пунктир). План подтверждён владельцем («Делай»).
@@ -20,39 +29,39 @@ mode: collaborative
 ## Slide 1 — Хук
 
 - scene: «IELTS за 2 минуты» + плашка «Academic»; четыре секции появляются иконками-вехами; «листай →»
-- status: planned
+- status: animated
 
 ## Slide 2 — Listening
 
 - scene: «30 минут» · «4 записи · 40 вопросов»; волна проходит один раз; «запись звучит один раз»
 - source: ielts.org · Academic Listening
-- status: planned
+- status: animated
 
 ## Slide 3 — Reading
 
 - scene: «60 минут» · «3 текста · 40 вопросов»; «2150–2750 слов на все три»; строки текста подсвечиваются
 - source: ielts.org · Academic Reading
-- status: planned
+- status: animated
 
 ## Slide 4 — Writing
 
 - scene: «60 минут» · Task 1 «описать график · ≥150 слов», Task 2 «эссе · ≥250 слов»; «Task 2 весит вдвое больше»
 - source: ielts.org · Academic Writing
-- status: planned
+- status: animated
 
 ## Slide 5 — Speaking
 
 - scene: «11–14 минут» · три пузыря: интервью 4–5 · монолог (1 мин подготовка + ~2 мин) · обсуждение 4–5
 - source: ielts.org · Academic Speaking
-- status: planned
+- status: animated
 
 ## Slide 6 — По времени
 
 - scene: шкала 30 → 60 → 60 подряд без перерывов = «2 ч 44 мин»; Speaking — отдельно
 - source: British Council
-- status: planned
+- status: animated
 
 ## Slide 7 — Призыв
 
 - scene: «А какой у тебя уровень?»; «Бесплатная диагностика · ~20 минут · ссылка в профиле»; «Сохрани шпаргалку»; Искра
-- status: planned
+- status: animated
