@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>s06 trap</title>
+  </head>
+  <body>
+    <template>
+      <style>
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-cyrillic.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-800-latin.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-cyrillic.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-500-latin.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-cyrillic.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Inter';src:url('assets/fonts/inter-600-latin.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-cyrillic.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700-latin.woff2') format('woff2');font-weight:700;font-display:block}
+
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#161311}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w{display:inline-block}
+
+
+.chip-r{position:absolute;top:96px;left:90px;padding:12px 24px;border-radius:999px;background:#fcf3f0;color:#b60916;font:600 30px/1 'Inter';letter-spacing:.06em;white-space:nowrap}
+.wm{position:absolute;top:92px;right:90px;width:150px}
+.cn{position:absolute;left:90px;top:180px;font:800 84px/1 'Manrope';letter-spacing:-.025em;color:#161311;white-space:nowrap}
+.ce{position:absolute;left:92px;top:280px;font:600 32px/1 'Inter';color:#8c8b8a;white-space:nowrap}
+.q4{position:absolute;right:90px;top:180px;width:150px;height:150px}
+.card{position:absolute;left:90px;top:350px;width:900px;padding:40px 48px 44px;border-radius:36px;background:#fdfdfd;box-shadow:0 20px 60px rgba(22,19,17,.1)}
+.card .tq{font:600 28px/1.3 'Inter';color:#8c8b8a;margin-bottom:18px}
+.card .pp{font:500 41px/1.5 'Inter';color:#161311}
+.hl{background-image:linear-gradient(#f9e0db,#f9e0db);background-repeat:no-repeat;background-position:0 90%;background-size:0% 45%;padding:0 3px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hl.on{font-weight:600}
+.why{position:absolute;left:90px;top:910px;width:900px;padding:28px 36px 28px 44px;border-radius:30px;background:#fdfdfd;border-left:10px solid #2e5e3a;box-shadow:0 12px 40px rgba(22,19,17,.08);font:600 38px/1.3 'Inter';color:#161311}
+.why b{font-family:'Manrope';font-weight:800;color:#2e5e3a}
+.hand{position:absolute;font:700 68px/1.05 'Caveat';color:#b60916;transform:rotate(-2deg);transform-origin:0 50%;white-space:nowrap}
+.pill{position:absolute;padding:18px 34px;border-radius:999px;background:#de0b1b;color:#fff;font:600 40px/1 'Inter';white-space:nowrap}
+.spk{position:absolute}
+.dts{position:absolute;left:0;top:0;width:100%;height:100%}
+
+.ttl{position:absolute;left:90px;right:90px;top:190px;font:800 84px/1.02 'Manrope';letter-spacing:-.025em;color:#161311}
+.ttl .ln{display:block;white-space:nowrap}
+.src{position:absolute;left:90px;font:500 26px/1.3 'Inter';color:#8c8b8a}
+.tip{position:absolute;left:90px;width:900px;padding:26px 36px 26px 44px;border-radius:30px;background:#fdfdfd;border-left:10px solid #2e5e3a;box-shadow:0 12px 40px rgba(22,19,17,.08);font:600 36px/1.3 'Inter';color:#161311}
+.tip b{font-family:'Manrope';font-weight:800;color:#2e5e3a}
+
+.rec{position:absolute;left:90px;top:330px;width:900px;padding:30px 40px 36px 120px;border-radius:32px;background:#161311;color:#fdfdfd}
+.rec .ic{position:absolute;left:36px;top:34px;width:60px;height:60px;border-radius:50%;background:#de0b1b;display:flex;align-items:center;justify-content:center;font:800 28px/1 'Manrope';color:#fff}
+.rec .lb{font:600 26px/1.2 'Inter';color:#b9b6b0;margin-bottom:12px}
+.rec .tx{font:600 44px/1.35 'Inter'}
+.rec .tx .em{color:#f9e0db;font-weight:800;font-family:'Manrope'}
+.sh{position:absolute;left:90px;top:640px;width:900px;padding:30px 40px;border-radius:32px;background:#fdfdfd;box-shadow:0 20px 60px rgba(22,19,17,.1)}
+.sh .lb{font:600 26px/1.2 'Inter';color:#8c8b8a;margin-bottom:18px}
+.ans{display:flex;align-items:center;gap:22px;margin-top:10px}
+.ans .mk{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 32px/1 'Manrope';color:#fff;flex:none}
+.ans .v{font:800 50px/1.1 'Manrope';letter-spacing:-.01em;white-space:nowrap}
+.ans.bad .mk{background:#de0b1b}.ans.bad .v{color:#b60916;text-decoration:line-through;text-decoration-thickness:5px}
+.ans.good .mk{background:#2e5e3a}.ans.good .v{color:#2e5e3a}
+
+      </style>
+      <div id="root" data-composition-id="s06" data-width="1080" data-height="1440">
+<span class="chip-r">ЛОВУШКА 5/5</span><img class="wm" src="assets/brand/wordmark-ink.png" alt="ashyq" /><div class="ttl"><span class="ln"><span class="m"><span class="w">Множественное</span></span> <span class="m"><span class="w">число</span></span></span></div><div class="rec"><div class="ic">▶</div><div class="lb">В записи · звучит один раз</div><div class="tx">You will need <span class="em">two passport photos</span>.</div></div><div class="sh"><div class="lb">Bring: two passport</div><div class="ans bad"><div class="mk">✕</div><div class="v">photo</div></div><div class="ans good"><div class="mk">✓</div><div class="v">photos</div></div></div><div class="tip" style="top:1010px">слушай окончание <b>-s</b> и проверь, сколько предметов</div><div class="src" style="top:1170px">Совет по подготовке</div><div class="spk" style="left:860px;top:1190px;width:120px;height:120px"></div><div class="dts"><i class="" style="position:absolute;top:1305px;left:411.0px;width:18px;height:18px;border-radius:50%;background:#de0b1b;"></i><i class="" style="position:absolute;top:1305px;left:471.0px;width:18px;height:18px;border-radius:50%;background:#de0b1b;"></i><i class="" style="position:absolute;top:1305px;left:531.0px;width:18px;height:18px;border-radius:50%;background:#de0b1b;"></i><i class="" style="position:absolute;top:1305px;left:591.0px;width:18px;height:18px;border-radius:50%;background:#de0b1b;"></i><i class="dn" style="position:absolute;top:1300px;left:646.0px;width:28px;height:28px;border-radius:50%;background:#de0b1b;"></i></div>
+      </div>
+      <script>
+
+function rise(tl, scope, sel, times, dur, ease){
+  const els = scope.querySelectorAll(sel);
+  els.forEach((el, i) => tl.fromTo(el, {yPercent: 115, opacity: 0}, {yPercent: 0, opacity: 1, duration: dur || 0.38, ease: ease || 'expo.out'}, times[Math.min(i, times.length - 1)]));
+}
+function wipe(tl, el, from, to){
+  tl.fromTo(el, {clipPath: 'inset(-30% 104% -30% -4%)'}, {clipPath: 'inset(-30% -4% -30% -4%)', duration: Math.max(0.3, to - from), ease: 'power1.inOut'}, from);
+}
+
+
+const S = document.querySelector('[data-composition-id="s06"]');
+const q = (s) => S.querySelector(s);
+const qa = (s) => S.querySelectorAll(s);
+const tl = gsap.timeline({ paused: true });
+tl.fromTo(q('.chip-r'), {x: -40, opacity: 0}, {x: 0, opacity: 1, duration: 0.35, ease: 'power3.out'}, 0.05);
+tl.fromTo(q('.wm'), {opacity: 0}, {opacity: 1, duration: 0.4}, 0.1);
+// «Искра» — ASHYQ mascot built from the four-point spark in the logo.
+// spark(variant, pose) returns SVG markup for a 400×400 viewBox; the same
+// function drives the exploration sheets and, later, the video frames.
+//   variant: 'logo' | 'chubby' | 'sticker'
+//   pose: { name: 'stand'|'wave'|'cheer'|'think'|'run'|'peace'|'fly', phase, blink, lookX, lookY }
+(function () {
+  const INK = '#161311', RED = '#de0b1b', DEEP = '#b60916', PAPER = '#fdfdfd';
+  const C = { x: 200, y: 196 };
+
+  const BODIES = {
+    // logo proportions: tall vertical rays, long right ray, shorter left ray
+    logo: { t: 138, r: 158, b: 108, l: 118, k: 44, along: 0.22, round: 10 },
+    // softer, rounder core with short rays: more room for a face
+    chubby: { t: 126, r: 132, b: 100, l: 132, k: 66, along: 0.02, round: 22 },
+    // outlined sticker version
+    sticker: { t: 126, r: 134, b: 96, l: 126, k: 56, along: 0.16, round: 10 },
+  };
+
+  // concave four-point spark: each side runs along the rays and turns near the core
+  function starPath(b) {
+    const rays = [[0, -1, b.t], [1, 0, b.r], [0, 1, b.b], [-1, 0, b.l]];
+    const tip = ([x, y, len]) => [C.x + x * len, C.y + y * len];
+    let d = `M${tip(rays[0]).join(' ')}`;
+    for (let i = 0; i < 4; i++) {
+      const A = rays[i], B = rays[(i + 1) % 4];
+      const c1 = [C.x + A[0] * A[2] * b.along + B[0] * b.k, C.y + A[1] * A[2] * b.along + B[1] * b.k];
+      const c2 = [C.x + B[0] * B[2] * b.along + A[0] * b.k, C.y + B[1] * B[2] * b.along + A[1] * b.k];
+      d += ` C${c1.join(' ')} ${c2.join(' ')} ${tip(B).join(' ')}`;
+    }
+    return d + ' Z';
+  }
+  // the comet trail from the logo: two tapered blades sweeping back-left
+  function trail(b, color) {
+    const x = C.x - b.l + 10, y = C.y;
+    return `<path d="M${x} ${y - 6} Q${x - 70} ${y - 26} ${x - 200} ${y - 4} Q${x - 70} ${y - 8} ${x} ${y + 8} Z" fill="${color}"/>` +
+      `<path d="M${x + 6} ${y + 14} Q${x - 50} ${y + 6} ${x - 150} ${y + 30} Q${x - 50} ${y + 20} ${x + 6} ${y + 26} Z" fill="${color}" opacity="0.75"/>`;
+  }
+
+  // ----- limbs (monoline, like the flame reference) -----
+  const P = (o) => Object.assign({ name: 'stand', phase: 0, blink: 0, lookX: 0, lookY: 0, mood: null, squash: 1 }, o || {});
+  const line = (pts, w, col) => {
+    const [s, m, e] = pts;
+    return `<path d="M${s[0]} ${s[1]} Q${m[0]} ${m[1]} ${e[0]} ${e[1]}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  };
+  const fist = (x, y, col) => `<circle cx="${x}" cy="${y}" r="10" fill="${col}"/>`;
+  const openHand = (x, y, a, col) => {
+    const f = [-0.9, -0.3, 0.3, 0.9].map((o) => {
+      const ang = a + o * 0.5;
+      return `<path d="M${x} ${y} l${Math.sin(ang) * 16} ${-Math.cos(ang) * 16}" stroke="${col}" stroke-width="7" stroke-linecap="round"/>`;
+    }).join('');
+    return `<circle cx="${x}" cy="${y}" r="9" fill="${col}"/>` + f;
+  };
+  const vHand = (x, y, col) => `<circle cx="${x}" cy="${y}" r="9" fill="${col}"/>` +
+    `<path d="M${x} ${y} l-9 -22 M${x} ${y} l9 -22" stroke="${col}" stroke-width="7" stroke-linecap="round"/>`;
+  const foot = (x, y, dir, col) => `<path d="M${x} ${y} h${dir * 24}" stroke="${col}" stroke-width="9" stroke-linecap="round"/>`;
+
+  function limbs(p, col, w) {
+    const sL = [C.x - 58, C.y + 14], sR = [C.x + 58, C.y + 14];
+    const hL = [C.x - 30, C.y + 52], hR = [C.x + 30, C.y + 52];
+    const standLegs = line([hL, [C.x - 40, 320], [C.x - 46, 362]], w, col) + foot(C.x - 46, 362, -1, col) +
+      line([hR, [C.x + 40, 320], [C.x + 46, 362]], w, col) + foot(C.x + 46, 362, 1, col);
+    const sw = Math.sin(p.phase * Math.PI * 2);
+    switch (p.name) {
+      case 'wave': {
+        const hx = C.x + 128 + sw * 10, hy = C.y - 88;
+        return standLegs + line([sL, [C.x - 100, C.y + 60], [C.x - 96, C.y + 110]], w, col) + fist(C.x - 96, C.y + 110, col) +
+          line([sR, [C.x + 130, C.y + 10], [hx, hy]], w, col) + openHand(hx, hy, 0.25 + sw * 0.3, col);
+      }
+      case 'cheer':
+        return line([hL, [C.x - 58, 318], [C.x - 44, 346]], w, col) + foot(C.x - 44, 346, -1, col) +
+          line([hR, [C.x + 58, 318], [C.x + 44, 346]], w, col) + foot(C.x + 44, 346, 1, col) +
+          line([sL, [C.x - 118, C.y - 10], [C.x - 112, C.y - 104]], w, col) + fist(C.x - 112, C.y - 104, col) +
+          line([sR, [C.x + 118, C.y - 10], [C.x + 112, C.y - 104]], w, col) + fist(C.x + 112, C.y - 104, col);
+      case 'think':
+        return standLegs + line([sR, [C.x + 90, C.y + 90], [C.x + 30, C.y + 56]], w, col) + fist(C.x + 30, C.y + 56, col) +
+          line([sL, [C.x - 70, C.y + 80], [C.x + 26, C.y + 76]], w, col);
+      case 'run':
+        return line([hL, [C.x - 90, 300], [C.x - 120, 276]], w, col) + foot(C.x - 120, 276, -1, col) +
+          line([hR, [C.x + 70, 300], [C.x + 60, 356]], w, col) + foot(C.x + 60, 356, 1, col) +
+          line([sL, [C.x - 110, C.y + 20], [C.x - 118, C.y - 40]], w, col) + fist(C.x - 118, C.y - 40, col) +
+          line([sR, [C.x + 100, C.y + 70], [C.x + 140, C.y + 70]], w, col) + fist(C.x + 140, C.y + 70, col);
+      case 'peace':
+        return standLegs + line([sL, [C.x - 96, C.y + 30], [C.x - 70, C.y + 60]], w, col) + fist(C.x - 70, C.y + 60, col) +
+          line([sR, [C.x + 120, C.y + 20], [C.x + 118, C.y - 70]], w, col) + vHand(C.x + 118, C.y - 70, col);
+      case 'fly':
+        return line([sR, [C.x + 110, C.y - 10], [C.x + 150, C.y - 40]], w, col) + fist(C.x + 150, C.y - 40, col) +
+          line([sL, [C.x - 70, C.y + 60], [C.x - 110, C.y + 70]], w, col) + fist(C.x - 110, C.y + 70, col) +
+          line([hL, [C.x - 70, C.y + 90], [C.x - 120, C.y + 100]], w, col) + line([hR, [C.x - 20, C.y + 100], [C.x - 70, C.y + 120]], w, col);
+      default: // stand, hands on hips
+        return standLegs + line([sL, [C.x - 118, C.y + 40], [C.x - 60, C.y + 62]], w, col) + fist(C.x - 60, C.y + 62, col) +
+          line([sR, [C.x + 118, C.y + 40], [C.x + 60, C.y + 62]], w, col) + fist(C.x + 60, C.y + 62, col);
+    }
+  }
+
+  // ----- faces -----
+  function bigEyes(p, eyeCol, pupilCol) {
+    const s = Math.max(0.08, 1 - p.blink);
+    if (p.name === 'cheer' && p.mood !== 'wow') {
+      return [-26, 26].map((dx) => `<path d="M${C.x + dx - 14} ${C.y - 2} q14 -18 28 0" fill="none" stroke="${pupilCol}" stroke-width="8" stroke-linecap="round"/>`).join('') +
+        `<path d="M${C.x - 16} ${C.y + 18} q16 22 32 0 z" fill="${pupilCol}"/>`;
+    }
+    const lx = p.name === 'think' ? -5 : p.lookX, ly = p.name === 'think' ? -8 : p.lookY;
+    const eyes = [-26, 26].map((dx) => `<g transform="translate(${C.x + dx} ${C.y - 6}) scale(1 ${s})"><ellipse rx="17" ry="22" fill="${eyeCol}"/><ellipse cx="${lx}" cy="${ly + 3}" rx="8" ry="11" fill="${pupilCol}"/></g>`).join('');
+    const mouth = p.mood === 'wow'
+      ? `<ellipse cx="${C.x}" cy="${C.y + 28}" rx="9" ry="12" fill="${pupilCol}"/>`
+      : p.name === 'think'
+      ? `<path d="M${C.x - 8} ${C.y + 26} h16" stroke="${pupilCol}" stroke-width="6" stroke-linecap="round"/>`
+      : p.name === 'run' || p.name === 'fly'
+        ? `<path d="M${C.x - 12} ${C.y + 22} q12 16 24 0 z" fill="${pupilCol}"/>`
+        : `<path d="M${C.x - 10} ${C.y + 24} q10 10 20 0" fill="none" stroke="${pupilCol}" stroke-width="6" stroke-linecap="round"/>`;
+    return eyes + mouth;
+  }
+  function lineFace(p, col) {
+    const s = Math.max(0.08, 1 - p.blink);
+    const st = `fill="none" stroke="${col}" stroke-width="7" stroke-linecap="round"`;
+    let eyes;
+    if (p.name === 'cheer') eyes = [-24, 24].map((dx) => `<path d="M${C.x + dx - 12} ${C.y} q12 -14 24 0" ${st}/>`).join('');
+    else if (p.name === 'stand') eyes = [-24, 24].map((dx) => `<path d="M${C.x + dx - 13} ${C.y - 12} h26" ${st}/><ellipse cx="${C.x + dx}" cy="${C.y - 4}" rx="9" ry="${7 * s}" fill="${col}"/>`).join('');
+    else if (p.name === 'peace') eyes = `<path d="M${C.x - 36} ${C.y - 4} q12 -12 24 0" ${st}/><path d="M${C.x + 12} ${C.y - 12} l20 8 l-20 8" ${st}/>`;
+    else eyes = [-24, 24].map((dx) => `<g transform="translate(${C.x + dx} ${C.y - 4}) scale(1 ${s})"><ellipse rx="9" ry="12" fill="${col}"/><circle cx="3" cy="-4" r="3" fill="${PAPER}"/></g>`).join('');
+    const brows = p.name === 'think' ? `<path d="M${C.x - 36} ${C.y - 26} l20 -6 M${C.x + 16} ${C.y - 30} l20 2" ${st}/>` : '';
+    const mouth = p.name === 'think' ? `<path d="M${C.x - 10} ${C.y + 24} q5 -5 10 0 t10 0" ${st}/>`
+      : p.name === 'cheer' || p.name === 'run' || p.name === 'fly' ? `<path d="M${C.x - 14} ${C.y + 18} q14 20 28 0 z" fill="${col}"/>`
+        : `<path d="M${C.x - 12} ${C.y + 20} q12 12 24 0" ${st}/>`;
+    return eyes + brows + mouth;
+  }
+
+  // opts: { limb: colour of arms and legs (on dark panels), trail: force the comet trail }
+  function spark(variant, pose, opts) {
+    const o = Object.assign({ limb: INK, trail: null }, opts || {});
+    const p = P(pose);
+    const b = BODIES[variant];
+    const tilt = p.name === 'run' ? 10 : p.name === 'fly' ? -14 : p.name === 'think' ? -6 : 0;
+    const lift = p.name === 'cheer' ? -16 : 0;
+    const body = starPath(b);
+    const withTrail = o.trail ?? (p.name === 'fly' || p.name === 'run');
+    let inner;
+    if (variant === 'sticker') {
+      const halo = `<g stroke="${PAPER}" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" fill="${PAPER}"><path d="${body}"/>${limbs(p, PAPER, 30).replace(/stroke="#fdfdfd" stroke-width="\d+"/g, '')}</g>`;
+      inner = halo + (withTrail ? trail(b, DEEP) : '') + limbs(p, DEEP, 9) +
+        `<path d="${body}" fill="${PAPER}" stroke="${DEEP}" stroke-width="${b.round}" stroke-linejoin="round"/>` + lineFace(p, DEEP);
+    } else if (variant === 'chubby') {
+      inner = (withTrail ? trail(b, RED) : '') + limbs(p, INK, 9) +
+        `<path d="${body}" fill="${RED}" stroke="${RED}" stroke-width="${b.round}" stroke-linejoin="round"/>` + lineFace(p, INK);
+    } else {
+      inner = (withTrail ? trail(b, RED) : '') + limbs(p, o.limb, 9) +
+        `<path d="${body}" fill="${RED}" stroke="${RED}" stroke-width="${b.round}" stroke-linejoin="round"/>` + bigEyes(p, PAPER, INK);
+    }
+    const sq = `translate(${C.x} 362) scale(${1 / Math.sqrt(p.squash)} ${p.squash}) translate(${-C.x} -362)`;
+    return `<svg viewBox="0 0 400 400" overflow="visible" xmlns="http://www.w3.org/2000/svg"><g transform="${sq} translate(0 ${lift}) rotate(${tilt} ${C.x} ${C.y + 60})">${inner}</g></svg>`;
+  }
+
+  window.SPARK = { spark, BODIES, starPath, limbs, trail, C };
+})();
+
+const spk = q('.spk');
+let lastSvg = '';
+function driveSpark(poseFn) {
+  tl.to({}, {duration: 6.0, ease: 'none', onUpdate() {
+    const t = this.time();
+    const blink = Math.max(0, ...[1.6, 3.3, 5.3].map((b) => 1 - Math.abs(t - b) / 0.09));
+    const pose = poseFn(t); pose.blink = blink;
+    const svg = window.SPARK.spark('logo', pose);
+    if (svg !== lastSvg) { spk.innerHTML = svg; lastSvg = svg; }
+  }}, 0);
+}
+rise(tl, S, '.ttl .w', [0.25, 0.37], 0.5);
+
+tl.fromTo(q('.rec'), {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.45, ease: 'power3.out'}, 0.6);
+tl.fromTo(q('.rec .ic'), {scale: 0.6}, {scale: 1, duration: 0.3, ease: 'back.out(3)', yoyo: true, repeat: 1}, 0.9);
+wipe(tl, q('.rec .tx'), 1.0, 2.2);
+tl.fromTo(q('.sh'), {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.45, ease: 'power3.out'}, 2.3);
+tl.fromTo(q('.ans.bad'), {x: -30, opacity: 0}, {x: 0, opacity: 1, duration: 0.4, ease: 'power3.out'}, 2.7);
+tl.fromTo(q('.ans.good'), {x: -30, opacity: 0, scale: 0.9}, {x: 0, opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2)'}, 3.3);
+tl.fromTo(q('.tip'), {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.45, ease: 'power3.out'}, 3.8);
+tl.fromTo(q('.src'), {opacity: 0}, {opacity: 1, duration: 0.4}, 4.1);
+tl.fromTo(q('.spk'), {scale: 0, opacity: 0}, {scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2.2)'}, 3.4);
+tl.fromTo(q('.dts'), {opacity: 0}, {opacity: 1, duration: 0.4}, 0.2);
+qa('.dn').forEach((el, i) => tl.fromTo(el, {scale: 0}, {scale: 1, duration: 0.4, ease: 'back.out(3)'}, 0.5 + i * 0.12));
+driveSpark((t) => (t < 3.3 ? {name: 'think', lookX: -6 + Math.sin(t * 1.3) * 4} : {name: 'cheer'}));
+
+window.__timelines['s06'] = tl;
+
+      </script>
+    </template>
+  </body>
+</html>
