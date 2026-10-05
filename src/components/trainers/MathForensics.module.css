@@ -8,10 +8,10 @@
 .sectionHead { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 24px; }
 .sectionHead h2, .lesson h2 { margin: 0; font: 800 clamp(1.8rem, 3vw, 2.5rem)/1.18 var(--font-display); letter-spacing: -.04em; }
 .sectionHead p { max-width: 400px; margin: 0; color: var(--ink-soft); line-height: 1.5; }
-.caseGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.caseCard { display: flex; flex-direction: column; min-height: 255px; padding: 28px; border: 1px solid var(--hairline); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-card); }
+.caseGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.caseCard { display: flex; flex-direction: column; min-width: 0; min-height: 255px; padding: 28px; border: 1px solid var(--hairline); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-card); overflow-wrap: anywhere; }
 .caseCard span { color: var(--red-deep); font-size: 12px; font-weight: 800; letter-spacing: .05em; }
-.caseCard h3 { margin: 20px 0 0; font: 800 1.9rem var(--font-display); }
+.caseCard h3 { margin: 20px 0 0; font: 800 clamp(1.55rem, 3vw, 1.9rem)/1.2 var(--font-display); hyphens: auto; }
 .caseCard p { margin: 12px 0 28px; color: var(--ink-soft); line-height: 1.55; }
 .caseCard button { align-self: start; margin-top: auto; }
 .primary { min-height: 48px; padding: 11px 20px; border: 0; border-radius: var(--r-pill); background: var(--dark); color: var(--on-dark); font: 800 14px var(--font-body); cursor: pointer; }
