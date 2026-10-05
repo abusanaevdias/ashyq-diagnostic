@@ -41,7 +41,19 @@ audio duration or measured speech quality.
 
 ## Verification boundary
 
-Local code checks and browser no-audio flows are recorded in the release ledger.
+Local build, targeted ESLint, TypeScript, 21st review and token audit 9/9 passed.
+Browser replay completed three independent no-audio reviews with preserved
+observations/ratings/plans, guards, an actual 60-second preparation transition
+without automatic microphone activation, early preparation finish, and a readable
+390 px final comparison without document overflow.
+
+`node scripts/speaking-recorder-review.mjs` extracts the actual component handlers
+and runs eight synthetic scenarios: late permission after cancellation, normal
+stop with delayed encoding, timed stop, active cancellation, empty recording,
+permission rejection, recorder error and unmount cleanup. All eight passed.
+The fixture does not access any real microphone or validate browser codecs.
+
+CI and production checks are recorded in the release ledger.
 Agent QA does not enable the user's microphone without explicit permission.
 Real microphone recording, permission rejection/retry, mobile Safari encoding
 and two-minute recorder auto-stop require a learner/device acceptance check;
