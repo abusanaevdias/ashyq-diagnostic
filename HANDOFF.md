@@ -307,6 +307,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | MATH-METHOD-SWITCH-020 | IN_PROGRESS | Codex `/root` | `codex/math-method-switch-020`; worktree `C:\Users\Dias\.codex\worktrees\writing-calibration\ashyq-diagnostic` | started 2026-10-06; original systems/intersection pairs, first independent answer then alternative algebra/graph/table and fresh transfer. Own new route/data/UI/styles/docs and hub card. No AI, official scores, student data or persistence. |
 
+| SEO-PRESS-DISCOVERY-031 | IN_PROGRESS | Codex /root (Dias Windows) | codex/seo-press-discovery-031; dedicated worktree C:/Users/Dias/Documents/ChatGPT/ashyq-press-discovery-031 | started 2026-10-06; strengthen existing /press with verified BlueScreen publication and contextual links to original source and own news, align press title/H1/description, add news-to-press link. Own /press page, news body only and focused docs/checks. No homepage/WebSite, GSC submissions, shared blog UI, trainer files or social posts. |
+
 ## 6. Проверки и команды
 
 ```powershell
