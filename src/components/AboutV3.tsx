@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PHOTOS } from '@/data/media';
 import { CLUB_FACTS, CLUB_MANAGER, CONTACT_EMAIL, SITE_DESCRIPTION } from '@/lib/site';
 import { CLUB_OFFER } from '@/data/club-offer';
+import { BLUESCREEN_COVERAGE } from '@/data/press-coverage';
 import home from './HomeV3.module.css';
 import styles from './AboutV3.module.css';
 import { ButtonLink, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
@@ -63,6 +64,15 @@ export default function AboutV3() {
               <div><h3>Контактное лицо клуба</h3><p>{CLUB_MANAGER}, CEO ASHYQ. Почта для вопросов о клубе и сотрудничестве: <a className="link-underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Официальные социальные каналы указаны на <Link className="link-underline" href="/contacts">странице контактов</Link>.</p></div>
             </article>
           </div>
+        </section>
+
+        <section className={`${home.container} ${home.section}`} aria-labelledby="press-coverage-heading">
+          <MicroLabel>О нас в СМИ</MicroLabel>
+          <h2 id="press-coverage-heading" className={styles.heading}>Bluescreen об ASHYQ</h2>
+          <p className={styles.lead}>5 октября 2026 года Bluescreen опубликовал интервью с основателем ASHYQ о бесплатной библиотеке IELTS и границах проверки ответов. Это материал о продукте, а не рейтинг школы или подтверждение экзаменационных результатов.</p>
+          <p><a className="link-underline" href={BLUESCREEN_COVERAGE.url}>Читать интервью в Bluescreen</a> · <Link className="link-underline" href={BLUESCREEN_COVERAGE.postPath}>Наш разбор и открытые упражнения</Link></p>
+          <h3>Ищете ASHYQ EDU?</h3>
+          <p>ASHYQ — название нашего образовательного проекта; @ashyqedu — официальный аккаунт в социальных сетях. Все ссылки и способы связи доступны на <Link className="link-underline" href="/contacts">странице контактов</Link>.</p>
         </section>
 
         <Reveal>

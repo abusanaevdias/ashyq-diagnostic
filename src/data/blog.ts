@@ -6,13 +6,15 @@
 
 import { IELTS_OVERALL_SCORE_POST } from './ielts-overall-score-post';
 import { IELTS_SELF_STUDY_POST } from './ielts-self-study-post';
+import { ASHYQ_BLUESCREEN_POST } from './ashyq-bluescreen-post';
 
-export type BlogCategory = 'ielts' | 'sat' | 'season';
+export type BlogCategory = 'ielts' | 'sat' | 'season' | 'news';
 
 export const BLOG_CATEGORIES: Record<BlogCategory, string> = {
   ielts: 'IELTS',
   sat: 'SAT',
   season: 'Сезон',
+  news: 'Новости ASHYQ',
 };
 
 export type BlogPost = {
@@ -28,11 +30,13 @@ export type BlogPost = {
   body: string;
   publishedAt: string;
   updatedAt: string;
+  citations?: string[];
 };
 
 export const BLOG_IS_DEMO = false;
 
 export const BLOG_POSTS: BlogPost[] = [
+  ASHYQ_BLUESCREEN_POST,
   IELTS_SELF_STUDY_POST,
   IELTS_OVERALL_SCORE_POST,
   {
