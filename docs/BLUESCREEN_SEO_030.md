@@ -37,6 +37,8 @@ References: https://schema.org/subjectOf and https://developers.google.com/searc
 
 Check against misleading interpretation: news ≠ school endorsement; practice ≠ official score; different valid free-text answers are possible; no synthetic example presented as student data; account handle ≠ legal-name claim; source article ≠ duplicate ASHYQ content/canonical target. Counts from historical interview deliberately not copied as current library totals. Source-derived summary is under 200 words; no verbatim interview quote.
 
+Additional exercise-source review caught an overly general “find a confirming sentence” example for a TRUE/FALSE/NOT GIVEN set. Corrected the rule to distinguish confirmation, contradiction and missing information explicitly; NOT GIVEN does not require a confirming sentence that cannot exist.
+
 Cover is original text artwork with source/publication attribution and no publisher logo, student photo or fabricated event. Verify it at desktop/mobile and in the cropped 16:9 article slot. Review caught the shared Markdown table's keyboard-scroll accessibility failure at mobile width; replaced this article's table with three clear bullets, preserving unrelated rendering code.
 
 ## Post-publication measurement
