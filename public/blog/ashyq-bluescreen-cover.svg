@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Об ASHYQ в СМИ</title>
+  <desc id="desc">Интервью Bluescreen о библиотеке IELTS и проверке ответов. Оформление команды ASHYQ, не логотип издания.</desc>
+  <rect width="1200" height="630" fill="#f8f7f3"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="#ffffff" stroke="#dedbd5"/>
+  <text x="108" y="140" fill="#c42b2b" font-family="Arial,sans-serif" font-size="46" font-weight="700">ASHYQ</text>
+  <text x="108" y="208" fill="#5f5b56" font-family="Arial,sans-serif" font-size="25">О НАС В СМИ · 5 ОКТЯБРЯ 2026</text>
+  <text x="108" y="295" fill="#282522" font-family="Arial,sans-serif" font-size="49" font-weight="700">Интервью в Bluescreen</text>
+  <text x="108" y="370" fill="#282522" font-family="Arial,sans-serif" font-size="33">Библиотека IELTS</text>
+  <text x="108" y="421" fill="#282522" font-family="Arial,sans-serif" font-size="33">и границы проверки ответов</text>
+  <path d="M108 460H1092" stroke="#dedbd5" stroke-width="2"/>
+  <text x="108" y="517" fill="#5f5b56" font-family="Arial,sans-serif" font-size="25">Учебная практика ≠ официальный экзаменационный балл</text>
+</svg>

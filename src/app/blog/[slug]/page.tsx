@@ -90,6 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           ...(data.post.publishedAt ? { datePublished: data.post.publishedAt } : {}),
           ...(modifiedTime ? { dateModified: modifiedTime } : {}),
           inLanguage: language,
+          ...(editorial?.citations?.length ? { citation: editorial.citations } : {}),
           publisher: { '@type': 'EducationalOrganization', '@id': `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL },
           ...(data.author?.name ? { author: { '@type': 'Person', name: data.author.name } } : {}),
         }} />

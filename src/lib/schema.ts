@@ -1,6 +1,7 @@
 import type { CourseDetail } from '@/data/courses';
 import { FAQ } from '@/data/faq';
 import { WHATSAPP_NUMBER } from '@/lib/config';
+import { BLUESCREEN_COVERAGE } from '@/data/press-coverage';
 import { CONTACT_EMAIL, SITE_DESCRIPTION, SITE_FULL_NAME, SITE_NAME, SITE_URL, SOCIAL_LINKS } from '@/lib/site';
 
 /**
@@ -37,6 +38,16 @@ export const ORGANIZATION = {
     { '@type': 'Country', name: 'Казахстан' },
   ],
   sameAs: SOCIAL_LINKS.map((social) => social.href),
+  subjectOf: [{
+    '@type': 'Article',
+    '@id': BLUESCREEN_COVERAGE.url,
+    url: BLUESCREEN_COVERAGE.url,
+    headline: BLUESCREEN_COVERAGE.title,
+    datePublished: BLUESCREEN_COVERAGE.publishedAt,
+    author: { '@type': 'Person', name: BLUESCREEN_COVERAGE.author },
+    publisher: { '@type': 'Organization', name: BLUESCREEN_COVERAGE.publisher, url: 'https://bluescreen.kz/' },
+    about: { '@id': ORGANIZATION_ID },
+  }],
   contactPoint: { '@type': 'ContactPoint', telephone: `+${WHATSAPP_NUMBER}`, email: CONTACT_EMAIL, url: `${SITE_URL}/contacts`, contactType: 'customer service' },
 };
 
