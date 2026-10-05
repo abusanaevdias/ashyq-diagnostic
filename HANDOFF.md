@@ -297,6 +297,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | LISTENING-REPLAY-015 | IN_PROGRESS | Codex `/root` (trainer continuation) | `codex/listening-replay-015`; worktree `C:\Users\Dias\.codex\worktrees\listening-replay\ashyq-diagnostic` | started 2026-10-05; original public Listening Prediction and Replay pilot: predict answer type/cue before one initial playback, commit answer/confidence, self-diagnose, replay/segment/masked/full transcript ladder, repair and new item. Own new route/data/audio/UI/docs and hub card. Synthetic English voice explicitly disclosed; no official IELTS simulation, bands, student data, AI calls or persistence. |
 
+| TASK1-OVERVIEW-016 | IN_PROGRESS | Codex `/root` (trainer continuation) | `codex/task1-overview-016`; worktree `C:\Users\Dias\.codex\worktrees\task1-overview\ashyq-diagnostic` | started 2026-10-05; original public Academic Task 1 pilot: select main chart features, write overview before model, connect claims to data, diagnose inaccurate/invented claims, write and revise response, then fresh chart transfer. Own new route/data/chart/UI/docs and hub card. No official IELTS content, band, free-text AI grading, real student data or persistence. |
+
 ## 6. Проверки и команды
 
 ```powershell
