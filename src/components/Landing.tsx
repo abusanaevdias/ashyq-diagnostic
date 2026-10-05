@@ -53,8 +53,8 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
               <MicroLabel>ASHYQ · образовательный клуб Казахстана</MicroLabel>
-              <h1 className={styles.title}>IELTS и SAT.<span className={styles.titleAccent}>Начните бесплатно.</span></h1>
-              <p className={styles.lead}>Открытые материалы, практика и диагностика — без регистрации. Занятия с преподавателем и менторство — отдельные платные программы.</p>
+              <h1 className={styles.title}>ASHYQ. IELTS и SAT.<span className={styles.titleAccent}>Начните бесплатно.</span></h1>
+              <p className={styles.lead}>Онлайн-подготовка к IELTS и SAT в Казахстане. Библиотека, практика и диагностика — бесплатно, без регистрации. Курсы с преподавателем и менторство — платные программы.</p>
               <nav className={styles.entryChoices} aria-label="Первые шаги: диагностика и библиотека">
                 <Link href="/diagnostic"><strong>Бесплатная диагностика <HeroArrow /></strong><span>IELTS или SAT · узнайте свой уровень</span></Link>
                 <Link href="/library"><strong>Бесплатная библиотека <HeroArrow /></strong><span>Материалы, задания и разборы · 0 ₸</span></Link>
