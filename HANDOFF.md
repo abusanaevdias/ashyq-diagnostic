@@ -299,6 +299,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | TASK1-OVERVIEW-016 | IN_PROGRESS | Codex `/root` (trainer continuation) | `codex/task1-overview-016`; worktree `C:\Users\Dias\.codex\worktrees\task1-overview\ashyq-diagnostic` | started 2026-10-05; original public Academic Task 1 pilot: select main chart features, write overview before model, connect claims to data, diagnose inaccurate/invented claims, write and revise response, then fresh chart transfer. Own new route/data/chart/UI/docs and hub card. No official IELTS content, band, free-text AI grading, real student data or persistence. |
 
+| TRAINERS-OVERFLOW-017 | IN_PROGRESS | Codex `/root` (trainer continuation) | `codex/trainers-overflow-017`; reused free worktree `C:\Users\Dias\.codex\worktrees\writing-calibration\ashyq-diagnostic` | started 2026-10-05; user screenshot shows Math Forensics card title overflowing narrow two-column layout. Own MathForensics.module.css responsive card grid/minimum width/title wrapping only; inspect nearby trainer card title risks. Preserve all exercise behavior. |
+
 ## 6. Проверки и команды
 
 ```powershell
