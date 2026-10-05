@@ -24,7 +24,7 @@
 .panel > label, .amounts label { display: block; margin: 16px 0 8px; font-weight: 800; line-height: 1.5; }
 .panel select, .panel textarea, .panel input:not([type=radio]) { width: 100%; min-height: 48px; margin-bottom: 16px; padding: 12px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: 15px/1.65 var(--font-body); }
 .panel textarea { min-height: 130px; resize: vertical; }
-.amounts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.amounts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
 .panel fieldset { display: grid; gap: 9px; margin: 5px 0; padding: 0; border: 0; }
 .panel legend { margin-bottom: 15px; font-weight: 800; }
 .choice { display: flex; align-items: start; gap: 10px; min-height: 48px; padding: 13px; border: 1px solid var(--hairline); border-radius: var(--r-sm); line-height: 1.5; cursor: pointer; }
@@ -39,7 +39,7 @@
 .warning { padding: 12px 14px; border-left: 3px solid var(--red-deep); background: var(--blush-soft); font-weight: 750; line-height: 1.55; }
 .note { color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
 .graph { width: 100%; max-width: 630px; background: var(--bg); border-radius: var(--r-sm); }
-.graph text { fill: var(--ink); font: 24px var(--font-body); }
+.graph text { fill: var(--ink); font: 32px var(--font-body); }
 .grid { stroke: var(--hairline); stroke-width: 1; }
 .first { fill: none; stroke: var(--red-deep); stroke-width: 4; }
 .second { fill: none; stroke: var(--ink); stroke-width: 4; stroke-dasharray: 10 6; }

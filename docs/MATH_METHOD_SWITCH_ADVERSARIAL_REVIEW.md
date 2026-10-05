@@ -12,7 +12,7 @@ Original authored content: two linear systems and two quadratic/line intersectio
 - Different problem durations: display elapsed open-attempt time including reading/pauses without claiming causal speed improvement.
 - Empty fields, NaN, infinite or huge input: strict finite decimal parsing rejects them. Comma decimal supported.
 - Transfer reset: coordinates, working, actual-method report and plan reset; selected alternative is named on the fresh problem, but prepared graphs/tables are withheld until commitment. Adversarial review found that displaying a ready table during transfer leaked the answer; removed before release.
-- Graph accessibility: solid/dashed lines plus equations, large SVG text and exact table; meaning does not rely on colour alone.
+- Graph accessibility: solid/dashed lines plus equations, 32px source SVG labels and exact table; meaning does not rely on colour alone. Labels enlarged after considering scale at 320px; two coordinate fields use two columns on desktop and stack on mobile.
 - Long headings/mobile: adaptive minimum card widths, min-width zero and wrapping inherited from fixed trainer card rules.
 
 ## Required checks
