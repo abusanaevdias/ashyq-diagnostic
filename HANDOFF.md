@@ -293,6 +293,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 **Goal status correction (28.09, after the entry above):** `get_goal` now reports `paused`, not ACTIVE; no resume/completion mutation was made. Ranking recovery remains unachieved and this repair request remains in scope. The separate existing heartbeat `ashyq` is verified ACTIVE at 10:00/19:00; scheduled monitoring is not continuous execution or proof of ranking.
 
+| SEO-PRESS-BLUESCREEN-030 | IN_PROGRESS | Codex /root (Dias Windows) | codex/seo-press-bluescreen-030; dedicated worktree C:/Users/Dias/Documents/ChatGPT/ashyq-press-bluescreen-030 | started 2026-10-05; publish original Russian news about verified BlueScreen interview, visible About press link and organization subjectOf/citation connection; read-only branded-query/public technical audit. Independent of SEO-BRAND-RECOVERY-028 homepage/WebSite and SEO-GSC-INDEX-015 submissions, BLOG-REDESIGN-001 components. No invented volumes, rankings, endorsements or copied press photos. |
+
 ## 6. Проверки и команды
 
 ```powershell
