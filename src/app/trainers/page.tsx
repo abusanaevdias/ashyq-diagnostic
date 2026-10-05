@@ -21,6 +21,7 @@ export default function TrainersPage() {
       <article className={styles.card}><span>SAT · MATH</span><h2>Найди первую ошибку</h2><p>Разбери чужое решение, исправь первый неверный переход и реши новую задачу.</p><Link href="/trainers/math-forensics">Попробовать SAT Math →</Link></article>
       <article className={styles.card}><span>SAT · READING & WRITING</span><h2>Разбери ложные варианты</h2><p>Выбери ответ и объясни, почему остальные варианты не подходят. Проверь себя на новом тексте.</p><Link href="/trainers/sat-distractor">Разобрать варианты →</Link></article>
       <article className={styles.card}><span>IELTS ACADEMIC · WRITING TASK 2</span><h2>Улучши эссе сам</h2><p>Найди ошибки в готовом учебном эссе и перепиши его по критериям шаг за шагом.</p><Link href="/writing/trainer">Попробовать Writing →</Link></article>
+      <article className={styles.card}><span>IELTS ACADEMIC · WRITING TASK 1</span><h2>Собери overview по графику</h2><p>Выбери главное, проверь опору на данные и убери неточности перед полным ответом.</p><Link href="/trainers/task1-overview">Попробовать Task 1 →</Link></article>
     </div>
     <p className={styles.note}>Тренажёры не выдают официальный балл IELTS или SAT. Ответы в открытых упражнениях не отправляются на внешний AI.</p>
   </main><Footer /></>;
