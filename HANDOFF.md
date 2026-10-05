@@ -303,6 +303,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | SAT-TRANSLATION-018 | IN_PROGRESS | Codex `/root` (trainer continuation) | `codex/sat-translation-018`; reuse completed worktree `C:\Users\Dias\.codex\worktrees\task1-overview\ashyq-diagnostic` | started 2026-10-06; original public contextual Math model builder: identify variable and units, one-time/repeated/total amounts, commit equation before calculation, distinguish authored model agreement from arithmetic result and test fresh transfer. Own new route/data/UI/styles/docs and hub card. No copied SAT content, AI, student data, score or persistence. |
 
+| SPEAKING-SECOND-TAKE-019 | IN_PROGRESS | Codex `/root` (trainer continuation) | `codex/speaking-second-take-019`; reuse completed worktree `C:\Users\Dias\.codex\worktrees\listening-replay\ashyq-diagnostic` | started 2026-10-06; original Part 2 practice with preparation, local microphone recording, timed self-review observations, four criterion reflection, repair plan, same-prompt second take and fresh prompt. Own new route/data/UI/styles/docs and hub card. No AI, transcript generation, band, upload, storage or server processing of audio. Browser microphone permission remains learner initiated; do not activate user microphone during agent QA without permission. |
+
 ## 6. Проверки и команды
 
 ```powershell
