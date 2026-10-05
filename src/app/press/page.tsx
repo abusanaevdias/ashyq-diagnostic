@@ -2,19 +2,20 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
 import { LIBRARY_CHAPTERS, LIBRARY_DOWNLOADS } from '@/data/free-library';
+import { BLUESCREEN_COVERAGE } from '@/data/press-coverage';
 import { chapterSections } from '@/lib/free-library';
 import { buildLibraryPractice } from '@/lib/library-practice';
 import { CONTACT_EMAIL, SITE_DESCRIPTION, SITE_URL } from '@/lib/site';
 import styles from './press.module.css';
 
 export const metadata: Metadata = {
-  title: 'ASHYQ для СМИ — факты и открытая практика',
-  description: 'Материалы для редакционной проверки ASHYQ: бесплатная библиотека IELTS, интерактивная практика, ограничения проверки и контакт команды.',
+  title: 'ASHYQ для СМИ — факты, практика и публикации',
+  description: 'ASHYQ для СМИ: интервью в Bluescreen, открытая библиотека IELTS и практика Digital SAT. Проверяемые факты, ограничения диагностики и контакт команды.',
   alternates: { canonical: '/press' },
   robots: { index: true, follow: true },
   openGraph: {
-    title: 'ASHYQ для СМИ — факты и открытая практика',
-    description: 'Проверьте продукт самостоятельно: открытые упражнения, исходные PDF и ограничения проверки.',
+    title: 'ASHYQ для СМИ — факты, практика и публикации',
+    description: 'Интервью в Bluescreen и материалы для самостоятельной проверки продукта: упражнения, исходные PDF и ограничения проверки.',
     url: '/press',
     type: 'website',
   },
@@ -31,7 +32,7 @@ export default function PressPage() {
     <main className={styles.container}>
       <header className={styles.hero}>
         <p className={styles.kicker}>ASHYQ · материалы для редакций</p>
-        <h1>Сначала проверьте продукт.</h1>
+        <h1>ASHYQ для СМИ: факты, практика и публикации.</h1>
         <p className={styles.lead}>{SITE_DESCRIPTION}</p>
         <p>Ниже — открытые материалы и границы их применения. Эта страница подготовлена командой ASHYQ, а не независимой редакцией.</p>
         <div className={styles.actions}>
@@ -40,6 +41,14 @@ export default function PressPage() {
           <Link href="/diagnostic">Открыть предварительную диагностику</Link>
         </div>
       </header>
+
+      <section className={styles.section} aria-labelledby="coverage-title">
+        <h2 id="coverage-title">Публикации об ASHYQ</h2>
+        <p><time dateTime={BLUESCREEN_COVERAGE.publishedAt}>5 октября 2026 года</time> Bluescreen опубликовал интервью с основателем ASHYQ о бесплатной библиотеке IELTS и границах проверки учебных ответов. Автор материала — {BLUESCREEN_COVERAGE.author}.</p>
+        <p><a className={styles.inlineLink} href={BLUESCREEN_COVERAGE.url}>{BLUESCREEN_COVERAGE.title}</a></p>
+        <p>В интервью разбираются сверка с ключом и сравнение с образцом. Публикация не является рейтингом школы, подтверждением роста экзаменационных баллов или одобрением со стороны IELTS.</p>
+        <Link className={styles.inlineLink} href={BLUESCREEN_COVERAGE.postPath}>Наш разбор интервью и маршрут по открытым упражнениям</Link>
+      </section>
 
       <section className={styles.section} aria-labelledby="facts-title">
         <h2 id="facts-title">Что уже можно проверить</h2>
@@ -81,7 +90,7 @@ export default function PressPage() {
         <h2 id="contact-title">Контакт команды</h2>
         <p>Вопросы об авторстве, продукте и редакционных материалах:</p>
         <div className={styles.actions}><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a><a href={SITE_URL}>Сайт ASHYQ</a><Link href="/contacts">Другие контакты</Link></div>
-        <p className={styles.note}>Публикация и выводы остаются решением редакции. Размещение этой страницы не означает публикацию в СМИ, партнёрство, индексацию или гарантированную рекомендацию в поиске и AI-сервисах.</p>
+        <p className={styles.note}>Публикация и выводы остаются решением редакции. Материалы на этой странице не подтверждают партнёрство с редакциями, индексацию или гарантированную рекомендацию в поиске и AI-сервисах.</p>
       </section>
     </main>
     <Footer />
