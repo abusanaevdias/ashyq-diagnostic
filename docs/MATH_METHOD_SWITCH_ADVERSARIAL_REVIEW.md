@@ -18,3 +18,7 @@ Original authored content: two linear systems and two quadratic/line intersectio
 ## Required checks
 
 Target lint, TypeScript, production build, design review, full branch CI, browser initial/transfer/final flow, mobile overflow and production route after merge. Local/CI checks do not substitute for production confirmation.
+
+## Local evidence 2026-10-06
+
+Target lint and TypeScript PASS. Build PASS before final transfer hint removal; final branch CI required. 21st review: zero findings. Token audit 9/9. Browser: empty guard, wrong negative intersection, graph review, comma coordinate parsing, independent fresh table transfer (zero table elements before commitment), correct linear pair, original attempts and plans retained. Mobile 390 px document width equals scroll width. Browser smooth-scroll automation clicked an unrelated footer link once; recovered with observed keyboard interaction rather than treating that attempt as success.
