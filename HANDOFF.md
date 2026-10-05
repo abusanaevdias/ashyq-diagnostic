@@ -397,6 +397,8 @@ npx tsx scripts/season-visual-check.ts
 После любого merge все проверки нужно повторить на объединённом `main` —
 результаты веток не заменяют интеграционный прогон.
 
+| MATH-METHOD-SWITCH-020 | IN_PROGRESS | Codex `/root` | `codex/math-method-switch-020`; worktree `C:\Users\Dias\.codex\worktrees\writing-calibration\ashyq-diagnostic` | started 2026-10-06; original systems/intersection pairs, first independent answer then alternative algebra/graph/table and fresh transfer. Own new route/data/UI/styles/docs and hub card. No AI, official scores, student data or persistence. |
+
 ## 7. Важные файлы
 
 - `AGENTS.md` — обязательные правила работы агентов и Next.js 16.
