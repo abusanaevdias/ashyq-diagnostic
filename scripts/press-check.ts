@@ -21,6 +21,14 @@ async function main() {
     const text = await page.locator('main').innerText();
     for (const value of ['42 раздела', '322 уникальных', '148 с автоматической', '174 со сравнением', 'не AI-оценивание', 'не официальный IELTS/SAT score', 'не реальные работы учеников']) assert.ok(text.includes(value), value);
     assert.equal(await page.locator('main a[href="mailto:ashyqhub@gmail.com"]').count(), 1);
+    const coverage = page.getByRole('region', { name: 'Публикации об ASHYQ', exact: true });
+    assert.match(await coverage.innerText(), /5 октября 2026 года.*Bluescreen/);
+    assert.match(await coverage.innerText(), /Жанна Аксентий/);
+    assert.equal(await coverage.locator('a[href^="https://bluescreen.kz/"]').count(), 1);
+    assert.equal(await coverage.locator('a[href="/blog/ashyq-bluescreen-interview"]').count(), 1);
+    const news = await context.request.get(`${base}/blog/ashyq-bluescreen-interview`);
+    assert.equal(news.status(), 200);
+    assert.match(await news.text(), /href="\/press"/);
     const links = await page.locator('main a').evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute('href') || ''));
     for (const href of new Set(links.filter((href) => href.startsWith('/')))) {
       const url = new URL(href, base);
