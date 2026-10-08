@@ -81,6 +81,7 @@ jobs:
             exit 1
           fi
 
+          npx tsx scripts/agent-readiness-check.ts
           npm run e2e
           npm run check:crm
           npm run check:crm-ui

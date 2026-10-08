@@ -27,6 +27,16 @@ const nextConfig = {
   // и без исключения локальные заявки копируются в standalone-сборку
   outputFileTracingExcludes: { '/*': ['.data/**/*'] },  reactStrictMode: true,
   poweredByHeader: false,
+  async rewrites() {
+    return {
+      // Run only after Next has checked existing pages, dynamic routes and assets.
+      fallback: [{
+        source: '/:path*',
+        has: [{ type: 'header', key: 'x-ashyq-markdown', value: '1' }],
+        destination: '/agent/not-found',
+      }],
+    };
+  },
   async headers() {
     return [
       {

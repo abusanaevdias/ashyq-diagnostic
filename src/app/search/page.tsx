@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 /** Служебная страница: служебные страницы поиска принято закрывать от индексации. */
 
 const PAGES: Array<{ title: string; text: string; href: string }> = [
+  { title: 'ASHYQ developer documentation', text: 'IELTS SAT diagnostic Vercel разработчики агенты Markdown llms.txt HTTP authentication документация', href: '/docs' },
   { title: 'Бесплатная библиотека IELTS', text: 'Writing Upgrade Lab, полные эссе, Reading, Listening, Speaking и языковые упражнения с объяснениями.', href: '/library' },
   { title: 'Менторство по поступлению', text: 'Стратегия поступления, документы, CV, Personal Statement, дедлайны и онлайн-сопровождение ASHYQ.', href: '/mentoring' },
   { title: 'Главная', text: 'Диагностика IELTS и SAT, направления клуба и статистика подготовки.', href: '/' },

@@ -27,6 +27,7 @@ export const SITE_ROUTES = [
   '/courses/sat',
   '/about',
   '/press',
+  '/docs',
   '/contacts',
   '/mentoring',
   '/library',
