@@ -1,5 +1,6 @@
 import type { TrainerId } from './catalog';
 import { writingDrills } from '../writing-trainer/drills';
+import { MAX_DRILL_CHOICES, MAX_DRILL_RECORDS } from './drill-records';
 
 export const CHECKPOINT_VERSION = 1;
 export const MAX_RECORD_BYTES = 1_500_000;
@@ -21,8 +22,12 @@ const nullable = (check: Check): Check => v => v === null || check(v);
 const array = (check: Check, max = 50): Check => v => Array.isArray(v) && v.length <= max && v.every(check);
 const record = (check: Check, key: RegExp = /^(?:[a-z][a-z0-9-]*|[0-9]+)$/i): Check => v => object(v) && Object.keys(v).length <= 100 && Object.entries(v).every(([k, x]) => key.test(k) && !['__proto__', 'constructor', 'prototype'].includes(k) && check(x));
 const shape = (fields: Record<string, Check>): Check => v => object(v) && Object.keys(v).length === Object.keys(fields).length && Object.entries(fields).every(([key, check]) => Object.hasOwn(v, key) && check(v[key]));
+const shapeWithOptional = (required: Record<string, Check>, optional: Record<string, Check>): Check => v => object(v) && Object.keys(v).every(key => Object.hasOwn(required, key) || Object.hasOwn(optional, key)) && Object.entries(required).every(([key, check]) => Object.hasOwn(v, key) && check(v[key])) && Object.entries(optional).every(([key, check]) => !Object.hasOwn(v, key) || check(v[key]));
 const phase = (...values: string[]) => one(...values);
 const completedDrills: Check = v => array(one(...writingDrills.map(item => item.id)), writingDrills.length)(v) && new Set(v as string[]).size === (v as string[]).length;
+const drillRecordShape = shape({ savedAt: v => typeof v === 'string' && !Number.isNaN(Date.parse(v)), draft: v => typeof v === 'string' && v.length <= 600, choices: array(integer(2), MAX_DRILL_CHOICES), attemptCount: integer(10000), revealedByHelp: nullable(bool) });
+const drillRecord: Check = v => drillRecordShape(v) && ((v as Snapshot).attemptCount as number) >= ((v as Snapshot).choices as unknown[]).length;
+const drillRecords: Check = v => object(v) && Object.entries(v).every(([id, values]) => writingDrills.some(item => item.id === id) && array(drillRecord, MAX_DRILL_RECORDS)(values));
 const index = nullable(integer(1));
 const confidence = one('', 'low', 'medium', 'high');
 const listeningConfidence = one('', 'Низкая', 'Средняя', 'Высокая');
@@ -56,7 +61,7 @@ const schemas: Record<TrainerId, Check> = {
   'math-method-switch': shape({ phase: phase('choose', 'solve', 'review', 'result'), index: integer(1), round: integer(1), x: text, y: text, working: text, method: v => v === ' ' || method(v), alternative: v => v === ' ' || method(v), plan: text, attempts: array(methodAttempt, 2) }),
   'speaking-second-take': shape({ phase: phase('start', 'prepare', 'capture', 'review', 'compare', 'result'), takeIndex: integer(2), takes: array(take, 3), notes: text, kind: text, markerNote: text, noMarkers: bool }),
   'writing-task2': shape({ session: writingSession }),
-  'writing-drills': shape({ mode: nullable(one('combine', 'grammar', 'argument')), index: integer(1), draft: text, optionsVisible: bool, choice: nullable(integer(2)), attempts: integer(10000), feedback: text, revealed: bool, completed: completedDrills }),
+  'writing-drills': shapeWithOptional({ mode: nullable(one('combine', 'grammar', 'argument')), index: integer(1), draft: text, optionsVisible: bool, choice: nullable(integer(2)), attempts: integer(10000), feedback: text, revealed: bool, completed: completedDrills }, { currentChoices: array(integer(2), MAX_DRILL_CHOICES), revealedByHelp: nullable(bool), drillRecords }),
 };
 
 export function validSnapshot(trainer: TrainerId, value: unknown): value is Snapshot {

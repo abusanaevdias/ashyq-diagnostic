@@ -4,6 +4,7 @@ import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { drillModes, writingDrills, type DrillMode } from '@/lib/writing-trainer/drills';
+import { appendDrillChoice, appendDrillRecord, MAX_DRILL_RECORDS, type DrillRecords } from '@/lib/trainers/drill-records';
 import styles from './WritingDrills.module.css';
 
 export default function WritingDrills() {
@@ -16,6 +17,9 @@ export default function WritingDrills() {
   const [feedback, setFeedback] = useState('');
   const [revealed, setRevealed] = useState(false);
   const [completed, setCompleted] = useState<string[]>([]);
+  const [currentChoices, setCurrentChoices] = useState<number[]>([]);
+  const [revealedByHelp, setRevealedByHelp] = useState<boolean | null>(false);
+  const [drillRecords, setDrillRecords] = useState<DrillRecords>({});
 
   const items = writingDrills.filter((item) => item.mode === mode);
   const item = items[index];
@@ -31,6 +35,8 @@ export default function WritingDrills() {
     setAttempts(0);
     setFeedback('');
     setRevealed(false);
+    setCurrentChoices([]);
+    setRevealedByHelp(false);
   }
 
   function chooseMode(next: DrillMode) {
@@ -41,6 +47,8 @@ export default function WritingDrills() {
 
   function finishItem() {
     if (!item) return;
+    const record = { savedAt: new Date().toISOString(), draft, choices: [...currentChoices], attemptCount: attempts, revealedByHelp };
+    setDrillRecords(old => appendDrillRecord(old, item.id, record));
     setCompleted((old) => old.includes(item.id) ? old : [...old, item.id]);
     if (index < items.length - 1) {
       setIndex(index + 1);
@@ -71,8 +79,9 @@ export default function WritingDrills() {
     const selected = item.choices[choice];
     const nextAttempts = attempts + 1;
     setAttempts(nextAttempts);
+    setCurrentChoices(old => appendDrillChoice(old, choice));
     setFeedback(selected.feedback);
-    if (selected.best) setRevealed(true);
+    if (selected.best) { setRevealed(true); setRevealedByHelp(false); }
     else setChoice(null);
   }
 
@@ -83,7 +92,7 @@ export default function WritingDrills() {
       <h1>Отработай один навык за раз</h1>
       <p>Сначала напиши свой вариант. Затем сравни три решения, получи объяснение и при необходимости попробуй ещё раз. Все задания вымышлены и доступны без входа. Здесь нет автоматической оценки твоего текста или балла IELTS.</p>
     </header>
-    <TrainerCheckpoint trainer="writing-drills" data={{ mode, index, draft, optionsVisible, choice, attempts, feedback, revealed, completed }} completed={mode === null && completed.length > 0} onRestore={saved => { setMode(saved.mode); setIndex(saved.index); setDraft(saved.draft); setOptionsVisible(saved.optionsVisible); setChoice(saved.choice); setAttempts(saved.attempts); setFeedback(saved.feedback); setRevealed(saved.revealed); setCompleted(saved.completed); }} />
+    <TrainerCheckpoint trainer="writing-drills" data={{ mode, index, draft, optionsVisible, choice, attempts, feedback, revealed, completed, currentChoices, revealedByHelp, drillRecords }} completed={mode === null && completed.length > 0} onRestore={saved => { setMode(saved.mode); setIndex(saved.index); setDraft(saved.draft); setOptionsVisible(saved.optionsVisible); setChoice(saved.choice); setAttempts(saved.attempts); setFeedback(saved.feedback); setRevealed(saved.revealed); setCompleted(saved.completed); setCurrentChoices(saved.currentChoices ?? []); setRevealedByHelp(saved.revealedByHelp === undefined ? null : saved.revealedByHelp); setDrillRecords(saved.drillRecords ?? {}); }} />
 
     {!mode ? <section aria-labelledby="drill-modes-title">
       <div className={styles.sectionHeading}><h2 id="drill-modes-title">Выбери упражнение</h2><p>Каждый блок содержит два коротких задания. Для продолжения после обновления включи сохранение выше.</p></div>
@@ -113,7 +122,7 @@ export default function WritingDrills() {
           <span>{option.text}</span>
         </label>)}
       </fieldset>
-      {!revealed && <div className={styles.actions}><button type="button" className={styles.primary} onClick={checkChoice}>Проверить выбор →</button>{attempts >= 2 && <button type="button" className={styles.secondary} onClick={() => { setRevealed(true); setFeedback('Разбор открыт. Сравни свой вариант с примером и объяснением.'); }}>Показать разбор</button>}</div>}</>}
+      {!revealed && <div className={styles.actions}><button type="button" className={styles.primary} onClick={checkChoice}>Проверить выбор →</button>{attempts >= 2 && <button type="button" className={styles.secondary} onClick={() => { setRevealed(true); setRevealedByHelp(true); setFeedback('Разбор открыт. Сравни свой вариант с примером и объяснением.'); }}>Показать разбор</button>}</div>}</>}
       {feedback && <p className={revealed ? styles.feedbackGood : styles.feedback} role="status">{feedback}{!revealed && attempts > 0 ? ' Попробуй ещё раз.' : ''}</p>}
       {revealed && <div className={styles.reveal}>
         <span className={styles.modeSkill}>РАЗБОР · {item.criterion}</span>
@@ -124,5 +133,7 @@ export default function WritingDrills() {
         <button type="button" className={styles.primary} onClick={finishItem}>{index < items.length - 1 ? 'Следующее задание' : 'К упражнениям'} →</button>
       </div>}
     </section>}
+    {Object.keys(drillRecords).length > 0 && <section className={styles.reveal} aria-labelledby="drill-history-title"><h2 id="drill-history-title">Твои завершённые попытки</h2><p>Последние {MAX_DRILL_RECORDS} попыток каждого упражнения. Текст не оценивается автоматически; выполнение не означает освоение навыка. Для хранения после закрытия включи сохранение выше.</p><details><summary>Посмотреть первые варианты, выборы и помощь</summary>{writingDrills.filter(drill => drillRecords[drill.id]?.length).map(drill => <section key={drill.id}><h3>{drill.title}</h3>{drillRecords[drill.id].map((record, index) => <article className={styles.record} key={`${record.savedAt}-${index}`}><p>{new Date(record.savedAt).toLocaleString('ru-RU')} · {record.revealedByHelp === null ? 'Способ открытия разбора не сохранён в ранней версии' : record.revealedByHelp ? 'Разбор открыт через помощь' : 'Разбор открыт после подходящего выбора'}</p><p lang="en">{record.draft}</p><p>Выборы: {record.choices.length ? record.choices.map(choice => `${choice + 1}${drill.choices[choice].best ? ' (подходит)' : ' (нужно пересмотреть)'}`).join(' → ') : 'не сохранились в ранней версии'}. Всего проверок выбора: {record.attemptCount}.</p>{record.attemptCount > record.choices.length && <p>Список неполный: при долгой серии сохраняются первый и последние 19 выборов; ранние версии могли не хранить выборы.</p>}</article>)}</section>)}</details></section>}
+    {completed.some(id => !drillRecords[id]?.length) && <p className={styles.note}>Часть выполнений отмечена в ранней версии без текста попытки. Их содержание не восстановлено.</p>}
   </main>;
 }
