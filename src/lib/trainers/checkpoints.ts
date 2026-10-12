@@ -46,7 +46,7 @@ const translationAttempt = shape({ model, answer: number, working: text, repair:
 const method = one('algebra', 'graph', 'table', 'other');
 const methodAttempt = shape({ x: number, y: number, working: text, method, seconds: nullable(duration), plan: text });
 const marker = shape({ id: integer(1e9), second: nullable(duration), kind: text, note: text });
-const take = shape({ url: one(null), seconds: nullable(duration), markers: array(marker, 100), ratings: v => array(text, 4)(v) && (v as unknown[]).length === 4, plan: text, confirmed: bool });
+const take = shapeWithOptional({ url: one(null), seconds: nullable(duration), markers: array(marker, 100), ratings: v => array(text, 4)(v) && (v as unknown[]).length === 4, plan: text, confirmed: bool }, { preparationNotes: v => typeof v === 'string' && v.length <= 3000 });
 const revisions = record(text, /^(task|coherence|lexical)$/);
 const writingSession = shape({ caseId: one('city-transport', 'school-projects'), stage: phase('grammar', 'task', 'coherence', 'lexical', 'report'), furthestStage: phase('grammar', 'task', 'coherence', 'lexical', 'report'), selectedSentenceId: nullable(text), grammarDrafts: record(text), grammarChecked: bool, appliedGrammar: record(text), revisionDrafts: revisions, postFeedbackDrafts: revisions, revealed: record(bool, /^(task|coherence|lexical)$/), appliedRevisions: revisions });
 
