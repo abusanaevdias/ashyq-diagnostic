@@ -45,4 +45,8 @@
 .preview .filters label { align-items: start; }
 .preview .filters input { flex-shrink: 0; margin-top: 5px; }
 .frozenText { white-space: pre-wrap; overflow-wrap: anywhere; }
+.previewReasons label { display: block; margin: 16px 0; font-weight: 600; }
+.previewReasons label span { display: block; margin: 8px 0; font-weight: 400; }
+.previewReasons textarea { display: block; box-sizing: border-box; width: 100%; min-width: 0; margin: 10px 0; padding: 12px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: inherit; font-weight: 400; }
+.preview h4 { scroll-margin-top: 160px; }
 @media (max-width: 500px) { .panel { padding: 16px; } .actions { flex-direction: column; } .actions button { width: 100%; } }

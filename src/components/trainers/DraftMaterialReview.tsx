@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useSyncExternalStore, type ReactNode } from 'react';
 import RequireRole from '@/components/lms/RequireRole';
 import DraftWritingPreview from './DraftWritingPreview';
+import DraftSatPreview from './DraftSatPreview';
 import { draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
 import styles from './TrainerCheckpoint.module.css';
 
@@ -46,6 +47,7 @@ function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; prev
     <p>{unit.id} · {unit.category} · DRAFT</p><h2 id="material-title">{unit.title}</h2>
     <MaterialText text={unit.student_markdown}/>
     <DraftWritingPreview value={unit.exercise_data}/>
+    <DraftSatPreview value={unit.exercise_data}/>
     <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown} sectionLabel="разбора"/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown} sectionLabel="языковой правки"/></>}</details>
     <fieldset className={styles.filters}><legend>Решение проверяющего</legend>
       <label htmlFor="draft-review-decision">Результат проверки</label><select id="draft-review-decision" value={decision} onChange={event => { onDirty(true); setDecision(event.target.value as ReviewDecision); setError(''); }}><option value="pending">Пока не проверено</option><option value="recommend">Рекомендую принять</option><option value="revise">Нужна правка</option><option value="hold">Отложить</option></select>
