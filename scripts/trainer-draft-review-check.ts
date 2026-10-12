@@ -166,6 +166,24 @@ async function main() {
     for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `sixth batch overflow at ${width}`); }
     const sixthAxe = await new AxeBuilder({ page }).include('main').analyze();
     assert.deepEqual(sixthAxe.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) })), []);
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('07');
+    await page.getByRole('heading', { name: 'Рассмотрено 0 из 8', exact: true }).waitFor();
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('S12');
+    await page.getByLabel('Результат проверки', { exact: true }).selectOption('hold');
+    await page.getByLabel('Замечание', { exact: true }).fill('Synthetic seventh-batch fixture; not a Speaking evaluation.');
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 8', exact: true }).waitFor();
+    await page.reload();
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('07');
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 8', exact: true }).waitFor();
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('S12');
+    assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), 'Synthetic seventh-batch fixture; not a Speaking evaluation.');
+    const seventhRaw = await page.evaluate(key => localStorage.getItem(key), reviewKey('fixture-a', draftBatches[6]));
+    assert.equal(parseDraftReview(seventhRaw, 'fixture-a', draftBatches[6])?.decisions.S12.decision, 'hold');
+    await page.getByText('Показать ключ, альтернативы и границы проверки', { exact: true }).click();
+    for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `seventh batch overflow at ${width}`); }
+    const seventhAxe = await new AxeBuilder({ page }).include('main').analyze();
+    assert.deepEqual(seventhAxe.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) })), []);
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('01');
     await page.getByRole('heading', { name: 'Рассмотрено 2 из 12', exact: true }).waitFor();
     await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-b'));

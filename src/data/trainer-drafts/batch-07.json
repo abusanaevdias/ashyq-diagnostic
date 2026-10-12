@@ -1,0 +1,396 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "07",
+  "version": 1,
+  "source_sha256": "a8b6b2d1c86cb8c4c1459d0bb5e44ea1ca89dc3b931184e0df93727116cdcc56",
+  "content_sha256": "a8b6b2d1c86cb8c4c1459d0bb5e44ea1ca89dc3b931184e0df93727116cdcc56",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "S05",
+      "title": "Пример вместо общего описания",
+      "category": "Speaking · второй ответ и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная тема, не официальный экзаменационный материал. Можно использовать вымышленную ситуацию; личные имена, адреса и чувствительные подробности не нужны.\n\nНавык: Пример вместо общего описания.\n\n1. Составь короткий план до подсказок. Учебный ориентир: минута подготовки и ответ до двух минут.\n2. Ответь самостоятельно. Если запись недоступна, работай с заметками: они не доказывают выполнение устного ответа.\n3. Выбери одну конкретную цель улучшения, повтори ответ и сравни собственные примеры.\n4. Затем ответь на новую тему. Первая попытка и повтор после помощи должны оставаться раздельными.\n\nDescribe an object that helps you complete an everyday task.\n- what the object is\n- when you use it\n- how it helps you\n- and explain one specific occasion when it was useful\n\nНе заучивай готовый ответ. Свободная речь не получает автоматическую оценку или band.",
+      "teacher_markdown": "### Первая тема\nDescribe an object that helps you complete an everyday task.\n- what the object is\n- when you use it\n- how it helps you\n- and explain one specific occasion when it was useful\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Name the task before describing the object.\n- Describe one actual or fictional occasion in a clear sequence.\n- Explain how a feature helped, rather than listing features.\n\nДополнительный вопрос: Could a simpler object serve the same purpose? Why?\n\n### Новая тема\nDescribe a place where you can concentrate on a task.\n- where the place is\n- what you do there\n- what features help you concentrate\n- and explain one occasion when the place was useful\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Connect one feature to the task you chose.\n- Use a concrete occasion to support the description.\n- Explain a limitation if the place is not always suitable.\n\nДополнительный вопрос: Would the same place suit a group activity? Why?\n\nПроверка преподавателя:\n- Fluency and coherence: проследить ход мысли и отметить конкретное место, где связь теряется; не считать отсутствие пауз единственной целью.\n- Lexical resource: отметить точное слово или выражение и уместную альтернативу, не требовать редкой лексики.\n- Grammatical range and accuracy: привести пример формы из реального ответа; не приписывать ошибки по выбранной теме или заметкам.\n- Pronunciation: проверять только по доступной слышимой записи или живому ответу. По одному письменному плану произношение не оценивать.\n- Сравнить первый и повторный ответ по одной выбранной цели, затем проверить её на свежей теме. Длительность и повтор не доказывают рост уровня.\n\nАдверсальное ревью автора:\n- Дорогой предмет или необычное место не требуется.\n- Новая тема меняет объект описания, сохраняя необходимость конкретного примера.\n- Качество ответа определяется речью, не выбором предмета.\n\nВсе наблюдения требуют ручного прослушивания/проверки. Это черновик без методического одобрения, AI-оценки или публикации.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "skill": "specific-example-and-purpose",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "topics": [
+          {
+            "prompt": "Describe an object that helps you complete an everyday task.",
+            "cues": [
+              "what the object is",
+              "when you use it",
+              "how it helps you",
+              "and explain one specific occasion when it was useful"
+            ],
+            "followup": "Could a simpler object serve the same purpose? Why?",
+            "ideas": [
+              "Name the task before describing the object.",
+              "Describe one actual or fictional occasion in a clear sequence.",
+              "Explain how a feature helped, rather than listing features."
+            ]
+          },
+          {
+            "prompt": "Describe a place where you can concentrate on a task.",
+            "cues": [
+              "where the place is",
+              "what you do there",
+              "what features help you concentrate",
+              "and explain one occasion when the place was useful"
+            ],
+            "followup": "Would the same place suit a group activity? Why?",
+            "ideas": [
+              "Connect one feature to the task you chose.",
+              "Use a concrete occasion to support the description.",
+              "Explain a limitation if the place is not always suitable."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Последовательность и вклад участника",
+      "category": "Speaking · второй ответ и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная тема, не официальный экзаменационный материал. Можно использовать вымышленную ситуацию; личные имена, адреса и чувствительные подробности не нужны.\n\nНавык: Последовательность и вклад участника.\n\n1. Составь короткий план до подсказок. Учебный ориентир: минута подготовки и ответ до двух минут.\n2. Ответь самостоятельно. Если запись недоступна, работай с заметками: они не доказывают выполнение устного ответа.\n3. Выбери одну конкретную цель улучшения, повтори ответ и сравни собственные примеры.\n4. Затем ответь на новую тему. Первая попытка и повтор после помощи должны оставаться раздельными.\n\nDescribe a small project you completed with another person.\n- what the project was\n- who worked with you\n- what each person did\n- and explain how your contributions fitted together\n\nНе заучивай готовый ответ. Свободная речь не получает автоматическую оценку или band.",
+      "teacher_markdown": "### Первая тема\nDescribe a small project you completed with another person.\n- what the project was\n- who worked with you\n- what each person did\n- and explain how your contributions fitted together\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Give a brief beginning, middle and outcome.\n- Separate your contribution from the other person’s.\n- Connect a task to the final result.\n\nДополнительный вопрос: What would you organise differently next time?\n\n### Новая тема\nDescribe a group activity that required people to coordinate.\n- what the activity was\n- how the group prepared\n- what you were responsible for\n- and explain why coordination mattered\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Name your own role without describing every participant.\n- Explain one point where coordination changed an action.\n- Describe an outcome without claiming everyone felt the same.\n\nДополнительный вопрос: Would the activity work with fewer people? Why?\n\nПроверка преподавателя:\n- Fluency and coherence: проследить ход мысли и отметить конкретное место, где связь теряется; не считать отсутствие пауз единственной целью.\n- Lexical resource: отметить точное слово или выражение и уместную альтернативу, не требовать редкой лексики.\n- Grammatical range and accuracy: привести пример формы из реального ответа; не приписывать ошибки по выбранной теме или заметкам.\n- Pronunciation: проверять только по доступной слышимой записи или живому ответу. По одному письменному плану произношение не оценивать.\n- Сравнить первый и повторный ответ по одной выбранной цели, затем проверить её на свежей теме. Длительность и повтор не доказывают рост уровня.\n\nАдверсальное ревью автора:\n- Не требовать руководящую роль, награду или крупный проект.\n- Коллективный результат не доказывает личный вклад: спросить конкретное действие.\n- Вымышленный пример допустим; не проверять биографическую правдивость.\n\nВсе наблюдения требуют ручного прослушивания/проверки. Это черновик без методического одобрения, AI-оценки или публикации.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "skill": "sequence-and-contribution",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "topics": [
+          {
+            "prompt": "Describe a small project you completed with another person.",
+            "cues": [
+              "what the project was",
+              "who worked with you",
+              "what each person did",
+              "and explain how your contributions fitted together"
+            ],
+            "followup": "What would you organise differently next time?",
+            "ideas": [
+              "Give a brief beginning, middle and outcome.",
+              "Separate your contribution from the other person’s.",
+              "Connect a task to the final result."
+            ]
+          },
+          {
+            "prompt": "Describe a group activity that required people to coordinate.",
+            "cues": [
+              "what the activity was",
+              "how the group prepared",
+              "what you were responsible for",
+              "and explain why coordination mattered"
+            ],
+            "followup": "Would the activity work with fewer people? Why?",
+            "ideas": [
+              "Name your own role without describing every participant.",
+              "Explain one point where coordination changed an action.",
+              "Describe an outcome without claiming everyone felt the same."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Как способ обучения изменился",
+      "category": "Speaking · второй ответ и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная тема, не официальный экзаменационный материал. Можно использовать вымышленную ситуацию; личные имена, адреса и чувствительные подробности не нужны.\n\nНавык: Как способ обучения изменился.\n\n1. Составь короткий план до подсказок. Учебный ориентир: минута подготовки и ответ до двух минут.\n2. Ответь самостоятельно. Если запись недоступна, работай с заметками: они не доказывают выполнение устного ответа.\n3. Выбери одну конкретную цель улучшения, повтори ответ и сравни собственные примеры.\n4. Затем ответь на новую тему. Первая попытка и повтор после помощи должны оставаться раздельными.\n\nDescribe a practical skill you learnt through practice.\n- what the skill was\n- how you first tried to learn it\n- what difficulty you encountered\n- and explain how you adjusted your practice\n\nНе заучивай готовый ответ. Свободная речь не получает автоматическую оценку или band.",
+      "teacher_markdown": "### Первая тема\nDescribe a practical skill you learnt through practice.\n- what the skill was\n- how you first tried to learn it\n- what difficulty you encountered\n- and explain how you adjusted your practice\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Choose one difficulty rather than a list of unrelated problems.\n- Connect the change in practice to that difficulty.\n- Use a small example to describe improvement without inventing measurements.\n\nДополнительный вопрос: How would you introduce the skill to a beginner?\n\n### Новая тема\nDescribe how you learnt to use an unfamiliar tool or application.\n- what the tool or application was\n- what you wanted to do with it\n- how you learnt to use it\n- and explain something you changed after your first attempt\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- State the task before naming features.\n- Describe what did not work in the first attempt.\n- Explain what the next attempt changed and why.\n\nДополнительный вопрос: When would you ask another person for help?\n\nПроверка преподавателя:\n- Fluency and coherence: проследить ход мысли и отметить конкретное место, где связь теряется; не считать отсутствие пауз единственной целью.\n- Lexical resource: отметить точное слово или выражение и уместную альтернативу, не требовать редкой лексики.\n- Grammatical range and accuracy: привести пример формы из реального ответа; не приписывать ошибки по выбранной теме или заметкам.\n- Pronunciation: проверять только по доступной слышимой записи или живому ответу. По одному письменному плану произношение не оценивать.\n- Сравнить первый и повторный ответ по одной выбранной цели, затем проверить её на свежей теме. Длительность и повтор не доказывают рост уровня.\n\nАдверсальное ревью автора:\n- Не требовать владение платным приложением или технический опыт.\n- Не считать перефразирование исходного ответа переносом: тема и задача различаются.\n- Не приравнивать самоотчёт об улучшении к измеренному эффекту.\n\nВсе наблюдения требуют ручного прослушивания/проверки. Это черновик без методического одобрения, AI-оценки или публикации.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "skill": "learning-process-and-adjustment",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "topics": [
+          {
+            "prompt": "Describe a practical skill you learnt through practice.",
+            "cues": [
+              "what the skill was",
+              "how you first tried to learn it",
+              "what difficulty you encountered",
+              "and explain how you adjusted your practice"
+            ],
+            "followup": "How would you introduce the skill to a beginner?",
+            "ideas": [
+              "Choose one difficulty rather than a list of unrelated problems.",
+              "Connect the change in practice to that difficulty.",
+              "Use a small example to describe improvement without inventing measurements."
+            ]
+          },
+          {
+            "prompt": "Describe how you learnt to use an unfamiliar tool or application.",
+            "cues": [
+              "what the tool or application was",
+              "what you wanted to do with it",
+              "how you learnt to use it",
+              "and explain something you changed after your first attempt"
+            ],
+            "followup": "When would you ask another person for help?",
+            "ideas": [
+              "State the task before naming features.",
+              "Describe what did not work in the first attempt.",
+              "Explain what the next attempt changed and why."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Критерий выбора и компромисс",
+      "category": "Speaking · второй ответ и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная тема, не официальный экзаменационный материал. Можно использовать вымышленную ситуацию; личные имена, адреса и чувствительные подробности не нужны.\n\nНавык: Критерий выбора и компромисс.\n\n1. Составь короткий план до подсказок. Учебный ориентир: минута подготовки и ответ до двух минут.\n2. Ответь самостоятельно. Если запись недоступна, работай с заметками: они не доказывают выполнение устного ответа.\n3. Выбери одну конкретную цель улучшения, повтори ответ и сравни собственные примеры.\n4. Затем ответь на новую тему. Первая попытка и повтор после помощи должны оставаться раздельными.\n\nDescribe a time when you chose between two ordinary options.\n- what the two options were\n- what you needed at the time\n- what you chose\n- and explain one advantage and one limitation of your choice\n\nНе заучивай готовый ответ. Свободная речь не получает автоматическую оценку или band.",
+      "teacher_markdown": "### Первая тема\nDescribe a time when you chose between two ordinary options.\n- what the two options were\n- what you needed at the time\n- what you chose\n- and explain one advantage and one limitation of your choice\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- State the criterion that mattered for this decision.\n- Compare both options using that criterion.\n- Explain a limitation without contradicting your main reason.\n\nДополнительный вопрос: Would different circumstances change your choice?\n\n### Новая тема\nDescribe a change you considered making to an everyday routine.\n- what the routine was\n- what change you considered\n- what might improve or become harder\n- and explain whether you would make the change\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Separate the current routine from the possible change.\n- Explain one benefit and one tradeoff.\n- A considered change need not have happened; keep the timing clear.\n\nДополнительный вопрос: Who might prefer to keep the original routine?\n\nПроверка преподавателя:\n- Fluency and coherence: проследить ход мысли и отметить конкретное место, где связь теряется; не считать отсутствие пауз единственной целью.\n- Lexical resource: отметить точное слово или выражение и уместную альтернативу, не требовать редкой лексики.\n- Grammatical range and accuracy: привести пример формы из реального ответа; не приписывать ошибки по выбранной теме или заметкам.\n- Pronunciation: проверять только по доступной слышимой записи или живому ответу. По одному письменному плану произношение не оценивать.\n- Сравнить первый и повторный ответ по одной выбранной цели, затем проверить её на свежей теме. Длительность и повтор не доказывают рост уровня.\n\nАдверсальное ревью автора:\n- Тема не требует уже совершённого изменения или серьёзного жизненного решения.\n- Плюсы и минусы должны относиться к собственному критерию, а не к чужому обязательному ответу.\n- Не оценивать личное предпочтение как правильное или неправильное.\n\nВсе наблюдения требуют ручного прослушивания/проверки. Это черновик без методического одобрения, AI-оценки или публикации.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "skill": "comparison-and-tradeoff",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "topics": [
+          {
+            "prompt": "Describe a time when you chose between two ordinary options.",
+            "cues": [
+              "what the two options were",
+              "what you needed at the time",
+              "what you chose",
+              "and explain one advantage and one limitation of your choice"
+            ],
+            "followup": "Would different circumstances change your choice?",
+            "ideas": [
+              "State the criterion that mattered for this decision.",
+              "Compare both options using that criterion.",
+              "Explain a limitation without contradicting your main reason."
+            ]
+          },
+          {
+            "prompt": "Describe a change you considered making to an everyday routine.",
+            "cues": [
+              "what the routine was",
+              "what change you considered",
+              "what might improve or become harder",
+              "and explain whether you would make the change"
+            ],
+            "followup": "Who might prefer to keep the original routine?",
+            "ideas": [
+              "Separate the current routine from the possible change.",
+              "Explain one benefit and one tradeoff.",
+              "A considered change need not have happened; keep the timing clear."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Совет с объяснением границ",
+      "category": "Speaking · второй ответ и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная тема, не официальный экзаменационный материал. Можно использовать вымышленную ситуацию; личные имена, адреса и чувствительные подробности не нужны.\n\nНавык: Совет с объяснением границ.\n\n1. Составь короткий план до подсказок. Учебный ориентир: минута подготовки и ответ до двух минут.\n2. Ответь самостоятельно. Если запись недоступна, работай с заметками: они не доказывают выполнение устного ответа.\n3. Выбери одну конкретную цель улучшения, повтори ответ и сравни собственные примеры.\n4. Затем ответь на новую тему. Первая попытка и повтор после помощи должны оставаться раздельными.\n\nDescribe a recommendation you would give to someone starting a hobby.\n- what the hobby is\n- what you would recommend\n- why the recommendation could help\n- and explain when a different approach might be better\n\nНе заучивай готовый ответ. Свободная речь не получает автоматическую оценку или band.",
+      "teacher_markdown": "### Первая тема\nDescribe a recommendation you would give to someone starting a hobby.\n- what the hobby is\n- what you would recommend\n- why the recommendation could help\n- and explain when a different approach might be better\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Make the recommendation specific enough to act on.\n- Explain a mechanism rather than saying it is useful.\n- Name a circumstance where the advice may not fit.\n\nДополнительный вопрос: How would your recommendation change for someone with more experience?\n\n### Новая тема\nDescribe advice that could help a student organise a short study session.\n- what the advice is\n- how the student could follow it\n- why it might help\n- and explain one situation where it would need adjusting\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Describe a feasible action within one session.\n- Explain its connection to the student’s aim.\n- Suggest observation rather than guaranteeing a result.\n\nДополнительный вопрос: How could a student check whether the advice helps them?\n\nПроверка преподавателя:\n- Fluency and coherence: проследить ход мысли и отметить конкретное место, где связь теряется; не считать отсутствие пауз единственной целью.\n- Lexical resource: отметить точное слово или выражение и уместную альтернативу, не требовать редкой лексики.\n- Grammatical range and accuracy: привести пример формы из реального ответа; не приписывать ошибки по выбранной теме или заметкам.\n- Pronunciation: проверять только по доступной слышимой записи или живому ответу. По одному письменному плану произношение не оценивать.\n- Сравнить первый и повторный ответ по одной выбранной цели, затем проверить её на свежей теме. Длительность и повтор не доказывают рост уровня.\n\nАдверсальное ревью автора:\n- Не превращать учебный ответ в медицинский, финансовый или обязательный совет.\n- Не обещать одинаковый эффект всем учащимся.\n- Признавать несколько обоснованных рекомендаций, не сверять с единственным списком.\n\nВсе наблюдения требуют ручного прослушивания/проверки. Это черновик без методического одобрения, AI-оценки или публикации.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "skill": "recommendation-and-limitation",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "topics": [
+          {
+            "prompt": "Describe a recommendation you would give to someone starting a hobby.",
+            "cues": [
+              "what the hobby is",
+              "what you would recommend",
+              "why the recommendation could help",
+              "and explain when a different approach might be better"
+            ],
+            "followup": "How would your recommendation change for someone with more experience?",
+            "ideas": [
+              "Make the recommendation specific enough to act on.",
+              "Explain a mechanism rather than saying it is useful.",
+              "Name a circumstance where the advice may not fit."
+            ]
+          },
+          {
+            "prompt": "Describe advice that could help a student organise a short study session.",
+            "cues": [
+              "what the advice is",
+              "how the student could follow it",
+              "why it might help",
+              "and explain one situation where it would need adjusting"
+            ],
+            "followup": "How could a student check whether the advice helps them?",
+            "ideas": [
+              "Describe a feasible action within one session.",
+              "Explain its connection to the student’s aim.",
+              "Suggest observation rather than guaranteeing a result."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Наблюдение и возможное объяснение",
+      "category": "Speaking · второй ответ и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная тема, не официальный экзаменационный материал. Можно использовать вымышленную ситуацию; личные имена, адреса и чувствительные подробности не нужны.\n\nНавык: Наблюдение и возможное объяснение.\n\n1. Составь короткий план до подсказок. Учебный ориентир: минута подготовки и ответ до двух минут.\n2. Ответь самостоятельно. Если запись недоступна, работай с заметками: они не доказывают выполнение устного ответа.\n3. Выбери одну конкретную цель улучшения, повтори ответ и сравни собственные примеры.\n4. Затем ответь на новую тему. Первая попытка и повтор после помощи должны оставаться раздельными.\n\nDescribe something unusual you noticed in an ordinary place.\n- where you were\n- what you noticed\n- why it caught your attention\n- and explain a possible reason while saying what you do not know\n\nНе заучивай готовый ответ. Свободная речь не получает автоматическую оценку или band.",
+      "teacher_markdown": "### Первая тема\nDescribe something unusual you noticed in an ordinary place.\n- where you were\n- what you noticed\n- why it caught your attention\n- and explain a possible reason while saying what you do not know\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Describe the observation before proposing a reason.\n- Use language that marks an explanation as possible.\n- Name one missing piece of information.\n\nДополнительный вопрос: What information would help you check your explanation?\n\n### Новая тема\nDescribe a question that arose while you were doing an everyday activity.\n- what the activity was\n- what question you had\n- what made you think of it\n- and explain how you might look for an answer\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Keep the observed event separate from your guess.\n- Describe a feasible way to look for relevant information.\n- Explain what a source would need to establish.\n\nДополнительный вопрос: How would you decide whether an answer is reliable?\n\nПроверка преподавателя:\n- Fluency and coherence: проследить ход мысли и отметить конкретное место, где связь теряется; не считать отсутствие пауз единственной целью.\n- Lexical resource: отметить точное слово или выражение и уместную альтернативу, не требовать редкой лексики.\n- Grammatical range and accuracy: привести пример формы из реального ответа; не приписывать ошибки по выбранной теме или заметкам.\n- Pronunciation: проверять только по доступной слышимой записи или живому ответу. По одному письменному плану произношение не оценивать.\n- Сравнить первый и повторный ответ по одной выбранной цели, затем проверить её на свежей теме. Длительность и повтор не доказывают рост уровня.\n\nАдверсальное ревью автора:\n- Не требовать научную точность или необычное событие: задача про ясность речи.\n- Возможная причина не должна оцениваться как факт без подтверждения.\n- Отсутствие готового ответа на вопрос не является провалом монолога.\n\nВсе наблюдения требуют ручного прослушивания/проверки. Это черновик без методического одобрения, AI-оценки или публикации.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "skill": "observation-versus-speculation",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "topics": [
+          {
+            "prompt": "Describe something unusual you noticed in an ordinary place.",
+            "cues": [
+              "where you were",
+              "what you noticed",
+              "why it caught your attention",
+              "and explain a possible reason while saying what you do not know"
+            ],
+            "followup": "What information would help you check your explanation?",
+            "ideas": [
+              "Describe the observation before proposing a reason.",
+              "Use language that marks an explanation as possible.",
+              "Name one missing piece of information."
+            ]
+          },
+          {
+            "prompt": "Describe a question that arose while you were doing an everyday activity.",
+            "cues": [
+              "what the activity was",
+              "what question you had",
+              "what made you think of it",
+              "and explain how you might look for an answer"
+            ],
+            "followup": "How would you decide whether an answer is reliable?",
+            "ideas": [
+              "Keep the observed event separate from your guess.",
+              "Describe a feasible way to look for relevant information.",
+              "Explain what a source would need to establish."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Проблема, действие и результат",
+      "category": "Speaking · второй ответ и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная тема, не официальный экзаменационный материал. Можно использовать вымышленную ситуацию; личные имена, адреса и чувствительные подробности не нужны.\n\nНавык: Проблема, действие и результат.\n\n1. Составь короткий план до подсказок. Учебный ориентир: минута подготовки и ответ до двух минут.\n2. Ответь самостоятельно. Если запись недоступна, работай с заметками: они не доказывают выполнение устного ответа.\n3. Выбери одну конкретную цель улучшения, повтори ответ и сравни собственные примеры.\n4. Затем ответь на новую тему. Первая попытка и повтор после помощи должны оставаться раздельными.\n\nDescribe a small improvement you made or could make to a repeated task.\n- what the task is\n- what makes it difficult or slow\n- what improvement you made or suggest\n- and explain how you would recognise whether it helped\n\nНе заучивай готовый ответ. Свободная речь не получает автоматическую оценку или band.",
+      "teacher_markdown": "### Первая тема\nDescribe a small improvement you made or could make to a repeated task.\n- what the task is\n- what makes it difficult or slow\n- what improvement you made or suggest\n- and explain how you would recognise whether it helped\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- State one specific difficulty.\n- Connect the proposed action to that difficulty.\n- Distinguish an observed result from an expected result.\n\nДополнительный вопрос: What could make the improvement less useful?\n\n### Новая тема\nDescribe a misunderstanding you resolved or could resolve in a group task.\n- what the group was trying to do\n- what was misunderstood\n- how you clarified or would clarify it\n- and explain how you would check shared understanding\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Use a low-stakes fictional situation if preferred.\n- Explain the clarification instead of blaming a person.\n- Describe a question or action that checks understanding.\n\nДополнительный вопрос: How could the group prevent a similar misunderstanding?\n\nПроверка преподавателя:\n- Fluency and coherence: проследить ход мысли и отметить конкретное место, где связь теряется; не считать отсутствие пауз единственной целью.\n- Lexical resource: отметить точное слово или выражение и уместную альтернативу, не требовать редкой лексики.\n- Grammatical range and accuracy: привести пример формы из реального ответа; не приписывать ошибки по выбранной теме или заметкам.\n- Pronunciation: проверять только по доступной слышимой записи или живому ответу. По одному письменному плану произношение не оценивать.\n- Сравнить первый и повторный ответ по одной выбранной цели, затем проверить её на свежей теме. Длительность и повтор не доказывают рост уровня.\n\nАдверсальное ревью автора:\n- Не требовать личный конфликт или чувствительный рассказ.\n- Гипотетический ответ допустим, но времена и условность должны быть понятны.\n- Более длинный рассказ не обязательно лучше: проверять связь действий с проблемой.\n\nВсе наблюдения требуют ручного прослушивания/проверки. Это черновик без методического одобрения, AI-оценки или публикации.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "skill": "problem-action-result",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "topics": [
+          {
+            "prompt": "Describe a small improvement you made or could make to a repeated task.",
+            "cues": [
+              "what the task is",
+              "what makes it difficult or slow",
+              "what improvement you made or suggest",
+              "and explain how you would recognise whether it helped"
+            ],
+            "followup": "What could make the improvement less useful?",
+            "ideas": [
+              "State one specific difficulty.",
+              "Connect the proposed action to that difficulty.",
+              "Distinguish an observed result from an expected result."
+            ]
+          },
+          {
+            "prompt": "Describe a misunderstanding you resolved or could resolve in a group task.",
+            "cues": [
+              "what the group was trying to do",
+              "what was misunderstood",
+              "how you clarified or would clarify it",
+              "and explain how you would check shared understanding"
+            ],
+            "followup": "How could the group prevent a similar misunderstanding?",
+            "ideas": [
+              "Use a low-stakes fictional situation if preferred.",
+              "Explain the clarification instead of blaming a person.",
+              "Describe a question or action that checks understanding."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "S12",
+      "title": "План с ограничениями",
+      "category": "Speaking · второй ответ и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная тема, не официальный экзаменационный материал. Можно использовать вымышленную ситуацию; личные имена, адреса и чувствительные подробности не нужны.\n\nНавык: План с ограничениями.\n\n1. Составь короткий план до подсказок. Учебный ориентир: минута подготовки и ответ до двух минут.\n2. Ответь самостоятельно. Если запись недоступна, работай с заметками: они не доказывают выполнение устного ответа.\n3. Выбери одну конкретную цель улучшения, повтори ответ и сравни собственные примеры.\n4. Затем ответь на новую тему. Первая попытка и повтор после помощи должны оставаться раздельными.\n\nDescribe a small event you would like to organise.\n- what the event would be\n- who it would be for\n- what preparation it would need\n- and explain how you would handle one likely difficulty\n\nНе заучивай готовый ответ. Свободная речь не получает автоматическую оценку или band.",
+      "teacher_markdown": "### Первая тема\nDescribe a small event you would like to organise.\n- what the event would be\n- who it would be for\n- what preparation it would need\n- and explain how you would handle one likely difficulty\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Name the purpose and audience first.\n- Prioritise a few necessary preparations.\n- Connect a backup action to a plausible difficulty.\n\nДополнительный вопрос: What part of the plan could you simplify?\n\n### Новая тема\nDescribe a manageable goal you would like to work towards.\n- what the goal is\n- why it matters to you\n- what first steps you would take\n- and explain how you might adapt if a step did not work\n\nИдеи для помощи после первой попытки, не обязательный ответ:\n- Choose a goal that can be explained without personal details.\n- Make the first steps concrete.\n- Distinguish a plan from an achievement and allow adjustment.\n\nДополнительный вопрос: What would count as useful progress before completing the goal?\n\nПроверка преподавателя:\n- Fluency and coherence: проследить ход мысли и отметить конкретное место, где связь теряется; не считать отсутствие пауз единственной целью.\n- Lexical resource: отметить точное слово или выражение и уместную альтернативу, не требовать редкой лексики.\n- Grammatical range and accuracy: привести пример формы из реального ответа; не приписывать ошибки по выбранной теме или заметкам.\n- Pronunciation: проверять только по доступной слышимой записи или живому ответу. По одному письменному плану произношение не оценивать.\n- Сравнить первый и повторный ответ по одной выбранной цели, затем проверить её на свежей теме. Длительность и повтор не доказывают рост уровня.\n\nАдверсальное ревью автора:\n- Не требовать финансовых ресурсов, поездки или достижений для хорошего ответа.\n- План не выдаётся за состоявшийся результат.\n- Оценивать понятность и развитие мысли по реальной речи, не амбициозность цели.\n\nВсе наблюдения требуют ручного прослушивания/проверки. Это черновик без методического одобрения, AI-оценки или публикации.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "skill": "planning-and-contingency",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "topics": [
+          {
+            "prompt": "Describe a small event you would like to organise.",
+            "cues": [
+              "what the event would be",
+              "who it would be for",
+              "what preparation it would need",
+              "and explain how you would handle one likely difficulty"
+            ],
+            "followup": "What part of the plan could you simplify?",
+            "ideas": [
+              "Name the purpose and audience first.",
+              "Prioritise a few necessary preparations.",
+              "Connect a backup action to a plausible difficulty."
+            ]
+          },
+          {
+            "prompt": "Describe a manageable goal you would like to work towards.",
+            "cues": [
+              "what the goal is",
+              "why it matters to you",
+              "what first steps you would take",
+              "and explain how you might adapt if a step did not work"
+            ],
+            "followup": "What would count as useful progress before completing the goal?",
+            "ideas": [
+              "Choose a goal that can be explained without personal details.",
+              "Make the first steps concrete.",
+              "Distinguish a plan from an achievement and allow adjustment."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
