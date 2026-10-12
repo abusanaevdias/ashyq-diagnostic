@@ -1,0 +1,11 @@
+import styles from './Task1Overview.module.css';
+
+export type Task1LineChartData = { title: string; unit: string; years: number[]; series: { name: string; values: number[] }[] };
+export default function Task1LineChart({ item }: { item: Task1LineChartData }) {
+  const max = Math.max(1, Math.ceil(Math.max(...item.series.flatMap(series => series.values)) / 20) * 20);
+  return <figure className={styles.chart}><figcaption><strong lang="en">{item.title}</strong><span>{item.unit}</span></figcaption><svg viewBox="0 0 540 340" role="img" aria-label={`Линейный график: ${item.title}. Точные значения доступны в таблице под графиком.`}>
+    {[0,1,2,3,4].map(tick => <g key={tick}><line x1="60" x2="510" y1={280-tick*60} y2={280-tick*60} className={styles.gridLine}/><text x="48" y={285-tick*60} textAnchor="end">{max*tick/4}</text></g>)}
+    {item.years.map((year,index) => <text key={year} x={70+index*140} y="310" textAnchor="middle">{year}</text>)}
+    {item.series.map((series,index) => <g key={series.name} className={[styles.seriesA,styles.seriesB,styles.seriesC][index]}><polyline points={series.values.map((value,point) => `${70+point*140},${280-value/max*240}`).join(' ')} fill="none" strokeWidth="3" strokeDasharray={index===1?'8 5':index===2?'3 4':undefined}/>{series.values.map((value,point) => <circle key={point} cx={70+point*140} cy={280-value/max*240} r="5"/>)}</g>)}
+  </svg><ul className={styles.legend}>{item.series.map((series,index) => <li key={series.name}><span className={[styles.seriesA,styles.seriesB,styles.seriesC][index]} aria-hidden="true">{index===0?'━':index===1?'┄':'┈'}</span>{series.name}</li>)}</ul><details><summary>Точные значения таблицей</summary><div className={styles.chartTable} role="region" aria-label={`Таблица данных: ${item.title}`} tabIndex={0}><table><caption>{item.unit}</caption><thead><tr><th scope="col">Series</th>{item.years.map(year => <th key={year} scope="col">{year}</th>)}</tr></thead><tbody>{item.series.map(series => <tr key={series.name}><th scope="row">{series.name}</th>{series.values.map((value,index) => <td key={index}>{value}</td>)}</tr>)}</tbody></table></div></details><p className={styles.note}>Точки — записанные значения. Линии соединяют их для удобства; график не показывает причины изменений.</p></figure>;
+}

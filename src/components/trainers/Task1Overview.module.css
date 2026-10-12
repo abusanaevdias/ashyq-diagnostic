@@ -31,7 +31,9 @@
 .chart caption { text-align: left; color: var(--ink-soft); margin-bottom: 8px; }
 .chart th, .chart td { padding: 9px 4px; text-align: right; border-bottom: 1px solid var(--hairline); }
 .chart th:first-child { text-align: left; }
-.page summary { min-height: 44px; padding: 12px 0; font-weight: 800; cursor: pointer; }
+.page summary, .chart summary { min-height: 44px; padding: 12px 0; font-weight: 800; cursor: pointer; }
+.chartTable { max-width: 100%; overflow-x: auto; }
+.chartTable:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 .response p { line-height: 1.6; overflow-wrap: anywhere; }
 .response > label, .evidenceRow label { display: block; margin: 16px 0 8px; font-weight: 800; line-height: 1.5; }
 .response select, .response textarea { width: 100%; min-height: 48px; margin-bottom: 16px; padding: 12px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: 15px/1.65 var(--font-body); }

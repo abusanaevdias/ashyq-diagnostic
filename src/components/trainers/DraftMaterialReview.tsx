@@ -8,6 +8,7 @@ import DraftSatPreview from './DraftSatPreview';
 import DraftListeningPreview from './DraftListeningPreview';
 import DraftMathPreview from './DraftMathPreview';
 import DraftReadingPreview from './DraftReadingPreview';
+import DraftTask1Preview from './DraftTask1Preview';
 import { decisionSignature, DRAFT_REVIEW_CHANGED, draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
 import { saveDraftDecision } from '@/lib/trainers/draft-review-storage';
 import styles from './TrainerCheckpoint.module.css';
@@ -65,6 +66,7 @@ function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; prev
     <DraftListeningPreview value={unit.exercise_data} unitId={unit.id}/>
     <DraftMathPreview value={unit.exercise_data}/>
     <DraftReadingPreview value={unit.exercise_data}/>
+    <DraftTask1Preview value={unit.exercise_data}/>
     <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown} sectionLabel="разбора"/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown} sectionLabel="языковой правки"/></>}</details>
     <fieldset className={styles.filters} disabled={saving}><legend>Решение проверяющего</legend>
       <label htmlFor="draft-review-decision">Результат проверки</label><select id="draft-review-decision" value={decision} onChange={event => { onDirty(true); setDecision(event.target.value as ReviewDecision); setError(''); }}><option value="pending">Пока не проверено</option><option value="recommend">Рекомендую принять</option><option value="revise">Нужна правка</option><option value="hold">Отложить</option></select>
