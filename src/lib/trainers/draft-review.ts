@@ -2,9 +2,10 @@ import batch from '@/data/trainer-drafts/batch-01.json';
 import batch02 from '@/data/trainer-drafts/batch-02.json';
 import batch03 from '@/data/trainer-drafts/batch-03.json';
 import batch04 from '@/data/trainer-drafts/batch-04.json';
+import batch05 from '@/data/trainer-drafts/batch-05.json';
 
 export const draftBatch = batch;
-export const draftBatches = [batch, batch02, batch03, batch04];
+export const draftBatches = [batch, batch02, batch03, batch04, batch05];
 export type DraftBatch = { batch: string; version: string | number; content_sha256: string; author: string; methodically_approved: boolean; units: DraftUnit[] };
 export type DraftUnit = typeof batch.units[number] & { exercise_data?: unknown };
 export type ReviewDecision = 'pending' | 'recommend' | 'revise' | 'hold';
