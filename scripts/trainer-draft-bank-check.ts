@@ -9,7 +9,8 @@ import { draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewK
 
 assert.equal(batch.methodically_approved, false);
 assert.equal(batch.units.length, 6);
-assert.equal(new Set(draftBatches.flatMap(b => b.units.map(u => u.id))).size, 18, 'unique IDs across batches');
+const allIds = draftBatches.flatMap(b => b.units.map(u => u.id));
+assert.equal(new Set(allIds).size, allIds.length, 'unique IDs across batches');
 assert.equal(crypto.createHash('sha256').update(JSON.stringify(batch.units)).digest('hex'), batch.content_sha256);
 for (const unit of batch.units) {
   assert.equal(unit.status, 'DRAFT');
@@ -86,4 +87,4 @@ try {
     assert.equal(result.stdout, '');
   }
 } finally { if (fs.existsSync(fixture)) fs.unlinkSync(fixture); fs.rmdirSync(temp); }
-console.log('PASS 18 unique DRAFT units; six new module structures, four chart models/arithmetic/ties, listening variants/excerpts, fresh topics, cross-batch identity/fingerprint isolation and seven rejected importer cases. No methodology, audio or band-quality certification.');
+console.log(`PASS ${allIds.length} unique IDs; batch 02: six DRAFT module structures, four chart models/arithmetic/ties, listening variants/excerpts, fresh topics, cross-batch identity/fingerprint isolation and seven rejected importer cases. No methodology, audio or band-quality certification.`);
