@@ -25,6 +25,7 @@ const phase = (...values: string[]) => one(...values);
 const completedDrills: Check = v => array(one(...writingDrills.map(item => item.id)), writingDrills.length)(v) && new Set(v as string[]).size === (v as string[]).length;
 const index = nullable(integer(1));
 const confidence = one('', 'low', 'medium', 'high');
+const listeningConfidence = one('', 'Низкая', 'Средняя', 'Высокая');
 const tfng = one('TRUE', 'FALSE', 'NOT GIVEN');
 const readAttempt = shape({ answer: tfng, evidenceId: text, confidence: one('low', 'medium', 'high') });
 const optionAttempt = shape({ prediction: text, choiceIndex: integer(3) });
@@ -33,7 +34,7 @@ const reasonMap = record(reason, /^[0-3]$/);
 const distractorAttempt = shape({ answerIndex: integer(3), reasons: reasonMap });
 const firstMath = shape({ stepIndex: integer(5), mechanism: text, repairLine: text });
 const transferMath = shape({ stepIndex: integer(5), answer: text });
-const listeningAttempt = shape({ answer: text, type: text, cue: text, confidence, diagnosis: text, level: nullable(integer(3)), repaired: text, textMode: bool, textHelp: bool, stopped: bool });
+const listeningAttempt = shape({ answer: text, type: text, cue: text, confidence: listeningConfidence, diagnosis: text, level: nullable(integer(3)), repaired: text, textMode: bool, textHelp: bool, stopped: bool });
 const overviewAttempt = shape({ selected: array(integer(5), 6), overview: text, evidence: record(integer(20), /^[0-5]$/), reasons: record(integer(20), /^[0-5]$/), correction: text });
 const model = shape({ variable: text, setup: number, rate: v => number(v) && (v as number) > 0, total: number, form: one('once', 'repeated', 'omitted') });
 const translationAttempt = shape({ model, answer: number, working: text, repair: text });
@@ -49,7 +50,7 @@ const schemas: Record<TrainerId, Check> = {
   'sat-optionless': shape({ caseIndex: nullable(integer(4)), phase: phase('choose', 'predict', 'options', 'review', 'result'), round: one('first', 'transfer'), prediction: text, choiceIndex: nullable(integer(3)), first: nullable(optionAttempt), transfer: nullable(optionAttempt) }),
   'sat-distractor': shape({ caseIndex: index, phase: phase('choose', 'answer', 'reasons', 'review', 'result'), round: one('first', 'transfer'), answerIndex: nullable(integer(3)), reasons: reasonMap, first: nullable(distractorAttempt), transfer: nullable(distractorAttempt) }),
   'math-forensics': shape({ caseIndex: index, phase: phase('choose', 'locate', 'feedback', 'continue', 'transfer', 'result'), stepIndex: nullable(integer(5)), mechanism: text, repairLine: text, firstAttempt: nullable(firstMath), ownAnswer: text, transferStep: nullable(integer(5)), transferAnswer: text, transferAttempt: nullable(transferMath) }),
-  'listening-replay': shape({ caseIndex: index, round: one('first', 'transfer'), phase: phase('choose', 'predict', 'answer', 'diagnose', 'repair', 'review', 'result'), prediction: text, cue: text, answer: text, confidence, diagnosis: text, repair: text, level: integer(3), attemptedLevel: bool, feedback: text, textMode: bool, textHelp: bool, stopped: bool, first: nullable(listeningAttempt), transfer: nullable(listeningAttempt) }),
+  'listening-replay': shape({ caseIndex: index, round: one('first', 'transfer'), phase: phase('choose', 'predict', 'answer', 'diagnose', 'repair', 'review', 'result'), prediction: text, cue: text, answer: text, confidence: listeningConfidence, diagnosis: text, repair: text, level: integer(3), attemptedLevel: bool, feedback: text, textMode: bool, textHelp: bool, stopped: bool, first: nullable(listeningAttempt), transfer: nullable(listeningAttempt) }),
   'task1-overview': shape({ round: integer(1), phase: phase('start', 'select', 'evidence', 'accuracy', 'review', 'draft', 'revise', 'result'), selected: array(integer(5), 6), overview: text, evidence: record(integer(20), /^[0-5]$/), reasons: record(integer(20), /^[0-5]$/), correction: text, first: nullable(overviewAttempt), transfer: nullable(overviewAttempt), draft: text, revision: text, focus: text, noChanges: bool }),
   'sat-translation': shape({ phase: phase('choose', 'model', 'calculate', 'review', 'result'), caseIndex: integer(1), round: integer(1), variable: text, setup: text, rate: text, total: text, form: text, model: nullable(model), answer: text, working: text, attempts: array(translationAttempt, 2), repair: text }),
   'math-method-switch': shape({ phase: phase('choose', 'solve', 'review', 'result'), index: integer(1), round: integer(1), x: text, y: text, working: text, method: v => v === ' ' || method(v), alternative: v => v === ' ' || method(v), plan: text, attempts: array(methodAttempt, 2) }),

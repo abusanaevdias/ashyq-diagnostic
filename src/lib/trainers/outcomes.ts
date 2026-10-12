@@ -55,13 +55,13 @@ export function practiceOutcome(trainer: TrainerId, value: unknown): PracticeOut
   } else if (trainer === 'listening-replay') {
     const item = listeningCases[v.caseIndex as number];
     for (const [index, name] of (['first', 'transfer'] as const).entries()) {
-      const attempt = v[name] as { answer: string; repaired: string; textMode: boolean; textHelp: boolean; level: number | null };
+      const attempt = v[name] as { answer: string; repaired: string; textMode: boolean; textHelp: boolean; stopped: boolean; level: number | null };
       const help = attempt.textMode || attempt.textHelp || attempt.level !== null;
-      outcome.checks.push(check(`${stageLabels[index]}: исходный ответ${attempt.textMode ? ' по тексту' : ''}`, answerMatches(attempt.answer, item[name]), index ? 'transfer' : 'first'));
+      outcome.checks.push(check(`${stageLabels[index]}: исходный ответ${attempt.textMode ? ' по тексту' : ''}${attempt.stopped ? ' · прослушивание прерывалось' : ''}`, answerMatches(attempt.answer, item[name]), index ? 'transfer' : 'first'));
       outcome.checks.push(check(`${stageLabels[index]}: исправление${help ? ' с помощью' : ''}`, answerMatches(attempt.repaired, item[name]), 'repair'));
     }
     outcome.advice = 'Послушай другую запись без полного текста. Проверь окончательный ответ после исправления говорящего и точное написание.';
-    outcome.limitation += ' Текстовый режим и помощь видны в подписях. Самоописание затруднения не является диагнозом системы.';
+    outcome.limitation += ' Текстовый режим, помощь и прерывание видны в подписях. Они не равны непрерывному самостоятельному прослушиванию. Самоописание затруднения не является диагнозом системы.';
   } else if (trainer === 'task1-overview') {
     for (const [index, name] of (['first', 'transfer'] as const).entries()) {
       const item = overviewItems[index], attempt = v[name] as OverviewAttempt;

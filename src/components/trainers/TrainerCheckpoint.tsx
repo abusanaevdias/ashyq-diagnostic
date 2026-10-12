@@ -101,7 +101,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     const generation = writeGeneration.current;
     const save = async () => { try {
       const value: unknown = JSON.parse(serialized);
-      if (!validSnapshot(trainer, value)) return;
+      if (!validSnapshot(trainer, value)) throw new Error('Этот шаг не удалось сохранить. Оставь страницу открытой и скопируй свой текст перед выходом.');
       if (!navigator.locks) throw new Error('Браузер не поддерживает безопасное сохранение между вкладками. Скачай работу.');
       await navigator.locks.request(`ashyq-trainer:${key}`, () => {
       if (generation !== writeGeneration.current) return;
