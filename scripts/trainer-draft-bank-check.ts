@@ -18,7 +18,7 @@ for (const unit of batch.units) {
   assert.equal(data.publication_ready, false);
   assert.ok(unit.student_markdown.trim() && unit.teacher_markdown.trim());
   if (data.kind === 'listening-pair-v1') {
-    assert.equal(data.audio_status, 'NOT_GENERATED');
+    assert.equal(data.audio_status, 'GENERATED_DRAFT');
     assert.equal(data.rounds!.length, 2);
     for (const round of data.rounds!) {
       assert.ok(round.script.includes(round.segment), 'segment must be an exact contiguous excerpt');

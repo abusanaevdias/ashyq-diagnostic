@@ -2,8 +2,8 @@
   "format": "ashyq-draft-bank-v1",
   "batch": "02",
   "version": 1,
-  "source_sha256": "b1a6017b5aa47235a53d8ff543bfbfe2114cfee3067d6b8f2e59a644521088f2",
-  "content_sha256": "b1a6017b5aa47235a53d8ff543bfbfe2114cfee3067d6b8f2e59a644521088f2",
+  "source_sha256": "04cdf34ebfff4ae6cbd829a6030ecf2633622e217547d7f5e144012175c32cd8",
+  "content_sha256": "04cdf34ebfff4ae6cbd829a6030ecf2633622e217547d7f5e144012175c32cd8",
   "author": "Codex",
   "intended_reviewer": "Dias",
   "methodically_approved": false,
@@ -51,7 +51,7 @@
             "explanation": "Forty — первоначальная бронь; fourteen — окончательное число участников. Учителя сопровождают группу, но не участвуют."
           }
         ],
-        "audio_status": "NOT_GENERATED",
+        "audio_status": "GENERATED_DRAFT",
         "publication_ready": false
       }
     },
@@ -60,15 +60,15 @@
       "title": "Что принести с собой",
       "category": "Listening · повтор и перенос",
       "status": "DRAFT",
-      "student_markdown": "Два авторских учебных аудио. Это не материал реального экзамена.\n\nЦель: Предмет, перефразирование и окончание множественного числа.\n\n1. Прослушай первую запись целиком и запиши ответ. Текст и ключ пока не открывай.\n2. Повтори нужный фрагмент. Отметь, что помешало: число, слово, окончание, перефразирование или другое. Можно выбрать «не уверен».\n3. Исправь ответ и сравни с объяснением.\n4. Выполни второе задание без текста: это новый пример. Система сохраняет первую попытку отдельно.\n\n### Первое задание\nVolunteers must bring their own reusable ____. Write ONE WORD ONLY.\n\n### Новый пример\nThe school supplies the seedlings, but students must bring gardening ____. Write ONE WORD ONLY.",
-      "teacher_markdown": "### Первое аудио\nПолный сценарий: For the park clean-up, we will provide protective gloves and collection bags. Please bring your own reusable bottles, since there is a drinking-water tap near the entrance. There is no need to buy gloves or bags.\n\nПовторяемый фрагмент: Please bring your own reusable bottles, since there is a drinking-water tap near the entrance.\n\nКлюч: bottles. Допустимые варианты: bottles.\n\nРазбор: Bring your own указывает на bottles. Gloves и bags выдаются. В задании сохранено множественное число исходной формулировки.\n\nГраницы проверки: регистр и крайние пробелы несущественны. Не принимать дополнительные слова сверх инструкции. Причину ошибки выбирает ученик: нельзя автоматически считать неверное число доказательством проблемы teen/ty. Отсутствие записи не считать выполненным аудированием.\n\n### Новый пример\nПолный сценарий: The school will supply seedlings and small tools for our gardening day. Students need to bring gardening gloves to protect their hands. Water bottles are recommended, but they are not compulsory. Please label your gloves so they do not get mixed up.\n\nПовторяемый фрагмент: Students need to bring gardening gloves to protect their hands.\n\nКлюч: gloves. Допустимые варианты: gloves.\n\nРазбор: Supplies противопоставлено must bring. Tools выдаются школой, bottles только рекомендуются. Перенос проверяет новое содержание, а не повторение слова bottles.\n\nГраницы проверки: регистр и крайние пробелы несущественны. Не принимать дополнительные слова сверх инструкции. Причину ошибки выбирает ученик: нельзя автоматически считать неверное число доказательством проблемы teen/ty. Отсутствие записи не считать выполненным аудированием.",
+      "student_markdown": "Два авторских учебных аудио. Это не материал реального экзамена.\n\nЦель: Предмет, перефразирование и окончание множественного числа.\n\n1. Прослушай первую запись целиком и запиши ответ. Текст и ключ пока не открывай.\n2. Повтори нужный фрагмент. Отметь, что помешало: число, слово, окончание, перефразирование или другое. Можно выбрать «не уверен».\n3. Исправь ответ и сравни с объяснением.\n4. Выполни второе задание без текста: это новый пример. Система сохраняет первую попытку отдельно.\n\n### Первое задание\nReusable ____ are the items volunteers must bring themselves. Write ONE WORD ONLY.\n\n### Новый пример\nGardening ____ are compulsory for the students. Write ONE WORD ONLY.",
+      "teacher_markdown": "### Первое аудио\nПолный сценарий: For the park clean-up, we will provide protective gloves and collection bags. Please bring your own reusable bottles, since there is a drinking-water tap near the entrance. There is no need to buy gloves or bags.\n\nПовторяемый фрагмент: Please bring your own reusable bottles, since there is a drinking-water tap near the entrance.\n\nКлюч: bottles. Допустимые варианты: bottles.\n\nРазбор: Bring your own указывает на bottles. Gloves и bags выдаются. Are в условии требует множественного числа, которое совпадает с услышанным bottles; единственное bottle не подходит именно к этой формулировке.\n\nГраницы проверки: регистр и крайние пробелы несущественны. Не принимать дополнительные слова сверх инструкции. Причину ошибки выбирает ученик: нельзя автоматически считать неверное число доказательством проблемы teen/ty. Отсутствие записи не считать выполненным аудированием.\n\n### Новый пример\nПолный сценарий: The school will supply seedlings and small tools for our gardening day. Students need to bring gardening gloves to protect their hands. Water bottles are recommended, but they are not compulsory. Please label your gloves so they do not get mixed up.\n\nПовторяемый фрагмент: Students need to bring gardening gloves to protect their hands.\n\nКлюч: gloves. Допустимые варианты: gloves.\n\nРазбор: Supplies противопоставлено must bring. Tools выдаются школой, bottles только рекомендуются. Are compulsory требует множественного числа gloves. Перенос проверяет новое содержание, а не повторение слова bottles.\n\nГраницы проверки: регистр и крайние пробелы несущественны. Не принимать дополнительные слова сверх инструкции. Причину ошибки выбирает ученик: нельзя автоматически считать неверное число доказательством проблемы teen/ty. Отсутствие записи не считать выполненным аудированием.",
       "language_only_markdown": "",
       "exercise_data": {
         "kind": "listening-pair-v1",
         "focus": "Предмет, перефразирование и окончание множественного числа",
         "rounds": [
           {
-            "prompt": "Volunteers must bring their own reusable ____. Write ONE WORD ONLY.",
+            "prompt": "Reusable ____ are the items volunteers must bring themselves. Write ONE WORD ONLY.",
             "script": "For the park clean-up, we will provide protective gloves and collection bags. Please bring your own reusable bottles, since there is a drinking-water tap near the entrance. There is no need to buy gloves or bags.",
             "segment": "Please bring your own reusable bottles, since there is a drinking-water tap near the entrance.",
             "answer": "bottles",
@@ -80,10 +80,10 @@
               "bags",
               "bottle"
             ],
-            "explanation": "Bring your own указывает на bottles. Gloves и bags выдаются. В задании сохранено множественное число исходной формулировки."
+            "explanation": "Bring your own указывает на bottles. Gloves и bags выдаются. Are в условии требует множественного числа, которое совпадает с услышанным bottles; единственное bottle не подходит именно к этой формулировке."
           },
           {
-            "prompt": "The school supplies the seedlings, but students must bring gardening ____. Write ONE WORD ONLY.",
+            "prompt": "Gardening ____ are compulsory for the students. Write ONE WORD ONLY.",
             "script": "The school will supply seedlings and small tools for our gardening day. Students need to bring gardening gloves to protect their hands. Water bottles are recommended, but they are not compulsory. Please label your gloves so they do not get mixed up.",
             "segment": "Students need to bring gardening gloves to protect their hands.",
             "answer": "gloves",
@@ -95,10 +95,10 @@
               "bottles",
               "glove"
             ],
-            "explanation": "Supplies противопоставлено must bring. Tools выдаются школой, bottles только рекомендуются. Перенос проверяет новое содержание, а не повторение слова bottles."
+            "explanation": "Supplies противопоставлено must bring. Tools выдаются школой, bottles только рекомендуются. Are compulsory требует множественного числа gloves. Перенос проверяет новое содержание, а не повторение слова bottles."
           }
         ],
-        "audio_status": "NOT_GENERATED",
+        "audio_status": "GENERATED_DRAFT",
         "publication_ready": false
       }
     },
