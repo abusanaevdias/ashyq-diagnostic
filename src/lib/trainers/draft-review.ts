@@ -1,11 +1,15 @@
 import batch from '@/data/trainer-drafts/batch-01.json';
+import batch02 from '@/data/trainer-drafts/batch-02.json';
 
 export const draftBatch = batch;
+export const draftBatches = [batch, batch02];
+export type DraftBatch = { batch: string; version: string | number; content_sha256: string; author: string; methodically_approved: boolean; units: DraftUnit[] };
 export type DraftUnit = typeof batch.units[number];
 export type ReviewDecision = 'pending' | 'recommend' | 'revise' | 'hold';
 export type DraftDecision = { decision: ReviewDecision; comment: string; attested: boolean; savedAt: string };
 export type DraftReview = { format: 'ashyq-draft-review-v1'; batch: string; source_sha256: string; reviewerId: string; decisions: Record<string, DraftDecision> };
-export function emptyDraftReview(reviewerId: string): DraftReview {
+export function emptyDraftReview(reviewerId: string, selectedBatch: DraftBatch = batch): DraftReview {
+  const batch = selectedBatch;
   return { format: 'ashyq-draft-review-v1', batch: batch.batch, source_sha256: batch.content_sha256, reviewerId, decisions: {} };
 }
 export function validDecision(value: unknown): value is DraftDecision {
@@ -16,7 +20,8 @@ export function validDecision(value: unknown): value is DraftDecision {
   if (v.decision === 'revise' && !v.comment.trim()) return false;
   return true;
 }
-export function parseDraftReview(raw: string | null, reviewerId: string): DraftReview | null {
+export function parseDraftReview(raw: string | null, reviewerId: string, selectedBatch: DraftBatch = batch): DraftReview | null {
+  const batch = selectedBatch;
   if (!raw || raw.length > 100_000) return null;
   try {
     const v = JSON.parse(raw) as Partial<DraftReview>;
@@ -25,10 +30,11 @@ export function parseDraftReview(raw: string | null, reviewerId: string): DraftR
     return v as DraftReview;
   } catch { return null; }
 }
-export const reviewKey = (reviewerId: string) => `ashyq:trainer-review:v1:${batch.batch}:${batch.content_sha256}:${reviewerId}`;
+export const reviewKey = (reviewerId: string, selectedBatch: DraftBatch = batch) => `ashyq:trainer-review:v1:${selectedBatch.batch}:${selectedBatch.content_sha256}:${reviewerId}`;
 
 /** Local recommendations cannot publish or change a source material's status. */
-export function reviewCounts(review: DraftReview) {
+export function reviewCounts(review: DraftReview, selectedBatch: DraftBatch = batch) {
+  const batch = selectedBatch;
   const decisions = Object.values(review.decisions);
   return { total: batch.units.length, considered: decisions.filter(item => item.decision !== 'pending').length, recommended: decisions.filter(item => item.decision === 'recommend').length, revise: decisions.filter(item => item.decision === 'revise').length, hold: decisions.filter(item => item.decision === 'hold').length };
 }
