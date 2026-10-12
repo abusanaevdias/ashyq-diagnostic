@@ -1,5 +1,6 @@
 'use client';
 
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { distractorCases, distractorReasons, expectedReason, type DistractorItem, type ReasonId } from '@/lib/sat-distractor/cases';
@@ -58,7 +59,8 @@ export default function SatDistractor() {
   return <main className={styles.page}>
     <div className={styles.topline}><Link href="/trainers">← Все тренажёры</Link><span>ASHYQ · SAT R&W LAB</span></div>
     <header className={styles.hero}><p className={styles.eyebrow}>SAT READING & WRITING · УЧЕБНЫЕ ПРИМЕРЫ</p><h1>Разбери ложные варианты</h1><p>Выбери лучший ответ. Затем для каждого другого варианта объясни, почему он не подходит — или отметь, что сомневаешься. Сравни ход мысли с разбором и попробуй новый текст.</p></header>
-    {phase === 'choose' && <section aria-labelledby="distractor-stage-title"><div className={styles.sectionHead}><h2 id="distractor-stage-title">Выбери ловушку</h2><p>Два авторских сценария с новым вопросом для каждого. Ответы остаются в открытой вкладке.</p></div><div className={styles.caseGrid}>{distractorCases.map((entry, index) => <article className={styles.caseCard} key={entry.id}><span>{entry.domain}</span><h3>{entry.title}</h3><p>Верный выбор может скрывать слабое объяснение неверных вариантов.</p><button type="button" className={styles.primary} onClick={() => start(index)}>Начать →</button></article>)}</div></section>}
+    <TrainerCheckpoint trainer="sat-distractor" data={{ caseIndex, phase, round, answerIndex, reasons, first, transfer }} completed={phase === 'result'} onRestore={saved => { setCaseIndex(saved.caseIndex); setPhase(saved.phase); setRound(saved.round); setAnswerIndex(saved.answerIndex); setReasons(saved.reasons); setFirst(saved.first); setTransfer(saved.transfer); setError(''); }} />
+    {phase === 'choose' && <section aria-labelledby="distractor-stage-title"><div className={styles.sectionHead}><h2 id="distractor-stage-title">Выбери ловушку</h2><p>Два авторских сценария с новым вопросом для каждого. Для продолжения после обновления включи сохранение ниже.</p></div><div className={styles.caseGrid}>{distractorCases.map((entry, index) => <article className={styles.caseCard} key={entry.id}><span>{entry.domain}</span><h3>{entry.title}</h3><p>Верный выбор может скрывать слабое объяснение неверных вариантов.</p><button type="button" className={styles.primary} onClick={() => start(index)}>Начать →</button></article>)}</div></section>}
     {current && item && phase !== 'choose' && <section className={styles.lesson} aria-labelledby="distractor-stage-title">
       <div className={styles.lessonTop}><button type="button" onClick={() => { setCaseIndex(null); setPhase('choose'); window.scrollTo({ top: 0 }); }}>← К выбору</button><span>{current.domain} · {current.title}</span></div>
       <div className={styles.progress} aria-label={round === 'first' ? 'Первый вопрос' : 'Новый вопрос'}><span style={{ width: round === 'first' ? '50%' : '100%' }} /></div>

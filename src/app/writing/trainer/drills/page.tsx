@@ -1,3 +1,4 @@
+import TrainerIdentityBoundary from '@/components/trainers/TrainerIdentityBoundary';
 import type { Metadata } from 'next';
 import WritingDrills from '@/components/writing/WritingDrills';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function WritingDrillsPage() {
-  return <><NavBar /><WritingDrills /><Footer /></>;
+  return <><NavBar /><TrainerIdentityBoundary><WritingDrills /></TrainerIdentityBoundary><Footer /></>;
 }

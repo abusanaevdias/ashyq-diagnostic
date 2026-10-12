@@ -1,5 +1,6 @@
 'use client';
 
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { drillModes, writingDrills, type DrillMode } from '@/lib/writing-trainer/drills';
@@ -82,9 +83,10 @@ export default function WritingDrills() {
       <h1>Отработай один навык за раз</h1>
       <p>Сначала напиши свой вариант. Затем сравни три решения, получи объяснение и при необходимости попробуй ещё раз. Все задания вымышлены и доступны без входа. Здесь нет автоматической оценки твоего текста или балла IELTS.</p>
     </header>
+    <TrainerCheckpoint trainer="writing-drills" data={{ mode, index, draft, optionsVisible, choice, attempts, feedback, revealed, completed }} completed={mode === null && completed.length > 0} onRestore={saved => { setMode(saved.mode); setIndex(saved.index); setDraft(saved.draft); setOptionsVisible(saved.optionsVisible); setChoice(saved.choice); setAttempts(saved.attempts); setFeedback(saved.feedback); setRevealed(saved.revealed); setCompleted(saved.completed); }} />
 
     {!mode ? <section aria-labelledby="drill-modes-title">
-      <div className={styles.sectionHeading}><h2 id="drill-modes-title">Выбери упражнение</h2><p>Каждый блок содержит два коротких задания. Ответы останутся только в открытой вкладке.</p></div>
+      <div className={styles.sectionHeading}><h2 id="drill-modes-title">Выбери упражнение</h2><p>Каждый блок содержит два коротких задания. Для продолжения после обновления включи сохранение выше.</p></div>
       <div className={styles.modeGrid}>{drillModes.map((drillMode) => {
         const done = writingDrills.filter((drill) => drill.mode === drillMode.id && completed.includes(drill.id)).length;
         return <article className={styles.modeCard} key={drillMode.id}>

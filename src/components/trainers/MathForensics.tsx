@@ -1,5 +1,6 @@
 'use client';
 
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { mathForensicsCases, numericAnswerMatches, parseNumericAnswer } from '@/lib/math-forensics/cases';
@@ -63,7 +64,8 @@ export default function MathForensics() {
   return <main className={styles.page}>
     <div className={styles.topline}><Link href="/trainers">← Все тренажёры</Link><span>ASHYQ · SAT MATH LAB</span></div>
     <header className={styles.hero}><p className={styles.eyebrow}>SAT MATH · УЧЕБНЫЕ ПРИМЕРЫ</p><h1>Найди первую ошибку</h1><p>Посмотри чужое решение. Укажи первый неверный шаг, объясни причину и исправь только эту строку. Затем доведи решение до конца и проверь себя на новой задаче.</p></header>
-    {phase === 'choose' && <section aria-labelledby="math-stage-title"><div className={styles.sectionHead}><h2 id="math-stage-title">Выбери механизм ошибки</h2><p>Две авторские задачи: алгебра и проценты. Твои действия остаются в этой вкладке.</p></div><div className={styles.caseGrid}>{mathForensicsCases.map((item, index) => <article className={styles.caseCard} key={item.id}><span>{item.domain}</span><h3>{item.title}</h3><p>Найди неверный переход и попробуй исправить ход решения.</p><button className={styles.primary} type="button" onClick={() => start(index)}>Начать →</button></article>)}</div></section>}
+    <TrainerCheckpoint trainer="math-forensics" data={{ caseIndex, phase, stepIndex, mechanism, repairLine, firstAttempt, ownAnswer, transferStep, transferAnswer, transferAttempt }} completed={phase === 'result'} onRestore={saved => { setCaseIndex(saved.caseIndex); setPhase(saved.phase); setStepIndex(saved.stepIndex); setMechanism(saved.mechanism); setRepairLine(saved.repairLine); setFirstAttempt(saved.firstAttempt); setOwnAnswer(saved.ownAnswer); setTransferStep(saved.transferStep); setTransferAnswer(saved.transferAnswer); setTransferAttempt(saved.transferAttempt); setError(''); }} />
+    {phase === 'choose' && <section aria-labelledby="math-stage-title"><div className={styles.sectionHead}><h2 id="math-stage-title">Выбери механизм ошибки</h2><p>Две авторские задачи: алгебра и проценты. Для продолжения после обновления включи сохранение выше.</p></div><div className={styles.caseGrid}>{mathForensicsCases.map((item, index) => <article className={styles.caseCard} key={item.id}><span>{item.domain}</span><h3>{item.title}</h3><p>Найди неверный переход и попробуй исправить ход решения.</p><button className={styles.primary} type="button" onClick={() => start(index)}>Начать →</button></article>)}</div></section>}
     {current && phase !== 'choose' && <section className={styles.lesson} aria-labelledby="math-stage-title">
       <div className={styles.lessonTop}><button type="button" onClick={() => { setCaseIndex(null); setPhase('choose'); window.scrollTo({ top: 0 }); }}>← К выбору</button><span>{current.domain} · {current.title}</span></div>
       <div className={styles.progress} aria-label={`Шаг ${['locate', 'feedback', 'continue', 'transfer', 'result'].indexOf(phase) + 1} из 5`}><span style={{ width: `${(['locate', 'feedback', 'continue', 'transfer', 'result'].indexOf(phase) + 1) * 20}%` }} /></div>

@@ -1,3 +1,4 @@
+import TrainerIdentityBoundary from '@/components/trainers/TrainerIdentityBoundary';
 import type { Metadata } from 'next';
 import MathForensics from '@/components/trainers/MathForensics';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function MathForensicsPage() {
-  return <><NavBar /><MathForensics /><Footer /></>;
+  return <><NavBar /><TrainerIdentityBoundary><MathForensics /></TrainerIdentityBoundary><Footer /></>;
 }

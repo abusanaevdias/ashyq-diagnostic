@@ -1,5 +1,6 @@
 'use client';
 
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { answerLabels, evidenceMatches, readingCases, type Confidence, type ReadingTask, type TfngAnswer } from '@/lib/reading-evidence/cases';
@@ -103,8 +104,9 @@ export default function ReadingEvidence() {
       <h1>Докажи ответ текстом</h1>
       <p>Выбери TRUE, FALSE или NOT GIVEN, найди ближайший фрагмент и укажи уверенность. Потом разбери свою логику, исправь ответ и проверь навык на новом тексте.</p>
     </header>
+    <TrainerCheckpoint trainer="reading-evidence" data={{ caseIndex, phase, answer, evidenceId, confidence, first, repair, transfer, reason }} completed={phase === 'result'} onRestore={saved => { setCaseIndex(saved.caseIndex); setPhase(saved.phase); setAnswer(saved.answer); setEvidenceId(saved.evidenceId); setConfidence(saved.confidence); setFirst(saved.first); setRepair(saved.repair); setTransfer(saved.transfer); setReason(saved.reason); setError(''); }} />
     {phase === 'choose' && <section aria-labelledby="reading-stage-title">
-      <div className={styles.sectionHead}><h2 id="reading-stage-title">Выбери ловушку</h2><p>Два коротких сценария. Всё работает в этой вкладке; ответы никуда не отправляются.</p></div>
+      <div className={styles.sectionHead}><h2 id="reading-stage-title">Выбери ловушку</h2><p>Два коротких сценария. Ответы не отправляются на сервер. Для продолжения позже включи сохранение выше.</p></div>
       <div className={styles.caseGrid}>{readingCases.map((item, index) => <article className={styles.caseCard} key={item.id}>
         <span className={styles.caseNumber}>0{index + 1}</span><p>{item.focus}</p><h3>{item.title}</h3>
         <button type="button" className={styles.primary} onClick={() => start(index)}>Начать →</button>

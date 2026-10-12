@@ -1,3 +1,4 @@
+import TrainerIdentityBoundary from '@/components/trainers/TrainerIdentityBoundary';
 import type { Metadata } from 'next';
 import SatDistractor from '@/components/trainers/SatDistractor';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function SatDistractorPage() {
-  return <><NavBar /><SatDistractor /><Footer /></>;
+  return <><NavBar /><TrainerIdentityBoundary><SatDistractor /></TrainerIdentityBoundary><Footer /></>;
 }

@@ -1,3 +1,4 @@
+import TrainerIdentityBoundary from '@/components/trainers/TrainerIdentityBoundary';
 import type { Metadata } from 'next';
 import ListeningReplay from '@/components/trainers/ListeningReplay';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function ListeningReplayPage() {
-  return <><NavBar /><ListeningReplay /><Footer /></>;
+  return <><NavBar /><TrainerIdentityBoundary><ListeningReplay /></TrainerIdentityBoundary><Footer /></>;
 }
