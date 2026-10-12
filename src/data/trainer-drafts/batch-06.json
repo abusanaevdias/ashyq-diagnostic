@@ -1,0 +1,540 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "06",
+  "version": 1,
+  "source_sha256": "72965470f8b09be514646b6e21207961dbf7a89614e39113eab6bb1974c7f922",
+  "content_sha256": "72965470f8b09be514646b6e21207961dbf7a89614e39113eab6bb1974c7f922",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "R03",
+      "title": "Некоторые — не все",
+      "category": "Reading · доказательство и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Авторская учебная практика, не официальный IELTS. Все организации и ситуации вымышлены.\n\nНавык: Некоторые — не все.\n\nПрочитай первый текст. Для каждого утверждения выбери TRUE, FALSE или NOT GIVEN, найди относящийся к нему фрагмент и объясни связь. TRUE — текст подтверждает всё утверждение; FALSE — текст ему противоречит; NOT GIVEN — данных не хватает. Затем исправь ответ по разбору и выполни новое задание. Внешние знания не используй.\n\nAt the fictional Alder library, all six reading rooms were open in June. Two rooms offered silent study, while the other four allowed quiet group discussion. Weekend opening hours were identical for every room. The report did not record how many people used each room.\n\n1. Some reading rooms allowed group discussion.\n2. Every reading room required silent study.\n3. The silent rooms attracted more visitors than the discussion rooms.",
+      "teacher_markdown": "### Первый текст · R03-A\nAt the fictional Alder library, all six reading rooms were open in June. Two rooms offered silent study, while the other four allowed quiet group discussion. Weekend opening hours were identical for every room. The report did not record how many people used each room.\n\nУтверждение: Some reading rooms allowed group discussion.\nКлюч: TRUE.\nФрагмент: the other four allowed quiet group discussion\nОбъяснение: Четыре из шести — некоторые. Для some не требуется ровно половина.\n\nУтверждение: Every reading room required silent study.\nКлюч: FALSE.\nФрагмент: Two rooms offered silent study, while the other four allowed quiet group discussion.\nОбъяснение: Четыре комнаты допускают обсуждение: это противоречит every.\n\nУтверждение: The silent rooms attracted more visitors than the discussion rooms.\nКлюч: NOT GIVEN.\nФрагмент: The report did not record how many people used each room.\nОбъяснение: Назначение комнат и одинаковые часы ничего не говорят о сравнении числа посетителей.\n\n### Новый текст · R03-B\nAt the fictional Birch centre, five workshops took place in September. Three workshops included outdoor activities; the remaining two were entirely indoors. All five workshops lasted ninety minutes. The centre published no attendance figures for individual workshops.\n\nУтверждение: All five workshops included outdoor activities.\nКлюч: FALSE.\nФрагмент: the remaining two were entirely indoors\nОбъяснение: Два полностью внутренних занятия противоречат all five.\n\nУтверждение: The outdoor workshops had the largest groups.\nКлюч: NOT GIVEN.\nФрагмент: The centre published no attendance figures for individual workshops.\nОбъяснение: Продолжительность и место не определяют численность групп.\n\nУтверждение: At least one workshop included outdoor activities.\nКлюч: TRUE.\nФрагмент: Three workshops included outdoor activities\nОбъяснение: Три занятия подтверждают at least one.\n\nАдверсальное ревью автора:\n- Некоторые не означает некоторые, но обязательно не все: ключ TRUE опирается на наличие четырёх.\n- Сравнение посещаемости нельзя выводить из режима тишины или наличия улицы.\n\nСвободный выбор доказательства и объяснение требуют ручной проверки. Совпадение категории с ключом не подтверждает качество объяснения или рост IELTS.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "skill": "quantifier-scope",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R03-A",
+            "text": "At the fictional Alder library, all six reading rooms were open in June. Two rooms offered silent study, while the other four allowed quiet group discussion. Weekend opening hours were identical for every room. The report did not record how many people used each room.",
+            "claims": [
+              {
+                "statement": "Some reading rooms allowed group discussion.",
+                "answer": "TRUE",
+                "evidence": "the other four allowed quiet group discussion",
+                "explanation": "Четыре из шести — некоторые. Для some не требуется ровно половина."
+              },
+              {
+                "statement": "Every reading room required silent study.",
+                "answer": "FALSE",
+                "evidence": "Two rooms offered silent study, while the other four allowed quiet group discussion.",
+                "explanation": "Четыре комнаты допускают обсуждение: это противоречит every."
+              },
+              {
+                "statement": "The silent rooms attracted more visitors than the discussion rooms.",
+                "answer": "NOT GIVEN",
+                "evidence": "The report did not record how many people used each room.",
+                "explanation": "Назначение комнат и одинаковые часы ничего не говорят о сравнении числа посетителей."
+              }
+            ]
+          },
+          {
+            "id": "R03-B",
+            "text": "At the fictional Birch centre, five workshops took place in September. Three workshops included outdoor activities; the remaining two were entirely indoors. All five workshops lasted ninety minutes. The centre published no attendance figures for individual workshops.",
+            "claims": [
+              {
+                "statement": "All five workshops included outdoor activities.",
+                "answer": "FALSE",
+                "evidence": "the remaining two were entirely indoors",
+                "explanation": "Два полностью внутренних занятия противоречат all five."
+              },
+              {
+                "statement": "The outdoor workshops had the largest groups.",
+                "answer": "NOT GIVEN",
+                "evidence": "The centre published no attendance figures for individual workshops.",
+                "explanation": "Продолжительность и место не определяют численность групп."
+              },
+              {
+                "statement": "At least one workshop included outdoor activities.",
+                "answer": "TRUE",
+                "evidence": "Three workshops included outdoor activities",
+                "explanation": "Три занятия подтверждают at least one."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "R04",
+      "title": "Больше в конце — не больше прирост",
+      "category": "Reading · доказательство и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Авторская учебная практика, не официальный IELTS. Все организации и ситуации вымышлены.\n\nНавык: Больше в конце — не больше прирост.\n\nПрочитай первый текст. Для каждого утверждения выбери TRUE, FALSE или NOT GIVEN, найди относящийся к нему фрагмент и объясни связь. TRUE — текст подтверждает всё утверждение; FALSE — текст ему противоречит; NOT GIVEN — данных не хватает. Затем исправь ответ по разбору и выполни новое задание. Внешние знания не используй.\n\nA fictional transport report counted bus trips in two towns. Elm recorded 40,000 trips in 2024 and 50,000 in 2025. Fir recorded 20,000 in 2024 and 35,000 in 2025. Counts used the same definition of a trip. The report gave no explanation for the changes.\n\n1. Elm recorded more bus trips than Fir in 2025.\n2. The increase in trip numbers was larger in Elm than in Fir.\n3. Lower fares caused the increase in Fir.",
+      "teacher_markdown": "### Первый текст · R04-A\nA fictional transport report counted bus trips in two towns. Elm recorded 40,000 trips in 2024 and 50,000 in 2025. Fir recorded 20,000 in 2024 and 35,000 in 2025. Counts used the same definition of a trip. The report gave no explanation for the changes.\n\nУтверждение: Elm recorded more bus trips than Fir in 2025.\nКлюч: TRUE.\nФрагмент: Elm recorded 40,000 trips in 2024 and 50,000 in 2025. Fir recorded 20,000 in 2024 and 35,000 in 2025.\nОбъяснение: 50 000 больше 35 000; речь только о конечном числе.\n\nУтверждение: The increase in trip numbers was larger in Elm than in Fir.\nКлюч: FALSE.\nФрагмент: Elm recorded 40,000 trips in 2024 and 50,000 in 2025. Fir recorded 20,000 in 2024 and 35,000 in 2025.\nОбъяснение: Прирост Elm 10 000, Fir 15 000. Большее конечное число не означает больший прирост.\n\nУтверждение: Lower fares caused the increase in Fir.\nКлюч: NOT GIVEN.\nФрагмент: The report gave no explanation for the changes.\nОбъяснение: Причины и тарифы не сообщаются.\n\n### Новый текст · R04-B\nA fictional archive counted digitised records. Archive A held 120,000 in January and 150,000 in December. Archive B held 60,000 in January and 100,000 in December. Both counts refer to the same year and record type. Staffing changes were not discussed.\n\nУтверждение: Archive B added fewer records than Archive A during the year.\nКлюч: FALSE.\nФрагмент: Archive A held 120,000 in January and 150,000 in December. Archive B held 60,000 in January and 100,000 in December.\nОбъяснение: B добавил 40 000, A — 30 000: fewer противоречит данным.\n\nУтверждение: Archive A employed more staff than Archive B.\nКлюч: NOT GIVEN.\nФрагмент: Staffing changes were not discussed.\nОбъяснение: Число записей не определяет число работников; об их численности нет данных.\n\nУтверждение: Archive A held more digitised records at the end of the year.\nКлюч: TRUE.\nФрагмент: Archive A held 120,000 in January and 150,000 in December. Archive B held 60,000 in January and 100,000 in December.\nОбъяснение: В декабре 150 000 больше 100 000.\n\nАдверсальное ревью автора:\n- Абсолютный прирост проверен отдельно: 10/15 тысяч и 30/40 тысяч.\n- Не превращать отсутствие объяснения в опровержение причины.\n\nСвободный выбор доказательства и объяснение требуют ручной проверки. Совпадение категории с ключом не подтверждает качество объяснения или рост IELTS.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "skill": "endpoint-versus-change",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R04-A",
+            "text": "A fictional transport report counted bus trips in two towns. Elm recorded 40,000 trips in 2024 and 50,000 in 2025. Fir recorded 20,000 in 2024 and 35,000 in 2025. Counts used the same definition of a trip. The report gave no explanation for the changes.",
+            "claims": [
+              {
+                "statement": "Elm recorded more bus trips than Fir in 2025.",
+                "answer": "TRUE",
+                "evidence": "Elm recorded 40,000 trips in 2024 and 50,000 in 2025. Fir recorded 20,000 in 2024 and 35,000 in 2025.",
+                "explanation": "50 000 больше 35 000; речь только о конечном числе."
+              },
+              {
+                "statement": "The increase in trip numbers was larger in Elm than in Fir.",
+                "answer": "FALSE",
+                "evidence": "Elm recorded 40,000 trips in 2024 and 50,000 in 2025. Fir recorded 20,000 in 2024 and 35,000 in 2025.",
+                "explanation": "Прирост Elm 10 000, Fir 15 000. Большее конечное число не означает больший прирост."
+              },
+              {
+                "statement": "Lower fares caused the increase in Fir.",
+                "answer": "NOT GIVEN",
+                "evidence": "The report gave no explanation for the changes.",
+                "explanation": "Причины и тарифы не сообщаются."
+              }
+            ]
+          },
+          {
+            "id": "R04-B",
+            "text": "A fictional archive counted digitised records. Archive A held 120,000 in January and 150,000 in December. Archive B held 60,000 in January and 100,000 in December. Both counts refer to the same year and record type. Staffing changes were not discussed.",
+            "claims": [
+              {
+                "statement": "Archive B added fewer records than Archive A during the year.",
+                "answer": "FALSE",
+                "evidence": "Archive A held 120,000 in January and 150,000 in December. Archive B held 60,000 in January and 100,000 in December.",
+                "explanation": "B добавил 40 000, A — 30 000: fewer противоречит данным."
+              },
+              {
+                "statement": "Archive A employed more staff than Archive B.",
+                "answer": "NOT GIVEN",
+                "evidence": "Staffing changes were not discussed.",
+                "explanation": "Число записей не определяет число работников; об их численности нет данных."
+              },
+              {
+                "statement": "Archive A held more digitised records at the end of the year.",
+                "answer": "TRUE",
+                "evidence": "Archive A held 120,000 in January and 150,000 in December. Archive B held 60,000 in January and 100,000 in December.",
+                "explanation": "В декабре 150 000 больше 100 000."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "R05",
+      "title": "План и состоявшееся событие",
+      "category": "Reading · доказательство и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Авторская учебная практика, не официальный IELTS. Все организации и ситуации вымышлены.\n\nНавык: План и состоявшееся событие.\n\nПрочитай первый текст. Для каждого утверждения выбери TRUE, FALSE или NOT GIVEN, найди относящийся к нему фрагмент и объясни связь. TRUE — текст подтверждает всё утверждение; FALSE — текст ему противоречит; NOT GIVEN — данных не хватает. Затем исправь ответ по разбору и выполни новое задание. Внешние знания не используй.\n\nIn April, the fictional Mallow museum announced a plan to open a roof garden in July. On 10 July, its update said construction was still under way and the garden remained closed to visitors. It would announce a new opening date later. The update did not mention ticket prices.\n\n1. Visitors could enter the roof garden on 10 July.\n2. Admission to the roof garden would be free.\n3. The museum had originally planned a July opening.",
+      "teacher_markdown": "### Первый текст · R05-A\nIn April, the fictional Mallow museum announced a plan to open a roof garden in July. On 10 July, its update said construction was still under way and the garden remained closed to visitors. It would announce a new opening date later. The update did not mention ticket prices.\n\nУтверждение: Visitors could enter the roof garden on 10 July.\nКлюч: FALSE.\nФрагмент: the garden remained closed to visitors\nОбъяснение: Текст прямо сообщает закрытие в эту дату.\n\nУтверждение: Admission to the roof garden would be free.\nКлюч: NOT GIVEN.\nФрагмент: The update did not mention ticket prices.\nОбъяснение: Ни цена, ни бесплатность не указаны.\n\nУтверждение: The museum had originally planned a July opening.\nКлюч: TRUE.\nФрагмент: announced a plan to open a roof garden in July\nОбъяснение: Утверждение о первоначальном плане подтверждено, даже если план не выполнен.\n\n### Новый текст · R05-B\nIn January, the fictional Lark college proposed an evening language course beginning in March. A February notice confirmed that the course would not run that March because too few people had registered. A later starting date was being considered. The notice did not state the course fee.\n\nУтверждение: The college was considering a later start.\nКлюч: TRUE.\nФрагмент: A later starting date was being considered.\nОбъяснение: Это подтверждённое рассмотрение варианта, а не обещание запуска.\n\nУтверждение: The evening course ran that March.\nКлюч: FALSE.\nФрагмент: the course would not run that March\nОбъяснение: Февральское подтверждение прямо исключает запуск в тот март.\n\nУтверждение: The proposed course fee was higher than the daytime fee.\nКлюч: NOT GIVEN.\nФрагмент: The notice did not state the course fee.\nОбъяснение: Нет ни вечерней, ни дневной цены для сравнения.\n\nАдверсальное ревью автора:\n- Проверять определённую дату, а не делать вывод о том, что объект никогда не откроется.\n- Рассматриваемый новый старт не равен утверждённому или уже состоявшемуся.\n\nСвободный выбор доказательства и объяснение требуют ручной проверки. Совпадение категории с ключом не подтверждает качество объяснения или рост IELTS.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "skill": "plan-versus-completion",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R05-A",
+            "text": "In April, the fictional Mallow museum announced a plan to open a roof garden in July. On 10 July, its update said construction was still under way and the garden remained closed to visitors. It would announce a new opening date later. The update did not mention ticket prices.",
+            "claims": [
+              {
+                "statement": "Visitors could enter the roof garden on 10 July.",
+                "answer": "FALSE",
+                "evidence": "the garden remained closed to visitors",
+                "explanation": "Текст прямо сообщает закрытие в эту дату."
+              },
+              {
+                "statement": "Admission to the roof garden would be free.",
+                "answer": "NOT GIVEN",
+                "evidence": "The update did not mention ticket prices.",
+                "explanation": "Ни цена, ни бесплатность не указаны."
+              },
+              {
+                "statement": "The museum had originally planned a July opening.",
+                "answer": "TRUE",
+                "evidence": "announced a plan to open a roof garden in July",
+                "explanation": "Утверждение о первоначальном плане подтверждено, даже если план не выполнен."
+              }
+            ]
+          },
+          {
+            "id": "R05-B",
+            "text": "In January, the fictional Lark college proposed an evening language course beginning in March. A February notice confirmed that the course would not run that March because too few people had registered. A later starting date was being considered. The notice did not state the course fee.",
+            "claims": [
+              {
+                "statement": "The college was considering a later start.",
+                "answer": "TRUE",
+                "evidence": "A later starting date was being considered.",
+                "explanation": "Это подтверждённое рассмотрение варианта, а не обещание запуска."
+              },
+              {
+                "statement": "The evening course ran that March.",
+                "answer": "FALSE",
+                "evidence": "the course would not run that March",
+                "explanation": "Февральское подтверждение прямо исключает запуск в тот март."
+              },
+              {
+                "statement": "The proposed course fee was higher than the daytime fee.",
+                "answer": "NOT GIVEN",
+                "evidence": "The notice did not state the course fee.",
+                "explanation": "Нет ни вечерней, ни дневной цены для сравнения."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "R06",
+      "title": "Наблюдение не доказывает причину",
+      "category": "Reading · доказательство и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Авторская учебная практика, не официальный IELTS. Все организации и ситуации вымышлены.\n\nНавык: Наблюдение не доказывает причину.\n\nПрочитай первый текст. Для каждого утверждения выбери TRUE, FALSE или NOT GIVEN, найди относящийся к нему фрагмент и объясни связь. TRUE — текст подтверждает всё утверждение; FALSE — текст ему противоречит; NOT GIVEN — данных не хватает. Затем исправь ответ по разбору и выполни новое задание. Внешние знания не используй.\n\nIn a fictional school survey, pupils who joined the walking club reported eight hours of sleep on average; pupils who did not join reported seven. Pupils chose whether to join. Researchers described this as an association and said the survey could not establish whether walking caused longer sleep. The survey did not ask about diet.\n\n1. Club members reported more sleep on average than non-members.\n2. The researchers concluded that walking caused the difference in sleep.\n3. Club members ate more vegetables than non-members.",
+      "teacher_markdown": "### Первый текст · R06-A\nIn a fictional school survey, pupils who joined the walking club reported eight hours of sleep on average; pupils who did not join reported seven. Pupils chose whether to join. Researchers described this as an association and said the survey could not establish whether walking caused longer sleep. The survey did not ask about diet.\n\nУтверждение: Club members reported more sleep on average than non-members.\nКлюч: TRUE.\nФрагмент: pupils who joined the walking club reported eight hours of sleep on average; pupils who did not join reported seven\nОбъяснение: Восемь часов больше семи; это сравнение отчётов, не доказательство причины.\n\nУтверждение: The researchers concluded that walking caused the difference in sleep.\nКлюч: FALSE.\nФрагмент: the survey could not establish whether walking caused longer sleep\nОбъяснение: Утверждение приписывает исследователям вывод, который они явно не делали.\n\nУтверждение: Club members ate more vegetables than non-members.\nКлюч: NOT GIVEN.\nФрагмент: The survey did not ask about diet.\nОбъяснение: Данных о рационе нет. NOT GIVEN не означает, что разницы не существовало.\n\n### Новый текст · R06-B\nIn a fictional workplace survey, employees who cycled to work reported fewer sick days than employees who drove. Employees selected their own transport. The authors said these observations did not show that cycling caused better health. They collected no information about employees’ weekend exercise.\n\nУтверждение: The authors said the survey proved that cycling improved health.\nКлюч: FALSE.\nФрагмент: these observations did not show that cycling caused better health\nОбъяснение: Их заявленный вывод противоположен формулировке proved.\n\nУтверждение: Cyclists exercised more at weekends than drivers.\nКлюч: NOT GIVEN.\nФрагмент: They collected no information about employees’ weekend exercise.\nОбъяснение: Поведение по выходным не исследовалось.\n\nУтверждение: Cyclists reported fewer sick days than drivers.\nКлюч: TRUE.\nФрагмент: employees who cycled to work reported fewer sick days than employees who drove\nОбъяснение: Это точное наблюдение в отчётах, без причинного вывода.\n\nАдверсальное ревью автора:\n- Объект FALSE — явно приписанный авторам вывод. Утверждение о фактической причинности само по себе здесь было бы NOT GIVEN.\n- Самоотчёты не выдавать за независимо измеренное здоровье.\n\nСвободный выбор доказательства и объяснение требуют ручной проверки. Совпадение категории с ключом не подтверждает качество объяснения или рост IELTS.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "skill": "observation-versus-cause",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R06-A",
+            "text": "In a fictional school survey, pupils who joined the walking club reported eight hours of sleep on average; pupils who did not join reported seven. Pupils chose whether to join. Researchers described this as an association and said the survey could not establish whether walking caused longer sleep. The survey did not ask about diet.",
+            "claims": [
+              {
+                "statement": "Club members reported more sleep on average than non-members.",
+                "answer": "TRUE",
+                "evidence": "pupils who joined the walking club reported eight hours of sleep on average; pupils who did not join reported seven",
+                "explanation": "Восемь часов больше семи; это сравнение отчётов, не доказательство причины."
+              },
+              {
+                "statement": "The researchers concluded that walking caused the difference in sleep.",
+                "answer": "FALSE",
+                "evidence": "the survey could not establish whether walking caused longer sleep",
+                "explanation": "Утверждение приписывает исследователям вывод, который они явно не делали."
+              },
+              {
+                "statement": "Club members ate more vegetables than non-members.",
+                "answer": "NOT GIVEN",
+                "evidence": "The survey did not ask about diet.",
+                "explanation": "Данных о рационе нет. NOT GIVEN не означает, что разницы не существовало."
+              }
+            ]
+          },
+          {
+            "id": "R06-B",
+            "text": "In a fictional workplace survey, employees who cycled to work reported fewer sick days than employees who drove. Employees selected their own transport. The authors said these observations did not show that cycling caused better health. They collected no information about employees’ weekend exercise.",
+            "claims": [
+              {
+                "statement": "The authors said the survey proved that cycling improved health.",
+                "answer": "FALSE",
+                "evidence": "these observations did not show that cycling caused better health",
+                "explanation": "Их заявленный вывод противоположен формулировке proved."
+              },
+              {
+                "statement": "Cyclists exercised more at weekends than drivers.",
+                "answer": "NOT GIVEN",
+                "evidence": "They collected no information about employees’ weekend exercise.",
+                "explanation": "Поведение по выходным не исследовалось."
+              },
+              {
+                "statement": "Cyclists reported fewer sick days than drivers.",
+                "answer": "TRUE",
+                "evidence": "employees who cycled to work reported fewer sick days than employees who drove",
+                "explanation": "Это точное наблюдение в отчётах, без причинного вывода."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "R07",
+      "title": "Количество и доля",
+      "category": "Reading · доказательство и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Авторская учебная практика, не официальный IELTS. Все организации и ситуации вымышлены.\n\nНавык: Количество и доля.\n\nПрочитай первый текст. Для каждого утверждения выбери TRUE, FALSE или NOT GIVEN, найди относящийся к нему фрагмент и объясни связь. TRUE — текст подтверждает всё утверждение; FALSE — текст ему противоречит; NOT GIVEN — данных не хватает. Затем исправь ответ по разбору и выполни новое задание. Внешние знания не используй.\n\nAt the fictional Cedar fair, 30 of 100 visitors arrived by bicycle on Saturday. On Sunday, 40 of 200 visitors arrived by bicycle. Each visitor was counted once per day. Organisers did not ask visitors why they chose their transport.\n\n1. More visitors arrived by bicycle on Sunday than on Saturday.\n2. The proportion arriving by bicycle was higher on Sunday.\n3. Sunday visitors cycled because bus services were cancelled.",
+      "teacher_markdown": "### Первый текст · R07-A\nAt the fictional Cedar fair, 30 of 100 visitors arrived by bicycle on Saturday. On Sunday, 40 of 200 visitors arrived by bicycle. Each visitor was counted once per day. Organisers did not ask visitors why they chose their transport.\n\nУтверждение: More visitors arrived by bicycle on Sunday than on Saturday.\nКлюч: TRUE.\nФрагмент: 30 of 100 visitors arrived by bicycle on Saturday. On Sunday, 40 of 200 visitors arrived by bicycle.\nОбъяснение: 40 больше 30: абсолютное число выросло.\n\nУтверждение: The proportion arriving by bicycle was higher on Sunday.\nКлюч: FALSE.\nФрагмент: 30 of 100 visitors arrived by bicycle on Saturday. On Sunday, 40 of 200 visitors arrived by bicycle.\nОбъяснение: В субботу 30%, в воскресенье 20%: доля снизилась.\n\nУтверждение: Sunday visitors cycled because bus services were cancelled.\nКлюч: NOT GIVEN.\nФрагмент: Organisers did not ask visitors why they chose their transport.\nОбъяснение: Причины выбора транспорта и отмена автобусов не сообщаются.\n\n### Новый текст · R07-B\nAt the fictional Reed exhibition, 18 of 60 visitors used an audio guide on Friday. On Saturday, 24 of 120 visitors used one. Counts covered the entire opening period on each day. The report gave no reasons for visitors’ choices.\n\nУтверждение: Audio-guide use represented a larger share of visitors on Saturday.\nКлюч: FALSE.\nФрагмент: 18 of 60 visitors used an audio guide on Friday. On Saturday, 24 of 120 visitors used one.\nОбъяснение: Доли 30% и 20%; большее число пользователей не означает большую долю.\n\nУтверждение: The guides were cheaper on Saturday.\nКлюч: NOT GIVEN.\nФрагмент: The report gave no reasons for visitors’ choices.\nОбъяснение: Цены не приведены; количество пользователей не определяет цену.\n\nУтверждение: The number of audio-guide users was higher on Saturday.\nКлюч: TRUE.\nФрагмент: 18 of 60 visitors used an audio guide on Friday. On Saturday, 24 of 120 visitors used one.\nОбъяснение: 24 больше 18.\n\nАдверсальное ревью автора:\n- Знаменатели заданы явно. Проверенные доли обеих пар: 30% и 20%.\n- Не путать суточное количество с почасовой интенсивностью; часы работы не сравниваются.\n\nСвободный выбор доказательства и объяснение требуют ручной проверки. Совпадение категории с ключом не подтверждает качество объяснения или рост IELTS.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "skill": "count-versus-proportion",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R07-A",
+            "text": "At the fictional Cedar fair, 30 of 100 visitors arrived by bicycle on Saturday. On Sunday, 40 of 200 visitors arrived by bicycle. Each visitor was counted once per day. Organisers did not ask visitors why they chose their transport.",
+            "claims": [
+              {
+                "statement": "More visitors arrived by bicycle on Sunday than on Saturday.",
+                "answer": "TRUE",
+                "evidence": "30 of 100 visitors arrived by bicycle on Saturday. On Sunday, 40 of 200 visitors arrived by bicycle.",
+                "explanation": "40 больше 30: абсолютное число выросло."
+              },
+              {
+                "statement": "The proportion arriving by bicycle was higher on Sunday.",
+                "answer": "FALSE",
+                "evidence": "30 of 100 visitors arrived by bicycle on Saturday. On Sunday, 40 of 200 visitors arrived by bicycle.",
+                "explanation": "В субботу 30%, в воскресенье 20%: доля снизилась."
+              },
+              {
+                "statement": "Sunday visitors cycled because bus services were cancelled.",
+                "answer": "NOT GIVEN",
+                "evidence": "Organisers did not ask visitors why they chose their transport.",
+                "explanation": "Причины выбора транспорта и отмена автобусов не сообщаются."
+              }
+            ]
+          },
+          {
+            "id": "R07-B",
+            "text": "At the fictional Reed exhibition, 18 of 60 visitors used an audio guide on Friday. On Saturday, 24 of 120 visitors used one. Counts covered the entire opening period on each day. The report gave no reasons for visitors’ choices.",
+            "claims": [
+              {
+                "statement": "Audio-guide use represented a larger share of visitors on Saturday.",
+                "answer": "FALSE",
+                "evidence": "18 of 60 visitors used an audio guide on Friday. On Saturday, 24 of 120 visitors used one.",
+                "explanation": "Доли 30% и 20%; большее число пользователей не означает большую долю."
+              },
+              {
+                "statement": "The guides were cheaper on Saturday.",
+                "answer": "NOT GIVEN",
+                "evidence": "The report gave no reasons for visitors’ choices.",
+                "explanation": "Цены не приведены; количество пользователей не определяет цену."
+              },
+              {
+                "statement": "The number of audio-guide users was higher on Saturday.",
+                "answer": "TRUE",
+                "evidence": "18 of 60 visitors used an audio guide on Friday. On Saturday, 24 of 120 visitors used one.",
+                "explanation": "24 больше 18."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "R08",
+      "title": "Необходимое условие и разрешение",
+      "category": "Reading · доказательство и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Авторская учебная практика, не официальный IELTS. Все организации и ситуации вымышлены.\n\nНавык: Необходимое условие и разрешение.\n\nПрочитай первый текст. Для каждого утверждения выбери TRUE, FALSE или NOT GIVEN, найди относящийся к нему фрагмент и объясни связь. TRUE — текст подтверждает всё утверждение; FALSE — текст ему противоречит; NOT GIVEN — данных не хватает. Затем исправь ответ по разбору и выполни новое задание. Внешние знания не используй.\n\nAt the fictional Hazel workshop, visitors may use the pottery wheel only after completing a safety briefing. Completing the briefing gives permission to use the wheel but does not require anyone to do so. Lina completed the briefing on Monday. The record does not say whether she later used the wheel.\n\n1. Lina completed the required safety briefing.\n2. Visitors are allowed to use the wheel before completing the briefing.\n3. Lina used the pottery wheel on Monday.",
+      "teacher_markdown": "### Первый текст · R08-A\nAt the fictional Hazel workshop, visitors may use the pottery wheel only after completing a safety briefing. Completing the briefing gives permission to use the wheel but does not require anyone to do so. Lina completed the briefing on Monday. The record does not say whether she later used the wheel.\n\nУтверждение: Lina completed the required safety briefing.\nКлюч: TRUE.\nФрагмент: Lina completed the briefing on Monday.\nОбъяснение: Записано выполнение инструктажа.\n\nУтверждение: Visitors are allowed to use the wheel before completing the briefing.\nКлюч: FALSE.\nФрагмент: visitors may use the pottery wheel only after completing a safety briefing\nОбъяснение: Only after прямо запрещает использование до инструктажа.\n\nУтверждение: Lina used the pottery wheel on Monday.\nКлюч: NOT GIVEN.\nФрагмент: The record does not say whether she later used the wheel.\nОбъяснение: Разрешение не доказывает, что действие состоялось.\n\n### Новый текст · R08-B\nAt the fictional Rowan archive, researchers may enter the document room only after receiving a visitor pass. Receiving a pass permits entry but does not oblige a researcher to enter. Omar received his pass on Tuesday. The archive recorded no information about his subsequent room visits.\n\nУтверждение: Researchers may enter the document room without first receiving a pass.\nКлюч: FALSE.\nФрагмент: researchers may enter the document room only after receiving a visitor pass\nОбъяснение: Утверждение противоречит необходимому условию only after.\n\nУтверждение: Omar entered the document room on Tuesday.\nКлюч: NOT GIVEN.\nФрагмент: The archive recorded no information about his subsequent room visits.\nОбъяснение: Получение пропуска не равно посещению.\n\nУтверждение: Omar received a visitor pass on Tuesday.\nКлюч: TRUE.\nФрагмент: Omar received his pass on Tuesday.\nОбъяснение: Дата и действие сообщены прямо.\n\nАдверсальное ревью автора:\n- Необходимое условие не превращать в обязанность совершить действие.\n- Не использовать ошибочную импликацию: получил пропуск значит вошёл.\n\nСвободный выбор доказательства и объяснение требуют ручной проверки. Совпадение категории с ключом не подтверждает качество объяснения или рост IELTS.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "skill": "necessary-condition-versus-action",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R08-A",
+            "text": "At the fictional Hazel workshop, visitors may use the pottery wheel only after completing a safety briefing. Completing the briefing gives permission to use the wheel but does not require anyone to do so. Lina completed the briefing on Monday. The record does not say whether she later used the wheel.",
+            "claims": [
+              {
+                "statement": "Lina completed the required safety briefing.",
+                "answer": "TRUE",
+                "evidence": "Lina completed the briefing on Monday.",
+                "explanation": "Записано выполнение инструктажа."
+              },
+              {
+                "statement": "Visitors are allowed to use the wheel before completing the briefing.",
+                "answer": "FALSE",
+                "evidence": "visitors may use the pottery wheel only after completing a safety briefing",
+                "explanation": "Only after прямо запрещает использование до инструктажа."
+              },
+              {
+                "statement": "Lina used the pottery wheel on Monday.",
+                "answer": "NOT GIVEN",
+                "evidence": "The record does not say whether she later used the wheel.",
+                "explanation": "Разрешение не доказывает, что действие состоялось."
+              }
+            ]
+          },
+          {
+            "id": "R08-B",
+            "text": "At the fictional Rowan archive, researchers may enter the document room only after receiving a visitor pass. Receiving a pass permits entry but does not oblige a researcher to enter. Omar received his pass on Tuesday. The archive recorded no information about his subsequent room visits.",
+            "claims": [
+              {
+                "statement": "Researchers may enter the document room without first receiving a pass.",
+                "answer": "FALSE",
+                "evidence": "researchers may enter the document room only after receiving a visitor pass",
+                "explanation": "Утверждение противоречит необходимому условию only after."
+              },
+              {
+                "statement": "Omar entered the document room on Tuesday.",
+                "answer": "NOT GIVEN",
+                "evidence": "The archive recorded no information about his subsequent room visits.",
+                "explanation": "Получение пропуска не равно посещению."
+              },
+              {
+                "statement": "Omar received a visitor pass on Tuesday.",
+                "answer": "TRUE",
+                "evidence": "Omar received his pass on Tuesday.",
+                "explanation": "Дата и действие сообщены прямо."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "R09",
+      "title": "Кто именно высказал мнение",
+      "category": "Reading · доказательство и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Авторская учебная практика, не официальный IELTS. Все организации и ситуации вымышлены.\n\nНавык: Кто именно высказал мнение.\n\nПрочитай первый текст. Для каждого утверждения выбери TRUE, FALSE или NOT GIVEN, найди относящийся к нему фрагмент и объясни связь. TRUE — текст подтверждает всё утверждение; FALSE — текст ему противоречит; NOT GIVEN — данных не хватает. Затем исправь ответ по разбору и выполни новое задание. Внешние знания не используй.\n\nAt a fictional council meeting, planner Nora supported extending the market opening hours. Shopkeeper Ivo opposed the extension because of staffing costs. The official minutes recorded both views but did not state the council’s final decision or the chair’s personal opinion.\n\n1. Ivo supported extending the opening hours.\n2. The council chair favoured the extension.\n3. Nora supported longer market opening hours.",
+      "teacher_markdown": "### Первый текст · R09-A\nAt a fictional council meeting, planner Nora supported extending the market opening hours. Shopkeeper Ivo opposed the extension because of staffing costs. The official minutes recorded both views but did not state the council’s final decision or the chair’s personal opinion.\n\nУтверждение: Ivo supported extending the opening hours.\nКлюч: FALSE.\nФрагмент: Shopkeeper Ivo opposed the extension\nОбъяснение: Мнение прямо противоположное; нельзя переносить поддержку Норы на Иво.\n\nУтверждение: The council chair favoured the extension.\nКлюч: NOT GIVEN.\nФрагмент: did not state the council’s final decision or the chair’s personal opinion\nОбъяснение: Запись двух чужих мнений не раскрывает мнение председателя.\n\nУтверждение: Nora supported longer market opening hours.\nКлюч: TRUE.\nФрагмент: planner Nora supported extending the market opening hours\nОбъяснение: Позиция приписана правильному человеку.\n\n### Новый текст · R09-B\nAt a fictional college discussion, tutor Eva favoured replacing the printed handbook with a digital version. Librarian Sam opposed the replacement because some students lacked reliable internet access. The summary included both arguments but gave no view from the principal and no final policy.\n\nУтверждение: Eva favoured a digital replacement for the printed handbook.\nКлюч: TRUE.\nФрагмент: tutor Eva favoured replacing the printed handbook with a digital version\nОбъяснение: Это точное содержание позиции Евы.\n\nУтверждение: Sam favoured replacing the printed handbook.\nКлюч: FALSE.\nФрагмент: Librarian Sam opposed the replacement\nОбъяснение: Sam выступил против, а не за замену.\n\nУтверждение: The principal agreed with Eva.\nКлюч: NOT GIVEN.\nФрагмент: gave no view from the principal and no final policy\nОбъяснение: Позиция директора отсутствует; наличие позиции преподавателя её не определяет.\n\nАдверсальное ревью автора:\n- Не приписывать редактору или органу власти мнение цитируемого участника.\n- Противоположные позиции двух лиц не означают, что итоговое решение отклонено.\n\nСвободный выбор доказательства и объяснение требуют ручной проверки. Совпадение категории с ключом не подтверждает качество объяснения или рост IELTS.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "skill": "attribution-scope",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R09-A",
+            "text": "At a fictional council meeting, planner Nora supported extending the market opening hours. Shopkeeper Ivo opposed the extension because of staffing costs. The official minutes recorded both views but did not state the council’s final decision or the chair’s personal opinion.",
+            "claims": [
+              {
+                "statement": "Ivo supported extending the opening hours.",
+                "answer": "FALSE",
+                "evidence": "Shopkeeper Ivo opposed the extension",
+                "explanation": "Мнение прямо противоположное; нельзя переносить поддержку Норы на Иво."
+              },
+              {
+                "statement": "The council chair favoured the extension.",
+                "answer": "NOT GIVEN",
+                "evidence": "did not state the council’s final decision or the chair’s personal opinion",
+                "explanation": "Запись двух чужих мнений не раскрывает мнение председателя."
+              },
+              {
+                "statement": "Nora supported longer market opening hours.",
+                "answer": "TRUE",
+                "evidence": "planner Nora supported extending the market opening hours",
+                "explanation": "Позиция приписана правильному человеку."
+              }
+            ]
+          },
+          {
+            "id": "R09-B",
+            "text": "At a fictional college discussion, tutor Eva favoured replacing the printed handbook with a digital version. Librarian Sam opposed the replacement because some students lacked reliable internet access. The summary included both arguments but gave no view from the principal and no final policy.",
+            "claims": [
+              {
+                "statement": "Eva favoured a digital replacement for the printed handbook.",
+                "answer": "TRUE",
+                "evidence": "tutor Eva favoured replacing the printed handbook with a digital version",
+                "explanation": "Это точное содержание позиции Евы."
+              },
+              {
+                "statement": "Sam favoured replacing the printed handbook.",
+                "answer": "FALSE",
+                "evidence": "Librarian Sam opposed the replacement",
+                "explanation": "Sam выступил против, а не за замену."
+              },
+              {
+                "statement": "The principal agreed with Eva.",
+                "answer": "NOT GIVEN",
+                "evidence": "gave no view from the principal and no final policy",
+                "explanation": "Позиция директора отсутствует; наличие позиции преподавателя её не определяет."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "R10",
+      "title": "Среднее не описывает каждого",
+      "category": "Reading · доказательство и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Авторская учебная практика, не официальный IELTS. Все организации и ситуации вымышлены.\n\nНавык: Среднее не описывает каждого.\n\nПрочитай первый текст. Для каждого утверждения выбери TRUE, FALSE или NOT GIVEN, найди относящийся к нему фрагмент и объясни связь. TRUE — текст подтверждает всё утверждение; FALSE — текст ему противоречит; NOT GIVEN — данных не хватает. Затем исправь ответ по разбору и выполни новое задание. Внешние знания не используй.\n\nIn a fictional workshop, six participants made 30 model boats in total. Their average was five boats each. One participant made two boats, while another made eight. The report did not state the time each participant spent working.\n\n1. The participants made an average of five boats each.\n2. Every participant made exactly five boats.\n3. The participant who made eight boats worked for the longest time.",
+      "teacher_markdown": "### Первый текст · R10-A\nIn a fictional workshop, six participants made 30 model boats in total. Their average was five boats each. One participant made two boats, while another made eight. The report did not state the time each participant spent working.\n\nУтверждение: The participants made an average of five boats each.\nКлюч: TRUE.\nФрагмент: Their average was five boats each.\nОбъяснение: Среднее явно указано и равно 30 ÷ 6.\n\nУтверждение: Every participant made exactly five boats.\nКлюч: FALSE.\nФрагмент: One participant made two boats, while another made eight.\nОбъяснение: Два и восемь — явные контрпримеры every exactly five.\n\nУтверждение: The participant who made eight boats worked for the longest time.\nКлюч: NOT GIVEN.\nФрагмент: The report did not state the time each participant spent working.\nОбъяснение: Больший выпуск сам по себе не доказывает большую длительность.\n\n### Новый текст · R10-B\nIn a fictional reading group, four members read 40 articles in total during a month. The mean was ten articles per member. One member read six, and another read fourteen. The group recorded no information about article length or reading time.\n\nУтверждение: Each member read exactly ten articles.\nКлюч: FALSE.\nФрагмент: One member read six, and another read fourteen.\nОбъяснение: Шесть и четырнадцать противоречат утверждению обо всех.\n\nУтверждение: The member who read fourteen articles spent the most time reading.\nКлюч: NOT GIVEN.\nФрагмент: The group recorded no information about article length or reading time.\nОбъяснение: Количество не определяет длительность без данных о текстах и скорости.\n\nУтверждение: The mean number of articles read per member was ten.\nКлюч: TRUE.\nФрагмент: The mean was ten articles per member.\nОбъяснение: Среднее 40 ÷ 4, а не утверждение о каждом участнике.\n\nАдверсальное ревью автора:\n- Суммы согласованы: оставшиеся четыре участника первой пары могут сделать 20, оставшиеся два второй пары — 20.\n- Не выводить скорость или прилежание из числа произведённых объектов.\n\nСвободный выбор доказательства и объяснение требуют ручной проверки. Совпадение категории с ключом не подтверждает качество объяснения или рост IELTS.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "skill": "average-versus-individual",
+        "difficulty": "intermediate",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R10-A",
+            "text": "In a fictional workshop, six participants made 30 model boats in total. Their average was five boats each. One participant made two boats, while another made eight. The report did not state the time each participant spent working.",
+            "claims": [
+              {
+                "statement": "The participants made an average of five boats each.",
+                "answer": "TRUE",
+                "evidence": "Their average was five boats each.",
+                "explanation": "Среднее явно указано и равно 30 ÷ 6."
+              },
+              {
+                "statement": "Every participant made exactly five boats.",
+                "answer": "FALSE",
+                "evidence": "One participant made two boats, while another made eight.",
+                "explanation": "Два и восемь — явные контрпримеры every exactly five."
+              },
+              {
+                "statement": "The participant who made eight boats worked for the longest time.",
+                "answer": "NOT GIVEN",
+                "evidence": "The report did not state the time each participant spent working.",
+                "explanation": "Больший выпуск сам по себе не доказывает большую длительность."
+              }
+            ]
+          },
+          {
+            "id": "R10-B",
+            "text": "In a fictional reading group, four members read 40 articles in total during a month. The mean was ten articles per member. One member read six, and another read fourteen. The group recorded no information about article length or reading time.",
+            "claims": [
+              {
+                "statement": "Each member read exactly ten articles.",
+                "answer": "FALSE",
+                "evidence": "One member read six, and another read fourteen.",
+                "explanation": "Шесть и четырнадцать противоречат утверждению обо всех."
+              },
+              {
+                "statement": "The member who read fourteen articles spent the most time reading.",
+                "answer": "NOT GIVEN",
+                "evidence": "The group recorded no information about article length or reading time.",
+                "explanation": "Количество не определяет длительность без данных о текстах и скорости."
+              },
+              {
+                "statement": "The mean number of articles read per member was ten.",
+                "answer": "TRUE",
+                "evidence": "The mean was ten articles per member.",
+                "explanation": "Среднее 40 ÷ 4, а не утверждение о каждом участнике."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

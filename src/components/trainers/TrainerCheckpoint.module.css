@@ -53,4 +53,8 @@
 .preview > input, .previewReasons input { display: block; box-sizing: border-box; width: 100%; min-height: 44px; margin: 10px 0 14px; padding: 10px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); color: var(--ink); background: var(--surface); font: inherit; }
 .mathSteps { padding-left: 24px; overflow-wrap: anywhere; }
 .mathSteps li { margin: 10px 0; line-height: 1.6; }
+.readingClaim label { display: block; margin: 14px 0 8px; font-weight: 600; }
+.readingClaim :is(select,textarea) { display: block; box-sizing: border-box; width: 100%; max-width: 100%; min-width: 0; min-height: 44px; margin: 0 0 14px; padding: 12px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: inherit; }
+.readingClaim :is(select,textarea):focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
+.readingClaim blockquote { margin: 16px 0; padding-left: 16px; border-left: 3px solid var(--ink-soft); white-space: pre-wrap; }
 @media (max-width: 500px) { .panel { padding: 16px; } .actions { flex-direction: column; } .actions button { width: 100%; } }
