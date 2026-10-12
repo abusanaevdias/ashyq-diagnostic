@@ -1,0 +1,82 @@
+{
+    "format":  "ashyq-draft-listening-audio-v1",
+    "batch":  "02",
+    "publication_ready":  false,
+    "synthetic_voice":  "Microsoft Zira Desktop",
+    "voice_rate":  -1,
+    "generation":  "offline Windows System.Speech",
+    "assets":  [
+                   {
+                       "unit":  "L03",
+                       "round":  0,
+                       "kind":  "full",
+                       "text":  "We expected thirteen visitors for the science club. Sorry, that was the number on the old list. The final list has thirty visitors. We will need thirty chairs, plus two for the organisers.",
+                       "url":  "/audio/trainers/drafts/l03-1-full.wav",
+                       "sha256":  "054d972d8b92dd78b724e3c1a8d9efed92b03076fb2a9f0267330f227145b158",
+                       "bytes":  674226
+                   },
+                   {
+                       "unit":  "L03",
+                       "round":  0,
+                       "kind":  "segment",
+                       "text":  "Sorry, that was the number on the old list. The final list has thirty visitors.",
+                       "url":  "/audio/trainers/drafts/l03-1-segment.wav",
+                       "sha256":  "7d55868f9f66a6d0248d791957eabe8da7af2877cafa7bcb2137d23f8b859f67",
+                       "bytes":  303616
+                   },
+                   {
+                       "unit":  "L03",
+                       "round":  1,
+                       "kind":  "full",
+                       "text":  "At first we booked places for forty students at the art workshop. Several students then cancelled, so the final group contains fourteen students. Two teachers will accompany them, but neither teacher is taking part in the workshop.",
+                       "url":  "/audio/trainers/drafts/l03-2-full.wav",
+                       "sha256":  "b8ef37e31621284326c9e452749e62029020ff01e1117d704fcbf892e40eae96",
+                       "bytes":  737464
+                   },
+                   {
+                       "unit":  "L03",
+                       "round":  1,
+                       "kind":  "segment",
+                       "text":  "Several students then cancelled, so the final group contains fourteen students.",
+                       "url":  "/audio/trainers/drafts/l03-2-segment.wav",
+                       "sha256":  "6f5e202e7a235508589179c8829958c13bb29b7925fd2dd651a74b82808bf9a1",
+                       "bytes":  267444
+                   },
+                   {
+                       "unit":  "L04",
+                       "round":  0,
+                       "kind":  "full",
+                       "text":  "For the park clean-up, we will provide protective gloves and collection bags. Please bring your own reusable bottles, since there is a drinking-water tap near the entrance. There is no need to buy gloves or bags.",
+                       "url":  "/audio/trainers/drafts/l04-1-full.wav",
+                       "sha256":  "0a36952d9982bcceb13f2a409f9902fd8668807ce459b187e7ba115a40ac6f8d",
+                       "bytes":  693604
+                   },
+                   {
+                       "unit":  "L04",
+                       "round":  0,
+                       "kind":  "segment",
+                       "text":  "Please bring your own reusable bottles, since there is a drinking-water tap near the entrance.",
+                       "url":  "/audio/trainers/drafts/l04-1-segment.wav",
+                       "sha256":  "30797e23359d6b6a08fdfc4a98c6deae9cee605521a7de58e56dc43a85dead55",
+                       "bytes":  292358
+                   },
+                   {
+                       "unit":  "L04",
+                       "round":  1,
+                       "kind":  "full",
+                       "text":  "The school will supply seedlings and small tools for our gardening day. Students need to bring gardening gloves to protect their hands. Water bottles are recommended, but they are not compulsory. Please label your gloves so they do not get mixed up.",
+                       "url":  "/audio/trainers/drafts/l04-2-full.wav",
+                       "sha256":  "e1306edc273c9725b7125e01b2988015a332a41f289b4b853cb775f19c0bfebc",
+                       "bytes":  779360
+                   },
+                   {
+                       "unit":  "L04",
+                       "round":  1,
+                       "kind":  "segment",
+                       "text":  "Students need to bring gardening gloves to protect their hands.",
+                       "url":  "/audio/trainers/drafts/l04-2-segment.wav",
+                       "sha256":  "5e2b7054bf926c4a73c837594464cf2580841b2266ec461202a7bf6c25fc877b",
+                       "bytes":  195576
+                   }
+               ]
+}
