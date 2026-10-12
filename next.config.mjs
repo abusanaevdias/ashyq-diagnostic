@@ -46,6 +46,15 @@ const nextConfig = {
         ],
       },
       {
+        // Speaking records only after an explicit user action. Blob playback is
+        // local; external media and connect-src remain restricted.
+        source: '/trainers/speaking-second-take',
+        headers: [
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=()' },
+          { key: 'Content-Security-Policy', value: `${csp}; media-src 'self' blob:` },
+        ],
+      },
+      {
         // /crm — Telegram Mini App: веб-версия Telegram открывает его во фрейме.
         // X-Frame-Options: DENY выше остаётся, но при frame-ancestors браузеры его не применяют
         source: '/crm',

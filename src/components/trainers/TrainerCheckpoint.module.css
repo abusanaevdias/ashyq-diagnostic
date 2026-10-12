@@ -17,4 +17,24 @@
 .history summary { min-height: 44px; padding: 10px 0; cursor: pointer; font-weight: 700; }
 .history ul { padding: 0; list-style: none; }
 .history li { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 12px; }
+.filters { margin: 24px 0; border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 16px; }
+.filters button { min-height: 44px; padding: 10px 20px; border: 1px solid var(--hairline); background: var(--surface); color: var(--ink); border-radius: var(--r-sm); }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.filters label { display: flex; gap: 10px; align-items: center; min-height: 44px; margin-top: 12px; }
+.filters :is(button,input):focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
+.outcome { padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--hairline); }
+.outcome summary { min-height: 44px; padding: 10px 0; cursor: pointer; font-weight: 600; }
+.outcome ul { padding-left: 20px; }
+.outcome li { margin-bottom: 12px; }
+.outcome li strong { display: block; font-size: 14px; }
+.materialText { overflow-wrap: anywhere; }
+.materialText h3 { margin: 24px 0 12px; font-size: 18px; }
+.materialText p { color: var(--ink); font-size: 16px; }
+.listLine { padding-left: 16px; }
+.tableWrap { max-width: 100%; overflow-x: auto; margin: 16px 0; }
+.tableWrap table { border-collapse: collapse; font-size: 14px; }
+.tableWrap :is(th,td) { padding: 10px; border: 1px solid var(--hairline); min-width: 130px; text-align: left; }
+.filters :is(select,textarea) { display: block; width: 100%; max-width: 100%; padding: 10px; min-height: 44px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); color: var(--ink); background: var(--surface); font: inherit; }
+.filters label:has(select), .filters label:has(textarea) { display: block; }
+.filters :is(select,textarea):focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 500px) { .panel { padding: 16px; } .actions { flex-direction: column; } .actions button { width: 100%; } }

@@ -39,7 +39,7 @@ function fixture({denied=false, deferred=false, empty=false, delayedStop=false}=
     performance: {now: () => state.now},
     URL: {createObjectURL() {const url='blob:test-'+state.created.length;state.created.push(url);return url;},revokeObjectURL(url) {state.revoked.push(url);}},
     requestId:{current:0},recorder:{current:null},stream:{current:null},startTime:{current:0},stopTime:{current:0},clock:{current:null},recordingLimit:{current:null},urls:{current:new Set()},
-    takeIndex:0,pending:false,recording:false,
+    takeIndex:0,pending:false,recording:false,audioTypes:{current:new Map()},
     setPending(value) {state.pending=value;context.pending=value;},setRecording(value) {state.recording=value;context.recording=value;},
     setElapsed() {},setError(value) {state.error=value;},setNoMarkers() {},setMarkerNote() {},
     setPhase(value) {state.phase=value;},setTakes(update) {state.takes=update(state.takes);},

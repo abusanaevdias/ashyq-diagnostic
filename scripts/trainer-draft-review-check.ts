@@ -1,0 +1,82 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import crypto from 'node:crypto';
+import { chromium } from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
+import { draftBatch, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision } from '../src/lib/trainers/draft-review';
+
+async function main() {
+  assert.equal(draftBatch.methodically_approved, false);
+  assert.ok(draftBatch.units.every(unit => unit.status === 'DRAFT'));
+  assert.equal(crypto.createHash('sha256').update(JSON.stringify(draftBatch.units)).digest('hex'), draftBatch.content_sha256, 'content changes require a new fingerprint');
+  const review = emptyDraftReview('fixture-a');
+  assert.equal(parseDraftReview(JSON.stringify(review), 'fixture-b'), null);
+  assert.equal(parseDraftReview(JSON.stringify({ ...review, source_sha256: 'old' }), 'fixture-a'), null);
+  assert.equal(parseDraftReview('{bad', 'fixture-a'), null);
+  assert.equal(parseDraftReview(JSON.stringify({ ...review, decisions: { unknown: { decision: 'recommend' } } }), 'fixture-a'), null);
+  assert.equal(validDecision({ decision: 'recommend', comment: '', attested: false, savedAt: new Date().toISOString() }), false);
+  assert.equal(validDecision({ decision: 'revise', comment: ' ', attested: false, savedAt: new Date().toISOString() }), false);
+  assert.equal(reviewCounts(review).considered, 0);
+  const base = process.env.TRAINER_CHECK_BASE ?? 'http://127.0.0.1:3043';
+  assert.ok(['127.0.0.1','localhost'].includes(new URL(base).hostname), 'LocalDemo fixtures only');
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(base + '/trainers/material-review');
+    await page.getByRole('heading', { name: 'Нужно войти', exact: true }).waitFor();
+    const session = (id: string, role = 'teacher') => ({ user: { id, name: 'Synthetic reviewer', email: `${id}@example.invalid`, role, avatarColor: 'red' }, expiresAt: new Date(Date.now() + 3600000).toISOString() });
+    await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-a'));
+    await page.getByRole('heading', { name: 'Проверка учебных материалов', exact: true }).waitFor();
+    await page.getByRole('heading', { name: 'Рассмотрено 0 из 12', exact: true }).waitFor();
+    await page.getByLabel('Результат проверки', { exact: true }).selectOption('recommend');
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('alert').filter({ hasText: 'Подтверди проверку условия' }).waitFor();
+    assert.equal(await page.evaluate(key => localStorage.getItem(key), reviewKey('fixture-a')), null);
+    await page.getByRole('checkbox', { name: /Проверил условие, ключ/ }).check();
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 12', exact: true }).waitFor();
+    await page.reload();
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 12', exact: true }).waitFor();
+    assert.equal(await page.locator('details[open]').count(), 0, 'keys stay collapsed after reload');
+    await page.getByLabel('Замечание', { exact: true }).fill('Unsaved note');
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('D01');
+    await page.getByRole('button', { name: 'Остаться на материале', exact: true }).click();
+    assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), 'Unsaved note');
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('D01');
+    await page.getByRole('button', { name: 'Перейти без сохранения', exact: true }).click();
+    await page.getByLabel('Результат проверки', { exact: true }).selectOption('revise');
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('alert').filter({ hasText: 'конкретное замечание' }).waitFor();
+    await page.getByLabel('Замечание', { exact: true }).fill('Уточнить инструкцию и добавить допустимую альтернативу.');
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('heading', { name: 'Рассмотрено 2 из 12', exact: true }).waitFor();
+    const download = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Скачать сохранённые решения', exact: true }).click();
+    await fs.mkdir('artifacts/trainers-complete-033', { recursive: true });
+    const file = 'artifacts/trainers-complete-033/draft-review-fixture.json';
+    await (await download).saveAs(file);
+    const exported = parseDraftReview(await fs.readFile(file, 'utf8'), 'fixture-a')!;
+    assert.deepEqual(reviewCounts(exported), { total: 12, considered: 2, recommended: 1, revise: 1, hold: 0 });
+    assert.equal(draftBatch.methodically_approved, false, 'local recommendation cannot approve or publish source');
+    for (const width of [320,390,768,1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `review overflow at ${width}`);
+    }
+    const axe = await new AxeBuilder({ page }).include('main').analyze();
+    assert.deepEqual(axe.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) })), []);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.evaluate(() => scrollTo(0,0));
+    await page.screenshot({ path: 'artifacts/trainers-complete-033/draft-review-mobile.png' });
+    await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-b'));
+    await page.getByRole('heading', { name: 'Рассмотрено 0 из 12', exact: true }).waitFor();
+    assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), '');
+    await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-student', 'student'));
+    await page.getByRole('heading', { name: 'Недостаточно прав', exact: true }).waitFor();
+    assert.deepEqual(errors, []);
+    console.log('PASS draft fingerprint, invalid/stale decisions, explicit attestation, revision comment, unsaved-navigation guard, partial export, identity separation, role UI, four widths and axe. LocalDemo is not server authorization; no source approval/publication occurred.');
+  } finally { await browser.close(); }
+}
+main().catch(error => { console.error(error); process.exitCode = 1; });

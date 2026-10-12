@@ -1,4 +1,5 @@
 import type { TrainerId } from './catalog';
+import { writingDrills } from '../writing-trainer/drills';
 
 export const CHECKPOINT_VERSION = 1;
 export const MAX_RECORD_BYTES = 1_500_000;
@@ -21,6 +22,7 @@ const array = (check: Check, max = 50): Check => v => Array.isArray(v) && v.leng
 const record = (check: Check, key: RegExp = /^(?:[a-z][a-z0-9-]*|[0-9]+)$/i): Check => v => object(v) && Object.keys(v).length <= 100 && Object.entries(v).every(([k, x]) => key.test(k) && !['__proto__', 'constructor', 'prototype'].includes(k) && check(x));
 const shape = (fields: Record<string, Check>): Check => v => object(v) && Object.keys(v).length === Object.keys(fields).length && Object.entries(fields).every(([key, check]) => Object.hasOwn(v, key) && check(v[key]));
 const phase = (...values: string[]) => one(...values);
+const completedDrills: Check = v => array(one(...writingDrills.map(item => item.id)), writingDrills.length)(v) && new Set(v as string[]).size === (v as string[]).length;
 const index = nullable(integer(1));
 const confidence = one('', 'low', 'medium', 'high');
 const tfng = one('TRUE', 'FALSE', 'NOT GIVEN');
@@ -53,7 +55,7 @@ const schemas: Record<TrainerId, Check> = {
   'math-method-switch': shape({ phase: phase('choose', 'solve', 'review', 'result'), index: integer(1), round: integer(1), x: text, y: text, working: text, method: v => v === ' ' || method(v), alternative: v => v === ' ' || method(v), plan: text, attempts: array(methodAttempt, 2) }),
   'speaking-second-take': shape({ phase: phase('start', 'prepare', 'capture', 'review', 'compare', 'result'), takeIndex: integer(2), takes: array(take, 3), notes: text, kind: text, markerNote: text, noMarkers: bool }),
   'writing-task2': shape({ session: writingSession }),
-  'writing-drills': shape({ mode: nullable(one('combine', 'grammar', 'argument')), index: integer(1), draft: text, optionsVisible: bool, choice: nullable(integer(2)), attempts: integer(10000), feedback: text, revealed: bool, completed: array(text, 100) }),
+  'writing-drills': shape({ mode: nullable(one('combine', 'grammar', 'argument')), index: integer(1), draft: text, optionsVisible: bool, choice: nullable(integer(2)), attempts: integer(10000), feedback: text, revealed: bool, completed: completedDrills }),
 };
 
 export function validSnapshot(trainer: TrainerId, value: unknown): value is Snapshot {
@@ -108,6 +110,7 @@ export function parseRecord(raw: string | null, trainer: TrainerId): TrainerReco
     const validEntry = (e: unknown): e is Entry => object(e) && typeof e.id === 'string' && e.id.length <= 100 && typeof e.savedAt === 'string' && !Number.isNaN(Date.parse(e.savedAt)) && validSnapshot(trainer, e.data);
     if (value.checkpoint !== null && !validEntry(value.checkpoint)) return null;
     if (!value.history.every(validEntry)) return null;
+    if (new Set(value.history.map(entry => entry.id)).size !== value.history.length) return null;
     return value as TrainerRecord;
   } catch { return null; }
 }

@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
 import styles from './trainers.module.css';
+import TrainerStaffLinks from '@/components/trainers/TrainerStaffLinks';
+import TrainerPracticeLink from '@/components/trainers/TrainerPracticeLink';
 
 export const metadata: Metadata = {
   title: 'Тренажёры IELTS и SAT — ASHYQ',
@@ -15,11 +17,12 @@ export default function TrainersPage() {
     <h1>Учись на своей первой попытке</h1>
     <p className={styles.intro}>Здесь важен не только ответ. Сначала попробуй сам, затем сравни ход мысли с разбором и примени навык к новому примеру. Все открытые задания вымышлены.</p>
     <p><Link href="/trainers/history">Мои занятия и сохранённые попытки →</Link></p>
+    <TrainerStaffLinks/>
     <div className={styles.grid}>
       <article className={styles.card}><span>SAT · MATH</span><h2>Сравни способы решения</h2><p>Реши систему сам, сравни алгебру, график и таблицу и попробуй другой путь на новой задаче.</p><Link href="/trainers/math-method-switch">Выбрать другой способ →</Link></article>
       <article className={styles.card}><span>IELTS ACADEMIC · READING</span><h2>Докажи ответ текстом</h2><p>TRUE / FALSE / NOT GIVEN: выбери ответ и опору, проверь логическую связь и реши новый вопрос.</p><Link href="/trainers/reading-evidence">Попробовать Reading →</Link></article>
       <article className={styles.card}><span>IELTS-STYLE · LISTENING</span><h2>Услышь, где меняется ответ</h2><p>Предскажи тип ответа, послушай один раз и восстанови пропущенное с постепенной помощью.</p><Link href="/trainers/listening-replay">Попробовать Listening →</Link></article>
-      <article className={styles.card}><span>IELTS-STYLE · SPEAKING</span><h2>Запиши ответ второй раз</h2><p>Прослушай себя, составь план правки и сравни повтор с ответом на новую тему.</p><Link href="/trainers/speaking-second-take">Попробовать Speaking →</Link></article>
+      <article className={styles.card}><span>IELTS-STYLE · SPEAKING</span><h2>Запиши ответ второй раз</h2><p>Прослушай себя, составь план правки и сравни повтор с ответом на новую тему.</p><TrainerPracticeLink href="/trainers/speaking-second-take">Попробовать Speaking →</TrainerPracticeLink></article>
       <article className={styles.card}><span>SAT · READING & WRITING</span><h2>Реши до вариантов</h2><p>Сначала запиши свой прогноз, затем сравни его с четырьмя вариантами и реши новый вопрос.</p><Link href="/trainers/sat-optionless">Попробовать SAT R&W →</Link></article>
       <article className={styles.card}><span>SAT · MATH</span><h2>Найди первую ошибку</h2><p>Разбери чужое решение, исправь первый неверный переход и реши новую задачу.</p><Link href="/trainers/math-forensics">Попробовать SAT Math →</Link></article>
       <article className={styles.card}><span>SAT · CONTEXTUAL MATH</span><h2>От текста к уравнению</h2><p>Отдели разовый платёж от ставки, зафиксируй модель до расчёта и проверь её на новой задаче.</p><Link href="/trainers/sat-translation">Собрать модель →</Link></article>

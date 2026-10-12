@@ -3,11 +3,16 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useSession } from '@/lib/lms/hooks';
-import { trainerById, type TrainerId } from '@/lib/trainers/catalog';
+import { trainerById, trainerCatalog, type TrainerId } from '@/lib/trainers/catalog';
 import { archiveEntry, checkpointKey, createEntry, emptyRecord, MAX_RECORD_BYTES, parseRecord, utf8Bytes, validSnapshot, type Snapshot, type TrainerRecord } from '@/lib/trainers/checkpoints';
 import styles from './TrainerCheckpoint.module.css';
 
 const changed = 'ashyq:trainer-checkpoint-change';
+function subscribeChanges(callback: () => void) {
+  window.addEventListener('storage', callback);
+  window.addEventListener(changed, callback);
+  return () => { window.removeEventListener('storage', callback); window.removeEventListener(changed, callback); };
+}
 function failureMessage(error: unknown, fallback: string) {
   if (error instanceof DOMException && ['QuotaExceededError', 'SecurityError'].includes(error.name)) return 'Браузер не разрешил сохранить работу или место закончилось. Работа остаётся на экране: скачай файл перед закрытием.';
   return error instanceof Error ? error.message : fallback;
@@ -16,16 +21,23 @@ export function useCheckpointRecord(trainer: TrainerId) {
   const { session, ready } = useSession();
   const scope = session?.user.id ?? 'guest';
   const key = checkpointKey(trainer, scope);
-  function subscribe(callback: () => void) {
-    window.addEventListener('storage', callback);
-    window.addEventListener(changed, callback);
-    return () => { window.removeEventListener('storage', callback); window.removeEventListener(changed, callback); };
-  }
-  const raw = useSyncExternalStore(subscribe, () => {
+  const raw = useSyncExternalStore(subscribeChanges, () => {
     if (!ready) return null;
     try { return localStorage.getItem(key); } catch { return '!storage-unavailable'; }
   }, () => null);
   return { raw, key, ready, scope, record: parseRecord(raw, trainer) };
+}
+
+export function useCheckpointLibrary() {
+  const { session, ready } = useSession();
+  const scope = session?.user.id ?? 'guest';
+  const raw = useSyncExternalStore(subscribeChanges, () => {
+    if (!ready) return '[]';
+    try { return JSON.stringify(trainerCatalog.map(item => localStorage.getItem(checkpointKey(item.id, scope)))); }
+    catch { return JSON.stringify(trainerCatalog.map(() => '!storage-unavailable')); }
+  }, () => '[]');
+  const values = JSON.parse(raw) as (string | null)[];
+  return { ready, entries: trainerCatalog.map((item, index) => ({ item, raw: values[index] ?? null, record: parseRecord(values[index] ?? null, item.id) })) };
 }
 
 export function downloadTrainerRecord(record: TrainerRecord) {
@@ -46,6 +58,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   const [imported, setImported] = useState<TrainerRecord | null>(null);
   const revision = useRef('');
   const pendingWrites = useRef(0);
+  const writeGeneration = useRef(0);
   const enabled = activeKey === key;
   const serialized = JSON.stringify(data);
   const item = trainerById(trainer);
@@ -59,7 +72,9 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   }, []);
   async function locked(action: () => void) {
     if (!navigator.locks) throw new Error('Этот браузер не поддерживает безопасное сохранение между вкладками. Скачай работу в файл.');
-    await navigator.locks.request(`ashyq-trainer:${key}`, action);
+    pendingWrites.current++;
+    try { await navigator.locks.request(`ashyq-trainer:${key}`, action); }
+    finally { pendingWrites.current--; }
   }
 
   function write(next: TrainerRecord) {
@@ -71,7 +86,9 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   }
   async function saveNow() {
     if (!validSnapshot(trainer, data)) throw new Error('Этот промежуточный шаг пока нельзя сохранить. Заверши текущее действие и попробуй снова.');
+    const generation = writeGeneration.current;
     await locked(() => {
+      if (generation !== writeGeneration.current) throw new Error('Сохранение было удалено. Включи его заново, если хочешь сохранить текущую работу.');
       const current = parseRecord(localStorage.getItem(key), trainer) ?? emptyRecord(trainer);
       if (current.revision !== revision.current) throw new Error('Запись изменилась в другой вкладке. Автосохранение остановлено: сначала скачай текущую работу или продолжи сохранённую.');
       const entry = createEntry(data);
@@ -81,11 +98,13 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   useEffect(() => {
     if (!enabled || !ready) return;
     pendingWrites.current++;
+    const generation = writeGeneration.current;
     const save = async () => { try {
       const value: unknown = JSON.parse(serialized);
       if (!validSnapshot(trainer, value)) return;
       if (!navigator.locks) throw new Error('Браузер не поддерживает безопасное сохранение между вкладками. Скачай работу.');
       await navigator.locks.request(`ashyq-trainer:${key}`, () => {
+      if (generation !== writeGeneration.current) return;
       const current = parseRecord(localStorage.getItem(key), trainer) ?? emptyRecord(trainer);
       if (current.revision !== revision.current) throw new Error('Сохранение изменилось в другой вкладке. Текущая работа остаётся на экране; скачай её перед продолжением сохранённой.');
       if (JSON.stringify(current.checkpoint?.data) === serialized) return;
@@ -127,7 +146,8 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     try {
       await saveNow();
       await locked(() => {
-        const current = parseRecord(localStorage.getItem(key), trainer)!;
+        const current = parseRecord(localStorage.getItem(key), trainer);
+        if (!current?.checkpoint) throw new Error('Сохранение больше недоступно. Скачай текущую работу перед продолжением.');
         if (current.revision !== revision.current) throw new Error('Запись изменилась в другой вкладке. Скачай текущую работу перед продолжением.');
         write(archiveEntry(current, current.checkpoint!));
       });
@@ -138,11 +158,13 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     setImported(null);
     if (!file) return;
     try {
-      if (file.size > MAX_RECORD_BYTES + 1000) throw new Error('Файл слишком большой. Выбери экспорт одного тренажёра ASHYQ.');
+      if (file.size > MAX_RECORD_BYTES * 2) throw new Error('Файл слишком большой. Выбери экспорт одного тренажёра ASHYQ.');
       const body = await file.text();
       const parsed: unknown = JSON.parse(body);
       if (!parsed || typeof parsed !== 'object' || !('format' in parsed) || parsed.format !== 'ashyq-trainer-export-v1') throw new Error('Нужен JSON-файл, скачанный из тренажёра ASHYQ.');
-      const candidate = parseRecord(body, trainer);
+      // Export indentation/metadata must not consume the stored-record budget.
+      const bundle = parsed as Record<string, unknown>;
+      const candidate = parseRecord(JSON.stringify({ version: bundle.version, trainer: bundle.trainer, revision: bundle.revision, checkpoint: bundle.checkpoint, history: bundle.history }), trainer);
       if (!candidate?.checkpoint) throw new Error('Файл повреждён, относится к другому тренажёру или несовместимой версии.');
       setImported(candidate);
       setMessage('Файл проверен локально. Подтверди восстановление ниже; пока работа и сохранение не изменены.');
@@ -158,10 +180,22 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
       setMessage('Работа из файла восстановлена; локальное сохранение заменено. Аудио в экспорт не входит.');
     } catch (error) { setMessage(failureMessage(error, 'Не удалось восстановить файл. Текущая работа не изменена.')); }
   }
+  async function removeSaved() {
+    try {
+      await locked(() => {
+        localStorage.removeItem(key);
+        writeGeneration.current++;
+        revision.current = '';
+        window.dispatchEvent(new Event(changed));
+      });
+      setActiveKey(''); setDeleting(false);
+      setMessage('Локальная запись удалена. Работа на экране не изменена.');
+    } catch { setMessage('Браузер не разрешил удалить запись.'); }
+  }
 
   return <section className={styles.panel} aria-label={`Сохранение: ${item.title}`}>
     <div className={styles.heading}><div><h2>Продолжи с того же места</h2><p>{enabled ? 'Автосохранение включено для этого тренажёра.' : 'Сохранение выключено. Можно скачать текущую работу без включения.'}</p></div><Link href="/trainers/history">Мои занятия →</Link></div>
-    <p className={styles.note}>Текст сохраняется только в этом браузере {scope === 'guest' ? 'в гостевом режиме' : 'для текущего аккаунта'}. На общем устройстве записи могут быть доступны другим людям с этим браузером. Синхронизации между устройствами нет.{trainer === 'speaking-second-take' ? ' Аудио не сохраняется; сохраняются заметки и самопроверка.' : ''}</p>
+    <details className={styles.history}><summary>Хранение ответов и общее устройство</summary><p className={styles.note}>Текст сохраняется только в этом браузере {scope === 'guest' ? 'в гостевом режиме' : 'для текущего аккаунта'}. На общем устройстве записи могут быть доступны другим людям с этим браузером. Автоматической синхронизации между устройствами нет; перенос возможен через файл.{trainer === 'speaking-second-take' ? ' Аудио не сохраняется; сохраняются заметки и самопроверка.' : ''}</p></details>
     {enabled && <p role="status">{saved ? 'Сохранено на этом устройстве.' : 'Сохраняем изменения… Дождись сообщения «Сохранено» перед закрытием.'}</p>}
     {raw && !record && <p className={styles.warning} role="status">{raw === '!storage-unavailable' ? 'Браузер запретил сохранение. Текущая работа доступна для скачивания.' : 'Сохранённая запись повреждена или относится к другой версии. Она не восстановлена и не будет перезаписана автоматически.'}</p>}
     {record?.checkpoint && !enabled && <p className={styles.resume}>Есть попытка от {new Date(record.checkpoint.savedAt).toLocaleString('ru-RU')}. Продолжи её или явно замени текущей работой.</p>}
@@ -174,7 +208,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     <details className={styles.history}><summary>Перенести работу с другого устройства</summary><p>Выбери JSON-файл, скачанный из этого тренажёра. Он будет проверен в браузере. После подтверждения файл заменит текущее сохранение и работу на экране; сначала скачай их, если они нужны.</p><label>Файл работы ASHYQ <input type="file" accept=".json,application/json" disabled={busy || !ready} onChange={event => { void readImport(event.target.files?.[0]); event.target.value = ''; }}/></label></details>
     {imported?.checkpoint && <div className={styles.warning}><p>Восстановить работу от {new Date(imported.checkpoint.savedAt).toLocaleString('ru-RU')} и {imported.history.length} записей истории? Текущая работа и локальное сохранение будут заменены.</p><div className={styles.actions}><button type="button" disabled={busy || !ready || raw === '!storage-unavailable'} onClick={confirmImport}>Восстановить из файла и заменить сохранение</button><button type="button" onClick={() => setImported(null)}>Отмена импорта</button></div></div>}
     {record && <details className={styles.history}><summary>История этого тренажёра · {record.history.length}</summary><p>Хранятся последние 20 разных завершённых занятий. Одобрение учителя и экзаменационные баллы не присваиваются.</p><ul>{record.history.map(entry => <li key={entry.id}><span>{new Date(entry.savedAt).toLocaleString('ru-RU')}</span><button disabled={busy} type="button" onClick={() => restore(entry.data)}>Открыть эту попытку</button></li>)}</ul><button type="button" onClick={() => setDeleting(true)}>Удалить сохранение и историю этого тренажёра</button></details>}
-    {deleting && <div className={styles.warning}><p>Удалить локальную запись и историю «{item.title}»? Текущая работа останется на экране. Сначала можно скачать файл.</p><div className={styles.actions}><button type="button" onClick={() => { try { localStorage.removeItem(key); setActiveKey(''); revision.current = ''; setDeleting(false); window.dispatchEvent(new Event(changed)); setMessage('Локальная запись удалена. Работа на экране не изменена.'); } catch { setMessage('Браузер не разрешил удалить запись.'); } }}>Подтвердить удаление</button><button type="button" onClick={() => setDeleting(false)}>Отмена</button></div></div>}
+    {deleting && <div className={styles.warning}><p>Удалить локальную запись и историю «{item.title}»? Текущая работа останется на экране. Сначала можно скачать файл.</p><div className={styles.actions}><button type="button" disabled={busy || (enabled && !saved)} onClick={removeSaved}>Подтвердить удаление</button><button type="button" onClick={() => setDeleting(false)}>Отмена</button></div></div>}
     {busy && <p className={styles.note}>Управление сохранением доступно после окончания записи или воспроизведения.</p>}
     {message && <p className={styles.status} role="status">{message}</p>}
   </section>;
