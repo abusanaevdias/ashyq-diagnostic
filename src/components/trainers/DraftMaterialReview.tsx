@@ -9,6 +9,7 @@ import DraftListeningPreview from './DraftListeningPreview';
 import DraftMathPreview from './DraftMathPreview';
 import DraftReadingPreview from './DraftReadingPreview';
 import DraftTask1Preview from './DraftTask1Preview';
+import DraftSpeakingLaunch from './DraftSpeakingLaunch';
 import { decisionSignature, DRAFT_REVIEW_CHANGED, draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
 import { saveDraftDecision } from '@/lib/trainers/draft-review-storage';
 import styles from './TrainerCheckpoint.module.css';
@@ -43,7 +44,7 @@ function MaterialText({ text, sectionLabel = 'задания' }: { text: string;
   return <div className={styles.materialText}>{blocks}</div>;
 }
 
-function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; previous?: DraftDecision; onSave: (value: DraftDecision, expected: string | null) => Promise<boolean>; onDirty: (dirty: boolean) => void }) {
+function ReviewUnit({ unit, batchId, contentHash, previous, onSave, onDirty }: { unit: DraftUnit; batchId: string; contentHash: string; previous?: DraftDecision; onSave: (value: DraftDecision, expected: string | null) => Promise<boolean>; onDirty: (dirty: boolean) => void }) {
   const [decision, setDecision] = useState<ReviewDecision>(previous?.decision ?? 'pending');
   const [comment, setComment] = useState(previous?.comment ?? '');
   const [attested, setAttested] = useState(previous?.attested ?? false);
@@ -67,6 +68,7 @@ function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; prev
     <DraftMathPreview value={unit.exercise_data}/>
     <DraftReadingPreview value={unit.exercise_data}/>
     <DraftTask1Preview value={unit.exercise_data}/>
+    <DraftSpeakingLaunch value={unit.exercise_data} batchId={batchId} unitId={unit.id} contentHash={contentHash}/>
     <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown} sectionLabel="разбора"/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown} sectionLabel="языковой правки"/></>}</details>
     <fieldset className={styles.filters} disabled={saving}><legend>Решение проверяющего</legend>
       <label htmlFor="draft-review-decision">Результат проверки</label><select id="draft-review-decision" value={decision} onChange={event => { onDirty(true); setDecision(event.target.value as ReviewDecision); setError(''); }}><option value="pending">Пока не проверено</option><option value="recommend">Рекомендую принять</option><option value="revise">Нужна правка</option><option value="hold">Отложить</option></select>
@@ -127,7 +129,7 @@ function Workspace({ reviewerId, draftBatch, onBatchChange }: { reviewerId: stri
     {raw !== null && !parsed && <div className={styles.panel}><p className={styles.warning} role="status">{raw === '!unavailable' ? 'Локальное сохранение недоступно.' : 'Локальная запись несовместима с этой версией. Она не восстановлена и не заменена. Скачай исходную запись для восстановления; выгрузка пустого набора решений отключена.'}</p>{raw !== '!unavailable' && <button type="button" onClick={exportRecovery}>Скачать исходную запись для восстановления</button>}</div>}
     <div className={styles.filters}><label htmlFor="draft-batch-picker">Партия материалов</label><select id="draft-batch-picker" value={draftBatch.batch} disabled={saving} onChange={event => { setPendingExit(false); setPendingUnit(null); if (dirty) setPendingBatch(event.target.value); else onBatchChange(event.target.value); }}>{draftBatches.map(batch => <option value={batch.batch} key={batch.batch}>Партия {batch.batch} · {batch.units.length} черновиков</option>)}</select><label htmlFor="draft-material-picker">Выбери материал</label><select id="draft-material-picker" value={selected} disabled={saving} onChange={event => { setPendingExit(false); setPendingBatch(null); if (dirty) setPendingUnit(event.target.value); else { setSelected(event.target.value); setMessage(''); } }}>{draftBatch.units.map(item => <option value={item.id} key={item.id}>{item.id} · {item.title}{review.decisions[item.id]?.decision && review.decisions[item.id].decision !== 'pending' ? ' · рассмотрено' : ''}</option>)}</select></div>
     {(pendingUnit || pendingBatch || pendingExit) && <div className={styles.warning} role="alert"><p>Есть несохранённое решение. Сохрани его внизу материала или явно перейди без сохранения.</p><div className={styles.actions}><button type="button" disabled={saving} onClick={() => { setPendingUnit(null); setPendingBatch(null); setPendingExit(false); }}>Остаться на материале</button>{pendingExit && !saving ? <Link href="/trainers" onClick={() => setDirty(false)}>Перейти без сохранения</Link> : <button type="button" disabled={saving} onClick={() => { if (pendingBatch) { onBatchChange(pendingBatch); return; } if (pendingUnit) setSelected(pendingUnit); setPendingUnit(null); setDirty(false); setMessage(''); }}>Перейти без сохранения</button>}</div></div>}
-    <ReviewUnit key={unit.id} unit={unit} previous={review.decisions[unit.id]} onSave={save} onDirty={setDirty}/>
+    <ReviewUnit key={unit.id} unit={unit} batchId={draftBatch.batch} contentHash={draftBatch.content_sha256} previous={review.decisions[unit.id]} onSave={save} onDirty={setDirty}/>
     {message && <p role="status">{message}</p>}
   </>;
 }
