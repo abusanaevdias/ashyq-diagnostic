@@ -1,6 +1,7 @@
 "use client";
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   cases,
   coordinate,
@@ -16,7 +17,7 @@ type Attempt = {
   y: number;
   working: string;
   method: Method;
-  seconds: number;
+  seconds: number | null;
   plan: string;
 };
 function Representation({ item, method }: { item: Item; method: Method }) {
@@ -172,6 +173,7 @@ export default function MathMethodSwitch() {
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [error, setError] = useState("");
   const [started, setStarted] = useState(0);
+  const resumedTimer = useRef(false);
   const item = cases[index].items[round];
   useEffect(() => {
     if (phase !== "choose") {
@@ -181,6 +183,7 @@ export default function MathMethodSwitch() {
     }
   }, [phase, round]);
   function resetAttempt(now: number) {
+    resumedTimer.current = false;
     setX("");
     setY("");
     setWorking("");
@@ -213,7 +216,7 @@ export default function MathMethodSwitch() {
         y: b,
         working,
         method,
-        seconds: Math.round((now - started) / 1000),
+        seconds: resumedTimer.current ? null : Math.max(0, Math.round((now - started) / 1000)),
         plan: "",
       },
     ]);
@@ -235,10 +238,11 @@ export default function MathMethodSwitch() {
           другой способ на новой задаче.
         </p>
         <p className={styles.note}>
-          Четыре авторские задачи. Без AI, официального SAT score и сохранения
-          после обновления страницы.
+          Четыре авторские задачи. Нет AI или официального SAT score.
+          Для продолжения после обновления включи сохранение ниже.
         </p>
       </header>
+    <TrainerCheckpoint trainer="math-method-switch" data={{ phase, index, round, x, y, working, method, alternative, plan, attempts }} completed={phase === 'result'} onRestore={saved => { resumedTimer.current = true; setStarted(performance.now()); setPhase(saved.phase); setIndex(saved.index); setRound(saved.round); setX(saved.x); setY(saved.y); setWorking(saved.working); setMethod(saved.method); setAlternative(saved.alternative); setPlan(saved.plan); setAttempts(saved.attempts); setError(''); }} />
       {phase === "choose" ? (
         <section>
           <h2>Выбери пару задач</h2>
@@ -436,7 +440,7 @@ export default function MathMethodSwitch() {
                     <p>
                       Отмеченный тобой способ: {methods[a.method]}
                       <br />
-                      Время открытой попытки: {a.seconds} сек.
+                      {a.seconds === null ? 'Длительность не измерена: попытка продолжена из сохранения.' : `Время открытой попытки: ${a.seconds} сек.`}
                     </p>
                     <Feedback item={cases[index].items[i]} attempt={a} />
                     <details>

@@ -1,3 +1,4 @@
+import TrainerIdentityBoundary from '@/components/trainers/TrainerIdentityBoundary';
 import type { Metadata } from 'next';
 import ReadingEvidence from '@/components/trainers/ReadingEvidence';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function ReadingEvidencePage() {
-  return <><NavBar /><ReadingEvidence /><Footer /></>;
+  return <><NavBar /><TrainerIdentityBoundary><ReadingEvidence /></TrainerIdentityBoundary><Footer /></>;
 }

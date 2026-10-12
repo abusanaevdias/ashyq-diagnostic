@@ -14,6 +14,7 @@ export default function TrainersPage() {
     <p className={styles.eyebrow}>ASHYQ · УЧЕБНЫЕ ТРЕНАЖЁРЫ</p>
     <h1>Учись на своей первой попытке</h1>
     <p className={styles.intro}>Здесь важен не только ответ. Сначала попробуй сам, затем сравни ход мысли с разбором и примени навык к новому примеру. Все открытые задания вымышлены.</p>
+    <p><Link href="/trainers/history">Мои занятия и сохранённые попытки →</Link></p>
     <div className={styles.grid}>
       <article className={styles.card}><span>SAT · MATH</span><h2>Сравни способы решения</h2><p>Реши систему сам, сравни алгебру, график и таблицу и попробуй другой путь на новой задаче.</p><Link href="/trainers/math-method-switch">Выбрать другой способ →</Link></article>
       <article className={styles.card}><span>IELTS ACADEMIC · READING</span><h2>Докажи ответ текстом</h2><p>TRUE / FALSE / NOT GIVEN: выбери ответ и опору, проверь логическую связь и реши новый вопрос.</p><Link href="/trainers/reading-evidence">Попробовать Reading →</Link></article>

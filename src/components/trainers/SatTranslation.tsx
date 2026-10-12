@@ -1,5 +1,6 @@
 'use client';
 
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { equation, forms, modelMatches, modelSolution, near, parseAmount, translationCases, type Model, type TranslationItem } from '@/lib/sat-translation/cases';
@@ -60,7 +61,8 @@ export default function SatTranslation() {
   }
   return <main className={styles.page}>
     <div className={styles.topline}><Link href="/trainers">← Все тренажёры</Link><span>ASHYQ · TRANSLATION LAB</span></div>
-    <header className={styles.hero}><p className={styles.eyebrow}>SAT MATH · ОТ ТЕКСТА К УРАВНЕНИЮ</p><h1>Сначала модель. Потом расчёт.</h1><p>Найди, за что платят один раз, а за что — каждый месяц или за каждую единицу. Зафиксируй уравнение до вычисления ответа.</p><p className={styles.note}>Четыре авторские задачи в двух парах. Нет официального SAT score, AI или сохранения работы после обновления страницы.</p></header>
+    <header className={styles.hero}><p className={styles.eyebrow}>SAT MATH · ОТ ТЕКСТА К УРАВНЕНИЮ</p><h1>Сначала модель. Потом расчёт.</h1><p>Найди, за что платят один раз, а за что — каждый месяц или за каждую единицу. Зафиксируй уравнение до вычисления ответа.</p><p className={styles.note}>Четыре авторские задачи в двух парах. Нет официального SAT score или AI. Для продолжения после обновления включи сохранение ниже.</p></header>
+    <TrainerCheckpoint trainer="sat-translation" data={{ phase, caseIndex, round, variable, setup, rate, total, form, model, answer, working, attempts, repair }} completed={phase === 'result'} onRestore={saved => { setPhase(saved.phase); setCaseIndex(saved.caseIndex); setRound(saved.round); setVariable(saved.variable); setSetup(saved.setup); setRate(saved.rate); setTotal(saved.total); setForm(saved.form); setModel(saved.model); setAnswer(saved.answer); setWorking(saved.working); setAttempts(saved.attempts); setRepair(saved.repair); setError(''); }} />
     {phase === 'choose' ? <section><h2>Выбери задачу</h2><div className={styles.caseGrid}>{translationCases.map((entry, index) => <article key={entry.title} className={styles.card}><span>CONTEXTUAL MATH</span><h3>{entry.title}</h3><p>Собери модель, сравни разбор и попробуй новую задачу.</p><button className={styles.primary} type="button" onClick={() => begin(index)}>Начать →</button></article>)}</div></section> : <section className={styles.lesson} aria-labelledby="translation-stage-title">
       <div className={styles.lessonTop}><button type="button" onClick={() => { setPhase('choose'); window.scrollTo({ top: 0 }); }}>← К выбору задачи</button><span>{round === 0 ? 'Первая попытка' : 'Новая задача'}</span></div>
       <h2 id="translation-stage-title" tabIndex={-1}>{phase === 'model' ? '1. Собери математическую модель' : phase === 'calculate' ? '2. Посчитай по своей модели' : phase === 'review' ? '3. Сравни модель и расчёт' : 'Что получилось на двух задачах'}</h2>

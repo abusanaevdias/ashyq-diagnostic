@@ -1,3 +1,4 @@
+import TrainerIdentityBoundary from '@/components/trainers/TrainerIdentityBoundary';
 import type { Metadata } from 'next';
 import SatOptionless from '@/components/trainers/SatOptionless';
 import { Footer, NavBar } from '@/components/ui/CleanUi';
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function SatOptionlessPage() {
-  return <><NavBar /><SatOptionless /><Footer /></>;
+  return <><NavBar /><TrainerIdentityBoundary><SatOptionless /></TrainerIdentityBoundary><Footer /></>;
 }

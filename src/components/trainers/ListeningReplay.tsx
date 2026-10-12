@@ -1,5 +1,6 @@
 'use client';
 
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { answerMatches, answerTypes, diagnoses, helpLevels, listeningCases, maskedSegment, type ListeningItem } from '@/lib/listening-replay/cases';
@@ -115,7 +116,8 @@ export default function ListeningReplay() {
 
   return <main className={styles.page}>
     <div className={styles.topline}><Link href="/trainers">← Все тренажёры</Link><span>ASHYQ · LISTENING LAB</span></div>
-    <header className={styles.hero}><p className={styles.eyebrow}>IELTS-STYLE · АВТОРСКИЕ ЗАПИСИ</p><h1>Услышь, где меняется ответ</h1><p>Предскажи тип ответа, послушай один раз и запиши услышанное. Затем восстанови ответ с постепенной помощью и попробуй новую запись.</p><p className={styles.note}>Короткий пилот с синтетическим английским голосом. Он не воспроизводит условия IELTS и не оценивает band. Ответы остаются в открытой вкладке.</p></header>
+    <header className={styles.hero}><p className={styles.eyebrow}>IELTS-STYLE · АВТОРСКИЕ ЗАПИСИ</p><h1>Услышь, где меняется ответ</h1><p>Предскажи тип ответа, послушай один раз и запиши услышанное. Затем восстанови ответ с постепенной помощью и попробуй новую запись.</p><p className={styles.note}>Короткий пилот с синтетическим английским голосом. Он не воспроизводит условия IELTS и не оценивает band. Для продолжения после обновления включи сохранение ниже.</p></header>
+    <TrainerCheckpoint trainer="listening-replay" data={{ caseIndex, round, phase, prediction, cue, answer, confidence, diagnosis, repair, level, attemptedLevel, feedback, textMode, textHelp, stopped, first, transfer }} completed={phase === 'result'} busy={playing} onRestore={saved => { stopAudio(); setCaseIndex(saved.caseIndex); setRound(saved.round); setPhase(saved.phase); setPrediction(saved.prediction); setCue(saved.cue); setAnswer(saved.answer); setConfidence(saved.confidence); setDiagnosis(saved.diagnosis); setRepair(saved.repair); setLevel(saved.level); setAttemptedLevel(saved.attemptedLevel); setFeedback(saved.feedback); setTextMode(saved.textMode); setTextHelp(saved.textHelp); setStopped(saved.stopped); setFirst(saved.first); setTransfer(saved.transfer); setError(''); }} />
     {phase === 'choose' && <section><h2>Выбери навык</h2><div className={styles.caseGrid}>{listeningCases.map((entry, index) => <article className={styles.caseCard} key={entry.id}><h3>{entry.title}</h3><p>Две разные записи: первая попытка, разбор и новый пример.</p><button type="button" className={styles.primary} onClick={() => start(index)}>Начать →</button></article>)}</div></section>}
     {current && item && phase !== 'choose' && <section className={styles.lesson} aria-labelledby="listening-stage-title">
       <div className={styles.lessonTop}><button type="button" onClick={() => { stopAudio(); setPhase('choose'); setCaseIndex(null); window.scrollTo({top:0}); }}>← К выбору</button><span>{round === 'first' ? 'Первая запись' : 'Новая запись'} · {current.title}</span></div>

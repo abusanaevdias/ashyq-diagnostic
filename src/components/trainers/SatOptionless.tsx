@@ -1,5 +1,6 @@
 'use client';
 
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { optionlessCases, type OptionlessItem } from '@/lib/sat-optionless/cases';
@@ -60,6 +61,7 @@ export default function SatOptionless() {
   return <main className={styles.page}>
     <div className={styles.topline}><Link href="/trainers">← Все тренажёры</Link><span>ASHYQ · SAT R&W LAB</span></div>
     <header className={styles.hero}><p className={styles.eyebrow}>SAT READING & WRITING · УЧЕБНЫЕ ПРИМЕРЫ</p><h1>Реши до вариантов</h1><p>Сначала запиши, что думаешь сам. Четыре варианта появятся только после этого. Сравни первый прогноз, выбранный ответ и новый пример того же навыка.</p></header>
+    <TrainerCheckpoint trainer="sat-optionless" data={{ caseIndex, phase, round, prediction, choiceIndex, first, transfer }} completed={phase === 'result'} onRestore={saved => { setCaseIndex(saved.caseIndex); setPhase(saved.phase); setRound(saved.round); setPrediction(saved.prediction); setChoiceIndex(saved.choiceIndex); setFirst(saved.first); setTransfer(saved.transfer); setError(''); }} />
     {phase === 'choose' && <section aria-labelledby="optionless-stage-title"><div className={styles.sectionHead}><h2 id="optionless-stage-title">Выбери навык</h2><p>Пять коротких авторских сценариев. Ответы хранятся только пока открыт экран.</p></div><div className={styles.caseGrid}>{optionlessCases.map((entry, index) => <article className={styles.caseCard} key={entry.id}><span>{entry.domain}</span><h3>{entry.title}</h3><p>Первый прогноз → варианты → разбор → новый вопрос.</p><button className={styles.primary} type="button" onClick={() => start(index)}>Начать →</button></article>)}</div></section>}
     {current && item && phase !== 'choose' && <section className={styles.lesson} aria-labelledby="optionless-stage-title">
       <div className={styles.lessonTop}><button type="button" onClick={() => { setCaseIndex(null); setPhase('choose'); window.scrollTo({ top: 0 }); }}>← К навыкам</button><span>{current.domain} · {current.title}</span></div>

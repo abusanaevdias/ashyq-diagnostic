@@ -1,3 +1,4 @@
+import TrainerIdentityBoundary from '@/components/trainers/TrainerIdentityBoundary';
 import type { Metadata } from "next";
 import MathMethodSwitch from "@/components/trainers/MathMethodSwitch";
 import { Footer, NavBar } from "@/components/ui/CleanUi";
@@ -11,7 +12,7 @@ export default function Page() {
   return (
     <>
       <NavBar />
-      <MathMethodSwitch />
+      <TrainerIdentityBoundary><MathMethodSwitch /></TrainerIdentityBoundary>
       <Footer />
     </>
   );

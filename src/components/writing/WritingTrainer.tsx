@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { criterionLabels, writingCases, type Criterion, type GrammarIssue } from '@/lib/writing-trainer/cases';
 import {
@@ -123,8 +124,9 @@ export default function WritingTrainer() {
         </div>
         <div className={styles.heroNumber} aria-hidden="true">02<span>кейса</span></div>
       </header>
+    <TrainerCheckpoint trainer="writing-task2" data={{ session }} completed={session.stage === 'report'} onRestore={saved => { setSession(saved.session); }} />
 
-      <div className={styles.notice}><strong>Как читать оценки</strong><span>Это учебные ориентиры для заранее размеченных вымышленных эссе. Они не являются официальным IELTS band score и не оценивают твой свободный текст автоматически. Черновик живёт только в открытой вкладке.</span></div>
+      <div className={styles.notice}><strong>Как читать оценки</strong><span>Это учебные ориентиры для заранее размеченных вымышленных эссе. Они не являются официальным IELTS band score и не оценивают твой свободный текст автоматически. Чтобы продолжить после обновления страницы, включи сохранение выше.</span></div>
 
       <section className={styles.caseBar} aria-label="Выбор эссе">
         <div><span className={styles.overline}>ВЫБЕРИ ЭССЕ</span><p>Оба текста написаны для этого тренажёра.</p></div>
