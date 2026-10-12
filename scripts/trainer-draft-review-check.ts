@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import crypto from 'node:crypto';
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
-import { draftBatch, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision } from '../src/lib/trainers/draft-review';
+import { draftBatch, draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision } from '../src/lib/trainers/draft-review';
 
 async function main() {
   assert.equal(draftBatch.methodically_approved, false);
@@ -70,13 +70,41 @@ async function main() {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.evaluate(() => scrollTo(0,0));
     await page.screenshot({ path: 'artifacts/trainers-complete-033/draft-review-mobile.png' });
+    await page.getByLabel('Замечание', { exact: true }).fill('Unsaved cross-batch note');
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('02');
+    await page.getByRole('button', { name: 'Остаться на материале', exact: true }).click();
+    assert.equal(await page.getByLabel('Партия материалов', { exact: true }).inputValue(), '01');
+    assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), 'Unsaved cross-batch note');
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('02');
+    await page.getByRole('button', { name: 'Перейти без сохранения', exact: true }).click();
+    await page.getByRole('heading', { name: 'Рассмотрено 0 из 6', exact: true }).waitFor();
+    assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), '');
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('T104');
+    await page.getByLabel('Результат проверки', { exact: true }).selectOption('hold');
+    await page.getByLabel('Замечание', { exact: true }).fill('Synthetic review fixture, not an approval.');
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 6', exact: true }).waitFor();
+    const secondRaw = await page.evaluate(key => localStorage.getItem(key), reviewKey('fixture-a', draftBatches[1]));
+    assert.equal(parseDraftReview(secondRaw, 'fixture-a', draftBatches[1])?.decisions.T104.decision, 'hold');
+    for (const width of [320,390,768,1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `second batch/table overflow at ${width}`);
+    }
+    await page.getByText('Показать ключ, альтернативы и границы проверки', { exact: true }).click();
+    const secondAxe = await new AxeBuilder({ page }).include('main').analyze();
+    assert.deepEqual(secondAxe.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) })), []);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.evaluate(() => scrollTo(0,0));
+    await page.screenshot({ path: 'artifacts/trainers-complete-033/draft-batch02-mobile.png' });
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('01');
+    await page.getByRole('heading', { name: 'Рассмотрено 2 из 12', exact: true }).waitFor();
     await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-b'));
     await page.getByRole('heading', { name: 'Рассмотрено 0 из 12', exact: true }).waitFor();
     assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), '');
     await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-student', 'student'));
     await page.getByRole('heading', { name: 'Недостаточно прав', exact: true }).waitFor();
     assert.deepEqual(errors, []);
-    console.log('PASS draft fingerprint, invalid/stale decisions, explicit attestation, revision comment, unsaved-navigation guard, partial export, identity separation, role UI, four widths and axe. LocalDemo is not server authorization; no source approval/publication occurred.');
+    console.log('PASS draft fingerprint, invalid/stale decisions, explicit attestation, revision comment, unsaved unit/batch navigation guards, independent batch decisions, partial export, identity separation, role UI, four widths/tables and axe. LocalDemo is not server authorization; no source approval/publication occurred.');
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

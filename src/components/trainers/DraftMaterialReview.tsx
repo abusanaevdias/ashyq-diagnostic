@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useSyncExternalStore, type ReactNode } from 'react';
 import RequireRole from '@/components/lms/RequireRole';
-import { draftBatch, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
+import { draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
 import styles from './TrainerCheckpoint.module.css';
 
 const changed = 'ashyq:draft-review-change';
@@ -13,8 +13,9 @@ function subscribe(callback: () => void) {
 }
 
 /** Deliberately renders text through React; supplied HTML is not executed. */
-function MaterialText({ text }: { text: string }) {
+function MaterialText({ text, sectionLabel = 'задания' }: { text: string; sectionLabel?: string }) {
   const lines = text.split('\n'), blocks: ReactNode[] = [];
+  let tableCount = 0;
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (!line.trim()) continue;
@@ -26,7 +27,8 @@ function MaterialText({ text }: { text: string }) {
         i++;
       }
       i--;
-      blocks.push(<div key={i} className={styles.tableWrap} tabIndex={0} role="region" aria-label="Таблица учебного материала"><table><thead><tr>{rows[0]?.map((cell, index) => <th key={index} scope="col">{cell}</th>)}</tr></thead><tbody>{rows.slice(1).map((row, index) => <tr key={index}>{row.map((cell, col) => <td key={col}>{cell}</td>)}</tr>)}</tbody></table></div>);
+      tableCount++;
+      blocks.push(<div key={i} className={styles.tableWrap} tabIndex={0} role="region" aria-label={`Таблица ${sectionLabel} ${tableCount}`}><table><thead><tr>{rows[0]?.map((cell, index) => <th key={index} scope="col">{cell}</th>)}</tr></thead><tbody>{rows.slice(1).map((row, index) => <tr key={index}>{row.map((cell, col) => <td key={col}>{cell}</td>)}</tr>)}</tbody></table></div>);
     } else if (/^#{1,4} /.test(line)) blocks.push(<h3 key={i}>{line.replace(/^#+ /, '')}</h3>);
     else if (/^(?:- |\d+\. )/.test(line)) blocks.push(<p key={i} className={styles.listLine}>{line}</p>);
     else blocks.push(<p key={i}>{line}</p>);
@@ -42,7 +44,7 @@ function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; prev
   return <section className={styles.panel} aria-labelledby="material-title">
     <p>{unit.id} · {unit.category} · DRAFT</p><h2 id="material-title">{unit.title}</h2>
     <MaterialText text={unit.student_markdown}/>
-    <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown}/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown}/></>}</details>
+    <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown} sectionLabel="разбора"/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown} sectionLabel="языковой правки"/></>}</details>
     <fieldset className={styles.filters}><legend>Решение проверяющего</legend>
       <label htmlFor="draft-review-decision">Результат проверки</label><select id="draft-review-decision" value={decision} onChange={event => { onDirty(true); setDecision(event.target.value as ReviewDecision); setError(''); }}><option value="pending">Пока не проверено</option><option value="recommend">Рекомендую принять</option><option value="revise">Нужна правка</option><option value="hold">Отложить</option></select>
       <label htmlFor="draft-review-comment">Замечание</label><textarea id="draft-review-comment" rows={4} value={comment} maxLength={3000} onChange={event => { onDirty(true); setComment(event.target.value); }}/>
@@ -53,21 +55,22 @@ function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; prev
   </section>;
 }
 
-function Workspace({ reviewerId }: { reviewerId: string }) {
-  const key = reviewKey(reviewerId);
+function Workspace({ reviewerId, draftBatch, onBatchChange }: { reviewerId: string; draftBatch: DraftBatch; onBatchChange: (batch: string) => void }) {
+  const key = reviewKey(reviewerId, draftBatch);
   const raw = useSyncExternalStore(subscribe, () => { try { return localStorage.getItem(key); } catch { return '!unavailable'; } }, () => null);
-  const parsed = parseDraftReview(raw, reviewerId), review = parsed ?? emptyDraftReview(reviewerId);
-  const counts = reviewCounts(review);
+  const parsed = parseDraftReview(raw, reviewerId, draftBatch), review = parsed ?? emptyDraftReview(reviewerId, draftBatch);
+  const counts = reviewCounts(review, draftBatch);
   const [selected, setSelected] = useState(draftBatch.units[0].id);
   const [message, setMessage] = useState('');
   const [dirty, setDirty] = useState(false);
   const [pendingUnit, setPendingUnit] = useState<string | null>(null);
+  const [pendingBatch, setPendingBatch] = useState<string | null>(null);
   const unit = draftBatch.units.find(item => item.id === selected)!;
   function save(value: DraftDecision) {
     try {
       const currentRaw = localStorage.getItem(key);
-      if (currentRaw && !parseDraftReview(currentRaw, reviewerId)) throw new Error('Локальная запись повреждена или относится к другой версии. Она не заменена. Сначала скачай решения с экрана.');
-      const current = parseDraftReview(currentRaw, reviewerId) ?? emptyDraftReview(reviewerId);
+      if (currentRaw && !parseDraftReview(currentRaw, reviewerId, draftBatch)) throw new Error('Локальная запись повреждена или относится к другой версии. Она не заменена. Сначала скачай решения с экрана.');
+      const current = parseDraftReview(currentRaw, reviewerId, draftBatch) ?? emptyDraftReview(reviewerId, draftBatch);
       localStorage.setItem(key, JSON.stringify({ ...current, decisions: { ...current.decisions, [unit.id]: value } }));
       window.dispatchEvent(new Event(changed)); setMessage(`Решение для ${unit.id} сохранено локально. Статус материала на сайте не изменён.`);
       return true;
@@ -83,13 +86,19 @@ function Workspace({ reviewerId }: { reviewerId: string }) {
   return <><h1>Проверка учебных материалов</h1><p>Партия {draftBatch.batch} · версия {draftBatch.version} · {counts.total} черновиков. Автор: {draftBatch.author}. Методическая проверка не завершена.</p><p>Сначала реши материал без ключа. Затем проверь объяснения и допустимые ответы. Решения сохраняются для текущего аккаунта в этом браузере; на общем устройстве их могут увидеть другие люди. Они не публикуют задания и не отправляются на сервер.</p>
     <div className={styles.panel}><h2>Рассмотрено {counts.considered} из {counts.total}</h2><p>Рекомендовано принять: {counts.recommended}; нужна правка: {counts.revise}; отложено: {counts.hold}.</p><div className={styles.actions}><button type="button" onClick={() => exportReview(review)}>Скачать сохранённые решения</button><Link href="/trainers">К тренажёрам →</Link></div></div>
     {raw && !parsed && <p className={styles.warning} role="status">{raw === '!unavailable' ? 'Локальное сохранение недоступно.' : 'Локальная запись несовместима с этой версией. Она не восстановлена и не заменена.'}</p>}
-    <div className={styles.filters}><label htmlFor="draft-material-picker">Выбери материал</label><select id="draft-material-picker" value={selected} onChange={event => { if (dirty) setPendingUnit(event.target.value); else { setSelected(event.target.value); setMessage(''); } }}>{draftBatch.units.map(item => <option value={item.id} key={item.id}>{item.id} · {item.title}{review.decisions[item.id]?.decision && review.decisions[item.id].decision !== 'pending' ? ' · рассмотрено' : ''}</option>)}</select></div>
-    {pendingUnit && <div className={styles.warning} role="alert"><p>Есть несохранённое решение. Сохрани его внизу материала или явно перейди без сохранения.</p><div className={styles.actions}><button type="button" onClick={() => setPendingUnit(null)}>Остаться на материале</button><button type="button" onClick={() => { setSelected(pendingUnit); setPendingUnit(null); setDirty(false); setMessage(''); }}>Перейти без сохранения</button></div></div>}
+    <div className={styles.filters}><label htmlFor="draft-batch-picker">Партия материалов</label><select id="draft-batch-picker" value={draftBatch.batch} onChange={event => { if (dirty) setPendingBatch(event.target.value); else onBatchChange(event.target.value); }}>{draftBatches.map(batch => <option value={batch.batch} key={batch.batch}>Партия {batch.batch} · {batch.units.length} черновиков</option>)}</select><label htmlFor="draft-material-picker">Выбери материал</label><select id="draft-material-picker" value={selected} onChange={event => { if (dirty) setPendingUnit(event.target.value); else { setSelected(event.target.value); setMessage(''); } }}>{draftBatch.units.map(item => <option value={item.id} key={item.id}>{item.id} · {item.title}{review.decisions[item.id]?.decision && review.decisions[item.id].decision !== 'pending' ? ' · рассмотрено' : ''}</option>)}</select></div>
+    {(pendingUnit || pendingBatch) && <div className={styles.warning} role="alert"><p>Есть несохранённое решение. Сохрани его внизу материала или явно перейди без сохранения.</p><div className={styles.actions}><button type="button" onClick={() => { setPendingUnit(null); setPendingBatch(null); }}>Остаться на материале</button><button type="button" onClick={() => { if (pendingBatch) { onBatchChange(pendingBatch); return; } if (pendingUnit) setSelected(pendingUnit); setPendingUnit(null); setDirty(false); setMessage(''); }}>Перейти без сохранения</button></div></div>}
     <ReviewUnit key={unit.id} unit={unit} previous={review.decisions[unit.id]} onSave={save} onDirty={setDirty}/>
     {message && <p role="status">{message}</p>}
   </>;
 }
 
+function ReviewLibrary({ reviewerId }: { reviewerId: string }) {
+  const [batchId, setBatchId] = useState(draftBatches[0].batch);
+  const batch = draftBatches.find(item => item.batch === batchId)!;
+  return <Workspace key={batch.content_sha256} reviewerId={reviewerId} draftBatch={batch} onBatchChange={setBatchId}/>;
+}
+
 export default function DraftMaterialReview() {
-  return <RequireRole roles={['teacher','author']}>{user => <Workspace key={user.id} reviewerId={user.id}/>}</RequireRole>;
+  return <RequireRole roles={['teacher','author']}>{user => <ReviewLibrary key={user.id} reviewerId={user.id}/>}</RequireRole>;
 }
