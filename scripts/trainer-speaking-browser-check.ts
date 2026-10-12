@@ -87,6 +87,7 @@ async function main() {
     await page.getByRole('button', { name: /Сохранить самопроверку/ }).click();
     for (let index = 1; index <= 2; index++) {
       await page.getByRole('button', { name: index === 1 ? /Повторить ту же тему по плану/ : /Проверить себя на новой теме/ }).click();
+      if (index === 1) await page.getByLabel('Твои заметки: ключевые идеи, не готовый текст', { exact: true }).fill('Different preparation for the second synthetic take.');
       await page.getByRole('button', { name: /Я готов к ответу/ }).click();
       await page.getByRole('button', { name: /Самостоятельная попытка без аудио/ }).click();
       await page.getByRole('checkbox', { name: /Не выделил отдельные моменты/ }).check();
@@ -96,6 +97,9 @@ async function main() {
       await page.getByRole('button', { name: /Сохранить самопроверку/ }).click();
     }
     await page.getByRole('heading', { name: 'Три попытки: что ты заметил', exact: true }).waitFor();
+    await page.getByText('Synthetic codec verification only.', { exact: true }).waitFor();
+    await page.getByText('Different preparation for the second synthetic take.', { exact: true }).waitFor();
+    await page.getByText('До ответа заметки не добавлены.', { exact: true }).waitFor();
     for (const width of [320,390,768,1440]) {
       await page.setViewportSize({ width, height: 900 });
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Speaking result overflow ${width}`);
@@ -103,14 +107,51 @@ async function main() {
     const axe = await new AxeBuilder({ page }).include('main').analyze();
     assert.deepEqual(axe.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) })), []);
     await page.getByText('Сохранено на этом устройстве.', { exact: true }).waitFor();
+    await page.getByRole('button', { name: 'Добавить занятие в историю', exact: true }).click();
+    await page.getByText('Занятие добавлено в историю. Это запись работы, а не подтверждение освоения навыка. Повторное нажатие не увеличивает счётчик.', { exact: true }).waitFor();
     const record = parseRecord(await page.evaluate(key => localStorage.getItem(key), checkpointKey('speaking-second-take', 'guest')), 'speaking-second-take')!;
     assert.equal((record.checkpoint!.data.takes as {url: string | null}[]).every(take => take.url === null), true, 'audio URLs never persist');
+    const expectedNotes = ['Synthetic codec verification only.', 'Different preparation for the second synthetic take.', ''];
+    assert.deepEqual((record.checkpoint!.data.takes as {preparationNotes: string}[]).map(take => take.preparationNotes), expectedNotes);
+    const resultHistory = record.history.find(entry => entry.data.phase === 'result'); assert.ok(resultHistory);
+    assert.deepEqual((resultHistory.data.takes as {preparationNotes: string}[]).map(take => take.preparationNotes), expectedNotes);
+    const jsonDownload = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Скачать текущую работу', exact: true }).click();
+    const exported = await jsonDownload;
+    const exportedPath = 'artifacts/trainers-complete-033/speaking-notes-checkpoint.json';
+    await exported.saveAs(exportedPath);
+    const exportedBody = JSON.parse(await fs.readFile(exportedPath, 'utf8'));
+    assert.equal(exportedBody.format, 'ashyq-trainer-export-v1');
+    const exportedRecord = parseRecord(JSON.stringify(exportedBody), 'speaking-second-take'); assert.ok(exportedRecord);
+    assert.deepEqual((exportedRecord.checkpoint!.data.takes as {preparationNotes: string}[]).map(take => take.preparationNotes), expectedNotes);
     await page.reload();
     await page.getByRole('button', { name: 'Продолжить сохранённую', exact: true }).click();
     await page.getByRole('heading', { name: 'Три попытки: что ты заметил', exact: true }).waitFor();
     assert.equal(await page.locator('audio').count(), 0, 'restored notes do not pretend audio exists');
+    await page.getByText(expectedNotes[0], { exact: true }).waitFor();
+    await page.getByText(expectedNotes[1], { exact: true }).waitFor();
+    await page.setViewportSize({ width: 390, height: 900 });
+    await page.getByRole('heading', { name: 'Первый ответ', exact: true }).evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY - 140, behavior: 'instant' }));
+    await page.screenshot({ path: 'artifacts/trainers-complete-033/speaking-preparation-restored-mobile.png' });
+    const legacy = structuredClone(record);
+    for (const entry of [legacy.checkpoint, ...legacy.history]) if (entry) for (const take of entry.data.takes as Record<string,unknown>[]) delete take.preparationNotes;
+    assert.ok(parseRecord(JSON.stringify(legacy), 'speaking-second-take'), 'old v1 take records remain valid');
+    for (const notes of [null, 123, 'x'.repeat(3001)]) {
+      const invalid = structuredClone(record);
+      (invalid.checkpoint!.data.takes as Record<string,unknown>[])[0].preparationNotes = notes;
+      assert.equal(parseRecord(JSON.stringify(invalid), 'speaking-second-take'), null);
+    }
+    const boundary = structuredClone(record);
+    (boundary.checkpoint!.data.takes as Record<string,unknown>[])[0].preparationNotes = 'x'.repeat(3000);
+    assert.ok(parseRecord(JSON.stringify(boundary), 'speaking-second-take'));
+    await page.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: checkpointKey('speaking-second-take', 'guest'), raw: JSON.stringify(legacy) });
+    await page.reload();
+    await page.getByRole('button', { name: 'Продолжить сохранённую', exact: true }).click();
+    await page.getByRole('heading', { name: 'Три попытки: что ты заметил', exact: true }).waitFor();
+    assert.equal(await page.getByText('Исходные заметки не были записаны в этой старой версии сохранения.', { exact: true }).count(), 3);
+    assert.equal(await page.getByText('До ответа заметки не добавлены.', { exact: true }).count(), 0, 'legacy unknown is not labelled as known empty');
     assert.deepEqual(errors, []);
-    console.log(`PASS real Chromium MediaRecorder with generated stream: ${bytes.length} bytes, ${decoded.duration.toFixed(2)}s decoded; download, playback, track cleanup, three-attempt flow and notes-only restore. No physical microphone, human speech, pronunciation quality or other browser/device claim.`);
+    console.log(`PASS real Chromium MediaRecorder with generated stream: ${bytes.length} bytes, ${decoded.duration.toFixed(2)}s decoded; download, playback, track cleanup, three-attempt flow, distinct preparation notes through next/repeat/fresh/checkpoint/manual history/export/reload, known blank versus legacy unknown, invalid and 3000/3001 bounds, four widths/axe and notes-only restore. No physical microphone, human speech, pronunciation quality or other browser/device claim.`);
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });
