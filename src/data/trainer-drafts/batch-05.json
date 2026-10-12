@@ -1,0 +1,538 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "05",
+  "version": 1,
+  "source_sha256": "5682d0d5c971f7a15d51f4657e009f375e674308b094d3d9decbad502dc54c3c",
+  "content_sha256": "5682d0d5c971f7a15d51f4657e009f375e674308b094d3d9decbad502dc54c3c",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "M03",
+      "title": "Разовый платёж и цена за экземпляр",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nA fictional print shop charges a one-time setup fee of $30 and $6 for each poster. A club pays $126 in total. How many posters does it order?\n\nПеременная: p = number of posters ordered. Ответ в единицах: posters.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M03-A\nA fictional print shop charges a one-time setup fee of $30 and $6 for each poster. A club pays $126 in total. How many posters does it order?\n\nПеременная: p = number of posters ordered. Ответ в единицах: posters.\n\nОтвет: 16 posters.\nSubtract the setup fee once, then divide the remaining $96 by $6 per poster.\n\nМодели:\n1. 30 + 6p = 126\nПодходит: Разовый платёж прибавлен один раз; цена экземпляра умножена на число экземпляров.\n\n2. (30 + 6)p = 126\nНужно пересмотреть: Разовый платёж ошибочно повторяется для каждого экземпляра.\n\n3. 6p = 126\nНужно пересмотреть: Разовый платёж пропущен.\n\nКорректное решение:\n- 30 + 6p = 126\n- 6p = 96\n- p = 16\n\n### Свежий перенос: M03-B\nA fictional workshop charges a one-time registration fee of $18 and $4 for each badge produced. The total bill is $90. How many badges are produced?\n\nПеременная: b = number of badges produced. Ответ в единицах: badges.\n\nОтвет: 18 badges.\nThe $18 is paid once, not per badge. The remaining $72 buys 18 badges.\n\nМодели:\n1. 4b = 90\nНужно пересмотреть: Пропущен разовый регистрационный платёж.\n\n2. 18 + 4b = 90\nПодходит: Регистрация один раз плюс стоимость всех значков.\n\n3. (18 + 4)b = 90\nНужно пересмотреть: Регистрация умножена на число значков.\n\nКорректное решение:\n- 18 + 4b = 90\n- 4b = 72\n- b = 18\n\n### Адверсальные замечания автора — не методическое утверждение\n- Не переопределять переменную как общую сумму: вопрос просит количество.\n- Верный ответ с неверной выбранной моделью не означает, что модель правильная.\n- Эквивалентные уравнения 6p = 96 и p = (126 − 30)/6 допустимы в свободном решении.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "translation",
+        "skill": "fixed-versus-variable-cost",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M03-A",
+            "prompt": "A fictional print shop charges a one-time setup fee of $30 and $6 for each poster. A club pays $126 in total. How many posters does it order?",
+            "variable": "p = number of posters ordered",
+            "unit": "posters",
+            "answer": 16,
+            "models": [
+              {
+                "equation": "30 + 6p = 126",
+                "best": true,
+                "feedback": "Разовый платёж прибавлен один раз; цена экземпляра умножена на число экземпляров."
+              },
+              {
+                "equation": "(30 + 6)p = 126",
+                "best": false,
+                "feedback": "Разовый платёж ошибочно повторяется для каждого экземпляра."
+              },
+              {
+                "equation": "6p = 126",
+                "best": false,
+                "feedback": "Разовый платёж пропущен."
+              }
+            ],
+            "corrected_working": [
+              "30 + 6p = 126",
+              "6p = 96",
+              "p = 16"
+            ],
+            "explanation": "Subtract the setup fee once, then divide the remaining $96 by $6 per poster."
+          },
+          {
+            "id": "M03-B",
+            "prompt": "A fictional workshop charges a one-time registration fee of $18 and $4 for each badge produced. The total bill is $90. How many badges are produced?",
+            "variable": "b = number of badges produced",
+            "unit": "badges",
+            "answer": 18,
+            "models": [
+              {
+                "equation": "4b = 90",
+                "best": false,
+                "feedback": "Пропущен разовый регистрационный платёж."
+              },
+              {
+                "equation": "18 + 4b = 90",
+                "best": true,
+                "feedback": "Регистрация один раз плюс стоимость всех значков."
+              },
+              {
+                "equation": "(18 + 4)b = 90",
+                "best": false,
+                "feedback": "Регистрация умножена на число значков."
+              }
+            ],
+            "corrected_working": [
+              "18 + 4b = 90",
+              "4b = 72",
+              "b = 18"
+            ],
+            "explanation": "The $18 is paid once, not per badge. The remaining $72 buys 18 badges."
+          }
+        ],
+        "review_notes": [
+          "Не переопределять переменную как общую сумму: вопрос просит количество.",
+          "Верный ответ с неверной выбранной моделью не означает, что модель правильная.",
+          "Эквивалентные уравнения 6p = 96 и p = (126 − 30)/6 допустимы в свободном решении."
+        ]
+      }
+    },
+    {
+      "id": "M04",
+      "title": "Бюджет: максимум целых участников",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nA club has a budget of at most $101. Transport costs $28 in total, and admission costs $9 per student. No other costs apply. What is the greatest whole number of students the club can pay for?\n\nПеременная: n = number of students. Ответ в единицах: students.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M04-A\nA club has a budget of at most $101. Transport costs $28 in total, and admission costs $9 per student. No other costs apply. What is the greatest whole number of students the club can pay for?\n\nПеременная: n = number of students. Ответ в единицах: students.\n\nОтвет: 8 students.\nThe maximum must fit the budget; rounding 8.111… up would exceed it.\n\nМодели:\n1. 28 + 9n ≤ 101, with n a nonnegative integer\nПодходит: At most задаёт ≤, а число учеников должно быть целым.\n\n2. (28 + 9)n ≤ 101, with n a nonnegative integer\nНужно пересмотреть: Общая стоимость транспорта ошибочно повторяется на каждого ученика.\n\n3. 9n ≤ 101, with n a nonnegative integer\nНужно пересмотреть: Стоимость транспорта пропущена.\n\nКорректное решение:\n- 9n ≤ 73\n- n ≤ 73/9 = 8.111…\n- The greatest whole number is 8.\n- For 8 students: 28 + 72 = 100 ≤ 101. For 9: 28 + 81 = 109 > 101.\n\n### Свежий перенос: M04-B\nA group can spend at most $110. A room costs $35 once, and materials cost $8 per participant. There are no other charges. What is the greatest whole number of participants covered by the budget?\n\nПеременная: n = number of participants. Ответ в единицах: participants.\n\nОтвет: 9 participants.\nRound down to satisfy the upper bound; the next whole number is unaffordable.\n\nМодели:\n1. 8n ≤ 110, with n a nonnegative integer\nНужно пересмотреть: Не учтена комната.\n\n2. (35 + 8)n ≤ 110, with n a nonnegative integer\nНужно пересмотреть: Разовая стоимость комнаты повторяется.\n\n3. 35 + 8n ≤ 110, with n a nonnegative integer\nПодходит: Комната оплачивается один раз, материалы — на каждого участника.\n\nКорректное решение:\n- 8n ≤ 75\n- n ≤ 75/8 = 9.375\n- The greatest whole number is 9.\n- For 9 participants: 35 + 72 = 107 ≤ 110. For 10: 35 + 80 = 115 > 110.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Обычное округление к ближайшему целому не является правилом решения бюджетного ограничения.\n- Проверь допустимость найденного максимума и недопустимость следующего целого.\n- Не делать вывод о налогах или скидках: условие явно исключает другие расходы.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "translation",
+        "skill": "integer-budget-constraint",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M04-A",
+            "prompt": "A club has a budget of at most $101. Transport costs $28 in total, and admission costs $9 per student. No other costs apply. What is the greatest whole number of students the club can pay for?",
+            "variable": "n = number of students",
+            "unit": "students",
+            "answer": 8,
+            "models": [
+              {
+                "equation": "28 + 9n ≤ 101, with n a nonnegative integer",
+                "best": true,
+                "feedback": "At most задаёт ≤, а число учеников должно быть целым."
+              },
+              {
+                "equation": "(28 + 9)n ≤ 101, with n a nonnegative integer",
+                "best": false,
+                "feedback": "Общая стоимость транспорта ошибочно повторяется на каждого ученика."
+              },
+              {
+                "equation": "9n ≤ 101, with n a nonnegative integer",
+                "best": false,
+                "feedback": "Стоимость транспорта пропущена."
+              }
+            ],
+            "corrected_working": [
+              "9n ≤ 73",
+              "n ≤ 73/9 = 8.111…",
+              "The greatest whole number is 8.",
+              "For 8 students: 28 + 72 = 100 ≤ 101. For 9: 28 + 81 = 109 > 101."
+            ],
+            "explanation": "The maximum must fit the budget; rounding 8.111… up would exceed it."
+          },
+          {
+            "id": "M04-B",
+            "prompt": "A group can spend at most $110. A room costs $35 once, and materials cost $8 per participant. There are no other charges. What is the greatest whole number of participants covered by the budget?",
+            "variable": "n = number of participants",
+            "unit": "participants",
+            "answer": 9,
+            "models": [
+              {
+                "equation": "8n ≤ 110, with n a nonnegative integer",
+                "best": false,
+                "feedback": "Не учтена комната."
+              },
+              {
+                "equation": "(35 + 8)n ≤ 110, with n a nonnegative integer",
+                "best": false,
+                "feedback": "Разовая стоимость комнаты повторяется."
+              },
+              {
+                "equation": "35 + 8n ≤ 110, with n a nonnegative integer",
+                "best": true,
+                "feedback": "Комната оплачивается один раз, материалы — на каждого участника."
+              }
+            ],
+            "corrected_working": [
+              "8n ≤ 75",
+              "n ≤ 75/8 = 9.375",
+              "The greatest whole number is 9.",
+              "For 9 participants: 35 + 72 = 107 ≤ 110. For 10: 35 + 80 = 115 > 110."
+            ],
+            "explanation": "Round down to satisfy the upper bound; the next whole number is unaffordable."
+          }
+        ],
+        "review_notes": [
+          "Обычное округление к ближайшему целому не является правилом решения бюджетного ограничения.",
+          "Проверь допустимость найденного максимума и недопустимость следующего целого.",
+          "Не делать вывод о налогах или скидках: условие явно исключает другие расходы."
+        ]
+      }
+    },
+    {
+      "id": "M05",
+      "title": "Проценты от изменённой базы",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nA fictional item originally costs $120. Its price is reduced by 25%, then the reduced price is increased by 20%. Find the final price and the first incorrect line in the proposed solution.\n\nПеременная: P = final price. Ответ в единицах: dollars.\n\nПредложенное решение:\n1. 120 × 0.75 = 90\n2. 20% of 90 = 18\n3. 90 + 24 = 114\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M05-A\nA fictional item originally costs $120. Its price is reduced by 25%, then the reduced price is increased by 20%. Find the final price and the first incorrect line in the proposed solution.\n\nПеременная: P = final price. Ответ в единицах: dollars.\n\nПредложенное решение:\n1. 120 × 0.75 = 90\n2. 20% of 90 = 18\n3. 90 + 24 = 114\n\nОтвет: 108 dollars.\nThe increase uses the reduced price as its base. Subtracting 25 and adding 20 as percentage points of the original is not equivalent.\n\n\nПервая неверная строка: 3.\n1. Верно: После снижения база становится 90.\n2. Верно: Повышение считается от новой цены.\n3. Неверно: 24 — это 20% от старой цены 120; нужно прибавить найденные 18.\n\nКорректное решение:\n- 25% of 120 = 30\n- 120 − 30 = 90\n- 20% of 90 = 18\n- 90 + 18 = 108\n\n### Свежий перенос: M05-B\nA fictional pass costs $80. Its price rises by 25%, then the new price is reduced by 10%. Find the final price and the first incorrect line in the proposed solution.\n\nПеременная: P = final price. Ответ в единицах: dollars.\n\nПредложенное решение:\n1. 80 × 1.25 = 100\n2. 10% of 80 = 8\n3. 100 − 8 = 92\n\nОтвет: 90 dollars.\nThe second percentage is taken from $100. An arithmetically valid later line can still depend on an earlier modelling error.\n\n\nПервая неверная строка: 2.\n1. Верно: Правильная цена после повышения.\n2. Неверно: Скидка относится к новой цене 100, не к 80.\n3. Неверно: Вычитание арифметически верно, но использует неверно найденную скидку.\n\nКорректное решение:\n- 80 × 1.25 = 100\n- 10% of 100 = 10\n- 100 − 10 = 90\n\n### Адверсальные замечания автора — не методическое утверждение\n- Первая неправильная строка и последующее распространение ошибки — разные вещи.\n- 100 − 8 = 92 арифметически верно; неверна величина скидки в этом контексте.\n- Эквивалентное произведение множителей 120 × .75 × 1.2 допустимо.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "forensics",
+        "skill": "successive-percent-base",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M05-A",
+            "prompt": "A fictional item originally costs $120. Its price is reduced by 25%, then the reduced price is increased by 20%. Find the final price and the first incorrect line in the proposed solution.",
+            "variable": "P = final price",
+            "unit": "dollars",
+            "answer": 108,
+            "steps": [
+              {
+                "statement": "120 × 0.75 = 90",
+                "valid": true,
+                "explanation": "После снижения база становится 90."
+              },
+              {
+                "statement": "20% of 90 = 18",
+                "valid": true,
+                "explanation": "Повышение считается от новой цены."
+              },
+              {
+                "statement": "90 + 24 = 114",
+                "valid": false,
+                "explanation": "24 — это 20% от старой цены 120; нужно прибавить найденные 18."
+              }
+            ],
+            "first_invalid": 2,
+            "corrected_working": [
+              "25% of 120 = 30",
+              "120 − 30 = 90",
+              "20% of 90 = 18",
+              "90 + 18 = 108"
+            ],
+            "explanation": "The increase uses the reduced price as its base. Subtracting 25 and adding 20 as percentage points of the original is not equivalent."
+          },
+          {
+            "id": "M05-B",
+            "prompt": "A fictional pass costs $80. Its price rises by 25%, then the new price is reduced by 10%. Find the final price and the first incorrect line in the proposed solution.",
+            "variable": "P = final price",
+            "unit": "dollars",
+            "answer": 90,
+            "steps": [
+              {
+                "statement": "80 × 1.25 = 100",
+                "valid": true,
+                "explanation": "Правильная цена после повышения."
+              },
+              {
+                "statement": "10% of 80 = 8",
+                "valid": false,
+                "explanation": "Скидка относится к новой цене 100, не к 80."
+              },
+              {
+                "statement": "100 − 8 = 92",
+                "valid": false,
+                "explanation": "Вычитание арифметически верно, но использует неверно найденную скидку."
+              }
+            ],
+            "first_invalid": 1,
+            "corrected_working": [
+              "80 × 1.25 = 100",
+              "10% of 100 = 10",
+              "100 − 10 = 90"
+            ],
+            "explanation": "The second percentage is taken from $100. An arithmetically valid later line can still depend on an earlier modelling error."
+          }
+        ],
+        "review_notes": [
+          "Первая неправильная строка и последующее распространение ошибки — разные вещи.",
+          "100 − 8 = 92 арифметически верно; неверна величина скидки в этом контексте.",
+          "Эквивалентное произведение множителей 120 × .75 × 1.2 допустимо."
+        ]
+      }
+    },
+    {
+      "id": "M06",
+      "title": "Множитель для каждого слагаемого",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nSolve 4(x − 3) = 2x + 10. Identify the first incorrect line in the proposed solution, then repair it and find x.\n\nПеременная: x = the solution of the equation. Укажи числовое значение x.\n\nПредложенное решение:\n1. 4x − 3 = 2x + 10\n2. 2x = 13\n3. x = 6.5\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M06-A\nSolve 4(x − 3) = 2x + 10. Identify the first incorrect line in the proposed solution, then repair it and find x.\n\nПеременная: x = the solution of the equation. Укажи числовое значение x.\n\nПредложенное решение:\n1. 4x − 3 = 2x + 10\n2. 2x = 13\n3. x = 6.5\n\nОтвет: 11.\nDistribute 4 to both terms. Substitution into the original equation verifies the repaired result.\n\n\nПервая неверная строка: 1.\n1. Неверно: Четвёрка должна умножить и x, и −3; получается −12.\n2. Неверно: Это следует из ошибочной предыдущей строки, а не из исходного уравнения.\n3. Неверно: Деление 13 на 2 верно, но решается уже другое уравнение.\n\nКорректное решение:\n- 4x − 12 = 2x + 10\n- 2x = 22\n- x = 11\n- Check: 4(11 − 3) = 32 and 2(11) + 10 = 32.\n\n### Свежий перенос: M06-B\nSolve 3(2x + 5) = 4x + 23. Identify the first incorrect line in the proposed solution and find x after repairing it.\n\nПеременная: x = the solution of the equation. Укажи числовое значение x.\n\nПредложенное решение:\n1. 3(2x + 5) − 4x = 23\n2. 6x + 5 − 4x = 23\n3. 2x = 18, so x = 9\n\nОтвет: 4.\nThe valid subtraction step does not justify the later distribution. Repair the first invalid transition, then continue from the original equality.\n\n\nПервая неверная строка: 2.\n1. Верно: Из обеих частей вычли 4x.\n2. Неверно: Тройка должна умножить 5; получится 15.\n3. Неверно: Эта строка продолжает ошибочно изменённое уравнение.\n\nКорректное решение:\n- 6x + 15 − 4x = 23\n- 2x = 8\n- x = 4\n- Check: 3(2(4) + 5) = 39 and 4(4) + 23 = 39.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Формулировка valid означает допустимую строку решения исходной задачи, а не только истинность отдельного числового равенства.\n- Не отмечать последнюю неверную строку вместо первой: её ошибочность может быть следствием более ранней.\n- Сохранить различие между распределением множителя и арифметикой последующих строк.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "forensics",
+        "skill": "distribution-and-equivalence",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M06-A",
+            "prompt": "Solve 4(x − 3) = 2x + 10. Identify the first incorrect line in the proposed solution, then repair it and find x.",
+            "variable": "x = the solution of the equation",
+            "unit": "",
+            "answer": 11,
+            "steps": [
+              {
+                "statement": "4x − 3 = 2x + 10",
+                "valid": false,
+                "explanation": "Четвёрка должна умножить и x, и −3; получается −12."
+              },
+              {
+                "statement": "2x = 13",
+                "valid": false,
+                "explanation": "Это следует из ошибочной предыдущей строки, а не из исходного уравнения."
+              },
+              {
+                "statement": "x = 6.5",
+                "valid": false,
+                "explanation": "Деление 13 на 2 верно, но решается уже другое уравнение."
+              }
+            ],
+            "first_invalid": 0,
+            "corrected_working": [
+              "4x − 12 = 2x + 10",
+              "2x = 22",
+              "x = 11",
+              "Check: 4(11 − 3) = 32 and 2(11) + 10 = 32."
+            ],
+            "explanation": "Distribute 4 to both terms. Substitution into the original equation verifies the repaired result."
+          },
+          {
+            "id": "M06-B",
+            "prompt": "Solve 3(2x + 5) = 4x + 23. Identify the first incorrect line in the proposed solution and find x after repairing it.",
+            "variable": "x = the solution of the equation",
+            "unit": "",
+            "answer": 4,
+            "steps": [
+              {
+                "statement": "3(2x + 5) − 4x = 23",
+                "valid": true,
+                "explanation": "Из обеих частей вычли 4x."
+              },
+              {
+                "statement": "6x + 5 − 4x = 23",
+                "valid": false,
+                "explanation": "Тройка должна умножить 5; получится 15."
+              },
+              {
+                "statement": "2x = 18, so x = 9",
+                "valid": false,
+                "explanation": "Эта строка продолжает ошибочно изменённое уравнение."
+              }
+            ],
+            "first_invalid": 1,
+            "corrected_working": [
+              "6x + 15 − 4x = 23",
+              "2x = 8",
+              "x = 4",
+              "Check: 3(2(4) + 5) = 39 and 4(4) + 23 = 39."
+            ],
+            "explanation": "The valid subtraction step does not justify the later distribution. Repair the first invalid transition, then continue from the original equality."
+          }
+        ],
+        "review_notes": [
+          "Формулировка valid означает допустимую строку решения исходной задачи, а не только истинность отдельного числового равенства.",
+          "Не отмечать последнюю неверную строку вместо первой: её ошибочность может быть следствием более ранней.",
+          "Сохранить различие между распределением множителя и арифметикой последующих строк."
+        ]
+      }
+    },
+    {
+      "id": "M07",
+      "title": "Вычитание уравнений с общим слагаемым",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nAt a fictional shop, 2 notebooks and 3 pens cost $19. At the same prices, 2 notebooks and 1 pen cost $9. Find the price of one pen. Choose a method, solve, then compare with another valid method.\n\nПеременная: p = price of one pen; n = price of one notebook. Ответ в единицах: dollars per pen.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M07-A\nAt a fictional shop, 2 notebooks and 3 pens cost $19. At the same prices, 2 notebooks and 1 pen cost $9. Find the price of one pen. Choose a method, solve, then compare with another valid method.\n\nПеременная: p = price of one pen; n = price of one notebook. Ответ в единицах: dollars per pen.\n\nОтвет: 5 dollars per pen.\nBoth purchases include the same two notebooks, so subtracting removes their cost.\n\n\n\nКорректное решение:\n- 2n + 3p = 19; 2n + p = 9\n- Subtract the second equation: 2p = 10\n- p = 5\n\nРазные допустимые способы:\nВычитание: (2n + 3p) − (2n + p) = 19 − 9; 2p = 10; p = 5. Здесь удобно исключить одинаковые слагаемые сразу.\nПодстановка: 2n = 9 − p; 9 − p + 3p = 19; 2p = 10; p = 5. Тоже верно; содержит промежуточную подстановку.\n\n### Свежий перенос: M07-B\nAt another fictional shop, 3 notebooks and 2 pens cost $22, while 1 notebook and 2 pens cost $14. Prices do not change between purchases. Find the price of one notebook.\n\nПеременная: n = price of one notebook; p = price of one pen. Ответ в единицах: dollars per notebook.\n\nОтвет: 4 dollars per notebook.\nThis time the repeated cost is for pens. Subtraction isolates notebooks, which are the requested item.\n\n\n\nКорректное решение:\n- 3n + 2p = 22; n + 2p = 14\n- Subtract: 2n = 8\n- n = 4\n\nРазные допустимые способы:\nВычитание: (3n + 2p) − (n + 2p) = 22 − 14; 2n = 8; n = 4. Повторяющаяся стоимость ручек исключается.\nПодстановка: 2p = 14 − n; 3n + 14 − n = 22; 2n = 8; n = 4. Верно; важно не перепутать, цену какого предмета спрашивают.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Перенос меняет запрошенный предмет: нельзя автоматически отвечать ценой ручки.\n- Метод подстановки не считается неправильным только из-за большего числа строк.\n- Не выводить скорость ученика из выбранного метода; нужна фактическая попытка и сопоставимые условия.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "method-switch",
+        "skill": "elimination-from-conditions",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M07-A",
+            "prompt": "At a fictional shop, 2 notebooks and 3 pens cost $19. At the same prices, 2 notebooks and 1 pen cost $9. Find the price of one pen. Choose a method, solve, then compare with another valid method.",
+            "variable": "p = price of one pen; n = price of one notebook",
+            "unit": "dollars per pen",
+            "answer": 5,
+            "corrected_working": [
+              "2n + 3p = 19; 2n + p = 9",
+              "Subtract the second equation: 2p = 10",
+              "p = 5"
+            ],
+            "explanation": "Both purchases include the same two notebooks, so subtracting removes their cost.",
+            "methods": [
+              {
+                "title": "Вычитание",
+                "working": [
+                  "(2n + 3p) − (2n + p) = 19 − 9",
+                  "2p = 10",
+                  "p = 5"
+                ],
+                "tradeoff": "Здесь удобно исключить одинаковые слагаемые сразу."
+              },
+              {
+                "title": "Подстановка",
+                "working": [
+                  "2n = 9 − p",
+                  "9 − p + 3p = 19",
+                  "2p = 10; p = 5"
+                ],
+                "tradeoff": "Тоже верно; содержит промежуточную подстановку."
+              }
+            ]
+          },
+          {
+            "id": "M07-B",
+            "prompt": "At another fictional shop, 3 notebooks and 2 pens cost $22, while 1 notebook and 2 pens cost $14. Prices do not change between purchases. Find the price of one notebook.",
+            "variable": "n = price of one notebook; p = price of one pen",
+            "unit": "dollars per notebook",
+            "answer": 4,
+            "corrected_working": [
+              "3n + 2p = 22; n + 2p = 14",
+              "Subtract: 2n = 8",
+              "n = 4"
+            ],
+            "explanation": "This time the repeated cost is for pens. Subtraction isolates notebooks, which are the requested item.",
+            "methods": [
+              {
+                "title": "Вычитание",
+                "working": [
+                  "(3n + 2p) − (n + 2p) = 22 − 14",
+                  "2n = 8",
+                  "n = 4"
+                ],
+                "tradeoff": "Повторяющаяся стоимость ручек исключается."
+              },
+              {
+                "title": "Подстановка",
+                "working": [
+                  "2p = 14 − n",
+                  "3n + 14 − n = 22",
+                  "2n = 8; n = 4"
+                ],
+                "tradeoff": "Верно; важно не перепутать, цену какого предмета спрашивают."
+              }
+            ]
+          }
+        ],
+        "review_notes": [
+          "Перенос меняет запрошенный предмет: нельзя автоматически отвечать ценой ручки.",
+          "Метод подстановки не считается неправильным только из-за большего числа строк.",
+          "Не выводить скорость ученика из выбранного метода; нужна фактическая попытка и сопоставимые условия."
+        ]
+      }
+    },
+    {
+      "id": "M08",
+      "title": "Одинаковая стоимость двух тарифов",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nFor a fictional printing order, plan A costs $18 plus $3 per poster. Plan B costs $6 plus $5 per poster. For how many posters are the total costs equal?\n\nПеременная: n = number of posters. Ответ в единицах: posters.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M08-A\nFor a fictional printing order, plan A costs $18 plus $3 per poster. Plan B costs $6 plus $5 per poster. For how many posters are the total costs equal?\n\nПеременная: n = number of posters. Ответ в единицах: posters.\n\nОтвет: 6 posters.\nCompare total costs for the same number of posters, including both setup fees.\n\n\n\nКорректное решение:\n- 18 + 3n = 6 + 5n\n- 12 = 2n\n- n = 6\n- Both plans cost $36 at n = 6.\n\nРазные допустимые способы:\nУравнение: 18 + 3n = 6 + 5n; 12 = 2n; n = 6. Даёт точку равенства непосредственно.\nТаблица целых значений: At n = 4: A = 30, B = 26; At n = 6: A = 36, B = 36. Находит решение; для других задач может понадобиться больше проверок.\n\n### Свежий перенос: M08-B\nAt a fictional equipment service, plan A costs $29 once plus $2 per hour. Plan B costs $9 once plus $6 per hour. For how many hours are the total charges equal?\n\nПеременная: h = number of hours. Ответ в единицах: hours.\n\nОтвет: 5 hours.\nThe equality concerns total charges, not just the hourly rates.\n\n\n\nКорректное решение:\n- 29 + 2h = 9 + 6h\n- 20 = 4h\n- h = 5\n- Both plans cost $39 at h = 5.\n\nРазные допустимые способы:\nУравнение: 29 + 2h = 9 + 6h; 20 = 4h; h = 5. Отделяет разницу разовых плат от разницы ставок.\nРазница затрат: A starts $20 higher; B grows $4 faster per hour; 20 ÷ 4 = 5 hours. Короткое рассуждение верно, если явно объяснить смысл обеих разниц.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Одинаковые общие расходы не требуют одинаковых ставок за единицу.\n- Не требовать табличный или алгебраический способ как единственный допустимый.\n- В этих задачах решение целое, но не обобщать это на любые тарифы.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "method-switch",
+        "skill": "linear-plan-comparison",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M08-A",
+            "prompt": "For a fictional printing order, plan A costs $18 plus $3 per poster. Plan B costs $6 plus $5 per poster. For how many posters are the total costs equal?",
+            "variable": "n = number of posters",
+            "unit": "posters",
+            "answer": 6,
+            "corrected_working": [
+              "18 + 3n = 6 + 5n",
+              "12 = 2n",
+              "n = 6",
+              "Both plans cost $36 at n = 6."
+            ],
+            "explanation": "Compare total costs for the same number of posters, including both setup fees.",
+            "methods": [
+              {
+                "title": "Уравнение",
+                "working": [
+                  "18 + 3n = 6 + 5n",
+                  "12 = 2n",
+                  "n = 6"
+                ],
+                "tradeoff": "Даёт точку равенства непосредственно."
+              },
+              {
+                "title": "Таблица целых значений",
+                "working": [
+                  "At n = 4: A = 30, B = 26",
+                  "At n = 6: A = 36, B = 36"
+                ],
+                "tradeoff": "Находит решение; для других задач может понадобиться больше проверок."
+              }
+            ]
+          },
+          {
+            "id": "M08-B",
+            "prompt": "At a fictional equipment service, plan A costs $29 once plus $2 per hour. Plan B costs $9 once plus $6 per hour. For how many hours are the total charges equal?",
+            "variable": "h = number of hours",
+            "unit": "hours",
+            "answer": 5,
+            "corrected_working": [
+              "29 + 2h = 9 + 6h",
+              "20 = 4h",
+              "h = 5",
+              "Both plans cost $39 at h = 5."
+            ],
+            "explanation": "The equality concerns total charges, not just the hourly rates.",
+            "methods": [
+              {
+                "title": "Уравнение",
+                "working": [
+                  "29 + 2h = 9 + 6h",
+                  "20 = 4h",
+                  "h = 5"
+                ],
+                "tradeoff": "Отделяет разницу разовых плат от разницы ставок."
+              },
+              {
+                "title": "Разница затрат",
+                "working": [
+                  "A starts $20 higher",
+                  "B grows $4 faster per hour",
+                  "20 ÷ 4 = 5 hours"
+                ],
+                "tradeoff": "Короткое рассуждение верно, если явно объяснить смысл обеих разниц."
+              }
+            ]
+          }
+        ],
+        "review_notes": [
+          "Одинаковые общие расходы не требуют одинаковых ставок за единицу.",
+          "Не требовать табличный или алгебраический способ как единственный допустимый.",
+          "В этих задачах решение целое, но не обобщать это на любые тарифы."
+        ]
+      }
+    }
+  ]
+}
