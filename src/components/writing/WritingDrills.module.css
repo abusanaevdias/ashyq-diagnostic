@@ -52,6 +52,8 @@
 .reveal > p { line-height: 1.6; }
 .revealNote { color: var(--ink-soft); font-size: 14px; }
 .reveal .primary { margin-top: 8px; }
+.record { margin-block: 12px; padding: 17px; border-radius: var(--r-sm); background: var(--bg); overflow-wrap: anywhere; }
+.record p { white-space: pre-wrap; line-height: 1.6; }
 .page button:focus-visible, .page a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 @media (max-width: 850px) { .modeGrid { grid-template-columns: 1fr; } .sectionHeading { align-items: start; flex-direction: column; } }
 @media (max-width: 600px) { .page { padding: 20px 16px 72px; } .hero { padding: 42px 0 38px; } .topline { flex-wrap: wrap; } .essayCallout { flex-direction: column; align-items: stretch; padding: 24px; } .essayCallout a { align-self: start; } .compare { grid-template-columns: 1fr; } .reveal { padding: 22px; } .draftLabel { display: block; } .draftLabel span { display: block; margin-top: 3px; } }

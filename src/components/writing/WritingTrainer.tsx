@@ -93,12 +93,12 @@ export default function WritingTrainer() {
 
   function chooseCase(caseId: string) {
     if (caseId === session.caseId) return;
-    if (hasWork(session) && !window.confirm('Текущие правки сохраняются только в этой вкладке. Начать другое эссе и удалить их?')) return;
+    if (hasWork(session) && !window.confirm('Начать другое эссе и заменить текущую попытку? Сначала скачай работу, если хочешь оставить её.')) return;
     setSession(createSession(caseId));
   }
 
   function restart() {
-    if (hasWork(session) && !window.confirm('Начать заново и удалить правки этого эссе?')) return;
+    if (hasWork(session) && !window.confirm('Начать заново и заменить текущую попытку? Сначала скачай работу, если хочешь оставить её.')) return;
     setSession(createSession(session.caseId));
   }
 
@@ -219,7 +219,7 @@ export default function WritingTrainer() {
                   <p>Перепиши свой абзац с учётом объяснения. Эта попытка останется для обсуждения с учителем и не изменит учебный ориентир автоматически.</p>
                   <label className={styles.fieldLabel} htmlFor="post-feedback-edit">Твоя версия после разбора</label>
                   <textarea id="post-feedback-edit" className={styles.paragraphEditor} lang="en" rows={6} value={postFeedbackDraft} placeholder="Новая версия абзаца" aria-describedby="post-feedback-note" onChange={(event) => setSession((current) => ({ ...current, postFeedbackDrafts: { ...current.postFeedbackDrafts, [criterion]: event.target.value } }))} />
-                  <p id="post-feedback-note" className={styles.hint}>{postFeedbackDraft.trim() ? 'Вторая попытка сохранена в этой вкладке и появится в итоговом отчёте.' : 'Необязательный шаг. Исходная попытка останется без изменений.'}</p>
+                  <p id="post-feedback-note" className={styles.hint}>{postFeedbackDraft.trim() ? 'Вторая попытка добавлена к текущей работе и появится в итоговом отчёте.' : 'Необязательный шаг. Исходная попытка останется без изменений.'}</p>
                 </div>
                 <div className={styles.actionRow}><button type="button" className={styles.primaryButton} onClick={() => setSession(moveToNext)}>{criterion === 'lexical' ? 'Посмотреть итог →' : 'Следующий критерий →'}</button><span>Можно продолжить без применения примера</span></div>
               </>}
@@ -256,7 +256,7 @@ export default function WritingTrainer() {
         <aside className={styles.aside} aria-label="Учебные ориентиры и прогресс">
           <div className={styles.asideCard}><span className={styles.overline}>ПРОГРЕСС</span><strong className={styles.asideHeadline}>{String(furthestStageIndex + 1).padStart(2, '0')} <span>/ 05</span></strong><div className={styles.progressTrack}><span style={{ width: `${((furthestStageIndex + 1) / stages.length) * 100}%` }} /></div><p>Сейчас: {stageLabels[currentStageIndex]}</p></div>
           <div className={styles.asideCard}><span className={styles.overline}>УЧЕБНЫЕ ОРИЕНТИРЫ</span><p className={styles.asideNote}>Для этого вымышленного эссе. Рост только после применения размеченной правки.</p>{criterionOrder.map((criterion) => <div className={styles.scoreRow} key={criterion}><span>{criterionLabels[criterion]}</span><strong>{scores[criterion].toFixed(1)}</strong></div>)}</div>
-          <div className={styles.asideFoot}>IELTS Academic Task 2 · 4 критерия<br />Версия эссе не сохраняется после закрытия страницы.</div>
+          <div className={styles.asideFoot}>IELTS Academic Task 2 · 4 критерия<br />Для продолжения после закрытия включи локальное сохранение выше.</div>
         </aside>
       </div>
     </div>

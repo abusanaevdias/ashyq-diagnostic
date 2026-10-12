@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import { appendDrillChoice, appendDrillRecord, MAX_DRILL_RECORDS, type DrillRecords } from '../src/lib/trainers/drill-records';
+import { validSnapshot, utf8Bytes, MAX_SNAPSHOT_BYTES } from '../src/lib/trainers/checkpoints';
+import { writingDrills } from '../src/lib/writing-trainer/drills';
+
+const legacy={mode:null,index:0,draft:'',optionsVisible:false,choice:null,attempts:0,feedback:'',revealed:false,completed:[]};
+assert.equal(validSnapshot('writing-drills',legacy),true,'existing v1 snapshots remain valid without new fields');
+let choices:number[]=[];
+for(let i=0;i<40;i++) choices=appendDrillChoice(choices,i%3);
+assert.deepEqual(choices,[0,...Array.from({length:19},(_,i)=>(21+i)%3)],'first and latest nineteen choices remain');
+let records:DrillRecords={};
+const id=writingDrills[0].id;
+for(let i=0;i<8;i++) records=appendDrillRecord(records,id,{savedAt:new Date(1000+i*1000).toISOString(),draft:`first draft ${i}`,choices:[0,1],attemptCount:2,revealedByHelp:false});
+assert.equal(records[id].length,MAX_DRILL_RECORDS);
+assert.equal(records[id][0].draft,'first draft 3');
+const current={...legacy,currentChoices:[],revealedByHelp:false,drillRecords:records};
+assert.equal(validSnapshot('writing-drills',current),true);
+assert.equal(validSnapshot('writing-drills',{...current,revealedByHelp:null,drillRecords:{[id]:[{...records[id][0],revealedByHelp:null}]}}),true,'unknown legacy help is not converted into an independent correct choice');
+assert.equal(validSnapshot('writing-drills',{...current,drillRecords:{unknown:records[id]}}),false);
+assert.equal(validSnapshot('writing-drills',{...current,currentChoices:[3]}),false);
+assert.equal(validSnapshot('writing-drills',{...current,drillRecords:{[id]:[{...records[id][0],attemptCount:1}]}}),false,'a trail cannot exceed total attempts');
+assert.equal(validSnapshot('writing-drills',{...current,drillRecords:{[id]:[{...records[id][0],savedAt:'invalid'}]}}),false);
+assert.equal(validSnapshot('writing-drills',{...current,drillRecords:{[id]:[{...records[id][0],draft:'x'.repeat(601)}]}}),false);
+assert.equal(validSnapshot('writing-drills',{...current,drillRecords:{[id]:Array(6).fill(records[id][0])}}),false);
+const bounded={...current,drillRecords:Object.fromEntries(writingDrills.map(item=>[item.id,Array.from({length:MAX_DRILL_RECORDS},()=>({...records[id][0],draft:'я'.repeat(600),choices:Array(20).fill(0),attemptCount:40}))]))};
+assert.ok(utf8Bytes(JSON.stringify(bounded))<MAX_SNAPSHOT_BYTES,'bounded record bank fits UTF-8 snapshot budget');
+assert.equal(validSnapshot('writing-drills',bounded),true);
+console.log('PASS legacy-v1 compatibility, capped first/latest choices and five records, malformed IDs/totals/dates/text/choices, worst-case UTF-8 record budget. Local records are not verified achievements.');
