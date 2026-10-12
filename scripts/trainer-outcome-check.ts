@@ -13,7 +13,7 @@ import { cases as methods } from '../src/lib/math-method-switch/cases';
 import { writingCases } from '../src/lib/writing-trainer/cases';
 import { createSession } from '../src/lib/writing-trainer/engine';
 import { writingDrills } from '../src/lib/writing-trainer/drills';
-import type { Snapshot } from '../src/lib/trainers/checkpoints';
+import { validSnapshot, type Snapshot } from '../src/lib/trainers/checkpoints';
 
 // Defaults captured through the real UI by trainer-checkpoint-check.ts.
 const defaults = JSON.parse(fs.readFileSync('artifacts/trainers-complete-033/checkpoint-defaults.json', 'utf8')) as Record<TrainerId, Snapshot>;
@@ -35,7 +35,11 @@ const da = (item: typeof distractor.first) => ({ answerIndex: item.correctIndex,
 completed['sat-distractor'] = { ...defaults['sat-distractor'], caseIndex: 0, phase: 'result', first: da(distractor.first), transfer: da(distractor.transfer) };
 const math = mathForensicsCases[0];
 completed['math-forensics'] = { ...defaults['math-forensics'], caseIndex: 0, phase: 'result', firstAttempt: { stepIndex: math.wrongStepIndex, mechanism: math.mechanism, repairLine: 'own line' }, ownAnswer: String(math.finalAnswer), transferAttempt: { stepIndex: math.transfer.wrongStepIndex, answer: String(math.transfer.answer) } };
-const la = (item: typeof listeningCases[number]['first']) => ({ answer: item.answer, type: item.answerType, cue: item.cue, confidence: 'high', diagnosis: 'Не было затруднений', level: null, repaired: item.answer, textMode: false, textHelp: false, stopped: false });
+const la = (item: typeof listeningCases[number]['first']) => ({ answer: item.answer, type: item.answerType, cue: item.cue, confidence: 'Высокая', diagnosis: 'Не было затруднений', level: null, repaired: item.answer, textMode: false, textHelp: false, stopped: false });
+for (const confidence of ['Низкая','Средняя','Высокая']) {
+  assert.equal(validSnapshot('listening-replay', { ...defaults['listening-replay'], confidence }), true, 'actual Listening UI confidence values must remain savable');
+}
+assert.equal(validSnapshot('listening-replay', { ...defaults['listening-replay'], confidence: 'high' }), false, 'Listening does not use Reading confidence codes');
 completed['listening-replay'] = { ...defaults['listening-replay'], caseIndex: 0, phase: 'result', first: la(listeningCases[0].first), transfer: la(listeningCases[0].transfer) };
 const oa = (item: typeof overviewItems[number]) => ({ selected: [0,1,2], overview: 'own overview', evidence: Object.fromEntries([0,1,2].map(i => [i, item.claims[i].evidence])), reasons: Object.fromEntries(item.inaccurate.map((entry, i) => [i, entry.reason])), correction: 'own correction' });
 completed['task1-overview'] = { ...defaults['task1-overview'], phase: 'result', round: 1, first: oa(overviewItems[0]), transfer: oa(overviewItems[1]) };
@@ -55,6 +59,8 @@ assert.equal(practiceOutcome('sat-distractor', { ...completed['sat-distractor'],
 const textListening = practiceOutcome('listening-replay', { ...completed['listening-replay'], transfer: { ...la(listeningCases[0].transfer), textMode: true, textHelp: true, level: 3 } });
 assert.ok(textListening?.checks.some(check => check.label.includes('по тексту')));
 assert.ok(textListening?.checks.some(check => check.label.includes('с помощью')));
+const interruptedListening = practiceOutcome('listening-replay', { ...completed['listening-replay'], first: { ...la(listeningCases[0].first), stopped: true } });
+assert.ok(interruptedListening?.checks.some(check => check.label.includes('прослушивание прерывалось')), 'history must retain interruption provenance');
 const duplicateOverview = { ...oa(overviewItems[1]), selected: [0,0,0] };
 assert.equal(practiceOutcome('task1-overview', { ...completed['task1-overview'], transfer: duplicateOverview })?.repeat, true, 'duplicate choices must not look like three features');
 const session = { ...createSession(writingCases[0].id), stage: 'report', furthestStage: 'report' };
