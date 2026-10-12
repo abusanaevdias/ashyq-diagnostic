@@ -11,6 +11,9 @@ export type DraftUnit = typeof batch.units[number] & { exercise_data?: unknown }
 export type ReviewDecision = 'pending' | 'recommend' | 'revise' | 'hold';
 export type DraftDecision = { decision: ReviewDecision; comment: string; attested: boolean; savedAt: string };
 export type DraftReview = { format: 'ashyq-draft-review-v1'; batch: string; source_sha256: string; reviewerId: string; decisions: Record<string, DraftDecision> };
+export const MAX_DRAFT_REVIEW_BYTES = 1_300_000;
+export const DRAFT_REVIEW_CHANGED = 'ashyq:draft-review-change';
+export const decisionSignature = (decision?: DraftDecision): string | null => decision ? JSON.stringify([decision.decision, decision.comment, decision.attested, decision.savedAt]) : null;
 export function emptyDraftReview(reviewerId: string, selectedBatch: DraftBatch = batch): DraftReview {
   const batch = selectedBatch;
   return { format: 'ashyq-draft-review-v1', batch: batch.batch, source_sha256: batch.content_sha256, reviewerId, decisions: {} };
@@ -25,7 +28,7 @@ export function validDecision(value: unknown): value is DraftDecision {
 }
 export function parseDraftReview(raw: string | null, reviewerId: string, selectedBatch: DraftBatch = batch): DraftReview | null {
   const batch = selectedBatch;
-  if (!raw || raw.length > 100_000) return null;
+  if (!raw || raw.length > MAX_DRAFT_REVIEW_BYTES || new TextEncoder().encode(raw).byteLength > MAX_DRAFT_REVIEW_BYTES) return null;
   try {
     const v = JSON.parse(raw) as Partial<DraftReview>;
     if (!v || v.format !== 'ashyq-draft-review-v1' || v.batch !== batch.batch || v.source_sha256 !== batch.content_sha256 || v.reviewerId !== reviewerId || !v.decisions || typeof v.decisions !== 'object' || Array.isArray(v.decisions)) return null;

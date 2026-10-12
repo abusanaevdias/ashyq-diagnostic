@@ -1,15 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import RequireRole from '@/components/lms/RequireRole';
 import DraftWritingPreview from './DraftWritingPreview';
 import DraftSatPreview from './DraftSatPreview';
 import DraftListeningPreview from './DraftListeningPreview';
-import { draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
+import { decisionSignature, DRAFT_REVIEW_CHANGED, draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
+import { saveDraftDecision } from '@/lib/trainers/draft-review-storage';
 import styles from './TrainerCheckpoint.module.css';
 
-const changed = 'ashyq:draft-review-change';
+const changed = DRAFT_REVIEW_CHANGED;
 function subscribe(callback: () => void) {
   window.addEventListener('storage', callback); window.addEventListener(changed, callback);
   return () => { window.removeEventListener('storage', callback); window.removeEventListener(changed, callback); };
@@ -39,11 +40,21 @@ function MaterialText({ text, sectionLabel = 'задания' }: { text: string;
   return <div className={styles.materialText}>{blocks}</div>;
 }
 
-function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; previous?: DraftDecision; onSave: (value: DraftDecision) => boolean; onDirty: (dirty: boolean) => void }) {
+function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; previous?: DraftDecision; onSave: (value: DraftDecision, expected: string | null) => Promise<boolean>; onDirty: (dirty: boolean) => void }) {
   const [decision, setDecision] = useState<ReviewDecision>(previous?.decision ?? 'pending');
   const [comment, setComment] = useState(previous?.comment ?? '');
   const [attested, setAttested] = useState(previous?.attested ?? false);
   const [error, setError] = useState('');
+  const [baseline, setBaseline] = useState(() => decisionSignature(previous));
+  const [saving, setSaving] = useState(false);
+  async function save() {
+    const value: DraftDecision = { decision, comment, attested, savedAt: new Date().toISOString() };
+    if (!validDecision(value)) { setError(decision === 'recommend' ? 'Подтверди проверку условия, ключа и альтернатив.' : 'Для решения «Нужна правка» напиши конкретное замечание.'); return; }
+    setSaving(true); setError('');
+    try { if (await onSave(value, baseline)) { setBaseline(decisionSignature(value)); onDirty(false); } }
+    catch { setError('Не удалось сохранить решение. Скопируй замечание перед выходом.'); }
+    finally { setSaving(false); }
+  }
   return <section className={styles.panel} aria-labelledby="material-title">
     <p>{unit.id} · {unit.category} · DRAFT</p><h2 id="material-title">{unit.title}</h2>
     <MaterialText text={unit.student_markdown}/>
@@ -51,11 +62,11 @@ function ReviewUnit({ unit, previous, onSave, onDirty }: { unit: DraftUnit; prev
     <DraftSatPreview value={unit.exercise_data}/>
     <DraftListeningPreview value={unit.exercise_data} unitId={unit.id}/>
     <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown} sectionLabel="разбора"/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown} sectionLabel="языковой правки"/></>}</details>
-    <fieldset className={styles.filters}><legend>Решение проверяющего</legend>
+    <fieldset className={styles.filters} disabled={saving}><legend>Решение проверяющего</legend>
       <label htmlFor="draft-review-decision">Результат проверки</label><select id="draft-review-decision" value={decision} onChange={event => { onDirty(true); setDecision(event.target.value as ReviewDecision); setError(''); }}><option value="pending">Пока не проверено</option><option value="recommend">Рекомендую принять</option><option value="revise">Нужна правка</option><option value="hold">Отложить</option></select>
       <label htmlFor="draft-review-comment">Замечание</label><textarea id="draft-review-comment" rows={4} value={comment} maxLength={3000} onChange={event => { onDirty(true); setComment(event.target.value); }}/>
       <label><input type="checkbox" checked={attested} onChange={event => { onDirty(true); setAttested(event.target.checked); }}/> Проверил условие, ключ, допустимые альтернативы и понятность разбора.</label>
-      <div className={styles.actions}><button type="button" onClick={() => { const value: DraftDecision = { decision, comment, attested, savedAt: new Date().toISOString() }; if (!validDecision(value)) { setError(decision === 'recommend' ? 'Подтверди проверку условия, ключа и альтернатив.' : 'Для решения «Нужна правка» напиши конкретное замечание.'); return; } if (onSave(value)) onDirty(false); setError(''); }}>Сохранить решение в этом браузере</button></div>
+      <div className={styles.actions}><button type="button" onClick={save}>Сохранить решение в этом браузере</button></div>
       {error && <p role="alert">{error}</p>}
     </fieldset>
   </section>;
@@ -69,18 +80,26 @@ function Workspace({ reviewerId, draftBatch, onBatchChange }: { reviewerId: stri
   const [selected, setSelected] = useState(draftBatch.units[0].id);
   const [message, setMessage] = useState('');
   const [dirty, setDirty] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [pendingUnit, setPendingUnit] = useState<string | null>(null);
   const [pendingBatch, setPendingBatch] = useState<string | null>(null);
+  const [pendingExit, setPendingExit] = useState(false);
   const unit = draftBatch.units.find(item => item.id === selected)!;
-  function save(value: DraftDecision) {
+  useEffect(() => {
+    if (!dirty && !saving) return;
+    const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ''; };
+    window.addEventListener('beforeunload', warn);
+    return () => window.removeEventListener('beforeunload', warn);
+  }, [dirty, saving]);
+  async function save(value: DraftDecision, expected: string | null) {
+    setSaving(true); setMessage('Сохранение решения: жду безопасную запись в этом браузере.');
     try {
-      const currentRaw = localStorage.getItem(key);
-      if (currentRaw && !parseDraftReview(currentRaw, reviewerId, draftBatch)) throw new Error('Локальная запись повреждена или относится к другой версии. Она не заменена. Сначала скачай решения с экрана.');
-      const current = parseDraftReview(currentRaw, reviewerId, draftBatch) ?? emptyDraftReview(reviewerId, draftBatch);
-      localStorage.setItem(key, JSON.stringify({ ...current, decisions: { ...current.decisions, [unit.id]: value } }));
-      window.dispatchEvent(new Event(changed)); setMessage(`Решение для ${unit.id} сохранено локально. Статус материала на сайте не изменён.`);
+      await saveDraftDecision(reviewerId, draftBatch, unit.id, value, expected);
+      setPendingUnit(null); setPendingBatch(null); setPendingExit(false);
+      setMessage(`Решение для ${unit.id} сохранено локально. Статус материала на сайте не изменён.`);
       return true;
     } catch (error) { setMessage(error instanceof DOMException ? 'Браузер не разрешил сохранение. Не закрывай страницу: скопируй замечание перед выходом.' : error instanceof Error ? error.message : 'Не удалось сохранить решение.'); return false; }
+    finally { setSaving(false); }
   }
   function exportReview(value: DraftReview) {
     try {
@@ -89,11 +108,19 @@ function Workspace({ reviewerId, draftBatch, onBatchChange }: { reviewerId: stri
       setMessage('Сохранённые решения выгружены в JSON. Несохранённые замечания в файл не входят. Непроверенные материалы остаются непроверенными.');
     } catch { setMessage('Не удалось выгрузить файл. Скопируй замечания вручную.'); }
   }
+  function exportRecovery() {
+    if (raw === null || raw === '!unavailable') return;
+    try {
+      const url = URL.createObjectURL(new Blob([raw], { type: 'text/plain;charset=utf-8' }));
+      const a = document.createElement('a'); a.href = url; a.download = `ASHYQ-batch-${draftBatch.batch}-review-recovery.txt`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setMessage('Исходная локальная запись выгружена без изменений для восстановления. Она не считается проверенным набором решений.');
+    } catch { setMessage('Не удалось скачать исходную запись. Скопируй замечание перед выходом.'); }
+  }
   return <><h1>Проверка учебных материалов</h1><p>Партия {draftBatch.batch} · версия {draftBatch.version} · {counts.total} черновиков. Автор: {draftBatch.author}. Методическая проверка не завершена.</p><p>Сначала реши материал без ключа. Затем проверь объяснения и допустимые ответы. Решения сохраняются для текущего аккаунта в этом браузере; на общем устройстве их могут увидеть другие люди. Они не публикуют задания и не отправляются на сервер.</p>
-    <div className={styles.panel}><h2>Рассмотрено {counts.considered} из {counts.total}</h2><p>Рекомендовано принять: {counts.recommended}; нужна правка: {counts.revise}; отложено: {counts.hold}.</p><div className={styles.actions}><button type="button" onClick={() => exportReview(review)}>Скачать сохранённые решения</button><Link href="/trainers">К тренажёрам →</Link></div></div>
-    {raw && !parsed && <p className={styles.warning} role="status">{raw === '!unavailable' ? 'Локальное сохранение недоступно.' : 'Локальная запись несовместима с этой версией. Она не восстановлена и не заменена.'}</p>}
-    <div className={styles.filters}><label htmlFor="draft-batch-picker">Партия материалов</label><select id="draft-batch-picker" value={draftBatch.batch} onChange={event => { if (dirty) setPendingBatch(event.target.value); else onBatchChange(event.target.value); }}>{draftBatches.map(batch => <option value={batch.batch} key={batch.batch}>Партия {batch.batch} · {batch.units.length} черновиков</option>)}</select><label htmlFor="draft-material-picker">Выбери материал</label><select id="draft-material-picker" value={selected} onChange={event => { if (dirty) setPendingUnit(event.target.value); else { setSelected(event.target.value); setMessage(''); } }}>{draftBatch.units.map(item => <option value={item.id} key={item.id}>{item.id} · {item.title}{review.decisions[item.id]?.decision && review.decisions[item.id].decision !== 'pending' ? ' · рассмотрено' : ''}</option>)}</select></div>
-    {(pendingUnit || pendingBatch) && <div className={styles.warning} role="alert"><p>Есть несохранённое решение. Сохрани его внизу материала или явно перейди без сохранения.</p><div className={styles.actions}><button type="button" onClick={() => { setPendingUnit(null); setPendingBatch(null); }}>Остаться на материале</button><button type="button" onClick={() => { if (pendingBatch) { onBatchChange(pendingBatch); return; } if (pendingUnit) setSelected(pendingUnit); setPendingUnit(null); setDirty(false); setMessage(''); }}>Перейти без сохранения</button></div></div>}
+    <div className={styles.panel}><h2>Рассмотрено {counts.considered} из {counts.total}</h2><p>Рекомендовано принять: {counts.recommended}; нужна правка: {counts.revise}; отложено: {counts.hold}.</p><div className={styles.actions}><button type="button" disabled={raw !== null && !parsed} onClick={() => exportReview(review)}>Скачать сохранённые решения</button><Link href="/trainers" onClick={event => { if (saving) { event.preventDefault(); setMessage('Дождись завершения записи перед выходом.'); } else if (dirty) { event.preventDefault(); setPendingUnit(null); setPendingBatch(null); setPendingExit(true); } }}>К тренажёрам →</Link></div></div>
+    {raw !== null && !parsed && <div className={styles.panel}><p className={styles.warning} role="status">{raw === '!unavailable' ? 'Локальное сохранение недоступно.' : 'Локальная запись несовместима с этой версией. Она не восстановлена и не заменена. Скачай исходную запись для восстановления; выгрузка пустого набора решений отключена.'}</p>{raw !== '!unavailable' && <button type="button" onClick={exportRecovery}>Скачать исходную запись для восстановления</button>}</div>}
+    <div className={styles.filters}><label htmlFor="draft-batch-picker">Партия материалов</label><select id="draft-batch-picker" value={draftBatch.batch} disabled={saving} onChange={event => { setPendingExit(false); setPendingUnit(null); if (dirty) setPendingBatch(event.target.value); else onBatchChange(event.target.value); }}>{draftBatches.map(batch => <option value={batch.batch} key={batch.batch}>Партия {batch.batch} · {batch.units.length} черновиков</option>)}</select><label htmlFor="draft-material-picker">Выбери материал</label><select id="draft-material-picker" value={selected} disabled={saving} onChange={event => { setPendingExit(false); setPendingBatch(null); if (dirty) setPendingUnit(event.target.value); else { setSelected(event.target.value); setMessage(''); } }}>{draftBatch.units.map(item => <option value={item.id} key={item.id}>{item.id} · {item.title}{review.decisions[item.id]?.decision && review.decisions[item.id].decision !== 'pending' ? ' · рассмотрено' : ''}</option>)}</select></div>
+    {(pendingUnit || pendingBatch || pendingExit) && <div className={styles.warning} role="alert"><p>Есть несохранённое решение. Сохрани его внизу материала или явно перейди без сохранения.</p><div className={styles.actions}><button type="button" disabled={saving} onClick={() => { setPendingUnit(null); setPendingBatch(null); setPendingExit(false); }}>Остаться на материале</button>{pendingExit && !saving ? <Link href="/trainers" onClick={() => setDirty(false)}>Перейти без сохранения</Link> : <button type="button" disabled={saving} onClick={() => { if (pendingBatch) { onBatchChange(pendingBatch); return; } if (pendingUnit) setSelected(pendingUnit); setPendingUnit(null); setDirty(false); setMessage(''); }}>Перейти без сохранения</button>}</div></div>}
     <ReviewUnit key={unit.id} unit={unit} previous={review.decisions[unit.id]} onSave={save} onDirty={setDirty}/>
     {message && <p role="status">{message}</p>}
   </>;
