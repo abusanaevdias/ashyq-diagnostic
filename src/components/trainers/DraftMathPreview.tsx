@@ -64,7 +64,7 @@ function Preview({ pair,source,onDirty,onBusy }: { pair: DraftMathPair;source:Ba
           <label htmlFor="draft-math-repaired-working">Твоё решение после разбора</label><textarea id="draft-math-repaired-working" rows={4} maxLength={600} value={repairedWorking} onChange={event => { setRepairedWorking(event.target.value); setError(''); }}/>
           <label htmlFor="draft-math-repaired-answer">Твой числовой ответ после разбора</label><input id="draft-math-repaired-answer" inputMode="decimal" maxLength={60} value={repairedAnswer} onChange={event => { setRepairedAnswer(event.target.value); setError(''); }}/>
           <p>Это версия после помощи, а не независимая попытка. Можно сохранить прежние действия после проверки; совпадение числа не оценивает рассуждение.</p>
-          <div className={styles.previewReasons}><label htmlFor="draft-math-reflection">Что проверишь в новой задаче?<textarea id="draft-math-reflection" rows={3} maxLength={600} value={reflection} onChange={event => { setReflection(event.target.value); setError(''); }}/></label></div>
+          <div className={styles.previewReasons}><label htmlFor="draft-math-reflection">Что проверишь в новой задаче?</label><textarea id="draft-math-reflection" rows={3} maxLength={600} value={reflection} onChange={event => { setReflection(event.target.value); setError(''); }}/></div>
           <p>Свободные записи не оценивались автоматически. Достаточная длина пояснения не означает верное рассуждение.</p><button type="button" onClick={advance}>{round === 0 ? 'Перейти к новой Math-задаче' : 'Сравнить две Math-попытки'}</button>
         </div>}
       </>}

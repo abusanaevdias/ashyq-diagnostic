@@ -81,9 +81,13 @@ async function main() {
       for (const prediction of predictions) await preview.getByText(`Прогноз: ${prediction}`, { exact: true }).waitFor();
       await preview.getByText('Первый выбор не совпал с подготовленным ключом.', { exact: true }).waitFor();
       await preview.getByText('Выбор совпал с подготовленным ключом.', { exact: true }).waitFor();
-      await preview.getByRole('button', { name: 'Начать новую временную SAT-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Начать новую SAT-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую SAT-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Пройти SAT-черновик как ученик', exact: true }).click();
       assert.equal(await preview.getByLabel('Твой прогноз до вариантов', { exact: true }).inputValue(), '');
       assert.equal(await preview.getByRole('radio').count(), 0);
+      await preview.getByRole('button', { name: 'Начать новую SAT-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую SAT-пробу', exact: true }).click();
     }
     await page.reload();
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('04');
