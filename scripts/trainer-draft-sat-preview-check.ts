@@ -2,10 +2,11 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import batch from '../src/data/trainer-drafts/batch-04.json';
+import batch12 from '../src/data/trainer-drafts/batch-12.json';
 import { parseDraftSatPair } from '../src/lib/trainers/draft-sat-rw';
 
 async function main() {
-  for (const unit of batch.units) assert.ok(parseDraftSatPair(unit.exercise_data), unit.id);
+  for (const unit of [...batch.units,...batch12.units]) assert.ok(parseDraftSatPair(unit.exercise_data), unit.id);
   const original = batch.units[0].exercise_data;
   for (const value of [null, [], {}, { ...original, publication_ready: true }, { ...original, trainer: 'reading' }, { ...original, rounds: [] }, { ...original, rounds: [original.rounds[0], original.rounds[0]] }, { ...original, rounds: [{ ...original.rounds[0], key: 99 }, original.rounds[1]] }, { ...original, rounds: [{ ...original.rounds[0], evidence: 'Invented evidence' }, original.rounds[1]] }, { ...original, difficulty_status: 'CALIBRATED' }]) assert.equal(parseDraftSatPair(value), null);
   const normalized = parseDraftSatPair({ ...original, unknown: 'discard' })!;
@@ -23,7 +24,8 @@ async function main() {
     await page.getByRole('heading', { name: 'Нужно войти', exact: true }).waitFor();
     await page.evaluate(() => { localStorage.setItem('ashyq:v2:session', JSON.stringify({ user: { id: 'synthetic-sat-preview', name: 'Synthetic reviewer', email: 'synthetic@example.invalid', role: 'teacher', avatarColor: 'red' }, expiresAt: new Date(Date.now() + 3600000).toISOString() })); dispatchEvent(new Event('storage')); });
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('04');
-    for (const unit of batch.units) {
+    for (const unit of [...batch.units,...batch12.units]) {
+      await page.getByLabel('Партия материалов', { exact: true }).selectOption(batch12.units.some(value => value.id === unit.id) ? '12' : '04');
       await page.getByLabel('Выбери материал', { exact: true }).selectOption(unit.id);
       const preview = page.getByRole('region', { name: 'Пробное прохождение SAT · DRAFT', exact: true });
       await preview.getByRole('button', { name: 'Пройти SAT-черновик как ученик', exact: true }).click();
@@ -32,6 +34,7 @@ async function main() {
         await preview.getByRole('heading', { name: `${index === 0 ? 'Первая задача' : 'Новый текст после разбора'} · ${round.id}`, exact: true }).waitFor();
         assert.equal(await page.evaluate(() => document.activeElement?.tagName), 'H4');
         assert.equal(await preview.getByRole('radio').count(), 0);
+        if (round.passage.includes('\n')) assert.equal(await preview.getByText(round.passage, { exact: true }).evaluate(element => getComputedStyle(element).whiteSpace), 'pre-wrap');
         if (index === 0) assert.equal(await preview.getByText(unit.exercise_data.rounds[1].passage, { exact: true }).count(), 0, 'fresh passage hidden');
         await preview.getByRole('button', { name: 'Зафиксировать прогноз и показать варианты', exact: true }).click();
         await preview.getByRole('status').filter({ hasText: 'Сначала сформулируй' }).waitFor();
@@ -40,6 +43,10 @@ async function main() {
         await preview.getByLabel('Твой прогноз до вариантов', { exact: true }).fill(prediction);
         await preview.getByRole('button', { name: 'Зафиксировать прогноз и показать варианты', exact: true }).click();
         assert.equal(await preview.getByLabel('Твой прогноз до вариантов', { exact: true }).isDisabled(), true);
+        if (unit.id === 'RW15') {
+          await preview.getByRole('radio', { name: /Semicolon/ }).waitFor();
+          await preview.getByRole('radio', { name: /No punctuation/ }).waitFor();
+        }
         await preview.getByRole('button', { name: 'Проверить первый выбор', exact: true }).click();
         await preview.getByRole('status').filter({ hasText: 'Выбери вариант.' }).waitFor();
         const selected = index === 0 ? (round.key + 1) % 4 : round.key;
@@ -57,10 +64,15 @@ async function main() {
         await preview.getByRole('status').filter({ hasText: 'Запиши, что подтверждает' }).waitFor();
         await preview.getByLabel('Что подтверждает ответ или что ты пересмотрел?', { exact: true }).fill('My manual reflection after the supplied explanation.');
         await preview.getByText('Разбор всех четырёх вариантов', { exact: true }).click();
-        if (unit.id === 'RW01' || unit.id === 'RW08') {
+        if (['RW01','RW08',...batch12.units.map(value => value.id)].includes(unit.id)) {
           for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `SAT draft overflow ${unit.id}/${index}/${width}`); }
           const axe = await new AxeBuilder({ page }).include('main').analyze();
           assert.deepEqual(axe.violations.map(value => ({ id: value.id, targets: value.nodes.map(node => node.target) })), []);
+          if (unit.id === 'RW15' && index === 0) {
+            await page.setViewportSize({ width: 390, height: 900 });
+            await preview.getByRole('heading', { name: 'Первый выбор нужно пересмотреть', exact: true }).scrollIntoViewIfNeeded();
+            await page.screenshot({ path: 'artifacts/trainers-complete-033/draft-sat-boundaries-mobile.png' });
+          }
         }
         await next.click();
       }
@@ -78,7 +90,7 @@ async function main() {
     assert.equal(await page.getByRole('button', { name: 'Пройти SAT-черновик как ученик', exact: true }).count(), 1);
     assert.equal(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('ashyq:trainer-review:')).length), 0);
     assert.deepEqual(errors, []);
-    console.log('PASS eight SAT draft pairs: invalid data rejected, own predictions before options, frozen wrong first/correct fresh selections, three-reason and reflection gates, first/fresh provenance, focus/reset/temporary reload, four widths and axe. No free-text grading, calibration or publication.');
+    console.log('PASS sixteen SAT draft pairs/thirty-two texts: invalid data rejected, own predictions before options, frozen wrong first/correct fresh selections, three-reason and reflection gates, first/fresh provenance, focus/reset/temporary reload, four widths and axe. No free-text grading, calibration or publication.');
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

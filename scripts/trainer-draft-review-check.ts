@@ -249,6 +249,22 @@ async function main() {
     assert.equal(parseDraftReview(eleventhRaw, 'fixture-a', draftBatches[10])?.decisions.M16.decision, 'hold');
     for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `eleventh batch overflow at ${width}`); }
     assert.deepEqual((await new AxeBuilder({ page }).include('main').analyze()).violations, []);
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('12');
+    await page.getByRole('heading', { name: 'Рассмотрено 0 из 8', exact: true }).waitFor();
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('RW16');
+    await page.getByLabel('Результат проверки', { exact: true }).selectOption('hold');
+    await page.getByLabel('Замечание', { exact: true }).fill('Synthetic twelfth-batch fixture; not methodological approval.');
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 8', exact: true }).waitFor();
+    await page.reload();
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('12');
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('RW16');
+    assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), 'Synthetic twelfth-batch fixture; not methodological approval.');
+    const twelfthRaw = await page.evaluate(key => localStorage.getItem(key), reviewKey('fixture-a', draftBatches[11]));
+    assert.equal(parseDraftReview(twelfthRaw, 'fixture-a', draftBatches[11])?.decisions.RW16.decision, 'hold');
+    await page.getByText('Показать ключ, альтернативы и границы проверки', { exact: true }).click();
+    for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `twelfth batch overflow at ${width}`); }
+    assert.deepEqual((await new AxeBuilder({ page }).include('main').analyze()).violations, []);
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('01');
     await page.getByRole('heading', { name: 'Рассмотрено 2 из 12', exact: true }).waitFor();
     await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-b'));
