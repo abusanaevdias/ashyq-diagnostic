@@ -109,7 +109,7 @@ function ReviewUnit({ unit, batchId, batchVersion, contentHash, previous, onSave
     <DraftListeningPreview value={unit.exercise_data} unitId={unit.id}/>
     <DraftMathPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftReadingPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
-    <DraftTask1Preview value={unit.exercise_data}/>
+    <DraftTask1Preview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftTask2Preview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftSpeakingLaunch value={unit.exercise_data} batchId={batchId} unitId={unit.id} contentHash={contentHash}/>
     <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown} sectionLabel="разбора"/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown} sectionLabel="языковой правки"/></>}</details>

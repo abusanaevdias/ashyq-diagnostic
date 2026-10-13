@@ -122,8 +122,12 @@ async function main() {
       await preview.getByText('Из выбранных особенностей входят в авторский набор: 3 из 3. Другой отбор может быть обоснован вручную.', { exact: true }).waitFor();
       for (const summary of await preview.locator('summary').all()) await summary.click();
       for (const full of independent) { assert.equal(await preview.getByText(full, { exact: true }).count(), 1); assert.equal(await preview.getByText(full + ' Revised.', { exact: true }).count(), 1); }
-      await preview.getByRole('button', { name: 'Начать новую временную Task 1-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Начать новую Task 1-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую Task 1-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Пройти Task 1-черновик', exact: true }).click();
       assert.equal(await preview.getByLabel('Свой overview до образца', { exact: true }).inputValue(), '');
+      await preview.getByRole('button', { name: 'Начать новую Task 1-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую Task 1-пробу', exact: true }).click();
     }
     await page.reload(); await page.getByLabel('Партия материалов', { exact: true }).selectOption('02'); await page.getByLabel('Выбери материал', { exact: true }).selectOption('T103');
     assert.equal(await page.getByRole('button', { name: 'Пройти Task 1-черновик', exact: true }).count(), 1);
