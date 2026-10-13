@@ -7,6 +7,18 @@ export type DraftWritingDrill = WritingDrill & {
   review_notes: string[];
 };
 
+/** Next existing source of the same mode; exposure is asked separately, never inferred. */
+export function nextDraftWriting(item: DraftWritingDrill, values: unknown[]): DraftWritingDrill | null {
+  const pool = values.map(parseDraftWriting).filter((value): value is DraftWritingDrill => !!value && value.mode === item.mode).sort((a,b) => a.id.localeCompare(b.id));
+  const start = pool.findIndex(value => value.id === item.id);
+  if (start < 0) return null;
+  for (let offset = 1; offset < pool.length; offset++) {
+    const next = pool[(start + offset) % pool.length];
+    if (next.id !== item.id && next.example !== item.example && JSON.stringify(next.source) !== JSON.stringify(item.source)) return next;
+  }
+  return null;
+}
+
 const text = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0 && value.length <= 4000;
 const texts = (value: unknown, max: number): value is string[] => Array.isArray(value) && value.length > 0 && value.length <= max && value.every(text);
 
