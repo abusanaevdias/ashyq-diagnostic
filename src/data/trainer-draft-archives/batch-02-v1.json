@@ -1,0 +1,514 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "02",
+  "version": 1,
+  "source_sha256": "04cdf34ebfff4ae6cbd829a6030ecf2633622e217547d7f5e144012175c32cd8",
+  "content_sha256": "04cdf34ebfff4ae6cbd829a6030ecf2633622e217547d7f5e144012175c32cd8",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "L03",
+      "title": "Число после исправления",
+      "category": "Listening · повтор и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Два авторских учебных аудио. Это не материал реального экзамена.\n\nЦель: Окончательное количество, а не первое услышанное число.\n\n1. Прослушай первую запись целиком и запиши ответ. Текст и ключ пока не открывай.\n2. Повтори нужный фрагмент. Отметь, что помешало: число, слово, окончание, перефразирование или другое. Можно выбрать «не уверен».\n3. Исправь ответ и сравни с объяснением.\n4. Выполни второе задание без текста: это новый пример. Система сохраняет первую попытку отдельно.\n\n### Первое задание\nThe final number of science-club visitors is ____. Write ONE WORD AND/OR A NUMBER.\n\n### Новый пример\nThe final number of art-workshop participants is ____. Write ONE WORD AND/OR A NUMBER.",
+      "teacher_markdown": "### Первое аудио\nПолный сценарий: We expected thirteen visitors for the science club. Sorry, that was the number on the old list. The final list has thirty visitors. We will need thirty chairs, plus two for the organisers.\n\nПовторяемый фрагмент: Sorry, that was the number on the old list. The final list has thirty visitors.\n\nКлюч: 30. Допустимые варианты: 30, thirty.\n\nРазбор: Thirteen относится к старому списку. Thirty — окончательное число посетителей. Два организатора не входят в число visitors.\n\nГраницы проверки: регистр и крайние пробелы несущественны. Не принимать дополнительные слова сверх инструкции. Причину ошибки выбирает ученик: нельзя автоматически считать неверное число доказательством проблемы teen/ty. Отсутствие записи не считать выполненным аудированием.\n\n### Новый пример\nПолный сценарий: At first we booked places for forty students at the art workshop. Several students then cancelled, so the final group contains fourteen students. Two teachers will accompany them, but neither teacher is taking part in the workshop.\n\nПовторяемый фрагмент: Several students then cancelled, so the final group contains fourteen students.\n\nКлюч: 14. Допустимые варианты: 14, fourteen.\n\nРазбор: Forty — первоначальная бронь; fourteen — окончательное число участников. Учителя сопровождают группу, но не участвуют.\n\nГраницы проверки: регистр и крайние пробелы несущественны. Не принимать дополнительные слова сверх инструкции. Причину ошибки выбирает ученик: нельзя автоматически считать неверное число доказательством проблемы teen/ty. Отсутствие записи не считать выполненным аудированием.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "listening-pair-v1",
+        "focus": "Окончательное количество, а не первое услышанное число",
+        "rounds": [
+          {
+            "prompt": "The final number of science-club visitors is ____. Write ONE WORD AND/OR A NUMBER.",
+            "script": "We expected thirteen visitors for the science club. Sorry, that was the number on the old list. The final list has thirty visitors. We will need thirty chairs, plus two for the organisers.",
+            "segment": "Sorry, that was the number on the old list. The final list has thirty visitors.",
+            "answer": "30",
+            "accepted": [
+              "30",
+              "thirty"
+            ],
+            "distractors": [
+              "13",
+              "32"
+            ],
+            "explanation": "Thirteen относится к старому списку. Thirty — окончательное число посетителей. Два организатора не входят в число visitors."
+          },
+          {
+            "prompt": "The final number of art-workshop participants is ____. Write ONE WORD AND/OR A NUMBER.",
+            "script": "At first we booked places for forty students at the art workshop. Several students then cancelled, so the final group contains fourteen students. Two teachers will accompany them, but neither teacher is taking part in the workshop.",
+            "segment": "Several students then cancelled, so the final group contains fourteen students.",
+            "answer": "14",
+            "accepted": [
+              "14",
+              "fourteen"
+            ],
+            "distractors": [
+              "40",
+              "16"
+            ],
+            "explanation": "Forty — первоначальная бронь; fourteen — окончательное число участников. Учителя сопровождают группу, но не участвуют."
+          }
+        ],
+        "audio_status": "GENERATED_DRAFT",
+        "publication_ready": false
+      }
+    },
+    {
+      "id": "L04",
+      "title": "Что принести с собой",
+      "category": "Listening · повтор и перенос",
+      "status": "DRAFT",
+      "student_markdown": "Два авторских учебных аудио. Это не материал реального экзамена.\n\nЦель: Предмет, перефразирование и окончание множественного числа.\n\n1. Прослушай первую запись целиком и запиши ответ. Текст и ключ пока не открывай.\n2. Повтори нужный фрагмент. Отметь, что помешало: число, слово, окончание, перефразирование или другое. Можно выбрать «не уверен».\n3. Исправь ответ и сравни с объяснением.\n4. Выполни второе задание без текста: это новый пример. Система сохраняет первую попытку отдельно.\n\n### Первое задание\nReusable ____ are the items volunteers must bring themselves. Write ONE WORD ONLY.\n\n### Новый пример\nGardening ____ are compulsory for the students. Write ONE WORD ONLY.",
+      "teacher_markdown": "### Первое аудио\nПолный сценарий: For the park clean-up, we will provide protective gloves and collection bags. Please bring your own reusable bottles, since there is a drinking-water tap near the entrance. There is no need to buy gloves or bags.\n\nПовторяемый фрагмент: Please bring your own reusable bottles, since there is a drinking-water tap near the entrance.\n\nКлюч: bottles. Допустимые варианты: bottles.\n\nРазбор: Bring your own указывает на bottles. Gloves и bags выдаются. Are в условии требует множественного числа, которое совпадает с услышанным bottles; единственное bottle не подходит именно к этой формулировке.\n\nГраницы проверки: регистр и крайние пробелы несущественны. Не принимать дополнительные слова сверх инструкции. Причину ошибки выбирает ученик: нельзя автоматически считать неверное число доказательством проблемы teen/ty. Отсутствие записи не считать выполненным аудированием.\n\n### Новый пример\nПолный сценарий: The school will supply seedlings and small tools for our gardening day. Students need to bring gardening gloves to protect their hands. Water bottles are recommended, but they are not compulsory. Please label your gloves so they do not get mixed up.\n\nПовторяемый фрагмент: Students need to bring gardening gloves to protect their hands.\n\nКлюч: gloves. Допустимые варианты: gloves.\n\nРазбор: Supplies противопоставлено must bring. Tools выдаются школой, bottles только рекомендуются. Are compulsory требует множественного числа gloves. Перенос проверяет новое содержание, а не повторение слова bottles.\n\nГраницы проверки: регистр и крайние пробелы несущественны. Не принимать дополнительные слова сверх инструкции. Причину ошибки выбирает ученик: нельзя автоматически считать неверное число доказательством проблемы teen/ty. Отсутствие записи не считать выполненным аудированием.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "listening-pair-v1",
+        "focus": "Предмет, перефразирование и окончание множественного числа",
+        "rounds": [
+          {
+            "prompt": "Reusable ____ are the items volunteers must bring themselves. Write ONE WORD ONLY.",
+            "script": "For the park clean-up, we will provide protective gloves and collection bags. Please bring your own reusable bottles, since there is a drinking-water tap near the entrance. There is no need to buy gloves or bags.",
+            "segment": "Please bring your own reusable bottles, since there is a drinking-water tap near the entrance.",
+            "answer": "bottles",
+            "accepted": [
+              "bottles"
+            ],
+            "distractors": [
+              "gloves",
+              "bags",
+              "bottle"
+            ],
+            "explanation": "Bring your own указывает на bottles. Gloves и bags выдаются. Are в условии требует множественного числа, которое совпадает с услышанным bottles; единственное bottle не подходит именно к этой формулировке."
+          },
+          {
+            "prompt": "Gardening ____ are compulsory for the students. Write ONE WORD ONLY.",
+            "script": "The school will supply seedlings and small tools for our gardening day. Students need to bring gardening gloves to protect their hands. Water bottles are recommended, but they are not compulsory. Please label your gloves so they do not get mixed up.",
+            "segment": "Students need to bring gardening gloves to protect their hands.",
+            "answer": "gloves",
+            "accepted": [
+              "gloves"
+            ],
+            "distractors": [
+              "tools",
+              "bottles",
+              "glove"
+            ],
+            "explanation": "Supplies противопоставлено must bring. Tools выдаются школой, bottles только рекомендуются. Are compulsory требует множественного числа gloves. Перенос проверяет новое содержание, а не повторение слова bottles."
+          }
+        ],
+        "audio_status": "GENERATED_DRAFT",
+        "publication_ready": false
+      }
+    },
+    {
+      "id": "T103",
+      "title": "Рост, снижение и смена лидера",
+      "category": "Task 1 · overview и точность",
+      "status": "DRAFT",
+      "student_markdown": "Сначала выбери главные особенности и укажи числовые основания. Не открывай ключ до первой попытки. Затем напиши overview, исправь неточное утверждение и составь полный ответ минимум 150 слов. После разбора выполни новый график.\n\n### Первый график: Electricity generated on a fictional island\nЕдиница: GWh. Все данные вымышлены.\n\n| Series | 2020 | 2021 | 2022 | 2023 |\n|---|---|---|---|---|\n| Wind | 10 | 20 | 30 | 40 |\n| Solar | 5 | 15 | 25 | 35 |\n| Hydro | 50 | 45 | 40 | 30 |\n\nВыбери три главных особенности для overview:\n1. Wind rose in every recorded year.\n2. Solar rose in every recorded year.\n3. Hydro fell and ended below both other sources.\n4. Hydro remained the largest source in 2023.\n5. Wind output was four times its initial level in 2023.\n6. The chart proves that a new government policy caused the changes.\n\n### Новый график: Enrolments in courses at a fictional learning centre\nЕдиница: students. Все данные вымышлены.\n\n| Series | 2020 | 2021 | 2022 | 2023 |\n|---|---|---|---|---|\n| Online | 30 | 35 | 45 | 50 |\n| Evening | 45 | 40 | 30 | 20 |\n| Weekend | 10 | 15 | 20 | 25 |\n\nВыбери три главных особенности для overview:\n1. Online and weekend enrolments increased.\n2. Evening enrolments decreased.\n3. Online courses ended first and weekend courses moved ahead of evening courses.\n4. Evening courses had the most students throughout.\n5. Weekend enrolments were 25 in 2023.\n6. Online courses doubled their enrolments.",
+      "teacher_markdown": "### Первый график\nКлюч главных особенностей: 1, 2, 3.\n\n1. Фактически верно: Wind rose in every recorded year.\n2. Фактически верно: Solar rose in every recorded year.\n3. Фактически верно: Hydro fell and ended below both other sources.\n4. Не подтверждается или неверно: Hydro remained the largest source in 2023.\n5. Фактически верно: Wind output was four times its initial level in 2023. Это точная деталь, но уступает общим тенденциям для overview.\n6. Не подтверждается или неверно: The chart proves that a new government policy caused the changes.\n\nПример overview: Overall, wind and solar generation rose throughout the period, while hydroelectric output declined. Hydro was the largest source initially, but by 2023 both wind and solar produced more electricity than hydro.\n\nПример полного ответа (учебная редакция без band):\nThe line chart compares the amounts of electricity generated from wind, solar and hydro power on a fictional island between 2020 and 2023. Output is measured in gigawatt-hours.\n\nOverall, wind and solar generation increased throughout the period, whereas hydroelectric output declined. Hydro was initially the largest of the three sources, but by the final year it had fallen below both wind and solar.\n\nWind generation rose from 10 GWh in 2020 to 20 GWh in 2021, before reaching 30 GWh in 2022 and 40 GWh in 2023. Solar output followed a similar upward pattern, increasing from 5 to 15 and then 25 GWh. It ended the period at 35 GWh, consistently 5 GWh below wind.\n\nBy contrast, hydroelectric generation decreased from 50 GWh to 45 GWh and then 40 GWh in the first three recorded years. It fell further to 30 GWh in 2023. Despite starting well ahead of the other sources, hydro therefore finished 10 GWh below wind and 5 GWh below solar.\n\nДопустимые альтернативы: другая точная группировка и формулировка тенденций; число слов само по себе не оценивает качество. Нельзя объявлять грамматику неверной только из-за несовпадения с образцом. Данные показывают значения, а не причины.\n\n### Новый график\nКлюч главных особенностей: 1, 2, 3.\n\n1. Фактически верно: Online and weekend enrolments increased.\n2. Фактически верно: Evening enrolments decreased.\n3. Фактически верно: Online courses ended first and weekend courses moved ahead of evening courses.\n4. Не подтверждается или неверно: Evening courses had the most students throughout.\n5. Фактически верно: Weekend enrolments were 25 in 2023. Это точная деталь, но уступает общим тенденциям для overview.\n6. Не подтверждается или неверно: Online courses doubled their enrolments.\n\nПример overview: Overall, online and weekend enrolments increased, whereas evening enrolments fell. Evening courses started with the most students, but online courses led by the end and weekend courses also overtook evening courses.\n\nПример полного ответа (учебная редакция без band):\nThe line chart shows enrolments in three types of courses at a fictional learning centre from 2020 to 2023. The figures represent numbers of students in online, evening and weekend courses.\n\nOverall, online and weekend enrolments rose, while evening enrolments declined. Evening courses were the most popular at the beginning, but online courses had the largest enrolment at the end. Weekend courses also finished above evening courses.\n\nOnline enrolments increased from 30 students in 2020 to 35 in 2021. The number then reached 45 in 2022 and 50 in 2023. Weekend courses followed a steady upward pattern, adding five students at each recorded point, from 10 initially to 25 in the final year.\n\nIn contrast, evening enrolments fell from 45 to 40 students between 2020 and 2021, then to 30 in 2022 and 20 in 2023. Online courses had already moved ahead of evening courses by 2022. By 2023, the gap between these two categories had widened to 30 students, while weekend courses had five more students than evening courses.\n\nДопустимые альтернативы: другая точная группировка и формулировка тенденций; число слов само по себе не оценивает качество. Нельзя объявлять грамматику неверной только из-за несовпадения с образцом. Данные показывают значения, а не причины.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "task1-pair-v1",
+        "charts": [
+          {
+            "title": "Electricity generated on a fictional island",
+            "unit": "GWh",
+            "years": [
+              2020,
+              2021,
+              2022,
+              2023
+            ],
+            "series": [
+              {
+                "name": "Wind",
+                "values": [
+                  10,
+                  20,
+                  30,
+                  40
+                ]
+              },
+              {
+                "name": "Solar",
+                "values": [
+                  5,
+                  15,
+                  25,
+                  35
+                ]
+              },
+              {
+                "name": "Hydro",
+                "values": [
+                  50,
+                  45,
+                  40,
+                  30
+                ]
+              }
+            ],
+            "overview": "Overall, wind and solar generation rose throughout the period, while hydroelectric output declined. Hydro was the largest source initially, but by 2023 both wind and solar produced more electricity than hydro.",
+            "claims": [
+              [
+                "Wind rose in every recorded year.",
+                true
+              ],
+              [
+                "Solar rose in every recorded year.",
+                true
+              ],
+              [
+                "Hydro fell and ended below both other sources.",
+                true
+              ],
+              [
+                "Hydro remained the largest source in 2023.",
+                false
+              ],
+              [
+                "Wind output was four times its initial level in 2023.",
+                true
+              ],
+              [
+                "The chart proves that a new government policy caused the changes.",
+                false
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              2
+            ],
+            "model": "The line chart compares the amounts of electricity generated from wind, solar and hydro power on a fictional island between 2020 and 2023. Output is measured in gigawatt-hours.\n\nOverall, wind and solar generation increased throughout the period, whereas hydroelectric output declined. Hydro was initially the largest of the three sources, but by the final year it had fallen below both wind and solar.\n\nWind generation rose from 10 GWh in 2020 to 20 GWh in 2021, before reaching 30 GWh in 2022 and 40 GWh in 2023. Solar output followed a similar upward pattern, increasing from 5 to 15 and then 25 GWh. It ended the period at 35 GWh, consistently 5 GWh below wind.\n\nBy contrast, hydroelectric generation decreased from 50 GWh to 45 GWh and then 40 GWh in the first three recorded years. It fell further to 30 GWh in 2023. Despite starting well ahead of the other sources, hydro therefore finished 10 GWh below wind and 5 GWh below solar."
+          },
+          {
+            "title": "Enrolments in courses at a fictional learning centre",
+            "unit": "students",
+            "years": [
+              2020,
+              2021,
+              2022,
+              2023
+            ],
+            "series": [
+              {
+                "name": "Online",
+                "values": [
+                  30,
+                  35,
+                  45,
+                  50
+                ]
+              },
+              {
+                "name": "Evening",
+                "values": [
+                  45,
+                  40,
+                  30,
+                  20
+                ]
+              },
+              {
+                "name": "Weekend",
+                "values": [
+                  10,
+                  15,
+                  20,
+                  25
+                ]
+              }
+            ],
+            "overview": "Overall, online and weekend enrolments increased, whereas evening enrolments fell. Evening courses started with the most students, but online courses led by the end and weekend courses also overtook evening courses.",
+            "claims": [
+              [
+                "Online and weekend enrolments increased.",
+                true
+              ],
+              [
+                "Evening enrolments decreased.",
+                true
+              ],
+              [
+                "Online courses ended first and weekend courses moved ahead of evening courses.",
+                true
+              ],
+              [
+                "Evening courses had the most students throughout.",
+                false
+              ],
+              [
+                "Weekend enrolments were 25 in 2023.",
+                true
+              ],
+              [
+                "Online courses doubled their enrolments.",
+                false
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              2
+            ],
+            "model": "The line chart shows enrolments in three types of courses at a fictional learning centre from 2020 to 2023. The figures represent numbers of students in online, evening and weekend courses.\n\nOverall, online and weekend enrolments rose, while evening enrolments declined. Evening courses were the most popular at the beginning, but online courses had the largest enrolment at the end. Weekend courses also finished above evening courses.\n\nOnline enrolments increased from 30 students in 2020 to 35 in 2021. The number then reached 45 in 2022 and 50 in 2023. Weekend courses followed a steady upward pattern, adding five students at each recorded point, from 10 initially to 25 in the final year.\n\nIn contrast, evening enrolments fell from 45 to 40 students between 2020 and 2021, then to 30 in 2022 and 20 in 2023. Online courses had already moved ahead of evening courses by 2022. By 2023, the gap between these two categories had widened to 30 students, while weekend courses had five more students than evening courses."
+          }
+        ],
+        "publication_ready": false
+      }
+    },
+    {
+      "id": "T104",
+      "title": "Пересечение линий и равные значения",
+      "category": "Task 1 · overview и точность",
+      "status": "DRAFT",
+      "student_markdown": "Сначала выбери главные особенности и укажи числовые основания. Не открывай ключ до первой попытки. Затем напиши overview, исправь неточное утверждение и составь полный ответ минимум 150 слов. После разбора выполни новый график.\n\n### Первый график: Passenger journeys on three fictional transport services\nЕдиница: thousand journeys. Все данные вымышлены.\n\n| Series | 2017 | 2019 | 2021 | 2023 |\n|---|---|---|---|---|\n| Train | 80 | 85 | 90 | 95 |\n| Bus | 100 | 90 | 80 | 70 |\n| Ferry | 20 | 25 | 25 | 30 |\n\nВыбери три главных особенности для overview:\n1. Train journeys increased while bus journeys declined.\n2. Trains overtook buses between the 2019 and 2021 observations.\n3. Ferries had the fewest journeys throughout.\n4. Ferry journeys rose at every recorded point.\n5. Train journeys numbered 95 thousand in 2023.\n6. The recorded values show that trains overtook buses in exactly 2020.\n\n### Новый график: Grants allocated by a fictional charity\nЕдиница: thousand dollars. Все данные вымышлены.\n\n| Series | 2017 | 2019 | 2021 | 2023 |\n|---|---|---|---|---|\n| Food | 20 | 30 | 40 | 50 |\n| Health | 50 | 45 | 40 | 35 |\n| Education | 10 | 10 | 15 | 20 |\n\nВыбери три главных особенности для overview:\n1. Food and education funding rose overall while health funding declined.\n2. Food and health were equal in 2021, with food ahead by 2023.\n3. Education was the smallest category throughout.\n4. Food was the sole largest category in 2021.\n5. Education funding doubled between the first and final years.\n6. Health funding fell because the charity closed its clinics.",
+      "teacher_markdown": "### Первый график\nКлюч главных особенностей: 1, 2, 3.\n\n1. Фактически верно: Train journeys increased while bus journeys declined.\n2. Фактически верно: Trains overtook buses between the 2019 and 2021 observations.\n3. Фактически верно: Ferries had the fewest journeys throughout.\n4. Не подтверждается или неверно: Ferry journeys rose at every recorded point.\n5. Фактически верно: Train journeys numbered 95 thousand in 2023. Это точная деталь, но уступает общим тенденциям для overview.\n6. Не подтверждается или неверно: The recorded values show that trains overtook buses in exactly 2020.\n\nПример overview: Overall, train and ferry journeys increased, whereas bus journeys declined. Trains overtook buses between the 2019 and 2021 observations, while ferries remained the least used service.\n\nПример полного ответа (учебная редакция без band):\nThe line chart compares passenger journeys on train, bus and ferry services in a fictional area in four recorded years between 2017 and 2023. The unit is thousands of journeys.\n\nOverall, train and ferry journeys increased over the period, while bus journeys fell. Trains moved ahead of buses between the 2019 and 2021 observations. Ferries remained the least used service throughout.\n\nBus journeys began at 100 thousand in 2017, compared with 80 thousand for trains. Bus use then decreased steadily to 90 thousand in 2019, 80 thousand in 2021 and 70 thousand in 2023. Train journeys followed the opposite pattern, increasing by five thousand at each recorded point to finish at 95 thousand.\n\nFerry journeys rose from 20 thousand in 2017 to 25 thousand in 2019. They remained at that level in 2021 before reaching 30 thousand in 2023. By the final year, trains accounted for 25 thousand more journeys than buses and 65 thousand more than ferries. The recorded points do not identify the exact date when train use first exceeded bus use.\n\nДопустимые альтернативы: другая точная группировка и формулировка тенденций; число слов само по себе не оценивает качество. Нельзя объявлять грамматику неверной только из-за несовпадения с образцом. Данные показывают значения, а не причины.\n\n### Новый график\nКлюч главных особенностей: 1, 2, 3.\n\n1. Фактически верно: Food and education funding rose overall while health funding declined.\n2. Фактически верно: Food and health were equal in 2021, with food ahead by 2023.\n3. Фактически верно: Education was the smallest category throughout.\n4. Не подтверждается или неверно: Food was the sole largest category in 2021.\n5. Фактически верно: Education funding doubled between the first and final years. Это точная деталь, но уступает общим тенденциям для overview.\n6. Не подтверждается или неверно: Health funding fell because the charity closed its clinics.\n\nПример overview: Overall, funding for food and education increased, whereas health funding declined. Food and health received equal amounts in 2021; food received the most in 2023, while education remained the smallest category.\n\nПример полного ответа (учебная редакция без band):\nThe line chart shows grants allocated to food, health and education programmes by a fictional charity in four years between 2017 and 2023. The amounts are given in thousands of dollars.\n\nOverall, funding for food and education increased, whereas health funding decreased. Food and health received the same amount in 2021, before food became the largest category in 2023. Education received the least funding at every recorded point.\n\nFood grants rose steadily from 20 thousand dollars in 2017 to 30 thousand in 2019, 40 thousand in 2021 and 50 thousand in 2023. Health funding moved in the opposite direction, falling from 50 thousand to 45 thousand, then 40 thousand and finally 35 thousand dollars. Their equal allocations in 2021 therefore do not make food the sole largest category in that year.\n\nEducation funding remained at 10 thousand dollars in both 2017 and 2019. It then increased to 15 thousand in 2021 and 20 thousand in 2023. Although this was twice its initial amount, education still received 15 thousand dollars less than health and 30 thousand less than food in the final year.\n\nДопустимые альтернативы: другая точная группировка и формулировка тенденций; число слов само по себе не оценивает качество. Нельзя объявлять грамматику неверной только из-за несовпадения с образцом. Данные показывают значения, а не причины.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "task1-pair-v1",
+        "charts": [
+          {
+            "title": "Passenger journeys on three fictional transport services",
+            "unit": "thousand journeys",
+            "years": [
+              2017,
+              2019,
+              2021,
+              2023
+            ],
+            "series": [
+              {
+                "name": "Train",
+                "values": [
+                  80,
+                  85,
+                  90,
+                  95
+                ]
+              },
+              {
+                "name": "Bus",
+                "values": [
+                  100,
+                  90,
+                  80,
+                  70
+                ]
+              },
+              {
+                "name": "Ferry",
+                "values": [
+                  20,
+                  25,
+                  25,
+                  30
+                ]
+              }
+            ],
+            "overview": "Overall, train and ferry journeys increased, whereas bus journeys declined. Trains overtook buses between the 2019 and 2021 observations, while ferries remained the least used service.",
+            "claims": [
+              [
+                "Train journeys increased while bus journeys declined.",
+                true
+              ],
+              [
+                "Trains overtook buses between the 2019 and 2021 observations.",
+                true
+              ],
+              [
+                "Ferries had the fewest journeys throughout.",
+                true
+              ],
+              [
+                "Ferry journeys rose at every recorded point.",
+                false
+              ],
+              [
+                "Train journeys numbered 95 thousand in 2023.",
+                true
+              ],
+              [
+                "The recorded values show that trains overtook buses in exactly 2020.",
+                false
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              2
+            ],
+            "model": "The line chart compares passenger journeys on train, bus and ferry services in a fictional area in four recorded years between 2017 and 2023. The unit is thousands of journeys.\n\nOverall, train and ferry journeys increased over the period, while bus journeys fell. Trains moved ahead of buses between the 2019 and 2021 observations. Ferries remained the least used service throughout.\n\nBus journeys began at 100 thousand in 2017, compared with 80 thousand for trains. Bus use then decreased steadily to 90 thousand in 2019, 80 thousand in 2021 and 70 thousand in 2023. Train journeys followed the opposite pattern, increasing by five thousand at each recorded point to finish at 95 thousand.\n\nFerry journeys rose from 20 thousand in 2017 to 25 thousand in 2019. They remained at that level in 2021 before reaching 30 thousand in 2023. By the final year, trains accounted for 25 thousand more journeys than buses and 65 thousand more than ferries. The recorded points do not identify the exact date when train use first exceeded bus use."
+          },
+          {
+            "title": "Grants allocated by a fictional charity",
+            "unit": "thousand dollars",
+            "years": [
+              2017,
+              2019,
+              2021,
+              2023
+            ],
+            "series": [
+              {
+                "name": "Food",
+                "values": [
+                  20,
+                  30,
+                  40,
+                  50
+                ]
+              },
+              {
+                "name": "Health",
+                "values": [
+                  50,
+                  45,
+                  40,
+                  35
+                ]
+              },
+              {
+                "name": "Education",
+                "values": [
+                  10,
+                  10,
+                  15,
+                  20
+                ]
+              }
+            ],
+            "overview": "Overall, funding for food and education increased, whereas health funding declined. Food and health received equal amounts in 2021; food received the most in 2023, while education remained the smallest category.",
+            "claims": [
+              [
+                "Food and education funding rose overall while health funding declined.",
+                true
+              ],
+              [
+                "Food and health were equal in 2021, with food ahead by 2023.",
+                true
+              ],
+              [
+                "Education was the smallest category throughout.",
+                true
+              ],
+              [
+                "Food was the sole largest category in 2021.",
+                false
+              ],
+              [
+                "Education funding doubled between the first and final years.",
+                true
+              ],
+              [
+                "Health funding fell because the charity closed its clinics.",
+                false
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              2
+            ],
+            "model": "The line chart shows grants allocated to food, health and education programmes by a fictional charity in four years between 2017 and 2023. The amounts are given in thousands of dollars.\n\nOverall, funding for food and education increased, whereas health funding decreased. Food and health received the same amount in 2021, before food became the largest category in 2023. Education received the least funding at every recorded point.\n\nFood grants rose steadily from 20 thousand dollars in 2017 to 30 thousand in 2019, 40 thousand in 2021 and 50 thousand in 2023. Health funding moved in the opposite direction, falling from 50 thousand to 45 thousand, then 40 thousand and finally 35 thousand dollars. Their equal allocations in 2021 therefore do not make food the sole largest category in that year.\n\nEducation funding remained at 10 thousand dollars in both 2017 and 2019. It then increased to 15 thousand in 2021 and 20 thousand in 2023. Although this was twice its initial amount, education still received 15 thousand dollars less than health and 30 thousand less than food in the final year."
+          }
+        ],
+        "publication_ready": false
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Объяснить так, чтобы поняли",
+      "category": "Speaking · повтор и новая тема",
+      "status": "DRAFT",
+      "student_markdown": "Учебная практика IELTS Part 2. Можно использовать вымышленную ситуацию: личные имена и адреса не нужны.\n\n1. Подготовься одну минуту и говори до двух минут. Запись необязательна; разрешение микрофона запрашивается только после нажатия.\n2. Послушай себя или вспомни ответ. Выбери один фокус: ясность и развитие, словарь, грамматика или произношение.\n3. Повтори тот же ответ, улучшая выбранный аспект. Сохрани исходную запись отдельно, если нужна.\n4. Перейди ко второй теме без готового текста. Сравни, удалось ли применить приём на новом содержании.\n\n### Первая тема\nDescribe a time when you explained something to another person.\nYou should say:\n- what you explained\n- who you explained it to\n- how you made the explanation clear\n- and explain how you knew whether the person understood\n\nFollow-up: How could you explain the same idea to someone with less experience?\n\n### Новая тема\nDescribe a time when you changed a plan.\nYou should say:\n- what the original plan was\n- why you changed it\n- what you did instead\n- and explain what you learnt from the change\n\nFollow-up: Would you make the same change again? Why?\n\nТренажёр не выдаёт подтверждённый IELTS band. Локальные записи не отправляются на AI и не сохраняются при перезагрузке; скачай нужные файлы.",
+      "teacher_markdown": "Цель: перенос одного выбранного приёма на новую тему, а не заучивание модельного монолога.\n\n### Первая тема\nИдеи для разбора только после попытки:\n- Explain the first step before adding detail.\n- Give one concrete example.\n- Describe what the other person did or asked.\n\n### Новая тема\nИдеи для разбора только после попытки:\n- Keep the original plan and the changed plan distinct.\n- Connect the reason to the new action.\n- Explain one consequence rather than listing events.\n\nЧетыре аспекта самоанализа:\n- Ясность: понятна последовательность и связь примера с ответом?\n- Словарь: выражена ли мысль точно; удалось ли перефразировать неизвестное слово?\n- Грамматика: есть ли конкретный фрагмент для правки, а не просто ощущение ошибки?\n- Произношение: можно ли разобрать слова; где помогла бы пауза или ударение? Акцент сам по себе не ошибка.\n\nНе оценивать произношение по тексту или длительности. Отсутствие аудио означает «не проверено». Самоотметка не доказывает улучшение. Две минуты — учебная граница записи, а не достаточное основание для band. Пример ответа может быть вымышленным; не требовать чувствительные подробности.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "topics": [
+          {
+            "prompt": "Describe a time when you explained something to another person.",
+            "cues": [
+              "what you explained",
+              "who you explained it to",
+              "how you made the explanation clear",
+              "and explain how you knew whether the person understood"
+            ],
+            "followup": "How could you explain the same idea to someone with less experience?",
+            "ideas": [
+              "Explain the first step before adding detail.",
+              "Give one concrete example.",
+              "Describe what the other person did or asked."
+            ]
+          },
+          {
+            "prompt": "Describe a time when you changed a plan.",
+            "cues": [
+              "what the original plan was",
+              "why you changed it",
+              "what you did instead",
+              "and explain what you learnt from the change"
+            ],
+            "followup": "Would you make the same change again? Why?",
+            "ideas": [
+              "Keep the original plan and the changed plan distinct.",
+              "Connect the reason to the new action.",
+              "Explain one consequence rather than listing events."
+            ]
+          }
+        ],
+        "publication_ready": false
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Опыт и конкретный пример",
+      "category": "Speaking · повтор и новая тема",
+      "status": "DRAFT",
+      "student_markdown": "Учебная практика IELTS Part 2. Можно использовать вымышленную ситуацию: личные имена и адреса не нужны.\n\n1. Подготовься одну минуту и говори до двух минут. Запись необязательна; разрешение микрофона запрашивается только после нажатия.\n2. Послушай себя или вспомни ответ. Выбери один фокус: ясность и развитие, словарь, грамматика или произношение.\n3. Повтори тот же ответ, улучшая выбранный аспект. Сохрани исходную запись отдельно, если нужна.\n4. Перейди ко второй теме без готового текста. Сравни, удалось ли применить приём на новом содержании.\n\n### Первая тема\nDescribe an object that you found useful more than once.\nYou should say:\n- what the object is\n- when you got it\n- how you have used it\n- and explain why it has remained useful\n\nFollow-up: Could a different object perform the same function?\n\n### Новая тема\nDescribe a place where you improved a skill.\nYou should say:\n- where the place is\n- what skill you practised\n- what you did there\n- and explain how the place helped you improve\n\nFollow-up: Could you practise that skill somewhere else?\n\nТренажёр не выдаёт подтверждённый IELTS band. Локальные записи не отправляются на AI и не сохраняются при перезагрузке; скачай нужные файлы.",
+      "teacher_markdown": "Цель: перенос одного выбранного приёма на новую тему, а не заучивание модельного монолога.\n\n### Первая тема\nИдеи для разбора только после попытки:\n- Name a specific use.\n- Explain what that use made easier.\n- Compare usefulness in two situations.\n\n### Новая тема\nИдеи для разбора только после попытки:\n- Identify one feature of the place.\n- Link it to a concrete practice activity.\n- Describe a change you noticed without inventing a score.\n\nЧетыре аспекта самоанализа:\n- Ясность: понятна последовательность и связь примера с ответом?\n- Словарь: выражена ли мысль точно; удалось ли перефразировать неизвестное слово?\n- Грамматика: есть ли конкретный фрагмент для правки, а не просто ощущение ошибки?\n- Произношение: можно ли разобрать слова; где помогла бы пауза или ударение? Акцент сам по себе не ошибка.\n\nНе оценивать произношение по тексту или длительности. Отсутствие аудио означает «не проверено». Самоотметка не доказывает улучшение. Две минуты — учебная граница записи, а не достаточное основание для band. Пример ответа может быть вымышленным; не требовать чувствительные подробности.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "speaking-pair-v1",
+        "topics": [
+          {
+            "prompt": "Describe an object that you found useful more than once.",
+            "cues": [
+              "what the object is",
+              "when you got it",
+              "how you have used it",
+              "and explain why it has remained useful"
+            ],
+            "followup": "Could a different object perform the same function?",
+            "ideas": [
+              "Name a specific use.",
+              "Explain what that use made easier.",
+              "Compare usefulness in two situations."
+            ]
+          },
+          {
+            "prompt": "Describe a place where you improved a skill.",
+            "cues": [
+              "where the place is",
+              "what skill you practised",
+              "what you did there",
+              "and explain how the place helped you improve"
+            ],
+            "followup": "Could you practise that skill somewhere else?",
+            "ideas": [
+              "Identify one feature of the place.",
+              "Link it to a concrete practice activity.",
+              "Describe a change you noticed without inventing a score."
+            ]
+          }
+        ],
+        "publication_ready": false
+      }
+    }
+  ]
+}

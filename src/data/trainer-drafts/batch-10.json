@@ -1,9 +1,9 @@
 {
   "format": "ashyq-draft-bank-v1",
   "batch": "10",
-  "version": 1,
+  "version": "2.0",
   "source_sha256": "4448bff2da4f5135c02d66245cb500050cbaa7389086682cfd8dc704aeb62298",
-  "content_sha256": "9b2695f12395b3ecfd8319dfac562c6aeca9433af2dfebdef9854b27d9258e86",
+  "content_sha256": "6529e0cedc48e53fd64c93f5e4b8f25fe6ff7bb994007ffa41a95d2aa47f19c8",
   "author": "Codex",
   "intended_reviewer": "Dias",
   "methodically_approved": false,
@@ -55,7 +55,42 @@
             ],
             "explanation": "Sixteen — подтверждённые посетители. Sixty — вместимость, три гида — сотрудники. Из вместимости нельзя выводить фактическую посещаемость."
           }
-        ]
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l05-1-full.wav",
+              "sha256": "295014207769d62a322d19e433a9c73ad962393347bb9db6909c48ce3bf721d1",
+              "bytes": 1518358
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l05-1-segment.wav",
+              "sha256": "d910bb398c8a5b5d50669ec9aeecb1c8167713193e8a3dff50ed1987199dc085",
+              "bytes": 429048
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l05-2-full.wav",
+              "sha256": "bcaa5ae81b1f7208cba2b70c3286beee9abe553d04102f1c52908232f2c7a5ab",
+              "bytes": 1620428
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l05-2-segment.wav",
+              "sha256": "b9930e123be61db819925249e9c9420f683fd531b6be89ebb0da371abde1047d",
+              "bytes": 401478
+            }
+          ]
+        }
       }
     },
     {
@@ -108,7 +143,42 @@
             ],
             "explanation": "Half past two в afternoon — 14:30. Инструкция требует 24-часовой формат. 14:00 — вход, 15:00 — отменённая версия, 16:00 — ожидаемый конец."
           }
-        ]
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l06-1-full.wav",
+              "sha256": "c9aec58913f2f4a969a543be6871ce92e6d3ca2470a457c74f51aade07f344e8",
+              "bytes": 1458818
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l06-1-segment.wav",
+              "sha256": "461c5afdd9ade6e6eb2d792c5c8e3632fa89cb77d515bbae4be1b48fef10bc45",
+              "bytes": 441836
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l06-2-full.wav",
+              "sha256": "e5bf5f7ed954f5a474b3833d52ba847541dbfc972a1bedce8a9d1a56c57b14c6",
+              "bytes": 1619764
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l06-2-segment.wav",
+              "sha256": "5b4e3842b5acdb90eecdc5908367da1e685508099f8acaf22ea77d8325f734dc",
+              "bytes": 308450
+            }
+          ]
+        }
       }
     },
     {
@@ -158,7 +228,42 @@
             ],
             "explanation": "24 включает обучение и обед. 4 — необязательный напиток, 8 — возвращаемый залог. 28/32/36 смешивают цену курса с другими платежами."
           }
-        ]
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l07-1-full.wav",
+              "sha256": "ff873a9b9095145a0a4ca22559c18be024c86fe6137284207ce1e6e2bd64918d",
+              "bytes": 1629234
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l07-1-segment.wav",
+              "sha256": "f9ea9c2d4f07a72703b57688e59ca100f6ab75be02b4600d1eac23cd69069f1e",
+              "bytes": 323442
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l07-2-full.wav",
+              "sha256": "008d4378667bb08ae4e18e37be2d64e638f9f809e9b52c84473b532e6ecfd257",
+              "bytes": 1459932
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l07-2-segment.wav",
+              "sha256": "a31ccb043ccc6f83c51589eca4d340ba88effaaffc1086970e67b51259076e48",
+              "bytes": 391788
+            }
+          ]
+        }
       }
     },
     {
@@ -208,7 +313,42 @@
             ],
             "explanation": "Studio — место демонстрации. Shop показывает инструменты, corridor — путь, courtyard — ориентир и помещение другой группы. Все эти слова слышны, но выполняют разные роли."
           }
-        ]
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l08-1-full.wav",
+              "sha256": "b145f4a53fbce8cf81682fe6511672397bc22721d052758690bd494d09d0d86a",
+              "bytes": 1503364
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l08-1-segment.wav",
+              "sha256": "141344918106f13c46c24adcb19a815677b4aee736a8c4ee396e11942bde48ae",
+              "bytes": 258404
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l08-2-full.wav",
+              "sha256": "8d564c48e9ca9c0013b897d7f446accba91afb3a9789d83d08c3140863ee949a",
+              "bytes": 1545898
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l08-2-segment.wav",
+              "sha256": "2a7c56bc26c9958fac3f644f88eab1377ba40f5df650eb8b9b9f567a0c591755",
+              "bytes": 286624
+            }
+          ]
+        }
       }
     },
     {
@@ -258,7 +398,42 @@
             ],
             "explanation": "Saturday — обновлённый день посещения. Sunday отменён из-за закрытия, Friday отклонён из-за разгрузки. Нельзя отвечать первым услышанным днём."
           }
-        ]
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l09-1-full.wav",
+              "sha256": "5919319e3e6277e0208adcc817b9f93414fab489cc840f305e1249ee57f6fe4b",
+              "bytes": 1758664
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l09-1-segment.wav",
+              "sha256": "1ae36742b73d4d15a0b0d8e8dd47f97cbb4afd565254a08e6b767c079eaa6a9b",
+              "bytes": 411190
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l09-2-full.wav",
+              "sha256": "e609b92155b09d76832f6084f8bb84e1c373a5ce88b7bcded8de1177b9784c15",
+              "bytes": 1714576
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l09-2-segment.wav",
+              "sha256": "b6a33e25c2922c7b2ce0bd984f538e256c1713a1a17aa211c71ff1250b7d7067",
+              "bytes": 282436
+            }
+          ]
+        }
       }
     },
     {
@@ -308,7 +483,42 @@
             ],
             "explanation": "16 — минимум для introductory session. 18 — рекомендация другого курса, 20 — возраст помощников. Нужно сохранить связь условия с нужной группой."
           }
-        ]
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l10-1-full.wav",
+              "sha256": "6a2cd045c6e14fec3449e8e46cb92e2c6600533f774612b67a05e5a9c078e11c",
+              "bytes": 1581382
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l10-1-segment.wav",
+              "sha256": "fd748b74d346faeab871edbdfbd0a06fa073d90a8a89ed973282fb1b694d3c8b",
+              "bytes": 296324
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l10-2-full.wav",
+              "sha256": "72677ad79a47aa6cfd1e945e221dfc62dda05b459396392b8f18400c6fe2e532",
+              "bytes": 1642018
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l10-2-segment.wav",
+              "sha256": "4957704cbb7643e897c306ae0c871b545c78956f2cd153e5acd6388238e1acae",
+              "bytes": 344394
+            }
+          ]
+        }
       }
     }
   ]

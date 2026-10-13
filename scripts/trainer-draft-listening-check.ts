@@ -104,6 +104,8 @@ async function main() {
         const next = preview.getByRole('button', { name: index === 0 ? 'Перейти к новой записи' : 'Сравнить попытки аудирования', exact: true });
         await next.click(); await preview.getByRole('status').filter({ hasText: 'Запиши ответ после разбора отдельно' }).waitFor();
         await preview.getByLabel('Ответ после разбора', { exact: true }).fill(item.answer);
+        await next.click();await preview.getByRole('status').filter({hasText:'что проверишь при следующем прослушивании'}).waitFor();
+        await preview.getByLabel('Что проверишь при следующем прослушивании?',{exact:true}).fill(`Synthetic next listening strategy ${unit.id}-${index}.`);
         for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Listening preview overflow ${unit.id}/${index}/${width}`); }
         const axe = await new AxeBuilder({ page }).include('main').analyze(); assert.deepEqual(axe.violations.map(value => ({ id: value.id, targets: value.nodes.map(node => node.target) })), []);
         // Keep a detached-node handle: checking only that the player vanished
@@ -118,8 +120,11 @@ async function main() {
       await preview.getByText('Текст открыт до ответа — это практика по тексту.', { exact: true }).waitFor();
       await preview.getByText('Браузер сообщил о завершении полной записи.', { exact: true }).waitFor();
       assert.equal(await preview.locator('audio').count(), 0);
-      await preview.getByRole('button', { name: 'Начать новую временную Listening-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Начать новую Listening-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую Listening-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Пройти Listening-черновик', exact: true }).click();
       assert.equal(await preview.getByLabel('Какой тип ответа ожидаешь и какую деталь будешь различать?', { exact: true }).inputValue(), '');
+      if(unit.id!==units.at(-1)!.id){await preview.getByRole('button',{name:'Начать новую Listening-пробу',exact:true}).click();await preview.getByRole('button',{name:'Подтвердить новую Listening-пробу',exact:true}).click();}
     }
     await page.getByLabel('Какой тип ответа ожидаешь и какую деталь будешь различать?',{exact:true}).fill('Synthetic unmount expectation.');
     await page.getByRole('button',{name:'Зафиксировать ожидание и открыть запись',exact:true}).click();
@@ -127,6 +132,8 @@ async function main() {
     const oldFull = await activeFull.elementHandle(); assert.ok(oldFull);
     await activeFull.evaluate(async (node: HTMLAudioElement) => { node.currentTime = 0; await node.play(); });
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('01');
+    await page.getByRole('alert').filter({hasText:'несохранённое решение или работа'}).waitFor();
+    await page.getByRole('button',{name:'Перейти без сохранения',exact:true}).click();
     assert.equal(await oldFull.evaluate((node: HTMLAudioElement) => node.paused), true, 'active full recording paused on workspace unmount');
     // Decode every served asset as well as validating the bytes on disk.
     for (const asset of assets) {

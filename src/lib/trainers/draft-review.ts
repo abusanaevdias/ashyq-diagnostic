@@ -13,11 +13,13 @@ import batch12 from '@/data/trainer-drafts/batch-12.json';
 import batch13 from '@/data/trainer-drafts/batch-13.json';
 import batch14 from '@/data/trainer-drafts/batch-14.json';
 import batch01v1 from '@/data/trainer-draft-archives/batch-01-v1.json';
+import batch02v1 from '@/data/trainer-draft-archives/batch-02-v1.json';
+import batch10v1 from '@/data/trainer-draft-archives/batch-10-v1.json';
 
 export const draftBatch = batch;
 export const draftBatches = [batch, batch02, batch03, batch04, batch05, batch06, batch07, batch08, batch09, batch10, batch11, batch12, batch13, batch14];
 /** Archives retain source-bound decisions; never add them to the active bank or migrate attestations. */
-export const draftArchives: DraftBatch[] = [batch01v1];
+export const draftArchives: DraftBatch[] = [batch01v1,batch02v1,batch10v1];
 export type DraftBatch = { batch: string; version: string | number; content_sha256: string; author: string; methodically_approved: boolean; units: DraftUnit[] };
 export type DraftUnit = { id: string; title: string; category: string; status: string; student_markdown: string; teacher_markdown: string; language_only_markdown: string | null; exercise_data?: unknown };
 export type ReviewDecision = 'pending' | 'recommend' | 'revise' | 'hold';
