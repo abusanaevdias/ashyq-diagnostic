@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { draftTask1ClaimLabel, draftTask1Words, parseDraftTask1, type DraftTask1Pair } from '@/lib/trainers/draft-task1';
+import { draftTask1ClaimLabel, draftTask1Words, parseDraftTask1, type DraftTask1Chart } from '@/lib/trainers/draft-task1';
+import { parseDraftTask1Categories, type Task1CategoryChart as CategoryChart } from '@/lib/trainers/draft-task1-categories';
 import Task1LineChart from './Task1LineChart';
+import Task1CategoryChart from './Task1CategoryChart';
 import styles from './TrainerCheckpoint.module.css';
 
 type Attempt = { selected: number[]; overview: string; evidence: Record<number, string>; draft: string; revision: string; reflection: string };
 const order = [3,0,5,2,4,1];
-function Preview({ pair }: { pair: DraftTask1Pair }) {
+function Preview({ pair }: { pair: { charts: (DraftTask1Chart|CategoryChart)[] } }) {
   const [started, setStarted] = useState(false), [round, setRound] = useState(0), [phase, setPhase] = useState<'overview'|'draft'|'feedback'|'report'>('overview');
   const [selected, setSelected] = useState<number[]>([]), [overview, setOverview] = useState(''), [evidence, setEvidence] = useState<Record<number,string>>({});
   const [draft, setDraft] = useState(''), [revision, setRevision] = useState(''), [reflection, setReflection] = useState(''), [reviewed, setReviewed] = useState(false), [error, setError] = useState('');
@@ -43,7 +45,7 @@ function Preview({ pair }: { pair: DraftTask1Pair }) {
       </div>)}<p>Сравнение с авторским отбором не оценивает свободный ответ. Пересмотр выполнялся после образца; два графика не доказывают устойчивый навык.</p><button type="button" onClick={() => { setRound(0); setPhase('overview'); setAttempts([]); clear(); }}>Начать новую временную Task 1-пробу</button>
     </> : <>
       <h4 ref={step} tabIndex={-1}>{round ? 'Новый график' : 'Первый график'} · {phase === 'overview' ? 'Свой обзор' : phase === 'draft' ? 'Полный ответ до образца' : 'Разбор и пересмотр'}</h4>
-      <div className={styles.chartFrame}><Task1LineChart item={item}/></div>
+      <div className={styles.chartFrame}>{'categories' in item?<Task1CategoryChart item={item}/>:<Task1LineChart item={item}/>}</div>
       {phase === 'overview' ? <>
         <fieldset className={styles.filters}><legend>Выбери три главные особенности для overview</legend>{order.map(index => <label key={index}><input type="checkbox" checked={selected.includes(index)} onChange={() => { setSelected(old => old.includes(index) ? old.filter(value => value !== index) : [...old,index]); setError(''); }}/><span lang="en">{item.claims[index][0]}</span></label>)}</fieldset>
         <p>Выбрано {selected.length} из 3. Верная отдельная цифра может уступать общей тенденции.</p><label htmlFor="draft-task1-overview">Свой overview до образца</label><textarea id="draft-task1-overview" rows={3} maxLength={1800} value={overview} onChange={event => { setOverview(event.target.value); setError(''); }}/>
@@ -60,8 +62,8 @@ function Preview({ pair }: { pair: DraftTask1Pair }) {
   </section>;
 }
 export default function DraftTask1Preview({ value }: { value: unknown }) {
-  if (!value || typeof value !== 'object' || !('kind' in value) || value.kind !== 'task1-pair-v1') return null;
-  const pair = parseDraftTask1(value);
+  if (!value || typeof value !== 'object' || !('kind' in value) || !['task1-pair-v1','task1-categories-pair-v1'].includes(String(value.kind))) return null;
+  const pair = value.kind==='task1-pair-v1'?parseDraftTask1(value):parseDraftTask1Categories(value);
   if (!pair) return <p role="alert">Структура Task 1-черновика не прошла проверку. Проба недоступна; другой график не подставлен.</p>;
   return <Preview key={pair.charts[0].title} pair={pair}/>;
 }

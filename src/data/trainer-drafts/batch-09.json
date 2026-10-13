@@ -1,0 +1,504 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "09",
+  "version": 1,
+  "source_sha256": "41738f43214111a1a9476461d3d07cb59f8b235d737f88c857b431b21df9a266",
+  "content_sha256": "2975fa90fdb52b567f06127d23e9126cd317fe098a73a3bca35fa3223f98974c",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "T105",
+      "title": "Столбцы: сравнение регистраций",
+      "category": "Writing Task 1",
+      "status": "DRAFT",
+      "student_markdown": "### Registrations at Brook Learning Centre\n\n2024. Единицы: registrations. Все данные вымышленные.\n\n| Category | Value |\n|---|---|\n| Languages | 120 |\n| Art | 90 |\n| Coding | 60 |\n| Music | 45 |\n| Drama | 15 |\n\nВыбери три главные особенности, напиши overview, затем полный ответ до образца. После сравнения создай отдельную версию и перейди к новому графику. Причины, изменение во времени и абсолютные суммы нельзя добавлять без данных.",
+      "teacher_markdown": "### Первый график: Registrations at Brook Learning Centre\n\nАвторский overview: Overall, Languages had the most registrations, while Drama had the fewest. Together, the two leading categories accounted for more than half of all registrations.\n\n1. Languages was the largest category. — главная особенность авторского набора\n\n2. Drama was the smallest category. — главная особенность авторского набора\n\n3. The two largest categories together represented more than half of the registrations. — главная особенность авторского набора\n\n4. Drama was larger than Languages. — не подтверждается этим графиком\n\n5. Languages had 120 registrations. — подтверждённая деталь, не обязательная для overview\n\n6. Languages increased most compared with the previous year. — не подтверждается этим графиком\n\nРегистрации не равны уникальным людям. Сложение категорий даёт регистрации, но не доказывает число разных участников. Столбцы категорий за один период не показывают временную динамику.\n\nНе считать другой обоснованный обзор неверным из-за несовпадения с авторским набором. Верная отдельная цифра может быть менее приоритетной; неподтверждённая причинность не означает доказанное отсутствие причины. Свободный ответ вручную, без band.\n\nПодготовленный полный пример:\n\nThe bar chart compares registrations for five categories at the fictional Brook Learning Centre during 2024. The figures count registrations for activities in the same reporting period, rather than changes across several years. A person could register for more than one activity, so these counts should not be described as numbers of distinct people.\n\nOverall, Languages had the most registrations, while Drama had the fewest. Together, the two leading categories accounted for more than half of all registrations. The distribution was therefore uneven, with a clear gap between the top and bottom categories.\n\nLanguages recorded 120 registrations, compared with 90 for Art, a difference of 30. The next category, Coding, had 60. This was 30 below the second category but 15 above Music, which recorded 45 registrations.\n\nAt the lower end, Drama had 15 registrations, 30 fewer than Music. The difference between the largest and smallest categories was 105. Across all five categories, the total was 330, of which the leading pair contributed 210, or approximately 64%. The remaining three categories together accounted for 120 registrations.\n\n### Новый график: Registrations at Harbour Workshop Centre\n\nАвторский overview: Overall, Cooking had the most registrations, while Gardening had the fewest. Together, the two leading categories accounted for more than half of all registrations.\n\n1. Gardening was the smallest category. — главная особенность авторского набора\n\n2. The two largest categories together represented more than half of the registrations. — главная особенность авторского набора\n\n3. Gardening was larger than Cooking. — не подтверждается этим графиком\n\n4. Photography had 40 registrations. — подтверждённая деталь, не обязательная для overview\n\n5. Cooking increased most compared with the previous year. — не подтверждается этим графиком\n\n6. Cooking was the largest category. — главная особенность авторского набора\n\nРегистрации не равны уникальным людям. Сложение категорий даёт регистрации, но не доказывает число разных участников. Столбцы категорий за один период не показывают временную динамику.\n\nНе считать другой обоснованный обзор неверным из-за несовпадения с авторским набором. Верная отдельная цифра может быть менее приоритетной; неподтверждённая причинность не означает доказанное отсутствие причины. Свободный ответ вручную, без band.\n\nПодготовленный полный пример:\n\nThe bar chart compares registrations for five categories at the fictional Harbour Workshop Centre during 2025. The figures count registrations for activities in the same reporting period, rather than changes across several years. A person could register for more than one activity, so these counts should not be described as numbers of distinct people.\n\nOverall, Cooking had the most registrations, while Gardening had the fewest. Together, the two leading categories accounted for more than half of all registrations. The distribution was therefore uneven, with a clear gap between the top and bottom categories.\n\nCooking recorded 100 registrations, compared with 80 for Repair, a difference of 20. The next category, Design, had 60. This was 20 below the second category but 20 above Photography, which recorded 40 registrations.\n\nAt the lower end, Gardening had 20 registrations, 20 fewer than Photography. The difference between the largest and smallest categories was 80. Across all five categories, the total was 300, of which the leading pair contributed 180, or approximately 60%. The remaining three categories together accounted for 120 registrations.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "task1-categories-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "skill": "rank-versus-unique-people",
+        "charts": [
+          {
+            "chartType": "bar",
+            "title": "Registrations at Brook Learning Centre",
+            "period": "2024",
+            "unit": "registrations",
+            "categories": [
+              "Languages",
+              "Art",
+              "Coding",
+              "Music",
+              "Drama"
+            ],
+            "values": [
+              120,
+              90,
+              60,
+              45,
+              15
+            ],
+            "overview": "Overall, Languages had the most registrations, while Drama had the fewest. Together, the two leading categories accounted for more than half of all registrations.",
+            "model": "The bar chart compares registrations for five categories at the fictional Brook Learning Centre during 2024. The figures count registrations for activities in the same reporting period, rather than changes across several years. A person could register for more than one activity, so these counts should not be described as numbers of distinct people.\n\nOverall, Languages had the most registrations, while Drama had the fewest. Together, the two leading categories accounted for more than half of all registrations. The distribution was therefore uneven, with a clear gap between the top and bottom categories.\n\nLanguages recorded 120 registrations, compared with 90 for Art, a difference of 30. The next category, Coding, had 60. This was 30 below the second category but 15 above Music, which recorded 45 registrations.\n\nAt the lower end, Drama had 15 registrations, 30 fewer than Music. The difference between the largest and smallest categories was 105. Across all five categories, the total was 330, of which the leading pair contributed 210, or approximately 64%. The remaining three categories together accounted for 120 registrations.",
+            "claims": [
+              [
+                "Languages was the largest category.",
+                true
+              ],
+              [
+                "Drama was the smallest category.",
+                true
+              ],
+              [
+                "The two largest categories together represented more than half of the registrations.",
+                true
+              ],
+              [
+                "Drama was larger than Languages.",
+                false
+              ],
+              [
+                "Languages had 120 registrations.",
+                true
+              ],
+              [
+                "Languages increased most compared with the previous year.",
+                false
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "chartType": "bar",
+            "title": "Registrations at Harbour Workshop Centre",
+            "period": "2025",
+            "unit": "registrations",
+            "categories": [
+              "Photography",
+              "Cooking",
+              "Gardening",
+              "Repair",
+              "Design"
+            ],
+            "values": [
+              40,
+              100,
+              20,
+              80,
+              60
+            ],
+            "overview": "Overall, Cooking had the most registrations, while Gardening had the fewest. Together, the two leading categories accounted for more than half of all registrations.",
+            "model": "The bar chart compares registrations for five categories at the fictional Harbour Workshop Centre during 2025. The figures count registrations for activities in the same reporting period, rather than changes across several years. A person could register for more than one activity, so these counts should not be described as numbers of distinct people.\n\nOverall, Cooking had the most registrations, while Gardening had the fewest. Together, the two leading categories accounted for more than half of all registrations. The distribution was therefore uneven, with a clear gap between the top and bottom categories.\n\nCooking recorded 100 registrations, compared with 80 for Repair, a difference of 20. The next category, Design, had 60. This was 20 below the second category but 20 above Photography, which recorded 40 registrations.\n\nAt the lower end, Gardening had 20 registrations, 20 fewer than Photography. The difference between the largest and smallest categories was 80. Across all five categories, the total was 300, of which the leading pair contributed 180, or approximately 60%. The remaining three categories together accounted for 120 registrations.",
+            "claims": [
+              [
+                "Gardening was the smallest category.",
+                true
+              ],
+              [
+                "The two largest categories together represented more than half of the registrations.",
+                true
+              ],
+              [
+                "Gardening was larger than Cooking.",
+                false
+              ],
+              [
+                "Photography had 40 registrations.",
+                true
+              ],
+              [
+                "Cooking increased most compared with the previous year.",
+                false
+              ],
+              [
+                "Cooking was the largest category.",
+                true
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "T106",
+      "title": "Столбцы: общая картина и точная деталь",
+      "category": "Writing Task 1",
+      "status": "DRAFT",
+      "student_markdown": "### Registrations for library events\n\nSpring 2024. Единицы: registrations. Все данные вымышленные.\n\n| Category | Value |\n|---|---|\n| Writing | 35 |\n| History | 70 |\n| Science | 20 |\n| Poetry | 55 |\n| Film | 90 |\n\nВыбери три главные особенности, напиши overview, затем полный ответ до образца. После сравнения создай отдельную версию и перейди к новому графику. Причины, изменение во времени и абсолютные суммы нельзя добавлять без данных.",
+      "teacher_markdown": "### Первый график: Registrations for library events\n\nАвторский overview: Overall, Film had the most registrations, while Science had the fewest. Together, the two leading categories accounted for more than half of all registrations.\n\n1. The two largest categories together represented more than half of the registrations. — главная особенность авторского набора\n\n2. Science was larger than Film. — не подтверждается этим графиком\n\n3. Writing had 35 registrations. — подтверждённая деталь, не обязательная для overview\n\n4. Film increased most compared with the previous year. — не подтверждается этим графиком\n\n5. Film was the largest category. — главная особенность авторского набора\n\n6. Science was the smallest category. — главная особенность авторского набора\n\nРегистрации не равны уникальным людям. Сложение категорий даёт регистрации, но не доказывает число разных участников. Столбцы категорий за один период не показывают временную динамику.\n\nНе считать другой обоснованный обзор неверным из-за несовпадения с авторским набором. Верная отдельная цифра может быть менее приоритетной; неподтверждённая причинность не означает доказанное отсутствие причины. Свободный ответ вручную, без band.\n\nПодготовленный полный пример:\n\nThe bar chart compares registrations for five categories at a fictional neighbourhood library during Spring 2024. The figures count registrations for activities in the same reporting period, rather than changes across several years. A person could register for more than one activity, so these counts should not be described as numbers of distinct people.\n\nOverall, Film had the most registrations, while Science had the fewest. Together, the two leading categories accounted for more than half of all registrations. The distribution was therefore uneven, with a clear gap between the top and bottom categories.\n\nFilm recorded 90 registrations, compared with 70 for History, a difference of 20. The next category, Poetry, had 55. This was 15 below the second category but 20 above Writing, which recorded 35 registrations.\n\nAt the lower end, Science had 20 registrations, 15 fewer than Writing. The difference between the largest and smallest categories was 70. Across all five categories, the total was 270, of which the leading pair contributed 160, or approximately 59%. The remaining three categories together accounted for 110 registrations.\n\n### Новый график: Registrations for recreation sessions\n\nАвторский overview: Overall, Walking had the most registrations, while Climbing had the fewest. Together, the two leading categories accounted for more than half of all registrations.\n\n1. Climbing was larger than Walking. — не подтверждается этим графиком\n\n2. Swimming had 75 registrations. — подтверждённая деталь, не обязательная для overview\n\n3. Walking increased most compared with the previous year. — не подтверждается этим графиком\n\n4. Walking was the largest category. — главная особенность авторского набора\n\n5. Climbing was the smallest category. — главная особенность авторского набора\n\n6. The two largest categories together represented more than half of the registrations. — главная особенность авторского набора\n\nРегистрации не равны уникальным людям. Сложение категорий даёт регистрации, но не доказывает число разных участников. Столбцы категорий за один период не показывают временную динамику.\n\nНе считать другой обоснованный обзор неверным из-за несовпадения с авторским набором. Верная отдельная цифра может быть менее приоритетной; неподтверждённая причинность не означает доказанное отсутствие причины. Свободный ответ вручную, без band.\n\nПодготовленный полный пример:\n\nThe bar chart compares registrations for five categories at a fictional recreation centre during Autumn 2024. The figures count registrations for activities in the same reporting period, rather than changes across several years. A person could register for more than one activity, so these counts should not be described as numbers of distinct people.\n\nOverall, Walking had the most registrations, while Climbing had the fewest. Together, the two leading categories accounted for more than half of all registrations. The distribution was therefore uneven, with a clear gap between the top and bottom categories.\n\nWalking recorded 105 registrations, compared with 75 for Swimming, a difference of 30. The next category, Dance, had 60. This was 15 below the second category but 15 above Cycling, which recorded 45 registrations.\n\nAt the lower end, Climbing had 15 registrations, 30 fewer than Cycling. The difference between the largest and smallest categories was 90. Across all five categories, the total was 300, of which the leading pair contributed 180, or approximately 60%. The remaining three categories together accounted for 120 registrations.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "task1-categories-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "skill": "category-snapshot-versus-trend",
+        "charts": [
+          {
+            "chartType": "bar",
+            "title": "Registrations for library events",
+            "period": "Spring 2024",
+            "unit": "registrations",
+            "categories": [
+              "Writing",
+              "History",
+              "Science",
+              "Poetry",
+              "Film"
+            ],
+            "values": [
+              35,
+              70,
+              20,
+              55,
+              90
+            ],
+            "overview": "Overall, Film had the most registrations, while Science had the fewest. Together, the two leading categories accounted for more than half of all registrations.",
+            "model": "The bar chart compares registrations for five categories at a fictional neighbourhood library during Spring 2024. The figures count registrations for activities in the same reporting period, rather than changes across several years. A person could register for more than one activity, so these counts should not be described as numbers of distinct people.\n\nOverall, Film had the most registrations, while Science had the fewest. Together, the two leading categories accounted for more than half of all registrations. The distribution was therefore uneven, with a clear gap between the top and bottom categories.\n\nFilm recorded 90 registrations, compared with 70 for History, a difference of 20. The next category, Poetry, had 55. This was 15 below the second category but 20 above Writing, which recorded 35 registrations.\n\nAt the lower end, Science had 20 registrations, 15 fewer than Writing. The difference between the largest and smallest categories was 70. Across all five categories, the total was 270, of which the leading pair contributed 160, or approximately 59%. The remaining three categories together accounted for 110 registrations.",
+            "claims": [
+              [
+                "The two largest categories together represented more than half of the registrations.",
+                true
+              ],
+              [
+                "Science was larger than Film.",
+                false
+              ],
+              [
+                "Writing had 35 registrations.",
+                true
+              ],
+              [
+                "Film increased most compared with the previous year.",
+                false
+              ],
+              [
+                "Film was the largest category.",
+                true
+              ],
+              [
+                "Science was the smallest category.",
+                true
+              ]
+            ],
+            "key": [
+              0,
+              4,
+              5
+            ]
+          },
+          {
+            "chartType": "bar",
+            "title": "Registrations for recreation sessions",
+            "period": "Autumn 2024",
+            "unit": "registrations",
+            "categories": [
+              "Swimming",
+              "Cycling",
+              "Climbing",
+              "Walking",
+              "Dance"
+            ],
+            "values": [
+              75,
+              45,
+              15,
+              105,
+              60
+            ],
+            "overview": "Overall, Walking had the most registrations, while Climbing had the fewest. Together, the two leading categories accounted for more than half of all registrations.",
+            "model": "The bar chart compares registrations for five categories at a fictional recreation centre during Autumn 2024. The figures count registrations for activities in the same reporting period, rather than changes across several years. A person could register for more than one activity, so these counts should not be described as numbers of distinct people.\n\nOverall, Walking had the most registrations, while Climbing had the fewest. Together, the two leading categories accounted for more than half of all registrations. The distribution was therefore uneven, with a clear gap between the top and bottom categories.\n\nWalking recorded 105 registrations, compared with 75 for Swimming, a difference of 30. The next category, Dance, had 60. This was 15 below the second category but 15 above Cycling, which recorded 45 registrations.\n\nAt the lower end, Climbing had 15 registrations, 30 fewer than Cycling. The difference between the largest and smallest categories was 90. Across all five categories, the total was 300, of which the leading pair contributed 180, or approximately 60%. The remaining three categories together accounted for 120 registrations.",
+            "claims": [
+              [
+                "Climbing was larger than Walking.",
+                false
+              ],
+              [
+                "Swimming had 75 registrations.",
+                true
+              ],
+              [
+                "Walking increased most compared with the previous year.",
+                false
+              ],
+              [
+                "Walking was the largest category.",
+                true
+              ],
+              [
+                "Climbing was the smallest category.",
+                true
+              ],
+              [
+                "The two largest categories together represented more than half of the registrations.",
+                true
+              ]
+            ],
+            "key": [
+              3,
+              4,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "T107",
+      "title": "Доли бюджета и абсолютные суммы",
+      "category": "Writing Task 1",
+      "status": "DRAFT",
+      "student_markdown": "### Library budget allocation\n\n2024. Единицы: %. Все данные вымышленные.\n\n| Category | Value |\n|---|---|\n| Collections | 40 |\n| Staff training | 25 |\n| Building care | 15 |\n| Events | 12 |\n| Digital access | 8 |\n\nВыбери три главные особенности, напиши overview, затем полный ответ до образца. После сравнения создай отдельную версию и перейди к новому графику. Причины, изменение во времени и абсолютные суммы нельзя добавлять без данных.",
+      "teacher_markdown": "### Первый график: Library budget allocation\n\nАвторский overview: Overall, Collections received the largest share and Digital access the smallest. The two leading areas together accounted for more than half of the total allocation.\n\n1. Collections had 40%. — подтверждённая деталь, не обязательная для overview\n\n2. The total allocation was larger than in the previous year. — не подтверждается этим графиком\n\n3. Collections was the largest category. — главная особенность авторского набора\n\n4. Digital access was the smallest category. — главная особенность авторского набора\n\n5. The two largest shares together made up more than half of the allocation. — главная особенность авторского набора\n\n6. Digital access was larger than Collections. — не подтверждается этим графиком\n\nСумма долей 100%. Процентные пункты — разность долей; без абсолютного бюджета нельзя вычислить суммы или сравнить бюджеты разных графиков.\n\nНе считать другой обоснованный обзор неверным из-за несовпадения с авторским набором. Верная отдельная цифра может быть менее приоритетной; неподтверждённая причинность не означает доказанное отсутствие причины. Свободный ответ вручную, без band.\n\nПодготовленный полный пример:\n\nThe pie chart presents the percentage distribution of a fictional library’s annual budget in 2024. It divides the same total allocation into five named areas. These figures describe the composition of that total during one period; they do not provide a sequence of annual measurements or a monetary size for the allocation.\n\nOverall, Collections received the largest share and Digital access the smallest. The two leading areas together accounted for more than half of the total allocation. By contrast, the three other categories together represented less than half, despite covering more named areas.\n\nCollections accounted for 40% of the total, while Staff training represented 25%. The gap between them was 15 percentage points. Their combined share was 65%, compared with 35% for the other three areas taken together.\n\nAmong the smaller shares, Building care stood at 15%, followed by Events at 12%. Digital access made up the remaining 8%, leaving a 32-percentage-point difference between the largest and smallest categories. The percentage figures allow comparisons within this allocation, but they do not establish the absolute amount assigned to any area or explain why those priorities were chosen.\n\n### Новый график: Community centre budget allocation\n\nАвторский overview: Overall, Building care received the largest share and Public information the smallest. The two leading areas together accounted for more than half of the total allocation.\n\n1. The total allocation was larger than in the previous year. — не подтверждается этим графиком\n\n2. Building care was the largest category. — главная особенность авторского набора\n\n3. Public information was the smallest category. — главная особенность авторского набора\n\n4. The two largest shares together made up more than half of the allocation. — главная особенность авторского набора\n\n5. Public information was larger than Building care. — не подтверждается этим графиком\n\n6. Equipment had 18%. — подтверждённая деталь, не обязательная для overview\n\nСумма долей 100%. Процентные пункты — разность долей; без абсолютного бюджета нельзя вычислить суммы или сравнить бюджеты разных графиков.\n\nНе считать другой обоснованный обзор неверным из-за несовпадения с авторским набором. Верная отдельная цифра может быть менее приоритетной; неподтверждённая причинность не означает доказанное отсутствие причины. Свободный ответ вручную, без band.\n\nПодготовленный полный пример:\n\nThe pie chart presents the percentage distribution of a fictional community centre’s annual budget in 2025. It divides the same total allocation into five named areas. These figures describe the composition of that total during one period; they do not provide a sequence of annual measurements or a monetary size for the allocation.\n\nOverall, Building care received the largest share and Public information the smallest. The two leading areas together accounted for more than half of the total allocation. By contrast, the three other categories together represented less than half, despite covering more named areas.\n\nBuilding care accounted for 34% of the total, while Programmes represented 28%. The gap between them was 6 percentage points. Their combined share was 62%, compared with 38% for the other three areas taken together.\n\nAmong the smaller shares, Equipment stood at 18%, followed by Training at 11%. Public information made up the remaining 9%, leaving a 25-percentage-point difference between the largest and smallest categories. The percentage figures allow comparisons within this allocation, but they do not establish the absolute amount assigned to any area or explain why those priorities were chosen.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "task1-categories-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "skill": "share-versus-absolute-allocation",
+        "charts": [
+          {
+            "chartType": "pie",
+            "title": "Library budget allocation",
+            "period": "2024",
+            "unit": "%",
+            "categories": [
+              "Collections",
+              "Staff training",
+              "Building care",
+              "Events",
+              "Digital access"
+            ],
+            "values": [
+              40,
+              25,
+              15,
+              12,
+              8
+            ],
+            "overview": "Overall, Collections received the largest share and Digital access the smallest. The two leading areas together accounted for more than half of the total allocation.",
+            "model": "The pie chart presents the percentage distribution of a fictional library’s annual budget in 2024. It divides the same total allocation into five named areas. These figures describe the composition of that total during one period; they do not provide a sequence of annual measurements or a monetary size for the allocation.\n\nOverall, Collections received the largest share and Digital access the smallest. The two leading areas together accounted for more than half of the total allocation. By contrast, the three other categories together represented less than half, despite covering more named areas.\n\nCollections accounted for 40% of the total, while Staff training represented 25%. The gap between them was 15 percentage points. Their combined share was 65%, compared with 35% for the other three areas taken together.\n\nAmong the smaller shares, Building care stood at 15%, followed by Events at 12%. Digital access made up the remaining 8%, leaving a 32-percentage-point difference between the largest and smallest categories. The percentage figures allow comparisons within this allocation, but they do not establish the absolute amount assigned to any area or explain why those priorities were chosen.",
+            "claims": [
+              [
+                "Collections had 40%.",
+                true
+              ],
+              [
+                "The total allocation was larger than in the previous year.",
+                false
+              ],
+              [
+                "Collections was the largest category.",
+                true
+              ],
+              [
+                "Digital access was the smallest category.",
+                true
+              ],
+              [
+                "The two largest shares together made up more than half of the allocation.",
+                true
+              ],
+              [
+                "Digital access was larger than Collections.",
+                false
+              ]
+            ],
+            "key": [
+              2,
+              3,
+              4
+            ]
+          },
+          {
+            "chartType": "pie",
+            "title": "Community centre budget allocation",
+            "period": "2025",
+            "unit": "%",
+            "categories": [
+              "Equipment",
+              "Building care",
+              "Training",
+              "Programmes",
+              "Public information"
+            ],
+            "values": [
+              18,
+              34,
+              11,
+              28,
+              9
+            ],
+            "overview": "Overall, Building care received the largest share and Public information the smallest. The two leading areas together accounted for more than half of the total allocation.",
+            "model": "The pie chart presents the percentage distribution of a fictional community centre’s annual budget in 2025. It divides the same total allocation into five named areas. These figures describe the composition of that total during one period; they do not provide a sequence of annual measurements or a monetary size for the allocation.\n\nOverall, Building care received the largest share and Public information the smallest. The two leading areas together accounted for more than half of the total allocation. By contrast, the three other categories together represented less than half, despite covering more named areas.\n\nBuilding care accounted for 34% of the total, while Programmes represented 28%. The gap between them was 6 percentage points. Their combined share was 62%, compared with 38% for the other three areas taken together.\n\nAmong the smaller shares, Equipment stood at 18%, followed by Training at 11%. Public information made up the remaining 9%, leaving a 25-percentage-point difference between the largest and smallest categories. The percentage figures allow comparisons within this allocation, but they do not establish the absolute amount assigned to any area or explain why those priorities were chosen.",
+            "claims": [
+              [
+                "The total allocation was larger than in the previous year.",
+                false
+              ],
+              [
+                "Building care was the largest category.",
+                true
+              ],
+              [
+                "Public information was the smallest category.",
+                true
+              ],
+              [
+                "The two largest shares together made up more than half of the allocation.",
+                true
+              ],
+              [
+                "Public information was larger than Building care.",
+                false
+              ],
+              [
+                "Equipment had 18%.",
+                true
+              ]
+            ],
+            "key": [
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "T108",
+      "title": "Состав целого и процентные пункты",
+      "category": "Writing Task 1",
+      "status": "DRAFT",
+      "student_markdown": "### Student club budget allocation\n\n2024. Единицы: %. Все данные вымышленные.\n\n| Category | Value |\n|---|---|\n| Events | 30 |\n| Materials | 25 |\n| Travel | 20 |\n| Training | 15 |\n| Publicity | 10 |\n\nВыбери три главные особенности, напиши overview, затем полный ответ до образца. После сравнения создай отдельную версию и перейди к новому графику. Причины, изменение во времени и абсолютные суммы нельзя добавлять без данных.",
+      "teacher_markdown": "### Первый график: Student club budget allocation\n\nАвторский overview: Overall, Events received the largest share and Publicity the smallest. The two leading areas together accounted for more than half of the total allocation.\n\n1. Events was the largest category. — главная особенность авторского набора\n\n2. Publicity was the smallest category. — главная особенность авторского набора\n\n3. The two largest shares together made up more than half of the allocation. — главная особенность авторского набора\n\n4. Publicity was larger than Events. — не подтверждается этим графиком\n\n5. Events had 30%. — подтверждённая деталь, не обязательная для overview\n\n6. The total allocation was larger than in the previous year. — не подтверждается этим графиком\n\nСумма долей 100%. Процентные пункты — разность долей; без абсолютного бюджета нельзя вычислить суммы или сравнить бюджеты разных графиков.\n\nНе считать другой обоснованный обзор неверным из-за несовпадения с авторским набором. Верная отдельная цифра может быть менее приоритетной; неподтверждённая причинность не означает доказанное отсутствие причины. Свободный ответ вручную, без band.\n\nПодготовленный полный пример:\n\nThe pie chart presents the percentage distribution of a fictional student club’s annual budget in 2024. It divides the same total allocation into five named areas. These figures describe the composition of that total during one period; they do not provide a sequence of annual measurements or a monetary size for the allocation.\n\nOverall, Events received the largest share and Publicity the smallest. The two leading areas together accounted for more than half of the total allocation. By contrast, the three other categories together represented less than half, despite covering more named areas.\n\nEvents accounted for 30% of the total, while Materials represented 25%. The gap between them was 5 percentage points. Their combined share was 55%, compared with 45% for the other three areas taken together.\n\nAmong the smaller shares, Travel stood at 20%, followed by Training at 15%. Publicity made up the remaining 10%, leaving a 20-percentage-point difference between the largest and smallest categories. The percentage figures allow comparisons within this allocation, but they do not establish the absolute amount assigned to any area or explain why those priorities were chosen.\n\n### Новый график: Arts centre budget allocation\n\nАвторский overview: Overall, Performances received the largest share and Publicity the smallest. The two leading areas together accounted for more than half of the total allocation.\n\n1. Publicity was the smallest category. — главная особенность авторского набора\n\n2. The two largest shares together made up more than half of the allocation. — главная особенность авторского набора\n\n3. Publicity was larger than Performances. — не подтверждается этим графиком\n\n4. Workshops had 22%. — подтверждённая деталь, не обязательная для overview\n\n5. The total allocation was larger than in the previous year. — не подтверждается этим графиком\n\n6. Performances was the largest category. — главная особенность авторского набора\n\nСумма долей 100%. Процентные пункты — разность долей; без абсолютного бюджета нельзя вычислить суммы или сравнить бюджеты разных графиков.\n\nНе считать другой обоснованный обзор неверным из-за несовпадения с авторским набором. Верная отдельная цифра может быть менее приоритетной; неподтверждённая причинность не означает доказанное отсутствие причины. Свободный ответ вручную, без band.\n\nПодготовленный полный пример:\n\nThe pie chart presents the percentage distribution of a fictional arts centre’s annual budget in 2025. It divides the same total allocation into five named areas. These figures describe the composition of that total during one period; they do not provide a sequence of annual measurements or a monetary size for the allocation.\n\nOverall, Performances received the largest share and Publicity the smallest. The two leading areas together accounted for more than half of the total allocation. By contrast, the three other categories together represented less than half, despite covering more named areas.\n\nPerformances accounted for 35% of the total, while Workshops represented 22%. The gap between them was 13 percentage points. Their combined share was 57%, compared with 43% for the other three areas taken together.\n\nAmong the smaller shares, Equipment stood at 18%, followed by Maintenance at 15%. Publicity made up the remaining 10%, leaving a 25-percentage-point difference between the largest and smallest categories. The percentage figures allow comparisons within this allocation, but they do not establish the absolute amount assigned to any area or explain why those priorities were chosen.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "task1-categories-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "skill": "composition-and-percentage-points",
+        "charts": [
+          {
+            "chartType": "pie",
+            "title": "Student club budget allocation",
+            "period": "2024",
+            "unit": "%",
+            "categories": [
+              "Events",
+              "Materials",
+              "Travel",
+              "Training",
+              "Publicity"
+            ],
+            "values": [
+              30,
+              25,
+              20,
+              15,
+              10
+            ],
+            "overview": "Overall, Events received the largest share and Publicity the smallest. The two leading areas together accounted for more than half of the total allocation.",
+            "model": "The pie chart presents the percentage distribution of a fictional student club’s annual budget in 2024. It divides the same total allocation into five named areas. These figures describe the composition of that total during one period; they do not provide a sequence of annual measurements or a monetary size for the allocation.\n\nOverall, Events received the largest share and Publicity the smallest. The two leading areas together accounted for more than half of the total allocation. By contrast, the three other categories together represented less than half, despite covering more named areas.\n\nEvents accounted for 30% of the total, while Materials represented 25%. The gap between them was 5 percentage points. Their combined share was 55%, compared with 45% for the other three areas taken together.\n\nAmong the smaller shares, Travel stood at 20%, followed by Training at 15%. Publicity made up the remaining 10%, leaving a 20-percentage-point difference between the largest and smallest categories. The percentage figures allow comparisons within this allocation, but they do not establish the absolute amount assigned to any area or explain why those priorities were chosen.",
+            "claims": [
+              [
+                "Events was the largest category.",
+                true
+              ],
+              [
+                "Publicity was the smallest category.",
+                true
+              ],
+              [
+                "The two largest shares together made up more than half of the allocation.",
+                true
+              ],
+              [
+                "Publicity was larger than Events.",
+                false
+              ],
+              [
+                "Events had 30%.",
+                true
+              ],
+              [
+                "The total allocation was larger than in the previous year.",
+                false
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "chartType": "pie",
+            "title": "Arts centre budget allocation",
+            "period": "2025",
+            "unit": "%",
+            "categories": [
+              "Workshops",
+              "Equipment",
+              "Performances",
+              "Maintenance",
+              "Publicity"
+            ],
+            "values": [
+              22,
+              18,
+              35,
+              15,
+              10
+            ],
+            "overview": "Overall, Performances received the largest share and Publicity the smallest. The two leading areas together accounted for more than half of the total allocation.",
+            "model": "The pie chart presents the percentage distribution of a fictional arts centre’s annual budget in 2025. It divides the same total allocation into five named areas. These figures describe the composition of that total during one period; they do not provide a sequence of annual measurements or a monetary size for the allocation.\n\nOverall, Performances received the largest share and Publicity the smallest. The two leading areas together accounted for more than half of the total allocation. By contrast, the three other categories together represented less than half, despite covering more named areas.\n\nPerformances accounted for 35% of the total, while Workshops represented 22%. The gap between them was 13 percentage points. Their combined share was 57%, compared with 43% for the other three areas taken together.\n\nAmong the smaller shares, Equipment stood at 18%, followed by Maintenance at 15%. Publicity made up the remaining 10%, leaving a 25-percentage-point difference between the largest and smallest categories. The percentage figures allow comparisons within this allocation, but they do not establish the absolute amount assigned to any area or explain why those priorities were chosen.",
+            "claims": [
+              [
+                "Publicity was the smallest category.",
+                true
+              ],
+              [
+                "The two largest shares together made up more than half of the allocation.",
+                true
+              ],
+              [
+                "Publicity was larger than Performances.",
+                false
+              ],
+              [
+                "Workshops had 22%.",
+                true
+              ],
+              [
+                "The total allocation was larger than in the previous year.",
+                false
+              ],
+              [
+                "Performances was the largest category.",
+                true
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              5
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

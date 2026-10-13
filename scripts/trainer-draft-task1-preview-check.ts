@@ -2,12 +2,15 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import batch from '../src/data/trainer-drafts/batch-02.json';
+import categoryBatch from '../src/data/trainer-drafts/batch-09.json';
+import { parseDraftTask1Categories } from '../src/lib/trainers/draft-task1-categories';
 import { draftTask1ClaimLabel, draftTask1Words, parseDraftTask1 } from '../src/lib/trainers/draft-task1';
 
 async function main() {
-  const units = batch.units.filter(unit => unit.exercise_data.kind === 'task1-pair-v1');
-  assert.equal(units.length, 2);
-  const original = units[0].exercise_data;
+  const oldUnits = batch.units.filter(unit => unit.exercise_data.kind === 'task1-pair-v1');
+  const units = [...oldUnits.map(unit=>({batchId:'02',unit})),...categoryBatch.units.map(unit=>({batchId:'09',unit}))];
+  assert.equal(units.length, 6);
+  const original = oldUnits[0].exercise_data;
   assert.ok(original.charts);
   for (const value of [null, [], {}, { ...original, publication_ready: true }, { ...original, charts: [original.charts[0], original.charts[0]] }, { ...original, charts: original.charts.map(chart => ({ ...chart, key: [0,0,1] })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, key: [0,1,99] })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, model: 'Too short.' })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, years: [2020,2022,2021,2023] })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, series: chart.series.map(series => ({ ...series, values: [0,0,0,0] })) })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, series: chart.series.map(series => ({ ...series, values: [1,2,3,Infinity] })) })) }]) assert.equal(parseDraftTask1(value), null);
   assert.equal(draftTask1Words(' \n '), 0); assert.equal(draftTask1Words('one\n two  three'), 3);
@@ -21,8 +24,9 @@ async function main() {
     await page.getByRole('heading', { name: 'Нужно войти', exact: true }).waitFor();
     await page.evaluate(() => { localStorage.setItem('ashyq:v2:session', JSON.stringify({ user: { id: 'synthetic-task1-preview', name: 'Synthetic reviewer', email: 'synthetic@example.invalid', role: 'teacher', avatarColor: 'red' }, expiresAt: new Date(Date.now() + 3600000).toISOString() })); dispatchEvent(new Event('storage')); });
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('02');
-    for (const unit of units) {
-      const pair = parseDraftTask1(unit.exercise_data); assert.ok(pair);
+    for (const { batchId,unit } of units) {
+      const pair = parseDraftTask1(unit.exercise_data)??parseDraftTask1Categories(unit.exercise_data); assert.ok(pair);
+      await page.getByLabel('Партия материалов', { exact: true }).selectOption(batchId);
       await page.getByLabel('Выбери материал', { exact: true }).selectOption(unit.id);
       const preview = page.getByRole('region', { name: 'Пробный Task 1 · DRAFT', exact: true });
       await preview.getByRole('button', { name: 'Пройти Task 1-черновик', exact: true }).click();
@@ -34,7 +38,8 @@ async function main() {
         assert.equal(await preview.getByText(chart.model, { exact: true }).count(), 0);
         await preview.getByRole('button', { name: 'Зафиксировать overview и написать ответ', exact: true }).click();
         await preview.getByRole('status').filter({ hasText: 'ровно три' }).waitFor();
-        const selected = roundIndex ? chart.key : [0,3,4];
+        const selected = roundIndex ? chart.key : [chart.key[0],chart.claims.findIndex((claim,i)=>claim[1]&&!chart.key.includes(i)),chart.claims.findIndex(claim=>!claim[1])];
+        assert.ok(selected.every(i=>i>=0));
         for (const i of selected) await preview.getByRole('checkbox', { name: chart.claims[i][0], exact: true }).check();
         await preview.getByRole('button', { name: 'Зафиксировать overview и написать ответ', exact: true }).click();
         await preview.getByRole('status').filter({ hasText: '12 символов' }).waitFor();
@@ -60,6 +65,17 @@ async function main() {
         if (!await table.isVisible()) await preview.getByText('Точные значения таблицей', { exact: true }).click();
         await table.waitFor();
         assert.equal(await table.count(), 1, `${unit.id}/${roundIndex}: one visible values table`);
+        if('categories' in chart){
+          assert.equal(await table.locator('tbody tr').count(),chart.categories.length);
+          assert.deepEqual(await table.locator('tbody td').allTextContents(),chart.values.map(v=>String(v)+(chart.chartType==='pie'?'%':'')));
+          if(chart.chartType==='pie'){
+            const legendRows=preview.locator('figure ol li');assert.equal(await legendRows.count(),chart.categories.length);
+            for(let i=0;i<chart.categories.length;i++)assert.ok((await legendRows.nth(i).innerText()).startsWith(`${i+1}.`),'pie legend numbers are actual visible text, not reset list markers');
+            assert.equal(await preview.locator('[data-pie-label]').count(),chart.values.filter(v=>v>0).length);
+            const positions=await preview.locator('[data-pie-label]').evaluateAll(elements=>elements.map(e=>({x:Number(e.getAttribute('cx')),y:Number(e.getAttribute('cy'))})));
+            for(let a=0;a<positions.length;a++)for(let b=a+1;b<positions.length;b++)if(positions[a].x===positions[b].x)assert.ok(Math.abs(positions[a].y-positions[b].y)>=34);
+          }
+        }
         for (const i of selected) await preview.getByText(draftTask1ClaimLabel(chart, i), { exact: true }).first().waitFor();
         const next = preview.getByRole('button', { name: roundIndex ? 'Сравнить две Task 1-попытки' : 'Перейти к новому Task 1-графику', exact: true });
         await preview.getByLabel('Пересмотренный полный ответ', { exact: true }).fill('Short revision.');
@@ -73,9 +89,9 @@ async function main() {
           await page.setViewportSize({ width, height: 900 });
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Task1 overflow ${unit.id}/${roundIndex}/${width}`);
           assert.deepEqual((await new AxeBuilder({ page }).include('main').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations, []);
-          if (unit.id === 'T103' && !roundIndex && (width === 390 || width === 1440)) {
+          if (['T103','T105','T107'].includes(unit.id) && !roundIndex && (width === 390 || width === 1440)) {
             await preview.getByRole('heading', { name: 'Первый график · Разбор и пересмотр', exact: true }).evaluate(element => element.scrollIntoView({ block: 'start', behavior: 'instant' }));
-            await page.screenshot({ path: `artifacts/trainers-complete-033/draft-task1-feedback-${width}.png` });
+            await page.screenshot({ path: `artifacts/trainers-complete-033/draft-task1-${unit.id}-feedback-${width}.png` });
           }
         }
         await next.click();
@@ -92,7 +108,7 @@ async function main() {
     assert.equal(await page.getByRole('button', { name: 'Пройти Task 1-черновик', exact: true }).count(), 1);
     assert.equal(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('ashyq:trainer-review:')).length), 0);
     assert.deepEqual(errors, []);
-    console.log('PASS two Task1 draft pairs/four charts: malformed data/zero-scale/key guards, own overview/evidence and 149-versus-150 word boundary before model, frozen first/full revisions, true detail versus unsupported claim, explicit review/reflection/fresh chart, separate report/reset/reload, shared chart/table four widths and axe. Word count is quantity only; no free-text grade/publication.');
+    console.log('PASS six Task1 draft pairs/twelve line/bar/pie charts: malformed data/zero-scale/key guards, own overview/evidence and 149-versus-150 word boundary before model, frozen first/full revisions, true detail versus unsupported claim, explicit review/reflection/fresh chart, separate report/reset/reload, exact category tables and nonoverlapping pie labels, shared chart/table four widths and axe. Word count is quantity only; no free-text grade/publication.');
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });
