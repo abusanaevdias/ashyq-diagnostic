@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import RequireRole from '@/components/lms/RequireRole';
 import DraftWritingPreview from './DraftWritingPreview';
+import { nextDraftWriting, parseDraftWriting } from '@/lib/trainers/draft-writing';
 import DraftSatPreview from './DraftSatPreview';
 import DraftListeningPreview from './DraftListeningPreview';
 import DraftMathPreview from './DraftMathPreview';
@@ -46,6 +47,8 @@ function MaterialText({ text, sectionLabel = 'задания' }: { text: string;
 }
 
 function ReviewUnit({ unit, batchId, contentHash, previous, onSave, onDirty }: { unit: DraftUnit; batchId: string; contentHash: string; previous?: DraftDecision; onSave: (value: DraftDecision, expected: string | null) => Promise<boolean>; onDirty: (dirty: boolean) => void }) {
+  const writing = parseDraftWriting(unit.exercise_data);
+  const nextWriting = writing ? nextDraftWriting(writing, draftBatches.flatMap(batch => batch.units.map(value => 'exercise_data' in value ? value.exercise_data : undefined))) : null;
   const [decision, setDecision] = useState<ReviewDecision>(previous?.decision ?? 'pending');
   const [comment, setComment] = useState(previous?.comment ?? '');
   const [attested, setAttested] = useState(previous?.attested ?? false);
@@ -63,7 +66,7 @@ function ReviewUnit({ unit, batchId, contentHash, previous, onSave, onDirty }: {
   return <section className={styles.panel} aria-labelledby="material-title">
     <p>{unit.id} · {unit.category} · DRAFT</p><h2 id="material-title">{unit.title}</h2>
     <MaterialText text={unit.student_markdown}/>
-    <DraftWritingPreview value={unit.exercise_data}/>
+    <DraftWritingPreview value={unit.exercise_data} nextValue={nextWriting}/>
     <DraftSatPreview value={unit.exercise_data}/>
     <DraftListeningPreview value={unit.exercise_data} unitId={unit.id}/>
     <DraftMathPreview value={unit.exercise_data}/>
