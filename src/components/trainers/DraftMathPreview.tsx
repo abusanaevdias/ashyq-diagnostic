@@ -4,15 +4,16 @@ import { useEffect, useRef, useState } from 'react';
 import { draftMathChoiceLabel, parseDraftMath, parseDraftMathNumber, type DraftMathPair } from '@/lib/trainers/draft-math';
 import styles from './TrainerCheckpoint.module.css';
 
-type Attempt = { working: string; answer: string; numericAnswer: number; choice: number; reflection: string };
+type Attempt = { working: string; answer: string; numericAnswer: number; choice: number; reflection: string; repairedWorking: string; repairedAnswer: string; repairedNumericAnswer: number };
 function Preview({ pair }: { pair: DraftMathPair }) {
   const [started, setStarted] = useState(false), [round, setRound] = useState(0), [report, setReport] = useState(false);
   const [working, setWorking] = useState(''), [answer, setAnswer] = useState(''), [choice, setChoice] = useState<number | null>(null);
   const [locked, setLocked] = useState(false), [checked, setChecked] = useState(false), [reflection, setReflection] = useState(''), [error, setError] = useState('');
+  const [repairedWorking, setRepairedWorking] = useState(''), [repairedAnswer, setRepairedAnswer] = useState('');
   const [attempts, setAttempts] = useState<Attempt[]>([]), step = useRef<HTMLHeadingElement>(null);
   const item = pair.rounds[round];
   useEffect(() => { if (started) { step.current?.focus({ preventScroll: true }); step.current?.scrollIntoView({ block: 'start' }); } }, [started, round, report]);
-  function clearRound() { setWorking(''); setAnswer(''); setChoice(null); setLocked(false); setChecked(false); setReflection(''); setError(''); }
+  function clearRound() { setWorking(''); setAnswer(''); setChoice(null); setLocked(false); setChecked(false); setReflection(''); setRepairedWorking(''); setRepairedAnswer(''); setError(''); }
   function reset() { setRound(0); setReport(false); setAttempts([]); clearRound(); }
   function lock() {
     if (working.trim().length < 3) { setError('Запиши модель или действия своими словами: минимум 3 символа. Короткое уравнение тоже подходит.'); return; }
@@ -25,7 +26,9 @@ function Preview({ pair }: { pair: DraftMathPair }) {
     const numericAnswer = parseDraftMathNumber(answer);
     if (!checked || choice === null || numericAnswer === null) return;
     if (reflection.trim().length < 3) { setError('Запиши, что проверишь в новой задаче: минимум 3 символа.'); return; }
-    setAttempts(old => [...old, { working, answer, numericAnswer, choice, reflection }]);
+    const repairedNumericAnswer = parseDraftMathNumber(repairedAnswer);
+    if (repairedWorking.trim().length < 3 || repairedNumericAnswer === null) { setError('После разбора запиши отдельную версию решения и числовой ответ. Можно оставить прежнее решение, если ты проверил его; первая попытка сохранится отдельно.'); return; }
+    setAttempts(old => [...old, { working, answer, numericAnswer, choice, reflection, repairedWorking, repairedAnswer, repairedNumericAnswer }]);
     if (round === 0) { setRound(1); clearRound(); } else { setReport(true); setError(''); }
   }
   return <section className={styles.preview} aria-labelledby="math-draft-preview-title">
@@ -33,7 +36,7 @@ function Preview({ pair }: { pair: DraftMathPair }) {
     <p>Сначала реши сам, затем сравни модель или переход и проверь число. Записи действий проверяются вручную: выбор подготовленного варианта не доказывает правильность твоего решения. Это временная проба для рецензента; она не сохраняется с его решением, не публикует материал и не выдаёт балл SAT. Просмотр ключа заранее влияет на независимость попытки.</p>
     {!started ? <button type="button" onClick={() => setStarted(true)}>Пройти Math-черновик</button> : report ? <>
       <h4 ref={step} tabIndex={-1}>Сравнение двух Math-попыток</h4>{attempts.map((attempt, index) => <div key={pair.rounds[index].id} className={styles.outcome}>
-        <h4>{index === 0 ? 'Первая задача' : 'Новая задача'} · {pair.rounds[index].id}</h4><p className={styles.frozenText}>Свои действия: {attempt.working}</p><p>Первый ответ: {attempt.answer} {pair.rounds[index].unit}.</p><p>{attempt.numericAnswer === pair.rounds[index].answer ? 'Число совпало с подготовленным ответом.' : 'Число отличается от подготовленного ответа.'}</p><p>{draftMathChoiceLabel(pair.rounds[index], pair.family, attempt.choice)}</p>{pair.family === 'method-switch' && <p>Отмеченный способ: {pair.rounds[index].methods![attempt.choice].title}.</p>}<p className={styles.frozenText}>После разбора: {attempt.reflection}</p>
+        <h4>{index === 0 ? 'Первая задача' : 'Новая задача'} · {pair.rounds[index].id}</h4><p className={styles.frozenText}>Свои действия: {attempt.working}</p><p>Первый ответ: {attempt.answer} {pair.rounds[index].unit}.</p><p>{attempt.numericAnswer === pair.rounds[index].answer ? 'Число совпало с подготовленным ответом.' : 'Число отличается от подготовленного ответа.'}</p><p>{draftMathChoiceLabel(pair.rounds[index], pair.family, attempt.choice)}</p>{pair.family === 'method-switch' && <p>Отмеченный способ: {pair.rounds[index].methods![attempt.choice].title}.</p>}<p className={styles.frozenText}>Версия решения после помощи: {attempt.repairedWorking}</p><p>Ответ после помощи: {attempt.repairedAnswer} {pair.rounds[index].unit}.</p><p>{attempt.repairedNumericAnswer === pair.rounds[index].answer ? 'После помощи число совпало с ключом; качество действий не оценивалось.' : 'После помощи число всё ещё отличается от ключа; проверь решение с учителем.'}</p><p className={styles.frozenText}>После разбора: {attempt.reflection}</p>
       </div>)}<p>Две задачи не подтверждают устойчивый навык или рост балла. Первые ответы и размышления после помощи показаны отдельно.</p><button type="button" onClick={reset}>Начать новую временную Math-пробу</button>
     </> : <>
       <h4 ref={step} tabIndex={-1}>{round === 0 ? 'Первая задача' : 'Новая задача'} · {item.id}</h4><p lang="en">{item.prompt}</p><p lang="en">{item.variable}</p>
@@ -48,6 +51,9 @@ function Preview({ pair }: { pair: DraftMathPair }) {
           {pair.family === 'translation' && <p>{item.models![choice!].feedback}</p>}{pair.family === 'forensics' && <p>Первая неверная строка: {item.first_invalid! + 1}. {item.steps![item.first_invalid!].explanation}</p>}
           <p><strong>Подготовленный ответ:</strong> {item.answer} {item.unit}.</p><p>{item.explanation}</p><ol className={styles.mathSteps}>{item.corrected_working.map((line, index) => <li key={index}>{line}</li>)}</ol>
           {pair.family === 'method-switch' && <details><summary>Сравнить два допустимых способа</summary>{item.methods!.map((method, index) => <div key={index}><h4>{method.title}</h4>{method.working.map((line, n) => <p key={n}>{line}</p>)}<p>{method.tradeoff}</p></div>)}</details>}
+          <label htmlFor="draft-math-repaired-working">Твоё решение после разбора</label><textarea id="draft-math-repaired-working" rows={4} maxLength={600} value={repairedWorking} onChange={event => { setRepairedWorking(event.target.value); setError(''); }}/>
+          <label htmlFor="draft-math-repaired-answer">Твой числовой ответ после разбора</label><input id="draft-math-repaired-answer" inputMode="decimal" maxLength={60} value={repairedAnswer} onChange={event => { setRepairedAnswer(event.target.value); setError(''); }}/>
+          <p>Это версия после помощи, а не независимая попытка. Можно сохранить прежние действия после проверки; совпадение числа не оценивает рассуждение.</p>
           <div className={styles.previewReasons}><label htmlFor="draft-math-reflection">Что проверишь в новой задаче?<textarea id="draft-math-reflection" rows={3} maxLength={600} value={reflection} onChange={event => { setReflection(event.target.value); setError(''); }}/></label></div>
           <p>Свободные записи не оценивались автоматически. Достаточная длина пояснения не означает верное рассуждение.</p><button type="button" onClick={advance}>{round === 0 ? 'Перейти к новой Math-задаче' : 'Сравнить две Math-попытки'}</button>
         </div>}
