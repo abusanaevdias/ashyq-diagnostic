@@ -58,6 +58,9 @@
 .practiceBody > legend { padding: 0; margin: 16px 0; font-weight: 700; }
 .practiceBody > label { display: block; margin: 14px 0 8px; font-weight: 600; }
 .practiceBody > textarea { display: block; box-sizing: border-box; width: 100%; min-width: 0; margin-bottom: 14px; padding: 12px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: inherit; }
+.practiceBody :where(label:not(.consent):not(:has(input[type="checkbox"],input[type="radio"]))) { display: block; margin: 14px 0 8px; font-weight: 600; }
+.practiceBody :where(textarea,select,input:not([type="checkbox"],[type="radio"],[type="file"])) { display: block; box-sizing: border-box; width: 100%; max-width: 100%; min-width: 0; min-height: 44px; margin: 10px 0 14px; padding: 12px; border: 1px solid var(--ink-soft); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: inherit; }
+.practiceBody :where(input:not([type="checkbox"],[type="radio"],[type="file"]),select):focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 .errorHighlight { background: var(--blush); color: var(--ink); border-bottom: 3px solid var(--red-deep); padding: 2px 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .essaySource { max-width: 76ch; line-height: 1.7; }
 .essayStage { font-size: 20px; font-weight: 700; line-height: 1.35; }

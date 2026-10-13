@@ -1,9 +1,9 @@
 {
   "format": "ashyq-draft-bank-v1",
   "batch": "02",
-  "version": 1,
+  "version": "2.0",
   "source_sha256": "04cdf34ebfff4ae6cbd829a6030ecf2633622e217547d7f5e144012175c32cd8",
-  "content_sha256": "04cdf34ebfff4ae6cbd829a6030ecf2633622e217547d7f5e144012175c32cd8",
+  "content_sha256": "85f132b60c1caf04edecb9351715f7576249c5414d99e14cf93fb6fdd3737cdf",
   "author": "Codex",
   "intended_reviewer": "Dias",
   "methodically_approved": false,
@@ -52,7 +52,42 @@
           }
         ],
         "audio_status": "GENERATED_DRAFT",
-        "publication_ready": false
+        "publication_ready": false,
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l03-1-full.wav",
+              "sha256": "054d972d8b92dd78b724e3c1a8d9efed92b03076fb2a9f0267330f227145b158",
+              "bytes": 674226
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l03-1-segment.wav",
+              "sha256": "7d55868f9f66a6d0248d791957eabe8da7af2877cafa7bcb2137d23f8b859f67",
+              "bytes": 303616
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l03-2-full.wav",
+              "sha256": "b8ef37e31621284326c9e452749e62029020ff01e1117d704fcbf892e40eae96",
+              "bytes": 737464
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l03-2-segment.wav",
+              "sha256": "6f5e202e7a235508589179c8829958c13bb29b7925fd2dd651a74b82808bf9a1",
+              "bytes": 267444
+            }
+          ]
+        }
       }
     },
     {
@@ -99,7 +134,42 @@
           }
         ],
         "audio_status": "GENERATED_DRAFT",
-        "publication_ready": false
+        "publication_ready": false,
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l04-1-full.wav",
+              "sha256": "0a36952d9982bcceb13f2a409f9902fd8668807ce459b187e7ba115a40ac6f8d",
+              "bytes": 693604
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l04-1-segment.wav",
+              "sha256": "30797e23359d6b6a08fdfc4a98c6deae9cee605521a7de58e56dc43a85dead55",
+              "bytes": 292358
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l04-2-full.wav",
+              "sha256": "e1306edc273c9725b7125e01b2988015a332a41f289b4b853cb775f19c0bfebc",
+              "bytes": 779360
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l04-2-segment.wav",
+              "sha256": "5e2b7054bf926c4a73c837594464cf2580841b2266ec461202a7bf6c25fc877b",
+              "bytes": 195576
+            }
+          ]
+        }
       }
     },
     {

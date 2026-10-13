@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useLayoutEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import RequireRole from '@/components/lms/RequireRole';
 import DraftWritingPreview from './DraftWritingPreview';
+import ArchivedBankWork from './ArchivedBankWork';
 import { findBankSource } from '@/lib/trainers/bank-sources';
 import DraftSatPreview from './DraftSatPreview';
 import DraftListeningPreview from './DraftListeningPreview';
@@ -49,7 +50,8 @@ function MaterialText({ text, sectionLabel = 'задания' }: { text: string;
 function ArchivedReview({ reviewerId, batch }: { reviewerId: string; batch: DraftBatch }) {
   const key = reviewKey(reviewerId,batch);
   const headingId = `draft-archive-${batch.batch}-${batch.content_sha256.slice(0,12)}`;
-  const raw = useSyncExternalStore(subscribe,() => { try { return localStorage.getItem(key); } catch { return '!unavailable'; } },() => null);
+  const snapshot=useSyncExternalStore(subscribe,()=>{try{return JSON.stringify({kind:'ready',raw:localStorage.getItem(key)});}catch{return '{"kind":"blocked"}';}},()=>'{"kind":"not-ready"}');
+  const read=JSON.parse(snapshot) as {kind:'ready';raw:string|null}|{kind:'blocked'|'not-ready'},raw=read.kind==='ready'?read.raw:null;
   const parsed = parseDraftReview(raw,reviewerId,batch);
   const [message,setMessage] = useState('');
   function download(content: string, suffix: string, mime: string) {
@@ -61,12 +63,12 @@ function ArchivedReview({ reviewerId, batch }: { reviewerId: string; batch: Draf
   }
   return <section className={styles.panel} aria-labelledby={headingId}>
     <h2 id={headingId}>Архив прежней версии · {batch.version}</h2>
-    <p>Материалы изменились. Старые решения относятся только к прежнему тексту и ключу. Для текущей версии нужна новая проверка; рекомендации и подтверждения автоматически не переносятся.</p>
+    <p>Версия партии обновилась. Старые решения относятся к архивной версии, в том числе когда отдельный текст остался прежним. Для текущей версии нужна новая проверка; рекомендации и подтверждения автоматически не переносятся.</p>
     <p className={styles.materialText}>Партия {batch.batch}; исходное содержание: {batch.content_sha256}. Архив не входит в число активных заданий.</p>
-    {raw===null ? <p>Для этого аккаунта в этом браузере решений прежней версии нет.</p> : raw==='!unavailable' ? <p role="status">Чтение локальных решений прежней версии недоступно.</p> : parsed ? <p>Рассмотрено в прежней версии: {reviewCounts(parsed,batch).considered} из {batch.units.length}. Это отдельные архивные решения.</p> : <p className={styles.warning} role="status">Исходная запись прежней версии не распознана. Она не заменена; можно скачать её целиком для восстановления.</p>}
+    {read.kind==='blocked' ? <p role="status">Чтение локальных решений прежней версии недоступно.</p> : raw===null ? <p>Для этого аккаунта в этом браузере решений прежней версии нет.</p> : parsed ? <p>Рассмотрено в прежней версии: {reviewCounts(parsed,batch).considered} из {batch.units.length}. Это отдельные архивные решения.</p> : <p className={styles.warning} role="status">Исходная запись прежней версии не распознана. Она не заменена; можно скачать её целиком для восстановления.</p>}
     <div className={styles.actions}>
       <button type="button" onClick={()=>download(JSON.stringify(batch,null,2),'source.json','application/json;charset=utf-8')}>Скачать материалы прежней версии</button>
-      {raw!==null&&raw!=='!unavailable'&&<button type="button" onClick={()=>download(raw,parsed?'review.json':'review-recovery.txt',parsed?'application/json;charset=utf-8':'text/plain;charset=utf-8')}>{parsed?'Скачать решения прежней версии':'Скачать исходную запись прежней версии'}</button>}
+      {raw!==null&&<button type="button" onClick={()=>download(raw,parsed?'review.json':'review-recovery.txt',parsed?'application/json;charset=utf-8':'text/plain;charset=utf-8')}>{parsed?'Скачать решения прежней версии':'Скачать исходную запись прежней версии'}</button>}
     </div>
     <details className={styles.history}><summary>Читать материалы и решения прежней версии</summary>
       {batch.units.map(unit=><details key={unit.id}><summary>{unit.id} · {unit.title} · архив {batch.version}</summary>
@@ -74,6 +76,7 @@ function ArchivedReview({ reviewerId, batch }: { reviewerId: string; batch: Draf
         <details><summary>Архивный ключ и границы</summary><MaterialText text={unit.teacher_markdown} sectionLabel="архивного разбора"/>{unit.language_only_markdown&&<MaterialText text={unit.language_only_markdown} sectionLabel="архивной языковой правки"/>}</details>
         <p>Архивное решение: {parsed?.decisions[unit.id]?.decision ?? 'не установлено'}.</p>
         {parsed?.decisions[unit.id]&&<><p className={styles.frozenText}>{parsed.decisions[unit.id].comment}</p><p>Подтверждение проверки прежнего источника: {parsed.decisions[unit.id].attested?'есть':'нет'}. Сохранено: {parsed.decisions[unit.id].savedAt}.</p></>}
+        <ArchivedBankWork scope={reviewerId} source={{batchId:batch.batch,version:String(batch.version),contentHash:batch.content_sha256,unitId:unit.id}}/>
       </details>)}
     </details>
     {message&&<p role="status">{message}</p>}
@@ -103,7 +106,7 @@ function ReviewUnit({ unit, batchId, batchVersion, contentHash, previous, onSave
     <MaterialText text={unit.student_markdown}/>
     <DraftWritingPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftSatPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
-    <DraftListeningPreview value={unit.exercise_data} unitId={unit.id}/>
+    <DraftListeningPreview value={unit.exercise_data} unitId={unit.id} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftMathPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftReadingPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftTask1Preview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
