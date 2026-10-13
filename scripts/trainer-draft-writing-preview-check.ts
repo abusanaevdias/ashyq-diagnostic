@@ -4,6 +4,7 @@ import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import batch from '../src/data/trainer-drafts/batch-03.json';
 import { nextDraftWriting, parseDraftWriting } from '../src/lib/trainers/draft-writing';
+import { draftBatches, type DraftUnit } from '../src/lib/trainers/draft-review';
 
 async function main() {
   for (const unit of batch.units) assert.ok(parseDraftWriting(unit.exercise_data),unit.id);
@@ -11,12 +12,14 @@ async function main() {
   for (const value of [null,[],{}, {...original,publication_ready:true},{...original,mode:'unknown'},{...original,source:[]},{...original,accepted_alternatives:[]},{...original,choices:original.choices.map(choice=>({...choice,best:true}))},{...original,example:'Wrong example'},{...original,task:'x'.repeat(4001)},{...original,choices:[original.choices[1],original.choices[1],original.choices[0]]}]) assert.equal(parseDraftWriting(value),null);
   const normalized = parseDraftWriting({...original,unexpected:'discard me'})!;
   assert.equal('unexpected' in normalized,false); assert.notEqual(normalized.source,original.source);
-  const values = batch.units.map(unit=>unit.exercise_data);
-  for (const unit of batch.units) {
+  const units: { batchId: string; unit: DraftUnit }[] = draftBatches.flatMap(b=>b.units.map(unit=>({batchId:b.batch,unit}))).filter(value=>parseDraftWriting(value.unit.exercise_data));
+  const values = units.map(value=>value.unit.exercise_data);
+  assert.equal(units.length,24);
+  for (const {unit} of units) {
     const item = parseDraftWriting(unit.exercise_data)!, next = nextDraftWriting(item,values)!;
     assert.ok(next); assert.notEqual(item.id,next.id); assert.equal(item.mode,next.mode); assert.notDeepEqual(item.source,next.source);
     assert.equal(nextDraftWriting(item,[item]),null);
-    assert.equal(nextDraftWriting(item,values.filter(value=>value.mode!==item.mode)),null);
+    assert.equal(nextDraftWriting(item,values.filter(value=>parseDraftWriting(value)?.mode!==item.mode)),null);
     assert.equal(nextDraftWriting(item,[item,{...item,id:'DISTINCT-ID'}]),null,'renamed identical source is not a different task');
     assert.equal(nextDraftWriting(item,[item,{...item,id:'OTHER',source:['Different source']}]),null,'same prepared example is rejected');
     assert.equal(nextDraftWriting(item,[null,{},...values])?.id,next.id);
@@ -34,7 +37,8 @@ async function main() {
     await page.getByRole('heading',{name:'Нужно войти',exact:true}).waitFor();
     await page.evaluate(()=>{localStorage.setItem('ashyq:v2:session',JSON.stringify({user:{id:'synthetic-draft-preview',name:'Synthetic reviewer',email:'synthetic@example.invalid',role:'teacher',avatarColor:'red'},expiresAt:new Date(Date.now()+3600000).toISOString()}));dispatchEvent(new Event('storage'));});
     await page.getByLabel('Партия материалов',{exact:true}).selectOption('03');
-    for (const [index,unit] of batch.units.entries()) {
+    for (const [index,{batchId,unit}] of units.entries()) {
+      await page.getByLabel('Партия материалов',{exact:true}).selectOption(batchId);
       await page.getByLabel('Выбери материал',{exact:true}).selectOption(unit.id);
       const preview = page.getByRole('region',{name:'Пробное прохождение · DRAFT',exact:true});
       await preview.getByRole('button',{name:'Пройти черновик как ученик',exact:true}).click();
@@ -82,7 +86,7 @@ async function main() {
         await preview.getByLabel('Что проверишь в следующем задании?',{exact:true}).fill(reflection);
         await continueButton.click();await preview.getByRole('status').filter({hasText:'подтверди границы оценки'}).waitFor();
         await preview.getByRole('checkbox').check();
-        if(index===17&&round===0) {
+        if(index===units.length-1&&round===0) {
           await fs.mkdir('artifacts/trainers-complete-033',{recursive:true});
           await page.setViewportSize({width:390,height:844});
           await preview.getByLabel('Твой вариант после разбора',{exact:true}).evaluate(node=>window.scrollTo({top:node.getBoundingClientRect().top+scrollY-190,behavior:'instant'}));
@@ -103,10 +107,10 @@ async function main() {
       }
       await preview.getByText('Текст изменён; качество изменений вручную ещё не проверено.',{exact:true}).waitFor();
       await preview.getByText('Текст оставлен без изменений.',{exact:true}).waitFor();
-      if(index===0||index===17) {
+      if(index===0||index===units.length-1) {
         for(const width of [320,390,768,1440]) {await page.setViewportSize({width,height:900});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,`report overflow ${unit.id}/${width}`);}
         const axe=await new AxeBuilder({page}).include('main').analyze();assert.deepEqual(axe.violations.map(value=>({id:value.id,targets:value.nodes.map(node=>node.target)})),[]);
-        if(index===17) {await page.setViewportSize({width:390,height:844});await report.locator('..').screenshot({path:'artifacts/trainers-complete-033/draft-writing-report-mobile.png',animations:'disabled'});}
+        if(index===units.length-1) {await page.setViewportSize({width:390,height:844});await report.locator('..').screenshot({path:'artifacts/trainers-complete-033/draft-writing-report-mobile.png',animations:'disabled'});}
       }
       await preview.getByRole('button',{name:'Начать новую временную пробу',exact:true}).click();
       assert.equal(await preview.getByLabel('Твоя первая попытка',{exact:true}).inputValue(),'');
@@ -116,7 +120,7 @@ async function main() {
     assert.equal(await page.getByRole('button',{name:'Пройти черновик как ученик',exact:true}).count(),1);
     assert.equal(await page.evaluate(()=>Object.keys(localStorage).filter(key=>key.startsWith('ashyq:trainer-review:')||key.startsWith('ashyq:trainer-checkpoint:')).length),0,'temporary trial writes no reviews/checkpoints');
     assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);
-    console.log('PASS 18 two-task writing trials/36 rounds: deterministic distinct same-mode sources, self-reported exposure, first-answer freeze, retry/help provenance, separate required repair/reflection/manual acknowledgement, wrong repair not graded, unchanged repair allowed, bounded choice trail, report/reset/reload/no writes, focus/four widths/axe. Existing next source is not guaranteed unseen, free text is not scored.');
+    console.log('PASS24 two-task writing trials/48 rounds including legacy v2: deterministic distinct same-mode sources, self-reported exposure, first-answer freeze, retry/help provenance, separate required repair/reflection/manual acknowledgement, wrong repair not graded, unchanged repair allowed, bounded choice trail, report/reset/reload/no writes, focus/four widths/axe. Existing next source is not guaranteed unseen, free text is not scored.');
   } finally {await browser.close();}
 }
 main().catch(error=>{console.error(error);process.exitCode=1;});

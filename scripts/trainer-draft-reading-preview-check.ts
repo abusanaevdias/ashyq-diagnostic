@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import batch from '../src/data/trainer-drafts/batch-06.json';
+import batch01 from '../src/data/trainer-drafts/batch-01.json';
 import { parseDraftReading, READING_LABELS } from '../src/lib/trainers/draft-reading';
 
 async function main() {
@@ -17,7 +18,8 @@ async function main() {
     await page.getByRole('heading', { name: 'Нужно войти', exact: true }).waitFor();
     await page.evaluate(() => { localStorage.setItem('ashyq:v2:session', JSON.stringify({ user: { id: 'synthetic-reading-preview', name: 'Synthetic reviewer', email: 'synthetic@example.invalid', role: 'teacher', avatarColor: 'red' }, expiresAt: new Date(Date.now() + 3600000).toISOString() })); dispatchEvent(new Event('storage')); });
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('06');
-    for (const unit of batch.units) {
+    for (const unit of [...batch.units,...batch01.units.filter(value=>value.id.startsWith('R'))]) {
+      await page.getByLabel('Партия материалов', { exact: true }).selectOption(batch01.units.some(value=>value.id===unit.id)?'01':'06');
       const pair = parseDraftReading(unit.exercise_data); assert.ok(pair);
       await page.getByLabel('Выбери материал', { exact: true }).selectOption(unit.id);
       const preview = page.getByRole('region', { name: 'Пробное Reading · DRAFT', exact: true });
@@ -54,7 +56,7 @@ async function main() {
         for (const [i, claim] of round.claims.entries()) await preview.getByLabel(`Категория после разбора · ${i+1}`, { exact: true }).selectOption(claim.answer);
         await advance.click(); await preview.getByRole('status').filter({ hasText: 'минимум 3 символа' }).waitFor();
         await preview.getByLabel('Что проверишь в новом тексте?', { exact: true }).fill(`Synthetic post-feedback plan for ${round.id}.`);
-        if (['R03','R06','R10'].includes(unit.id)) for (const width of [320,390,768,1440]) {
+        if (['R01','R02','R03','R06','R10'].includes(unit.id)) for (const width of [320,390,768,1440]) {
           await page.setViewportSize({ width, height: 900 });
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `overflow ${round.id}/${width}`);
           assert.deepEqual((await new AxeBuilder({ page }).include('main').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations, []);
@@ -76,7 +78,7 @@ async function main() {
     assert.equal(await page.getByRole('button', { name: 'Пройти Reading-черновик', exact: true }).count(), 1);
     assert.equal(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('ashyq:trainer-review:')).length), 0);
     assert.deepEqual(errors, []);
-    console.log('PASS eight Reading draft pairs/sixteen texts/48 first responses: malformed data, hidden feedback/fresh text, own category/reason/exact-quote guards including empty NG excerpt, frozen first evidence, explicit repair/reflection, wrong first/correct fresh reports, reset/reload, four widths and axe. Excerpt relevance/reasoning manual; no IELTS score/publication.');
+    console.log('PASS ten Reading draft pairs/twenty texts/60 first responses including legacy v2: malformed data, hidden feedback/fresh text, own category/reason/exact-quote guards including empty NG excerpt, frozen first evidence, explicit repair/reflection, wrong first/correct fresh reports, reset/reload, four widths and axe. Excerpt relevance/reasoning manual; no IELTS score/publication.');
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });
