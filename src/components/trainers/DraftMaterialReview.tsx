@@ -12,7 +12,7 @@ import DraftReadingPreview from './DraftReadingPreview';
 import DraftTask1Preview from './DraftTask1Preview';
 import DraftSpeakingLaunch from './DraftSpeakingLaunch';
 import DraftTask2Preview from './DraftTask2Preview';
-import { decisionSignature, DRAFT_REVIEW_CHANGED, draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
+import { decisionSignature, DRAFT_REVIEW_CHANGED, draftArchives, draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
 import { saveDraftDecision } from '@/lib/trainers/draft-review-storage';
 import styles from './TrainerCheckpoint.module.css';
 
@@ -44,6 +44,40 @@ function MaterialText({ text, sectionLabel = 'задания' }: { text: string;
     else blocks.push(<p key={i}>{line}</p>);
   }
   return <div className={styles.materialText}>{blocks}</div>;
+}
+
+function ArchivedReview({ reviewerId, batch }: { reviewerId: string; batch: DraftBatch }) {
+  const key = reviewKey(reviewerId,batch);
+  const headingId = `draft-archive-${batch.batch}-${batch.content_sha256.slice(0,12)}`;
+  const raw = useSyncExternalStore(subscribe,() => { try { return localStorage.getItem(key); } catch { return '!unavailable'; } },() => null);
+  const parsed = parseDraftReview(raw,reviewerId,batch);
+  const [message,setMessage] = useState('');
+  function download(content: string, suffix: string, mime: string) {
+    try {
+      const url=URL.createObjectURL(new Blob([content],{type:mime}));
+      const a=document.createElement('a');a.href=url;a.download=`ASHYQ-batch-${batch.batch}-v${batch.version}-${suffix}`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      setMessage('Архив выгружен. Решения не перенесены на изменённые задания; локальная запись сохранена без изменений.');
+    } catch {setMessage('Не удалось скачать архив. Исходная локальная запись не изменена.');}
+  }
+  return <section className={styles.panel} aria-labelledby={headingId}>
+    <h2 id={headingId}>Архив прежней версии · {batch.version}</h2>
+    <p>Материалы изменились. Старые решения относятся только к прежнему тексту и ключу. Для текущей версии нужна новая проверка; рекомендации и подтверждения автоматически не переносятся.</p>
+    <p className={styles.materialText}>Партия {batch.batch}; исходное содержание: {batch.content_sha256}. Архив не входит в число активных заданий.</p>
+    {raw===null ? <p>Для этого аккаунта в этом браузере решений прежней версии нет.</p> : raw==='!unavailable' ? <p role="status">Чтение локальных решений прежней версии недоступно.</p> : parsed ? <p>Рассмотрено в прежней версии: {reviewCounts(parsed,batch).considered} из {batch.units.length}. Это отдельные архивные решения.</p> : <p className={styles.warning} role="status">Исходная запись прежней версии не распознана. Она не заменена; можно скачать её целиком для восстановления.</p>}
+    <div className={styles.actions}>
+      <button type="button" onClick={()=>download(JSON.stringify(batch,null,2),'source.json','application/json;charset=utf-8')}>Скачать материалы прежней версии</button>
+      {raw!==null&&raw!=='!unavailable'&&<button type="button" onClick={()=>download(raw,parsed?'review.json':'review-recovery.txt',parsed?'application/json;charset=utf-8':'text/plain;charset=utf-8')}>{parsed?'Скачать решения прежней версии':'Скачать исходную запись прежней версии'}</button>}
+    </div>
+    <details className={styles.history}><summary>Читать материалы и решения прежней версии</summary>
+      {batch.units.map(unit=><details key={unit.id}><summary>{unit.id} · {unit.title} · архив {batch.version}</summary>
+        <MaterialText text={unit.student_markdown} sectionLabel="архивного задания"/>
+        <details><summary>Архивный ключ и границы</summary><MaterialText text={unit.teacher_markdown} sectionLabel="архивного разбора"/>{unit.language_only_markdown&&<MaterialText text={unit.language_only_markdown} sectionLabel="архивной языковой правки"/>}</details>
+        <p>Архивное решение: {parsed?.decisions[unit.id]?.decision ?? 'не установлено'}.</p>
+        {parsed?.decisions[unit.id]&&<><p className={styles.frozenText}>{parsed.decisions[unit.id].comment}</p><p>Подтверждение проверки прежнего источника: {parsed.decisions[unit.id].attested?'есть':'нет'}. Сохранено: {parsed.decisions[unit.id].savedAt}.</p></>}
+      </details>)}
+    </details>
+    {message&&<p role="status">{message}</p>}
+  </section>;
 }
 
 function ReviewUnit({ unit, batchId, contentHash, previous, onSave, onDirty }: { unit: DraftUnit; batchId: string; contentHash: string; previous?: DraftDecision; onSave: (value: DraftDecision, expected: string | null) => Promise<boolean>; onDirty: (dirty: boolean) => void }) {
@@ -134,6 +168,7 @@ function Workspace({ reviewerId, draftBatch, onBatchChange }: { reviewerId: stri
     {raw !== null && !parsed && <div className={styles.panel}><p className={styles.warning} role="status">{raw === '!unavailable' ? 'Локальное сохранение недоступно.' : 'Локальная запись несовместима с этой версией. Она не восстановлена и не заменена. Скачай исходную запись для восстановления; выгрузка пустого набора решений отключена.'}</p>{raw !== '!unavailable' && <button type="button" onClick={exportRecovery}>Скачать исходную запись для восстановления</button>}</div>}
     <div className={styles.filters}><label htmlFor="draft-batch-picker">Партия материалов</label><select id="draft-batch-picker" value={draftBatch.batch} disabled={saving} onChange={event => { setPendingExit(false); setPendingUnit(null); if (dirty) setPendingBatch(event.target.value); else onBatchChange(event.target.value); }}>{draftBatches.map(batch => <option value={batch.batch} key={batch.batch}>Партия {batch.batch} · {batch.units.length} черновиков</option>)}</select><label htmlFor="draft-material-picker">Выбери материал</label><select id="draft-material-picker" value={selected} disabled={saving} onChange={event => { setPendingExit(false); setPendingBatch(null); if (dirty) setPendingUnit(event.target.value); else { setSelected(event.target.value); setMessage(''); } }}>{draftBatch.units.map(item => <option value={item.id} key={item.id}>{item.id} · {item.title}{review.decisions[item.id]?.decision && review.decisions[item.id].decision !== 'pending' ? ' · рассмотрено' : ''}</option>)}</select></div>
     {(pendingUnit || pendingBatch || pendingExit) && <div className={styles.warning} role="alert"><p>Есть несохранённое решение. Сохрани его внизу материала или явно перейди без сохранения.</p><div className={styles.actions}><button type="button" disabled={saving} onClick={() => { setPendingUnit(null); setPendingBatch(null); setPendingExit(false); }}>Остаться на материале</button>{pendingExit && !saving ? <Link href="/trainers" onClick={() => setDirty(false)}>Перейти без сохранения</Link> : <button type="button" disabled={saving} onClick={() => { if (pendingBatch) { onBatchChange(pendingBatch); return; } if (pendingUnit) setSelected(pendingUnit); setPendingUnit(null); setDirty(false); setMessage(''); }}>Перейти без сохранения</button>}</div></div>}
+    {draftArchives.filter(value=>value.batch===draftBatch.batch&&value.content_sha256!==draftBatch.content_sha256).map(value=><ArchivedReview key={value.content_sha256} reviewerId={reviewerId} batch={value}/>)}
     <ReviewUnit key={unit.id} unit={unit} batchId={draftBatch.batch} contentHash={draftBatch.content_sha256} previous={review.decisions[unit.id]} onSave={save} onDirty={setDirty}/>
     {message && <p role="status">{message}</p>}
   </>;

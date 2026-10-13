@@ -3,10 +3,11 @@ import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import batch from '../src/data/trainer-drafts/batch-05.json';
 import batch11 from '../src/data/trainer-drafts/batch-11.json';
+import batch01 from '../src/data/trainer-drafts/batch-01.json';
 import { draftMathChoiceLabel, parseDraftMath, parseDraftMathNumber } from '../src/lib/trainers/draft-math';
 
 async function main() {
-  for (const unit of [...batch.units, ...batch11.units]) assert.ok(parseDraftMath(unit.exercise_data), unit.id);
+  for (const unit of [...batch.units, ...batch11.units,...batch01.units.filter(value=>value.id.startsWith('M'))]) assert.ok(parseDraftMath(unit.exercise_data), unit.id);
   for (const [raw, expected] of [[' 6,5 ',6.5],['-0.5',-0.5],['-.5',-.5],['+6',6],['0006.00',6],['0',0]] as const) assert.equal(parseDraftMathNumber(raw), expected);
   for (const raw of ['', ' ', 'NaN', 'Infinity', '1e2', '6 dollars', '6.5.2', '6.0000000000000001']) assert.equal(parseDraftMathNumber(raw), null);
   const original = batch.units[0].exercise_data;
@@ -25,8 +26,8 @@ async function main() {
     await page.getByRole('heading', { name: 'Нужно войти', exact: true }).waitFor();
     await page.evaluate(() => { localStorage.setItem('ashyq:v2:session', JSON.stringify({ user: { id: 'synthetic-math-preview', name: 'Synthetic reviewer', email: 'synthetic@example.invalid', role: 'teacher', avatarColor: 'red' }, expiresAt: new Date(Date.now() + 3600000).toISOString() })); dispatchEvent(new Event('storage')); });
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('05');
-    for (const unit of [...batch.units, ...batch11.units]) {
-      await page.getByLabel('Партия материалов', { exact: true }).selectOption(batch11.units.some(value => value.id === unit.id) ? '11' : '05');
+    for (const unit of [...batch.units, ...batch11.units,...batch01.units.filter(value=>value.id.startsWith('M'))]) {
+      await page.getByLabel('Партия материалов', { exact: true }).selectOption(batch01.units.some(value=>value.id===unit.id)?'01':batch11.units.some(value => value.id === unit.id) ? '11' : '05');
       const pair = parseDraftMath(unit.exercise_data)!;
       await page.getByLabel('Выбери материал', { exact: true }).selectOption(unit.id);
       const preview = page.getByRole('region', { name: 'Пробная математика · DRAFT', exact: true });
@@ -71,7 +72,7 @@ async function main() {
         await preview.getByLabel('Твой числовой ответ после разбора', { exact: true }).fill('1e2');
         await next.click(); await preview.getByRole('status').filter({ hasText: 'отдельную версию решения' }).waitFor();
         await preview.getByLabel('Твой числовой ответ после разбора', { exact: true }).fill(String(unit.id === 'M09' && index === 0 ? item.answer + 1 : item.answer));
-        if (['M03','M06','M08',...batch11.units.map(value => value.id)].includes(unit.id)) {
+        if (['M01','M02','M03','M06','M08',...batch11.units.map(value => value.id)].includes(unit.id)) {
           for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Math draft overflow ${item.id}/${width}`); }
           const axe = await new AxeBuilder({ page }).include('main').analyze(); assert.deepEqual(axe.violations.map(value => ({ id: value.id, targets: value.nodes.map(node => node.target) })), []);
           if (unit.id === 'M12' && index === 0) {
@@ -96,7 +97,7 @@ async function main() {
     assert.equal(await page.getByRole('button', { name: 'Пройти Math-черновик', exact: true }).count(), 1);
     assert.equal(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('ashyq:trainer-review:')).length), 0);
     assert.deepEqual(errors, []);
-    console.log('PASS fourteen Math draft pairs/twenty-eight problems: malformed data/numeric precision guards, frozen own solution before comparison, correct number with wrong model/step, separate method choice and numeric result, fresh-task/reflection/report/reset, four widths and axe. Working quality manual; no SAT score or publication.');
+    console.log('PASS sixteen Math draft pairs/thirty-two problems including legacy v2: malformed data/numeric precision guards, frozen own solution before comparison, correct number with wrong model/step, separate method choice and numeric result, fresh-task/reflection/report/reset, four widths and axe. Working quality manual; no SAT score or publication.');
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

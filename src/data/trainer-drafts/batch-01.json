@@ -1,9 +1,9 @@
 {
   "format": "ashyq-draft-bank-v1",
   "batch": "01",
-  "version": "1.0",
-  "source_sha256": "9f2edc1c0df2e731520cb57d981d7d0e09f4017e9f8cde9bdb026852f4b5b6b3",
-  "content_sha256": "2854e1937321d3472b1d432578d135372768d35122ccad7959ae49a5dd32c422",
+  "version": "2.0",
+  "source_sha256": "2854e1937321d3472b1d432578d135372768d35122ccad7959ae49a5dd32c422",
+  "content_sha256": "7df76c4d3f2cd18ee81f3cbef27111f386d3ae6aa6932766ba7189e2dfc71944",
   "author": "Codex",
   "intended_reviewer": "Dias",
   "methodically_approved": false,
@@ -13,108 +13,1025 @@
       "title": "Practical skills at school",
       "category": "Writing Task 2",
       "status": "DRAFT",
-      "student_markdown": "### Задание\n\nSchools should give more time to practical skills than to traditional academic subjects. To what extent do you agree or disagree?\n\n### Учебное эссе\n\nMany people argue that schools should spends more time on practical skills than on traditional academic subjects. I partly agree with this view. Students need academic knowledge, but they also need opportunities to use it outside the classroom. In my opinion, schools should connect these two kinds of learning instead of replacing one with the other.\n\nPractical lessons prepares teenagers for situations that they may face after leaving school. For example, a lesson about planning a budget can show students how to compare prices and avoid spending all their money at once. This mean that school learning becomes more useful in daily life. My cousin joined a cooking club and became more confident, which proves that practical activities are better for every student. Such lessons can also provide an useful break from sitting at a desk. Students may feel proud when they create something that they can actually use.\n\nHowever, academic subjects also gives students tools that practical activities depend on. Mathematics offers informations about numbers, while science helps young people understand how materials and natural processes work. This knowledges can make a practical task more easier to complete. If schools will remove too many academic lessons, students may struggle to understand the reasons behind their actions. Teachers should therefore pay attention on both kinds of learning. One subject can support another, and students can gradually discover which activities interest them most.\n\nIn conclusion, I support giving practical skills a clear place in the school timetable, but I would not make them the main purpose of education. A balanced programme can prepare teenagers for everyday life while keeping the academic foundations that they may need for further study.\n\n### Твои действия\n\n1. Найди возможные грамматические и лексические проблемы. Для каждой запиши исходный фрагмент и свою правку.\n2. Отдельно найди утверждение, для которого автору не хватает объяснения или основания.\n3. Перепиши один основной абзац, сохраняя позицию автора. Покажи связь «тезис → объяснение → пример → значение для вопроса».\n4. Только после своей попытки открой разбор. После него сохрани отдельную новую версию.\n\nНе нужно менять каждое предложение. Корректную формулировку можно оставить.",
-      "teacher_markdown": "### Карта языковых проблем\n\n| ID | Исходный фрагмент | Минимальная правка | Причина / граница |\n|---|---|---|---|\n| W01-G1 | should spends | should spend | После модального should нужна базовая форма |\n| W01-G2 | Practical lessons prepares | Practical lessons prepare | Подлежащее во множественном числе |\n| W01-G3 | This mean | This means | This в единственном числе |\n| W01-G4 | an useful break | a useful break | Useful начинается с согласного звука /j/, выбор артикля по звуку |\n| W01-G5 | academic subjects also gives | academic subjects also give | Согласование с subjects |\n| W01-G6 | offers informations | offers information | Information здесь неисчисляемое |\n| W01-G7 | This knowledges | This knowledge | Knowledge в этом значении неисчисляемое; this сохраняется |\n| W01-G8 | more easier | easier | Не удваивать сравнительную степень; much easier допустимо, но добавляет степень |\n| W01-G9 | If schools will remove | If schools remove | В этом обычном будущем условии present simple; will в if-clause возможно в других значениях, например готовности, поэтому запрет не универсальный |\n| W01-L1 | pay attention on | pay attention to | Сочетаемость: pay attention to |\n\nЭти десять фрагментов — целевые проблемы. Не считать любую незнакомую или менее изящную формулировку ошибкой. Другие замечания проверяющий может добавить с обоснованием.\n\n### Допустимые альтернативы\n\n- `Schools should spend more time teaching practical skills` — грамматически корректная переформулировка.\n- `These lessons prepare teenagers...` — допустимая замена подлежащего.\n- `This knowledge can make a practical task easier` / `Such knowledge can help students complete a practical task more easily` — разные корректные структуры.\n- `Teachers should consider both kinds of learning` — допустимая переформулировка, если смысл сохраняется.\n- `If schools removed too many academic lessons, students might struggle...` — корректный гипотетический вариант. Меняется степень гипотетичности; это нужно обсудить, а не объявлять его той же минимальной правкой.\n\n### Четыре критерия\n\n**Task Response.** Обе стороны темы присутствуют. Однако условие спрашивает о сравнении времени practical versus academic; слова `a clear place` и `balanced programme` не уточняют относительный приоритет. Нужно яснее назвать, согласен ли автор отдавать практическим навыкам больше времени, чем академическим предметам.\n\nУтверждение `which proves that practical activities are better for every student` не следует из истории одного родственника. Оно также сильнее общей умеренной позиции. Сохранить пример можно, ограничив вывод и объяснив, какой механизм он иллюстрирует.\n\n**Coherence and Cohesion.** Четыре абзаца имеют понятные роли. В практическом абзаце бюджет, история родственника и отдых перечислены без достаточно ясного общего аргумента. Полезно развить одну линию и показать её связь с вопросом.\n\n**Lexical Resource.** Большая часть слов подходит. `informations`, `knowledges` и `pay attention on` требуют правки; не дублировать их штрафом в нескольких учебных счётчиках. `Mathematics offers information about numbers` грамматически допустимо, но расплывчато. Более точная формулировка — редакционное улучшение, не отдельная обязательная грамматическая ошибка.\n\n**Grammatical Range and Accuracy.** Есть условная, относительная и придаточная конструкции, но повторяется проблема форм глагола и неисчисляемых существительных. Исправление целевых мест не подтверждает числовой рост критерия; оценивать нужно весь текст.\n\n### Пример более сильной версии\n\nСтатус: учебная редакция без band. Основная идея баланса сохранена, отношение к сравнению времени уточнено. Это один возможный текст; другие позиции и примеры допустимы при соответствии вопросу.\n\nSome people argue that practical skills should receive more time at school than traditional academic subjects. I support increasing opportunities for practical learning, but I disagree that it should take priority over academic study. Teenagers benefit most when they can apply their knowledge while continuing to build the foundations needed for further education.\n\nPractical activities can help students understand why classroom learning matters. For instance, a budgeting project could ask them to compare prices, calculate regular expenses and decide which purchases they can afford. This connects arithmetic with decisions they may eventually make independently. A cooking project can similarly require planning and careful measurement. Such activities may also give students opportunities to contribute in ways that written exercises do not. However, one student's increased confidence does not show that practical lessons are better for everyone; it illustrates one possible benefit rather than a universal result.\n\nAcademic subjects remain essential because they provide concepts that practical tasks alone may not explain. A student can follow instructions in a science activity without understanding why the process works. If the school reduces academic teaching too far, students may be able to repeat a familiar procedure but struggle when a new problem requires a different approach. Mathematics and science therefore support practical learning rather than competing with it. Teachers can make this relationship visible by including short applied projects within existing subjects instead of replacing most academic lessons.\n\nIn conclusion, practical skills deserve a regular place in education, especially when they help students use what they have learned. Nevertheless, academic subjects should retain a central role. Combining explanation with application offers a more convincing approach than giving practical activities more time simply because they appear immediately useful.\n\n### Проверка правки ученика\n\n- Языковые изменения корректны и сохраняют смысл?\n- Устранён ли необоснованный вывод про every student?\n- Позиция отвечает на сравнение времени в условии?\n- Есть ли объяснение между тезисом и примером?\n- Первая самостоятельная версия сохранена отдельно от версии после модели?",
-      "language_only_markdown": "Many people argue that schools should spend more time on practical skills than on traditional academic subjects. I partly agree with this view. Students need academic knowledge, but they also need opportunities to use it outside the classroom. In my opinion, schools should connect these two kinds of learning instead of replacing one with the other.\n\nPractical lessons prepare teenagers for situations that they may face after leaving school. For example, a lesson about planning a budget can show students how to compare prices and avoid spending all their money at once. This means that school learning becomes more useful in daily life. My cousin joined a cooking club and became more confident, which proves that practical activities are better for every student. Such lessons can also provide a useful break from sitting at a desk. Students may feel proud when they create something that they can actually use.\n\nHowever, academic subjects also give students tools that practical activities depend on. Mathematics offers information about numbers, while science helps young people understand how materials and natural processes work. This knowledge can make a practical task easier to complete. If schools remove too many academic lessons, students may struggle to understand the reasons behind their actions. Teachers should therefore pay attention to both kinds of learning. One subject can support another, and students can gradually discover which activities interest them most.\n\nIn conclusion, I support giving practical skills a clear place in the school timetable, but I would not make them the main purpose of education. A balanced programme can prepare teenagers for everyday life while keeping the academic foundations that they may need for further study."
+      "student_markdown": "### Задание\n\nSchools should give more time to practical skills than to traditional academic subjects. To what extent do you agree or disagree?\n\n### Учебное эссе\n\nMany people argue that schools should spends more time on practical skills than on traditional academic subjects. I partly agree with this view. Students need academic knowledge, but they also need opportunities to use it outside the classroom. In my opinion, schools should connect these two kinds of learning instead of replacing one with the other.\n\nPractical lessons prepares teenagers for situations that they may face after leaving school. For example, a lesson about planning a budget can show students how to compare prices and avoid spending all their money at once. This mean that school learning becomes more useful in daily life. My cousin joined a cooking club and became more confident, which proves that practical activities are better for every student. Such lessons can also provide an useful break from sitting at a desk. Students may feel proud when they create something that they can actually use.\n\nHowever, academic subjects also gives students tools that practical activities depend on. Mathematics offers informations about numbers, while science helps young people understand how materials and natural processes work. This knowledges can make a practical task more easier to complete. If schools will remove too many academic lessons, students may struggle to understand the reasons behind their actions. Teachers should therefore pay attention on both kinds of learning. One subject can support another, and students can gradually discover which activities interest them most.\n\nIn conclusion, I support giving practical skills a clear place in the school timetable, but I would not make them the main purpose of education. A balanced programme can prepare teenagers for everyday life while keeping the academic foundations that they may need for further study.\n\nСначала найди проблемы самостоятельно. Затем сравни язык и аргументы отдельно, запиши пересмотр и перейди к другому эссе. Свободный текст проверяется вручную; DRAFT не получает band.",
+      "teacher_markdown": "### Карта языковых проблем\n\n| ID | Исходный фрагмент | Минимальная правка | Причина / граница |\n|---|---|---|---|\n| W01-G1 | should spends | should spend | После модального should нужна базовая форма |\n| W01-G2 | Practical lessons prepares | Practical lessons prepare | Подлежащее во множественном числе |\n| W01-G3 | This mean | This means | This в единственном числе |\n| W01-G4 | an useful break | a useful break | Useful начинается с согласного звука /j/, выбор артикля по звуку |\n| W01-G5 | academic subjects also gives | academic subjects also give | Согласование с subjects |\n| W01-G6 | offers informations | offers information | Information здесь неисчисляемое |\n| W01-G7 | This knowledges | This knowledge | Knowledge в этом значении неисчисляемое; this сохраняется |\n| W01-G8 | more easier | easier | Не удваивать сравнительную степень; much easier допустимо, но добавляет степень |\n| W01-G9 | If schools will remove | If schools remove | В этом обычном будущем условии present simple; will в if-clause возможно в других значениях, например готовности, поэтому запрет не универсальный |\n| W01-L1 | pay attention on | pay attention to | Сочетаемость: pay attention to |\n\nЭти десять фрагментов — целевые проблемы. Не считать любую незнакомую или менее изящную формулировку ошибкой. Другие замечания проверяющий может добавить с обоснованием.\n\n### Допустимые альтернативы\n\n- `Schools should spend more time teaching practical skills` — грамматически корректная переформулировка.\n- `These lessons prepare teenagers...` — допустимая замена подлежащего.\n- `This knowledge can make a practical task easier` / `Such knowledge can help students complete a practical task more easily` — разные корректные структуры.\n- `Teachers should consider both kinds of learning` — допустимая переформулировка, если смысл сохраняется.\n- `If schools removed too many academic lessons, students might struggle...` — корректный гипотетический вариант. Меняется степень гипотетичности; это нужно обсудить, а не объявлять его той же минимальной правкой.\n\n### Четыре критерия\n\n**Task Response.** Обе стороны темы присутствуют. Однако условие спрашивает о сравнении времени practical versus academic; слова `a clear place` и `balanced programme` не уточняют относительный приоритет. Нужно яснее назвать, согласен ли автор отдавать практическим навыкам больше времени, чем академическим предметам.\n\nУтверждение `which proves that practical activities are better for every student` не следует из истории одного родственника. Оно также сильнее общей умеренной позиции. Сохранить пример можно, ограничив вывод и объяснив, какой механизм он иллюстрирует.\n\n**Coherence and Cohesion.** Четыре абзаца имеют понятные роли. В практическом абзаце бюджет, история родственника и отдых перечислены без достаточно ясного общего аргумента. Полезно развить одну линию и показать её связь с вопросом.\n\n**Lexical Resource.** Большая часть слов подходит. `informations`, `knowledges` и `pay attention on` требуют правки; не дублировать их штрафом в нескольких учебных счётчиках. `Mathematics offers information about numbers` грамматически допустимо, но расплывчато. Более точная формулировка — редакционное улучшение, не отдельная обязательная грамматическая ошибка.\n\n**Grammatical Range and Accuracy.** Есть условная, относительная и придаточная конструкции, но повторяется проблема форм глагола и неисчисляемых существительных. Исправление целевых мест не подтверждает числовой рост критерия; оценивать нужно весь текст.\n\n### Пример более сильной версии\n\nСтатус: учебная редакция без band. Основная идея баланса сохранена, отношение к сравнению времени уточнено. Это один возможный текст; другие позиции и примеры допустимы при соответствии вопросу.\n\nSome people argue that practical skills should receive more time at school than traditional academic subjects. I support increasing opportunities for practical learning, but I disagree that it should take priority over academic study. Teenagers benefit most when they can apply their knowledge while continuing to build the foundations needed for further education.\n\nPractical activities can help students understand why classroom learning matters. For instance, a budgeting project could ask them to compare prices, calculate regular expenses and decide which purchases they can afford. This connects arithmetic with decisions they may eventually make independently. A cooking project can similarly require planning and careful measurement. Such activities may also give students opportunities to contribute in ways that written exercises do not. However, one student's increased confidence does not show that practical lessons are better for everyone; it illustrates one possible benefit rather than a universal result.\n\nAcademic subjects remain essential because they provide concepts that practical tasks alone may not explain. A student can follow instructions in a science activity without understanding why the process works. If the school reduces academic teaching too far, students may be able to repeat a familiar procedure but struggle when a new problem requires a different approach. Mathematics and science therefore support practical learning rather than competing with it. Teachers can make this relationship visible by including short applied projects within existing subjects instead of replacing most academic lessons.\n\nIn conclusion, practical skills deserve a regular place in education, especially when they help students use what they have learned. Nevertheless, academic subjects should retain a central role. Combining explanation with application offers a more convincing approach than giving practical activities more time simply because they appear immediately useful.\n\n### Проверка правки ученика\n\n- Языковые изменения корректны и сохраняют смысл?\n- Устранён ли необоснованный вывод про every student?\n- Позиция отвечает на сравнение времени в условии?\n- Есть ли объяснение между тезисом и примером?\n- Первая самостоятельная версия сохранена отдельно от версии после модели?\n\n### Интерактивная версия 2: границы\n\nTask Response: Автор поддерживает сочетание предметов, но не вполне отвечает на сравнение времени practical versus academic. Даже развитый пример не снимает эту отдельную проблему позиции.\n\nCoherence and Cohesion: Бюджет, готовка и отдых перечислены: развей одну линию и покажи связь с распределением учебного времени.\n\nLexical Resource: Information и knowledge здесь неисчисляемые. Полезную альтернативу проверяй по смыслу; более сложное слово не обязательно лучше.\n\nGrammatical Range and Accuracy: Десять целевых фрагментов проверяются отдельно от содержания. Will в if-clause не запрещён во всех контекстах; здесь обычное будущее условие.\n\n### Другой учебный текст\n\nSome people believe schools with limited funds should spend more on sports facilities than on arts facilities. To what extent do you agree or disagree?\n\nSchools with limited budgets must decide which facilities deserve their attention. Some people believe they should spends more on sport than on the arts. I disagree with making sport the automatic priority. Both activities can benefit teenagers, and spending should depend on the facilities that a particular school already has and the opportunities its students lack.\n\nArt lessons gives students a way to explore ideas through music, drawing or performance. A school does not necessarily need an expensive theatre to offer these opportunities, but it may need a suitable room and basic materials. Access to instruments can helps a student try music before a family decides whether to buy one. My friend enjoyed a painting lesson, which proves that spending on art is always better than spending on sport. For some teenagers, a creative activity also provides an useful change from their ordinary classroom routine. However, enjoyment alone cannot tell a school how to divide a limited budget.\n\nSport has a different role because it provides structured opportunities for physical activity and cooperation. Safe equipment and an appropriate place to exercise can allow classes to take part without depending entirely on outside clubs. Schools should maintain their sports equipments and consider whether students with different abilities can participate. Clear routes and suitable spaces may make participation more easier. Yet a school with a well-maintained sports hall and no music room might reasonably give its next available funds to the arts. A school in the opposite situation could make a different choice.\n\nIn conclusion, I would reject a fixed rule that puts sports facilities above arts facilities. Schools should first check safety, existing provision and barriers to participation. They can then explain which investment addresses the most serious gap while retaining worthwhile opportunities in both areas.\n\n### Языковые цели\n\nshould spends → should spend: После should нужна базовая форма.\n\nArt lessons gives → Art lessons give: Согласование с множественным lessons.\n\ncan helps → can help: После can нужна базовая форма.\n\nan useful change → a useful change: Useful начинается со звука /j/, артикль выбирается по звуку.\n\nsports equipments → sports equipment: Equipment в значении инвентаря неисчисляемое.\n\nmore easier → easier: Не удваивать сравнительную степень.\n\nУдовольствие одного друга не устанавливает универсальный приоритет бюджета. Свяжи пример с конкретным дефицитом возможностей и обозначь границу.\n\nSchools with limited budgets must decide which facilities deserve their attention. Some people believe they should spend more on sport than on the arts. I disagree with making sport the automatic priority. Both activities can benefit teenagers, and spending should depend on the facilities that a particular school already has and the opportunities its students lack.\n\nArt lessons give students a way to explore ideas through music, drawing or performance. A school does not necessarily need an expensive theatre to offer these opportunities, but it may need a suitable room and basic materials. Access to instruments can help a student try music before a family decides whether to buy one. A student who enjoys painting may benefit from access to materials that are unavailable at home. This illustrates one reason to improve arts provision where it is missing, but it does not establish that every arts purchase should take priority over safe sports facilities. For some teenagers, a creative activity also provides a useful change from their ordinary classroom routine. However, enjoyment alone cannot tell a school how to divide a limited budget.\n\nSport has a different role because it provides structured opportunities for physical activity and cooperation. Safe equipment and an appropriate place to exercise can allow classes to take part without depending entirely on outside clubs. Schools should maintain their sports equipment and consider whether students with different abilities can participate. Clear routes and suitable spaces may make participation easier. Yet a school with a well-maintained sports hall and no music room might reasonably give its next available funds to the arts. A school in the opposite situation could make a different choice.\n\nIn conclusion, I would reject a fixed rule that puts sports facilities above arts facilities. Schools should first check safety, existing provision and barriers to participation. They can then explain which investment addresses the most serious gap while retaining worthwhile opportunities in both areas.",
+      "language_only_markdown": "Many people argue that schools should spend more time on practical skills than on traditional academic subjects. I partly agree with this view. Students need academic knowledge, but they also need opportunities to use it outside the classroom. In my opinion, schools should connect these two kinds of learning instead of replacing one with the other.\n\nPractical lessons prepare teenagers for situations that they may face after leaving school. For example, a lesson about planning a budget can show students how to compare prices and avoid spending all their money at once. This means that school learning becomes more useful in daily life. My cousin joined a cooking club and became more confident, which proves that practical activities are better for every student. Such lessons can also provide a useful break from sitting at a desk. Students may feel proud when they create something that they can actually use.\n\nHowever, academic subjects also give students tools that practical activities depend on. Mathematics offers information about numbers, while science helps young people understand how materials and natural processes work. This knowledge can make a practical task easier to complete. If schools remove too many academic lessons, students may struggle to understand the reasons behind their actions. Teachers should therefore pay attention to both kinds of learning. One subject can support another, and students can gradually discover which activities interest them most.\n\nIn conclusion, I support giving practical skills a clear place in the school timetable, but I would not make them the main purpose of education. A balanced programme can prepare teenagers for everyday life while keeping the academic foundations that they may need for further study.",
+      "exercise_data": {
+        "kind": "task2-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "skill": "Сначала самостоятельный поиск языковых целей, затем развитие ограниченного аргумента без гарантированного результата.",
+        "rounds": [
+          {
+            "prompt": "Schools should give more time to practical skills than to traditional academic subjects. To what extent do you agree or disagree?",
+            "text": "Many people argue that schools should spends more time on practical skills than on traditional academic subjects. I partly agree with this view. Students need academic knowledge, but they also need opportunities to use it outside the classroom. In my opinion, schools should connect these two kinds of learning instead of replacing one with the other.\n\nPractical lessons prepares teenagers for situations that they may face after leaving school. For example, a lesson about planning a budget can show students how to compare prices and avoid spending all their money at once. This mean that school learning becomes more useful in daily life. My cousin joined a cooking club and became more confident, which proves that practical activities are better for every student. Such lessons can also provide an useful break from sitting at a desk. Students may feel proud when they create something that they can actually use.\n\nHowever, academic subjects also gives students tools that practical activities depend on. Mathematics offers informations about numbers, while science helps young people understand how materials and natural processes work. This knowledges can make a practical task more easier to complete. If schools will remove too many academic lessons, students may struggle to understand the reasons behind their actions. Teachers should therefore pay attention on both kinds of learning. One subject can support another, and students can gradually discover which activities interest them most.\n\nIn conclusion, I support giving practical skills a clear place in the school timetable, but I would not make them the main purpose of education. A balanced programme can prepare teenagers for everyday life while keeping the academic foundations that they may need for further study.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "should spends",
+                "after": "should spend",
+                "why": "После модального should нужна базовая форма",
+                "alternatives": [
+                  "should spend"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "Practical lessons prepares",
+                "after": "Practical lessons prepare",
+                "why": "Подлежащее во множественном числе",
+                "alternatives": [
+                  "Practical lessons prepare"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "This mean",
+                "after": "This means",
+                "why": "This в единственном числе",
+                "alternatives": [
+                  "This means"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "an useful break",
+                "after": "a useful break",
+                "why": "Useful начинается с согласного звука /j/, выбор артикля по звуку",
+                "alternatives": [
+                  "a useful break"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "academic subjects also gives",
+                "after": "academic subjects also give",
+                "why": "Согласование с subjects",
+                "alternatives": [
+                  "academic subjects also give"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "offers informations",
+                "after": "offers information",
+                "why": "Information здесь неисчисляемое",
+                "alternatives": [
+                  "offers information"
+                ]
+              },
+              {
+                "id": "G7",
+                "before": "This knowledges",
+                "after": "This knowledge",
+                "why": "Knowledge в этом значении неисчисляемое; this сохраняется",
+                "alternatives": [
+                  "This knowledge"
+                ]
+              },
+              {
+                "id": "G8",
+                "before": "more easier",
+                "after": "easier",
+                "why": "Не удваивать сравнительную степень; much easier допустимо, но добавляет степень",
+                "alternatives": [
+                  "easier",
+                  "much easier"
+                ]
+              },
+              {
+                "id": "G9",
+                "before": "If schools will remove",
+                "after": "If schools remove",
+                "why": "В этом обычном будущем условии present simple; will в if-clause возможно в других значениях, например готовности, поэтому запрет не универсальный",
+                "alternatives": [
+                  "If schools remove"
+                ]
+              },
+              {
+                "id": "G10",
+                "before": "pay attention on",
+                "after": "pay attention to",
+                "why": "Сочетаемость: pay attention to",
+                "alternatives": [
+                  "pay attention to"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "My cousin joined a cooking club and became more confident, which proves that practical activities are better for every student.",
+              "explanation": "Один родственник не доказывает преимущество для каждого ученика. Ограничь вывод механизмом конкретной практической деятельности.",
+              "example": "A cooking activity may help a teenager build confidence by planning a task, following instructions and seeing a usable result. My cousin's experience illustrates this possibility, but other students may benefit from different activities. Such an example supports including practical work without proving that it deserves more time than every academic subject."
+            },
+            "languageOnly": "Many people argue that schools should spend more time on practical skills than on traditional academic subjects. I partly agree with this view. Students need academic knowledge, but they also need opportunities to use it outside the classroom. In my opinion, schools should connect these two kinds of learning instead of replacing one with the other.\n\nPractical lessons prepare teenagers for situations that they may face after leaving school. For example, a lesson about planning a budget can show students how to compare prices and avoid spending all their money at once. This means that school learning becomes more useful in daily life. My cousin joined a cooking club and became more confident, which proves that practical activities are better for every student. Such lessons can also provide a useful break from sitting at a desk. Students may feel proud when they create something that they can actually use.\n\nHowever, academic subjects also give students tools that practical activities depend on. Mathematics offers information about numbers, while science helps young people understand how materials and natural processes work. This knowledge can make a practical task easier to complete. If schools remove too many academic lessons, students may struggle to understand the reasons behind their actions. Teachers should therefore pay attention to both kinds of learning. One subject can support another, and students can gradually discover which activities interest them most.\n\nIn conclusion, I support giving practical skills a clear place in the school timetable, but I would not make them the main purpose of education. A balanced programme can prepare teenagers for everyday life while keeping the academic foundations that they may need for further study.",
+            "example": "Many people argue that schools should spend more time on practical skills than on traditional academic subjects. I partly agree with this view. Students need academic knowledge, but they also need opportunities to use it outside the classroom. In my opinion, schools should connect these two kinds of learning instead of replacing one with the other.\n\nPractical lessons prepare teenagers for situations that they may face after leaving school. For example, a lesson about planning a budget can show students how to compare prices and avoid spending all their money at once. This means that school learning becomes more useful in daily life. A cooking activity may help a teenager build confidence by planning a task, following instructions and seeing a usable result. My cousin's experience illustrates this possibility, but other students may benefit from different activities. Such an example supports including practical work without proving that it deserves more time than every academic subject. Such lessons can also provide a useful break from sitting at a desk. Students may feel proud when they create something that they can actually use.\n\nHowever, academic subjects also give students tools that practical activities depend on. Mathematics offers information about numbers, while science helps young people understand how materials and natural processes work. This knowledge can make a practical task easier to complete. If schools remove too many academic lessons, students may struggle to understand the reasons behind their actions. Teachers should therefore pay attention to both kinds of learning. One subject can support another, and students can gradually discover which activities interest them most.\n\nIn conclusion, I support giving practical skills a clear place in the school timetable, but I would not make them the main purpose of education. A balanced programme can prepare teenagers for everyday life while keeping the academic foundations that they may need for further study.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Автор поддерживает сочетание предметов, но не вполне отвечает на сравнение времени practical versus academic. Даже развитый пример не снимает эту отдельную проблему позиции."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Бюджет, готовка и отдых перечислены: развей одну линию и покажи связь с распределением учебного времени."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Information и knowledge здесь неисчисляемые. Полезную альтернативу проверяй по смыслу; более сложное слово не обязательно лучше."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Десять целевых фрагментов проверяются отдельно от содержания. Will в if-clause не запрещён во всех контекстах; здесь обычное будущее условие."
+              }
+            ]
+          },
+          {
+            "prompt": "Some people believe schools with limited funds should spend more on sports facilities than on arts facilities. To what extent do you agree or disagree?",
+            "text": "Schools with limited budgets must decide which facilities deserve their attention. Some people believe they should spends more on sport than on the arts. I disagree with making sport the automatic priority. Both activities can benefit teenagers, and spending should depend on the facilities that a particular school already has and the opportunities its students lack.\n\nArt lessons gives students a way to explore ideas through music, drawing or performance. A school does not necessarily need an expensive theatre to offer these opportunities, but it may need a suitable room and basic materials. Access to instruments can helps a student try music before a family decides whether to buy one. My friend enjoyed a painting lesson, which proves that spending on art is always better than spending on sport. For some teenagers, a creative activity also provides an useful change from their ordinary classroom routine. However, enjoyment alone cannot tell a school how to divide a limited budget.\n\nSport has a different role because it provides structured opportunities for physical activity and cooperation. Safe equipment and an appropriate place to exercise can allow classes to take part without depending entirely on outside clubs. Schools should maintain their sports equipments and consider whether students with different abilities can participate. Clear routes and suitable spaces may make participation more easier. Yet a school with a well-maintained sports hall and no music room might reasonably give its next available funds to the arts. A school in the opposite situation could make a different choice.\n\nIn conclusion, I would reject a fixed rule that puts sports facilities above arts facilities. Schools should first check safety, existing provision and barriers to participation. They can then explain which investment addresses the most serious gap while retaining worthwhile opportunities in both areas.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "should spends",
+                "after": "should spend",
+                "why": "После should нужна базовая форма.",
+                "alternatives": [
+                  "should spend"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "Art lessons gives",
+                "after": "Art lessons give",
+                "why": "Согласование с множественным lessons.",
+                "alternatives": [
+                  "Art lessons give"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "can helps",
+                "after": "can help",
+                "why": "После can нужна базовая форма.",
+                "alternatives": [
+                  "can help"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "an useful change",
+                "after": "a useful change",
+                "why": "Useful начинается со звука /j/, артикль выбирается по звуку.",
+                "alternatives": [
+                  "a useful change"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "sports equipments",
+                "after": "sports equipment",
+                "why": "Equipment в значении инвентаря неисчисляемое.",
+                "alternatives": [
+                  "sports equipment"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "more easier",
+                "after": "easier",
+                "why": "Не удваивать сравнительную степень.",
+                "alternatives": [
+                  "easier",
+                  "much easier"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "My friend enjoyed a painting lesson, which proves that spending on art is always better than spending on sport.",
+              "explanation": "Удовольствие одного друга не устанавливает универсальный приоритет бюджета. Свяжи пример с конкретным дефицитом возможностей и обозначь границу.",
+              "example": "A student who enjoys painting may benefit from access to materials that are unavailable at home. This illustrates one reason to improve arts provision where it is missing, but it does not establish that every arts purchase should take priority over safe sports facilities."
+            },
+            "languageOnly": "Schools with limited budgets must decide which facilities deserve their attention. Some people believe they should spend more on sport than on the arts. I disagree with making sport the automatic priority. Both activities can benefit teenagers, and spending should depend on the facilities that a particular school already has and the opportunities its students lack.\n\nArt lessons give students a way to explore ideas through music, drawing or performance. A school does not necessarily need an expensive theatre to offer these opportunities, but it may need a suitable room and basic materials. Access to instruments can help a student try music before a family decides whether to buy one. My friend enjoyed a painting lesson, which proves that spending on art is always better than spending on sport. For some teenagers, a creative activity also provides a useful change from their ordinary classroom routine. However, enjoyment alone cannot tell a school how to divide a limited budget.\n\nSport has a different role because it provides structured opportunities for physical activity and cooperation. Safe equipment and an appropriate place to exercise can allow classes to take part without depending entirely on outside clubs. Schools should maintain their sports equipment and consider whether students with different abilities can participate. Clear routes and suitable spaces may make participation easier. Yet a school with a well-maintained sports hall and no music room might reasonably give its next available funds to the arts. A school in the opposite situation could make a different choice.\n\nIn conclusion, I would reject a fixed rule that puts sports facilities above arts facilities. Schools should first check safety, existing provision and barriers to participation. They can then explain which investment addresses the most serious gap while retaining worthwhile opportunities in both areas.",
+            "example": "Schools with limited budgets must decide which facilities deserve their attention. Some people believe they should spend more on sport than on the arts. I disagree with making sport the automatic priority. Both activities can benefit teenagers, and spending should depend on the facilities that a particular school already has and the opportunities its students lack.\n\nArt lessons give students a way to explore ideas through music, drawing or performance. A school does not necessarily need an expensive theatre to offer these opportunities, but it may need a suitable room and basic materials. Access to instruments can help a student try music before a family decides whether to buy one. A student who enjoys painting may benefit from access to materials that are unavailable at home. This illustrates one reason to improve arts provision where it is missing, but it does not establish that every arts purchase should take priority over safe sports facilities. For some teenagers, a creative activity also provides a useful change from their ordinary classroom routine. However, enjoyment alone cannot tell a school how to divide a limited budget.\n\nSport has a different role because it provides structured opportunities for physical activity and cooperation. Safe equipment and an appropriate place to exercise can allow classes to take part without depending entirely on outside clubs. Schools should maintain their sports equipment and consider whether students with different abilities can participate. Clear routes and suitable spaces may make participation easier. Yet a school with a well-maintained sports hall and no music room might reasonably give its next available funds to the arts. A school in the opposite situation could make a different choice.\n\nIn conclusion, I would reject a fixed rule that puts sports facilities above arts facilities. Schools should first check safety, existing provision and barriers to participation. They can then explain which investment addresses the most serious gap while retaining worthwhile opportunities in both areas.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Позиция против автоматического приоритета ясна; сравнивай инвестиции с конкретным дефицитом, а не удовольствием одного человека."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Абзацы сравнивают разные потребности; пример должен поддерживать решение о распределении средств."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Facilities, provision и barriers уместны; оборудование не превращается в equipments. Не менять корректные слова ради сложности."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Шесть целевых фрагментов не исчерпывают ручную проверку и не определяют band. Альтернатива much easier добавляет степень."
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "W02",
       "title": "Homework every day",
       "category": "Writing Task 2",
       "status": "DRAFT",
-      "student_markdown": "### Задание\n\nSome people think secondary school students should do homework every day. Others believe their evenings should be free from schoolwork. Discuss both views and give your own opinion.\n\n### Учебное эссе\n\nPeople disagree about whether secondary school students should receive homework every day. Some believe that homework are essential for progress, while others want young people to have free evenings. I think regular practice is useful, but schools should choose tasks carefully and leave enough time for rest and other activities.\n\nSupporters of daily homework argue that students has to repeat what they learn in class. A short task allows them to revise an idea before they forget it. When a student finish several similar questions, the method may become easier to remember. My school gave us exercises every evening, and many of my classmates received good marks. Therefore, daily homework guarantees success in examinations. It also teaches responsibility because students must complete a task without a teacher standing beside them. These habits may be useful later when they study more independently.\n\nOn the other hand, teenagers need time for activities that are not connected to school. They may play sport, help at home or talk to friends. Rest can make them feel more better the next morning. If students spend their entire evening for completing worksheets, they may loses interest in learning. Parents can offer useful advices about how to organise this time, but they cannot create more hours in the day. I know a student who stopped attending a music club because of homework. This shows that homework is harmful and should never be given.\n\nIn my view, neither extreme is necessary. Teachers should give short tasks when practice has a clear purpose, and they should coordinate deadlines across subjects. Students should also have some evenings without homework. This approach can keep the benefits of practice while allowing young people to develop interests and recover from a busy school day.\n\n### Твои действия\n\n1. Исправь грамматику и неточные сочетания слов, сохранив содержание.\n2. Найди два места, где автор делает слишком сильный вывод из одного примера.\n3. Выбери одну позицию и развей её: объясни механизм, добавь подходящий пример и обозначь границу утверждения.\n4. Проверь, согласуется ли твоя правка с выводом автора. После разбора сохраняй новую версию отдельно от первой.",
-      "teacher_markdown": "### Карта языковых проблем\n\n| ID | Исходный фрагмент | Минимальная правка | Причина / граница |\n|---|---|---|---|\n| W02-G1 | homework are essential | homework is essential | Homework здесь неисчисляемое, согласование в единственном числе |\n| W02-G2 | students has to repeat | students have to repeat | Согласование с students |\n| W02-G3 | a student finish | a student finishes | Единственное число в present simple |\n| W02-G4 | feel more better | feel better | Двойная сравнительная степень; feel much better грамматически допустимо, но сильнее по смыслу |\n| W02-L1 | spend their entire evening for completing | spend their entire evening completing | Допустимо также spend their entire evening on completing; обычная конструкция spend time doing/on something |\n| W02-G5 | may loses interest | may lose interest | Базовая форма после may |\n| W02-G6 | useful advices | useful advice | Advice здесь неисчисляемое; useful pieces of advice допустимо |\n\n### Четыре критерия\n\n**Task Response.** Обе позиции обсуждаются; собственное мнение в заключении ясное и согласуется с введением. Два вывода из единичных примеров чрезмерны: `daily homework guarantees success` и `homework is harmful and should never be given`. Нужна связь между разумной практикой и обучением, а также ограничение вреда чрезмерной нагрузки.\n\n**Coherence and Cohesion.** Структура понятна. Во втором и третьем абзацах выводы из примеров меняют осторожный аргумент на универсальное утверждение. Исправление должно улучшить ход мысли, а не просто добавить however или therefore.\n\n**Lexical Resource.** Словарь в целом достаточен для темы. `advices` и `spend ... for completing` — целевые проблемы. `free evenings`, `coordinate deadlines` и `clear purpose` корректны; не заменять их ради более сложной лексики.\n\n**Grammatical Range and Accuracy.** Есть разные конструкции, но формы после модальных глаголов и согласование требуют внимания. Проверить исправленный текст целиком; не назначать band по семи найденным фрагментам.\n\n### Пример более сильной версии\n\nУчебная редакция без band; сохранена позиция «целенаправленная практика с временем для отдыха».\n\nSome people believe secondary school students need homework every day, whereas others think their evenings should be free from schoolwork. I believe homework can be useful when it has a clear learning purpose, but assigning it daily regardless of students' other commitments can create unnecessary pressure. Schools should consider both the task and the total workload.\n\nThe strongest argument for homework is that it gives students an opportunity to practise independently. After a mathematics lesson, for example, a few carefully chosen questions can show whether a student can use a method without immediate help. The answers also allow the teacher to identify what needs further explanation. This benefit depends on suitable tasks and later feedback. Repeating many nearly identical questions is less useful if the student keeps making the same mistake without understanding it. Homework can therefore support learning, but its presence alone does not guarantee examination success.\n\nThose who favour free evenings point out that teenagers also need rest and activities outside school. A student who travels a long distance home may have little time left for sport, family responsibilities or a music club. If several teachers set lengthy tasks for the same evening, the student may complete them hurriedly or lose sleep. This example explains why an excessive combined workload can be a problem; it does not show that every homework task is harmful. Short, relevant practice may fit comfortably alongside other activities.\n\nIn conclusion, I would keep homework but avoid treating a daily assignment as a goal in itself. Teachers should coordinate deadlines, explain the purpose of each task and leave some evenings free. This gives students opportunities to practise while protecting time for interests and recovery.\n\n### Проверка правки ученика\n\n- Обе позиции представлены справедливо?\n- Убраны ли guarantees и should never либо появились достаточные основания для таких сильных утверждений?\n- Пример иллюстрирует объяснённый механизм?\n- Итоговая позиция согласуется с аргументами?\n- Языковая правка отделена от содержательного переписывания?",
-      "language_only_markdown": "People disagree about whether secondary school students should receive homework every day. Some believe that homework is essential for progress, while others want young people to have free evenings. I think regular practice is useful, but schools should choose tasks carefully and leave enough time for rest and other activities.\n\nSupporters of daily homework argue that students have to repeat what they learn in class. A short task allows them to revise an idea before they forget it. When a student finishes several similar questions, the method may become easier to remember. My school gave us exercises every evening, and many of my classmates received good marks. Therefore, daily homework guarantees success in examinations. It also teaches responsibility because students must complete a task without a teacher standing beside them. These habits may be useful later when they study more independently.\n\nOn the other hand, teenagers need time for activities that are not connected to school. They may play sport, help at home or talk to friends. Rest can make them feel better the next morning. If students spend their entire evening completing worksheets, they may lose interest in learning. Parents can offer useful advice about how to organise this time, but they cannot create more hours in the day. I know a student who stopped attending a music club because of homework. This shows that homework is harmful and should never be given.\n\nIn my view, neither extreme is necessary. Teachers should give short tasks when practice has a clear purpose, and they should coordinate deadlines across subjects. Students should also have some evenings without homework. This approach can keep the benefits of practice while allowing young people to develop interests and recover from a busy school day."
+      "student_markdown": "### Задание\n\nSome people think secondary school students should do homework every day. Others believe their evenings should be free from schoolwork. Discuss both views and give your own opinion.\n\n### Учебное эссе\n\nPeople disagree about whether secondary school students should receive homework every day. Some believe that homework are essential for progress, while others want young people to have free evenings. I think regular practice is useful, but schools should choose tasks carefully and leave enough time for rest and other activities.\n\nSupporters of daily homework argue that students has to repeat what they learn in class. A short task allows them to revise an idea before they forget it. When a student finish several similar questions, the method may become easier to remember. My school gave us exercises every evening, and many of my classmates received good marks. Therefore, daily homework guarantees success in examinations. It also teaches responsibility because students must complete a task without a teacher standing beside them. These habits may be useful later when they study more independently.\n\nOn the other hand, teenagers need time for activities that are not connected to school. They may play sport, help at home or talk to friends. Rest can make them feel more better the next morning. If students spend their entire evening for completing worksheets, they may loses interest in learning. Parents can offer useful advices about how to organise this time, but they cannot create more hours in the day. I know a student who stopped attending a music club because of homework. This shows that homework is harmful and should never be given.\n\nIn my view, neither extreme is necessary. Teachers should give short tasks when practice has a clear purpose, and they should coordinate deadlines across subjects. Students should also have some evenings without homework. This approach can keep the benefits of practice while allowing young people to develop interests and recover from a busy school day.\n\nСначала найди проблемы самостоятельно. Затем сравни язык и аргументы отдельно, запиши пересмотр и перейди к другому эссе. Свободный текст проверяется вручную; DRAFT не получает band.",
+      "teacher_markdown": "### Карта языковых проблем\n\n| ID | Исходный фрагмент | Минимальная правка | Причина / граница |\n|---|---|---|---|\n| W02-G1 | homework are essential | homework is essential | Homework здесь неисчисляемое, согласование в единственном числе |\n| W02-G2 | students has to repeat | students have to repeat | Согласование с students |\n| W02-G3 | a student finish | a student finishes | Единственное число в present simple |\n| W02-G4 | feel more better | feel better | Двойная сравнительная степень; feel much better грамматически допустимо, но сильнее по смыслу |\n| W02-L1 | spend their entire evening for completing | spend their entire evening completing | Допустимо также spend their entire evening on completing; обычная конструкция spend time doing/on something |\n| W02-G5 | may loses interest | may lose interest | Базовая форма после may |\n| W02-G6 | useful advices | useful advice | Advice здесь неисчисляемое; useful pieces of advice допустимо |\n\n### Четыре критерия\n\n**Task Response.** Обе позиции обсуждаются; собственное мнение в заключении ясное и согласуется с введением. Два вывода из единичных примеров чрезмерны: `daily homework guarantees success` и `homework is harmful and should never be given`. Нужна связь между разумной практикой и обучением, а также ограничение вреда чрезмерной нагрузки.\n\n**Coherence and Cohesion.** Структура понятна. Во втором и третьем абзацах выводы из примеров меняют осторожный аргумент на универсальное утверждение. Исправление должно улучшить ход мысли, а не просто добавить however или therefore.\n\n**Lexical Resource.** Словарь в целом достаточен для темы. `advices` и `spend ... for completing` — целевые проблемы. `free evenings`, `coordinate deadlines` и `clear purpose` корректны; не заменять их ради более сложной лексики.\n\n**Grammatical Range and Accuracy.** Есть разные конструкции, но формы после модальных глаголов и согласование требуют внимания. Проверить исправленный текст целиком; не назначать band по семи найденным фрагментам.\n\n### Пример более сильной версии\n\nУчебная редакция без band; сохранена позиция «целенаправленная практика с временем для отдыха».\n\nSome people believe secondary school students need homework every day, whereas others think their evenings should be free from schoolwork. I believe homework can be useful when it has a clear learning purpose, but assigning it daily regardless of students' other commitments can create unnecessary pressure. Schools should consider both the task and the total workload.\n\nThe strongest argument for homework is that it gives students an opportunity to practise independently. After a mathematics lesson, for example, a few carefully chosen questions can show whether a student can use a method without immediate help. The answers also allow the teacher to identify what needs further explanation. This benefit depends on suitable tasks and later feedback. Repeating many nearly identical questions is less useful if the student keeps making the same mistake without understanding it. Homework can therefore support learning, but its presence alone does not guarantee examination success.\n\nThose who favour free evenings point out that teenagers also need rest and activities outside school. A student who travels a long distance home may have little time left for sport, family responsibilities or a music club. If several teachers set lengthy tasks for the same evening, the student may complete them hurriedly or lose sleep. This example explains why an excessive combined workload can be a problem; it does not show that every homework task is harmful. Short, relevant practice may fit comfortably alongside other activities.\n\nIn conclusion, I would keep homework but avoid treating a daily assignment as a goal in itself. Teachers should coordinate deadlines, explain the purpose of each task and leave some evenings free. This gives students opportunities to practise while protecting time for interests and recovery.\n\n### Проверка правки ученика\n\n- Обе позиции представлены справедливо?\n- Убраны ли guarantees и should never либо появились достаточные основания для таких сильных утверждений?\n- Пример иллюстрирует объяснённый механизм?\n- Итоговая позиция согласуется с аргументами?\n- Языковая правка отделена от содержательного переписывания?\n\n### Интерактивная версия 2: границы\n\nTask Response: Обе стороны и умеренное мнение присутствуют. В этой пробе развивается первый слабый аргумент; второй вывод homework is harmful and should never be given остаётся для отдельной правки. Пример не является идеальным готовым эссе.\n\nCoherence and Cohesion: Универсальные выводы из двух частных случаев нарушают осторожную линию рассуждения. Исправление одного не исправляет второй автоматически.\n\nLexical Resource: Free evenings и coordinate deadlines корректны. Advice неисчисляемое; pieces of advice допустимо при конкретизации числа советов.\n\nGrammatical Range and Accuracy: Семь целей: согласование, формы после модальных глаголов, сравнение и сочетания. Проверь остальные предложения вручную, не вычисляй band по числу исправлений.\n\n### Другой учебный текст\n\nSome people think museums should be free to enter. Others believe visitors should pay an admission charge. Discuss both views and give your own opinion.\n\nPeople disagree about how museums should fund public access to their collections. Supporters of free entry argue that cultural learning should not depend on a person's income. Others believe a charge helps institutions maintain their services. I favour free access to permanent collections where reliable funding is available, while allowing clearly explained charges for optional activities or special exhibitions.\n\nFree entry can remove one immediate barrier for families who want to visit. A parent may be more willing to bring children for a short visit when there is no pressure to stay long enough to justify a ticket. Museum visitors has different interests, and returning several times can make it possible to explore one subject gradually. Museums should provides clear explanations so that access leads to a useful learning experience. Well-designed labels offer informations about objects without requiring visitors to know specialist terms. My cousin visited a free museum and liked it, so free entry guarantees that every child will become interested in history. This claim seems attractive, but admission price is only one part of a visitor's experience.\n\nThose who support charges point to the continuing cost of caring for collections and running a building. A museum may need trained staff, secure storage and repairs even when visitor numbers are low. Charging can contribute to these costs, although a ticket alone may not cover them all. Reduced-price tickets can make a visit more cheaper for families on limited incomes. People who visits regularly might also benefit from a membership scheme. Institutions should pay attention on whether their arrangements exclude people who would otherwise attend, and they should explain how additional income supports their work.\n\nIn conclusion, neither a free door nor a paid ticket automatically creates a successful museum. I would keep permanent collections accessible without a charge when sustainable support exists, combine this with clear learning materials, and use carefully limited charges where they serve an explained purpose.\n\n### Языковые цели\n\nMuseum visitors has → Museum visitors have: Согласование с множественным visitors.\n\nshould provides → should provide: После should нужна базовая форма.\n\noffer informations → offer information: Information здесь неисчисляемое.\n\nmore cheaper → cheaper: Двойная сравнительная степень.\n\nPeople who visits → People who visit: Who относится к people; глагол согласуется с множественным подлежащим.\n\npay attention on → pay attention to: Устойчивое сочетание pay attention to.\n\nОпыт одного посетителя показывает возможность интереса, а не гарантированный эффект для каждого ребёнка. Отдели финансовую доступность от качества обучения.\n\nPeople disagree about how museums should fund public access to their collections. Supporters of free entry argue that cultural learning should not depend on a person's income. Others believe a charge helps institutions maintain their services. I favour free access to permanent collections where reliable funding is available, while allowing clearly explained charges for optional activities or special exhibitions.\n\nFree entry can remove one immediate barrier for families who want to visit. A parent may be more willing to bring children for a short visit when there is no pressure to stay long enough to justify a ticket. Museum visitors have different interests, and returning several times can make it possible to explore one subject gradually. Museums should provide clear explanations so that access leads to a useful learning experience. Well-designed labels offer information about objects without requiring visitors to know specialist terms. A child who can return without buying another ticket may have more opportunities to explore a favourite display. This can support an existing interest when the exhibits are understandable and relevant, but removing a charge does not by itself make every child interested in history. This claim seems attractive, but admission price is only one part of a visitor's experience.\n\nThose who support charges point to the continuing cost of caring for collections and running a building. A museum may need trained staff, secure storage and repairs even when visitor numbers are low. Charging can contribute to these costs, although a ticket alone may not cover them all. Reduced-price tickets can make a visit cheaper for families on limited incomes. People who visit regularly might also benefit from a membership scheme. Institutions should pay attention to whether their arrangements exclude people who would otherwise attend, and they should explain how additional income supports their work.\n\nIn conclusion, neither a free door nor a paid ticket automatically creates a successful museum. I would keep permanent collections accessible without a charge when sustainable support exists, combine this with clear learning materials, and use carefully limited charges where they serve an explained purpose.",
+      "language_only_markdown": "People disagree about whether secondary school students should receive homework every day. Some believe that homework is essential for progress, while others want young people to have free evenings. I think regular practice is useful, but schools should choose tasks carefully and leave enough time for rest and other activities.\n\nSupporters of daily homework argue that students have to repeat what they learn in class. A short task allows them to revise an idea before they forget it. When a student finishes several similar questions, the method may become easier to remember. My school gave us exercises every evening, and many of my classmates received good marks. Therefore, daily homework guarantees success in examinations. It also teaches responsibility because students must complete a task without a teacher standing beside them. These habits may be useful later when they study more independently.\n\nOn the other hand, teenagers need time for activities that are not connected to school. They may play sport, help at home or talk to friends. Rest can make them feel better the next morning. If students spend their entire evening completing worksheets, they may lose interest in learning. Parents can offer useful advice about how to organise this time, but they cannot create more hours in the day. I know a student who stopped attending a music club because of homework. This shows that homework is harmful and should never be given.\n\nIn my view, neither extreme is necessary. Teachers should give short tasks when practice has a clear purpose, and they should coordinate deadlines across subjects. Students should also have some evenings without homework. This approach can keep the benefits of practice while allowing young people to develop interests and recover from a busy school day.",
+      "exercise_data": {
+        "kind": "task2-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "skill": "Сначала самостоятельный поиск языковых целей, затем развитие ограниченного аргумента без гарантированного результата.",
+        "rounds": [
+          {
+            "prompt": "Some people think secondary school students should do homework every day. Others believe their evenings should be free from schoolwork. Discuss both views and give your own opinion.",
+            "text": "People disagree about whether secondary school students should receive homework every day. Some believe that homework are essential for progress, while others want young people to have free evenings. I think regular practice is useful, but schools should choose tasks carefully and leave enough time for rest and other activities.\n\nSupporters of daily homework argue that students has to repeat what they learn in class. A short task allows them to revise an idea before they forget it. When a student finish several similar questions, the method may become easier to remember. My school gave us exercises every evening, and many of my classmates received good marks. Therefore, daily homework guarantees success in examinations. It also teaches responsibility because students must complete a task without a teacher standing beside them. These habits may be useful later when they study more independently.\n\nOn the other hand, teenagers need time for activities that are not connected to school. They may play sport, help at home or talk to friends. Rest can make them feel more better the next morning. If students spend their entire evening for completing worksheets, they may loses interest in learning. Parents can offer useful advices about how to organise this time, but they cannot create more hours in the day. I know a student who stopped attending a music club because of homework. This shows that homework is harmful and should never be given.\n\nIn my view, neither extreme is necessary. Teachers should give short tasks when practice has a clear purpose, and they should coordinate deadlines across subjects. Students should also have some evenings without homework. This approach can keep the benefits of practice while allowing young people to develop interests and recover from a busy school day.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "homework are essential",
+                "after": "homework is essential",
+                "why": "Homework здесь неисчисляемое, согласование в единственном числе",
+                "alternatives": [
+                  "homework is essential"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "students has to repeat",
+                "after": "students have to repeat",
+                "why": "Согласование с students",
+                "alternatives": [
+                  "students have to repeat"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "a student finish",
+                "after": "a student finishes",
+                "why": "Единственное число в present simple",
+                "alternatives": [
+                  "a student finishes"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "feel more better",
+                "after": "feel better",
+                "why": "Двойная сравнительная степень; feel much better грамматически допустимо, но сильнее по смыслу",
+                "alternatives": [
+                  "feel better",
+                  "feel much better"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "spend their entire evening for completing",
+                "after": "spend their entire evening completing",
+                "why": "Допустимо также spend their entire evening on completing; обычная конструкция spend time doing/on something",
+                "alternatives": [
+                  "spend their entire evening completing",
+                  "spend their entire evening on completing"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "may loses interest",
+                "after": "may lose interest",
+                "why": "Базовая форма после may",
+                "alternatives": [
+                  "may lose interest"
+                ]
+              },
+              {
+                "id": "G7",
+                "before": "useful advices",
+                "after": "useful advice",
+                "why": "Advice здесь неисчисляемое; useful pieces of advice допустимо",
+                "alternatives": [
+                  "useful advice",
+                  "useful pieces of advice"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "My school gave us exercises every evening, and many of my classmates received good marks. Therefore, daily homework guarantees success in examinations.",
+              "explanation": "Сосуществование домашней работы и хороших оценок не доказывает гарантию. Объясни возможность самостоятельной практики и роль обратной связи. В другом абзаце остаётся отдельный слишком сильный вывод should never be given.",
+              "example": "After a lesson, a short task can show whether a student can use an idea without immediate help. A teacher can then use the answers to identify what needs further explanation. My classmates' good marks are compatible with this possible benefit, but their results do not show that daily homework guarantees success for everyone."
+            },
+            "languageOnly": "People disagree about whether secondary school students should receive homework every day. Some believe that homework is essential for progress, while others want young people to have free evenings. I think regular practice is useful, but schools should choose tasks carefully and leave enough time for rest and other activities.\n\nSupporters of daily homework argue that students have to repeat what they learn in class. A short task allows them to revise an idea before they forget it. When a student finishes several similar questions, the method may become easier to remember. My school gave us exercises every evening, and many of my classmates received good marks. Therefore, daily homework guarantees success in examinations. It also teaches responsibility because students must complete a task without a teacher standing beside them. These habits may be useful later when they study more independently.\n\nOn the other hand, teenagers need time for activities that are not connected to school. They may play sport, help at home or talk to friends. Rest can make them feel better the next morning. If students spend their entire evening completing worksheets, they may lose interest in learning. Parents can offer useful advice about how to organise this time, but they cannot create more hours in the day. I know a student who stopped attending a music club because of homework. This shows that homework is harmful and should never be given.\n\nIn my view, neither extreme is necessary. Teachers should give short tasks when practice has a clear purpose, and they should coordinate deadlines across subjects. Students should also have some evenings without homework. This approach can keep the benefits of practice while allowing young people to develop interests and recover from a busy school day.",
+            "example": "People disagree about whether secondary school students should receive homework every day. Some believe that homework is essential for progress, while others want young people to have free evenings. I think regular practice is useful, but schools should choose tasks carefully and leave enough time for rest and other activities.\n\nSupporters of daily homework argue that students have to repeat what they learn in class. A short task allows them to revise an idea before they forget it. When a student finishes several similar questions, the method may become easier to remember. After a lesson, a short task can show whether a student can use an idea without immediate help. A teacher can then use the answers to identify what needs further explanation. My classmates' good marks are compatible with this possible benefit, but their results do not show that daily homework guarantees success for everyone. It also teaches responsibility because students must complete a task without a teacher standing beside them. These habits may be useful later when they study more independently.\n\nOn the other hand, teenagers need time for activities that are not connected to school. They may play sport, help at home or talk to friends. Rest can make them feel better the next morning. If students spend their entire evening completing worksheets, they may lose interest in learning. Parents can offer useful advice about how to organise this time, but they cannot create more hours in the day. I know a student who stopped attending a music club because of homework. This shows that homework is harmful and should never be given.\n\nIn my view, neither extreme is necessary. Teachers should give short tasks when practice has a clear purpose, and they should coordinate deadlines across subjects. Students should also have some evenings without homework. This approach can keep the benefits of practice while allowing young people to develop interests and recover from a busy school day.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Обе стороны и умеренное мнение присутствуют. В этой пробе развивается первый слабый аргумент; второй вывод homework is harmful and should never be given остаётся для отдельной правки. Пример не является идеальным готовым эссе."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Универсальные выводы из двух частных случаев нарушают осторожную линию рассуждения. Исправление одного не исправляет второй автоматически."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Free evenings и coordinate deadlines корректны. Advice неисчисляемое; pieces of advice допустимо при конкретизации числа советов."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Семь целей: согласование, формы после модальных глаголов, сравнение и сочетания. Проверь остальные предложения вручную, не вычисляй band по числу исправлений."
+              }
+            ]
+          },
+          {
+            "prompt": "Some people think museums should be free to enter. Others believe visitors should pay an admission charge. Discuss both views and give your own opinion.",
+            "text": "People disagree about how museums should fund public access to their collections. Supporters of free entry argue that cultural learning should not depend on a person's income. Others believe a charge helps institutions maintain their services. I favour free access to permanent collections where reliable funding is available, while allowing clearly explained charges for optional activities or special exhibitions.\n\nFree entry can remove one immediate barrier for families who want to visit. A parent may be more willing to bring children for a short visit when there is no pressure to stay long enough to justify a ticket. Museum visitors has different interests, and returning several times can make it possible to explore one subject gradually. Museums should provides clear explanations so that access leads to a useful learning experience. Well-designed labels offer informations about objects without requiring visitors to know specialist terms. My cousin visited a free museum and liked it, so free entry guarantees that every child will become interested in history. This claim seems attractive, but admission price is only one part of a visitor's experience.\n\nThose who support charges point to the continuing cost of caring for collections and running a building. A museum may need trained staff, secure storage and repairs even when visitor numbers are low. Charging can contribute to these costs, although a ticket alone may not cover them all. Reduced-price tickets can make a visit more cheaper for families on limited incomes. People who visits regularly might also benefit from a membership scheme. Institutions should pay attention on whether their arrangements exclude people who would otherwise attend, and they should explain how additional income supports their work.\n\nIn conclusion, neither a free door nor a paid ticket automatically creates a successful museum. I would keep permanent collections accessible without a charge when sustainable support exists, combine this with clear learning materials, and use carefully limited charges where they serve an explained purpose.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "Museum visitors has",
+                "after": "Museum visitors have",
+                "why": "Согласование с множественным visitors.",
+                "alternatives": [
+                  "Museum visitors have"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "should provides",
+                "after": "should provide",
+                "why": "После should нужна базовая форма.",
+                "alternatives": [
+                  "should provide"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "offer informations",
+                "after": "offer information",
+                "why": "Information здесь неисчисляемое.",
+                "alternatives": [
+                  "offer information"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "more cheaper",
+                "after": "cheaper",
+                "why": "Двойная сравнительная степень.",
+                "alternatives": [
+                  "cheaper",
+                  "much cheaper"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "People who visits",
+                "after": "People who visit",
+                "why": "Who относится к people; глагол согласуется с множественным подлежащим.",
+                "alternatives": [
+                  "People who visit"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "pay attention on",
+                "after": "pay attention to",
+                "why": "Устойчивое сочетание pay attention to.",
+                "alternatives": [
+                  "pay attention to"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "My cousin visited a free museum and liked it, so free entry guarantees that every child will become interested in history.",
+              "explanation": "Опыт одного посетителя показывает возможность интереса, а не гарантированный эффект для каждого ребёнка. Отдели финансовую доступность от качества обучения.",
+              "example": "A child who can return without buying another ticket may have more opportunities to explore a favourite display. This can support an existing interest when the exhibits are understandable and relevant, but removing a charge does not by itself make every child interested in history."
+            },
+            "languageOnly": "People disagree about how museums should fund public access to their collections. Supporters of free entry argue that cultural learning should not depend on a person's income. Others believe a charge helps institutions maintain their services. I favour free access to permanent collections where reliable funding is available, while allowing clearly explained charges for optional activities or special exhibitions.\n\nFree entry can remove one immediate barrier for families who want to visit. A parent may be more willing to bring children for a short visit when there is no pressure to stay long enough to justify a ticket. Museum visitors have different interests, and returning several times can make it possible to explore one subject gradually. Museums should provide clear explanations so that access leads to a useful learning experience. Well-designed labels offer information about objects without requiring visitors to know specialist terms. My cousin visited a free museum and liked it, so free entry guarantees that every child will become interested in history. This claim seems attractive, but admission price is only one part of a visitor's experience.\n\nThose who support charges point to the continuing cost of caring for collections and running a building. A museum may need trained staff, secure storage and repairs even when visitor numbers are low. Charging can contribute to these costs, although a ticket alone may not cover them all. Reduced-price tickets can make a visit cheaper for families on limited incomes. People who visit regularly might also benefit from a membership scheme. Institutions should pay attention to whether their arrangements exclude people who would otherwise attend, and they should explain how additional income supports their work.\n\nIn conclusion, neither a free door nor a paid ticket automatically creates a successful museum. I would keep permanent collections accessible without a charge when sustainable support exists, combine this with clear learning materials, and use carefully limited charges where they serve an explained purpose.",
+            "example": "People disagree about how museums should fund public access to their collections. Supporters of free entry argue that cultural learning should not depend on a person's income. Others believe a charge helps institutions maintain their services. I favour free access to permanent collections where reliable funding is available, while allowing clearly explained charges for optional activities or special exhibitions.\n\nFree entry can remove one immediate barrier for families who want to visit. A parent may be more willing to bring children for a short visit when there is no pressure to stay long enough to justify a ticket. Museum visitors have different interests, and returning several times can make it possible to explore one subject gradually. Museums should provide clear explanations so that access leads to a useful learning experience. Well-designed labels offer information about objects without requiring visitors to know specialist terms. A child who can return without buying another ticket may have more opportunities to explore a favourite display. This can support an existing interest when the exhibits are understandable and relevant, but removing a charge does not by itself make every child interested in history. This claim seems attractive, but admission price is only one part of a visitor's experience.\n\nThose who support charges point to the continuing cost of caring for collections and running a building. A museum may need trained staff, secure storage and repairs even when visitor numbers are low. Charging can contribute to these costs, although a ticket alone may not cover them all. Reduced-price tickets can make a visit cheaper for families on limited incomes. People who visit regularly might also benefit from a membership scheme. Institutions should pay attention to whether their arrangements exclude people who would otherwise attend, and they should explain how additional income supports their work.\n\nIn conclusion, neither a free door nor a paid ticket automatically creates a successful museum. I would keep permanent collections accessible without a charge when sustainable support exists, combine this with clear learning materials, and use carefully limited charges where they serve an explained purpose.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Обе позиции представлены, собственное мнение ограничено устойчивым финансированием. Не подменять доступ гарантией интереса."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Пример должен объяснять механизм повторных посещений; переход к расходам музея логичен без универсального обещания."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Permanent collections и admission charge соответствуют вопросу. Information неисчисляемое; much cheaper корректно, но сильнее минимальной правки."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "После исправления шести целей проверь остальные конструкции вручную; количество целей не равно официальной оценке."
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "D01",
       "title": "Помощь в подходящее время",
       "category": "Writing · короткая практика",
       "status": "DRAFT",
-      "student_markdown": "**Исходные мысли:**\n\n- Some students cannot afford private tutoring.\n- Many of these students have jobs after school.\n- The school could offer free tutoring at lunchtime.\n\n**Задание:** объедини все три мысли в одно предложение. Покажи, почему предложенное время подходит этим ученикам. Сохрани осторожное could; не обещай результат, которого нет в исходных мыслях.\n\nСначала запиши свой вариант. Возможные варианты для сравнения находятся в разборе.",
-      "teacher_markdown": "**Один допустимый вариант:** Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.\n\n**Другой вариант:** The school could offer free lunchtime tutoring to support students who cannot afford private lessons and have jobs after school.\n\nКритерии: сохранены стоимость, занятость и время; одно связное предложение; could не заменено обещанием результата. Название частного преподавания tutoring/private lessons может различаться.\n\n**Варианты для сравнения после своего черновика:**\n\n1. Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime. — подходит.\n2. Free lunchtime tutoring will ensure that every student achieves excellent examination results. — добавлен гарантированный результат; потеряна причина выбора времени.\n3. The school could offer free tutoring after school because every student is available then. — противоречит занятости части учеников и заменяет lunchtime.\n\nРазбор: предложение объясняет, почему помощь должна быть и бесплатной, и доступной в другое время. Другую правильную формулировку принимать по смыслу, не по совпадению с образцом.",
-      "language_only_markdown": ""
+      "student_markdown": "объедини все три мысли в одно предложение. Покажи, почему предложенное время подходит этим ученикам. Сохрани осторожное could; не обещай результат, которого нет в исходных мыслях.\n\n### Исходные мысли или текст\n- Some students cannot afford private tutoring.\n- Many of these students have jobs after school.\n- The school could offer free tutoring at lunchtime.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
+      "teacher_markdown": "**Один допустимый вариант:** Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.\n\n**Другой вариант:** The school could offer free lunchtime tutoring to support students who cannot afford private lessons and have jobs after school.\n\nКритерии: сохранены стоимость, занятость и время; одно связное предложение; could не заменено обещанием результата. Название частного преподавания tutoring/private lessons может различаться.\n\n**Варианты для сравнения после своего черновика:**\n\n1. Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime. — подходит.\n2. Free lunchtime tutoring will ensure that every student achieves excellent examination results. — добавлен гарантированный результат; потеряна причина выбора времени.\n3. The school could offer free tutoring after school because every student is available then. — противоречит занятости части учеников и заменяет lunchtime.\n\nРазбор: предложение объясняет, почему помощь должна быть и бесплатной, и доступной в другое время. Другую правильную формулировку принимать по смыслу, не по совпадению с образцом.\n\n### Варианты интерактивной версии 2\n\n1. Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.\nПодходит: подходит.\n\n2. Free lunchtime tutoring will ensure that every student achieves excellent examination results.\nНужно пересмотреть: добавлен гарантированный результат; потеряна причина выбора времени.\n\n3. The school could offer free tutoring after school because every student is available then.\nНужно пересмотреть: противоречит занятости части учеников и заменяет lunchtime.\n\nСохрани все исходные ограничения и степень уверенности. Связанное предложение не должно добавлять результат или причину, которых нет в источнике.\n\nДопустимая альтернатива: The school could offer free lunchtime tutoring to support students who cannot afford private lessons and have jobs after school.\n\nДругие правильные связки и порядок частей допустимы при сохранении смысла и осторожности.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "writing-drill-v1",
+        "publication_ready": false,
+        "id": "D01",
+        "title": "Помощь в подходящее время",
+        "mode": "combine",
+        "context": "IELTS Task 2 · авторская короткая практика",
+        "task": "объедини все три мысли в одно предложение. Покажи, почему предложенное время подходит этим ученикам. Сохрани осторожное could; не обещай результат, которого нет в исходных мыслях.",
+        "source": [
+          "Some students cannot afford private tutoring.",
+          "Many of these students have jobs after school.",
+          "The school could offer free tutoring at lunchtime."
+        ],
+        "choices": [
+          {
+            "text": "Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.",
+            "feedback": "подходит.",
+            "best": true
+          },
+          {
+            "text": "Free lunchtime tutoring will ensure that every student achieves excellent examination results.",
+            "feedback": "добавлен гарантированный результат; потеряна причина выбора времени.",
+            "best": false
+          },
+          {
+            "text": "The school could offer free tutoring after school because every student is available then.",
+            "feedback": "противоречит занятости части учеников и заменяет lunchtime.",
+            "best": false
+          }
+        ],
+        "example": "Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.",
+        "explanation": "Сохрани все исходные ограничения и степень уверенности. Связанное предложение не должно добавлять результат или причину, которых нет в источнике.",
+        "criterion": "Связность и грамматика",
+        "accepted_alternatives": [
+          "The school could offer free lunchtime tutoring to support students who cannot afford private lessons and have jobs after school."
+        ],
+        "review_notes": [
+          "Другие правильные связки и порядок частей допустимы при сохранении смысла и осторожности."
+        ]
+      }
     },
     {
       "id": "D02",
       "title": "Велосипедные дорожки",
       "category": "Writing · короткая практика",
       "status": "DRAFT",
-      "student_markdown": "**Исходные мысли:**\n\n- Protected cycle lanes can make cycling safer.\n- Some streets are too narrow for them.\n- The council should consider street width before building them.\n\n**Задание:** объедини мысли в одно предложение. Сохрани пользу дорожек и ограничение. Не превращай can make cycling safer в обещание полной безопасности.",
-      "teacher_markdown": "**Один допустимый вариант:** Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.\n\n**Другой вариант:** The council should consider street width before building protected cycle lanes because, although they can make cycling safer, some streets are too narrow for them.\n\nОба варианта грамматически допустимы. Второй тяжелее для чтения; это предмет обсуждения ясности, не основание назвать его грамматически неверным.\n\n**Варианты для сравнения:**\n\n1. Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow. — подходит.\n2. Protected cycle lanes make every street completely safe, so width does not matter. — усилена уверенность и потеряно ограничение.\n3. The council should avoid cycle lanes because cyclists are not interested in them. — причины нет в исходных мыслях.\n\nПроверка: польза can сохранена; some streets не превращено в all streets; действие совета связано с ограничением.",
-      "language_only_markdown": ""
+      "student_markdown": "объедини мысли в одно предложение. Сохрани пользу дорожек и ограничение. Не превращай can make cycling safer в обещание полной безопасности.\n\n### Исходные мысли или текст\n- Protected cycle lanes can make cycling safer.\n- Some streets are too narrow for them.\n- The council should consider street width before building them.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
+      "teacher_markdown": "**Один допустимый вариант:** Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.\n\n**Другой вариант:** The council should consider street width before building protected cycle lanes because, although they can make cycling safer, some streets are too narrow for them.\n\nОба варианта грамматически допустимы. Второй тяжелее для чтения; это предмет обсуждения ясности, не основание назвать его грамматически неверным.\n\n**Варианты для сравнения:**\n\n1. Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow. — подходит.\n2. Protected cycle lanes make every street completely safe, so width does not matter. — усилена уверенность и потеряно ограничение.\n3. The council should avoid cycle lanes because cyclists are not interested in them. — причины нет в исходных мыслях.\n\nПроверка: польза can сохранена; some streets не превращено в all streets; действие совета связано с ограничением.\n\n### Варианты интерактивной версии 2\n\n1. Protected cycle lanes make every street completely safe, so width does not matter.\nНужно пересмотреть: усилена уверенность и потеряно ограничение.\n\n2. Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.\nПодходит: подходит.\n\n3. The council should avoid cycle lanes because cyclists are not interested in them.\nНужно пересмотреть: причины нет в исходных мыслях.\n\nСохрани все исходные ограничения и степень уверенности. Связанное предложение не должно добавлять результат или причину, которых нет в источнике.\n\nДопустимая альтернатива: The council should consider street width before building protected cycle lanes because, although they can make cycling safer, some streets are too narrow for them.\n\nДругие правильные связки и порядок частей допустимы при сохранении смысла и осторожности.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "writing-drill-v1",
+        "publication_ready": false,
+        "id": "D02",
+        "title": "Велосипедные дорожки",
+        "mode": "combine",
+        "context": "IELTS Task 2 · авторская короткая практика",
+        "task": "объедини мысли в одно предложение. Сохрани пользу дорожек и ограничение. Не превращай can make cycling safer в обещание полной безопасности.",
+        "source": [
+          "Protected cycle lanes can make cycling safer.",
+          "Some streets are too narrow for them.",
+          "The council should consider street width before building them."
+        ],
+        "choices": [
+          {
+            "text": "Protected cycle lanes make every street completely safe, so width does not matter.",
+            "feedback": "усилена уверенность и потеряно ограничение.",
+            "best": false
+          },
+          {
+            "text": "Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.",
+            "feedback": "подходит.",
+            "best": true
+          },
+          {
+            "text": "The council should avoid cycle lanes because cyclists are not interested in them.",
+            "feedback": "причины нет в исходных мыслях.",
+            "best": false
+          }
+        ],
+        "example": "Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.",
+        "explanation": "Сохрани все исходные ограничения и степень уверенности. Связанное предложение не должно добавлять результат или причину, которых нет в источнике.",
+        "criterion": "Связность и грамматика",
+        "accepted_alternatives": [
+          "The council should consider street width before building protected cycle lanes because, although they can make cycling safer, some streets are too narrow for them."
+        ],
+        "review_notes": [
+          "Другие правильные связки и порядок частей допустимы при сохранении смысла и осторожности."
+        ]
+      }
     },
     {
       "id": "D03",
       "title": "Школьные клубы",
       "category": "Writing · короткая практика",
       "status": "DRAFT",
-      "student_markdown": "Each of the students in the two clubs have a separate task.\n\n**Задание:** исправь согласование подлежащего и глагола. Для минимальной правки измени только have. Если хочешь предложить переформулировку, запиши её отдельно.",
-      "teacher_markdown": "**Минимальная правка:** Each of the students in the two clubs has a separate task.\n\nГлавное слово each задаёт единственное число. Students и clubs находятся внутри групп, уточняющих подлежащее.\n\n**Варианты для сравнения:**\n\n1. Each of the students in the two clubs has a separate task. — минимальная правка.\n2. Each of the student in the two clubs has a separate task. — после of the нужен plural students в этой конструкции.\n3. Each of the students in the two clubs have a separate task. — исходная целевая проблема сохранена.\n\n**Допустимая переформулировка:** Every student in the two clubs has a separate task. Она не соответствует инструкции «измени только have», но грамматически корректна. Обратная связь должна различать соблюдение формата и качество английского.",
-      "language_only_markdown": ""
+      "student_markdown": "исправь согласование подлежащего и глагола. Для минимальной правки измени только have. Если хочешь предложить переформулировку, запиши её отдельно.\n\n### Исходные мысли или текст\n- Each of the students in the two clubs have a separate task.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
+      "teacher_markdown": "**Минимальная правка:** Each of the students in the two clubs has a separate task.\n\nГлавное слово each задаёт единственное число. Students и clubs находятся внутри групп, уточняющих подлежащее.\n\n**Варианты для сравнения:**\n\n1. Each of the students in the two clubs has a separate task. — минимальная правка.\n2. Each of the student in the two clubs has a separate task. — после of the нужен plural students в этой конструкции.\n3. Each of the students in the two clubs have a separate task. — исходная целевая проблема сохранена.\n\n**Допустимая переформулировка:** Every student in the two clubs has a separate task. Она не соответствует инструкции «измени только have», но грамматически корректна. Обратная связь должна различать соблюдение формата и качество английского.\n\n### Варианты интерактивной версии 2\n\n1. Each of the student in the two clubs has a separate task.\nНужно пересмотреть: после of the нужен plural students в этой конструкции.\n\n2. Each of the students in the two clubs have a separate task.\nНужно пересмотреть: исходная целевая проблема сохранена.\n\n3. Each of the students in the two clubs has a separate task.\nПодходит: минимальная правка.\n\nПроверь целевую форму, сохраняя остальной смысл. Соблюдение минимального формата и грамматическая корректность переформулировки — разные вопросы.\n\nДопустимая альтернатива: Every student in the two clubs has a separate task.\n\nEvery student грамматически корректно, но не выполняет ограничение изменить только have.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "writing-drill-v1",
+        "publication_ready": false,
+        "id": "D03",
+        "title": "Школьные клубы",
+        "mode": "grammar",
+        "context": "IELTS Task 2 · авторская короткая практика",
+        "task": "исправь согласование подлежащего и глагола. Для минимальной правки измени только have. Если хочешь предложить переформулировку, запиши её отдельно.",
+        "source": [
+          "Each of the students in the two clubs have a separate task."
+        ],
+        "choices": [
+          {
+            "text": "Each of the student in the two clubs has a separate task.",
+            "feedback": "после of the нужен plural students в этой конструкции.",
+            "best": false
+          },
+          {
+            "text": "Each of the students in the two clubs have a separate task.",
+            "feedback": "исходная целевая проблема сохранена.",
+            "best": false
+          },
+          {
+            "text": "Each of the students in the two clubs has a separate task.",
+            "feedback": "минимальная правка.",
+            "best": true
+          }
+        ],
+        "example": "Each of the students in the two clubs has a separate task.",
+        "explanation": "Проверь целевую форму, сохраняя остальной смысл. Соблюдение минимального формата и грамматическая корректность переформулировки — разные вопросы.",
+        "criterion": "Грамматическая точность",
+        "accepted_alternatives": [
+          "Every student in the two clubs has a separate task."
+        ],
+        "review_notes": [
+          "Every student грамматически корректно, но не выполняет ограничение изменить только have."
+        ]
+      }
     },
     {
       "id": "D04",
       "title": "Совет перед экзаменом",
       "category": "Writing · короткая практика",
       "status": "DRAFT",
-      "student_markdown": "Teachers should give students useful advices before the exam.\n\n**Задание:** исправь форму существительного, сохранив общий смысл. Если есть другой корректный вариант, запиши его отдельно.",
-      "teacher_markdown": "**Минимальная правка:** Teachers should give students useful advice before the exam.\n\nAdvice в этом значении неисчисляемое. Можно сказать `a useful piece of advice` или `useful pieces of advice`. Число отдельных советов при такой переформулировке может стать более конкретным, чем в исходной фразе.\n\n**Варианты для сравнения:**\n\n1. Teachers should give students useful advice before the exam. — подходит.\n2. Teachers should give students a useful advice before the exam. — article a не делает advice исчисляемым.\n3. Teachers should give students useful advices before the exam. — исходная проблема сохранена.",
-      "language_only_markdown": ""
+      "student_markdown": "исправь форму существительного, сохранив общий смысл. Если есть другой корректный вариант, запиши его отдельно.\n\n### Исходные мысли или текст\n- Teachers should give students useful advices before the exam.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
+      "teacher_markdown": "**Минимальная правка:** Teachers should give students useful advice before the exam.\n\nAdvice в этом значении неисчисляемое. Можно сказать `a useful piece of advice` или `useful pieces of advice`. Число отдельных советов при такой переформулировке может стать более конкретным, чем в исходной фразе.\n\n**Варианты для сравнения:**\n\n1. Teachers should give students useful advice before the exam. — подходит.\n2. Teachers should give students a useful advice before the exam. — article a не делает advice исчисляемым.\n3. Teachers should give students useful advices before the exam. — исходная проблема сохранена.\n\n### Варианты интерактивной версии 2\n\n1. Teachers should give students useful advice before the exam.\nПодходит: подходит.\n\n2. Teachers should give students a useful advice before the exam.\nНужно пересмотреть: article a не делает advice исчисляемым.\n\n3. Teachers should give students useful advices before the exam.\nНужно пересмотреть: исходная проблема сохранена.\n\nПроверь целевую форму, сохраняя остальной смысл. Соблюдение минимального формата и грамматическая корректность переформулировки — разные вопросы.\n\nДопустимая альтернатива: Teachers should give students useful pieces of advice before the exam.\n\nPieces of advice конкретизирует отдельные советы; advice не становится исчисляемым после артикля.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "writing-drill-v1",
+        "publication_ready": false,
+        "id": "D04",
+        "title": "Совет перед экзаменом",
+        "mode": "grammar",
+        "context": "IELTS Task 2 · авторская короткая практика",
+        "task": "исправь форму существительного, сохранив общий смысл. Если есть другой корректный вариант, запиши его отдельно.",
+        "source": [
+          "Teachers should give students useful advices before the exam."
+        ],
+        "choices": [
+          {
+            "text": "Teachers should give students useful advice before the exam.",
+            "feedback": "подходит.",
+            "best": true
+          },
+          {
+            "text": "Teachers should give students a useful advice before the exam.",
+            "feedback": "article a не делает advice исчисляемым.",
+            "best": false
+          },
+          {
+            "text": "Teachers should give students useful advices before the exam.",
+            "feedback": "исходная проблема сохранена.",
+            "best": false
+          }
+        ],
+        "example": "Teachers should give students useful advice before the exam.",
+        "explanation": "Проверь целевую форму, сохраняя остальной смысл. Соблюдение минимального формата и грамматическая корректность переформулировки — разные вопросы.",
+        "criterion": "Грамматическая точность",
+        "accepted_alternatives": [
+          "Teachers should give students useful pieces of advice before the exam."
+        ],
+        "review_notes": [
+          "Pieces of advice конкретизирует отдельные советы; advice не становится исчисляемым после артикля."
+        ]
+      }
     },
     {
       "id": "D05",
       "title": "Онлайн-занятия",
       "category": "Writing · короткая практика",
       "status": "DRAFT",
-      "student_markdown": "**Тезис:** Online lessons can help teenagers who live far from school.\n\n**Задание:** развей тезис в 50–70 слов. Объясни, как возникает польза, добавь конкретный вымышленный пример и одно существенное ограничение. Не придумывай исследование или процент успешности.\n\nОриентир по словам помогает держать фокус; это не автоматическая оценка качества.",
-      "teacher_markdown": "**Один допустимый пример:**\n\nOnline lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.\n\n**Альтернативное развитие:** доступ к конкретному предмету или преподавателю, которого нет поблизости, при наличии связи и подходящего расписания. Другой механизм тоже допустим.\n\n**Варианты для сравнения:**\n\n1. Online lessons can reduce travel time; for example, a village student could join an evening class from home if the connection is reliable. — объяснение, пример и условие связаны.\n2. Online lessons are useful because they are helpful and beneficial for students. — повтор тезиса без механизма и примера.\n3. Online lessons guarantee better grades for every teenager because all students prefer computers. — универсальный необоснованный вывод и неподтверждённое предпочтение.\n\nChecklist: конкретная польза; понятная цепочка; пример согласуется с ней; ограничение существенно; нет выдуманной статистики. Диапазон слов — ориентир задания, не шкала качества или band.",
-      "language_only_markdown": ""
+      "student_markdown": "развей тезис в 50–70 слов. Объясни, как возникает польза, добавь конкретный вымышленный пример и одно существенное ограничение. Не придумывай исследование или процент успешности.\n\n### Исходные мысли или текст\n- Online lessons can help teenagers who live far from school.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
+      "teacher_markdown": "**Один допустимый пример:**\n\nOnline lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.\n\n**Альтернативное развитие:** доступ к конкретному предмету или преподавателю, которого нет поблизости, при наличии связи и подходящего расписания. Другой механизм тоже допустим.\n\n**Варианты для сравнения:**\n\n1. Online lessons can reduce travel time; for example, a village student could join an evening class from home if the connection is reliable. — объяснение, пример и условие связаны.\n2. Online lessons are useful because they are helpful and beneficial for students. — повтор тезиса без механизма и примера.\n3. Online lessons guarantee better grades for every teenager because all students prefer computers. — универсальный необоснованный вывод и неподтверждённое предпочтение.\n\nChecklist: конкретная польза; понятная цепочка; пример согласуется с ней; ограничение существенно; нет выдуманной статистики. Диапазон слов — ориентир задания, не шкала качества или band.\n\n### Варианты интерактивной версии 2\n\n1. Online lessons are useful because they are helpful and beneficial for students.\nНужно пересмотреть: повтор тезиса без механизма и примера.\n\n2. Online lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.\nПодходит: Есть адресат, механизм, вымышленный пример и существенное условие; это один полный вариант, а не единственный правильный ответ.\n\n3. Online lessons guarantee better grades for every teenager because all students prefer computers.\nНужно пересмотреть: универсальный необоснованный вывод и неподтверждённое предпочтение.\n\nРазвитие связывает адресата, механизм, пример и условие; количество слов помогает держать фокус, но не оценивает качество.\n\nДопустимая альтернатива: Online lessons may give a teenager access to a subject that is not taught nearby. For instance, a rural student could join a small evening class with a specialist teacher in another town. This opportunity depends on a suitable timetable and reliable internet access; being able to join a class does not itself guarantee learning or higher examination marks.\n\nКороткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "writing-drill-v1",
+        "publication_ready": false,
+        "id": "D05",
+        "title": "Онлайн-занятия",
+        "mode": "argument",
+        "context": "IELTS Task 2 · авторская короткая практика",
+        "task": "развей тезис в 50–70 слов. Объясни, как возникает польза, добавь конкретный вымышленный пример и одно существенное ограничение. Не придумывай исследование или процент успешности.",
+        "source": [
+          "Online lessons can help teenagers who live far from school."
+        ],
+        "choices": [
+          {
+            "text": "Online lessons are useful because they are helpful and beneficial for students.",
+            "feedback": "повтор тезиса без механизма и примера.",
+            "best": false
+          },
+          {
+            "text": "Online lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.",
+            "feedback": "Есть адресат, механизм, вымышленный пример и существенное условие; это один полный вариант, а не единственный правильный ответ.",
+            "best": true
+          },
+          {
+            "text": "Online lessons guarantee better grades for every teenager because all students prefer computers.",
+            "feedback": "универсальный необоснованный вывод и неподтверждённое предпочтение.",
+            "best": false
+          }
+        ],
+        "example": "Online lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.",
+        "explanation": "Развитие связывает адресата, механизм, пример и условие; количество слов помогает держать фокус, но не оценивает качество.",
+        "criterion": "Развитие аргумента",
+        "accepted_alternatives": [
+          "Online lessons may give a teenager access to a subject that is not taught nearby. For instance, a rural student could join a small evening class with a specialist teacher in another town. This opportunity depends on a suitable timetable and reliable internet access; being able to join a class does not itself guarantee learning or higher examination marks."
+        ],
+        "review_notes": [
+          "Короткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ."
+        ]
+      }
     },
     {
       "id": "D06",
       "title": "Школьная библиотека",
       "category": "Writing · короткая практика",
       "status": "DRAFT",
-      "student_markdown": "**Тезис:** Schools should keep their libraries open after lessons.\n\n**Задание:** развей аргумент в 50–70 слов. Назови, кому это помогает, объясни механизм и предложи конкретный пример. Укажи условие, от которого зависит польза. Не обещай, что библиотека гарантирует высокие оценки.",
-      "teacher_markdown": "**Один допустимый пример:**\n\nSchools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.\n\n**Альтернатива:** доступ к книгам или совместная подготовка при правилах пользования. Обязательно показать связь с временем после уроков.\n\n**Варианты для сравнения:**\n\n1. An after-school library can give students a quiet place to study when their homes are crowded, provided that suitable supervision is available. — есть адресат, механизм и условие.\n2. Libraries are good, so schools should open them because good libraries are important. — круговое повторение тезиса.\n3. Every student will achieve the highest grades if the library stays open for one extra hour. — выдуманная универсальная гарантия.\n\nНе требовать одного «идеального» аргумента. Вымышленный пример не должен выглядеть как опубликованное исследование или реальный результат ASHYQ.",
-      "language_only_markdown": ""
+      "student_markdown": "развей аргумент в 50–70 слов. Назови, кому это помогает, объясни механизм и предложи конкретный пример. Укажи условие, от которого зависит польза. Не обещай, что библиотека гарантирует высокие оценки.\n\n### Исходные мысли или текст\n- Schools should keep their libraries open after lessons.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
+      "teacher_markdown": "**Один допустимый пример:**\n\nSchools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.\n\n**Альтернатива:** доступ к книгам или совместная подготовка при правилах пользования. Обязательно показать связь с временем после уроков.\n\n**Варианты для сравнения:**\n\n1. An after-school library can give students a quiet place to study when their homes are crowded, provided that suitable supervision is available. — есть адресат, механизм и условие.\n2. Libraries are good, so schools should open them because good libraries are important. — круговое повторение тезиса.\n3. Every student will achieve the highest grades if the library stays open for one extra hour. — выдуманная универсальная гарантия.\n\nНе требовать одного «идеального» аргумента. Вымышленный пример не должен выглядеть как опубликованное исследование или реальный результат ASHYQ.\n\n### Варианты интерактивной версии 2\n\n1. Libraries are good, so schools should open them because good libraries are important.\nНужно пересмотреть: круговое повторение тезиса.\n\n2. Every student will achieve the highest grades if the library stays open for one extra hour.\nНужно пересмотреть: выдуманная универсальная гарантия.\n\n3. Schools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.\nПодходит: Есть адресат, механизм, вымышленный пример и существенное условие; это один полный вариант, а не единственный правильный ответ.\n\nРазвитие связывает адресата, механизм, пример и условие; количество слов помогает держать фокус, но не оценивает качество.\n\nДопустимая альтернатива: An after-school library could help students who cannot obtain suitable books at home. For example, a teenager preparing a presentation might use the collection and ask a librarian for help before travelling home. This benefit depends on relevant resources and realistic staffing arrangements, and it does not mean that longer opening hours alone will improve every student's results.\n\nКороткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "writing-drill-v1",
+        "publication_ready": false,
+        "id": "D06",
+        "title": "Школьная библиотека",
+        "mode": "argument",
+        "context": "IELTS Task 2 · авторская короткая практика",
+        "task": "развей аргумент в 50–70 слов. Назови, кому это помогает, объясни механизм и предложи конкретный пример. Укажи условие, от которого зависит польза. Не обещай, что библиотека гарантирует высокие оценки.",
+        "source": [
+          "Schools should keep their libraries open after lessons."
+        ],
+        "choices": [
+          {
+            "text": "Libraries are good, so schools should open them because good libraries are important.",
+            "feedback": "круговое повторение тезиса.",
+            "best": false
+          },
+          {
+            "text": "Every student will achieve the highest grades if the library stays open for one extra hour.",
+            "feedback": "выдуманная универсальная гарантия.",
+            "best": false
+          },
+          {
+            "text": "Schools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.",
+            "feedback": "Есть адресат, механизм, вымышленный пример и существенное условие; это один полный вариант, а не единственный правильный ответ.",
+            "best": true
+          }
+        ],
+        "example": "Schools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.",
+        "explanation": "Развитие связывает адресата, механизм, пример и условие; количество слов помогает держать фокус, но не оценивает качество.",
+        "criterion": "Развитие аргумента",
+        "accepted_alternatives": [
+          "An after-school library could help students who cannot obtain suitable books at home. For example, a teenager preparing a presentation might use the collection and ask a librarian for help before travelling home. This benefit depends on relevant resources and realistic staffing arrangements, and it does not mean that longer opening hours alone will improve every student's results."
+        ],
+        "review_notes": [
+          "Короткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ."
+        ]
+      }
     },
     {
       "id": "R01",
       "title": "Museum Fridays → Campus laptops",
       "category": "Reading · TFNG",
       "status": "DRAFT",
-      "student_markdown": "### R01-A — Museum Fridays\n\n[S1] The Westbridge Museum introduced a Friday admission scheme for local residents in September. [S2] Residents who show proof of their address can enter the museum's permanent galleries without paying on Fridays. [S3] Visitors from outside the town continue to pay the normal admission fee. [S4] The museum also hosts temporary exhibitions in a separate wing. [S5] These exhibitions have their own ticket price, and residents must pay that price even on Fridays. [S6] A free guided walk through the permanent galleries takes place at noon, but places must be booked in advance. [S7] The scheme does not change Saturday or Sunday prices. [S8] The museum plans to review attendance after six months, and it has not yet announced whether the scheme will continue next year.\n\n**Statement:** Local residents can visit every exhibition at the museum without paying on Fridays.\n\n**Твои действия:**\n\n1. Выбери TRUE, FALSE или NOT GIVEN.\n2. Укажи номер предложения или предложений, на которые опираешься.\n3. Объясни связь между текстом и утверждением своими словами.\n4. Отметь уверенность: низкая / средняя / высокая.\n\nСначала сохрани ответ. Затем изучи разбор и запиши, что проверишь в следующем вопросе.\n\n### R01-B — Campus laptops\n\nПройди этот вопрос после разбора R01-A. Не открывай его ключ заранее.\n\n[T1] The Hill Campus library has started a laptop loan service for enrolled students. [T2] Every enrolled student, including those on part-time courses, may borrow a laptop during weekday opening hours. [T3] The service is available from nine in the morning until five in the afternoon, Monday to Friday. [T4] Students must show their campus card and return the device before the library closes. [T5] Laptops cannot be taken home overnight. [T6] Members of staff use a separate equipment service, so they do not borrow from this collection. [T7] A small number of chargers are available at the desk, although their availability is not guaranteed. [T8] The library will review demand at the end of the term before deciding whether to offer weekend loans.\n\n**Statement:** Part-time students are allowed to borrow laptops during weekday opening hours.\n\nЗапиши ответ, точную опору и объяснение до просмотра ключа. Этот вопрос оценивается отдельно от исправленной первой попытки.",
-      "teacher_markdown": "### R01-A\n\n**Ответ: FALSE.** S5: временные выставки платные для жителей даже по пятницам. S2 вместе с S4–S5 также допустимы как составная опора: бесплатны permanent galleries, но не every exhibition.\n\nS2 в одиночку объясняет область льготы, но для явного противоречия лучше добавить S5. Если ученик правильно рассуждает о различии permanent/temporary, обсуждать полноту опоры отдельно от ответа.\n\nПодсказка 1: «Сравни every exhibition с условиями льготы».\n\nПодсказка 2: «Есть ли отдельная цена для другой части музея?»\n\nПриманка: local residents, free и Fridays совпадают с текстом, но every расширяет утверждение. NOT GIVEN не подходит: исключение явно описано.\n\n### R01-B\n\n**Ответ: TRUE.** T2 прямо включает part-time students; T3 подтверждает weekday opening hours. T2 достаточно для основного утверждения, T2–T3 — полная составная опора.\n\nAllowed to borrow не означает, что каждому гарантирован свободный ноутбук в любой момент, и не означает overnight loan. Не добавлять этих требований при проверке.\n\nПара меняет FALSE на TRUE. Навык сохраняется: проверка адресата и границ правила в новом контексте.",
-      "language_only_markdown": ""
+      "student_markdown": "### Первый текст\n\n[S1] The Westbridge Museum introduced a Friday admission scheme for local residents in September. [S2] Residents who show proof of their address can enter the museum's permanent galleries without paying on Fridays. [S3] Visitors from outside the town continue to pay the normal admission fee. [S4] The museum also hosts temporary exhibitions in a separate wing. [S5] These exhibitions have their own ticket price, and residents must pay that price even on Fridays. [S6] A free guided walk through the permanent galleries takes place at noon, but places must be booked in advance. [S7] The scheme does not change Saturday or Sunday prices. [S8] The museum plans to review attendance after six months, and it has not yet announced whether the scheme will continue next year.\n\nСначала ответь на три утверждения, укажи точную опору и объясни её. Для NOT GIVEN прочти весь отрывок. После разбора и пересмотра откроется другой текст. Ключи не раскрыты заранее.",
+      "teacher_markdown": "### R01-A\n\n**Ответ: FALSE.** S5: временные выставки платные для жителей даже по пятницам. S2 вместе с S4–S5 также допустимы как составная опора: бесплатны permanent galleries, но не every exhibition.\n\nS2 в одиночку объясняет область льготы, но для явного противоречия лучше добавить S5. Если ученик правильно рассуждает о различии permanent/temporary, обсуждать полноту опоры отдельно от ответа.\n\nПодсказка 1: «Сравни every exhibition с условиями льготы».\n\nПодсказка 2: «Есть ли отдельная цена для другой части музея?»\n\nПриманка: local residents, free и Fridays совпадают с текстом, но every расширяет утверждение. NOT GIVEN не подходит: исключение явно описано.\n\n### R01-B\n\n**Ответ: TRUE.** T2 прямо включает part-time students; T3 подтверждает weekday opening hours. T2 достаточно для основного утверждения, T2–T3 — полная составная опора.\n\nAllowed to borrow не означает, что каждому гарантирован свободный ноутбук в любой момент, и не означает overnight loan. Не добавлять этих требований при проверке.\n\nПара меняет FALSE на TRUE. Навык сохраняется: проверка адресата и границ правила в новом контексте.\n\n### Дополненные утверждения версии 2\n\nLocal residents can visit every exhibition at the museum without paying on Fridays.\nFALSE: These exhibitions have their own ticket price, and residents must pay that price even on Fridays.\nEvery включает временные выставки, а для них прямо указана отдельная платная цена даже в пятницу.\n\nPlaces on the free noon guided walk must be booked in advance.\nTRUE: A free guided walk through the permanent galleries takes place at noon, but places must be booked in advance.\nТекст прямо требует предварительную запись для бесплатной прогулки.\n\nThe Friday admission scheme will definitely continue next year.\nNOT GIVEN: The museum plans to review attendance after six months, and it has not yet announced whether the scheme will continue next year.\nПродолжение ещё не объявлено. Это не подтверждает и не опровергает будущего решения; проверь полный текст.\n\nPart-time students are allowed to borrow laptops during weekday opening hours.\nTRUE: Every enrolled student, including those on part-time courses, may borrow a laptop during weekday opening hours.\nPart-time students прямо включены в правило доступа в рабочие часы; разрешение не гарантирует свободный ноутбук.\n\nStudents may keep a borrowed laptop at home overnight.\nFALSE: Laptops cannot be taken home overnight.\nПрямой запрет на ночной заём противоречит may keep overnight.\n\nMore than one hundred laptops were borrowed in the first week.\nNOT GIVEN: The library will review demand at the end of the term before deciding whether to offer weekend loans.\nБудущая проверка спроса не содержит числа займов первой недели. В полном тексте такого числа нет.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "skill": "Границы правила и неизвестное продолжение/число",
+        "rounds": [
+          {
+            "id": "R01-A",
+            "text": "[S1] The Westbridge Museum introduced a Friday admission scheme for local residents in September. [S2] Residents who show proof of their address can enter the museum's permanent galleries without paying on Fridays. [S3] Visitors from outside the town continue to pay the normal admission fee. [S4] The museum also hosts temporary exhibitions in a separate wing. [S5] These exhibitions have their own ticket price, and residents must pay that price even on Fridays. [S6] A free guided walk through the permanent galleries takes place at noon, but places must be booked in advance. [S7] The scheme does not change Saturday or Sunday prices. [S8] The museum plans to review attendance after six months, and it has not yet announced whether the scheme will continue next year.",
+            "claims": [
+              {
+                "statement": "Local residents can visit every exhibition at the museum without paying on Fridays.",
+                "answer": "FALSE",
+                "evidence": "These exhibitions have their own ticket price, and residents must pay that price even on Fridays.",
+                "explanation": "Every включает временные выставки, а для них прямо указана отдельная платная цена даже в пятницу."
+              },
+              {
+                "statement": "Places on the free noon guided walk must be booked in advance.",
+                "answer": "TRUE",
+                "evidence": "A free guided walk through the permanent galleries takes place at noon, but places must be booked in advance.",
+                "explanation": "Текст прямо требует предварительную запись для бесплатной прогулки."
+              },
+              {
+                "statement": "The Friday admission scheme will definitely continue next year.",
+                "answer": "NOT GIVEN",
+                "evidence": "The museum plans to review attendance after six months, and it has not yet announced whether the scheme will continue next year.",
+                "explanation": "Продолжение ещё не объявлено. Это не подтверждает и не опровергает будущего решения; проверь полный текст."
+              }
+            ]
+          },
+          {
+            "id": "R01-B",
+            "text": "[T1] The Hill Campus library has started a laptop loan service for enrolled students. [T2] Every enrolled student, including those on part-time courses, may borrow a laptop during weekday opening hours. [T3] The service is available from nine in the morning until five in the afternoon, Monday to Friday. [T4] Students must show their campus card and return the device before the library closes. [T5] Laptops cannot be taken home overnight. [T6] Members of staff use a separate equipment service, so they do not borrow from this collection. [T7] A small number of chargers are available at the desk, although their availability is not guaranteed. [T8] The library will review demand at the end of the term before deciding whether to offer weekend loans.",
+            "claims": [
+              {
+                "statement": "Part-time students are allowed to borrow laptops during weekday opening hours.",
+                "answer": "TRUE",
+                "evidence": "Every enrolled student, including those on part-time courses, may borrow a laptop during weekday opening hours.",
+                "explanation": "Part-time students прямо включены в правило доступа в рабочие часы; разрешение не гарантирует свободный ноутбук."
+              },
+              {
+                "statement": "Students may keep a borrowed laptop at home overnight.",
+                "answer": "FALSE",
+                "evidence": "Laptops cannot be taken home overnight.",
+                "explanation": "Прямой запрет на ночной заём противоречит may keep overnight."
+              },
+              {
+                "statement": "More than one hundred laptops were borrowed in the first week.",
+                "answer": "NOT GIVEN",
+                "evidence": "The library will review demand at the end of the term before deciding whether to offer weekend loans.",
+                "explanation": "Будущая проверка спроса не содержит числа займов первой недели. В полном тексте такого числа нет."
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "R02",
       "title": "Trees near classrooms → Clinic appointments",
       "category": "Reading · TFNG",
       "status": "DRAFT",
-      "student_markdown": "### R02-A — Trees near classrooms\n\n[S1] Oakfield School planted thirty young trees beside its classroom building in March. [S2] The project was designed to create shade and make the playground more comfortable during warm weather. [S3] Staff chose species that can grow well in the local soil, and students helped with planting. [S4] The trees are still small, so most of the playground remains exposed to direct sunlight. [S5] Temperature sensors were fitted in June, but the first comparison of shaded and unshaded areas is scheduled for next summer. [S6] The school has published the cost of buying the trees and installing the sensors. [S7] It has not included electricity use or electricity bills in its project report. [S8] The gardening club is responsible for watering, and a local nursery will check the trees at the end of the year.\n\n**Statement:** The new trees have reduced the school's electricity bills.\n\nВыбери TFNG, укажи релевантные предложения и объясни, есть ли в полном отрывке факт, необходимый для ответа. Для NOT GIVEN одной подходящей по теме цитаты недостаточно: проверь весь текст.\n\n### R02-B — Clinic appointments\n\nПройди этот вопрос после разбора R02-A.\n\n[T1] The Riverside Clinic introduced an online booking system at the start of January. [T2] Patients can use it to choose an appointment or cancel one without calling reception. [T3] The clinic compared the first two months of the new system with the previous two months. [T4] Average waiting time in the clinic was eighteen minutes in both periods. [T5] The number of appointments cancelled in advance increased, which gave reception staff more time to contact people on the waiting list. [T6] Patients who do not use the internet can still book by telephone, and reception hours have not changed. [T7] The clinic has not yet asked patients to rate the website. [T8] It plans to improve the booking page after collecting comments later in the year.\n\n**Statement:** Average waiting time in the clinic was lower during the first two months of online booking than in the previous two months.\n\nЗапиши ответ, опору и объяснение. Не переноси ответ первого текста автоматически.",
-      "teacher_markdown": "### R02-A\n\n**Ответ: NOT GIVEN.** Текст не сообщает величины счетов до/после и не сообщает их изменения. S7 — ближайшая релевантная фраза, S2/S5 объясняют цель и запланированное измерение температуры. Эти предложения не дают значения изменения счетов.\n\nВажно: `not included ... in its project report` не означает «счета не уменьшились». Неопубликованный результат может быть любым. Отсутствие нужного факта подтверждается чтением всего доступного отрывка, а не одной цитатой.\n\nПодсказка 1: «Отдели цель проекта от измеренного результата».\n\nПодсказка 2: «Есть ли в тексте сравнение счетов или прямое сообщение об их изменении?»\n\nFALSE был бы обоснован, если бы текст прямо сообщил отсутствие снижения; такого сообщения нет.\n\n### R02-B\n\n**Ответ: FALSE.** T3 задаёт сравниваемые периоды, T4 сообщает eighteen minutes in both periods. Одинаковое значение противоречит lower.\n\nБольше предварительных отмен в T5 — другой показатель; его нельзя подменять временем ожидания.\n\nФормулировка вопроса специально сравнивает наблюдаемые значения. Не требует вывода о том, каким было бы ожидание без системы, и не приписывает причинность.\n\nПара меняет NOT GIVEN на FALSE: в новом тексте нужный факт есть, и он противоречит утверждению.",
-      "language_only_markdown": ""
+      "student_markdown": "### Первый текст\n\n[S1] Oakfield School planted thirty young trees beside its classroom building in March. [S2] The project was designed to create shade and make the playground more comfortable during warm weather. [S3] Staff chose species that can grow well in the local soil, and students helped with planting. [S4] The trees are still small, so most of the playground remains exposed to direct sunlight. [S5] Temperature sensors were fitted in June, but the first comparison of shaded and unshaded areas is scheduled for next summer. [S6] The school has published the cost of buying the trees and installing the sensors. [S7] It has not included electricity use or electricity bills in its project report. [S8] The gardening club is responsible for watering, and a local nursery will check the trees at the end of the year.\n\nСначала ответь на три утверждения, укажи точную опору и объясни её. Для NOT GIVEN прочти весь отрывок. После разбора и пересмотра откроется другой текст. Ключи не раскрыты заранее.",
+      "teacher_markdown": "### R02-A\n\n**Ответ: NOT GIVEN.** Текст не сообщает величины счетов до/после и не сообщает их изменения. S7 — ближайшая релевантная фраза, S2/S5 объясняют цель и запланированное измерение температуры. Эти предложения не дают значения изменения счетов.\n\nВажно: `not included ... in its project report` не означает «счета не уменьшились». Неопубликованный результат может быть любым. Отсутствие нужного факта подтверждается чтением всего доступного отрывка, а не одной цитатой.\n\nПодсказка 1: «Отдели цель проекта от измеренного результата».\n\nПодсказка 2: «Есть ли в тексте сравнение счетов или прямое сообщение об их изменении?»\n\nFALSE был бы обоснован, если бы текст прямо сообщил отсутствие снижения; такого сообщения нет.\n\n### R02-B\n\n**Ответ: FALSE.** T3 задаёт сравниваемые периоды, T4 сообщает eighteen minutes in both periods. Одинаковое значение противоречит lower.\n\nБольше предварительных отмен в T5 — другой показатель; его нельзя подменять временем ожидания.\n\nФормулировка вопроса специально сравнивает наблюдаемые значения. Не требует вывода о том, каким было бы ожидание без системы, и не приписывает причинность.\n\nПара меняет NOT GIVEN на FALSE: в новом тексте нужный факт есть, и он противоречит утверждению.\n\n### Дополненные утверждения версии 2\n\nThe new trees have reduced the school's electricity bills.\nNOT GIVEN: It has not included electricity use or electricity bills in its project report.\nНеопубликованные счета не доказывают отсутствие снижения: нет сравнения до/после или сообщения о результате во всём тексте.\n\nThe school planted thirty trees in March.\nTRUE: Oakfield School planted thirty young trees beside its classroom building in March.\nЧисло и месяц прямо названы.\n\nMost of the playground is already shaded by the new trees.\nFALSE: The trees are still small, so most of the playground remains exposed to direct sunlight.\nMost remains exposed to direct sunlight противоречит most already shaded.\n\nAverage waiting time in the clinic was lower during the first two months of online booking than in the previous two months.\nFALSE: Average waiting time in the clinic was eighteen minutes in both periods.\nEighteen minutes in both periods означает равные наблюдаемые значения, а не lower. Это не причинный вывод.\n\nPatients can still book an appointment by telephone.\nTRUE: Patients who do not use the internet can still book by telephone, and reception hours have not changed.\nВозможность телефонной записи прямо сохранена.\n\nPatients generally found the website easier to use than telephone booking.\nNOT GIVEN: The clinic has not yet asked patients to rate the website.\nОценки пользователей ещё не собирали; текст не сообщает сравнение удобства. Отсутствие опроса не означает, что сайт неудобен.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "reading-evidence-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "skill": "Цель, отсутствие результата и явное сравнение",
+        "rounds": [
+          {
+            "id": "R02-A",
+            "text": "[S1] Oakfield School planted thirty young trees beside its classroom building in March. [S2] The project was designed to create shade and make the playground more comfortable during warm weather. [S3] Staff chose species that can grow well in the local soil, and students helped with planting. [S4] The trees are still small, so most of the playground remains exposed to direct sunlight. [S5] Temperature sensors were fitted in June, but the first comparison of shaded and unshaded areas is scheduled for next summer. [S6] The school has published the cost of buying the trees and installing the sensors. [S7] It has not included electricity use or electricity bills in its project report. [S8] The gardening club is responsible for watering, and a local nursery will check the trees at the end of the year.",
+            "claims": [
+              {
+                "statement": "The new trees have reduced the school's electricity bills.",
+                "answer": "NOT GIVEN",
+                "evidence": "It has not included electricity use or electricity bills in its project report.",
+                "explanation": "Неопубликованные счета не доказывают отсутствие снижения: нет сравнения до/после или сообщения о результате во всём тексте."
+              },
+              {
+                "statement": "The school planted thirty trees in March.",
+                "answer": "TRUE",
+                "evidence": "Oakfield School planted thirty young trees beside its classroom building in March.",
+                "explanation": "Число и месяц прямо названы."
+              },
+              {
+                "statement": "Most of the playground is already shaded by the new trees.",
+                "answer": "FALSE",
+                "evidence": "The trees are still small, so most of the playground remains exposed to direct sunlight.",
+                "explanation": "Most remains exposed to direct sunlight противоречит most already shaded."
+              }
+            ]
+          },
+          {
+            "id": "R02-B",
+            "text": "[T1] The Riverside Clinic introduced an online booking system at the start of January. [T2] Patients can use it to choose an appointment or cancel one without calling reception. [T3] The clinic compared the first two months of the new system with the previous two months. [T4] Average waiting time in the clinic was eighteen minutes in both periods. [T5] The number of appointments cancelled in advance increased, which gave reception staff more time to contact people on the waiting list. [T6] Patients who do not use the internet can still book by telephone, and reception hours have not changed. [T7] The clinic has not yet asked patients to rate the website. [T8] It plans to improve the booking page after collecting comments later in the year.",
+            "claims": [
+              {
+                "statement": "Average waiting time in the clinic was lower during the first two months of online booking than in the previous two months.",
+                "answer": "FALSE",
+                "evidence": "Average waiting time in the clinic was eighteen minutes in both periods.",
+                "explanation": "Eighteen minutes in both periods означает равные наблюдаемые значения, а не lower. Это не причинный вывод."
+              },
+              {
+                "statement": "Patients can still book an appointment by telephone.",
+                "answer": "TRUE",
+                "evidence": "Patients who do not use the internet can still book by telephone, and reception hours have not changed.",
+                "explanation": "Возможность телефонной записи прямо сохранена."
+              },
+              {
+                "statement": "Patients generally found the website easier to use than telephone booking.",
+                "answer": "NOT GIVEN",
+                "evidence": "The clinic has not yet asked patients to rate the website.",
+                "explanation": "Оценки пользователей ещё не собирали; текст не сообщает сравнение удобства. Отсутствие опроса не означает, что сайт неудобен."
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "M01",
       "title": "Workshop costs → Equipment rental",
       "category": "SAT Math",
       "status": "DRAFT",
-      "student_markdown": "### M01-A — Workshop costs\n\nA school pays a workshop organiser a one-time booking fee of $36 for the whole group. It also pays $12 for each student who attends. The total bill is $132. How many students attended?\n\n**Чужое решение:**\n\n1. Let n be the number of students.\n2. 36n + 12n = 132.\n3. 48n = 132.\n4. n = 2.75.\n\n**Твои действия:**\n\n1. Назови первую неверную строку и объясни, какое слово или условие было пропущено.\n2. Запиши правильную модель.\n3. Найди ответ и проверь его по условию.\n4. После разбора запиши короткое правило самопроверки.\n\n### M01-B — Equipment rental\n\nAn equipment hire company charges a one-time delivery fee of $34 for an order, plus $10 for each hour the equipment is rented. A customer pays $124 in total. For how many hours was the equipment rented?\n\nРеши самостоятельно после разбора M01-A. Определи переменную и её единицы, составь модель и проверь ответ. Готового решения до своей попытки не открывай.",
-      "teacher_markdown": "### M01-A\n\n**Первая неверная строка: 2.** One-time booking fee for the whole group означает $36 один раз, а не $36 для каждого ученика. $12 for each student повторяется n раз.\n\nМодель: `36 + 12n = 132`.\n\nРешение: `12n = 96`, `n = 8`.\n\nПроверка: `36 + 12 × 8 = 132`, восемь учеников — допустимое целое количество.\n\nАльтернативный путь: `(132 − 36) / 12 = 8` без отдельной записи уравнения. Он корректен, если ученик объясняет смысл действий.\n\nСтроки 3 и 4 арифметически следуют из ошибочной модели. Нельзя исправить модель округлением 2.75 до трёх; количество учеников не согласуется с исходным счётом.\n\nПодсказка 1: «Какая сумма относится ко всей группе?»\n\nПодсказка 2: «Что должно умножаться на число учеников?»\n\n### M01-B\n\nПусть h — число часов. `34 + 10h = 124` → `10h = 90` → `h = 9`.\n\nПроверка: `34 + 10 × 9 = 124`.\n\n**Ответ: 9 часов.** Число 9 без указания единицы численно верно; полноту ответа по смыслу оценивать отдельно. Ошибка вида `(34 + 10)h` снова повторяет разовую сумму.\n\nНовый контекст меняет счёт учеников на длительность аренды. Размерностная проверка: деньги + деньги/час × часы = деньги.",
-      "language_only_markdown": ""
+      "student_markdown": "### Первое условие\n\nA school pays a workshop organiser a one-time booking fee of $36 for the whole group. It also pays $12 for each student who attends. The total bill is $132. How many students attended?\n\nСначала запиши своё решение и число; после фиксации сравни чужие шаги, укажи первую ошибку и исправь решение. Затем откроется другой контекст. Число не оценивает качество рассуждения.",
+      "teacher_markdown": "### M01-A\n\n**Первая неверная строка: 2.** One-time booking fee for the whole group означает $36 один раз, а не $36 для каждого ученика. $12 for each student повторяется n раз.\n\nМодель: `36 + 12n = 132`.\n\nРешение: `12n = 96`, `n = 8`.\n\nПроверка: `36 + 12 × 8 = 132`, восемь учеников — допустимое целое количество.\n\nАльтернативный путь: `(132 − 36) / 12 = 8` без отдельной записи уравнения. Он корректен, если ученик объясняет смысл действий.\n\nСтроки 3 и 4 арифметически следуют из ошибочной модели. Нельзя исправить модель округлением 2.75 до трёх; количество учеников не согласуется с исходным счётом.\n\nПодсказка 1: «Какая сумма относится ко всей группе?»\n\nПодсказка 2: «Что должно умножаться на число учеников?»\n\n### M01-B\n\nПусть h — число часов. `34 + 10h = 124` → `10h = 90` → `h = 9`.\n\nПроверка: `34 + 10 × 9 = 124`.\n\n**Ответ: 9 часов.** Число 9 без указания единицы численно верно; полноту ответа по смыслу оценивать отдельно. Ошибка вида `(34 + 10)h` снова повторяет разовую сумму.\n\nНовый контекст меняет счёт учеников на длительность аренды. Размерностная проверка: деньги + деньги/час × часы = деньги.\n\n### Интерактивная версия 2\n\nM01-A: первая неверная строка 2\n1. Let n be the number of students. — Переменная и единица заданы верно.\n2. 36n + 12n = 132. — One-time for the whole group не означает36 для каждого ученика.\n3. 48n = 132. — Арифметически следует из предыдущего уравнения, но сохраняет неверную модель.\n4. n = 2.75. — Правильное деление для неверной модели; дробь не согласуется с исходным количеством учеников.\n36 + 12n = 132 → 12n = 96 → n = 8 → 36 + 12 × 8 = 132\nРазовый сбор36 относится ко всей группе. Только12 повторяется для каждого ученика. Округление ошибочного2.75 не исправляет модель.\n\nM01-B: первая неверная строка 2\n1. Let h be the number of hours. — Переменная обозначает длительность.\n2. (34 + 10)h = 124. — Умножение всей суммы на h повторяет разовую доставку каждый час.\n3. 44h = 124. — Сумма44 вычислена верно, но используется неверная модель.\n4. h = 31/11. — Деление арифметически следует из неверного уравнения; не удовлетворяет условию.\n34 + 10h = 124 → 10h = 90 → h = 9 → 34 + 10 × 9 = 124\nРазовая доставка34 не повторяется каждый час. Деньги + деньги/час × часы = деньги. Девять здесь часы, а не ученики.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "family": "forensics",
+        "skill": "Разовая и повторяющаяся часть модели с проверкой единицы",
+        "rounds": [
+          {
+            "id": "M01-A",
+            "prompt": "A school pays a workshop organiser a one-time booking fee of $36 for the whole group. It also pays $12 for each student who attends. The total bill is $132. How many students attended?",
+            "variable": "n — number of students",
+            "unit": "students",
+            "answer": 8,
+            "corrected_working": [
+              "36 + 12n = 132",
+              "12n = 96",
+              "n = 8",
+              "36 + 12 × 8 = 132"
+            ],
+            "explanation": "Разовый сбор36 относится ко всей группе. Только12 повторяется для каждого ученика. Округление ошибочного2.75 не исправляет модель.",
+            "first_invalid": 1,
+            "steps": [
+              {
+                "statement": "Let n be the number of students.",
+                "valid": true,
+                "explanation": "Переменная и единица заданы верно."
+              },
+              {
+                "statement": "36n + 12n = 132.",
+                "valid": false,
+                "explanation": "One-time for the whole group не означает36 для каждого ученика."
+              },
+              {
+                "statement": "48n = 132.",
+                "valid": false,
+                "explanation": "Арифметически следует из предыдущего уравнения, но сохраняет неверную модель."
+              },
+              {
+                "statement": "n = 2.75.",
+                "valid": false,
+                "explanation": "Правильное деление для неверной модели; дробь не согласуется с исходным количеством учеников."
+              }
+            ]
+          },
+          {
+            "id": "M01-B",
+            "prompt": "An equipment hire company charges a one-time delivery fee of $34 for an order, plus $10 for each hour the equipment is rented. A customer pays $124 in total. For how many hours was the equipment rented?",
+            "variable": "h — rental duration",
+            "unit": "hours",
+            "answer": 9,
+            "corrected_working": [
+              "34 + 10h = 124",
+              "10h = 90",
+              "h = 9",
+              "34 + 10 × 9 = 124"
+            ],
+            "explanation": "Разовая доставка34 не повторяется каждый час. Деньги + деньги/час × часы = деньги. Девять здесь часы, а не ученики.",
+            "first_invalid": 1,
+            "steps": [
+              {
+                "statement": "Let h be the number of hours.",
+                "valid": true,
+                "explanation": "Переменная обозначает длительность."
+              },
+              {
+                "statement": "(34 + 10)h = 124.",
+                "valid": false,
+                "explanation": "Умножение всей суммы на h повторяет разовую доставку каждый час."
+              },
+              {
+                "statement": "44h = 124.",
+                "valid": false,
+                "explanation": "Сумма44 вычислена верно, но используется неверная модель."
+              },
+              {
+                "statement": "h = 31/11.",
+                "valid": false,
+                "explanation": "Деление арифметически следует из неверного уравнения; не удовлетворяет условию."
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "M02",
       "title": "A changed price → Membership fee",
       "category": "SAT Math",
       "status": "DRAFT",
-      "student_markdown": "### M02-A — A changed price\n\nA shop initially sells a jacket for $80. It increases this price by 20%. Later, it offers a discount of 25% on the increased price. What is the final price?\n\n**Чужое решение:**\n\n1. The increase is 0.20 × 80 = 16.\n2. The increased price is 80 + 16 = 96.\n3. The discount is 0.25 × 80 = 20.\n4. The final price is 96 − 20 = 76.\n\nНайди первую неверную строку, объясни её по английскому условию, исправь решение и проверь итог.\n\n### M02-B — Membership fee\n\nA sports club's annual membership fee is $200. The club raises the fee by 10%. It then gives returning members a discount of 10% on the raised fee. What does a returning member pay?\n\nРеши самостоятельно после разбора M02-A. Для каждого процента явно укажи базовую сумму. Сохрани эту попытку отдельно от исправленного первого решения.",
-      "teacher_markdown": "### M02-A\n\n**Первая неверная строка: 3.** Скидка применяется on the increased price, то есть к 96, а не к исходным 80.\n\nПравильно: повышение `80 × 1.20 = 96`; скидка `96 × 0.25 = 24`; итог `96 − 24 = 72`.\n\nАльтернатива: `80 × 1.20 × 0.75 = 72`.\n\n**Ответ: $72.** В строке 4 вычитание верно для ошибочной суммы скидки; основной механизм — неверная база в строке 3.\n\nПодсказка 1: «Для каждого процента подпиши базовую сумму».\n\nПодсказка 2: «К какому price относится increased?»\n\n### M02-B\n\nПовышенная цена: `200 × 1.10 = 220`.\n\nСкидка: `220 × 0.10 = 22`.\n\nИтог: `220 − 22 = 198`.\n\nАльтернатива: `200 × 1.10 × 0.90 = 198`.\n\n**Ответ: $198.** +10% и −10% имеют разные базы и не отменяются. Итог $198, $198.00 и эквивалентная запись числа допустимы.\n\nПроверка: совокупный множитель 0.99 означает снижение на 1% от исходных $200, то есть на $2. Не вычислять скидку как 10% от 200.\n",
-      "language_only_markdown": ""
+      "student_markdown": "### Первое условие\n\nA shop initially sells a jacket for $80. It increases this price by 20%. Later, it offers a discount of 25% on the increased price. What is the final price?\n\nСначала запиши своё решение и число; после фиксации сравни чужие шаги, укажи первую ошибку и исправь решение. Затем откроется другой контекст. Число не оценивает качество рассуждения.",
+      "teacher_markdown": "### M02-A\n\n**Первая неверная строка: 3.** Скидка применяется on the increased price, то есть к 96, а не к исходным 80.\n\nПравильно: повышение `80 × 1.20 = 96`; скидка `96 × 0.25 = 24`; итог `96 − 24 = 72`.\n\nАльтернатива: `80 × 1.20 × 0.75 = 72`.\n\n**Ответ: $72.** В строке 4 вычитание верно для ошибочной суммы скидки; основной механизм — неверная база в строке 3.\n\nПодсказка 1: «Для каждого процента подпиши базовую сумму».\n\nПодсказка 2: «К какому price относится increased?»\n\n### M02-B\n\nПовышенная цена: `200 × 1.10 = 220`.\n\nСкидка: `220 × 0.10 = 22`.\n\nИтог: `220 − 22 = 198`.\n\nАльтернатива: `200 × 1.10 × 0.90 = 198`.\n\n**Ответ: $198.** +10% и −10% имеют разные базы и не отменяются. Итог $198, $198.00 и эквивалентная запись числа допустимы.\n\nПроверка: совокупный множитель 0.99 означает снижение на 1% от исходных $200, то есть на $2. Не вычислять скидку как 10% от 200.\n\n\n### Интерактивная версия 2\n\nM02-A: первая неверная строка 3\n1. The increase is 0.20 × 80 = 16. — Повышение рассчитано от исходной цены80.\n2. The increased price is 80 + 16 = 96. — Новая база96.\n3. The discount is 0.25 × 80 = 20. — Нужна база96, а не80.\n4. The final price is 96 − 20 = 76. — Вычитание следует из ошибочной скидки и не даёт правильную конечную цену.\n80 × 1.20 = 96 → 96 × 0.25 = 24 → 96 − 24 = 72 → 80 × 1.20 × 0.75 = 72\nOn the increased price задаёт базу96 для скидки. Вычитание20 в последней строке арифметически верно, но сумма скидки выбрана неверно.\n\nM02-B: первая неверная строка 3\n1. The increase is 0.10 × 200 = 20. — Повышение от исходных200.\n2. The raised fee is 200 + 20 = 220. — Повышенная цена220.\n3. The discount is 0.10 × 200 = 20. — Скидка on the raised fee относится к220, поэтому равна22.\n4. The returning member pays 220 − 20 = 200. — Арифметика следует из неверной базы; итог должен быть198.\n200 × 1.10 = 220 → 220 × 0.10 = 22 → 220 − 22 = 198 → 200 × 1.10 × 0.90 = 198\nПовышение и скидка имеют разные базы200 и220. Множитель0.99 даёт198: равные проценты здесь не отменяются.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "family": "forensics",
+        "skill": "Новая база для второго процента",
+        "rounds": [
+          {
+            "id": "M02-A",
+            "prompt": "A shop initially sells a jacket for $80. It increases this price by 20%. Later, it offers a discount of 25% on the increased price. What is the final price?",
+            "variable": "p — final price",
+            "unit": "dollars",
+            "answer": 72,
+            "corrected_working": [
+              "80 × 1.20 = 96",
+              "96 × 0.25 = 24",
+              "96 − 24 = 72",
+              "80 × 1.20 × 0.75 = 72"
+            ],
+            "explanation": "On the increased price задаёт базу96 для скидки. Вычитание20 в последней строке арифметически верно, но сумма скидки выбрана неверно.",
+            "first_invalid": 2,
+            "steps": [
+              {
+                "statement": "The increase is 0.20 × 80 = 16.",
+                "valid": true,
+                "explanation": "Повышение рассчитано от исходной цены80."
+              },
+              {
+                "statement": "The increased price is 80 + 16 = 96.",
+                "valid": true,
+                "explanation": "Новая база96."
+              },
+              {
+                "statement": "The discount is 0.25 × 80 = 20.",
+                "valid": false,
+                "explanation": "Нужна база96, а не80."
+              },
+              {
+                "statement": "The final price is 96 − 20 = 76.",
+                "valid": false,
+                "explanation": "Вычитание следует из ошибочной скидки и не даёт правильную конечную цену."
+              }
+            ]
+          },
+          {
+            "id": "M02-B",
+            "prompt": "A sports club's annual membership fee is $200. The club raises the fee by 10%. It then gives returning members a discount of 10% on the raised fee. What does a returning member pay?",
+            "variable": "p — returning-member fee",
+            "unit": "dollars",
+            "answer": 198,
+            "corrected_working": [
+              "200 × 1.10 = 220",
+              "220 × 0.10 = 22",
+              "220 − 22 = 198",
+              "200 × 1.10 × 0.90 = 198"
+            ],
+            "explanation": "Повышение и скидка имеют разные базы200 и220. Множитель0.99 даёт198: равные проценты здесь не отменяются.",
+            "first_invalid": 2,
+            "steps": [
+              {
+                "statement": "The increase is 0.10 × 200 = 20.",
+                "valid": true,
+                "explanation": "Повышение от исходных200."
+              },
+              {
+                "statement": "The raised fee is 200 + 20 = 220.",
+                "valid": true,
+                "explanation": "Повышенная цена220."
+              },
+              {
+                "statement": "The discount is 0.10 × 200 = 20.",
+                "valid": false,
+                "explanation": "Скидка on the raised fee относится к220, поэтому равна22."
+              },
+              {
+                "statement": "The returning member pays 220 − 20 = 200.",
+                "valid": false,
+                "explanation": "Арифметика следует из неверной базы; итог должен быть198."
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
