@@ -42,11 +42,11 @@ async function main() {
       await page.getByLabel('Выбери материал',{exact:true}).selectOption(unit.id);
       const preview = page.getByRole('region',{name:'Пробное прохождение · DRAFT',exact:true});
       await preview.getByRole('button',{name:'Пройти черновик как ученик',exact:true}).click();
-      const first=parseDraftWriting(unit.exercise_data)!, next=nextDraftWriting(first,values)!;
+      const first=parseDraftWriting(unit.exercise_data)!, next=nextDraftWriting(first,units.filter(value=>value.batchId===batchId).map(value=>value.unit.exercise_data))!;
       const records:{id:string;draft:string;revision:string;reflection:string;help:boolean}[]=[];
       assert.equal(await preview.getByText(next.task,{exact:true}).count(),0,'next task hidden before first revision');
       for (const [round,item] of [first,next].entries()) {
-        const stage=preview.getByRole('heading',{level:4}).filter({hasText:item.id}); await stage.waitFor();
+        const stage=preview.getByRole('heading',{name:`${round?'Следующее задание того же типа практики':'Самостоятельная попытка'} · ${item.id} · ${item.title}`,exact:true}); await stage.waitFor();
         assert.equal(await stage.evaluate(node=>document.activeElement===node),true,'stage focus');
         const options=preview.getByRole('group',{name:'Какой вариант выполняет задание?',exact:true});
         assert.equal(await options.count(),0,'options hidden before own attempt');
@@ -96,7 +96,7 @@ async function main() {
         records.push({id:item.id,draft:own,revision,reflection,help});
         await continueButton.click();
       }
-      const report=preview.getByRole('heading',{name:'Отчёт временной пробы',exact:true});await report.waitFor();
+      const report=preview.getByRole('heading',{name:'Отчёт пробы',exact:true});await report.waitFor();
       assert.equal(await report.evaluate(node=>document.activeElement===node),true,'report focus');
       for(const record of records) {
         const section=preview.getByRole('region',{name:`Попытки ${record.id}`,exact:true});
@@ -112,9 +112,13 @@ async function main() {
         const axe=await new AxeBuilder({page}).include('main').analyze();assert.deepEqual(axe.violations.map(value=>({id:value.id,targets:value.nodes.map(node=>node.target)})),[]);
         if(index===units.length-1) {await page.setViewportSize({width:390,height:844});await report.locator('..').screenshot({path:'artifacts/trainers-complete-033/draft-writing-report-mobile.png',animations:'disabled'});}
       }
-      await preview.getByRole('button',{name:'Начать новую временную пробу',exact:true}).click();
+      await preview.getByRole('button',{name:'Начать новую пробу',exact:true}).click();
+      await preview.getByRole('button',{name:'Подтвердить новую пробу',exact:true}).click();
+      await preview.getByRole('button',{name:'Пройти черновик как ученик',exact:true}).click();
       assert.equal(await preview.getByLabel('Твоя первая попытка',{exact:true}).inputValue(),'');
       assert.equal(await preview.getByRole('group',{name:'Какой вариант выполняет задание?',exact:true}).count(),0);
+      await preview.getByRole('button',{name:'Начать новую пробу',exact:true}).click();
+      await preview.getByRole('button',{name:'Подтвердить новую пробу',exact:true}).click();
     }
     await page.reload();await page.getByLabel('Партия материалов',{exact:true}).selectOption('03');
     assert.equal(await page.getByRole('button',{name:'Пройти черновик как ученик',exact:true}).count(),1);

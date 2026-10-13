@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useEffect, useLayoutEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import RequireRole from '@/components/lms/RequireRole';
 import DraftWritingPreview from './DraftWritingPreview';
-import { nextDraftWriting, parseDraftWriting } from '@/lib/trainers/draft-writing';
 import { findBankSource } from '@/lib/trainers/bank-sources';
 import DraftSatPreview from './DraftSatPreview';
 import DraftListeningPreview from './DraftListeningPreview';
@@ -83,8 +82,6 @@ function ArchivedReview({ reviewerId, batch }: { reviewerId: string; batch: Draf
 
 function ReviewUnit({ unit, batchId, batchVersion, contentHash, previous, onSave, onDirty,practiceBusy,onPracticeBusy }: { unit: DraftUnit; batchId: string;batchVersion:string; contentHash: string; previous?: DraftDecision; onSave: (value: DraftDecision, expected: string | null) => Promise<boolean>; onDirty: (dirty: boolean) => void;practiceBusy:boolean;onPracticeBusy:(busy:boolean)=>void }) {
   const source=findBankSource({batchId,version:batchVersion,contentHash,unitId:unit.id});
-  const writing = parseDraftWriting(unit.exercise_data);
-  const nextWriting = writing ? nextDraftWriting(writing, draftBatches.flatMap(batch => batch.units.map(value => 'exercise_data' in value ? value.exercise_data : undefined))) : null;
   const [decision, setDecision] = useState<ReviewDecision>(previous?.decision ?? 'pending');
   const [comment, setComment] = useState(previous?.comment ?? '');
   const [attested, setAttested] = useState(previous?.attested ?? false);
@@ -104,7 +101,7 @@ function ReviewUnit({ unit, batchId, batchVersion, contentHash, previous, onSave
   return <section className={styles.panel} aria-labelledby="material-title">
     <p>{unit.id} · {unit.category} · DRAFT</p><h2 id="material-title">{unit.title}</h2>
     <MaterialText text={unit.student_markdown}/>
-    <DraftWritingPreview value={unit.exercise_data} nextValue={nextWriting}/>
+    <DraftWritingPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftSatPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftListeningPreview value={unit.exercise_data} unitId={unit.id}/>
     <DraftMathPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
