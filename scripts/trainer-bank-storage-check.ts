@@ -5,16 +5,17 @@ import type { BankTask2State } from '../src/lib/trainers/bank-task2-state';
 import { emptyBankTask2State } from '../src/lib/trainers/bank-task2-state';
 import type { BankRecord } from '../src/lib/trainers/bank-records';
 
-type Harness={key:(scope:string,unit:string)=>string;read:(scope:string,unit:string)=>BankRecord|null;save:(scope:string,unit:string,expected:string|null,state:BankTask2State,mode?:string)=>Promise<BankRecord>;clear:(scope:string,unit:string,expected:string|null)=>Promise<BankRecord>;hold:(scope:string,unit:string)=>Promise<void>;release:()=>void;events:()=>number};
+type Harness={key:(scope:string,unit:string)=>string;read:(scope:string,unit:string)=>BankRecord|null;save:(scope:string,unit:string,expected:string|null,state:BankTask2State,mode?:string)=>Promise<BankRecord>;clear:(scope:string,unit:string,expected:string|null)=>Promise<BankRecord>;clearInvalid:(scope:string,unit:string,raw:string)=>Promise<BankRecord>;hold:(scope:string,unit:string)=>Promise<void>;release:()=>void;events:()=>number};
 const harness = `
 import {trainerBank} from './src/lib/trainers/bank-sources';
 import {bankRecordKey,parseBankRecord,createBankEntry} from './src/lib/trainers/bank-records';
-import {mutateBankRecord,clearBankRecord,BANK_RECORD_CHANGED} from './src/lib/trainers/bank-storage';
+import {mutateBankRecord,clearBankRecord,clearInvalidBankRecord,BANK_RECORD_CHANGED} from './src/lib/trainers/bank-storage';
 const source=(unit)=>{const value=trainerBank.sources.find(s=>s.ref.unitId===unit);if(!value)throw new Error('Unknown synthetic source');return value;};
 let release=null,events=0;window.addEventListener(BANK_RECORD_CHANGED,()=>events++);
 window.__trainerBank={key:(scope,unit)=>bankRecordKey(scope,source(unit).ref),read:(scope,unit)=>parseBankRecord(localStorage.getItem(bankRecordKey(scope,source(unit).ref)),source(unit)),events:()=>events,
 save:(scope,unit,expected,state,mode)=>mutateBankRecord(scope,source(unit),expected,record=>mode==='wrong-source'?({...record,source:source('W02').ref}):mode==='invalid-state'?({...record,checkpoint:{...createBankEntry(source(unit),state),data:{...state,index:2}}}):mode==='oversize'?({...record,padding:'Я'.repeat(750001)}):({...record,checkpoint:createBankEntry(source(unit),state)})),
 clear:(scope,unit,expected)=>clearBankRecord(scope,source(unit),expected),
+clearInvalid:(scope,unit,raw)=>clearInvalidBankRecord(scope,source(unit),raw),
 hold:async(scope,unit)=>{await new Promise(ready=>{navigator.locks.request(bankRecordKey(scope,source(unit).ref),()=>new Promise(done=>{release=done;ready();}));});},release:()=>{if(release){release();release=null;}}};
 `;
 function state(label:string):BankTask2State{return {...emptyBankTask2State(),started:true,attempt:{...emptyBankTask2State().attempt,argumentReason:label}};}
@@ -41,8 +42,11 @@ async function main(){
     await a.evaluate(value=>(window as unknown as {__trainerBank:Harness}).__trainerBank.save('synthetic:other/account','W02',null,value),state('Different account and source.'));
     assert.equal(JSON.stringify(await read(a)),unchanged);
     const key=await a.evaluate(({scope,unit})=>(window as unknown as {__trainerBank:Harness}).__trainerBank.key(scope,unit),{scope,unit});
+    await assert.rejects(a.evaluate(({scope,unit,raw})=>(window as unknown as {__trainerBank:Harness}).__trainerBank.clearInvalid(scope,unit,raw),{scope,unit,raw:unchanged}),/совместима/);
     for(const broken of ['','{bad raw\n']){
       await a.evaluate(({key,broken})=>localStorage.setItem(key,broken),{key,broken});await assert.rejects(save(a,current.revision,'Cannot overwrite a damaged record.'),/повреждена/);assert.equal(await b.evaluate(key=>localStorage.getItem(key),key),broken);
+      await assert.rejects(a.evaluate(({scope,unit,raw})=>(window as unknown as {__trainerBank:Harness}).__trainerBank.clearInvalid(scope,unit,raw),{scope,unit,raw:broken+'stale'}),/изменилась/);assert.equal(await b.evaluate(key=>localStorage.getItem(key),key),broken);
+      const recovered=await a.evaluate(({scope,unit,raw})=>(window as unknown as {__trainerBank:Harness}).__trainerBank.clearInvalid(scope,unit,raw),{scope,unit,raw:broken});assert.equal(recovered.checkpoint,null);assert.ok(recovered.revision);
     }
     await a.evaluate(({key,raw})=>localStorage.setItem(key,raw),{key,raw:unchanged});
     // Quota failure leaves the existing bytes intact.

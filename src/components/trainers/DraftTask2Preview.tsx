@@ -1,21 +1,30 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { mentionsTask2Issue, parseDraftTask2, task2Words, type DraftTask2, type Task2Correction, type Task2Round } from '@/lib/trainers/draft-task2';
 import styles from './TrainerCheckpoint.module.css';
+import BankCheckpoint from './BankCheckpoint';
+import { type BankSource } from '@/lib/trainers/bank-sources';
+import { blankBankTask2Attempt, type BankTask2Attempt, type BankTask2State } from '@/lib/trainers/bank-task2-state';
 
-type Attempt = { corrections: Task2Correction[]; noIssues: boolean; argumentQuote: string; argumentReason: string; revision: string; reflection: string };
-const blank = (): Attempt => ({corrections:[{quote:'',replacement:'',reason:''}],noIssues:false,argumentQuote:'',argumentReason:'',revision:'',reflection:''});
+type Attempt = BankTask2Attempt;
+const blank = blankBankTask2Attempt;
+const unchanged = () => {};
 function Source({ item, highlight }: { item: Task2Round; highlight: boolean }) {
   const spans = highlight ? item.issues.map(i=>({start:item.text.indexOf(i.before),end:item.text.indexOf(i.before)+i.before.length,id:i.id})).sort((a,b)=>a.start-b.start) : [];
   return <div lang="en" className={`${styles.materialText} ${styles.frozenText} ${styles.essaySource}`} data-task2-source>{spans.map((span,index)=><span key={span.id}>{item.text.slice(index?spans[index-1].end:0,span.start)}<mark className={styles.errorHighlight} aria-label={`Языковая цель ${span.id}: ${item.text.slice(span.start,span.end)}`}>{item.text.slice(span.start,span.end)} <strong>[{span.id}]</strong></mark></span>)}{item.text.slice(spans.at(-1)?.end??0)}</div>;
 }
-function Preview({ pair }: { pair: DraftTask2 }) {
-  const [started,setStarted]=useState(false),[index,setIndex]=useState(0),[revealed,setRevealed]=useState(false),[result,setResult]=useState(false);
+function Preview({ pair,source,onDirty,onBusy }: { pair: DraftTask2;source:BankSource|null;onDirty:(dirty:boolean)=>void;onBusy:(busy:boolean)=>void }) {
+  const [started,setStarted]=useState(false),[index,setIndex]=useState<0|1>(0),[revealed,setRevealed]=useState(false),[result,setResult]=useState(false);
   const [attempt,setAttempt]=useState<Attempt>(blank),[saved,setSaved]=useState<Attempt[]>([]),[checked,setChecked]=useState(false),[error,setError]=useState('');
+  const [generation,setGeneration]=useState(0),[resetRequested,setResetRequested]=useState(false),[bankBusy,setBankBusy]=useState(false),[focusTick,setFocusTick]=useState(0);
+  const handleBusy=useCallback((value:boolean)=>{setBankBusy(value);onBusy(value);},[onBusy]);
   const stage = useRef<HTMLHeadingElement>(null);
-  useEffect(()=>{ if (started) { stage.current?.focus({preventScroll:true}); stage.current?.scrollIntoView({block:'start',behavior:'instant'}); } },[started,index,revealed,result]);
+  const heading=useRef<HTMLHeadingElement>(null);
+  useEffect(()=>{ if (started||focusTick) { const target=started?stage.current:heading.current;target?.focus({preventScroll:true});target?.scrollIntoView({block:'start',behavior:'instant'}); } },[started,index,revealed,result,focusTick]);
   const item=pair.rounds[index];
+  const snapshot:BankTask2State={type:'task2',started,index,revealed,result,attempt,saved,checked};
+  function restore(value:BankTask2State){setStarted(value.started);setIndex(value.index);setRevealed(value.revealed);setResult(value.result);setAttempt(value.attempt);setSaved(value.saved);setChecked(value.checked);setError('');setResetRequested(false);setFocusTick(value=>value+1);}
   function change(patch: Partial<Attempt>) { setAttempt(old=>({...old,...patch})); setError(''); }
   function updateRow(position:number,patch:Partial<Task2Correction>) { change({corrections:attempt.corrections.map((row,i)=>i===position?{...row,...patch}:row)}); }
   function reveal() {
@@ -30,9 +39,10 @@ function Preview({ pair }: { pair: DraftTask2 }) {
     setSaved(old=>[...old,attempt]);setError('');
     if(index===1) setResult(true); else {setIndex(1);setRevealed(false);setAttempt(blank());setChecked(false);}
   }
-  function reset(){setStarted(false);setIndex(0);setRevealed(false);setResult(false);setAttempt(blank());setSaved([]);setChecked(false);setError('');}
-  return <section className={styles.preview} aria-labelledby="task2-draft-title"><h3 id="task2-draft-title">Пробное эссе · DRAFT</h3>
-    <p>Сам найди языковые проблемы, объясни слабое место аргумента, сравни с разбором и создай отдельную версию. Затем повтори работу на другом эссе. Свободный текст проверяется вручную: нет AI, автоматического band или оценки качества по количеству слов. Проба временная, без истории и решения о публикации. Просмотр ключа заранее влияет на независимость.</p>
+  function reset(){setStarted(false);setIndex(0);setRevealed(false);setResult(false);setAttempt(blank());setSaved([]);setChecked(false);setError('');setResetRequested(false);setGeneration(value=>value+1);setFocusTick(value=>value+1);}
+  return <section className={styles.preview} aria-labelledby="task2-draft-title"><h3 ref={heading} tabIndex={-1} id="task2-draft-title">Пробное эссе · DRAFT</h3>
+    <p>Сам найди языковые проблемы, объясни слабое место аргумента, сравни с разбором и создай отдельную версию. Затем повтори работу на другом эссе. Свободный текст проверяется вручную: нет AI, автоматического band или оценки качества по количеству слов. {source?'Работу и историю можно сохранить в этом браузере отдельной кнопкой ниже; это не публикует материал.':'Проба временная, без истории и решения о публикации.'} Просмотр ключа заранее влияет на независимость.</p>
+    <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Работа с эссе</legend>
     {!started?<button type="button" onClick={()=>setStarted(true)}>Начать пробу эссе</button>:result?<>
       <h4 ref={stage} tabIndex={-1} className={styles.essayStage}>Два эссе: первая работа и версии после разбора</h4><p>Разбор использован в обоих текстах. Новое эссе начато после изучения первого, но до показа его собственного ключа. Это не измерение роста IELTS band.</p>
       {saved.map((value,i)=><section className={styles.outcome} key={i}><h4>{i?'Новый текст':'Первый текст'}</h4><p lang="en">{pair.rounds[i].prompt}</p><h5>Твои правки до разбора</h5>{value.noIssues?<p>Языковые проблемы не были указаны.</p>:value.corrections.map((row,j)=><div key={j}><p lang="en">{row.quote} → {row.replacement}</p><p>{row.reason}</p></div>)}<h5>Твой анализ аргумента до разбора</h5><p lang="en">{value.argumentQuote}</p><p>{value.argumentReason}</p><h5>Твоя версия после разбора</h5><p lang="en" className={styles.frozenText}>{value.revision}</p><h5>Твоя рефлексия</h5><p>{value.reflection}</p></section>)}
@@ -65,11 +75,14 @@ function Preview({ pair }: { pair: DraftTask2 }) {
         <button type="button" onClick={next}>{index?'Завершить пробу двух эссе':'Перейти к новому эссе'}</button>
       </>}
     </>}
-    {error&&<p role="alert" className={styles.warning}>{error}</p>}{started&&<div className={styles.actions}><button type="button" onClick={reset}>Начать новую временную пробу эссе</button></div>}
+    </fieldset>
+    {source&&<BankCheckpoint key={generation} source={source} data={snapshot} onRestore={restore} onDirty={onDirty} onBusy={handleBusy}/>}
+    {error&&<p role="alert" className={styles.warning}>{error}</p>}{started&&<div className={styles.actions}><button type="button" disabled={bankBusy} onClick={()=>source?setResetRequested(true):reset()}>Начать новую пробу эссе</button></div>}
+    {resetRequested&&<div role="alert" className={styles.warning}><p>Новая проба очистит текст на экране. Сохранённая работа и история останутся, но несохранённые изменения нужно сначала скачать или сохранить.</p><div className={styles.actions}><button type="button" disabled={bankBusy} onClick={reset}>Подтвердить новую пробу</button><button type="button" disabled={bankBusy} onClick={()=>setResetRequested(false)}>Продолжить текущую пробу</button></div></div>}
   </section>;
 }
-export default function DraftTask2Preview({ value }: { value: unknown }) {
+export default function DraftTask2Preview({ value,source=null,onDirty=unchanged,onBusy=unchanged }: { value: unknown;source?:BankSource|null;onDirty?:(dirty:boolean)=>void;onBusy?:(busy:boolean)=>void }) {
   if (!value || typeof value!=='object' || !('kind' in value) || value.kind!=='task2-pair-v1') return null;
   const pair=parseDraftTask2(value);
-  return pair?<Preview pair={pair}/>:<p role="alert">Структура Task 2 не прошла проверку. Другое эссе не подставлено.</p>;
+  return pair?<Preview pair={pair} source={source} onDirty={onDirty} onBusy={onBusy}/>:<p role="alert">Структура Task 2 не прошла проверку. Другое эссе не подставлено.</p>;
 }
