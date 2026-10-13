@@ -40,8 +40,10 @@ async function main() {
       for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false); }
       assert.deepEqual((await new AxeBuilder({ page }).include('main').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations, []);
     };
-    const first = units[0], query = new URLSearchParams({ reviewBatch: first.batch.batch, reviewUnit: first.unit.id, reviewHash: first.batch.content_sha256 });
+    const first = units[0], query = new URLSearchParams({ reviewBatch: first.batch.batch, reviewVersion:String(first.batch.version), reviewUnit: first.unit.id, reviewHash: first.batch.content_sha256 });
     const url = base + '/trainers/speaking-second-take?' + query;
+    const missingVersion=new URL(url);missingVersion.searchParams.delete('reviewVersion');await page.goto(missingVersion.href);await page.getByRole('heading',{name:'Не удалось открыть черновик',exact:true}).waitFor();
+    await page.goto(url+'&reviewVersion=99.0');await page.getByRole('heading',{name:'Не удалось открыть черновик',exact:true}).waitFor();
     await page.goto(url);
     await page.getByRole('heading', { name: 'Нужно войти для Speaking-черновика', exact: true }).waitFor();
     await checkGate();
@@ -96,7 +98,7 @@ async function main() {
           await trial.getByRole('heading', { name: '3. Прослушай и проверь себя', exact: true }).waitFor();
           assert.deepEqual(await trial.evaluate(() => (window as unknown as {syntheticMicrophone:{requested:number;stopped:number}}).syntheticMicrophone), { requested: 1, stopped: 1 });
           const downloadPromise = trial.waitForEvent('download'); await trial.getByRole('button', { name: 'Скачать эту аудиозапись', exact: true }).click();
-          const download = await downloadPromise; assert.match(download.suggestedFilename(), /^ASHYQ-speaking-S05-answer-1\.(webm|m4a|ogg)$/);
+          const download = await downloadPromise; assert.match(download.suggestedFilename(), /^ASHYQ-speaking-S05-v[0-9.]+-[a-f0-9]{12}-answer-1\.(webm|m4a|ogg)$/);
           const path = 'artifacts/trainers-complete-033/draft-' + download.suggestedFilename(); await download.saveAs(path); assert.ok((await fs.stat(path)).size > 1000);
           await trial.locator('audio').evaluate(element => (element as HTMLAudioElement).play());
           await trial.waitForFunction(() => (document.querySelector('audio')?.currentTime ?? 0) > 0.1);
@@ -127,14 +129,15 @@ async function main() {
         assert.equal(warned, true); assert.equal(await trial.getByRole('heading', { name: 'Три попытки: что ты заметил', exact: true }).count(), 0);
       }
       if (unit.id === 'S12') {
-        let warned = false; trial.once('dialog', async dialog => { warned = dialog.type() === 'beforeunload'; await dialog.accept(); });
         await trial.getByRole('link', { name: '← К проверке материалов', exact: true }).click();
-        await trial.getByRole('heading', { name: 'Проверка учебных материалов', exact: true }).waitFor(); assert.equal(warned, true);
+        await trial.getByRole('alert', {name:'Подтверждение выхода',exact:true}).waitFor();
+        await trial.getByRole('button',{name:'Подтвердить переход',exact:true}).click();
+        await trial.getByRole('heading', { name: 'Проверка учебных материалов', exact: true }).waitFor();
       }
       await trial.close();
     }
     const recorded = units.find(value => value.unit.id === 'S05')!;
-    await page.goto(base + '/trainers/speaking-second-take?' + new URLSearchParams({ reviewBatch: recorded.batch.batch, reviewUnit: recorded.unit.id, reviewHash: recorded.batch.content_sha256 }));
+    await page.goto(base + '/trainers/speaking-second-take?' + new URLSearchParams({ reviewBatch: recorded.batch.batch, reviewVersion:String(recorded.batch.version), reviewUnit: recorded.unit.id, reviewHash: recorded.batch.content_sha256 }));
     await page.getByRole('button', { name: /Начать подготовку/ }).click(); await page.getByRole('button', { name: /Я готов к ответу/ }).click();
     assert.equal(await page.evaluate(() => navigator.mediaDevices.getUserMedia.toString().includes('state.requested')), true);
     await page.getByRole('button', { name: 'Разрешить микрофон и начать запись', exact: true }).click(); await page.getByText(/Идёт запись · 0:01/).waitFor();
@@ -149,7 +152,7 @@ async function main() {
     await page.getByRole('heading', { name: 'Нужно войти для Speaking-черновика', exact: true }).waitFor();
     assert.equal(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('ashyq:trainer-review:')).length), 0);
     assert.deepEqual(posts, []); assert.deepEqual(errors, []);
-    console.log('PASS ten Speaking draft pairs/thirty take flows: malformed/duplicate/stale/missing source gates, login preserves version, student denied/teacher trial, native document microphone policy, no auto microphone, generated-stream recording/download/cleanup, frozen own preparation, hidden fresh ideas, first/repeat/fresh provenance, public checkpoint isolation, explicit unload warning/ephemeral reload/native return link, active-capture role change cleanup/signout reset, gate and result landmarks/four widths/axe. LocalDemo UI only; no physical microphone, server-role, pronunciation, band or approval claim.');
+    console.log('PASS ten Speaking draft pairs/thirty take flows: malformed/duplicate/stale/missing source gates, login preserves version, student denied/teacher trial, native document microphone policy, no auto microphone, generated-stream recording/download/cleanup, frozen own preparation, hidden fresh ideas, first/repeat/fresh provenance, public checkpoint isolation, explicit unload warning/initial reload/manual return-link confirmation, active-capture role change cleanup/signout reset, gate and result landmarks/four widths/axe. LocalDemo UI only; no physical microphone, server-role, pronunciation, band or approval claim.');
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

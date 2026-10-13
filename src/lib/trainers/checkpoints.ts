@@ -46,7 +46,7 @@ const translationAttempt = shape({ model, answer: number, working: text, repair:
 const method = one('algebra', 'graph', 'table', 'other');
 const methodAttempt = shape({ x: number, y: number, working: text, method, seconds: nullable(duration), plan: text });
 const marker = shape({ id: integer(1e9), second: nullable(duration), kind: text, note: text });
-const take = shapeWithOptional({ url: one(null), seconds: nullable(duration), markers: array(marker, 100), ratings: v => array(text, 4)(v) && (v as unknown[]).length === 4, plan: text, confirmed: bool }, { preparationNotes: v => typeof v === 'string' && v.length <= 3000 });
+const take = shapeWithOptional({ url: one(null), seconds: nullable(duration), markers: array(marker, 100), ratings: v => array(text, 4)(v) && (v as unknown[]).length === 4, plan: text, confirmed: bool }, { preparationNotes: v => typeof v === 'string' && v.length <= 3000, noSpecificMoments: nullable(bool) });
 const revisions = record(text, /^(task|coherence|lexical)$/);
 const writingSession = shape({ caseId: one('city-transport', 'school-projects'), stage: phase('grammar', 'task', 'coherence', 'lexical', 'report'), furthestStage: phase('grammar', 'task', 'coherence', 'lexical', 'report'), selectedSentenceId: nullable(text), grammarDrafts: record(text), grammarChecked: bool, appliedGrammar: record(text), revisionDrafts: revisions, postFeedbackDrafts: revisions, revealed: record(bool, /^(task|coherence|lexical)$/), appliedRevisions: revisions });
 
@@ -99,6 +99,7 @@ export function validSnapshot(trainer: TrainerId, value: unknown): value is Snap
   }
   if (trainer === 'speaking-second-take') {
     const takes = v.takes as unknown[];
+    if(takes.some(value=>{const take=value as {noSpecificMoments?:boolean|null;markers:unknown[]};return take.noSpecificMoments===true&&take.markers.length>0;}))return false;
     if (['review', 'compare'].includes(p as string) && !takes[v.takeIndex as number]) return false;
     if (p === 'result' && takes.length !== 3) return false;
   }

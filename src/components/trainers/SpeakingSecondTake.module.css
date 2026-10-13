@@ -3,7 +3,7 @@
 .topline a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); }
 .hero { max-width: 850px; padding: 54px 0 42px; }
 .eyebrow { margin: 0 0 14px; color: var(--red-deep); font-size: 12px; font-weight: 800; letter-spacing: .09em; }
-.hero h1 { margin: 0; font: 800 clamp(2.6rem,6vw,5rem)/1.04 var(--font-display); letter-spacing: -.055em; }
+.hero h1 { scroll-margin-top: 105px; margin: 0; font: 800 clamp(2.6rem,6vw,5rem)/1.04 var(--font-display); letter-spacing: -.055em; }
 .hero > p:not(.eyebrow):not(.note) { margin-top: 22px; color: var(--ink-soft); font-size: 1.1rem; line-height: 1.65; }
 .page h2 { font: 800 clamp(1.8rem,3vw,2.5rem)/1.2 var(--font-display); letter-spacing: -.04em; }
 .page h3 { font: 800 clamp(1.35rem,3vw,1.8rem)/1.3 var(--font-display); overflow-wrap: anywhere; }
@@ -39,3 +39,5 @@
 .page summary { min-height: 44px; padding: 12px 0; font-weight: 800; cursor: pointer; }
 .page button:focus-visible, .page input:focus-visible, .page textarea:focus-visible, .page select:focus-visible, .page a:focus-visible, .page summary:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 600px) { .page { padding: 20px 16px 72px; } .hero { padding: 40px 0 32px; } .topline, .lessonTop { align-items: start; flex-direction: column; } .panel, .prompt { padding: 21px; } }
+
+.confirmation { scroll-margin-top: 105px; }
