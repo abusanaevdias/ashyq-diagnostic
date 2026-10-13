@@ -28,5 +28,5 @@ export function parseDraftTask1(value: unknown): DraftTask1Pair | null {
   return { charts };
 }
 export function draftTask1ClaimLabel(chart: Pick<DraftTask1Chart, 'claims'|'key'>, index: number): string {
-  return chart.key.includes(index) ? 'Входит в авторский отбор главных особенностей.' : chart.claims[index][1] ? 'Данные подтверждают эту деталь; авторский overview выделяет более общую картину.' : 'Это утверждение не подтверждается данными графика; не используй его как установленный факт.';
+  return chart.key.includes(index) ? 'Входит в авторский отбор главных особенностей.' : chart.claims[index][1] ? 'Данные подтверждают эту деталь; авторский overview выделяет более общую картину.' : `Это утверждение не подтверждается данными ${'diagram' in chart ? 'схемы' : 'графика'}; не используй его как установленный факт.`;
 }

@@ -3,13 +3,15 @@ import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import batch from '../src/data/trainer-drafts/batch-02.json';
 import categoryBatch from '../src/data/trainer-drafts/batch-09.json';
+import diagramBatch from '../src/data/trainer-drafts/batch-14.json';
+import { parseDraftTask1Diagrams } from '../src/lib/trainers/draft-task1-diagrams';
 import { parseDraftTask1Categories } from '../src/lib/trainers/draft-task1-categories';
 import { draftTask1ClaimLabel, draftTask1Words, parseDraftTask1 } from '../src/lib/trainers/draft-task1';
 
 async function main() {
   const oldUnits = batch.units.filter(unit => unit.exercise_data.kind === 'task1-pair-v1');
-  const units = [...oldUnits.map(unit=>({batchId:'02',unit})),...categoryBatch.units.map(unit=>({batchId:'09',unit}))];
-  assert.equal(units.length, 6);
+  const units = [...oldUnits.map(unit=>({batchId:'02',unit})),...categoryBatch.units.map(unit=>({batchId:'09',unit})),...diagramBatch.units.map(unit=>({batchId:'14',unit}))];
+  assert.equal(units.length, 8);
   const original = oldUnits[0].exercise_data;
   assert.ok(original.charts);
   for (const value of [null, [], {}, { ...original, publication_ready: true }, { ...original, charts: [original.charts[0], original.charts[0]] }, { ...original, charts: original.charts.map(chart => ({ ...chart, key: [0,0,1] })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, key: [0,1,99] })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, model: 'Too short.' })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, years: [2020,2022,2021,2023] })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, series: chart.series.map(series => ({ ...series, values: [0,0,0,0] })) })) }, { ...original, charts: original.charts.map(chart => ({ ...chart, series: chart.series.map(series => ({ ...series, values: [1,2,3,Infinity] })) })) }]) assert.equal(parseDraftTask1(value), null);
@@ -25,14 +27,16 @@ async function main() {
     await page.evaluate(() => { localStorage.setItem('ashyq:v2:session', JSON.stringify({ user: { id: 'synthetic-task1-preview', name: 'Synthetic reviewer', email: 'synthetic@example.invalid', role: 'teacher', avatarColor: 'red' }, expiresAt: new Date(Date.now() + 3600000).toISOString() })); dispatchEvent(new Event('storage')); });
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('02');
     for (const { batchId,unit } of units) {
-      const pair = parseDraftTask1(unit.exercise_data)??parseDraftTask1Categories(unit.exercise_data); assert.ok(pair);
+      const pair = parseDraftTask1(unit.exercise_data)??parseDraftTask1Categories(unit.exercise_data)??parseDraftTask1Diagrams(unit.exercise_data); assert.ok(pair);
       await page.getByLabel('Партия материалов', { exact: true }).selectOption(batchId);
       await page.getByLabel('Выбери материал', { exact: true }).selectOption(unit.id);
       const preview = page.getByRole('region', { name: 'Пробный Task 1 · DRAFT', exact: true });
       await preview.getByRole('button', { name: 'Пройти Task 1-черновик', exact: true }).click();
       const independent: string[] = [];
       for (const [roundIndex, chart] of pair.charts.entries()) {
-        await preview.getByRole('heading', { name: `${roundIndex ? 'Новый график' : 'Первый график'} · Свой обзор`, exact: true }).waitFor();
+        const isDiagram='diagram' in chart;
+        const sourceName=roundIndex?(isDiagram?'Новая схема':'Новый график'):(isDiagram?'Первая схема':'Первый график');
+        await preview.getByRole('heading', { name: `${sourceName} · Свой обзор`, exact: true }).waitFor();
         if (!roundIndex) assert.equal(await preview.getByText(pair.charts[1].title, { exact: true }).count(), 0);
         assert.equal(await preview.getByText(chart.overview, { exact: false }).count(), 0);
         assert.equal(await preview.getByText(chart.model, { exact: true }).count(), 0);
@@ -62,9 +66,24 @@ async function main() {
         // Native details may retain its open state across chart changes.
         // Open if needed; blindly clicking an already-open table closes it.
         const table = preview.getByRole('table');
-        if (!await table.isVisible()) await preview.getByText('Точные значения таблицей', { exact: true }).click();
-        await table.waitFor();
-        assert.equal(await table.count(), 1, `${unit.id}/${roundIndex}: one visible values table`);
+        if(!isDiagram||chart.chartType==='map'){
+          if (!await table.isVisible()) await preview.getByText(isDiagram?'Сопоставить места таблицей':'Точные значения таблицей', { exact: true }).click();
+          await table.waitFor();
+          assert.equal(await table.count(), 1, `${unit.id}/${roundIndex}: one visible values table`);
+        }
+        if('diagram' in chart){
+          if(chart.chartType==='map'){
+            assert.equal(await table.locator('tbody tr').count(),9);
+            assert.deepEqual(await table.locator('tbody td').allTextContents(),Array.from({length:9},(_,i)=>chart.diagram.frames.map(frame=>frame.cells[i])).flat());
+            if(chart.diagram.frames[1].status==='proposed')await preview.getByText('Проект: ещё не завершённое изменение',{exact:true}).waitFor();
+          }else{
+            const stages=preview.locator('figure ol li');assert.equal(await stages.count(),chart.diagram.stages.length);
+            for(let i=0;i<chart.diagram.stages.length;i++){
+              assert.ok((await stages.nth(i).innerText()).startsWith(String(i+1)),'stage number is visible text');
+              await stages.nth(i).getByText(chart.diagram.stages[i].detail,{exact:true}).waitFor();
+            }
+          }
+        }
         if('categories' in chart){
           assert.equal(await table.locator('tbody tr').count(),chart.categories.length);
           assert.deepEqual(await table.locator('tbody td').allTextContents(),chart.values.map(v=>String(v)+(chart.chartType==='pie'?'%':'')));
@@ -77,20 +96,22 @@ async function main() {
           }
         }
         for (const i of selected) await preview.getByText(draftTask1ClaimLabel(chart, i), { exact: true }).first().waitFor();
-        const next = preview.getByRole('button', { name: roundIndex ? 'Сравнить две Task 1-попытки' : 'Перейти к новому Task 1-графику', exact: true });
+        const next = preview.getByRole('button', { name: roundIndex ? 'Сравнить две Task 1-попытки' : (isDiagram?'Перейти к новой Task 1-схеме':'Перейти к новому Task 1-графику'), exact: true });
         await preview.getByLabel('Пересмотренный полный ответ', { exact: true }).fill('Short revision.');
         await next.click(); await preview.getByRole('status').filter({ hasText: 'не менее 150 слов' }).waitFor();
         await preview.getByLabel('Пересмотренный полный ответ', { exact: true }).fill(full + ' Revised.');
         await next.click(); await preview.getByRole('status').filter({ hasText: 'Подтверди сравнение' }).waitFor();
         await preview.getByRole('checkbox', { name: 'Сопоставил свой текст с данными; понимаю, что он не получил автоматическую оценку.', exact: true }).check();
         await next.click(); await preview.getByRole('status').filter({ hasText: 'Подтверди сравнение' }).waitFor();
-        await preview.getByLabel('Что проверишь на новом графике?', { exact: true }).fill(`Synthetic post-feedback plan ${roundIndex}.`);
+        await preview.getByLabel(isDiagram?'Что проверишь на новой схеме?':'Что проверишь на новом графике?', { exact: true }).fill(`Synthetic post-feedback plan ${roundIndex}.`);
         for (const width of [320,390,768,1440]) {
           await page.setViewportSize({ width, height: 900 });
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Task1 overflow ${unit.id}/${roundIndex}/${width}`);
+          if('diagram' in chart&&chart.chartType==='map'&&width===1440)assert.ok((await preview.locator('figure').boundingBox())!.width>800,'maps have room for readable paired layouts');
+          if(unit.id==='T110'&&!roundIndex)assert.equal(await preview.locator('figure strong').filter({hasText:'Greenhouse'}).locator('wbr').count(),2,'compound-word break is explicit in both map frames');
           assert.deepEqual((await new AxeBuilder({ page }).include('main').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations, []);
-          if (['T103','T105','T107'].includes(unit.id) && !roundIndex && (width === 390 || width === 1440)) {
-            await preview.getByRole('heading', { name: 'Первый график · Разбор и пересмотр', exact: true }).evaluate(element => element.scrollIntoView({ block: 'start', behavior: 'instant' }));
+          if (['T103','T105','T107','T109','T110'].includes(unit.id) && !roundIndex && (width === 390 || width === 1440)) {
+            await preview.getByRole('heading', { name: `${sourceName} · Разбор и пересмотр`, exact: true }).evaluate(element => element.scrollIntoView({ block: 'start', behavior: 'instant' }));
             await page.screenshot({ path: `artifacts/trainers-complete-033/draft-task1-${unit.id}-feedback-${width}.png` });
           }
         }
@@ -108,7 +129,7 @@ async function main() {
     assert.equal(await page.getByRole('button', { name: 'Пройти Task 1-черновик', exact: true }).count(), 1);
     assert.equal(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('ashyq:trainer-review:')).length), 0);
     assert.deepEqual(errors, []);
-    console.log('PASS six Task1 draft pairs/twelve line/bar/pie charts: malformed data/zero-scale/key guards, own overview/evidence and 149-versus-150 word boundary before model, frozen first/full revisions, true detail versus unsupported claim, explicit review/reflection/fresh chart, separate report/reset/reload, exact category tables and nonoverlapping pie labels, shared chart/table four widths and axe. Word count is quantity only; no free-text grade/publication.');
+    console.log('PASS eight Task1 draft pairs/sixteen line/bar/pie/process/map sources: malformed data/zero-scale/key guards, own overview/evidence and 149-versus-150 word boundary before model, frozen first/full revisions, true detail versus unsupported claim, explicit review/reflection/fresh source, separate report/reset/reload, exact category/map tables, visible stage ordering and proposed-state labels, nonoverlapping pie labels, four widths and axe. Word count is quantity only; no free-text grade/publication.');
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

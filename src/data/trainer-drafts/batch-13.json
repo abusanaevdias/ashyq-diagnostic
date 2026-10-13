@@ -1,0 +1,573 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "13",
+  "version": 1,
+  "source_sha256": "088aa8a0af77fa6ba1f05c47557ef86ca5d8064854abf00cf8069c905b4fc5e2",
+  "content_sha256": "8b1e962915ce662b96c02ee26fb2016e56fa3aff90c78ccabb4d706b2c6102a2",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "W06",
+      "title": "Онлайн-уроки и записи лекций",
+      "category": "Writing Task 2",
+      "status": "DRAFT",
+      "student_markdown": "### Some people believe that online lessons should replace most classroom teaching in secondary schools. To what extent do you agree or disagree?\n\nOnline teaching can make schoolwork available beyond a particular classroom. However, replacing most classroom lessons would change more than the location of a screen. I partly agree that digital lessons should be used more widely, but I believe regular classroom contact remains important for secondary students.\n\nOne advantage of online lessons is flexibility. Students has access to materials without to travel to school, which can be useful during a temporary absence. A teacher could record a difficult explanation so that learners can pause it and return to an unfamiliar step. This may help them to studying at a suitable pace rather than copy notes while struggling to follow the speaker. A single successful online lesson proves that digital teaching is better for every student. Lessons that are more easier to revisit can also support a later classroom discussion, provided that the materials match what the class is learning.\n\nNevertheless, access to a recording is not the same as participation. Some students may share a device with relatives or lack an reliable connection. Others need a teacher to notice confusion before it becomes a larger problem. In a classroom, a short conversation can reveal that a learner has misunderstood the question rather than the formula. Online support should be provide, but the school would also need a practical way for students to ask questions and receive individual attention. Simply posting more videos does not ensure that these needs are met.\n\nFor these reasons, schools should combine digital resources with planned classroom work. Teachers could use recordings for review and reserve face-to-face time for discussion, feedback and activities that benefit from direct cooperation. The balance should depend on the task and students’ circumstances. Online teaching is a useful option, but replacing most classroom contact would require stronger evidence than the success of one lesson.\n\nСначала запиши свои языковые правки и анализ аргумента. Затем сравни, создай отдельную версию и проверь новое эссе. Тексты вымышлены, автоматического band нет.",
+      "teacher_markdown": "### Первая попытка\nSome people believe that online lessons should replace most classroom teaching in secondary schools. To what extent do you agree or disagree?\n\nG1: Students has access → Students have access. Students — множественное подлежащее; здесь нужно have. Альтернативы: Learners have access\n\nG2: without to travel to school → without travelling to school. После предлога without инфинитив to travel здесь не подходит; допустимы travelling или переформулировка without having to travel. Альтернативы: without having to travel to school\n\nG3: help them to studying → help them to study. После help + объект допустим инфинитив с to или без to; to studying здесь не подходит. Альтернативы: help them study\n\nG4: more easier to revisit → easier to revisit. Easier уже сравнительная форма; дополнительное more не нужно. Альтернативы: more convenient to revisit\n\nG5: an reliable connection → a reliable connection. Reliable начинается с согласного звука. Альтернативы: a dependable connection\n\nG6: should be provide → should be provided. Пассив после should be требует причастия provided. Альтернативы: should be made available\n\nАргумент: A single successful online lesson proves that digital teaching is better for every student.\nОдин удачный урок не устанавливает превосходство для всех учащихся и задач. Свяжи возможность повтора с конкретной трудностью и назови условия доступа.\nFor a student who needs more time to follow a calculation, replaying the same explanation may reduce the pressure to understand every step immediately. This benefit depends on access to a suitable device and a way to ask questions, so it does not establish that online lessons should replace classroom teaching for everyone.\n\nTask Response: Позиция — более широкое использование без замены большей части очного контакта. Оцени, насколько каждый абзац поддерживает именно эту степень согласия. Авторское направление ручной проверки, не калиброванный band.\n\nCoherence and Cohesion: Первый основной абзац объясняет повтор, второй — ограничения участия. Развитый пример должен соединить механизм повторного просмотра с условием доступа, а не просто увеличить длину. Авторское направление ручной проверки, не калиброванный band.\n\nLexical Resource: Access, participation и individual attention обозначают разные результаты; доступность файла не равна вовлечённости. Авторское направление ручной проверки, не калиброванный band.\n\nGrammatical Range and Accuracy: Проверь число Students have, инфинитив после help, сравнительную форму и пассив. Другая корректная структура допустима. Авторское направление ручной проверки, не калиброванный band.\n\nРазвитая версия, не единственный правильный ответ:\nOnline teaching can make schoolwork available beyond a particular classroom. However, replacing most classroom lessons would change more than the location of a screen. I partly agree that digital lessons should be used more widely, but I believe regular classroom contact remains important for secondary students.\n\nOne advantage of online lessons is flexibility. Students have access to materials without travelling to school, which can be useful during a temporary absence. A teacher could record a difficult explanation so that learners can pause it and return to an unfamiliar step. This may help them to study at a suitable pace rather than copy notes while struggling to follow the speaker. For a student who needs more time to follow a calculation, replaying the same explanation may reduce the pressure to understand every step immediately. This benefit depends on access to a suitable device and a way to ask questions, so it does not establish that online lessons should replace classroom teaching for everyone. Lessons that are easier to revisit can also support a later classroom discussion, provided that the materials match what the class is learning.\n\nNevertheless, access to a recording is not the same as participation. Some students may share a device with relatives or lack a reliable connection. Others need a teacher to notice confusion before it becomes a larger problem. In a classroom, a short conversation can reveal that a learner has misunderstood the question rather than the formula. Online support should be provided, but the school would also need a practical way for students to ask questions and receive individual attention. Simply posting more videos does not ensure that these needs are met.\n\nFor these reasons, schools should combine digital resources with planned classroom work. Teachers could use recordings for review and reserve face-to-face time for discussion, feedback and activities that benefit from direct cooperation. The balance should depend on the task and students’ circumstances. Online teaching is a useful option, but replacing most classroom contact would require stronger evidence than the success of one lesson.\n\n### Новое эссе\nUniversities increasingly provide recordings of lectures. Do the advantages of this development outweigh the disadvantages?\n\nG1: Recordings allows students → Recordings allow students. Подлежащее Recordings множественное. Альтернативы: A recording allows students\n\nG2: useful for learners which are studying → useful for learners who are studying. В относительной части о людях стандартно who/that, не which. Альтернативы: useful for learners that are studying\n\nG3: wording can takes time → wording can take time. После can базовая форма глагола. Альтернативы: wording may take time\n\nG4: encourage to passive study → encourage passive study. Encourage + существительное: to здесь не требуется; encourage somebody to do — другая структура. Альтернативы: encourage students to study passively\n\nG5: shortly before a examination → shortly before an examination. Examination начинается с гласного звука. Альтернативы: shortly before an exam\n\nG6: require students use the material → require students to use the material. Require somebody to do something. Альтернативы: ask students to use the material\n\nАргумент: One student who passed after watching a recording proves that recordings cause higher marks for all students.\nПоследовательность событий у одного студента не доказывает причинность или эффект для всех. Развивай механизм проверки понимания, а не обещание баллов.\nReviewing a missed explanation can help a student identify the exact step that remains unclear. However, a better mark would also depend on practice, prior knowledge and the assessment, so recordings should be paired with tasks that reveal whether the student can use the idea independently.\n\nTask Response: Вопрос требует сопоставить преимущества и недостатки. Позиция условная: преимущество при поддержке активного курса. Авторское направление ручной проверки, не калиброванный band.\n\nCoherence and Cohesion: Свяжи повтор объяснения, подготовку вопросов и применение идеи. Пример одного сдавшего студента не связывает все эти этапы доказательно. Авторское направление ручной проверки, не калиброванный band.\n\nLexical Resource: Review, absorb и apply не взаимозаменяемы; повторное прослушивание ещё не применение. Авторское направление ручной проверки, не калиброванный band.\n\nGrammatical Range and Accuracy: Проверь allow, who/that для людей, can take, управление encourage/require и артикль an examination. Авторское направление ручной проверки, не калиброванный band.\n\nРазвитая версия, не единственный правильный ответ:\nRecorded lectures give university students another way to work with course material. They can review an explanation after the scheduled class, but this convenience may also affect attendance and study habits. I believe the advantages can outweigh the disadvantages when recordings support an active course rather than replace every form of contact.\n\nThe main benefit is the opportunity to revisit difficult material. A student may understand the general idea of a lecture but miss the reasoning behind one example. Recordings allow students to pause at that point and compare the explanation with their notes. This is useful for learners who are studying in an additional language, because unfamiliar wording can take time to process. Reviewing a missed explanation can help a student identify the exact step that remains unclear. However, a better mark would also depend on practice, prior knowledge and the assessment, so recordings should be paired with tasks that reveal whether the student can use the idea independently. Students can also prepare specific questions before a seminar instead of asking the lecturer to repeat an entire topic.\n\nThe disadvantage is that easy access may encourage passive study. A learner might postpone watching several lectures and then try to absorb them all shortly before an examination. Listening again does not necessarily reveal whether the learner can apply the idea independently. For this reason, a course should include short tasks that require students to use the material, and tutors should explain how recordings fit into the weekly schedule. Students who are absent for a legitimate reason should not be treated as lazy simply because they need this resource.\n\nOn balance, recordings are valuable when they provide another route to understanding and support informed questions. Universities should protect that benefit while maintaining opportunities for discussion and practice. Attendance policies may differ between courses, but the design of the learning activities matters more than assuming that the presence or absence of a recording determines how seriously every student studies.",
+      "language_only_markdown": "### Текст 1: только язык\nOnline teaching can make schoolwork available beyond a particular classroom. However, replacing most classroom lessons would change more than the location of a screen. I partly agree that digital lessons should be used more widely, but I believe regular classroom contact remains important for secondary students.\n\nOne advantage of online lessons is flexibility. Students have access to materials without travelling to school, which can be useful during a temporary absence. A teacher could record a difficult explanation so that learners can pause it and return to an unfamiliar step. This may help them to study at a suitable pace rather than copy notes while struggling to follow the speaker. A single successful online lesson proves that digital teaching is better for every student. Lessons that are easier to revisit can also support a later classroom discussion, provided that the materials match what the class is learning.\n\nNevertheless, access to a recording is not the same as participation. Some students may share a device with relatives or lack a reliable connection. Others need a teacher to notice confusion before it becomes a larger problem. In a classroom, a short conversation can reveal that a learner has misunderstood the question rather than the formula. Online support should be provided, but the school would also need a practical way for students to ask questions and receive individual attention. Simply posting more videos does not ensure that these needs are met.\n\nFor these reasons, schools should combine digital resources with planned classroom work. Teachers could use recordings for review and reserve face-to-face time for discussion, feedback and activities that benefit from direct cooperation. The balance should depend on the task and students’ circumstances. Online teaching is a useful option, but replacing most classroom contact would require stronger evidence than the success of one lesson.\n\n### Текст 2: только язык\nRecorded lectures give university students another way to work with course material. They can review an explanation after the scheduled class, but this convenience may also affect attendance and study habits. I believe the advantages can outweigh the disadvantages when recordings support an active course rather than replace every form of contact.\n\nThe main benefit is the opportunity to revisit difficult material. A student may understand the general idea of a lecture but miss the reasoning behind one example. Recordings allow students to pause at that point and compare the explanation with their notes. This is useful for learners who are studying in an additional language, because unfamiliar wording can take time to process. One student who passed after watching a recording proves that recordings cause higher marks for all students. Students can also prepare specific questions before a seminar instead of asking the lecturer to repeat an entire topic.\n\nThe disadvantage is that easy access may encourage passive study. A learner might postpone watching several lectures and then try to absorb them all shortly before an examination. Listening again does not necessarily reveal whether the learner can apply the idea independently. For this reason, a course should include short tasks that require students to use the material, and tutors should explain how recordings fit into the weekly schedule. Students who are absent for a legitimate reason should not be treated as lazy simply because they need this resource.\n\nOn balance, recordings are valuable when they provide another route to understanding and support informed questions. Universities should protect that benefit while maintaining opportunities for discussion and practice. Attendance policies may differ between courses, but the design of the learning activities matters more than assuming that the presence or absence of a recording determines how seriously every student studies.",
+      "exercise_data": {
+        "kind": "task2-pair-v1",
+        "publication_ready": false,
+        "skill": "access-versus-learning-and-causal-claims",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "prompt": "Some people believe that online lessons should replace most classroom teaching in secondary schools. To what extent do you agree or disagree?",
+            "text": "Online teaching can make schoolwork available beyond a particular classroom. However, replacing most classroom lessons would change more than the location of a screen. I partly agree that digital lessons should be used more widely, but I believe regular classroom contact remains important for secondary students.\n\nOne advantage of online lessons is flexibility. Students has access to materials without to travel to school, which can be useful during a temporary absence. A teacher could record a difficult explanation so that learners can pause it and return to an unfamiliar step. This may help them to studying at a suitable pace rather than copy notes while struggling to follow the speaker. A single successful online lesson proves that digital teaching is better for every student. Lessons that are more easier to revisit can also support a later classroom discussion, provided that the materials match what the class is learning.\n\nNevertheless, access to a recording is not the same as participation. Some students may share a device with relatives or lack an reliable connection. Others need a teacher to notice confusion before it becomes a larger problem. In a classroom, a short conversation can reveal that a learner has misunderstood the question rather than the formula. Online support should be provide, but the school would also need a practical way for students to ask questions and receive individual attention. Simply posting more videos does not ensure that these needs are met.\n\nFor these reasons, schools should combine digital resources with planned classroom work. Teachers could use recordings for review and reserve face-to-face time for discussion, feedback and activities that benefit from direct cooperation. The balance should depend on the task and students’ circumstances. Online teaching is a useful option, but replacing most classroom contact would require stronger evidence than the success of one lesson.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "Students has access",
+                "after": "Students have access",
+                "why": "Students — множественное подлежащее; здесь нужно have.",
+                "alternatives": [
+                  "Learners have access"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "without to travel to school",
+                "after": "without travelling to school",
+                "why": "После предлога without инфинитив to travel здесь не подходит; допустимы travelling или переформулировка without having to travel.",
+                "alternatives": [
+                  "without having to travel to school"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "help them to studying",
+                "after": "help them to study",
+                "why": "После help + объект допустим инфинитив с to или без to; to studying здесь не подходит.",
+                "alternatives": [
+                  "help them study"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "more easier to revisit",
+                "after": "easier to revisit",
+                "why": "Easier уже сравнительная форма; дополнительное more не нужно.",
+                "alternatives": [
+                  "more convenient to revisit"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "an reliable connection",
+                "after": "a reliable connection",
+                "why": "Reliable начинается с согласного звука.",
+                "alternatives": [
+                  "a dependable connection"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "should be provide",
+                "after": "should be provided",
+                "why": "Пассив после should be требует причастия provided.",
+                "alternatives": [
+                  "should be made available"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "A single successful online lesson proves that digital teaching is better for every student.",
+              "explanation": "Один удачный урок не устанавливает превосходство для всех учащихся и задач. Свяжи возможность повтора с конкретной трудностью и назови условия доступа.",
+              "example": "For a student who needs more time to follow a calculation, replaying the same explanation may reduce the pressure to understand every step immediately. This benefit depends on access to a suitable device and a way to ask questions, so it does not establish that online lessons should replace classroom teaching for everyone."
+            },
+            "languageOnly": "Online teaching can make schoolwork available beyond a particular classroom. However, replacing most classroom lessons would change more than the location of a screen. I partly agree that digital lessons should be used more widely, but I believe regular classroom contact remains important for secondary students.\n\nOne advantage of online lessons is flexibility. Students have access to materials without travelling to school, which can be useful during a temporary absence. A teacher could record a difficult explanation so that learners can pause it and return to an unfamiliar step. This may help them to study at a suitable pace rather than copy notes while struggling to follow the speaker. A single successful online lesson proves that digital teaching is better for every student. Lessons that are easier to revisit can also support a later classroom discussion, provided that the materials match what the class is learning.\n\nNevertheless, access to a recording is not the same as participation. Some students may share a device with relatives or lack a reliable connection. Others need a teacher to notice confusion before it becomes a larger problem. In a classroom, a short conversation can reveal that a learner has misunderstood the question rather than the formula. Online support should be provided, but the school would also need a practical way for students to ask questions and receive individual attention. Simply posting more videos does not ensure that these needs are met.\n\nFor these reasons, schools should combine digital resources with planned classroom work. Teachers could use recordings for review and reserve face-to-face time for discussion, feedback and activities that benefit from direct cooperation. The balance should depend on the task and students’ circumstances. Online teaching is a useful option, but replacing most classroom contact would require stronger evidence than the success of one lesson.",
+            "example": "Online teaching can make schoolwork available beyond a particular classroom. However, replacing most classroom lessons would change more than the location of a screen. I partly agree that digital lessons should be used more widely, but I believe regular classroom contact remains important for secondary students.\n\nOne advantage of online lessons is flexibility. Students have access to materials without travelling to school, which can be useful during a temporary absence. A teacher could record a difficult explanation so that learners can pause it and return to an unfamiliar step. This may help them to study at a suitable pace rather than copy notes while struggling to follow the speaker. For a student who needs more time to follow a calculation, replaying the same explanation may reduce the pressure to understand every step immediately. This benefit depends on access to a suitable device and a way to ask questions, so it does not establish that online lessons should replace classroom teaching for everyone. Lessons that are easier to revisit can also support a later classroom discussion, provided that the materials match what the class is learning.\n\nNevertheless, access to a recording is not the same as participation. Some students may share a device with relatives or lack a reliable connection. Others need a teacher to notice confusion before it becomes a larger problem. In a classroom, a short conversation can reveal that a learner has misunderstood the question rather than the formula. Online support should be provided, but the school would also need a practical way for students to ask questions and receive individual attention. Simply posting more videos does not ensure that these needs are met.\n\nFor these reasons, schools should combine digital resources with planned classroom work. Teachers could use recordings for review and reserve face-to-face time for discussion, feedback and activities that benefit from direct cooperation. The balance should depend on the task and students’ circumstances. Online teaching is a useful option, but replacing most classroom contact would require stronger evidence than the success of one lesson.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Позиция — более широкое использование без замены большей части очного контакта. Оцени, насколько каждый абзац поддерживает именно эту степень согласия. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Первый основной абзац объясняет повтор, второй — ограничения участия. Развитый пример должен соединить механизм повторного просмотра с условием доступа, а не просто увеличить длину. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Access, participation и individual attention обозначают разные результаты; доступность файла не равна вовлечённости. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Проверь число Students have, инфинитив после help, сравнительную форму и пассив. Другая корректная структура допустима. Авторское направление ручной проверки, не калиброванный band."
+              }
+            ]
+          },
+          {
+            "prompt": "Universities increasingly provide recordings of lectures. Do the advantages of this development outweigh the disadvantages?",
+            "text": "Recorded lectures give university students another way to work with course material. They can review an explanation after the scheduled class, but this convenience may also affect attendance and study habits. I believe the advantages can outweigh the disadvantages when recordings support an active course rather than replace every form of contact.\n\nThe main benefit is the opportunity to revisit difficult material. A student may understand the general idea of a lecture but miss the reasoning behind one example. Recordings allows students to pause at that point and compare the explanation with their notes. This is useful for learners which are studying in an additional language, because unfamiliar wording can takes time to process. One student who passed after watching a recording proves that recordings cause higher marks for all students. Students can also prepare specific questions before a seminar instead of asking the lecturer to repeat an entire topic.\n\nThe disadvantage is that easy access may encourage to passive study. A learner might postpone watching several lectures and then try to absorb them all shortly before a examination. Listening again does not necessarily reveal whether the learner can apply the idea independently. For this reason, a course should include short tasks that require students use the material, and tutors should explain how recordings fit into the weekly schedule. Students who are absent for a legitimate reason should not be treated as lazy simply because they need this resource.\n\nOn balance, recordings are valuable when they provide another route to understanding and support informed questions. Universities should protect that benefit while maintaining opportunities for discussion and practice. Attendance policies may differ between courses, but the design of the learning activities matters more than assuming that the presence or absence of a recording determines how seriously every student studies.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "Recordings allows students",
+                "after": "Recordings allow students",
+                "why": "Подлежащее Recordings множественное.",
+                "alternatives": [
+                  "A recording allows students"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "useful for learners which are studying",
+                "after": "useful for learners who are studying",
+                "why": "В относительной части о людях стандартно who/that, не which.",
+                "alternatives": [
+                  "useful for learners that are studying"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "wording can takes time",
+                "after": "wording can take time",
+                "why": "После can базовая форма глагола.",
+                "alternatives": [
+                  "wording may take time"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "encourage to passive study",
+                "after": "encourage passive study",
+                "why": "Encourage + существительное: to здесь не требуется; encourage somebody to do — другая структура.",
+                "alternatives": [
+                  "encourage students to study passively"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "shortly before a examination",
+                "after": "shortly before an examination",
+                "why": "Examination начинается с гласного звука.",
+                "alternatives": [
+                  "shortly before an exam"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "require students use the material",
+                "after": "require students to use the material",
+                "why": "Require somebody to do something.",
+                "alternatives": [
+                  "ask students to use the material"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "One student who passed after watching a recording proves that recordings cause higher marks for all students.",
+              "explanation": "Последовательность событий у одного студента не доказывает причинность или эффект для всех. Развивай механизм проверки понимания, а не обещание баллов.",
+              "example": "Reviewing a missed explanation can help a student identify the exact step that remains unclear. However, a better mark would also depend on practice, prior knowledge and the assessment, so recordings should be paired with tasks that reveal whether the student can use the idea independently."
+            },
+            "languageOnly": "Recorded lectures give university students another way to work with course material. They can review an explanation after the scheduled class, but this convenience may also affect attendance and study habits. I believe the advantages can outweigh the disadvantages when recordings support an active course rather than replace every form of contact.\n\nThe main benefit is the opportunity to revisit difficult material. A student may understand the general idea of a lecture but miss the reasoning behind one example. Recordings allow students to pause at that point and compare the explanation with their notes. This is useful for learners who are studying in an additional language, because unfamiliar wording can take time to process. One student who passed after watching a recording proves that recordings cause higher marks for all students. Students can also prepare specific questions before a seminar instead of asking the lecturer to repeat an entire topic.\n\nThe disadvantage is that easy access may encourage passive study. A learner might postpone watching several lectures and then try to absorb them all shortly before an examination. Listening again does not necessarily reveal whether the learner can apply the idea independently. For this reason, a course should include short tasks that require students to use the material, and tutors should explain how recordings fit into the weekly schedule. Students who are absent for a legitimate reason should not be treated as lazy simply because they need this resource.\n\nOn balance, recordings are valuable when they provide another route to understanding and support informed questions. Universities should protect that benefit while maintaining opportunities for discussion and practice. Attendance policies may differ between courses, but the design of the learning activities matters more than assuming that the presence or absence of a recording determines how seriously every student studies.",
+            "example": "Recorded lectures give university students another way to work with course material. They can review an explanation after the scheduled class, but this convenience may also affect attendance and study habits. I believe the advantages can outweigh the disadvantages when recordings support an active course rather than replace every form of contact.\n\nThe main benefit is the opportunity to revisit difficult material. A student may understand the general idea of a lecture but miss the reasoning behind one example. Recordings allow students to pause at that point and compare the explanation with their notes. This is useful for learners who are studying in an additional language, because unfamiliar wording can take time to process. Reviewing a missed explanation can help a student identify the exact step that remains unclear. However, a better mark would also depend on practice, prior knowledge and the assessment, so recordings should be paired with tasks that reveal whether the student can use the idea independently. Students can also prepare specific questions before a seminar instead of asking the lecturer to repeat an entire topic.\n\nThe disadvantage is that easy access may encourage passive study. A learner might postpone watching several lectures and then try to absorb them all shortly before an examination. Listening again does not necessarily reveal whether the learner can apply the idea independently. For this reason, a course should include short tasks that require students to use the material, and tutors should explain how recordings fit into the weekly schedule. Students who are absent for a legitimate reason should not be treated as lazy simply because they need this resource.\n\nOn balance, recordings are valuable when they provide another route to understanding and support informed questions. Universities should protect that benefit while maintaining opportunities for discussion and practice. Attendance policies may differ between courses, but the design of the learning activities matters more than assuming that the presence or absence of a recording determines how seriously every student studies.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Вопрос требует сопоставить преимущества и недостатки. Позиция условная: преимущество при поддержке активного курса. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Свяжи повтор объяснения, подготовку вопросов и применение идеи. Пример одного сдавшего студента не связывает все эти этапы доказательно. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Review, absorb и apply не взаимозаменяемы; повторное прослушивание ещё не применение. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Проверь allow, who/that для людей, can take, управление encourage/require и артикль an examination. Авторское направление ручной проверки, не калиброванный band."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "W07",
+      "title": "Форма и совместное проживание",
+      "category": "Writing Task 2",
+      "status": "DRAFT",
+      "student_markdown": "### Some secondary schools require students to wear a uniform. Do the advantages of this policy outweigh the disadvantages?\n\nSchool uniforms create a shared appearance, but a common appearance do not automatically create a fair school. I believe uniforms can have modest practical advantages, although these advantages outweigh the disadvantages only when the policy is affordable and flexible.\n\nA uniform can simplify the decision about what to wear each morning. It may also make differences in fashionable clothing less visible during the school day. If the school offers several comfortable option, students can chose items that suit the weather and the activities they will do. One school with a uniform had no reported argument about clothing, so uniforms prevent every form of bullying. A sensible policy could reduce one source of comparison, but it would still need to work alongside clear expectations about how students treat one another.\n\nThe main difficulty is the cost of a compulsory purchase. A family may already owns suitable clothes but be asked to buy particular items from a single supplier. Replacing a damaged jacket can create pressure, especially if a student is punished for arrive in a different one. Schools should consider the financial burden and allow practical alternatives while a replacement is arranged. It is also important to listen to students who find an item uncomfortable or unsuitable for a particular activity. Consistency should not prevent staff from responding reasonably to individual needs.\n\nOverall, a uniform can be useful as a limited organisational tool. Its value depends of the details of the policy, not merely on the fact that students look alike. If the clothes are affordable and reasonable exceptions are available, the advantages may outweigh the restrictions. Without those conditions, a policy intended to reduce comparison could create a new way to exclude students whose families struggle to meet its requirements.\n\nСначала запиши свои языковые правки и анализ аргумента. Затем сравни, создай отдельную версию и проверь новое эссе. Тексты вымышлены, автоматического band нет.",
+      "teacher_markdown": "### Первая попытка\nSome secondary schools require students to wear a uniform. Do the advantages of this policy outweigh the disadvantages?\n\nG1: a common appearance do not automatically → a common appearance does not automatically. Единственное подлежащее appearance требует does. Альтернативы: a shared appearance does not automatically\n\nG2: offers several comfortable option → offers several comfortable options. После several исчисляемое существительное во множественном числе. Альтернативы: offers a range of comfortable options\n\nG3: can chose items → can choose items. После can базовая форма choose, не прошедшая chose. Альтернативы: may choose items\n\nG4: may already owns suitable clothes → may already own suitable clothes. После may базовая форма. Альтернативы: might already own suitable clothes\n\nG5: punished for arrive in a different one → punished for arriving in a different one. После for действие выражается -ing. Альтернативы: penalised because they arrive in a different one\n\nG6: depends of the details → depends on the details. Стандартное управление depend on. Альтернативы: is determined by the details\n\nАргумент: One school with a uniform had no reported argument about clothing, so uniforms prevent every form of bullying.\nНет зарегистрированных ссор об одежде — не отсутствие всех форм травли и не доказательство причины. Ограничь механизм и сохрани необходимость других мер.\nMaking fashionable clothes less visible may reduce one occasion for comparison, but the absence of reported arguments would not establish the absence of bullying. Students can be targeted for many other reasons, so a uniform policy must accompany accessible reporting and a clear response to harmful behaviour.\n\nTask Response: Оцени условный перевес преимуществ: доступность и разумные исключения важны для позиции, а не декоративная оговорка. Авторское направление ручной проверки, не калиброванный band.\n\nCoherence and Cohesion: Первый основной абзац обсуждает возможную пользу, второй — расходы и исключения. Развитие должно связать ограниченный эффект с необходимыми дополнительными мерами. Авторское направление ручной проверки, не калиброванный band.\n\nLexical Resource: Reported arguments, bullying и exclusion различаются. Отсутствие сообщения нельзя автоматически заменить отсутствием события. Авторское направление ручной проверки, не калиброванный band.\n\nGrammatical Range and Accuracy: Проверь согласование appearance does, several options, формы после can/may, for arriving и depend on. Авторское направление ручной проверки, не калиброванный band.\n\nРазвитая версия, не единственный правильный ответ:\nSchool uniforms create a shared appearance, but a common appearance does not automatically create a fair school. I believe uniforms can have modest practical advantages, although these advantages outweigh the disadvantages only when the policy is affordable and flexible.\n\nA uniform can simplify the decision about what to wear each morning. It may also make differences in fashionable clothing less visible during the school day. If the school offers several comfortable options, students can choose items that suit the weather and the activities they will do. Making fashionable clothes less visible may reduce one occasion for comparison, but the absence of reported arguments would not establish the absence of bullying. Students can be targeted for many other reasons, so a uniform policy must accompany accessible reporting and a clear response to harmful behaviour. A sensible policy could reduce one source of comparison, but it would still need to work alongside clear expectations about how students treat one another.\n\nThe main difficulty is the cost of a compulsory purchase. A family may already own suitable clothes but be asked to buy particular items from a single supplier. Replacing a damaged jacket can create pressure, especially if a student is punished for arriving in a different one. Schools should consider the financial burden and allow practical alternatives while a replacement is arranged. It is also important to listen to students who find an item uncomfortable or unsuitable for a particular activity. Consistency should not prevent staff from responding reasonably to individual needs.\n\nOverall, a uniform can be useful as a limited organisational tool. Its value depends on the details of the policy, not merely on the fact that students look alike. If the clothes are affordable and reasonable exceptions are available, the advantages may outweigh the restrictions. Without those conditions, a policy intended to reduce comparison could create a new way to exclude students whose families struggle to meet its requirements.\n\n### Новое эссе\nMany university students share accommodation with other students. Do the advantages of this arrangement outweigh the disadvantages?\n\nG1: choices that once affects one person → choices that once affected one person. Once здесь означает прежде; в сопоставлении с нынешней ситуацией нужна прошедшая форма. Альтернативы: choices that previously affected one person\n\nG2: Students can divides the cost → Students can divide the cost. После can базовая форма. Альтернативы: Students may divide the cost\n\nG3: help one another with ordinary task → help one another with ordinary tasks. В этом обобщении подразумевается несколько бытовых задач. Альтернативы: help one another with an ordinary task\n\nG4: respect each other need for privacy → respect each other’s need for privacy. Нужна притяжательная форма each other’s. Альтернативы: respect the other residents’ need for privacy\n\nG5: make these expectations more easier → make these expectations easier. Easier уже сравнительная форма. Альтернативы: make these expectations simpler\n\nG6: need an appropriate person or service contact → need an appropriate person or service to contact. Инфинитив обозначает, к кому можно обратиться. Альтернативы: need access to an appropriate support service\n\nАргумент: One friendly shared flat proves that sharing always improves every student’s wellbeing.\nОдин благоприятный случай не устанавливает результат для всех. Свяжи поддержку с возможностью сохранять личные границы и условиями конкретного проживания.\nRegular contact with considerate housemates may give a new student someone to ask for practical advice or share an ordinary concern with. This support depends on the relationships and the ability to keep personal boundaries, so shared housing can help some students without being the best choice for everyone.\n\nTask Response: Позиция — обычный перевес преимуществ при определённых условиях. Сравни расходы и поддержку с конфликтами, не объявляя предпочтение всех одинаковым. Авторское направление ручной проверки, не калиброванный band.\n\nCoherence and Cohesion: Механизм поддержки должен объяснять, что именно меняет совместное проживание; friendly само по себе не достаточно развитый аргумент. Авторское направление ручной проверки, не калиброванный band.\n\nLexical Resource: Affordable, cheaper и suitable не всегда равнозначны. Wellbeing нельзя вывести только из экономии денег. Авторское направление ручной проверки, не калиброванный band.\n\nGrammatical Range and Accuracy: Проверь временное once affected, формы после can, число task/tasks, притяжательное each other’s и инфинитив to contact. Авторское направление ручной проверки, не калиброванный band.\n\nРазвитая версия, не единственный правильный ответ:\nSharing accommodation is a common way for university students to manage living costs. It also changes how they organise daily life, because choices that once affected one person may affect several. I think the advantages usually outweigh the disadvantages when students agree on practical responsibilities and have a way to resolve disagreements.\n\nThe clearest advantage is sharing some expenses. Students can divide the cost of rent and certain household items, which may make a suitable location more affordable. They can also help one another with ordinary tasks, such as receiving a delivery when a housemate is away. A student who lives with friendly people may feel less isolated during the first months at university. Regular contact with considerate housemates may give a new student someone to ask for practical advice or share an ordinary concern with. This support depends on the relationships and the ability to keep personal boundaries, so shared housing can help some students without being the best choice for everyone. However, companionship is more useful when students respect each other’s need for privacy and time alone.\n\nThe disadvantages arise when expectations differ. One person may need a quiet evening to study while another wants to invite friends. A vague promise to keep the kitchen clean may mean different things to different residents. Before moving in, students should discuss noise, visitors and the division of household work. A simple written agreement can make these expectations easier to revisit, although it cannot remove every conflict. Where a problem continues, students need an appropriate person or service to contact rather than being told to tolerate any behaviour because sharing is cheaper.\n\nIn conclusion, shared housing can reduce some costs and provide everyday support, but neither benefit is automatic. The arrangement works best when affordability is combined with clear boundaries and a realistic response to disagreements. Students should consider their circumstances before choosing, rather than assume that living alone is selfish or that sharing is always the healthier option.",
+      "language_only_markdown": "### Текст 1: только язык\nSchool uniforms create a shared appearance, but a common appearance does not automatically create a fair school. I believe uniforms can have modest practical advantages, although these advantages outweigh the disadvantages only when the policy is affordable and flexible.\n\nA uniform can simplify the decision about what to wear each morning. It may also make differences in fashionable clothing less visible during the school day. If the school offers several comfortable options, students can choose items that suit the weather and the activities they will do. One school with a uniform had no reported argument about clothing, so uniforms prevent every form of bullying. A sensible policy could reduce one source of comparison, but it would still need to work alongside clear expectations about how students treat one another.\n\nThe main difficulty is the cost of a compulsory purchase. A family may already own suitable clothes but be asked to buy particular items from a single supplier. Replacing a damaged jacket can create pressure, especially if a student is punished for arriving in a different one. Schools should consider the financial burden and allow practical alternatives while a replacement is arranged. It is also important to listen to students who find an item uncomfortable or unsuitable for a particular activity. Consistency should not prevent staff from responding reasonably to individual needs.\n\nOverall, a uniform can be useful as a limited organisational tool. Its value depends on the details of the policy, not merely on the fact that students look alike. If the clothes are affordable and reasonable exceptions are available, the advantages may outweigh the restrictions. Without those conditions, a policy intended to reduce comparison could create a new way to exclude students whose families struggle to meet its requirements.\n\n### Текст 2: только язык\nSharing accommodation is a common way for university students to manage living costs. It also changes how they organise daily life, because choices that once affected one person may affect several. I think the advantages usually outweigh the disadvantages when students agree on practical responsibilities and have a way to resolve disagreements.\n\nThe clearest advantage is sharing some expenses. Students can divide the cost of rent and certain household items, which may make a suitable location more affordable. They can also help one another with ordinary tasks, such as receiving a delivery when a housemate is away. A student who lives with friendly people may feel less isolated during the first months at university. One friendly shared flat proves that sharing always improves every student’s wellbeing. However, companionship is more useful when students respect each other’s need for privacy and time alone.\n\nThe disadvantages arise when expectations differ. One person may need a quiet evening to study while another wants to invite friends. A vague promise to keep the kitchen clean may mean different things to different residents. Before moving in, students should discuss noise, visitors and the division of household work. A simple written agreement can make these expectations easier to revisit, although it cannot remove every conflict. Where a problem continues, students need an appropriate person or service to contact rather than being told to tolerate any behaviour because sharing is cheaper.\n\nIn conclusion, shared housing can reduce some costs and provide everyday support, but neither benefit is automatic. The arrangement works best when affordability is combined with clear boundaries and a realistic response to disagreements. Students should consider their circumstances before choosing, rather than assume that living alone is selfish or that sharing is always the healthier option.",
+      "exercise_data": {
+        "kind": "task2-pair-v1",
+        "publication_ready": false,
+        "skill": "qualified-advantages-and-individual-conditions",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "prompt": "Some secondary schools require students to wear a uniform. Do the advantages of this policy outweigh the disadvantages?",
+            "text": "School uniforms create a shared appearance, but a common appearance do not automatically create a fair school. I believe uniforms can have modest practical advantages, although these advantages outweigh the disadvantages only when the policy is affordable and flexible.\n\nA uniform can simplify the decision about what to wear each morning. It may also make differences in fashionable clothing less visible during the school day. If the school offers several comfortable option, students can chose items that suit the weather and the activities they will do. One school with a uniform had no reported argument about clothing, so uniforms prevent every form of bullying. A sensible policy could reduce one source of comparison, but it would still need to work alongside clear expectations about how students treat one another.\n\nThe main difficulty is the cost of a compulsory purchase. A family may already owns suitable clothes but be asked to buy particular items from a single supplier. Replacing a damaged jacket can create pressure, especially if a student is punished for arrive in a different one. Schools should consider the financial burden and allow practical alternatives while a replacement is arranged. It is also important to listen to students who find an item uncomfortable or unsuitable for a particular activity. Consistency should not prevent staff from responding reasonably to individual needs.\n\nOverall, a uniform can be useful as a limited organisational tool. Its value depends of the details of the policy, not merely on the fact that students look alike. If the clothes are affordable and reasonable exceptions are available, the advantages may outweigh the restrictions. Without those conditions, a policy intended to reduce comparison could create a new way to exclude students whose families struggle to meet its requirements.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "a common appearance do not automatically",
+                "after": "a common appearance does not automatically",
+                "why": "Единственное подлежащее appearance требует does.",
+                "alternatives": [
+                  "a shared appearance does not automatically"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "offers several comfortable option",
+                "after": "offers several comfortable options",
+                "why": "После several исчисляемое существительное во множественном числе.",
+                "alternatives": [
+                  "offers a range of comfortable options"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "can chose items",
+                "after": "can choose items",
+                "why": "После can базовая форма choose, не прошедшая chose.",
+                "alternatives": [
+                  "may choose items"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "may already owns suitable clothes",
+                "after": "may already own suitable clothes",
+                "why": "После may базовая форма.",
+                "alternatives": [
+                  "might already own suitable clothes"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "punished for arrive in a different one",
+                "after": "punished for arriving in a different one",
+                "why": "После for действие выражается -ing.",
+                "alternatives": [
+                  "penalised because they arrive in a different one"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "depends of the details",
+                "after": "depends on the details",
+                "why": "Стандартное управление depend on.",
+                "alternatives": [
+                  "is determined by the details"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "One school with a uniform had no reported argument about clothing, so uniforms prevent every form of bullying.",
+              "explanation": "Нет зарегистрированных ссор об одежде — не отсутствие всех форм травли и не доказательство причины. Ограничь механизм и сохрани необходимость других мер.",
+              "example": "Making fashionable clothes less visible may reduce one occasion for comparison, but the absence of reported arguments would not establish the absence of bullying. Students can be targeted for many other reasons, so a uniform policy must accompany accessible reporting and a clear response to harmful behaviour."
+            },
+            "languageOnly": "School uniforms create a shared appearance, but a common appearance does not automatically create a fair school. I believe uniforms can have modest practical advantages, although these advantages outweigh the disadvantages only when the policy is affordable and flexible.\n\nA uniform can simplify the decision about what to wear each morning. It may also make differences in fashionable clothing less visible during the school day. If the school offers several comfortable options, students can choose items that suit the weather and the activities they will do. One school with a uniform had no reported argument about clothing, so uniforms prevent every form of bullying. A sensible policy could reduce one source of comparison, but it would still need to work alongside clear expectations about how students treat one another.\n\nThe main difficulty is the cost of a compulsory purchase. A family may already own suitable clothes but be asked to buy particular items from a single supplier. Replacing a damaged jacket can create pressure, especially if a student is punished for arriving in a different one. Schools should consider the financial burden and allow practical alternatives while a replacement is arranged. It is also important to listen to students who find an item uncomfortable or unsuitable for a particular activity. Consistency should not prevent staff from responding reasonably to individual needs.\n\nOverall, a uniform can be useful as a limited organisational tool. Its value depends on the details of the policy, not merely on the fact that students look alike. If the clothes are affordable and reasonable exceptions are available, the advantages may outweigh the restrictions. Without those conditions, a policy intended to reduce comparison could create a new way to exclude students whose families struggle to meet its requirements.",
+            "example": "School uniforms create a shared appearance, but a common appearance does not automatically create a fair school. I believe uniforms can have modest practical advantages, although these advantages outweigh the disadvantages only when the policy is affordable and flexible.\n\nA uniform can simplify the decision about what to wear each morning. It may also make differences in fashionable clothing less visible during the school day. If the school offers several comfortable options, students can choose items that suit the weather and the activities they will do. Making fashionable clothes less visible may reduce one occasion for comparison, but the absence of reported arguments would not establish the absence of bullying. Students can be targeted for many other reasons, so a uniform policy must accompany accessible reporting and a clear response to harmful behaviour. A sensible policy could reduce one source of comparison, but it would still need to work alongside clear expectations about how students treat one another.\n\nThe main difficulty is the cost of a compulsory purchase. A family may already own suitable clothes but be asked to buy particular items from a single supplier. Replacing a damaged jacket can create pressure, especially if a student is punished for arriving in a different one. Schools should consider the financial burden and allow practical alternatives while a replacement is arranged. It is also important to listen to students who find an item uncomfortable or unsuitable for a particular activity. Consistency should not prevent staff from responding reasonably to individual needs.\n\nOverall, a uniform can be useful as a limited organisational tool. Its value depends on the details of the policy, not merely on the fact that students look alike. If the clothes are affordable and reasonable exceptions are available, the advantages may outweigh the restrictions. Without those conditions, a policy intended to reduce comparison could create a new way to exclude students whose families struggle to meet its requirements.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Оцени условный перевес преимуществ: доступность и разумные исключения важны для позиции, а не декоративная оговорка. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Первый основной абзац обсуждает возможную пользу, второй — расходы и исключения. Развитие должно связать ограниченный эффект с необходимыми дополнительными мерами. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Reported arguments, bullying и exclusion различаются. Отсутствие сообщения нельзя автоматически заменить отсутствием события. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Проверь согласование appearance does, several options, формы после can/may, for arriving и depend on. Авторское направление ручной проверки, не калиброванный band."
+              }
+            ]
+          },
+          {
+            "prompt": "Many university students share accommodation with other students. Do the advantages of this arrangement outweigh the disadvantages?",
+            "text": "Sharing accommodation is a common way for university students to manage living costs. It also changes how they organise daily life, because choices that once affects one person may affect several. I think the advantages usually outweigh the disadvantages when students agree on practical responsibilities and have a way to resolve disagreements.\n\nThe clearest advantage is sharing some expenses. Students can divides the cost of rent and certain household items, which may make a suitable location more affordable. They can also help one another with ordinary task, such as receiving a delivery when a housemate is away. A student who lives with friendly people may feel less isolated during the first months at university. One friendly shared flat proves that sharing always improves every student’s wellbeing. However, companionship is more useful when students respect each other need for privacy and time alone.\n\nThe disadvantages arise when expectations differ. One person may need a quiet evening to study while another wants to invite friends. A vague promise to keep the kitchen clean may mean different things to different residents. Before moving in, students should discuss noise, visitors and the division of household work. A simple written agreement can make these expectations more easier to revisit, although it cannot remove every conflict. Where a problem continues, students need an appropriate person or service contact rather than being told to tolerate any behaviour because sharing is cheaper.\n\nIn conclusion, shared housing can reduce some costs and provide everyday support, but neither benefit is automatic. The arrangement works best when affordability is combined with clear boundaries and a realistic response to disagreements. Students should consider their circumstances before choosing, rather than assume that living alone is selfish or that sharing is always the healthier option.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "choices that once affects one person",
+                "after": "choices that once affected one person",
+                "why": "Once здесь означает прежде; в сопоставлении с нынешней ситуацией нужна прошедшая форма.",
+                "alternatives": [
+                  "choices that previously affected one person"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "Students can divides the cost",
+                "after": "Students can divide the cost",
+                "why": "После can базовая форма.",
+                "alternatives": [
+                  "Students may divide the cost"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "help one another with ordinary task",
+                "after": "help one another with ordinary tasks",
+                "why": "В этом обобщении подразумевается несколько бытовых задач.",
+                "alternatives": [
+                  "help one another with an ordinary task"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "respect each other need for privacy",
+                "after": "respect each other’s need for privacy",
+                "why": "Нужна притяжательная форма each other’s.",
+                "alternatives": [
+                  "respect the other residents’ need for privacy"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "make these expectations more easier",
+                "after": "make these expectations easier",
+                "why": "Easier уже сравнительная форма.",
+                "alternatives": [
+                  "make these expectations simpler"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "need an appropriate person or service contact",
+                "after": "need an appropriate person or service to contact",
+                "why": "Инфинитив обозначает, к кому можно обратиться.",
+                "alternatives": [
+                  "need access to an appropriate support service"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "One friendly shared flat proves that sharing always improves every student’s wellbeing.",
+              "explanation": "Один благоприятный случай не устанавливает результат для всех. Свяжи поддержку с возможностью сохранять личные границы и условиями конкретного проживания.",
+              "example": "Regular contact with considerate housemates may give a new student someone to ask for practical advice or share an ordinary concern with. This support depends on the relationships and the ability to keep personal boundaries, so shared housing can help some students without being the best choice for everyone."
+            },
+            "languageOnly": "Sharing accommodation is a common way for university students to manage living costs. It also changes how they organise daily life, because choices that once affected one person may affect several. I think the advantages usually outweigh the disadvantages when students agree on practical responsibilities and have a way to resolve disagreements.\n\nThe clearest advantage is sharing some expenses. Students can divide the cost of rent and certain household items, which may make a suitable location more affordable. They can also help one another with ordinary tasks, such as receiving a delivery when a housemate is away. A student who lives with friendly people may feel less isolated during the first months at university. One friendly shared flat proves that sharing always improves every student’s wellbeing. However, companionship is more useful when students respect each other’s need for privacy and time alone.\n\nThe disadvantages arise when expectations differ. One person may need a quiet evening to study while another wants to invite friends. A vague promise to keep the kitchen clean may mean different things to different residents. Before moving in, students should discuss noise, visitors and the division of household work. A simple written agreement can make these expectations easier to revisit, although it cannot remove every conflict. Where a problem continues, students need an appropriate person or service to contact rather than being told to tolerate any behaviour because sharing is cheaper.\n\nIn conclusion, shared housing can reduce some costs and provide everyday support, but neither benefit is automatic. The arrangement works best when affordability is combined with clear boundaries and a realistic response to disagreements. Students should consider their circumstances before choosing, rather than assume that living alone is selfish or that sharing is always the healthier option.",
+            "example": "Sharing accommodation is a common way for university students to manage living costs. It also changes how they organise daily life, because choices that once affected one person may affect several. I think the advantages usually outweigh the disadvantages when students agree on practical responsibilities and have a way to resolve disagreements.\n\nThe clearest advantage is sharing some expenses. Students can divide the cost of rent and certain household items, which may make a suitable location more affordable. They can also help one another with ordinary tasks, such as receiving a delivery when a housemate is away. A student who lives with friendly people may feel less isolated during the first months at university. Regular contact with considerate housemates may give a new student someone to ask for practical advice or share an ordinary concern with. This support depends on the relationships and the ability to keep personal boundaries, so shared housing can help some students without being the best choice for everyone. However, companionship is more useful when students respect each other’s need for privacy and time alone.\n\nThe disadvantages arise when expectations differ. One person may need a quiet evening to study while another wants to invite friends. A vague promise to keep the kitchen clean may mean different things to different residents. Before moving in, students should discuss noise, visitors and the division of household work. A simple written agreement can make these expectations easier to revisit, although it cannot remove every conflict. Where a problem continues, students need an appropriate person or service to contact rather than being told to tolerate any behaviour because sharing is cheaper.\n\nIn conclusion, shared housing can reduce some costs and provide everyday support, but neither benefit is automatic. The arrangement works best when affordability is combined with clear boundaries and a realistic response to disagreements. Students should consider their circumstances before choosing, rather than assume that living alone is selfish or that sharing is always the healthier option.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Позиция — обычный перевес преимуществ при определённых условиях. Сравни расходы и поддержку с конфликтами, не объявляя предпочтение всех одинаковым. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Механизм поддержки должен объяснять, что именно меняет совместное проживание; friendly само по себе не достаточно развитый аргумент. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Affordable, cheaper и suitable не всегда равнозначны. Wellbeing нельзя вывести только из экономии денег. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Проверь временное once affected, формы после can, число task/tasks, притяжательное each other’s и инфинитив to contact. Авторское направление ручной проверки, не калиброванный band."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "W08",
+      "title": "Планирование заданий и домашние запасы",
+      "category": "Writing Task 2",
+      "status": "DRAFT",
+      "student_markdown": "### Some secondary students repeatedly postpone long homework assignments until the last evening. What are the causes of this problem, and what measures could schools take?\n\nLong assignments can become difficult before the actual writing or calculation begins. Some secondary students repeatedly wait until the last evening, even when the deadline was announced early. This may results from uncertainty about the task and from unrealistic planning. Schools can address both causes without assuming that every delay is simple laziness.\n\nOne cause are not knowing how to begin. A student may read a broad instruction and understand the topic but remain unsure what should the final product contain. Starting then feels like making a large decision with little information. Teachers could show an example of the required structure and ask students to identify the first manageable action. Giving every class a checklist will eliminate all late homework. A checklist is most useful when students understand why its stages matter and can ask questions when their own task does not fit the example exactly.\n\nAnother cause is underestimating the time needed. Students may plan only the final writing session and forget research, preparation or check. Several subjects may also set deadlines in the same week. Schools could coordinate larger assignments and include a small intermediate submission, such as a plan or one worked example. This would allow teachers noticing confusion before the final deadline and give students experience of estimate the remaining work. The intermediate task should be small enough to support progress rather than become another large assignment of its own.\n\nOverall, delaying work may reflect unclear starting points and weak estimates of time, although circumstances differ between students. Clear examples, opportunities to ask questions and realistic intermediate stages can reduce these problems. Schools should review how students use the support and adjust it when necessary. The purpose is to make independent planning more achievable, not to replace every student’s judgement with a rigid schedule.\n\nСначала запиши свои языковые правки и анализ аргумента. Затем сравни, создай отдельную версию и проверь новое эссе. Тексты вымышлены, автоматического band нет.",
+      "teacher_markdown": "### Первая попытка\nSome secondary students repeatedly postpone long homework assignments until the last evening. What are the causes of this problem, and what measures could schools take?\n\nG1: may results from uncertainty → may result from uncertainty. После may базовая форма. Альтернативы: can result from uncertainty\n\nG2: One cause are not knowing → One cause is not knowing. Подлежащее One cause единственное. Альтернативы: One cause involves not knowing\n\nG3: unsure what should the final product contain → unsure what the final product should contain. В косвенном вопросе прямой порядок подлежащее–сказуемое, без инверсии. Альтернативы: unsure about the required contents of the final product\n\nG4: forget research, preparation or check → forget research, preparation or checking. В параллельном списке названий действий нужна checking, не голый глагол check. Альтернативы: forget to research, prepare or check their work\n\nG5: allow teachers noticing confusion → allow teachers to notice confusion. Allow somebody to do something. Альтернативы: enable teachers to notice confusion\n\nG6: experience of estimate the remaining work → experience of estimating the remaining work. После of действие выражается формой -ing. Альтернативы: practice in estimating the remaining work\n\nАргумент: Giving every class a checklist will eliminate all late homework.\nChecklist может прояснить этапы, но не устраняет нехватку времени, здоровья или доступных материалов. Объясни механизм и границу.\nA short checklist can turn a broad task into visible stages, making it easier for a student to choose a starting point and notice a missing step. It cannot ensure that every student has enough time or support, so teachers should combine it with questions about the obstacles that remain.\n\nTask Response: Названы две причины и соответствующие меры. Проверь прямую связь между каждой причиной и предлагаемым действием школы. Авторское направление ручной проверки, не калиброванный band.\n\nCoherence and Cohesion: Развитие checklist должно объяснять выбор первого шага; промежуточная сдача нужна для обнаружения трудности до срока, не просто как ещё один срок. Авторское направление ручной проверки, не калиброванный band.\n\nLexical Resource: Delay не всегда означает laziness. Manageable, intermediate и rigid описывают разные характеристики поддержки. Авторское направление ручной проверки, не калиброванный band.\n\nGrammatical Range and Accuracy: Проверь косвенный вопрос без инверсии, параллельные существительные действий, allow to notice и of estimating. Авторское направление ручной проверки, не калиброванный band.\n\nРазвитая версия, не единственный правильный ответ:\nLong assignments can become difficult before the actual writing or calculation begins. Some secondary students repeatedly wait until the last evening, even when the deadline was announced early. This may result from uncertainty about the task and from unrealistic planning. Schools can address both causes without assuming that every delay is simple laziness.\n\nOne cause is not knowing how to begin. A student may read a broad instruction and understand the topic but remain unsure what the final product should contain. Starting then feels like making a large decision with little information. Teachers could show an example of the required structure and ask students to identify the first manageable action. A short checklist can turn a broad task into visible stages, making it easier for a student to choose a starting point and notice a missing step. It cannot ensure that every student has enough time or support, so teachers should combine it with questions about the obstacles that remain. A checklist is most useful when students understand why its stages matter and can ask questions when their own task does not fit the example exactly.\n\nAnother cause is underestimating the time needed. Students may plan only the final writing session and forget research, preparation or checking. Several subjects may also set deadlines in the same week. Schools could coordinate larger assignments and include a small intermediate submission, such as a plan or one worked example. This would allow teachers to notice confusion before the final deadline and give students experience of estimating the remaining work. The intermediate task should be small enough to support progress rather than become another large assignment of its own.\n\nOverall, delaying work may reflect unclear starting points and weak estimates of time, although circumstances differ between students. Clear examples, opportunities to ask questions and realistic intermediate stages can reduce these problems. Schools should review how students use the support and adjust it when necessary. The purpose is to make independent planning more achievable, not to replace every student’s judgement with a rigid schedule.\n\n### Новое эссе\nSome households throw away food that could still be eaten. What are the causes of this problem, and what could help reduce it?\n\nG1: households may does it → households may do it. После may базовая форма. Альтернативы: households can do it\n\nG2: more than they can uses → more than they can use. После can базовая форма. Альтернативы: more than they are able to use\n\nG3: buying without a realistically plan → buying without a realistic plan. Прилагательное realistic определяет существительное plan. Альтернативы: buying without planning realistically\n\nG4: choose quantities based in the meals → choose quantities based on the meals. Стандартно based on. Альтернативы: choose quantities according to the meals\n\nG5: containers that does not show → containers that do not show. Антецедент containers множественный; нужно do. Альтернативы: containers which do not show\n\nG6: making stored items easier notice → making stored items easier to notice. Конструкция easier to do something. Альтернативы: making stored items more visible\n\nАргумент: One household that used a shopping list threw away less food, so lists solve food waste for everyone.\nОдин пример не доказывает причинность и универсальность. Уточни, как сверка запасов влияет на покупки, и какие изменения всё ещё возможны.\nChecking existing supplies while making a list can reduce duplicate purchases and connect quantities to planned meals. However, an unexpected change in the week may still leave surplus food, so the list should be combined with flexible quantities and a way to notice items that need using soon.\n\nTask Response: Две причины связаны с разными мерами: покупки и видимость запасов. Не превращай ответ в совет употреблять потенциально небезопасную еду. Авторское направление ручной проверки, не калиброванный band.\n\nCoherence and Cohesion: Покажи механизм уменьшения дублей и механизм обнаружения запасов. Один бытовой случай не устанавливает эффект для всех. Авторское направление ручной проверки, не калиброванный band.\n\nLexical Resource: Edible, surplus и unsafe не взаимозаменяемы. Avoidable waste — более ограниченное понятие, чем любая потеря пищи. Авторское направление ручной проверки, не калиброванный band.\n\nGrammatical Range and Accuracy: Проверь формы после may/can, adjective realistic, based on, containers do и easier to notice. Авторское направление ручной проверки, не калиброванный band.\n\nРазвитая версия, не единственный правильный ответ:\nThrowing away edible food wastes money and resources, but households may do it for different reasons. Some buy more than they can use, while others lose track of what they already have. Better planning and clearer routines can reduce the problem, although a useful solution must fit the way a household actually lives.\n\nOne cause is buying without a realistic plan. Large packages may look economical, but their price is less important if much of the contents is never eaten. A family could check its cupboards before shopping and choose quantities based on the meals it is likely to prepare. Checking existing supplies while making a list can reduce duplicate purchases and connect quantities to planned meals. However, an unexpected change in the week may still leave surplus food, so the list should be combined with flexible quantities and a way to notice items that need using soon. A plan also needs room for changes, since work schedules or unexpected visitors can affect how much food is needed during a particular week.\n\nA second cause is forgetting food after it has been stored. Items may be hidden at the back of a cupboard or placed in containers that do not show what is inside. Households could keep food that needs using soon in a visible area and label prepared dishes with a clear date. Advice about storage should come from reliable guidance, because the aim is not to persuade people to eat food that may be unsafe. Where safe surplus food can be shared through an appropriate local scheme, the household also needs clear information about what that scheme accepts.\n\nIn conclusion, unrealistic purchasing and poor visibility of stored food can both lead to avoidable waste. Checking supplies, choosing suitable quantities and making stored items easier to notice may address these causes. These measures should support informed decisions about use and safety. They are practical starting points rather than a guarantee that every household can prevent every kind of waste.",
+      "language_only_markdown": "### Текст 1: только язык\nLong assignments can become difficult before the actual writing or calculation begins. Some secondary students repeatedly wait until the last evening, even when the deadline was announced early. This may result from uncertainty about the task and from unrealistic planning. Schools can address both causes without assuming that every delay is simple laziness.\n\nOne cause is not knowing how to begin. A student may read a broad instruction and understand the topic but remain unsure what the final product should contain. Starting then feels like making a large decision with little information. Teachers could show an example of the required structure and ask students to identify the first manageable action. Giving every class a checklist will eliminate all late homework. A checklist is most useful when students understand why its stages matter and can ask questions when their own task does not fit the example exactly.\n\nAnother cause is underestimating the time needed. Students may plan only the final writing session and forget research, preparation or checking. Several subjects may also set deadlines in the same week. Schools could coordinate larger assignments and include a small intermediate submission, such as a plan or one worked example. This would allow teachers to notice confusion before the final deadline and give students experience of estimating the remaining work. The intermediate task should be small enough to support progress rather than become another large assignment of its own.\n\nOverall, delaying work may reflect unclear starting points and weak estimates of time, although circumstances differ between students. Clear examples, opportunities to ask questions and realistic intermediate stages can reduce these problems. Schools should review how students use the support and adjust it when necessary. The purpose is to make independent planning more achievable, not to replace every student’s judgement with a rigid schedule.\n\n### Текст 2: только язык\nThrowing away edible food wastes money and resources, but households may do it for different reasons. Some buy more than they can use, while others lose track of what they already have. Better planning and clearer routines can reduce the problem, although a useful solution must fit the way a household actually lives.\n\nOne cause is buying without a realistic plan. Large packages may look economical, but their price is less important if much of the contents is never eaten. A family could check its cupboards before shopping and choose quantities based on the meals it is likely to prepare. One household that used a shopping list threw away less food, so lists solve food waste for everyone. A plan also needs room for changes, since work schedules or unexpected visitors can affect how much food is needed during a particular week.\n\nA second cause is forgetting food after it has been stored. Items may be hidden at the back of a cupboard or placed in containers that do not show what is inside. Households could keep food that needs using soon in a visible area and label prepared dishes with a clear date. Advice about storage should come from reliable guidance, because the aim is not to persuade people to eat food that may be unsafe. Where safe surplus food can be shared through an appropriate local scheme, the household also needs clear information about what that scheme accepts.\n\nIn conclusion, unrealistic purchasing and poor visibility of stored food can both lead to avoidable waste. Checking supplies, choosing suitable quantities and making stored items easier to notice may address these causes. These measures should support informed decisions about use and safety. They are practical starting points rather than a guarantee that every household can prevent every kind of waste.",
+      "exercise_data": {
+        "kind": "task2-pair-v1",
+        "publication_ready": false,
+        "skill": "cause-measure-mechanism-and-limits",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "prompt": "Some secondary students repeatedly postpone long homework assignments until the last evening. What are the causes of this problem, and what measures could schools take?",
+            "text": "Long assignments can become difficult before the actual writing or calculation begins. Some secondary students repeatedly wait until the last evening, even when the deadline was announced early. This may results from uncertainty about the task and from unrealistic planning. Schools can address both causes without assuming that every delay is simple laziness.\n\nOne cause are not knowing how to begin. A student may read a broad instruction and understand the topic but remain unsure what should the final product contain. Starting then feels like making a large decision with little information. Teachers could show an example of the required structure and ask students to identify the first manageable action. Giving every class a checklist will eliminate all late homework. A checklist is most useful when students understand why its stages matter and can ask questions when their own task does not fit the example exactly.\n\nAnother cause is underestimating the time needed. Students may plan only the final writing session and forget research, preparation or check. Several subjects may also set deadlines in the same week. Schools could coordinate larger assignments and include a small intermediate submission, such as a plan or one worked example. This would allow teachers noticing confusion before the final deadline and give students experience of estimate the remaining work. The intermediate task should be small enough to support progress rather than become another large assignment of its own.\n\nOverall, delaying work may reflect unclear starting points and weak estimates of time, although circumstances differ between students. Clear examples, opportunities to ask questions and realistic intermediate stages can reduce these problems. Schools should review how students use the support and adjust it when necessary. The purpose is to make independent planning more achievable, not to replace every student’s judgement with a rigid schedule.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "may results from uncertainty",
+                "after": "may result from uncertainty",
+                "why": "После may базовая форма.",
+                "alternatives": [
+                  "can result from uncertainty"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "One cause are not knowing",
+                "after": "One cause is not knowing",
+                "why": "Подлежащее One cause единственное.",
+                "alternatives": [
+                  "One cause involves not knowing"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "unsure what should the final product contain",
+                "after": "unsure what the final product should contain",
+                "why": "В косвенном вопросе прямой порядок подлежащее–сказуемое, без инверсии.",
+                "alternatives": [
+                  "unsure about the required contents of the final product"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "forget research, preparation or check",
+                "after": "forget research, preparation or checking",
+                "why": "В параллельном списке названий действий нужна checking, не голый глагол check.",
+                "alternatives": [
+                  "forget to research, prepare or check their work"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "allow teachers noticing confusion",
+                "after": "allow teachers to notice confusion",
+                "why": "Allow somebody to do something.",
+                "alternatives": [
+                  "enable teachers to notice confusion"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "experience of estimate the remaining work",
+                "after": "experience of estimating the remaining work",
+                "why": "После of действие выражается формой -ing.",
+                "alternatives": [
+                  "practice in estimating the remaining work"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "Giving every class a checklist will eliminate all late homework.",
+              "explanation": "Checklist может прояснить этапы, но не устраняет нехватку времени, здоровья или доступных материалов. Объясни механизм и границу.",
+              "example": "A short checklist can turn a broad task into visible stages, making it easier for a student to choose a starting point and notice a missing step. It cannot ensure that every student has enough time or support, so teachers should combine it with questions about the obstacles that remain."
+            },
+            "languageOnly": "Long assignments can become difficult before the actual writing or calculation begins. Some secondary students repeatedly wait until the last evening, even when the deadline was announced early. This may result from uncertainty about the task and from unrealistic planning. Schools can address both causes without assuming that every delay is simple laziness.\n\nOne cause is not knowing how to begin. A student may read a broad instruction and understand the topic but remain unsure what the final product should contain. Starting then feels like making a large decision with little information. Teachers could show an example of the required structure and ask students to identify the first manageable action. Giving every class a checklist will eliminate all late homework. A checklist is most useful when students understand why its stages matter and can ask questions when their own task does not fit the example exactly.\n\nAnother cause is underestimating the time needed. Students may plan only the final writing session and forget research, preparation or checking. Several subjects may also set deadlines in the same week. Schools could coordinate larger assignments and include a small intermediate submission, such as a plan or one worked example. This would allow teachers to notice confusion before the final deadline and give students experience of estimating the remaining work. The intermediate task should be small enough to support progress rather than become another large assignment of its own.\n\nOverall, delaying work may reflect unclear starting points and weak estimates of time, although circumstances differ between students. Clear examples, opportunities to ask questions and realistic intermediate stages can reduce these problems. Schools should review how students use the support and adjust it when necessary. The purpose is to make independent planning more achievable, not to replace every student’s judgement with a rigid schedule.",
+            "example": "Long assignments can become difficult before the actual writing or calculation begins. Some secondary students repeatedly wait until the last evening, even when the deadline was announced early. This may result from uncertainty about the task and from unrealistic planning. Schools can address both causes without assuming that every delay is simple laziness.\n\nOne cause is not knowing how to begin. A student may read a broad instruction and understand the topic but remain unsure what the final product should contain. Starting then feels like making a large decision with little information. Teachers could show an example of the required structure and ask students to identify the first manageable action. A short checklist can turn a broad task into visible stages, making it easier for a student to choose a starting point and notice a missing step. It cannot ensure that every student has enough time or support, so teachers should combine it with questions about the obstacles that remain. A checklist is most useful when students understand why its stages matter and can ask questions when their own task does not fit the example exactly.\n\nAnother cause is underestimating the time needed. Students may plan only the final writing session and forget research, preparation or checking. Several subjects may also set deadlines in the same week. Schools could coordinate larger assignments and include a small intermediate submission, such as a plan or one worked example. This would allow teachers to notice confusion before the final deadline and give students experience of estimating the remaining work. The intermediate task should be small enough to support progress rather than become another large assignment of its own.\n\nOverall, delaying work may reflect unclear starting points and weak estimates of time, although circumstances differ between students. Clear examples, opportunities to ask questions and realistic intermediate stages can reduce these problems. Schools should review how students use the support and adjust it when necessary. The purpose is to make independent planning more achievable, not to replace every student’s judgement with a rigid schedule.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Названы две причины и соответствующие меры. Проверь прямую связь между каждой причиной и предлагаемым действием школы. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Развитие checklist должно объяснять выбор первого шага; промежуточная сдача нужна для обнаружения трудности до срока, не просто как ещё один срок. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Delay не всегда означает laziness. Manageable, intermediate и rigid описывают разные характеристики поддержки. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Проверь косвенный вопрос без инверсии, параллельные существительные действий, allow to notice и of estimating. Авторское направление ручной проверки, не калиброванный band."
+              }
+            ]
+          },
+          {
+            "prompt": "Some households throw away food that could still be eaten. What are the causes of this problem, and what could help reduce it?",
+            "text": "Throwing away edible food wastes money and resources, but households may does it for different reasons. Some buy more than they can uses, while others lose track of what they already have. Better planning and clearer routines can reduce the problem, although a useful solution must fit the way a household actually lives.\n\nOne cause is buying without a realistically plan. Large packages may look economical, but their price is less important if much of the contents is never eaten. A family could check its cupboards before shopping and choose quantities based in the meals it is likely to prepare. One household that used a shopping list threw away less food, so lists solve food waste for everyone. A plan also needs room for changes, since work schedules or unexpected visitors can affect how much food is needed during a particular week.\n\nA second cause is forgetting food after it has been stored. Items may be hidden at the back of a cupboard or placed in containers that does not show what is inside. Households could keep food that needs using soon in a visible area and label prepared dishes with a clear date. Advice about storage should come from reliable guidance, because the aim is not to persuade people to eat food that may be unsafe. Where safe surplus food can be shared through an appropriate local scheme, the household also needs clear information about what that scheme accepts.\n\nIn conclusion, unrealistic purchasing and poor visibility of stored food can both lead to avoidable waste. Checking supplies, choosing suitable quantities and making stored items easier notice may address these causes. These measures should support informed decisions about use and safety. They are practical starting points rather than a guarantee that every household can prevent every kind of waste.",
+            "issues": [
+              {
+                "id": "G1",
+                "before": "households may does it",
+                "after": "households may do it",
+                "why": "После may базовая форма.",
+                "alternatives": [
+                  "households can do it"
+                ]
+              },
+              {
+                "id": "G2",
+                "before": "more than they can uses",
+                "after": "more than they can use",
+                "why": "После can базовая форма.",
+                "alternatives": [
+                  "more than they are able to use"
+                ]
+              },
+              {
+                "id": "G3",
+                "before": "buying without a realistically plan",
+                "after": "buying without a realistic plan",
+                "why": "Прилагательное realistic определяет существительное plan.",
+                "alternatives": [
+                  "buying without planning realistically"
+                ]
+              },
+              {
+                "id": "G4",
+                "before": "choose quantities based in the meals",
+                "after": "choose quantities based on the meals",
+                "why": "Стандартно based on.",
+                "alternatives": [
+                  "choose quantities according to the meals"
+                ]
+              },
+              {
+                "id": "G5",
+                "before": "containers that does not show",
+                "after": "containers that do not show",
+                "why": "Антецедент containers множественный; нужно do.",
+                "alternatives": [
+                  "containers which do not show"
+                ]
+              },
+              {
+                "id": "G6",
+                "before": "making stored items easier notice",
+                "after": "making stored items easier to notice",
+                "why": "Конструкция easier to do something.",
+                "alternatives": [
+                  "making stored items more visible"
+                ]
+              }
+            ],
+            "argument": {
+              "before": "One household that used a shopping list threw away less food, so lists solve food waste for everyone.",
+              "explanation": "Один пример не доказывает причинность и универсальность. Уточни, как сверка запасов влияет на покупки, и какие изменения всё ещё возможны.",
+              "example": "Checking existing supplies while making a list can reduce duplicate purchases and connect quantities to planned meals. However, an unexpected change in the week may still leave surplus food, so the list should be combined with flexible quantities and a way to notice items that need using soon."
+            },
+            "languageOnly": "Throwing away edible food wastes money and resources, but households may do it for different reasons. Some buy more than they can use, while others lose track of what they already have. Better planning and clearer routines can reduce the problem, although a useful solution must fit the way a household actually lives.\n\nOne cause is buying without a realistic plan. Large packages may look economical, but their price is less important if much of the contents is never eaten. A family could check its cupboards before shopping and choose quantities based on the meals it is likely to prepare. One household that used a shopping list threw away less food, so lists solve food waste for everyone. A plan also needs room for changes, since work schedules or unexpected visitors can affect how much food is needed during a particular week.\n\nA second cause is forgetting food after it has been stored. Items may be hidden at the back of a cupboard or placed in containers that do not show what is inside. Households could keep food that needs using soon in a visible area and label prepared dishes with a clear date. Advice about storage should come from reliable guidance, because the aim is not to persuade people to eat food that may be unsafe. Where safe surplus food can be shared through an appropriate local scheme, the household also needs clear information about what that scheme accepts.\n\nIn conclusion, unrealistic purchasing and poor visibility of stored food can both lead to avoidable waste. Checking supplies, choosing suitable quantities and making stored items easier to notice may address these causes. These measures should support informed decisions about use and safety. They are practical starting points rather than a guarantee that every household can prevent every kind of waste.",
+            "example": "Throwing away edible food wastes money and resources, but households may do it for different reasons. Some buy more than they can use, while others lose track of what they already have. Better planning and clearer routines can reduce the problem, although a useful solution must fit the way a household actually lives.\n\nOne cause is buying without a realistic plan. Large packages may look economical, but their price is less important if much of the contents is never eaten. A family could check its cupboards before shopping and choose quantities based on the meals it is likely to prepare. Checking existing supplies while making a list can reduce duplicate purchases and connect quantities to planned meals. However, an unexpected change in the week may still leave surplus food, so the list should be combined with flexible quantities and a way to notice items that need using soon. A plan also needs room for changes, since work schedules or unexpected visitors can affect how much food is needed during a particular week.\n\nA second cause is forgetting food after it has been stored. Items may be hidden at the back of a cupboard or placed in containers that do not show what is inside. Households could keep food that needs using soon in a visible area and label prepared dishes with a clear date. Advice about storage should come from reliable guidance, because the aim is not to persuade people to eat food that may be unsafe. Where safe surplus food can be shared through an appropriate local scheme, the household also needs clear information about what that scheme accepts.\n\nIn conclusion, unrealistic purchasing and poor visibility of stored food can both lead to avoidable waste. Checking supplies, choosing suitable quantities and making stored items easier to notice may address these causes. These measures should support informed decisions about use and safety. They are practical starting points rather than a guarantee that every household can prevent every kind of waste.",
+            "criteria": [
+              {
+                "name": "Task Response",
+                "note": "Две причины связаны с разными мерами: покупки и видимость запасов. Не превращай ответ в совет употреблять потенциально небезопасную еду. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Coherence and Cohesion",
+                "note": "Покажи механизм уменьшения дублей и механизм обнаружения запасов. Один бытовой случай не устанавливает эффект для всех. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Lexical Resource",
+                "note": "Edible, surplus и unsafe не взаимозаменяемы. Avoidable waste — более ограниченное понятие, чем любая потеря пищи. Авторское направление ручной проверки, не калиброванный band."
+              },
+              {
+                "name": "Grammatical Range and Accuracy",
+                "note": "Проверь формы после may/can, adjective realistic, based on, containers do и easier to notice. Авторское направление ручной проверки, не калиброванный band."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

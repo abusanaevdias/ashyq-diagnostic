@@ -52,6 +52,7 @@
 .preview > .consent { display: flex; align-items: start; gap: 10px; min-height: 44px; padding: 12px 0; }
 .preview > .consent input { flex-shrink: 0; margin-top: 5px; }
 .chartFrame { max-width: 640px; min-width: 0; }
+.mapFrame { max-width: 960px; min-width: 0; }
 .errorHighlight { background: var(--blush); color: var(--ink); border-bottom: 3px solid var(--red-deep); padding: 2px 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .essaySource { max-width: 76ch; line-height: 1.7; }
 .essayStage { font-size: 20px; font-weight: 700; line-height: 1.35; }
