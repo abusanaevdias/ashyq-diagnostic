@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import batch from '../src/data/trainer-drafts/batch-08.json';
+import batch13 from '../src/data/trainer-drafts/batch-13.json';
 import { parseDraftTask2 } from '../src/lib/trainers/draft-task2';
 
 async function main(){
@@ -13,7 +14,8 @@ async function main(){
     await page.goto(base+'/trainers/material-review');await page.getByRole('heading',{name:'Нужно войти',exact:true}).waitFor();
     await page.evaluate(()=>{localStorage.setItem('ashyq:v2:session',JSON.stringify({user:{id:'synthetic-task2-review',name:'Synthetic reviewer',email:'synthetic@example.invalid',role:'teacher',avatarColor:'red'},expiresAt:new Date(Date.now()+3600000).toISOString()}));dispatchEvent(new Event('storage'));});
     await page.getByLabel('Партия материалов',{exact:true}).selectOption('08');
-    for(const unit of batch.units){
+    for(const unit of [...batch.units,...batch13.units]){
+      await page.getByLabel('Партия материалов',{exact:true}).selectOption(batch13.units.some(value=>value.id===unit.id)?'13':'08');
       const pair=parseDraftTask2(unit.exercise_data);assert.ok(pair);
       await page.getByLabel('Выбери материал',{exact:true}).selectOption(unit.id);
       const preview=page.getByRole('region',{name:'Пробное эссе · DRAFT',exact:true});
@@ -64,10 +66,10 @@ async function main(){
         await preview.getByRole('checkbox',{name:/Я сравнил язык/}).check();
         await preview.getByLabel('Что изменил и что ещё требует проверки?',{exact:true}).fill('');await next.click();await preview.getByRole('alert').filter({hasText:'рефлексия'}).waitFor();
         await preview.getByLabel('Что изменил и что ещё требует проверки?',{exact:true}).fill(`Synthetic reflection ${unit.id}-${index}.`);
-        if(unit.id==='W03'&&index===0)for(const width of [320,390,768,1440]){
+        if((unit.id==='W03'||unit.id==='W06')&&index===0)for(const width of [320,390,768,1440]){
           await page.setViewportSize({width,height:900});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
           assert.deepEqual((await new AxeBuilder({page}).include('main').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations,[]);
-          if(width===390||width===1440){await preview.locator('[data-task2-source]').evaluate(e=>window.scrollTo({top:e.getBoundingClientRect().top+scrollY-155,behavior:'instant'}));await page.screenshot({path:`artifacts/trainers-complete-033/draft-task2-feedback-${width}.png`});}
+          if(width===390||width===1440){await preview.locator('[data-task2-source]').evaluate(e=>window.scrollTo({top:e.getBoundingClientRect().top+scrollY-155,behavior:'instant'}));await page.screenshot({path:`artifacts/trainers-complete-033/draft-task2-${unit.id}-feedback-${width}.png`});}
         }
         await next.click();
       }
@@ -82,7 +84,7 @@ async function main(){
     assert.equal(await page.getByRole('button',{name:'Начать пробу эссе',exact:true}).count(),1);
     assert.equal(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('ashyq:trainer-review:')||k.startsWith('ashyq:trainer-checkpoint:')).length),0);
     assert.deepEqual(posts,[]);assert.deepEqual(errors,[]);
-    console.log('PASS three Task2 pairs/six full essay flows: hidden keys/fresh text, own exact-quote/reason guards, add/remove/explicit no-findings, immutable search, wrong repair never marked correct, six numbered target highlights, separate language-only/developed examples, revision volume/manual acknowledgement/reflection, unchanged revision, first/fresh provenance, reset/reload/no writes, stage focus, four widths and axe. Synthetic manual-review fixtures; no free-text quality/band/approval claim.');
+    console.log('PASS six Task2 pairs/twelve full essay flows: hidden keys/fresh text, own exact-quote/reason guards, add/remove/explicit no-findings, immutable search, wrong repair never marked correct, six numbered target highlights, separate language-only/developed examples, revision volume/manual acknowledgement/reflection, unchanged revision, first/fresh provenance, reset/reload/no writes, stage focus, four widths and axe. Synthetic manual-review fixtures; no free-text quality/band/approval claim.');
   }finally{await browser.close();}
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
