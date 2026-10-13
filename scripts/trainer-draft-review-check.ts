@@ -201,6 +201,23 @@ async function main() {
     await page.getByText('Показать ключ, альтернативы и границы проверки', { exact: true }).click();
     for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `eighth batch overflow at ${width}`); }
     assert.deepEqual((await new AxeBuilder({ page }).include('main').analyze()).violations, []);
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('09');
+    await page.getByRole('heading', { name: 'Рассмотрено 0 из 4', exact: true }).waitFor();
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('T108');
+    await page.getByLabel('Результат проверки', { exact: true }).selectOption('hold');
+    await page.getByLabel('Замечание', { exact: true }).fill('Synthetic ninth-batch persistence fixture; not methodological approval.');
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 4', exact: true }).waitFor();
+    await page.reload();
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('09');
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 4', exact: true }).waitFor();
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('T108');
+    assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), 'Synthetic ninth-batch persistence fixture; not methodological approval.');
+    const ninthRaw = await page.evaluate(key => localStorage.getItem(key), reviewKey('fixture-a', draftBatches[8]));
+    assert.equal(parseDraftReview(ninthRaw, 'fixture-a', draftBatches[8])?.decisions.T108.decision, 'hold');
+    await page.getByText('Показать ключ, альтернативы и границы проверки', { exact: true }).click();
+    for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `ninth batch overflow at ${width}`); }
+    assert.deepEqual((await new AxeBuilder({ page }).include('main').analyze()).violations, []);
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('01');
     await page.getByRole('heading', { name: 'Рассмотрено 2 из 12', exact: true }).waitFor();
     await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-b'));

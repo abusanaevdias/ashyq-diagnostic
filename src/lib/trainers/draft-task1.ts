@@ -27,6 +27,6 @@ export function parseDraftTask1(value: unknown): DraftTask1Pair | null {
   if (charts[0].title === charts[1].title || JSON.stringify(charts[0].series) === JSON.stringify(charts[1].series)) return null;
   return { charts };
 }
-export function draftTask1ClaimLabel(chart: DraftTask1Chart, index: number): string {
+export function draftTask1ClaimLabel(chart: Pick<DraftTask1Chart, 'claims'|'key'>, index: number): string {
   return chart.key.includes(index) ? 'Входит в авторский отбор главных особенностей.' : chart.claims[index][1] ? 'Данные подтверждают эту деталь; авторский overview выделяет более общую картину.' : 'Это утверждение не подтверждается данными графика; не используй его как установленный факт.';
 }
