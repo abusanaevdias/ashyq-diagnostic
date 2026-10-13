@@ -5,7 +5,7 @@ import { compareDraftAnswer, parseDraftListening, type DraftListeningPair } from
 import styles from './TrainerCheckpoint.module.css';
 
 type Evidence = { played: boolean; ended: boolean; segment: boolean; transcript: boolean };
-type Attempt = { answer: string; repair: string; before: Evidence; after: Evidence };
+type Attempt = { prediction: string; answer: string; repair: string; before: Evidence; after: Evidence };
 const emptyEvidence = (): Evidence => ({ played: false, ended: false, segment: false, transcript: false });
 const answerLabel = { match: 'Ответ совпал с подготовленным вариантом', 'known-distractor': 'Ответ совпал с разобранной ловушкой', unreviewed: 'Ответ требует ручной проверки' };
 function modeLabel(evidence: Evidence) { return evidence.transcript ? 'Текст открыт до ответа — это практика по тексту.' : evidence.ended ? 'Браузер сообщил о завершении полной записи.' : evidence.played ? 'Запись запускалась; завершение до ответа не зафиксировано.' : 'Запись не запускалась.'; }
@@ -13,6 +13,7 @@ function modeLabel(evidence: Evidence) { return evidence.transcript ? 'Текс�
 function Preview({ pair }: { pair: DraftListeningPair }) {
   const [started, setStarted] = useState(false), [round, setRound] = useState(0), [report, setReport] = useState(false);
   const [answer, setAnswer] = useState(''), [repair, setRepair] = useState(''), [locked, setLocked] = useState(false);
+  const [prediction,setPrediction]=useState(''),[predictionLocked,setPredictionLocked]=useState(false);
   const [evidence, setEvidence] = useState<Evidence>(emptyEvidence), [before, setBefore] = useState<Evidence>(emptyEvidence);
   const [scriptVisible, setScriptVisible] = useState(false), [audioError, setAudioError] = useState(false), [error, setError] = useState('');
   const [segmentError, setSegmentError] = useState(false);
@@ -25,10 +26,11 @@ function Preview({ pair }: { pair: DraftListeningPair }) {
   useEffect(() => {
     const full = fullAudio.current, segment = segmentAudio.current;
     return () => { full?.pause(); segment?.pause(); };
-  }, [started, round, report, locked]);
-  function clearRound() { setAnswer(''); setRepair(''); setLocked(false); setEvidence(emptyEvidence()); setBefore(emptyEvidence()); setScriptVisible(false); setAudioError(false); setSegmentError(false); setError(''); }
+  }, [started, round, report, locked, predictionLocked]);
+  function clearRound() { setAnswer(''); setRepair(''); setLocked(false); setPrediction(''); setPredictionLocked(false); setEvidence(emptyEvidence()); setBefore(emptyEvidence()); setScriptVisible(false); setAudioError(false); setSegmentError(false); setError(''); }
   function reset() { setRound(0); setReport(false); setAttempts([]); clearRound(); }
   function checkFirst() {
+    if(!predictionLocked)return;
     if (!answer.trim()) { setError('Сначала запиши ответ.'); return; }
     if (!evidence.played && !evidence.transcript) { setError('Запусти запись или явно перейди к текстовой практике.'); return; }
     setBefore({ ...evidence }); setLocked(true); setError('');
@@ -36,7 +38,7 @@ function Preview({ pair }: { pair: DraftListeningPair }) {
   function advance() {
     if (!locked) return;
     if (!repair.trim()) { setError('Запиши ответ после разбора отдельно от первой попытки.'); return; }
-    setAttempts(old => [...old, { answer, repair, before: { ...before }, after: { ...evidence } }]);
+    setAttempts(old => [...old, { prediction, answer, repair, before: { ...before }, after: { ...evidence } }]);
     if (round === 0) { setRound(1); clearRound(); } else { setReport(true); setError(''); }
   }
   return <section className={styles.preview} aria-labelledby="listening-draft-preview-title">
@@ -44,10 +46,16 @@ function Preview({ pair }: { pair: DraftListeningPair }) {
     <p>Синтетическая речь: {pair.voice}, создана офлайн из авторского вымышленного сценария. Это временная проба материала, не экзамен и не подтверждение навыка. Попытки не сохраняются с решением проверяющего; новая проба и выход сбрасывают их.</p>
     {!started ? <button type="button" onClick={() => setStarted(true)}>Пройти Listening-черновик</button> : report ? <>
       <h4 ref={step} tabIndex={-1}>Две попытки аудирования и помощи</h4>{attempts.map((attempt, index) => <div key={index} className={styles.outcome}>
-        <h4>{index === 0 ? 'Первая задача' : 'Новая задача'}</h4><p>Первый ответ: <strong>{attempt.answer}</strong> — {answerLabel[compareDraftAnswer(attempt.answer, pair.rounds[index])]}.</p><p>{modeLabel(attempt.before)}</p><p>После разбора: <strong>{attempt.repair}</strong> — {answerLabel[compareDraftAnswer(attempt.repair, pair.rounds[index])]}.</p><p>Помощь за всю попытку: фрагмент {attempt.after.segment ? 'запускался' : 'не запускался'}; текст {attempt.after.transcript ? 'открывался' : 'не открывался'}.</p>
+        <h4>{index === 0 ? 'Первая задача' : 'Новая задача'}</h4><p className={styles.frozenText}>Ожидание до записи: {attempt.prediction}</p><p>Первый ответ: <strong>{attempt.answer}</strong> — {answerLabel[compareDraftAnswer(attempt.answer, pair.rounds[index])]}.</p><p>{modeLabel(attempt.before)}</p><p>После разбора: <strong>{attempt.repair}</strong> — {answerLabel[compareDraftAnswer(attempt.repair, pair.rounds[index])]}.</p><p>Помощь за всю попытку: фрагмент {attempt.after.segment ? 'запускался' : 'не запускался'}; текст {attempt.after.transcript ? 'открывался' : 'не открывался'}.</p>
       </div>)}<p>События плеера не доказывают внимательное прослушивание. Неизвестный вариант остаётся для ручной проверки; причина ошибки не выводится автоматически из числа или слова.</p><button type="button" onClick={reset}>Начать новую временную Listening-пробу</button>
     </> : <>
       <h4 ref={step} tabIndex={-1}>{round === 0 ? 'Первая запись' : 'Новая запись'} · {round + 1}</h4><p lang="en"><strong>{item.prompt}</strong></p>
+      {item.instruction&&<p>{item.instruction}</p>}
+      {!predictionLocked?<>
+        <label htmlFor="draft-listening-prediction">Какой тип ответа ожидаешь и какую деталь будешь различать?</label><textarea id="draft-listening-prediction" rows={3} maxLength={1000} value={prediction} onChange={event=>{setPrediction(event.target.value);setError('');}}/>
+        <p>Например: число участников, а не сотрудников; время начала, а не входа. Это твоя стратегия, она не оценивается автоматически.</p><button type="button" onClick={()=>{if(prediction.trim().length<3){setError('Сначала запиши ожидание: минимум 3 символа, без оценки качества по длине.');return;}setPrediction(prediction.trim());setPredictionLocked(true);setError('');}}>Зафиксировать ожидание и открыть запись</button>
+      </>:<>
+      <p className={styles.frozenText}>Ожидание до записи: {prediction}</p>
       <audio key={item.fullUrl} ref={fullAudio} controls preload="metadata" aria-label="Полная синтетическая запись" src={item.fullUrl} onPlay={() => { segmentAudio.current?.pause(); setEvidence(old => ({ ...old, played: true })); setAudioError(false); }} onEnded={() => setEvidence(old => ({ ...old, ended: true }))} onError={() => setAudioError(true)}/>
       {audioError && <><p role="alert" className={styles.warning}>Запись не загрузилась. Повтори загрузку или выбери текстовую практику; она будет отмечена отдельно.</p><button type="button" onClick={() => { setAudioError(false); fullAudio.current?.load(); }}>Повторить загрузку записи</button></>}
       <div className={styles.actions}><button type="button" onClick={() => { setScriptVisible(true); setEvidence(old => ({ ...old, transcript: true })); }}>Открыть текст · отметить текстовую помощь</button></div>
@@ -61,6 +69,7 @@ function Preview({ pair }: { pair: DraftListeningPair }) {
         <div className={styles.previewReasons}><label htmlFor="draft-listening-repair">Ответ после разбора<input id="draft-listening-repair" maxLength={60} value={repair} onChange={event => { setRepair(event.target.value); setError(''); }}/></label></div>
         <button type="button" onClick={advance}>{round === 0 ? 'Перейти к новой записи' : 'Сравнить попытки аудирования'}</button>
       </div>}
+      </>}
       {error && <p role="status" className={styles.warning}>{error}</p>}
     </>}
   </section>;
