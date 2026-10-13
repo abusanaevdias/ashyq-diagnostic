@@ -5,9 +5,10 @@ import batch04 from '@/data/trainer-drafts/batch-04.json';
 import batch05 from '@/data/trainer-drafts/batch-05.json';
 import batch06 from '@/data/trainer-drafts/batch-06.json';
 import batch07 from '@/data/trainer-drafts/batch-07.json';
+import batch08 from '@/data/trainer-drafts/batch-08.json';
 
 export const draftBatch = batch;
-export const draftBatches = [batch, batch02, batch03, batch04, batch05, batch06, batch07];
+export const draftBatches = [batch, batch02, batch03, batch04, batch05, batch06, batch07, batch08];
 export type DraftBatch = { batch: string; version: string | number; content_sha256: string; author: string; methodically_approved: boolean; units: DraftUnit[] };
 export type DraftUnit = typeof batch.units[number] & { exercise_data?: unknown };
 export type ReviewDecision = 'pending' | 'recommend' | 'revise' | 'hold';

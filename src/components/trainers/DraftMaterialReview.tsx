@@ -10,6 +10,7 @@ import DraftMathPreview from './DraftMathPreview';
 import DraftReadingPreview from './DraftReadingPreview';
 import DraftTask1Preview from './DraftTask1Preview';
 import DraftSpeakingLaunch from './DraftSpeakingLaunch';
+import DraftTask2Preview from './DraftTask2Preview';
 import { decisionSignature, DRAFT_REVIEW_CHANGED, draftBatches, emptyDraftReview, parseDraftReview, reviewCounts, reviewKey, validDecision, type DraftBatch, type DraftDecision, type DraftReview, type DraftUnit, type ReviewDecision } from '@/lib/trainers/draft-review';
 import { saveDraftDecision } from '@/lib/trainers/draft-review-storage';
 import styles from './TrainerCheckpoint.module.css';
@@ -68,6 +69,7 @@ function ReviewUnit({ unit, batchId, contentHash, previous, onSave, onDirty }: {
     <DraftMathPreview value={unit.exercise_data}/>
     <DraftReadingPreview value={unit.exercise_data}/>
     <DraftTask1Preview value={unit.exercise_data}/>
+    <DraftTask2Preview value={unit.exercise_data}/>
     <DraftSpeakingLaunch value={unit.exercise_data} batchId={batchId} unitId={unit.id} contentHash={contentHash}/>
     <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown} sectionLabel="разбора"/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown} sectionLabel="языковой правки"/></>}</details>
     <fieldset className={styles.filters} disabled={saving}><legend>Решение проверяющего</legend>
