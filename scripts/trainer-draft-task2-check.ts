@@ -79,7 +79,7 @@ async function main(){
       for(let index=0;index<2;index++)await preview.getByText(`Synthetic argument reasoning ${unit.id}-${index}.`,{exact:true}).waitFor();
       assert.equal(await preview.getByText('Языковые проблемы не были указаны.',{exact:true}).count(),1);
       for(const width of [320,390,768,1440]){await page.setViewportSize({width,height:900});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.deepEqual((await new AxeBuilder({page}).include('main').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations,[]);}
-      await preview.getByRole('button',{name:'Начать новую временную пробу эссе',exact:true}).click();await preview.getByRole('button',{name:'Начать пробу эссе',exact:true}).waitFor();
+      await preview.getByRole('button',{name:'Начать новую пробу эссе',exact:true}).click();await preview.getByRole('button',{name:'Подтвердить новую пробу',exact:true}).click();await preview.getByRole('button',{name:'Начать пробу эссе',exact:true}).waitFor();
     }
     await page.reload();await page.getByLabel('Партия материалов',{exact:true}).selectOption('08');
     assert.equal(await page.getByRole('button',{name:'Начать пробу эссе',exact:true}).count(),1);

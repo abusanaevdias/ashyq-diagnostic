@@ -25,3 +25,14 @@ export async function mutateBankRecord(scope: string,source: BankSource,expected
 }
 /** Retain an empty revision tombstone so a queued older write cannot resurrect deleted work. */
 export const clearBankRecord = (scope:string,source:BankSource,expectedRevision:string|null) => mutateBankRecord(scope,source,expectedRevision,()=>emptyBankRecord(source));
+
+/** Explicit recovery action only: exact invalid bytes must still match under the lock. */
+export async function clearInvalidBankRecord(scope:string,source:BankSource,expectedRaw:string):Promise<BankRecord>{
+  if(typeof navigator==='undefined'||!navigator.locks)throw new Error('Без безопасной блокировки очистка недоступна. Скачай исходную запись.');
+  const key=bankRecordKey(scope,source.ref),abort=new AbortController(),timer=setTimeout(()=>abort.abort(),10000);
+  try{return await navigator.locks.request(key,{mode:'exclusive',signal:abort.signal},()=>{
+    const raw=localStorage.getItem(key);
+    if(raw!==expectedRaw||parseBankRecord(raw,source))throw new Error('Запись изменилась или уже совместима. Очистка не выполнена.');
+    const next={...emptyBankRecord(source),revision:crypto.randomUUID()};localStorage.setItem(key,JSON.stringify(next));window.dispatchEvent(new Event(BANK_RECORD_CHANGED));return next;
+  });}catch(error){if(error instanceof DOMException&&error.name==='AbortError')throw new Error('Ожидание очистки заняло больше10 секунд. Исходная запись не изменена.');throw error;}finally{clearTimeout(timer);}
+}

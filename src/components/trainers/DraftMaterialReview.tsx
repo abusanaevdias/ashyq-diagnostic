@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import RequireRole from '@/components/lms/RequireRole';
 import DraftWritingPreview from './DraftWritingPreview';
 import { nextDraftWriting, parseDraftWriting } from '@/lib/trainers/draft-writing';
+import { findBankSource } from '@/lib/trainers/bank-sources';
 import DraftSatPreview from './DraftSatPreview';
 import DraftListeningPreview from './DraftListeningPreview';
 import DraftMathPreview from './DraftMathPreview';
@@ -80,7 +81,8 @@ function ArchivedReview({ reviewerId, batch }: { reviewerId: string; batch: Draf
   </section>;
 }
 
-function ReviewUnit({ unit, batchId, contentHash, previous, onSave, onDirty }: { unit: DraftUnit; batchId: string; contentHash: string; previous?: DraftDecision; onSave: (value: DraftDecision, expected: string | null) => Promise<boolean>; onDirty: (dirty: boolean) => void }) {
+function ReviewUnit({ unit, batchId, batchVersion, contentHash, previous, onSave, onDirty,practiceBusy,onPracticeBusy }: { unit: DraftUnit; batchId: string;batchVersion:string; contentHash: string; previous?: DraftDecision; onSave: (value: DraftDecision, expected: string | null) => Promise<boolean>; onDirty: (dirty: boolean) => void;practiceBusy:boolean;onPracticeBusy:(busy:boolean)=>void }) {
+  const source=findBankSource({batchId,version:batchVersion,contentHash,unitId:unit.id});
   const writing = parseDraftWriting(unit.exercise_data);
   const nextWriting = writing ? nextDraftWriting(writing, draftBatches.flatMap(batch => batch.units.map(value => 'exercise_data' in value ? value.exercise_data : undefined))) : null;
   const [decision, setDecision] = useState<ReviewDecision>(previous?.decision ?? 'pending');
@@ -89,11 +91,13 @@ function ReviewUnit({ unit, batchId, contentHash, previous, onSave, onDirty }: {
   const [error, setError] = useState('');
   const [baseline, setBaseline] = useState(() => decisionSignature(previous));
   const [saving, setSaving] = useState(false);
+  const [reviewDirty,setReviewDirty]=useState(false),[practiceDirty,setPracticeDirty]=useState(false);
+  useLayoutEffect(()=>{onDirty(reviewDirty||practiceDirty);},[reviewDirty,practiceDirty,onDirty]);
   async function save() {
     const value: DraftDecision = { decision, comment, attested, savedAt: new Date().toISOString() };
     if (!validDecision(value)) { setError(decision === 'recommend' ? 'Подтверди проверку условия, ключа и альтернатив.' : 'Для решения «Нужна правка» напиши конкретное замечание.'); return; }
     setSaving(true); setError('');
-    try { if (await onSave(value, baseline)) { setBaseline(decisionSignature(value)); onDirty(false); } }
+    try { if (await onSave(value, baseline)) { setBaseline(decisionSignature(value)); setReviewDirty(false); } }
     catch { setError('Не удалось сохранить решение. Скопируй замечание перед выходом.'); }
     finally { setSaving(false); }
   }
@@ -106,13 +110,13 @@ function ReviewUnit({ unit, batchId, contentHash, previous, onSave, onDirty }: {
     <DraftMathPreview value={unit.exercise_data}/>
     <DraftReadingPreview value={unit.exercise_data}/>
     <DraftTask1Preview value={unit.exercise_data}/>
-    <DraftTask2Preview value={unit.exercise_data}/>
+    <DraftTask2Preview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftSpeakingLaunch value={unit.exercise_data} batchId={batchId} unitId={unit.id} contentHash={contentHash}/>
     <details className={styles.history}><summary>Показать ключ, альтернативы и границы проверки</summary><MaterialText text={unit.teacher_markdown} sectionLabel="разбора"/>{unit.language_only_markdown && <><h3>Только языковые исправления</h3><MaterialText text={unit.language_only_markdown} sectionLabel="языковой правки"/></>}</details>
-    <fieldset className={styles.filters} disabled={saving}><legend>Решение проверяющего</legend>
-      <label htmlFor="draft-review-decision">Результат проверки</label><select id="draft-review-decision" value={decision} onChange={event => { onDirty(true); setDecision(event.target.value as ReviewDecision); setError(''); }}><option value="pending">Пока не проверено</option><option value="recommend">Рекомендую принять</option><option value="revise">Нужна правка</option><option value="hold">Отложить</option></select>
-      <label htmlFor="draft-review-comment">Замечание</label><textarea id="draft-review-comment" rows={4} value={comment} maxLength={3000} onChange={event => { onDirty(true); setComment(event.target.value); }}/>
-      <label><input type="checkbox" checked={attested} onChange={event => { onDirty(true); setAttested(event.target.checked); }}/> Проверил условие, ключ, допустимые альтернативы и понятность разбора.</label>
+    <fieldset className={styles.filters} disabled={saving||practiceBusy}><legend>Решение проверяющего</legend>
+      <label htmlFor="draft-review-decision">Результат проверки</label><select id="draft-review-decision" value={decision} onChange={event => { setReviewDirty(true); setDecision(event.target.value as ReviewDecision); setError(''); }}><option value="pending">Пока не проверено</option><option value="recommend">Рекомендую принять</option><option value="revise">Нужна правка</option><option value="hold">Отложить</option></select>
+      <label htmlFor="draft-review-comment">Замечание</label><textarea id="draft-review-comment" rows={4} value={comment} maxLength={3000} onChange={event => { setReviewDirty(true); setComment(event.target.value); }}/>
+      <label><input type="checkbox" checked={attested} onChange={event => { setReviewDirty(true); setAttested(event.target.checked); }}/> Проверил условие, ключ, допустимые альтернативы и понятность разбора.</label>
       <div className={styles.actions}><button type="button" onClick={save}>Сохранить решение в этом браузере</button></div>
       {error && <p role="alert">{error}</p>}
     </fieldset>
@@ -130,19 +134,31 @@ function Workspace({ reviewerId, draftBatch, onBatchChange }: { reviewerId: stri
   const [saving, setSaving] = useState(false);
   const [pendingUnit, setPendingUnit] = useState<string | null>(null);
   const [pendingBatch, setPendingBatch] = useState<string | null>(null);
-  const [pendingExit, setPendingExit] = useState(false);
+  const [pendingExit, setPendingExit] = useState<string|null>(null);
+  const [practiceBusy,setPracticeBusy]=useState(false);
+  const busy=saving||practiceBusy;
   const unit = draftBatch.units.find(item => item.id === selected)!;
   useEffect(() => {
-    if (!dirty && !saving) return;
+    if (!dirty && !busy) return;
     const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ''; };
     window.addEventListener('beforeunload', warn);
-    return () => window.removeEventListener('beforeunload', warn);
-  }, [dirty, saving]);
+    const leave=(event:MouseEvent)=>{
+      if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+      const anchor=event.target instanceof Element?event.target.closest('a'):null;
+      if(!anchor||anchor.target==='_blank'||anchor.hasAttribute('download')||anchor.dataset.reviewDiscard==='true')return;
+      const target=new URL(anchor.href,location.href);if(!['http:','https:'].includes(target.protocol)||target.pathname===location.pathname&&target.search===location.search&&target.origin===location.origin)return;
+      event.preventDefault();event.stopImmediatePropagation();
+      if(busy){setMessage('Дождись завершения записи перед выходом.');return;}
+      setPendingUnit(null);setPendingBatch(null);setPendingExit(target.origin===location.origin?target.pathname+target.search+target.hash:target.href);
+    };
+    document.addEventListener('click',leave,true);
+    return () => {window.removeEventListener('beforeunload', warn);document.removeEventListener('click',leave,true);};
+  }, [dirty, busy]);
   async function save(value: DraftDecision, expected: string | null) {
     setSaving(true); setMessage('Сохранение решения: жду безопасную запись в этом браузере.');
     try {
       await saveDraftDecision(reviewerId, draftBatch, unit.id, value, expected);
-      setPendingUnit(null); setPendingBatch(null); setPendingExit(false);
+      setPendingUnit(null); setPendingBatch(null); setPendingExit(null);
       setMessage(`Решение для ${unit.id} сохранено локально. Статус материала на сайте не изменён.`);
       return true;
     } catch (error) { setMessage(error instanceof DOMException ? 'Браузер не разрешил сохранение. Не закрывай страницу: скопируй замечание перед выходом.' : error instanceof Error ? error.message : 'Не удалось сохранить решение.'); return false; }
@@ -164,12 +180,12 @@ function Workspace({ reviewerId, draftBatch, onBatchChange }: { reviewerId: stri
     } catch { setMessage('Не удалось скачать исходную запись. Скопируй замечание перед выходом.'); }
   }
   return <><h1>Проверка учебных материалов</h1><p>Партия {draftBatch.batch} · версия {draftBatch.version} · {counts.total} черновиков. Автор: {draftBatch.author}. Методическая проверка не завершена.</p><p>Сначала реши материал без ключа. Затем проверь объяснения и допустимые ответы. Решения сохраняются для текущего аккаунта в этом браузере; на общем устройстве их могут увидеть другие люди. Они не публикуют задания и не отправляются на сервер.</p>
-    <div className={styles.panel}><h2>Рассмотрено {counts.considered} из {counts.total}</h2><p>Рекомендовано принять: {counts.recommended}; нужна правка: {counts.revise}; отложено: {counts.hold}.</p><div className={styles.actions}><button type="button" disabled={raw !== null && !parsed} onClick={() => exportReview(review)}>Скачать сохранённые решения</button><Link href="/trainers" onClick={event => { if (saving) { event.preventDefault(); setMessage('Дождись завершения записи перед выходом.'); } else if (dirty) { event.preventDefault(); setPendingUnit(null); setPendingBatch(null); setPendingExit(true); } }}>К тренажёрам →</Link></div></div>
+    <div className={styles.panel}><h2>Рассмотрено {counts.considered} из {counts.total}</h2><p>Рекомендовано принять: {counts.recommended}; нужна правка: {counts.revise}; отложено: {counts.hold}.</p><div className={styles.actions}><button type="button" disabled={raw !== null && !parsed} onClick={() => exportReview(review)}>Скачать сохранённые решения</button><Link href="/trainers" onClick={event => { if (busy) { event.preventDefault(); setMessage('Дождись завершения записи перед выходом.'); } else if (dirty) { event.preventDefault(); setPendingUnit(null); setPendingBatch(null); setPendingExit('/trainers'); } }}>К тренажёрам →</Link></div></div>
     {raw !== null && !parsed && <div className={styles.panel}><p className={styles.warning} role="status">{raw === '!unavailable' ? 'Локальное сохранение недоступно.' : 'Локальная запись несовместима с этой версией. Она не восстановлена и не заменена. Скачай исходную запись для восстановления; выгрузка пустого набора решений отключена.'}</p>{raw !== '!unavailable' && <button type="button" onClick={exportRecovery}>Скачать исходную запись для восстановления</button>}</div>}
-    <div className={styles.filters}><label htmlFor="draft-batch-picker">Партия материалов</label><select id="draft-batch-picker" value={draftBatch.batch} disabled={saving} onChange={event => { setPendingExit(false); setPendingUnit(null); if (dirty) setPendingBatch(event.target.value); else onBatchChange(event.target.value); }}>{draftBatches.map(batch => <option value={batch.batch} key={batch.batch}>Партия {batch.batch} · {batch.units.length} черновиков</option>)}</select><label htmlFor="draft-material-picker">Выбери материал</label><select id="draft-material-picker" value={selected} disabled={saving} onChange={event => { setPendingExit(false); setPendingBatch(null); if (dirty) setPendingUnit(event.target.value); else { setSelected(event.target.value); setMessage(''); } }}>{draftBatch.units.map(item => <option value={item.id} key={item.id}>{item.id} · {item.title}{review.decisions[item.id]?.decision && review.decisions[item.id].decision !== 'pending' ? ' · рассмотрено' : ''}</option>)}</select></div>
-    {(pendingUnit || pendingBatch || pendingExit) && <div className={styles.warning} role="alert"><p>Есть несохранённое решение. Сохрани его внизу материала или явно перейди без сохранения.</p><div className={styles.actions}><button type="button" disabled={saving} onClick={() => { setPendingUnit(null); setPendingBatch(null); setPendingExit(false); }}>Остаться на материале</button>{pendingExit && !saving ? <Link href="/trainers" onClick={() => setDirty(false)}>Перейти без сохранения</Link> : <button type="button" disabled={saving} onClick={() => { if (pendingBatch) { onBatchChange(pendingBatch); return; } if (pendingUnit) setSelected(pendingUnit); setPendingUnit(null); setDirty(false); setMessage(''); }}>Перейти без сохранения</button>}</div></div>}
+    <div className={styles.filters}><label htmlFor="draft-batch-picker">Партия материалов</label><select id="draft-batch-picker" value={draftBatch.batch} disabled={busy} onChange={event => { setPendingExit(null); setPendingUnit(null); if (dirty) setPendingBatch(event.target.value); else onBatchChange(event.target.value); }}>{draftBatches.map(batch => <option value={batch.batch} key={batch.batch}>Партия {batch.batch} · {batch.units.length} черновиков</option>)}</select><label htmlFor="draft-material-picker">Выбери материал</label><select id="draft-material-picker" value={selected} disabled={busy} onChange={event => { setPendingExit(null); setPendingBatch(null); if (dirty) setPendingUnit(event.target.value); else { setSelected(event.target.value); setMessage(''); } }}>{draftBatch.units.map(item => <option value={item.id} key={item.id}>{item.id} · {item.title}{review.decisions[item.id]?.decision && review.decisions[item.id].decision !== 'pending' ? ' · рассмотрено' : ''}</option>)}</select></div>
+    {(pendingUnit || pendingBatch || pendingExit) && <div className={styles.warning} role="alert"><p>Есть несохранённое решение или работа в пробе. Сохрани нужные данные или явно перейди без сохранения.</p><div className={styles.actions}><button type="button" disabled={busy} onClick={() => { setPendingUnit(null); setPendingBatch(null); setPendingExit(null); }}>Остаться на материале</button>{pendingExit && !busy ? <Link href={pendingExit} data-review-discard="true" onClick={() => setDirty(false)}>Перейти без сохранения</Link> : <button type="button" disabled={busy} onClick={() => { if (pendingBatch) { onBatchChange(pendingBatch); return; } if (pendingUnit) setSelected(pendingUnit); setPendingUnit(null); setDirty(false); setMessage(''); }}>Перейти без сохранения</button>}</div></div>}
     {draftArchives.filter(value=>value.batch===draftBatch.batch&&value.content_sha256!==draftBatch.content_sha256).map(value=><ArchivedReview key={value.content_sha256} reviewerId={reviewerId} batch={value}/>)}
-    <ReviewUnit key={unit.id} unit={unit} batchId={draftBatch.batch} contentHash={draftBatch.content_sha256} previous={review.decisions[unit.id]} onSave={save} onDirty={setDirty}/>
+    <ReviewUnit key={unit.id} unit={unit} batchId={draftBatch.batch} batchVersion={String(draftBatch.version)} contentHash={draftBatch.content_sha256} previous={review.decisions[unit.id]} onSave={save} onDirty={setDirty} practiceBusy={practiceBusy} onPracticeBusy={setPracticeBusy}/>
     {message && <p role="status">{message}</p>}
   </>;
 }
