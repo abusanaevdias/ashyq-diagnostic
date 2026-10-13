@@ -1,0 +1,788 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "12",
+  "version": 1,
+  "source_sha256": "a10124c2eb65de9a9439696e6a9f2b3777f8d307cb6ac2beb69b4ee567368b48",
+  "content_sha256": "a10124c2eb65de9a9439696e6a9f2b3777f8d307cb6ac2beb69b4ee567368b48",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "RW09",
+      "title": "Зачем автор приводит пример",
+      "category": "SAT R&W · ответ до вариантов",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не задания College Board и не прогноз SAT.\n\nIn a fictional exhibition, curator Nara argues that a useful display need not contain many objects. She describes one room that held only a repaired kettle, a photograph of its owner, and a short account of its daily use. Visitors could connect the repair marks to the story of the household. The account did not list every possession; it traced what happened to the kettle as the family changed homes.\n\nWhat is the function of the description of the room?\n\nСначала запиши прогноз, затем сравни варианты, объясни выбор и проверь новую ситуацию.",
+      "teacher_markdown": "### Первая ситуация: RW09-A\nIn a fictional exhibition, curator Nara argues that a useful display need not contain many objects. She describes one room that held only a repaired kettle, a photograph of its owner, and a short account of its daily use. Visitors could connect the repair marks to the story of the household. The account did not list every possession; it traced what happened to the kettle as the family changed homes.\n\nWhat is the function of the description of the room?\n\n1. It illustrates how a small selection can support the curator’s approach to a useful display.\nПодходит: Пример конкретизирует тезис о небольшом количестве предметов.\n\n2. It proves that all visitors prefer small exhibitions to large ones.\nНужно пересмотреть: Предпочтение всех посетителей и сравнение размеров не измерены.\n\n3. It challenges the curator’s claim by showing that the room contained too many objects.\nНужно пересмотреть: Пример поддерживает, а не опровергает тезис.\n\n4. It explains why the owner stopped using the kettle.\nНужно пересмотреть: Причина прекращения использования не сообщается.\n\nОснование: The account did not list every possession; it traced what happened to the kettle as the family changed homes.\n\nФункция примера определяется его связью с тезисом, а не общей темой предмета.\n\n### Новая ситуация: RW09-B\nIn a fictional essay, designer Ren claims that a small adjustment can improve how a space is used. He describes a workshop that moved its tool labels from a high shelf to eye level. New volunteers could then identify the drawers without asking the supervisor. The drawers and tools themselves were unchanged.\n\nWhat role does the workshop case play?\n\n1. It establishes that expensive rebuilding is necessary in every workshop.\nНужно пересмотреть: Стоимость не дана, изменение небольшое.\n\n2. It questions whether labels have any purpose.\nНужно пересмотреть: Наблюдение показывает пользу конкретного расположения.\n\n3. It provides a concrete instance of the benefit Ren attributes to a small adjustment.\nПодходит: Случай конкретизирует тезис, не универсальную закономерность.\n\n4. It compares the skill of supervisors at several workplaces.\nНужно пересмотреть: Описана одна мастерская, сравнения руководителей нет.\n\nОснование: The drawers and tools themselves were unchanged.\n\nОписание улучшения в одном случае не доказывает эффект для всех пространств.\n\n### Адверсальная проверка автора — не методическое утверждение\n- Функция предложения и фактический пересказ его содержания — разные ответы.\n- Иллюстрация тезиса не равна универсальному доказательству.\n\nСвободный прогноз/объяснение не оценивается по точному совпадению или длине. Проверяющий самостоятельно проверяет единственность ключа и альтернативы. Сюжеты и наблюдения вымышлены.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-optionless",
+        "skill": "rhetorical-function-example",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW09-A",
+            "skill": "rhetorical-function-example",
+            "passage": "In a fictional exhibition, curator Nara argues that a useful display need not contain many objects. She describes one room that held only a repaired kettle, a photograph of its owner, and a short account of its daily use. Visitors could connect the repair marks to the story of the household. The account did not list every possession; it traced what happened to the kettle as the family changed homes.",
+            "question": "What is the function of the description of the room?",
+            "choices": [
+              {
+                "text": "It illustrates how a small selection can support the curator’s approach to a useful display.",
+                "feedback": "Пример конкретизирует тезис о небольшом количестве предметов.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "It proves that all visitors prefer small exhibitions to large ones.",
+                "feedback": "Предпочтение всех посетителей и сравнение размеров не измерены.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "It challenges the curator’s claim by showing that the room contained too many objects.",
+                "feedback": "Пример поддерживает, а не опровергает тезис.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "It explains why the owner stopped using the kettle.",
+                "feedback": "Причина прекращения использования не сообщается.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 0,
+            "evidence": "In a fictional exhibition, curator Nara argues that a useful display need not contain many objects. She describes one room that held only a repaired kettle, a photograph of its owner, and a short account of its daily use. Visitors could connect the repair marks to the story of the household.",
+            "explanation": "Функция примера определяется его связью с тезисом, а не общей темой предмета.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          },
+          {
+            "id": "RW09-B",
+            "skill": "rhetorical-function-example",
+            "passage": "In a fictional essay, designer Ren claims that a small adjustment can improve how a space is used. He describes a workshop that moved its tool labels from a high shelf to eye level. New volunteers could then identify the drawers without asking the supervisor. The drawers and tools themselves were unchanged.",
+            "question": "What role does the workshop case play?",
+            "choices": [
+              {
+                "text": "It establishes that expensive rebuilding is necessary in every workshop.",
+                "feedback": "Стоимость не дана, изменение небольшое.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "It questions whether labels have any purpose.",
+                "feedback": "Наблюдение показывает пользу конкретного расположения.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "It provides a concrete instance of the benefit Ren attributes to a small adjustment.",
+                "feedback": "Случай конкретизирует тезис, не универсальную закономерность.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "It compares the skill of supervisors at several workplaces.",
+                "feedback": "Описана одна мастерская, сравнения руководителей нет.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 2,
+            "evidence": "In a fictional essay, designer Ren claims that a small adjustment can improve how a space is used. He describes a workshop that moved its tool labels from a high shelf to eye level. New volunteers could then identify the drawers without asking the supervisor.",
+            "explanation": "Описание улучшения в одном случае не доказывает эффект для всех пространств.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          }
+        ],
+        "review_notes": [
+          "Функция предложения и фактический пересказ его содержания — разные ответы.",
+          "Иллюстрация тезиса не равна универсальному доказательству."
+        ]
+      }
+    },
+    {
+      "id": "RW10",
+      "title": "Оговорка: где заканчивается вывод",
+      "category": "SAT R&W · ответ до вариантов",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не задания College Board и не прогноз SAT.\n\nA fictional archive tested a new catalogue with six volunteers, all experienced researchers. Each found a requested record without assistance. The archivist wrote, \"These results are encouraging, but they do not tell us how first-time users would manage.\" She proposed another test with people who had never visited the archive.\n\nWhat does the quoted sentence do?\n\nСначала запиши прогноз, затем сравни варианты, объясни выбор и проверь новую ситуацию.",
+      "teacher_markdown": "### Первая ситуация: RW10-A\nA fictional archive tested a new catalogue with six volunteers, all experienced researchers. Each found a requested record without assistance. The archivist wrote, \"These results are encouraging, but they do not tell us how first-time users would manage.\" She proposed another test with people who had never visited the archive.\n\nWhat does the quoted sentence do?\n\n1. It reports that first-time users failed the same test.\nНужно пересмотреть: Новые пользователи ещё не участвовали.\n\n2. It qualifies a positive result by identifying a group the test did not cover.\nПодходит: Оговорка ограничивает перенос на начинающих.\n\n3. It withdraws the observation that the six volunteers found their records.\nНужно пересмотреть: Наблюдение не отменено, ограничена его обобщаемость.\n\n4. It proves that experienced researchers do not need catalogues.\nНужно пересмотреть: Успех с новым каталогом не доказывает отсутствие потребности в нём.\n\nОснование: These results are encouraging, but they do not tell us how first-time users would manage.\n\nОговорка не утверждает противоположный результат у исключённой группы.\n\n### Новая ситуация: RW10-B\nA fictional sports club tried a new booking system during one quiet week. Staff received no duplicate bookings. The manager noted, \"This may be useful, although the week contained no tournament and therefore no unusually heavy demand.\" The club will repeat the trial during a busier period.\n\nWhat is the function of the manager’s quoted comment?\n\n1. It explains why tournaments should be cancelled permanently.\nНужно пересмотреть: Отмена турниров не предлагается.\n\n2. It establishes that the system will fail whenever demand increases.\nНужно пересмотреть: Предел данных не доказывает будущий провал.\n\n3. It denies that staff received no duplicate bookings.\nНужно пересмотреть: Наблюдение сохранено.\n\n4. It limits the interpretation of the promising trial by noting an untested demand level.\nПодходит: Указана граница условий теста.\n\nОснование: This may be useful, although the week contained no tournament and therefore no unusually heavy demand.\n\nНеисследованная нагрузка остаётся неизвестной, а не автоматически проблемной.\n\n### Адверсальная проверка автора — не методическое утверждение\n- Не заменять «не проверено» утверждением «не работает».\n- Оговорка совместима с истинностью исходного положительного наблюдения.\n\nСвободный прогноз/объяснение не оценивается по точному совпадению или длине. Проверяющий самостоятельно проверяет единственность ключа и альтернативы. Сюжеты и наблюдения вымышлены.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-optionless",
+        "skill": "rhetorical-function-qualification",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW10-A",
+            "skill": "rhetorical-function-qualification",
+            "passage": "A fictional archive tested a new catalogue with six volunteers, all experienced researchers. Each found a requested record without assistance. The archivist wrote, \"These results are encouraging, but they do not tell us how first-time users would manage.\" She proposed another test with people who had never visited the archive.",
+            "question": "What does the quoted sentence do?",
+            "choices": [
+              {
+                "text": "It reports that first-time users failed the same test.",
+                "feedback": "Новые пользователи ещё не участвовали.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "It qualifies a positive result by identifying a group the test did not cover.",
+                "feedback": "Оговорка ограничивает перенос на начинающих.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "It withdraws the observation that the six volunteers found their records.",
+                "feedback": "Наблюдение не отменено, ограничена его обобщаемость.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "It proves that experienced researchers do not need catalogues.",
+                "feedback": "Успех с новым каталогом не доказывает отсутствие потребности в нём.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "These results are encouraging, but they do not tell us how first-time users would manage.",
+            "explanation": "Оговорка не утверждает противоположный результат у исключённой группы.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          },
+          {
+            "id": "RW10-B",
+            "skill": "rhetorical-function-qualification",
+            "passage": "A fictional sports club tried a new booking system during one quiet week. Staff received no duplicate bookings. The manager noted, \"This may be useful, although the week contained no tournament and therefore no unusually heavy demand.\" The club will repeat the trial during a busier period.",
+            "question": "What is the function of the manager’s quoted comment?",
+            "choices": [
+              {
+                "text": "It explains why tournaments should be cancelled permanently.",
+                "feedback": "Отмена турниров не предлагается.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "It establishes that the system will fail whenever demand increases.",
+                "feedback": "Предел данных не доказывает будущий провал.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "It denies that staff received no duplicate bookings.",
+                "feedback": "Наблюдение сохранено.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "It limits the interpretation of the promising trial by noting an untested demand level.",
+                "feedback": "Указана граница условий теста.",
+                "trap": "none",
+                "best": true
+              }
+            ],
+            "key": 3,
+            "evidence": "This may be useful, although the week contained no tournament and therefore no unusually heavy demand.",
+            "explanation": "Неисследованная нагрузка остаётся неизвестной, а не автоматически проблемной.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          }
+        ],
+        "review_notes": [
+          "Не заменять «не проверено» утверждением «не работает».",
+          "Оговорка совместима с истинностью исходного положительного наблюдения."
+        ]
+      }
+    },
+    {
+      "id": "RW11",
+      "title": "Два текста: совпадение без полного согласия",
+      "category": "SAT R&W · разбор дистракторов",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не задания College Board и не прогноз SAT.\n\nText 1: In a fictional town, Lina supports keeping the library open on Saturday evenings because some residents work during the week. She suggests a small trial before deciding how many staff hours to add.\n\nText 2: Omar also wants residents with weekday jobs to have more access. He prefers Sunday mornings, arguing that they might be easier to staff. He asks the library to compare the two schedules before committing.\n\nWhich point would both writers most likely agree on?\n\nСначала запиши прогноз, затем сравни варианты, объясни выбор и проверь новую ситуацию.",
+      "teacher_markdown": "### Первая ситуация: RW11-A\nText 1: In a fictional town, Lina supports keeping the library open on Saturday evenings because some residents work during the week. She suggests a small trial before deciding how many staff hours to add.\n\nText 2: Omar also wants residents with weekday jobs to have more access. He prefers Sunday mornings, arguing that they might be easier to staff. He asks the library to compare the two schedules before committing.\n\nWhich point would both writers most likely agree on?\n\n1. Saturday evenings are definitely easier to staff than Sunday mornings.\nНужно пересмотреть: Первый автор этого не утверждает, второй предпочитает другое время.\n\n2. The library should immediately adopt both schedules permanently.\nНужно пересмотреть: Оба предлагают проверку, не постоянное немедленное внедрение.\n\n3. Residents with weekday jobs should have better access to the library.\nПодходит: Общая цель совпадает, расписания различаются.\n\n4. Staffing costs are identical for all opening times.\nНужно пересмотреть: Ни один текст не даёт такого равенства.\n\nОснование: Omar also wants residents with weekday jobs to have more access.\n\nСогласие по цели не означает согласия по средству или подтверждённым расходам.\n\n### Новая ситуация: RW11-B\nText 1: Fictional teacher Mei wants feedback to arrive while students still remember a task. She proposes brief comments the next day.\n\nText 2: Teacher Ivo shares the concern about feedback arriving too late. He prefers a short discussion at the end of the lesson, while acknowledging that longer written comments may need more time.\n\nWhich statement expresses a concern shared by both teachers?\n\n1. Feedback should arrive soon enough to remain connected to the task.\nПодходит: Оба считают задержку проблемой, но предлагают разные форматы.\n\n2. All written feedback should be replaced by immediate discussions.\nНужно пересмотреть: Иво допускает письменные комментарии, Мэй их предлагает.\n\n3. Next-day comments are always too late to be useful.\nНужно пересмотреть: Мэй именно их предлагает; универсального срока нет.\n\n4. Students remember every detail of every task for a week.\nНужно пересмотреть: Таких данных нет.\n\nОснование: Teacher Ivo shares the concern about feedback arriving too late.\n\nОбщая обеспокоенность сроком не равна единственному согласованному формату.\n\n### Адверсальная проверка автора — не методическое утверждение\n- Вывод о согласии обязан опираться на оба текста.\n- Различие предложений не исключает совпадения общей цели.\n\nСвободный прогноз/объяснение не оценивается по точному совпадению или длине. Проверяющий самостоятельно проверяет единственность ключа и альтернативы. Сюжеты и наблюдения вымышлены.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-distractor",
+        "skill": "cross-text-partial-agreement",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW11-A",
+            "skill": "cross-text-partial-agreement",
+            "passage": "Text 1: In a fictional town, Lina supports keeping the library open on Saturday evenings because some residents work during the week. She suggests a small trial before deciding how many staff hours to add.\n\nText 2: Omar also wants residents with weekday jobs to have more access. He prefers Sunday mornings, arguing that they might be easier to staff. He asks the library to compare the two schedules before committing.",
+            "question": "Which point would both writers most likely agree on?",
+            "choices": [
+              {
+                "text": "Saturday evenings are definitely easier to staff than Sunday mornings.",
+                "feedback": "Первый автор этого не утверждает, второй предпочитает другое время.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "The library should immediately adopt both schedules permanently.",
+                "feedback": "Оба предлагают проверку, не постоянное немедленное внедрение.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "Residents with weekday jobs should have better access to the library.",
+                "feedback": "Общая цель совпадает, расписания различаются.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "Staffing costs are identical for all opening times.",
+                "feedback": "Ни один текст не даёт такого равенства.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 2,
+            "evidence": "Omar also wants residents with weekday jobs to have more access.",
+            "explanation": "Согласие по цели не означает согласия по средству или подтверждённым расходам.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          },
+          {
+            "id": "RW11-B",
+            "skill": "cross-text-partial-agreement",
+            "passage": "Text 1: Fictional teacher Mei wants feedback to arrive while students still remember a task. She proposes brief comments the next day.\n\nText 2: Teacher Ivo shares the concern about feedback arriving too late. He prefers a short discussion at the end of the lesson, while acknowledging that longer written comments may need more time.",
+            "question": "Which statement expresses a concern shared by both teachers?",
+            "choices": [
+              {
+                "text": "Feedback should arrive soon enough to remain connected to the task.",
+                "feedback": "Оба считают задержку проблемой, но предлагают разные форматы.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "All written feedback should be replaced by immediate discussions.",
+                "feedback": "Иво допускает письменные комментарии, Мэй их предлагает.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "Next-day comments are always too late to be useful.",
+                "feedback": "Мэй именно их предлагает; универсального срока нет.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "Students remember every detail of every task for a week.",
+                "feedback": "Таких данных нет.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 0,
+            "evidence": "Teacher Ivo shares the concern about feedback arriving too late.",
+            "explanation": "Общая обеспокоенность сроком не равна единственному согласованному формату.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          }
+        ],
+        "review_notes": [
+          "Вывод о согласии обязан опираться на оба текста.",
+          "Различие предложений не исключает совпадения общей цели."
+        ]
+      }
+    },
+    {
+      "id": "RW12",
+      "title": "Два текста: что ответит второй автор",
+      "category": "SAT R&W · разбор дистракторов",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не задания College Board и не прогноз SAT.\n\nText 1: In a fictional garden trial, beds with a new cover lost less water over three days than uncovered beds. Toma concludes that the cover will save water in every season.\n\nText 2: Suri says that a three-day comparison can suggest a useful effect, but a claim about every season requires measurements under more varied weather conditions.\n\nHow would Suri most likely respond to Toma’s conclusion?\n\nСначала запиши прогноз, затем сравни варианты, объясни выбор и проверь новую ситуацию.",
+      "teacher_markdown": "### Первая ситуация: RW12-A\nText 1: In a fictional garden trial, beds with a new cover lost less water over three days than uncovered beds. Toma concludes that the cover will save water in every season.\n\nText 2: Suri says that a three-day comparison can suggest a useful effect, but a claim about every season requires measurements under more varied weather conditions.\n\nHow would Suri most likely respond to Toma’s conclusion?\n\n1. The trial proves that the cover increases water loss in winter.\nНужно пересмотреть: Зимнее измерение отсутствует.\n\n2. The conclusion extends beyond the conditions that were measured.\nПодходит: Три дня не представляют каждый сезон.\n\n3. No observation about water loss can ever be useful.\nНужно пересмотреть: Сури допускает полезность ограниченного наблюдения.\n\n4. The covered and uncovered beds must have lost equal amounts of water.\nНужно пересмотреть: Сури не отвергает сообщённое различие.\n\nОснование: a claim about every season requires measurements under more varied weather conditions.\n\nКритика широты вывода не отрицает исходное сравнение.\n\n### Новая ситуация: RW12-B\nText 1: Fictional organiser Eva received enthusiastic feedback from five volunteers after a morning workshop. She predicts that every local resident would prefer morning workshops.\n\nText 2: Malik values the volunteers’ comments but notes that people who could not attend in the morning were not represented. He recommends collecting their views as well.\n\nHow would Malik most likely assess Eva’s prediction?\n\n1. It is fully established because five positive comments represent all residents.\nНужно пересмотреть: Малик прямо указывает на непредставленных людей.\n\n2. The five volunteers secretly disliked the workshop.\nНужно пересмотреть: Замечание о составе группы не меняет содержания отзывов.\n\n3. Morning workshops should never be offered again.\nНужно пересмотреть: Запрет не предлагается; нужны дополнительные мнения.\n\n4. It generalises from a group that excludes some relevant residents.\nПодходит: Люди, не способные прийти утром, не представлены.\n\nОснование: people who could not attend in the morning were not represented.\n\nОшибка относится к охвату выборки, а не к честности участников.\n\n### Адверсальная проверка автора — не методическое утверждение\n- Не подменять границу выборки обвинением участников во лжи.\n- Нужны данные о других условиях; противоположный эффект также не установлен.\n\nСвободный прогноз/объяснение не оценивается по точному совпадению или длине. Проверяющий самостоятельно проверяет единственность ключа и альтернативы. Сюжеты и наблюдения вымышлены.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-distractor",
+        "skill": "cross-text-response-boundary",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW12-A",
+            "skill": "cross-text-response-boundary",
+            "passage": "Text 1: In a fictional garden trial, beds with a new cover lost less water over three days than uncovered beds. Toma concludes that the cover will save water in every season.\n\nText 2: Suri says that a three-day comparison can suggest a useful effect, but a claim about every season requires measurements under more varied weather conditions.",
+            "question": "How would Suri most likely respond to Toma’s conclusion?",
+            "choices": [
+              {
+                "text": "The trial proves that the cover increases water loss in winter.",
+                "feedback": "Зимнее измерение отсутствует.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "The conclusion extends beyond the conditions that were measured.",
+                "feedback": "Три дня не представляют каждый сезон.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "No observation about water loss can ever be useful.",
+                "feedback": "Сури допускает полезность ограниченного наблюдения.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "The covered and uncovered beds must have lost equal amounts of water.",
+                "feedback": "Сури не отвергает сообщённое различие.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "a claim about every season requires measurements under more varied weather conditions.",
+            "explanation": "Критика широты вывода не отрицает исходное сравнение.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          },
+          {
+            "id": "RW12-B",
+            "skill": "cross-text-response-boundary",
+            "passage": "Text 1: Fictional organiser Eva received enthusiastic feedback from five volunteers after a morning workshop. She predicts that every local resident would prefer morning workshops.\n\nText 2: Malik values the volunteers’ comments but notes that people who could not attend in the morning were not represented. He recommends collecting their views as well.",
+            "question": "How would Malik most likely assess Eva’s prediction?",
+            "choices": [
+              {
+                "text": "It is fully established because five positive comments represent all residents.",
+                "feedback": "Малик прямо указывает на непредставленных людей.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "The five volunteers secretly disliked the workshop.",
+                "feedback": "Замечание о составе группы не меняет содержания отзывов.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "Morning workshops should never be offered again.",
+                "feedback": "Запрет не предлагается; нужны дополнительные мнения.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "It generalises from a group that excludes some relevant residents.",
+                "feedback": "Люди, не способные прийти утром, не представлены.",
+                "trap": "none",
+                "best": true
+              }
+            ],
+            "key": 3,
+            "evidence": "people who could not attend in the morning were not represented.",
+            "explanation": "Ошибка относится к охвату выборки, а не к честности участников.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          }
+        ],
+        "review_notes": [
+          "Не подменять границу выборки обвинением участников во лжи.",
+          "Нужны данные о других условиях; противоположный эффект также не установлен."
+        ]
+      }
+    },
+    {
+      "id": "RW13",
+      "title": "Слово по контексту: ограничение и изменение",
+      "category": "SAT R&W · ответ до вариантов",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не задания College Board и не прогноз SAT.\n\nIn a fictional design brief, the team wanted a larger sign but could not extend it beyond the existing frame. The frame therefore constrained the sign’s width, even though the team was free to choose its colour.\n\nAs used in the text, \"constrained\" most nearly means\n\nСначала запиши прогноз, затем сравни варианты, объясни выбор и проверь новую ситуацию.",
+      "teacher_markdown": "### Первая ситуация: RW13-A\nIn a fictional design brief, the team wanted a larger sign but could not extend it beyond the existing frame. The frame therefore constrained the sign’s width, even though the team was free to choose its colour.\n\nAs used in the text, \"constrained\" most nearly means\n\n1. decorated\nНужно пересмотреть: Рама ограничивает размер, не украшает его.\n\n2. concealed\nНужно пересмотреть: Видимость ширины не обсуждается.\n\n3. limited\nПодходит: Не выйти за рамку означает ограничить ширину.\n\n4. measured\nНужно пересмотреть: Здесь речь о допустимом пределе, а не действии измерения.\n\nОснование: could not extend it beyond the existing frame.\n\nЗначение определяется ограничением размеров, а не любым возможным значением слова.\n\n### Новая ситуация: RW13-B\nIn a fictional rehearsal plan, the group originally scheduled four evening sessions. When the hall became unavailable on two evenings, the director revised the plan to include two afternoon sessions instead.\n\nAs used in the text, \"revised\" most nearly means\n\n1. altered\nПодходит: План изменён в ответ на недоступность зала.\n\n2. memorised\nНужно пересмотреть: Запоминание не заменяет расписание.\n\n3. praised\nНужно пересмотреть: Одобрение плана не описывает замену вечерних встреч.\n\n4. abandoned all rehearsals in\nНужно пересмотреть: Репетиции продолжаются днём; полная отмена не следует из текста.\n\nОснование: the director revised the plan to include two afternoon sessions instead.\n\nИзменить план не означает отменить всю деятельность.\n\n### Адверсальная проверка автора — не методическое утверждение\n- Не оценивать словарный ответ вне данного предложения.\n- Проверить подстановку значения и сохранение смысла; допускается другое верное русское объяснение.\n\nСвободный прогноз/объяснение не оценивается по точному совпадению или длине. Проверяющий самостоятельно проверяет единственность ключа и альтернативы. Сюжеты и наблюдения вымышлены.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-optionless",
+        "skill": "words-in-context-constraint",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW13-A",
+            "skill": "words-in-context-constraint",
+            "passage": "In a fictional design brief, the team wanted a larger sign but could not extend it beyond the existing frame. The frame therefore constrained the sign’s width, even though the team was free to choose its colour.",
+            "question": "As used in the text, \"constrained\" most nearly means",
+            "choices": [
+              {
+                "text": "decorated",
+                "feedback": "Рама ограничивает размер, не украшает его.",
+                "trap": "context",
+                "best": false
+              },
+              {
+                "text": "concealed",
+                "feedback": "Видимость ширины не обсуждается.",
+                "trap": "context",
+                "best": false
+              },
+              {
+                "text": "limited",
+                "feedback": "Не выйти за рамку означает ограничить ширину.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "measured",
+                "feedback": "Здесь речь о допустимом пределе, а не действии измерения.",
+                "trap": "context",
+                "best": false
+              }
+            ],
+            "key": 2,
+            "evidence": "could not extend it beyond the existing frame.",
+            "explanation": "Значение определяется ограничением размеров, а не любым возможным значением слова.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          },
+          {
+            "id": "RW13-B",
+            "skill": "words-in-context-constraint",
+            "passage": "In a fictional rehearsal plan, the group originally scheduled four evening sessions. When the hall became unavailable on two evenings, the director revised the plan to include two afternoon sessions instead.",
+            "question": "As used in the text, \"revised\" most nearly means",
+            "choices": [
+              {
+                "text": "altered",
+                "feedback": "План изменён в ответ на недоступность зала.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "memorised",
+                "feedback": "Запоминание не заменяет расписание.",
+                "trap": "context",
+                "best": false
+              },
+              {
+                "text": "praised",
+                "feedback": "Одобрение плана не описывает замену вечерних встреч.",
+                "trap": "context",
+                "best": false
+              },
+              {
+                "text": "abandoned all rehearsals in",
+                "feedback": "Репетиции продолжаются днём; полная отмена не следует из текста.",
+                "trap": "scope",
+                "best": false
+              }
+            ],
+            "key": 0,
+            "evidence": "the director revised the plan to include two afternoon sessions instead.",
+            "explanation": "Изменить план не означает отменить всю деятельность.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          }
+        ],
+        "review_notes": [
+          "Не оценивать словарный ответ вне данного предложения.",
+          "Проверить подстановку значения и сохранение смысла; допускается другое верное русское объяснение."
+        ]
+      }
+    },
+    {
+      "id": "RW14",
+      "title": "Слово по контексту: предварительный и достаточный",
+      "category": "SAT R&W · ответ до вариантов",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не задания College Board и не прогноз SAT.\n\nA fictional researcher called her explanation provisional. It fitted the first observations, but she expected to change it if later measurements revealed a different pattern.\n\nAs used in the text, \"provisional\" most nearly means\n\nСначала запиши прогноз, затем сравни варианты, объясни выбор и проверь новую ситуацию.",
+      "teacher_markdown": "### Первая ситуация: RW14-A\nA fictional researcher called her explanation provisional. It fitted the first observations, but she expected to change it if later measurements revealed a different pattern.\n\nAs used in the text, \"provisional\" most nearly means\n\n1. permanent\nНужно пересмотреть: Автор допускает изменение.\n\n2. unrelated\nНужно пересмотреть: Объяснение согласуется с первыми наблюдениями.\n\n3. secret\nНужно пересмотреть: Обнародование или секретность не обсуждаются.\n\n4. tentative\nПодходит: Это предварительное объяснение, открытое пересмотру.\n\nОснование: she expected to change it if later measurements revealed a different pattern.\n\nПредварительность не означает, что объяснение уже опровергнуто.\n\n### Новая ситуация: RW14-B\nIn a fictional workshop, the instructions required a shelf to hold six small boxes. The sample shelf supported all six without bending, so the supervisor described it as adequate for that stated purpose. She made no claim about heavier loads.\n\nAs used in the text, \"adequate\" most nearly means\n\n1. perfect for every possible use\nНужно пересмотреть: Суждение ограничено указанной нагрузкой.\n\n2. sufficient\nПодходит: Полка удовлетворяет конкретному требованию.\n\n3. unnecessary\nНужно пересмотреть: Требование к полке не отменено.\n\n4. fragile under the stated load\nНужно пересмотреть: В указанной пробе прогиба не было.\n\nОснование: adequate for that stated purpose.\n\nДостаточность относительно цели не равна превосходству по всем параметрам.\n\n### Адверсальная проверка автора — не методическое утверждение\n- Предварительный ≠ ложный; достаточный для цели ≠ идеальный вообще.\n- Отвлекающий вариант должен противоречить контексту или добавлять неподтверждённый смысл.\n\nСвободный прогноз/объяснение не оценивается по точному совпадению или длине. Проверяющий самостоятельно проверяет единственность ключа и альтернативы. Сюжеты и наблюдения вымышлены.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-optionless",
+        "skill": "words-in-context-certainty",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW14-A",
+            "skill": "words-in-context-certainty",
+            "passage": "A fictional researcher called her explanation provisional. It fitted the first observations, but she expected to change it if later measurements revealed a different pattern.",
+            "question": "As used in the text, \"provisional\" most nearly means",
+            "choices": [
+              {
+                "text": "permanent",
+                "feedback": "Автор допускает изменение.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "unrelated",
+                "feedback": "Объяснение согласуется с первыми наблюдениями.",
+                "trap": "context",
+                "best": false
+              },
+              {
+                "text": "secret",
+                "feedback": "Обнародование или секретность не обсуждаются.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "tentative",
+                "feedback": "Это предварительное объяснение, открытое пересмотру.",
+                "trap": "none",
+                "best": true
+              }
+            ],
+            "key": 3,
+            "evidence": "she expected to change it if later measurements revealed a different pattern.",
+            "explanation": "Предварительность не означает, что объяснение уже опровергнуто.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          },
+          {
+            "id": "RW14-B",
+            "skill": "words-in-context-certainty",
+            "passage": "In a fictional workshop, the instructions required a shelf to hold six small boxes. The sample shelf supported all six without bending, so the supervisor described it as adequate for that stated purpose. She made no claim about heavier loads.",
+            "question": "As used in the text, \"adequate\" most nearly means",
+            "choices": [
+              {
+                "text": "perfect for every possible use",
+                "feedback": "Суждение ограничено указанной нагрузкой.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "sufficient",
+                "feedback": "Полка удовлетворяет конкретному требованию.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "unnecessary",
+                "feedback": "Требование к полке не отменено.",
+                "trap": "context",
+                "best": false
+              },
+              {
+                "text": "fragile under the stated load",
+                "feedback": "В указанной пробе прогиба не было.",
+                "trap": "reversal",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "adequate for that stated purpose.",
+            "explanation": "Достаточность относительно цели не равна превосходству по всем параметрам.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          }
+        ],
+        "review_notes": [
+          "Предварительный ≠ ложный; достаточный для цели ≠ идеальный вообще.",
+          "Отвлекающий вариант должен противоречить контексту или добавлять неподтверждённый смысл."
+        ]
+      }
+    },
+    {
+      "id": "RW15",
+      "title": "Граница предложений: вводное наречие",
+      "category": "SAT R&W · разбор дистракторов",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не задания College Board и не прогноз SAT.\n\nComplete the fictional passage without changing any other words:\nThe team repaired the damaged frame ____ however, the glass still needed replacement.\n\nWhich choice completes the text in Standard English?\n\nСначала запиши прогноз, затем сравни варианты, объясни выбор и проверь новую ситуацию.",
+      "teacher_markdown": "### Первая ситуация: RW15-A\nComplete the fictional passage without changing any other words:\nThe team repaired the damaged frame ____ however, the glass still needed replacement.\n\nWhich choice completes the text in Standard English?\n\n1. ,\nНужно пересмотреть: Одна запятая перед however не соединяет два независимых предложения.\n\n2. ;\nПодходит: Точка с запятой отделяет два независимых предложения; however затем получает запятую.\n\n3. [no punctuation]\nНужно пересмотреть: Без знака возникает слияние независимых предложений.\n\n4. .\nНужно пересмотреть: После точки however должно начинаться с прописной буквы; менять остальные слова запрещено.\n\nОснование: The team repaired the damaged frame ____ however, the glass still needed replacement.\n\nОбе части имеют подлежащее и сказуемое. Здесь точка с запятой сохраняет данный строчный however; точка потребовала бы прописной However и тоже была бы допустима при редактировании.\n\n### Новая ситуация: RW15-B\nComplete the fictional passage without changing any other words:\nThe first model used less material ____ nevertheless, the designers chose the stronger second model.\n\nWhich choice completes the text in Standard English?\n\n1. [no punctuation]\nНужно пересмотреть: Два самостоятельных предложения нуждаются в границе.\n\n2. ,\nНужно пересмотреть: Nevertheless — не сочинительный союз, одна запятая даёт comma splice.\n\n3. .\nНужно пересмотреть: После точки nevertheless должно начинаться с прописной буквы; других изменений инструкция не допускает.\n\n4. ;\nПодходит: Обе части независимы; вводное nevertheless отделено следующей запятой.\n\nОснование: The first model used less material ____ nevertheless, the designers chose the stronger second model.\n\nПунктуация определяется синтаксисом; контраст сам по себе не превращает наречие в союз.\n\n### Адверсальная проверка автора — не методическое утверждение\n- Вне списка существует корректная редакция с точкой и прописной буквой; не объявлять точку с запятой единственной вообще.\n- Не давать двоеточие как заведомо неверный вариант только из-за контраста: допустимость двоеточия требует отдельной проверки.\n\nСвободный прогноз/объяснение не оценивается по точному совпадению или длине. Проверяющий самостоятельно проверяет единственность ключа и альтернативы. Сюжеты и наблюдения вымышлены.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-distractor",
+        "skill": "standard-english-clause-boundary",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW15-A",
+            "skill": "standard-english-clause-boundary",
+            "passage": "Complete the fictional passage without changing any other words:\nThe team repaired the damaged frame ____ however, the glass still needed replacement.",
+            "question": "Which choice completes the text in Standard English?",
+            "choices": [
+              {
+                "text": ",",
+                "feedback": "Одна запятая перед however не соединяет два независимых предложения.",
+                "trap": "comma-splice",
+                "best": false
+              },
+              {
+                "text": ";",
+                "feedback": "Точка с запятой отделяет два независимых предложения; however затем получает запятую.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "[no punctuation]",
+                "feedback": "Без знака возникает слияние независимых предложений.",
+                "trap": "run-on",
+                "best": false
+              },
+              {
+                "text": ".",
+                "feedback": "После точки however должно начинаться с прописной буквы; менять остальные слова запрещено.",
+                "trap": "capitalisation",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "The team repaired the damaged frame ____ however, the glass still needed replacement.",
+            "explanation": "Обе части имеют подлежащее и сказуемое. Здесь точка с запятой сохраняет данный строчный however; точка потребовала бы прописной However и тоже была бы допустима при редактировании.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          },
+          {
+            "id": "RW15-B",
+            "skill": "standard-english-clause-boundary",
+            "passage": "Complete the fictional passage without changing any other words:\nThe first model used less material ____ nevertheless, the designers chose the stronger second model.",
+            "question": "Which choice completes the text in Standard English?",
+            "choices": [
+              {
+                "text": "[no punctuation]",
+                "feedback": "Два самостоятельных предложения нуждаются в границе.",
+                "trap": "run-on",
+                "best": false
+              },
+              {
+                "text": ",",
+                "feedback": "Nevertheless — не сочинительный союз, одна запятая даёт comma splice.",
+                "trap": "comma-splice",
+                "best": false
+              },
+              {
+                "text": ".",
+                "feedback": "После точки nevertheless должно начинаться с прописной буквы; других изменений инструкция не допускает.",
+                "trap": "capitalisation",
+                "best": false
+              },
+              {
+                "text": ";",
+                "feedback": "Обе части независимы; вводное nevertheless отделено следующей запятой.",
+                "trap": "none",
+                "best": true
+              }
+            ],
+            "key": 3,
+            "evidence": "The first model used less material ____ nevertheless, the designers chose the stronger second model.",
+            "explanation": "Пунктуация определяется синтаксисом; контраст сам по себе не превращает наречие в союз.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          }
+        ],
+        "review_notes": [
+          "Вне списка существует корректная редакция с точкой и прописной буквой; не объявлять точку с запятой единственной вообще.",
+          "Не давать двоеточие как заведомо неверный вариант только из-за контраста: допустимость двоеточия требует отдельной проверки."
+        ]
+      }
+    },
+    {
+      "id": "RW16",
+      "title": "Граница: зависимая часть перед главной",
+      "category": "SAT R&W · разбор дистракторов",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не задания College Board и не прогноз SAT.\n\nComplete the fictional passage without changing any other words:\nAlthough the first route was shorter ____ the driver chose the road with fewer steep turns.\n\nWhich choice completes the text in Standard English?\n\nСначала запиши прогноз, затем сравни варианты, объясни выбор и проверь новую ситуацию.",
+      "teacher_markdown": "### Первая ситуация: RW16-A\nComplete the fictional passage without changing any other words:\nAlthough the first route was shorter ____ the driver chose the road with fewer steep turns.\n\nWhich choice completes the text in Standard English?\n\n1. ,\nПодходит: Начальная придаточная с Although отделена запятой от главной части.\n\n2. ;\nНужно пересмотреть: Although делает первую часть зависимой; она не является самостоятельным предложением для такой границы.\n\n3. .\nНужно пересмотреть: Получится фрагмент с Although; следующий the также останется строчным.\n\n4. , but\nНужно пересмотреть: Although и but здесь дублируют оформление одной уступительной связи; без иных изменений это некорректная конструкция.\n\nОснование: Although the first route was shorter ____ the driver chose the road with fewer steep turns.\n\nКраткость маршрута не задаёт единственный рациональный выбор; вопрос проверяет структуру, не предпочтение водителя.\n\n### Новая ситуация: RW16-B\nComplete the fictional passage without changing any other words:\nBecause the labels had faded ____ the assistant printed a new set before opening.\n\nWhich choice completes the text in Standard English?\n\n1. ;\nНужно пересмотреть: Начальная because-часть зависима; точка с запятой здесь не соединяет две независимые части.\n\n2. .\nНужно пересмотреть: Получится зависимый фрагмент и строчное начало следующего предложения.\n\n3. ,\nПодходит: Начальная придаточная причины отделена от главной запятой.\n\n4. , so\nНужно пересмотреть: В этой структуре Because и so дублируют подчинительное и сочинительное оформление связи.\n\nОснование: Because the labels had faded ____ the assistant printed a new set before opening.\n\nКонкретная грамматическая рамка ограничивает выбор; перестроенное самостоятельное предложение имело бы другие допустимые знаки.\n\n### Адверсальная проверка автора — не методическое утверждение\n- Не переносить правило на все позиции because: в конце предложения запятая часто не нужна.\n- Действуют Standard English и запрет других изменений; разговорные/перестроенные варианты не оцениваются этим ключом.\n\nСвободный прогноз/объяснение не оценивается по точному совпадению или длине. Проверяющий самостоятельно проверяет единственность ключа и альтернативы. Сюжеты и наблюдения вымышлены.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-distractor",
+        "skill": "standard-english-dependent-clause",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW16-A",
+            "skill": "standard-english-dependent-clause",
+            "passage": "Complete the fictional passage without changing any other words:\nAlthough the first route was shorter ____ the driver chose the road with fewer steep turns.",
+            "question": "Which choice completes the text in Standard English?",
+            "choices": [
+              {
+                "text": ",",
+                "feedback": "Начальная придаточная с Although отделена запятой от главной части.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": ";",
+                "feedback": "Although делает первую часть зависимой; она не является самостоятельным предложением для такой границы.",
+                "trap": "dependent-clause",
+                "best": false
+              },
+              {
+                "text": ".",
+                "feedback": "Получится фрагмент с Although; следующий the также останется строчным.",
+                "trap": "fragment",
+                "best": false
+              },
+              {
+                "text": ", but",
+                "feedback": "Although и but здесь дублируют оформление одной уступительной связи; без иных изменений это некорректная конструкция.",
+                "trap": "double-conjunction",
+                "best": false
+              }
+            ],
+            "key": 0,
+            "evidence": "Although the first route was shorter ____ the driver chose the road with fewer steep turns.",
+            "explanation": "Краткость маршрута не задаёт единственный рациональный выбор; вопрос проверяет структуру, не предпочтение водителя.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          },
+          {
+            "id": "RW16-B",
+            "skill": "standard-english-dependent-clause",
+            "passage": "Complete the fictional passage without changing any other words:\nBecause the labels had faded ____ the assistant printed a new set before opening.",
+            "question": "Which choice completes the text in Standard English?",
+            "choices": [
+              {
+                "text": ";",
+                "feedback": "Начальная because-часть зависима; точка с запятой здесь не соединяет две независимые части.",
+                "trap": "dependent-clause",
+                "best": false
+              },
+              {
+                "text": ".",
+                "feedback": "Получится зависимый фрагмент и строчное начало следующего предложения.",
+                "trap": "fragment",
+                "best": false
+              },
+              {
+                "text": ",",
+                "feedback": "Начальная придаточная причины отделена от главной запятой.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": ", so",
+                "feedback": "В этой структуре Because и so дублируют подчинительное и сочинительное оформление связи.",
+                "trap": "double-conjunction",
+                "best": false
+              }
+            ],
+            "key": 2,
+            "evidence": "Because the labels had faded ____ the assistant printed a new set before opening.",
+            "explanation": "Конкретная грамматическая рамка ограничивает выбор; перестроенное самостоятельное предложение имело бы другие допустимые знаки.",
+            "prediction_guidance": "Сначала своими словами предскажи нужную функцию, связь или структуру предложения. Затем открой варианты.",
+            "repair_prompt": "После сравнения укажи конкретное основание в тексте или синтаксисе. Другая доказательная формулировка допустима."
+          }
+        ],
+        "review_notes": [
+          "Не переносить правило на все позиции because: в конце предложения запятая часто не нужна.",
+          "Действуют Standard English и запрет других изменений; разговорные/перестроенные варианты не оцениваются этим ключом."
+        ]
+      }
+    }
+  ]
+}

@@ -1,5 +1,13 @@
 export type DraftSatRound = { id: string; skill: string; passage: string; question: string; choices: { text: string; feedback: string; trap: string; best: boolean }[]; key: number; evidence: string; explanation: string; prediction_guidance: string; repair_prompt: string };
 export type DraftSatPair = { kind: 'sat-rw-pair-v1'; publication_ready: false; trainer: 'sat-optionless' | 'sat-distractor'; skill: string; difficulty: string; difficulty_status: 'AUTHOR_ESTIMATE_UNCALIBRATED'; rounds: DraftSatRound[]; review_notes: string[] };
+/** Named punctuation keeps choices readable without relying on symbol pronunciation settings. */
+export function draftSatChoiceText(value: string): string {
+  if (value === ';') return 'Semicolon (;)';
+  if (value === ',') return 'Comma (,)';
+  if (value === '.') return 'Full stop (.)';
+  if (value === '[no punctuation]') return 'No punctuation (leave the gap empty)';
+  return value;
+}
 const text = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0 && value.length <= 5000;
 function parseRound(value: unknown): DraftSatRound | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
