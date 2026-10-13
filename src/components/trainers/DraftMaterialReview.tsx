@@ -105,7 +105,7 @@ function ReviewUnit({ unit, batchId, batchVersion, contentHash, previous, onSave
     <p>{unit.id} · {unit.category} · DRAFT</p><h2 id="material-title">{unit.title}</h2>
     <MaterialText text={unit.student_markdown}/>
     <DraftWritingPreview value={unit.exercise_data} nextValue={nextWriting}/>
-    <DraftSatPreview value={unit.exercise_data}/>
+    <DraftSatPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftListeningPreview value={unit.exercise_data} unitId={unit.id}/>
     <DraftMathPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftReadingPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
