@@ -1,0 +1,696 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "11",
+  "version": 1,
+  "source_sha256": "3f45939a1c22cffaa82b28360c0d073e8d115a65d3209d553a14662e69768fa7",
+  "content_sha256": "3f45939a1c22cffaa82b28360c0d073e8d115a65d3209d553a14662e69768fa7",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "M09",
+      "title": "Скорость: минуты и километры",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nA fictional cart travels at a constant speed of 72 kilometres per hour for 25 minutes. What distance, in kilometres, does it travel?\n\nПеременная: d = distance travelled. Ответ в единицах: kilometres.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M09-A\nA fictional cart travels at a constant speed of 72 kilometres per hour for 25 minutes. What distance, in kilometres, does it travel?\n\nПеременная: d = distance travelled. Ответ в единицах: kilometres.\n\nОтвет: 30 kilometres.\nThe units cancel as (km/hour) × hours. The given constant speed applies throughout the interval.\n\nМодели:\n1. d = 72 × 25\nНужно пересмотреть: 25 — минуты; скорость дана за час. Произведение без перевода единиц не даёт километры.\n\n2. d = 72 × (25/60)\nПодходит: 25/60 часа умножены на километры в час.\n\n3. d = 72 ÷ (25/60)\nНужно пересмотреть: Расстояние равно скорости, умноженной на время, а не делённой на время.\n\nКорректное решение:\n- 25 minutes = 25/60 hours\n- d = 72 × 25/60 = 30 kilometres\n\n### Свежий перенос: M09-B\nA fictional boat moves at a constant speed of 54 kilometres per hour for 40 minutes. How far does it travel, in kilometres?\n\nПеременная: d = distance travelled. Ответ в единицах: kilometres.\n\nОтвет: 36 kilometres.\nConverting the speed to 0.9 kilometres per minute and multiplying by 40 is equally valid.\n\nМодели:\n1. d = 54 × (40/60)\nПодходит: Время выражено в часах; произведение даёт километры.\n\n2. d = 54 × 40\nНужно пересмотреть: Минуты не переведены в часы.\n\n3. d = (54/60) ÷ 40\nНужно пересмотреть: 54/60 — километры за минуту; ещё нужно умножить на минуты.\n\nКорректное решение:\n- 40 minutes = 2/3 hour\n- d = 54 × 2/3 = 36 kilometres\n\n### Адверсальные замечания автора — не методическое утверждение\n- Переводить можно скорость или время: оба согласованных способа допустимы.\n- Не добавлять остановки или ускорение: скорость явно постоянна.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "translation",
+        "skill": "rate-unit-conversion",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M09-A",
+            "prompt": "A fictional cart travels at a constant speed of 72 kilometres per hour for 25 minutes. What distance, in kilometres, does it travel?",
+            "variable": "d = distance travelled",
+            "unit": "kilometres",
+            "answer": 30,
+            "models": [
+              {
+                "equation": "d = 72 × 25",
+                "best": false,
+                "feedback": "25 — минуты; скорость дана за час. Произведение без перевода единиц не даёт километры."
+              },
+              {
+                "equation": "d = 72 × (25/60)",
+                "best": true,
+                "feedback": "25/60 часа умножены на километры в час."
+              },
+              {
+                "equation": "d = 72 ÷ (25/60)",
+                "best": false,
+                "feedback": "Расстояние равно скорости, умноженной на время, а не делённой на время."
+              }
+            ],
+            "corrected_working": [
+              "25 minutes = 25/60 hours",
+              "d = 72 × 25/60 = 30 kilometres"
+            ],
+            "explanation": "The units cancel as (km/hour) × hours. The given constant speed applies throughout the interval."
+          },
+          {
+            "id": "M09-B",
+            "prompt": "A fictional boat moves at a constant speed of 54 kilometres per hour for 40 minutes. How far does it travel, in kilometres?",
+            "variable": "d = distance travelled",
+            "unit": "kilometres",
+            "answer": 36,
+            "models": [
+              {
+                "equation": "d = 54 × (40/60)",
+                "best": true,
+                "feedback": "Время выражено в часах; произведение даёт километры."
+              },
+              {
+                "equation": "d = 54 × 40",
+                "best": false,
+                "feedback": "Минуты не переведены в часы."
+              },
+              {
+                "equation": "d = (54/60) ÷ 40",
+                "best": false,
+                "feedback": "54/60 — километры за минуту; ещё нужно умножить на минуты."
+              }
+            ],
+            "corrected_working": [
+              "40 minutes = 2/3 hour",
+              "d = 54 × 2/3 = 36 kilometres"
+            ],
+            "explanation": "Converting the speed to 0.9 kilometres per minute and multiplying by 40 is equally valid."
+          }
+        ],
+        "review_notes": [
+          "Переводить можно скорость или время: оба согласованных способа допустимы.",
+          "Не добавлять остановки или ускорение: скорость явно постоянна."
+        ]
+      }
+    },
+    {
+      "id": "M10",
+      "title": "Средняя скорость на равных расстояниях",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nA fictional cyclist travels 30 kilometres at 15 kilometres per hour, then another 30 kilometres at 30 kilometres per hour. There are no stops. What is the average speed over the entire 60-kilometre trip?\n\nПеременная: v = total distance divided by total time. Ответ в единицах: kilometres per hour.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M10-A\nA fictional cyclist travels 30 kilometres at 15 kilometres per hour, then another 30 kilometres at 30 kilometres per hour. There are no stops. What is the average speed over the entire 60-kilometre trip?\n\nПеременная: v = total distance divided by total time. Ответ в единицах: kilometres per hour.\n\nОтвет: 20 kilometres per hour.\nThe slower part occupies more time. Equal distances do not imply equal time weights.\n\nМодели:\n1. v = (15 + 30)/2\nНужно пересмотреть: Простое среднее скоростей подходит при равных временах, а здесь равны расстояния.\n\n2. v = 60/(15 + 30)\nНужно пересмотреть: В знаменателе нужны часы, а не сумма скоростей.\n\n3. v = 60/(30/15 + 30/30)\nПодходит: Сложены времена обоих участков, затем полное расстояние разделено на полное время.\n\nКорректное решение:\n- First time = 30/15 = 2 hours\n- Second time = 30/30 = 1 hour\n- Average speed = 60/(2 + 1) = 20 kilometres per hour\n\n### Свежий перенос: M10-B\nA fictional shuttle travels 24 kilometres at 24 kilometres per hour and returns along the same 24-kilometre route at 12 kilometres per hour. With no stops, what is its average speed for the complete round trip?\n\nПеременная: v = total distance divided by total time. Ответ в единицах: kilometres per hour.\n\nОтвет: 16 kilometres per hour.\nAverage speed uses total distance, not displacement; returning to the start does not make it zero.\n\nМодели:\n1. v = 48/(24/24 + 24/12)\nПодходит: Общее расстояние 48; общее время 1 + 2 часа.\n\n2. v = (24 + 12)/2\nНужно пересмотреть: Неверное предположение о равных временах движения.\n\n3. v = 24/(24/24 + 24/12)\nНужно пересмотреть: Числитель учитывает только одно направление, время — оба.\n\nКорректное решение:\n- Outward time = 1 hour; return time = 2 hours\n- Total distance = 48 kilometres\n- Average speed = 48/3 = 16 kilometres per hour\n\n### Адверсальные замечания автора — не методическое утверждение\n- Не смешивать среднюю скорость движения со средней векторной скоростью.\n- Простое среднее скоростей не всегда неверно: оно верно для равных времен. Здесь времена разные.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "translation",
+        "skill": "equal-distance-average-speed",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M10-A",
+            "prompt": "A fictional cyclist travels 30 kilometres at 15 kilometres per hour, then another 30 kilometres at 30 kilometres per hour. There are no stops. What is the average speed over the entire 60-kilometre trip?",
+            "variable": "v = total distance divided by total time",
+            "unit": "kilometres per hour",
+            "answer": 20,
+            "models": [
+              {
+                "equation": "v = (15 + 30)/2",
+                "best": false,
+                "feedback": "Простое среднее скоростей подходит при равных временах, а здесь равны расстояния."
+              },
+              {
+                "equation": "v = 60/(15 + 30)",
+                "best": false,
+                "feedback": "В знаменателе нужны часы, а не сумма скоростей."
+              },
+              {
+                "equation": "v = 60/(30/15 + 30/30)",
+                "best": true,
+                "feedback": "Сложены времена обоих участков, затем полное расстояние разделено на полное время."
+              }
+            ],
+            "corrected_working": [
+              "First time = 30/15 = 2 hours",
+              "Second time = 30/30 = 1 hour",
+              "Average speed = 60/(2 + 1) = 20 kilometres per hour"
+            ],
+            "explanation": "The slower part occupies more time. Equal distances do not imply equal time weights."
+          },
+          {
+            "id": "M10-B",
+            "prompt": "A fictional shuttle travels 24 kilometres at 24 kilometres per hour and returns along the same 24-kilometre route at 12 kilometres per hour. With no stops, what is its average speed for the complete round trip?",
+            "variable": "v = total distance divided by total time",
+            "unit": "kilometres per hour",
+            "answer": 16,
+            "models": [
+              {
+                "equation": "v = 48/(24/24 + 24/12)",
+                "best": true,
+                "feedback": "Общее расстояние 48; общее время 1 + 2 часа."
+              },
+              {
+                "equation": "v = (24 + 12)/2",
+                "best": false,
+                "feedback": "Неверное предположение о равных временах движения."
+              },
+              {
+                "equation": "v = 24/(24/24 + 24/12)",
+                "best": false,
+                "feedback": "Числитель учитывает только одно направление, время — оба."
+              }
+            ],
+            "corrected_working": [
+              "Outward time = 1 hour; return time = 2 hours",
+              "Total distance = 48 kilometres",
+              "Average speed = 48/3 = 16 kilometres per hour"
+            ],
+            "explanation": "Average speed uses total distance, not displacement; returning to the start does not make it zero."
+          }
+        ],
+        "review_notes": [
+          "Не смешивать среднюю скорость движения со средней векторной скоростью.",
+          "Простое среднее скоростей не всегда неверно: оно верно для равных времен. Здесь времена разные."
+        ]
+      }
+    },
+    {
+      "id": "M11",
+      "title": "На сколько процентов больше: какая база",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nA fictional workshop made 80 badges in April and 100 badges in May. The May count is what percent greater than the April count?\n\nПеременная: p = percentage increase relative to April. Ответ в единицах: percent.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M11-A\nA fictional workshop made 80 badges in April and 100 badges in May. The May count is what percent greater than the April count?\n\nПеременная: p = percentage increase relative to April. Ответ в единицах: percent.\n\nОтвет: 25 percent.\nGreater than April fixes April as the denominator. A count difference is not a percentage.\n\nМодели:\n1. p = 100 × (100 − 80)/100\nНужно пересмотреть: Деление на майскую величину отвечает другому вопросу: насколько апрель меньше мая.\n\n2. p = 100 × (100 − 80)/80\nПодходит: База сравнения — апрель, 80 значков.\n\n3. p = 100 − 80\nНужно пересмотреть: Разность 20 — количество значков, не процент относительно апреля.\n\nКорректное решение:\n- Increase = 100 − 80 = 20 badges\n- Relative increase = 20/80 = 0.25\n- Percentage increase = 25%\n\n### Свежий перенос: M11-B\nA fictional club counted 150 visitors on Monday and 120 on Tuesday. The Monday count is what percent greater than the Tuesday count? Give a numerical percent value.\n\nПеременная: p = percentage by which Monday exceeds Tuesday. Ответ в единицах: percent.\n\nОтвет: 25 percent.\nThe reference is Tuesday. The exact answer is a finite percent value.\n\nМодели:\n1. p = 100 × (150 − 120)/150\nНужно пересмотреть: 150 — база вопроса про уменьшение со вторника относительно понедельника, а не заданного сравнения.\n\n2. p = 150 − 120\nНужно пересмотреть: 30 посетителей — абсолютная разность.\n\n3. p = 100 × (150 − 120)/120\nПодходит: Спрашивается превышение относительно вторника; знаменатель 120.\n\nКорректное решение:\n- Difference = 30 visitors\n- Percentage = 100 × 30/120 = 25 percent\n- Exact answer = 25%.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Процентное увеличение и обратное уменьшение не симметричны.\n- Для этого числового интерфейса выбраны точные конечные ответы; дробный или приближённый ответ потребует отдельного контракта проверки.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "translation",
+        "skill": "relative-percent-reference",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M11-A",
+            "prompt": "A fictional workshop made 80 badges in April and 100 badges in May. The May count is what percent greater than the April count?",
+            "variable": "p = percentage increase relative to April",
+            "unit": "percent",
+            "answer": 25,
+            "models": [
+              {
+                "equation": "p = 100 × (100 − 80)/100",
+                "best": false,
+                "feedback": "Деление на майскую величину отвечает другому вопросу: насколько апрель меньше мая."
+              },
+              {
+                "equation": "p = 100 × (100 − 80)/80",
+                "best": true,
+                "feedback": "База сравнения — апрель, 80 значков."
+              },
+              {
+                "equation": "p = 100 − 80",
+                "best": false,
+                "feedback": "Разность 20 — количество значков, не процент относительно апреля."
+              }
+            ],
+            "corrected_working": [
+              "Increase = 100 − 80 = 20 badges",
+              "Relative increase = 20/80 = 0.25",
+              "Percentage increase = 25%"
+            ],
+            "explanation": "Greater than April fixes April as the denominator. A count difference is not a percentage."
+          },
+          {
+            "id": "M11-B",
+            "prompt": "A fictional club counted 150 visitors on Monday and 120 on Tuesday. The Monday count is what percent greater than the Tuesday count? Give a numerical percent value.",
+            "variable": "p = percentage by which Monday exceeds Tuesday",
+            "unit": "percent",
+            "answer": 25,
+            "models": [
+              {
+                "equation": "p = 100 × (150 − 120)/150",
+                "best": false,
+                "feedback": "150 — база вопроса про уменьшение со вторника относительно понедельника, а не заданного сравнения."
+              },
+              {
+                "equation": "p = 150 − 120",
+                "best": false,
+                "feedback": "30 посетителей — абсолютная разность."
+              },
+              {
+                "equation": "p = 100 × (150 − 120)/120",
+                "best": true,
+                "feedback": "Спрашивается превышение относительно вторника; знаменатель 120."
+              }
+            ],
+            "corrected_working": [
+              "Difference = 30 visitors",
+              "Percentage = 100 × 30/120 = 25 percent",
+              "Exact answer = 25%."
+            ],
+            "explanation": "The reference is Tuesday. The exact answer is a finite percent value."
+          }
+        ],
+        "review_notes": [
+          "Процентное увеличение и обратное уменьшение не симметричны.",
+          "Для этого числового интерфейса выбраны точные конечные ответы; дробный или приближённый ответ потребует отдельного контракта проверки."
+        ]
+      }
+    },
+    {
+      "id": "M12",
+      "title": "Посторонний корень после возведения в квадрат",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nSolve sqrt(x + 6) = x, where sqrt denotes the nonnegative square root. Identify the first invalid line in the proposed solution, then give the valid value of x.\n\nПеременная: x = solution of the original equation. Укажи числовое значение x.\n\nПредложенное решение:\n1. Any original solution must satisfy x ≥ 0.\n2. Squaring gives x + 6 = x², so (x − 3)(x + 2) = 0.\n3. Both x = 3 and x = −2 solve the original equation.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M12-A\nSolve sqrt(x + 6) = x, where sqrt denotes the nonnegative square root. Identify the first invalid line in the proposed solution, then give the valid value of x.\n\nПеременная: x = solution of the original equation. Укажи числовое значение x.\n\nПредложенное решение:\n1. Any original solution must satisfy x ≥ 0.\n2. Squaring gives x + 6 = x², so (x − 3)(x + 2) = 0.\n3. Both x = 3 and x = −2 solve the original equation.\n\nОтвет: 3.\nSquaring can introduce extra candidates. Substitution in the original equation removes them.\n\n\nПервая неверная строка: 3.\n1. Верно: Левая часть неотрицательна; правая x должна быть неотрицательна.\n2. Верно: Это необходимое условие; найденные корни ещё нужно проверить.\n3. Неверно: −2 нарушает x ≥ 0 и даёт sqrt(4) = 2, а не −2.\n\nКорректное решение:\n- x ≥ 0\n- x² − x − 6 = 0 gives candidates 3 and −2\n- Check x = 3: sqrt(9) = 3\n- Reject −2: sqrt(4) = 2 ≠ −2\n\n### Свежий перенос: M12-B\nSolve sqrt(x + 12) = x for real x. The square root is nonnegative. Find the first invalid line and the valid solution.\n\nПеременная: x = solution of the original equation. Укажи числовое значение x.\n\nПредложенное решение:\n1. The square root exists when x ≥ −12.\n2. Squaring gives x² − x − 12 = 0, with candidates 4 and −3.\n3. The candidate −3 is valid because −3 ≥ −12.\n4. Therefore both candidates solve the original equation.\n\nОтвет: 4.\nDomain membership alone is insufficient. Check equality, not only whether the expression is defined.\n\n\nПервая неверная строка: 3.\n1. Верно: Это условие существования левой части; оно ещё не полное условие равенства.\n2. Верно: Кандидаты факторизации вычислены верно.\n3. Неверно: Существование корня не означает равенства отрицательному x; sqrt(9) = 3 ≠ −3.\n4. Неверно: Ошибочный вывод продолжает предыдущую неверную проверку.\n\nКорректное решение:\n- Original equality requires x ≥ 0\n- (x − 4)(x + 3) = 0 gives candidates 4 and −3\n- sqrt(4 + 12) = 4\n- sqrt(−3 + 12) = 3 ≠ −3, so reject −3\n\n### Адверсальные замечания автора — не методическое утверждение\n- Не называть само возведение в квадрат первой ошибкой: здесь оно допустимо для получения кандидатов.\n- Существование выражения и выполнение уравнения — разные проверки.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "forensics",
+        "skill": "extraneous-root-original-domain",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M12-A",
+            "prompt": "Solve sqrt(x + 6) = x, where sqrt denotes the nonnegative square root. Identify the first invalid line in the proposed solution, then give the valid value of x.",
+            "variable": "x = solution of the original equation",
+            "unit": "",
+            "answer": 3,
+            "steps": [
+              {
+                "statement": "Any original solution must satisfy x ≥ 0.",
+                "valid": true,
+                "explanation": "Левая часть неотрицательна; правая x должна быть неотрицательна."
+              },
+              {
+                "statement": "Squaring gives x + 6 = x², so (x − 3)(x + 2) = 0.",
+                "valid": true,
+                "explanation": "Это необходимое условие; найденные корни ещё нужно проверить."
+              },
+              {
+                "statement": "Both x = 3 and x = −2 solve the original equation.",
+                "valid": false,
+                "explanation": "−2 нарушает x ≥ 0 и даёт sqrt(4) = 2, а не −2."
+              }
+            ],
+            "first_invalid": 2,
+            "corrected_working": [
+              "x ≥ 0",
+              "x² − x − 6 = 0 gives candidates 3 and −2",
+              "Check x = 3: sqrt(9) = 3",
+              "Reject −2: sqrt(4) = 2 ≠ −2"
+            ],
+            "explanation": "Squaring can introduce extra candidates. Substitution in the original equation removes them."
+          },
+          {
+            "id": "M12-B",
+            "prompt": "Solve sqrt(x + 12) = x for real x. The square root is nonnegative. Find the first invalid line and the valid solution.",
+            "variable": "x = solution of the original equation",
+            "unit": "",
+            "answer": 4,
+            "steps": [
+              {
+                "statement": "The square root exists when x ≥ −12.",
+                "valid": true,
+                "explanation": "Это условие существования левой части; оно ещё не полное условие равенства."
+              },
+              {
+                "statement": "Squaring gives x² − x − 12 = 0, with candidates 4 and −3.",
+                "valid": true,
+                "explanation": "Кандидаты факторизации вычислены верно."
+              },
+              {
+                "statement": "The candidate −3 is valid because −3 ≥ −12.",
+                "valid": false,
+                "explanation": "Существование корня не означает равенства отрицательному x; sqrt(9) = 3 ≠ −3."
+              },
+              {
+                "statement": "Therefore both candidates solve the original equation.",
+                "valid": false,
+                "explanation": "Ошибочный вывод продолжает предыдущую неверную проверку."
+              }
+            ],
+            "first_invalid": 2,
+            "corrected_working": [
+              "Original equality requires x ≥ 0",
+              "(x − 4)(x + 3) = 0 gives candidates 4 and −3",
+              "sqrt(4 + 12) = 4",
+              "sqrt(−3 + 12) = 3 ≠ −3, so reject −3"
+            ],
+            "explanation": "Domain membership alone is insufficient. Check equality, not only whether the expression is defined."
+          }
+        ],
+        "review_notes": [
+          "Не называть само возведение в квадрат первой ошибкой: здесь оно допустимо для получения кандидатов.",
+          "Существование выражения и выполнение уравнения — разные проверки."
+        ]
+      }
+    },
+    {
+      "id": "M13",
+      "title": "Общее среднее для неравных групп",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nIn a fictional exercise, four students have an average score of 70 and six different students have an average score of 90. Find the average for all ten students and the first invalid line.\n\nПеременная: m = combined mean score. Ответ в единицах: points.\n\nПредложенное решение:\n1. The two group means are 70 and 90.\n2. The combined mean is (70 + 90)/2 = 80.\n3. Thus the total score is 10 × 80 = 800.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M13-A\nIn a fictional exercise, four students have an average score of 70 and six different students have an average score of 90. Find the average for all ten students and the first invalid line.\n\nПеременная: m = combined mean score. Ответ в единицах: points.\n\nПредложенное решение:\n1. The two group means are 70 and 90.\n2. The combined mean is (70 + 90)/2 = 80.\n3. Thus the total score is 10 × 80 = 800.\n\nОтвет: 82 points.\nUse total points divided by total students. Group means need weights equal to group sizes.\n\n\nПервая неверная строка: 2.\n1. Верно: Заданные средние прочитаны верно.\n2. Неверно: Группы разного размера, веса не равны.\n3. Неверно: Сумма построена по неверному общему среднему.\n\nКорректное решение:\n- First group total = 4 × 70 = 280\n- Second group total = 6 × 90 = 540\n- Combined mean = (280 + 540)/10 = 82\n\n### Свежий перенос: M13-B\nFive fictional bags have an average mass of 12 kilograms and three other bags have an average mass of 20 kilograms. Find the mean mass of all eight bags and the first invalid line.\n\nПеременная: m = combined mean mass. Ответ в единицах: kilograms.\n\nПредложенное решение:\n1. Total mass of the first five bags = 5 × 12 = 60.\n2. Total mass of the other three bags = 3 × 20 = 60.\n3. The combined mean = (60 + 60)/2 = 60.\n\nОтвет: 15 kilograms.\nAfter converting group means to totals, divide by the total number of objects, not the number of groups.\n\n\nПервая неверная строка: 3.\n1. Верно: Среднее умножено на размер первой группы.\n2. Верно: Вторая сумма тоже верна.\n3. Неверно: 2 — число групп; нужно делить суммарную массу на 8 мешков.\n\nКорректное решение:\n- Total mass = 60 + 60 = 120 kilograms\n- Number of bags = 5 + 3 = 8\n- Mean mass = 120/8 = 15 kilograms\n\n### Адверсальные замечания автора — не методическое утверждение\n- Среднее средних допустимо при одинаковом числе объектов; не объявлять его всегда неправильным.\n- Проверять и числитель, и знаменатель объединённого среднего.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "forensics",
+        "skill": "weighted-mean-group-size",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M13-A",
+            "prompt": "In a fictional exercise, four students have an average score of 70 and six different students have an average score of 90. Find the average for all ten students and the first invalid line.",
+            "variable": "m = combined mean score",
+            "unit": "points",
+            "answer": 82,
+            "steps": [
+              {
+                "statement": "The two group means are 70 and 90.",
+                "valid": true,
+                "explanation": "Заданные средние прочитаны верно."
+              },
+              {
+                "statement": "The combined mean is (70 + 90)/2 = 80.",
+                "valid": false,
+                "explanation": "Группы разного размера, веса не равны."
+              },
+              {
+                "statement": "Thus the total score is 10 × 80 = 800.",
+                "valid": false,
+                "explanation": "Сумма построена по неверному общему среднему."
+              }
+            ],
+            "first_invalid": 1,
+            "corrected_working": [
+              "First group total = 4 × 70 = 280",
+              "Second group total = 6 × 90 = 540",
+              "Combined mean = (280 + 540)/10 = 82"
+            ],
+            "explanation": "Use total points divided by total students. Group means need weights equal to group sizes."
+          },
+          {
+            "id": "M13-B",
+            "prompt": "Five fictional bags have an average mass of 12 kilograms and three other bags have an average mass of 20 kilograms. Find the mean mass of all eight bags and the first invalid line.",
+            "variable": "m = combined mean mass",
+            "unit": "kilograms",
+            "answer": 15,
+            "steps": [
+              {
+                "statement": "Total mass of the first five bags = 5 × 12 = 60.",
+                "valid": true,
+                "explanation": "Среднее умножено на размер первой группы."
+              },
+              {
+                "statement": "Total mass of the other three bags = 3 × 20 = 60.",
+                "valid": true,
+                "explanation": "Вторая сумма тоже верна."
+              },
+              {
+                "statement": "The combined mean = (60 + 60)/2 = 60.",
+                "valid": false,
+                "explanation": "2 — число групп; нужно делить суммарную массу на 8 мешков."
+              }
+            ],
+            "first_invalid": 2,
+            "corrected_working": [
+              "Total mass = 60 + 60 = 120 kilograms",
+              "Number of bags = 5 + 3 = 8",
+              "Mean mass = 120/8 = 15 kilograms"
+            ],
+            "explanation": "After converting group means to totals, divide by the total number of objects, not the number of groups."
+          }
+        ],
+        "review_notes": [
+          "Среднее средних допустимо при одинаковом числе объектов; не объявлять его всегда неправильным.",
+          "Проверять и числитель, и знаменатель объединённого среднего."
+        ]
+      }
+    },
+    {
+      "id": "M14",
+      "title": "Линейный масштаб и площадь",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nTwo fictional rectangular designs are similar. Every side in the enlarged design is three times the corresponding side in the original. The original area is 24 square centimetres. Find the enlarged area and the first invalid line.\n\nПеременная: A = enlarged area. Ответ в единицах: square centimetres.\n\nПредложенное решение:\n1. The linear scale factor is 3.\n2. The area scale factor is also 3.\n3. The new area is 24 × 3 = 72.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M14-A\nTwo fictional rectangular designs are similar. Every side in the enlarged design is three times the corresponding side in the original. The original area is 24 square centimetres. Find the enlarged area and the first invalid line.\n\nПеременная: A = enlarged area. Ответ в единицах: square centimetres.\n\nПредложенное решение:\n1. The linear scale factor is 3.\n2. The area scale factor is also 3.\n3. The new area is 24 × 3 = 72.\n\nОтвет: 216 square centimetres.\nA linear factor applies to lengths and perimeter; area uses its square.\n\n\nПервая неверная строка: 2.\n1. Верно: Он прямо задан для каждой стороны.\n2. Неверно: Площадь зависит от двух линейных размеров; множитель 3² = 9.\n3. Неверно: Использован неверный множитель площади.\n\nКорректное решение:\n- Both rectangle dimensions are multiplied by 3\n- Area factor = 3 × 3 = 9\n- Enlarged area = 24 × 9 = 216 square centimetres\n\n### Свежий перенос: M14-B\nTwo fictional rectangular panels are similar. Each side of the smaller panel is half the corresponding side of the larger panel. The larger area is 180 square centimetres. Find the smaller area and the first invalid line.\n\nПеременная: A = smaller area. Ответ в единицах: square centimetres.\n\nПредложенное решение:\n1. The smaller-to-larger length ratio is 1/2.\n2. The area ratio is (1/2)² = 1/4.\n3. The smaller area is 180 ÷ 1/4 = 720.\n\nОтвет: 45 square centimetres.\nAfter finding the correct ratio, apply it in the stated direction. The smaller panel must have smaller area.\n\n\nПервая неверная строка: 3.\n1. Верно: Направление отношения соответствует вопросу.\n2. Верно: Уменьшаются два измерения.\n3. Неверно: Меньшую площадь находят умножением 180 на 1/4; деление увеличивает её.\n\nКорректное решение:\n- Area ratio = 1/4\n- Smaller area = 180 × 1/4 = 45 square centimetres\n\n### Адверсальные замечания автора — не методическое утверждение\n- Подобие и масштаб каждой стороны заданы явно; не переносить квадрат масштаба на произвольное изменение одной стороны.\n- Периметр, площадь и объём имеют разные степени масштаба.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "forensics",
+        "skill": "similarity-area-scale",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M14-A",
+            "prompt": "Two fictional rectangular designs are similar. Every side in the enlarged design is three times the corresponding side in the original. The original area is 24 square centimetres. Find the enlarged area and the first invalid line.",
+            "variable": "A = enlarged area",
+            "unit": "square centimetres",
+            "answer": 216,
+            "steps": [
+              {
+                "statement": "The linear scale factor is 3.",
+                "valid": true,
+                "explanation": "Он прямо задан для каждой стороны."
+              },
+              {
+                "statement": "The area scale factor is also 3.",
+                "valid": false,
+                "explanation": "Площадь зависит от двух линейных размеров; множитель 3² = 9."
+              },
+              {
+                "statement": "The new area is 24 × 3 = 72.",
+                "valid": false,
+                "explanation": "Использован неверный множитель площади."
+              }
+            ],
+            "first_invalid": 1,
+            "corrected_working": [
+              "Both rectangle dimensions are multiplied by 3",
+              "Area factor = 3 × 3 = 9",
+              "Enlarged area = 24 × 9 = 216 square centimetres"
+            ],
+            "explanation": "A linear factor applies to lengths and perimeter; area uses its square."
+          },
+          {
+            "id": "M14-B",
+            "prompt": "Two fictional rectangular panels are similar. Each side of the smaller panel is half the corresponding side of the larger panel. The larger area is 180 square centimetres. Find the smaller area and the first invalid line.",
+            "variable": "A = smaller area",
+            "unit": "square centimetres",
+            "answer": 45,
+            "steps": [
+              {
+                "statement": "The smaller-to-larger length ratio is 1/2.",
+                "valid": true,
+                "explanation": "Направление отношения соответствует вопросу."
+              },
+              {
+                "statement": "The area ratio is (1/2)² = 1/4.",
+                "valid": true,
+                "explanation": "Уменьшаются два измерения."
+              },
+              {
+                "statement": "The smaller area is 180 ÷ 1/4 = 720.",
+                "valid": false,
+                "explanation": "Меньшую площадь находят умножением 180 на 1/4; деление увеличивает её."
+              }
+            ],
+            "first_invalid": 2,
+            "corrected_working": [
+              "Area ratio = 1/4",
+              "Smaller area = 180 × 1/4 = 45 square centimetres"
+            ],
+            "explanation": "After finding the correct ratio, apply it in the stated direction. The smaller panel must have smaller area."
+          }
+        ],
+        "review_notes": [
+          "Подобие и масштаб каждой стороны заданы явно; не переносить квадрат масштаба на произвольное изменение одной стороны.",
+          "Периметр, площадь и объём имеют разные степени масштаба."
+        ]
+      }
+    },
+    {
+      "id": "M15",
+      "title": "Корни квадратного уравнения и ограничение",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nA fictional rectangle has width w centimetres and length (w + 3) centimetres. Its area is 40 square centimetres. What is its width? Choose a method, solve, then compare with another valid method.\n\nПеременная: w = positive width. Ответ в единицах: centimetres.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M15-A\nA fictional rectangle has width w centimetres and length (w + 3) centimetres. Its area is 40 square centimetres. What is its width? Choose a method, solve, then compare with another valid method.\n\nПеременная: w = positive width. Ответ в единицах: centimetres.\n\nОтвет: 5 centimetres.\nThe algebraic negative root is not a permissible length.\n\n\n\nКорректное решение:\n- w(w + 3) = 40 and w > 0\n- w² + 3w − 40 = (w + 8)(w − 5) = 0\n- Candidates −8 and 5; width must be positive\n- w = 5; length = 8; area = 40\n\nРазные допустимые способы:\nФакторизация: w² + 3w − 40 = 0; (w + 8)(w − 5) = 0; Reject −8; w = 5. Удобна при распознаваемой целой факторизации.\nФормула корней: Discriminant = 3² + 4 × 40 = 169; w = (−3 ± 13)/2 gives 5 or −8; Keep only positive width 5. Тоже допустима; ограничение длины проверяется после вычисления обоих корней.\n\n### Свежий перенос: M15-B\nA fictional rectangle is 5 centimetres longer than it is wide. Its area is 84 square centimetres. Find the positive width.\n\nПеременная: w = positive width. Ответ в единицах: centimetres.\n\nОтвет: 7 centimetres.\nThe requested width is the shorter side, not the longer side 12.\n\n\n\nКорректное решение:\n- w(w + 5) = 84, w > 0\n- w² + 5w − 84 = (w + 12)(w − 7) = 0\n- Reject −12; width = 7 and length = 12\n\nРазные допустимые способы:\nФакторизация: (w + 12)(w − 7) = 0; Candidates −12 and 7; Keep positive width 7. Нужно соотнести корень с определённой переменной.\nФормула корней: Discriminant = 5² + 4 × 84 = 361; w = (−5 ± 19)/2; Keep 7, reject −12. Другая корректная техника даёт те же кандидаты и проверку.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Не принимать длину вместо ширины, даже если обе дают верную площадь в паре.\n- Графический/численный способ с проверкой исходных условий тоже допустим; здесь представлены два примера.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "method-switch",
+        "skill": "quadratic-root-domain",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M15-A",
+            "prompt": "A fictional rectangle has width w centimetres and length (w + 3) centimetres. Its area is 40 square centimetres. What is its width? Choose a method, solve, then compare with another valid method.",
+            "variable": "w = positive width",
+            "unit": "centimetres",
+            "answer": 5,
+            "corrected_working": [
+              "w(w + 3) = 40 and w > 0",
+              "w² + 3w − 40 = (w + 8)(w − 5) = 0",
+              "Candidates −8 and 5; width must be positive",
+              "w = 5; length = 8; area = 40"
+            ],
+            "explanation": "The algebraic negative root is not a permissible length.",
+            "methods": [
+              {
+                "title": "Факторизация",
+                "working": [
+                  "w² + 3w − 40 = 0",
+                  "(w + 8)(w − 5) = 0",
+                  "Reject −8; w = 5"
+                ],
+                "tradeoff": "Удобна при распознаваемой целой факторизации."
+              },
+              {
+                "title": "Формула корней",
+                "working": [
+                  "Discriminant = 3² + 4 × 40 = 169",
+                  "w = (−3 ± 13)/2 gives 5 or −8",
+                  "Keep only positive width 5"
+                ],
+                "tradeoff": "Тоже допустима; ограничение длины проверяется после вычисления обоих корней."
+              }
+            ]
+          },
+          {
+            "id": "M15-B",
+            "prompt": "A fictional rectangle is 5 centimetres longer than it is wide. Its area is 84 square centimetres. Find the positive width.",
+            "variable": "w = positive width",
+            "unit": "centimetres",
+            "answer": 7,
+            "corrected_working": [
+              "w(w + 5) = 84, w > 0",
+              "w² + 5w − 84 = (w + 12)(w − 7) = 0",
+              "Reject −12; width = 7 and length = 12"
+            ],
+            "explanation": "The requested width is the shorter side, not the longer side 12.",
+            "methods": [
+              {
+                "title": "Факторизация",
+                "working": [
+                  "(w + 12)(w − 7) = 0",
+                  "Candidates −12 and 7",
+                  "Keep positive width 7"
+                ],
+                "tradeoff": "Нужно соотнести корень с определённой переменной."
+              },
+              {
+                "title": "Формула корней",
+                "working": [
+                  "Discriminant = 5² + 4 × 84 = 361",
+                  "w = (−5 ± 19)/2",
+                  "Keep 7, reject −12"
+                ],
+                "tradeoff": "Другая корректная техника даёт те же кандидаты и проверку."
+              }
+            ]
+          }
+        ],
+        "review_notes": [
+          "Не принимать длину вместо ширины, даже если обе дают верную площадь в паре.",
+          "Графический/численный способ с проверкой исходных условий тоже допустим; здесь представлены два примера."
+        ]
+      }
+    },
+    {
+      "id": "M16",
+      "title": "Прямоугольный треугольник: какая сторона известна",
+      "category": "SAT Math · чтение условия и решение",
+      "status": "DRAFT",
+      "student_markdown": "Авторская вымышленная практика, не материал College Board и не прогноз балла SAT.\n\nA fictional right triangle has a hypotenuse of 13 centimetres and one leg of 5 centimetres. Find the length of the other leg.\n\nПеременная: b = positive length of the other leg. Ответ в единицах: centimetres.\n\nСначала запиши модель/первый неверный переход и свой ответ. Затем сравни с разбором, объясни правку и реши новую задачу. Записи рассуждения проверяются вручную.",
+      "teacher_markdown": "### Первая задача: M16-A\nA fictional right triangle has a hypotenuse of 13 centimetres and one leg of 5 centimetres. Find the length of the other leg.\n\nПеременная: b = positive length of the other leg. Ответ в единицах: centimetres.\n\nОтвет: 12 centimetres.\nThe hypotenuse is opposite the right angle and is the longest side; its square is the sum, not a new term to add.\n\n\n\nКорректное решение:\n- 5² + b² = 13²\n- b² = 169 − 25 = 144\n- b = 12 (positive length)\n\nРазные допустимые способы:\nТеорема Пифагора: b² = 13² − 5²; b = sqrt(144) = 12. Работает без запоминания специальной тройки.\nПроверка тройки: Recognise the candidate 5, 12, 13; Check 5² + 12² = 25 + 144 = 169 = 13²; The missing positive leg is 12. Распознавание требует проверки роли гипотенузы и исходного равенства.\n\n### Свежий перенос: M16-B\nA fictional right triangle has legs of 8 and 15 centimetres. Find the length of its hypotenuse.\n\nПеременная: c = positive hypotenuse length. Ответ в единицах: centimetres.\n\nОтвет: 17 centimetres.\nThis time both given sides are legs. Subtracting their squares would answer a different configuration.\n\n\n\nКорректное решение:\n- c² = 8² + 15² = 64 + 225 = 289\n- c = 17; it exceeds both legs\n\nРазные допустимые способы:\nТеорема Пифагора: c² = 8² + 15²; c = sqrt(289) = 17. Выбор сложения зависит от ролей сторон.\nПроверка тройки: Candidate triple 8, 15, 17; 64 + 225 = 289 = 17²; 17 is the largest side, so it is the hypotenuse. Тройка — полезная гипотеза, не замена проверке условия.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Не обобщать сложение квадратов на поиск любой стороны: неизвестный катет требует вычитания.\n- Отрицательный квадратный корень не является длиной; альтернативная верная геометрическая аргументация допустима.\n\nПравильное число не подтверждает правильность модели или каждой строки. Другой математически верный способ допустим. Выбор метода сам по себе не получает оценку: сравни фактическое решение и уместность для этой задачи, не назначай универсально самый быстрый метод.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-math-pair-v1",
+        "publication_ready": false,
+        "family": "method-switch",
+        "skill": "pythagorean-role-of-side",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "M16-A",
+            "prompt": "A fictional right triangle has a hypotenuse of 13 centimetres and one leg of 5 centimetres. Find the length of the other leg.",
+            "variable": "b = positive length of the other leg",
+            "unit": "centimetres",
+            "answer": 12,
+            "corrected_working": [
+              "5² + b² = 13²",
+              "b² = 169 − 25 = 144",
+              "b = 12 (positive length)"
+            ],
+            "explanation": "The hypotenuse is opposite the right angle and is the longest side; its square is the sum, not a new term to add.",
+            "methods": [
+              {
+                "title": "Теорема Пифагора",
+                "working": [
+                  "b² = 13² − 5²",
+                  "b = sqrt(144) = 12"
+                ],
+                "tradeoff": "Работает без запоминания специальной тройки."
+              },
+              {
+                "title": "Проверка тройки",
+                "working": [
+                  "Recognise the candidate 5, 12, 13",
+                  "Check 5² + 12² = 25 + 144 = 169 = 13²",
+                  "The missing positive leg is 12"
+                ],
+                "tradeoff": "Распознавание требует проверки роли гипотенузы и исходного равенства."
+              }
+            ]
+          },
+          {
+            "id": "M16-B",
+            "prompt": "A fictional right triangle has legs of 8 and 15 centimetres. Find the length of its hypotenuse.",
+            "variable": "c = positive hypotenuse length",
+            "unit": "centimetres",
+            "answer": 17,
+            "corrected_working": [
+              "c² = 8² + 15² = 64 + 225 = 289",
+              "c = 17; it exceeds both legs"
+            ],
+            "explanation": "This time both given sides are legs. Subtracting their squares would answer a different configuration.",
+            "methods": [
+              {
+                "title": "Теорема Пифагора",
+                "working": [
+                  "c² = 8² + 15²",
+                  "c = sqrt(289) = 17"
+                ],
+                "tradeoff": "Выбор сложения зависит от ролей сторон."
+              },
+              {
+                "title": "Проверка тройки",
+                "working": [
+                  "Candidate triple 8, 15, 17",
+                  "64 + 225 = 289 = 17²",
+                  "17 is the largest side, so it is the hypotenuse"
+                ],
+                "tradeoff": "Тройка — полезная гипотеза, не замена проверке условия."
+              }
+            ]
+          }
+        ],
+        "review_notes": [
+          "Не обобщать сложение квадратов на поиск любой стороны: неизвестный катет требует вычитания.",
+          "Отрицательный квадратный корень не является длиной; альтернативная верная геометрическая аргументация допустима."
+        ]
+      }
+    }
+  ]
+}
