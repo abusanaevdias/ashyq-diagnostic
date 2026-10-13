@@ -1,0 +1,338 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "14",
+  "version": 1,
+  "source_sha256": "5fff5e88b761193634d99ad129b10cfe215bca2c68f3f42caae5d346e9c1ae78",
+  "content_sha256": "2e24580506ca54b7ff506a63077871bc2db867a09893176d52a9163c68592dd5",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "T109",
+      "title": "Процессы: порядок и преобразование",
+      "category": "Writing Task 1",
+      "status": "DRAFT",
+      "student_markdown": "### Imaginary workshop: used paper to gift tags\n\nОпиши главную картину и значимые подробности схемы. Сначала запиши свой overview, опору в источнике и полный ответ; затем сравни и пересмотри его. Новая схема открывается после разбора. Только вымышленные учебные материалы, автоматического band нет.",
+      "teacher_markdown": "### Первая схема\nImaginary workshop: used paper to gift tags\n\n1. The process runs from used-paper collection to finished tags without a return arrow. — подтверждено источником\n2. Pulp is formed before a sheet is pressed and dried. — подтверждено источником\n3. Cutting and hole punching follow the drying stage. — подтверждено источником\n4. The soaking stage lasts overnight. — подтверждено источником\n5. The diagram proves that every stage is automated. — не подтверждено как факт\n6. The process has no discarded material at any point. — не подтверждено как факт\nАвторский отбор: 1, 2, 3\nOverview: Overall, the linear process changes used paper into finished tags through preparation, pulp formation and drying, followed by cutting and hole punching.\n\nПример полного ответа, не единственный допустимый:\nThe diagram shows an imaginary workshop process for turning used paper into gift tags. It presents seven successive stages, beginning with collection and ending with the preparation of individual tags. Overall, the material is first prepared and made into pulp, then formed into a sheet and dried before the final cutting takes place.\n\nAt the start, used paper is collected and sorted. Clips and pieces that are not suitable are removed at this point. The remaining paper is torn into smaller pieces and left in water overnight. The wet material is then blended with water, producing pulp rather than a finished sheet.\n\nNext, the pulp is spread on a mesh and pressed so that excess water is removed. The formed sheet is subsequently left to air-dry. Only after this drying stage is the sheet cut into separate tags, and a hole is punched in each one. Thus, preparation and the transformation into pulp precede sheet formation, while the individual tag shape is created at the end. The diagram gives an overnight soaking period but does not specify the duration of drying or the number of tags produced.\n\n### Новая схема\nImaginary workshop: clay to named plates\n\n1. The plates are heated only after they have air-dried. — подтверждено источником\n2. Cooling precedes packing, and no return loop is shown. — подтверждено источником\n3. Names are stamped before the 24-hour drying stage. — подтверждено источником\n4. The kiln heats the plates to 900 degrees Celsius. — не подтверждено как факт\n5. All plates are packed while they are still hot. — не подтверждено как факт\n6. The stages prepare and shape clay before drying and heating. — подтверждено источником\nАвторский отбор: 6, 1, 2\nOverview: Overall, the sequence prepares and shapes clay before drying and kiln heating; cooling and packing come last, with no return loop shown.\n\nПример полного ответа, не единственный допустимый:\nThe diagram outlines an imaginary workshop sequence that produces small clay plates bearing names. Seven stages are shown, starting with the weighing of clay and finishing with cooling and packing. Overall, preparation and shaping occur before drying and kiln heating, and the final products are packed only after they have cooled.\n\nFirst, clay is weighed into portions. Water is mixed into each portion, after which the material is rolled into a flat slab. Rectangles are then cut from the slab, and names are stamped into these shapes. The names are therefore added before the plates are dried or heated, rather than being attached to an already finished product.\n\nThe shaped plates are left to air-dry for twenty-four hours. They subsequently enter a kiln for heating. Once this stage is complete, the plates are cooled and then packed. The sequence contains no arrow returning a plate to an earlier operation. Although a specific period is provided for air-drying, the diagram does not state the kiln temperature, heating duration or cooling time. It also gives no quantities from which the number of finished plates or the amount of unused clay could be calculated.\n\nЭто авторская воображаемая схема, не универсальный производственный стандарт.\nПоследовательность и конкретный срок показаны явно; не придумывать температуру, объём, автоматизацию или эффективность.\nОтсутствие возвратной стрелки описывает схему, а не доказывает невозможность переработки в реальном мире.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "task1-diagrams-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "charts": [
+          {
+            "chartType": "process",
+            "title": "Imaginary workshop: used paper to gift tags",
+            "unit": "schematic",
+            "diagram": {
+              "stages": [
+                {
+                  "title": "Collect",
+                  "detail": "Used paper is collected."
+                },
+                {
+                  "title": "Sort",
+                  "detail": "Clips and unsuitable pieces are removed."
+                },
+                {
+                  "title": "Soak",
+                  "detail": "The remaining paper is torn and soaked in water overnight."
+                },
+                {
+                  "title": "Blend",
+                  "detail": "The wet paper is blended with water to make pulp."
+                },
+                {
+                  "title": "Form and press",
+                  "detail": "Pulp is spread on a mesh and pressed to remove excess water."
+                },
+                {
+                  "title": "Air-dry",
+                  "detail": "The formed sheet is left to air-dry."
+                },
+                {
+                  "title": "Finish",
+                  "detail": "The dry sheet is cut into tags and a hole is punched in each tag."
+                }
+              ]
+            },
+            "overview": "Overall, the linear process changes used paper into finished tags through preparation, pulp formation and drying, followed by cutting and hole punching.",
+            "model": "The diagram shows an imaginary workshop process for turning used paper into gift tags. It presents seven successive stages, beginning with collection and ending with the preparation of individual tags. Overall, the material is first prepared and made into pulp, then formed into a sheet and dried before the final cutting takes place.\n\nAt the start, used paper is collected and sorted. Clips and pieces that are not suitable are removed at this point. The remaining paper is torn into smaller pieces and left in water overnight. The wet material is then blended with water, producing pulp rather than a finished sheet.\n\nNext, the pulp is spread on a mesh and pressed so that excess water is removed. The formed sheet is subsequently left to air-dry. Only after this drying stage is the sheet cut into separate tags, and a hole is punched in each one. Thus, preparation and the transformation into pulp precede sheet formation, while the individual tag shape is created at the end. The diagram gives an overnight soaking period but does not specify the duration of drying or the number of tags produced.",
+            "claims": [
+              [
+                "The process runs from used-paper collection to finished tags without a return arrow.",
+                true
+              ],
+              [
+                "Pulp is formed before a sheet is pressed and dried.",
+                true
+              ],
+              [
+                "Cutting and hole punching follow the drying stage.",
+                true
+              ],
+              [
+                "The soaking stage lasts overnight.",
+                true
+              ],
+              [
+                "The diagram proves that every stage is automated.",
+                false
+              ],
+              [
+                "The process has no discarded material at any point.",
+                false
+              ]
+            ],
+            "key": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "chartType": "process",
+            "title": "Imaginary workshop: clay to named plates",
+            "unit": "schematic",
+            "diagram": {
+              "stages": [
+                {
+                  "title": "Weigh",
+                  "detail": "Clay is weighed into portions."
+                },
+                {
+                  "title": "Mix",
+                  "detail": "Water is mixed into each portion."
+                },
+                {
+                  "title": "Roll",
+                  "detail": "The clay is rolled into a flat slab."
+                },
+                {
+                  "title": "Shape and stamp",
+                  "detail": "Rectangles are cut from the slab and names are stamped into them."
+                },
+                {
+                  "title": "Air-dry",
+                  "detail": "The shaped plates air-dry for 24 hours."
+                },
+                {
+                  "title": "Heat",
+                  "detail": "The dried plates are heated in a kiln."
+                },
+                {
+                  "title": "Cool and pack",
+                  "detail": "The plates are cooled and then packed."
+                }
+              ]
+            },
+            "overview": "Overall, the sequence prepares and shapes clay before drying and kiln heating; cooling and packing come last, with no return loop shown.",
+            "model": "The diagram outlines an imaginary workshop sequence that produces small clay plates bearing names. Seven stages are shown, starting with the weighing of clay and finishing with cooling and packing. Overall, preparation and shaping occur before drying and kiln heating, and the final products are packed only after they have cooled.\n\nFirst, clay is weighed into portions. Water is mixed into each portion, after which the material is rolled into a flat slab. Rectangles are then cut from the slab, and names are stamped into these shapes. The names are therefore added before the plates are dried or heated, rather than being attached to an already finished product.\n\nThe shaped plates are left to air-dry for twenty-four hours. They subsequently enter a kiln for heating. Once this stage is complete, the plates are cooled and then packed. The sequence contains no arrow returning a plate to an earlier operation. Although a specific period is provided for air-drying, the diagram does not state the kiln temperature, heating duration or cooling time. It also gives no quantities from which the number of finished plates or the amount of unused clay could be calculated.",
+            "claims": [
+              [
+                "The plates are heated only after they have air-dried.",
+                true
+              ],
+              [
+                "Cooling precedes packing, and no return loop is shown.",
+                true
+              ],
+              [
+                "Names are stamped before the 24-hour drying stage.",
+                true
+              ],
+              [
+                "The kiln heats the plates to 900 degrees Celsius.",
+                false
+              ],
+              [
+                "All plates are packed while they are still hot.",
+                false
+              ],
+              [
+                "The stages prepare and shape clay before drying and heating.",
+                true
+              ]
+            ],
+            "key": [
+              5,
+              0,
+              1
+            ]
+          }
+        ],
+        "review_notes": [
+          "Это авторская воображаемая схема, не универсальный производственный стандарт.",
+          "Последовательность и конкретный срок показаны явно; не придумывать температуру, объём, автоматизацию или эффективность.",
+          "Отсутствие возвратной стрелки описывает схему, а не доказывает невозможность переработки в реальном мире."
+        ]
+      }
+    },
+    {
+      "id": "T110",
+      "title": "Карты: изменения и план",
+      "category": "Writing Task 1",
+      "status": "DRAFT",
+      "student_markdown": "### Fictional garden site: 2005 and 2025\n\nОпиши главную картину и значимые подробности схемы. Сначала запиши свой overview, опору в источнике и полный ответ; затем сравни и пересмотри его. Новая схема открывается после разбора. Только вымышленные учебные материалы, автоматического band нет.",
+      "teacher_markdown": "### Первая схема\nFictional garden site: 2005 and 2025\n\n1. The southern gate and road are retained while several northern and western labels change. — подтверждено источником\n2. The pond is directly east of the greenhouse on both maps. — подтверждено источником\n3. Visitor numbers doubled between the two dates. — не подтверждено как факт\n4. The pond occupies exactly half its previous area. — не подтверждено как факт\n5. The later map adds visitor, workshop and picnic facilities in former growing or open locations. — подтверждено источником\n6. The greenhouse and pond remain in their earlier schematic positions. — подтверждено источником\nАвторский отбор: 5, 6, 1\nOverview: Overall, the site gained visitor and workshop facilities while the central greenhouse, eastern pond and southern access remained in the same schematic locations.\n\nПример полного ответа, не единственный допустимый:\nThe maps compare a fictional garden site in 2005 and 2025. North is at the top of each schematic map, and the cells indicate locations rather than measured areas. Overall, several growing or open spaces were replaced by visitor facilities, while the greenhouse, pond and southern access remained in the same positions.\n\nIn the northwest, a workshop occupies the location previously labelled as an orchard. The storage shed in the northern middle position has given way to a visitor centre, and the grass area to its east is shown as a garden in 2025. On the western side, the former open field is now labelled as a car park.\n\nThe central greenhouse and the pond directly to its east appear on both maps. The gate in the southwest and the road along the southern middle position are also retained. However, the southeastern open field has become a picnic area. These changes introduce places for activities and visitors around features that remain. The maps do not provide visitor totals, exact land areas or construction details, so they cannot establish how attendance changed or whether a particular building was demolished rather than reused.\n\n### Новая схема\nFictional school courtyard: 2010 layout and 2030 proposal\n\n1. The proposed café is southeast of the open yard. — подтверждено источником\n2. All facilities on the 2030 proposal have already been constructed. — не подтверждено как факт\n3. The café will seat exactly forty people. — не подтверждено как факт\n4. The proposal introduces a music room, covered seating, a garden and a café in existing labelled locations. — подтверждено источником\n5. The central yard and the eastern sports and bicycle facilities are retained in the proposal. — подтверждено источником\n6. The map combines new proposed uses with unchanged southern access. — подтверждено источником\nАвторский отбор: 4, 5, 6\nOverview: Overall, the proposal adds learning, seating and café facilities mainly in the north, west and southeast, while retaining the central yard, eastern facilities and southern access.\n\nПример полного ответа, не единственный допустимый:\nThe maps show a fictional school courtyard as laid out in 2010 and a proposal for 2030. The second map represents a plan rather than completed construction. Overall, it would introduce several facilities for learning and quieter activities while retaining the central yard, the eastern sports and bicycle facilities, and the southern entrance route.\n\nThe northwestern store is labelled as a music room in the proposed layout. Immediately to its east, the existing grass position would be occupied by covered seating. Bicycle parking in the northeast would remain in place. On the western side of the central yard, a garden would replace the area previously used for play.\n\nThe open yard in the centre and the sports court directly to its east would be retained. The southwestern gate and the footpath in the southern middle position are also unchanged in the proposal. The southeastern grass location, however, is shown as a café. These differences indicate how the planned arrangement would combine new uses with existing facilities. Because the maps are schematic, they do not establish exact floor areas or the capacity of the café. Nor does the proposal show that the new facilities have already been built or that attendance will increase.\n\nСхема без масштаба: площадь клетки не даёт площадь объекта.\nProposed — план, не завершённая стройка; одинаковое место не доказывает снос или переиспользование здания.\nУказанные север/юг/восток/запад определяют положение; не угадывать число посетителей.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "task1-diagrams-pair-v1",
+        "publication_ready": false,
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "charts": [
+          {
+            "chartType": "map",
+            "title": "Fictional garden site: 2005 and 2025",
+            "unit": "schematic",
+            "diagram": {
+              "frames": [
+                {
+                  "period": "2005",
+                  "status": "observed",
+                  "cells": [
+                    "Orchard",
+                    "Storage shed",
+                    "Grass",
+                    "Open field",
+                    "Greenhouse",
+                    "Pond",
+                    "Gate",
+                    "Road",
+                    "Open field"
+                  ]
+                },
+                {
+                  "period": "2025",
+                  "status": "observed",
+                  "cells": [
+                    "Workshop",
+                    "Visitor centre",
+                    "Garden",
+                    "Car park",
+                    "Greenhouse",
+                    "Pond",
+                    "Gate",
+                    "Road",
+                    "Picnic area"
+                  ]
+                }
+              ]
+            },
+            "overview": "Overall, the site gained visitor and workshop facilities while the central greenhouse, eastern pond and southern access remained in the same schematic locations.",
+            "model": "The maps compare a fictional garden site in 2005 and 2025. North is at the top of each schematic map, and the cells indicate locations rather than measured areas. Overall, several growing or open spaces were replaced by visitor facilities, while the greenhouse, pond and southern access remained in the same positions.\n\nIn the northwest, a workshop occupies the location previously labelled as an orchard. The storage shed in the northern middle position has given way to a visitor centre, and the grass area to its east is shown as a garden in 2025. On the western side, the former open field is now labelled as a car park.\n\nThe central greenhouse and the pond directly to its east appear on both maps. The gate in the southwest and the road along the southern middle position are also retained. However, the southeastern open field has become a picnic area. These changes introduce places for activities and visitors around features that remain. The maps do not provide visitor totals, exact land areas or construction details, so they cannot establish how attendance changed or whether a particular building was demolished rather than reused.",
+            "claims": [
+              [
+                "The southern gate and road are retained while several northern and western labels change.",
+                true
+              ],
+              [
+                "The pond is directly east of the greenhouse on both maps.",
+                true
+              ],
+              [
+                "Visitor numbers doubled between the two dates.",
+                false
+              ],
+              [
+                "The pond occupies exactly half its previous area.",
+                false
+              ],
+              [
+                "The later map adds visitor, workshop and picnic facilities in former growing or open locations.",
+                true
+              ],
+              [
+                "The greenhouse and pond remain in their earlier schematic positions.",
+                true
+              ]
+            ],
+            "key": [
+              4,
+              5,
+              0
+            ]
+          },
+          {
+            "chartType": "map",
+            "title": "Fictional school courtyard: 2010 layout and 2030 proposal",
+            "unit": "schematic",
+            "diagram": {
+              "frames": [
+                {
+                  "period": "2010 layout",
+                  "status": "observed",
+                  "cells": [
+                    "Store",
+                    "Grass",
+                    "Bicycle parking",
+                    "Play area",
+                    "Open yard",
+                    "Sports court",
+                    "Gate",
+                    "Footpath",
+                    "Grass"
+                  ]
+                },
+                {
+                  "period": "2030 proposal",
+                  "status": "proposed",
+                  "cells": [
+                    "Music room",
+                    "Covered seating",
+                    "Bicycle parking",
+                    "Garden",
+                    "Open yard",
+                    "Sports court",
+                    "Gate",
+                    "Footpath",
+                    "Café"
+                  ]
+                }
+              ]
+            },
+            "overview": "Overall, the proposal adds learning, seating and café facilities mainly in the north, west and southeast, while retaining the central yard, eastern facilities and southern access.",
+            "model": "The maps show a fictional school courtyard as laid out in 2010 and a proposal for 2030. The second map represents a plan rather than completed construction. Overall, it would introduce several facilities for learning and quieter activities while retaining the central yard, the eastern sports and bicycle facilities, and the southern entrance route.\n\nThe northwestern store is labelled as a music room in the proposed layout. Immediately to its east, the existing grass position would be occupied by covered seating. Bicycle parking in the northeast would remain in place. On the western side of the central yard, a garden would replace the area previously used for play.\n\nThe open yard in the centre and the sports court directly to its east would be retained. The southwestern gate and the footpath in the southern middle position are also unchanged in the proposal. The southeastern grass location, however, is shown as a café. These differences indicate how the planned arrangement would combine new uses with existing facilities. Because the maps are schematic, they do not establish exact floor areas or the capacity of the café. Nor does the proposal show that the new facilities have already been built or that attendance will increase.",
+            "claims": [
+              [
+                "The proposed café is southeast of the open yard.",
+                true
+              ],
+              [
+                "All facilities on the 2030 proposal have already been constructed.",
+                false
+              ],
+              [
+                "The café will seat exactly forty people.",
+                false
+              ],
+              [
+                "The proposal introduces a music room, covered seating, a garden and a café in existing labelled locations.",
+                true
+              ],
+              [
+                "The central yard and the eastern sports and bicycle facilities are retained in the proposal.",
+                true
+              ],
+              [
+                "The map combines new proposed uses with unchanged southern access.",
+                true
+              ]
+            ],
+            "key": [
+              3,
+              4,
+              5
+            ]
+          }
+        ],
+        "review_notes": [
+          "Схема без масштаба: площадь клетки не даёт площадь объекта.",
+          "Proposed — план, не завершённая стройка; одинаковое место не доказывает снос или переиспользование здания.",
+          "Указанные север/юг/восток/запад определяют положение; не угадывать число посетителей."
+        ]
+      }
+    }
+  ]
+}

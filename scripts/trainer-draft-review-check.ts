@@ -280,6 +280,21 @@ async function main() {
     assert.equal(parseDraftReview(thirteenthRaw, 'fixture-a', draftBatches[12])?.decisions.W08.decision, 'hold');
     for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `thirteenth batch overflow at ${width}`); }
     assert.deepEqual((await new AxeBuilder({ page }).include('main').analyze()).violations, []);
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('14');
+    await page.getByRole('heading', { name: 'Рассмотрено 0 из 2', exact: true }).waitFor();
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('T110');
+    await page.getByLabel('Результат проверки', { exact: true }).selectOption('hold');
+    await page.getByLabel('Замечание', { exact: true }).fill('Synthetic fourteenth-batch fixture; not Task1 approval.');
+    await page.getByRole('button', { name: 'Сохранить решение в этом браузере', exact: true }).click();
+    await page.getByRole('heading', { name: 'Рассмотрено 1 из 2', exact: true }).waitFor();
+    await page.reload();
+    await page.getByLabel('Партия материалов', { exact: true }).selectOption('14');
+    await page.getByLabel('Выбери материал', { exact: true }).selectOption('T110');
+    assert.equal(await page.getByLabel('Замечание', { exact: true }).inputValue(), 'Synthetic fourteenth-batch fixture; not Task1 approval.');
+    const fourteenthRaw = await page.evaluate(key => localStorage.getItem(key), reviewKey('fixture-a', draftBatches[13]));
+    assert.equal(parseDraftReview(fourteenthRaw, 'fixture-a', draftBatches[13])?.decisions.T110.decision, 'hold');
+    for (const width of [320,390,768,1440]) { await page.setViewportSize({ width, height: 900 }); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `fourteenth batch overflow at ${width}`); }
+    assert.deepEqual((await new AxeBuilder({ page }).include('main').analyze()).violations, []);
     await page.getByLabel('Партия материалов', { exact: true }).selectOption('01');
     await page.getByRole('heading', { name: 'Рассмотрено 2 из 12', exact: true }).waitFor();
     await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('fixture-b'));
