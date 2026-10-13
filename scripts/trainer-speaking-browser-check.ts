@@ -134,8 +134,9 @@ async function main() {
     await page.getByRole('heading', { name: 'Первый ответ', exact: true }).evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY - 140, behavior: 'instant' }));
     await page.screenshot({ path: 'artifacts/trainers-complete-033/speaking-preparation-restored-mobile.png' });
     const legacy = structuredClone(record);
-    for (const entry of [legacy.checkpoint, ...legacy.history]) if (entry) for (const take of entry.data.takes as Record<string,unknown>[]) delete take.preparationNotes;
+    for (const entry of [legacy.checkpoint, ...legacy.history]) if (entry) for (const take of entry.data.takes as Record<string,unknown>[]) {delete take.preparationNotes;delete take.noSpecificMoments;}
     assert.ok(parseRecord(JSON.stringify(legacy), 'speaking-second-take'), 'old v1 take records remain valid');
+    const contradictory=structuredClone(record);(contradictory.checkpoint!.data.takes as Record<string,unknown>[])[0].noSpecificMoments=true;assert.equal(parseRecord(JSON.stringify(contradictory),'speaking-second-take'),null,'a no-moments declaration cannot coexist with actual markers');
     for (const notes of [null, 123, 'x'.repeat(3001)]) {
       const invalid = structuredClone(record);
       (invalid.checkpoint!.data.takes as Record<string,unknown>[])[0].preparationNotes = notes;
