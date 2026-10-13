@@ -27,7 +27,7 @@ for(const source of sources){
   for(const value of bad){assert.equal(validBankTask2State(value,pair),false);invalid++;}
   assert.ok(validBankSnapshot(source,done));
   const entry=createBankEntry(source,done,new Date('2026-10-13T00:00:00.000Z'));
-  assert.notEqual(entry.data,done);assert.notEqual(entry.data.attempt,done.attempt);
+  assert.notEqual(entry.data,done);assert.equal(entry.data.type,'task2');if(entry.data.type!=='task2')throw new Error('Unexpected adapter');assert.notEqual(entry.data.attempt,done.attempt);
   const record:BankRecord={...emptyBankRecord(source),revision:crypto.randomUUID(),checkpoint:entry};
   assert.equal(parseBankRecord(JSON.stringify(record).replace('"format":','"__proto__":{"polluted":true},"format":'),source),null);assert.equal(({} as Record<string,unknown>).polluted,undefined);
   assert.ok(parseBankRecord(JSON.stringify(record),source));assert.ok(parseBankRecord(JSON.stringify(reversed(record)),source));

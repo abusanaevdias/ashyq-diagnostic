@@ -1,3 +1,5 @@
+import type { BankSnapshot } from '../src/lib/trainers/bank-records';
+function task2(value:BankSnapshot|undefined){if(!value||value.type!=='task2')throw new Error('Expected Task2 record');return value;}
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import {chromium} from 'playwright';
@@ -31,12 +33,12 @@ async function main(){
    await preview.getByRole('heading',{name:i?'Разбор нового текста':'Разбор первого текста',exact:true}).waitFor();assert.equal(await preview.getByLabel('Исходный фрагмент 1',{exact:true}).count(),0,'frozen search remains frozen after resume');
    await preview.getByLabel('Твоя отдельная версия эссе после разбора',{exact:true}).fill(r.text);await preview.getByRole('checkbox',{name:/Я сравнил язык/}).check();await preview.getByLabel('Что изменил и что ещё требует проверки?',{exact:true}).fill(`Synthetic revised reflection ${i}.`);
    await preview.getByRole('button',{name:i?'Завершить пробу двух эссе':'Перейти к новому эссе',exact:true}).click();
-   if(!i){await save();freshRaw=(await page.evaluate(key=>localStorage.getItem(key),key))!;assert.equal(parseBankRecord(freshRaw,source)?.checkpoint?.data.saved.length,1);await reload();await preview.getByRole('heading',{name:'Новый текст · самостоятельный поиск',exact:true}).waitFor();}
+   if(!i){await save();freshRaw=(await page.evaluate(key=>localStorage.getItem(key),key))!;assert.equal(task2(parseBankRecord(freshRaw,source)?.checkpoint?.data).saved.length,1);await reload();await preview.getByRole('heading',{name:'Новый текст · самостоятельный поиск',exact:true}).waitFor();}
   }
   await preview.getByRole('heading',{name:'Два эссе: первая работа и версии после разбора',exact:true}).waitFor();await save();await reload();
   for(const i of [0,1])await preview.getByText(`Synthetic revised reflection ${i}.`,{exact:true}).waitFor();
   await bank.getByRole('button',{name:'Добавить завершённую пробу в историю',exact:true}).click();await bank.getByRole('status').filter({hasText:'Работа сохранена в этом браузере'}).waitFor();
-  let record=parseBankRecord(await page.evaluate(key=>localStorage.getItem(key),key),source)!;assert.equal(record.checkpoint,null);assert.equal(record.history.length,1);assert.equal(record.history[0].data.saved.length,2);
+  let record=parseBankRecord(await page.evaluate(key=>localStorage.getItem(key),key),source)!;assert.equal(record.checkpoint,null);assert.equal(record.history.length,1);assert.equal(task2(record.history[0].data).saved.length,2);
   await bank.getByRole('button',{name:'Добавить завершённую пробу в историю',exact:true}).click();await bank.getByRole('status').filter({hasText:'Работа сохранена в этом браузере'}).waitFor();record=parseBankRecord(await page.evaluate(key=>localStorage.getItem(key),key),source)!;assert.equal(record.history.length,1);
   await page.reload();await bank.getByText(/История этой версии/).click();await bank.getByRole('button',{name:`Загрузить занятие ${record.history[0].savedAt}`,exact:true}).click();await bank.getByRole('button',{name:'Подтвердить загрузку',exact:true}).click();await preview.getByRole('heading',{name:'Два эссе: первая работа и версии после разбора',exact:true}).waitFor();
   const otherState={...emptyBankTask2State(),started:true,attempt:{...emptyBankTask2State().attempt,argumentReason:'Another stored partial work; must survive archiving.'}};
