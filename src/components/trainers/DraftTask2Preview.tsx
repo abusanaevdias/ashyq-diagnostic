@@ -76,7 +76,7 @@ function Preview({ pair,source,onDirty,onBusy }: { pair: DraftTask2;source:BankS
       </>}
     </>}
     </fieldset>
-    {source&&<BankCheckpoint key={generation} source={source} data={snapshot} onRestore={restore} onDirty={onDirty} onBusy={handleBusy}/>}
+    {source&&<BankCheckpoint key={generation} source={source} data={snapshot} onRestore={value=>{if(value.type==="task2")restore(value);}} onDirty={onDirty} onBusy={handleBusy}/>}
     {error&&<p role="alert" className={styles.warning}>{error}</p>}{started&&<div className={styles.actions}><button type="button" disabled={bankBusy} onClick={()=>source?setResetRequested(true):reset()}>Начать новую пробу эссе</button></div>}
     {resetRequested&&<div role="alert" className={styles.warning}><p>Новая проба очистит текст на экране. Сохранённая работа и история останутся, но несохранённые изменения нужно сначала скачать или сохранить.</p><div className={styles.actions}><button type="button" disabled={bankBusy} onClick={reset}>Подтвердить новую пробу</button><button type="button" disabled={bankBusy} onClick={()=>setResetRequested(false)}>Продолжить текущую пробу</button></div></div>}
   </section>;

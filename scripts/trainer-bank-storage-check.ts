@@ -1,3 +1,5 @@
+import type { BankSnapshot } from '../src/lib/trainers/bank-records';
+function task2(value:BankSnapshot|undefined){if(!value||value.type!=='task2')throw new Error('Expected Task2 record');return value;}
 import assert from 'node:assert/strict';
 import { build } from 'esbuild';
 import { chromium, type Page } from 'playwright';
@@ -30,10 +32,10 @@ async function main(){
     const scope='synthetic-bank-storage',unit='W01';
     const save=(page:Page,expected:string|null,label:string,mode?:string)=>page.evaluate(({scope,unit,expected,value,mode})=>(window as unknown as {__trainerBank:Harness}).__trainerBank.save(scope,unit,expected,value,mode),{scope,unit,expected,value:state(label),mode});
     const read=(page:Page)=>page.evaluate(({scope,unit})=>(window as unknown as {__trainerBank:Harness}).__trainerBank.read(scope,unit),{scope,unit});
-    const first=await save(a,null,'First partial independent notes.');assert.ok(first.revision);assert.equal((await read(b))?.checkpoint?.data.attempt.argumentReason,'First partial independent notes.');
+    const first=await save(a,null,'First partial independent notes.');assert.ok(first.revision);assert.equal(task2((await read(b))?.checkpoint?.data).attempt.argumentReason,'First partial independent notes.');
     await assert.rejects(save(b,null,'Stale initial write.'),/другой вкладке/);assert.equal((await read(a))?.revision,first.revision);
     const raced=await Promise.allSettled([save(a,first.revision,'Competing source-bound A.'),save(b,first.revision,'Competing source-bound B.')]);assert.equal(raced.filter(r=>r.status==='fulfilled').length,1);assert.equal(raced.filter(r=>r.status==='rejected').length,1);
-    let current=(await read(a))!;assert.ok(['Competing source-bound A.','Competing source-bound B.'].includes(current.checkpoint!.data.attempt.argumentReason));
+    let current=(await read(a))!;assert.ok(['Competing source-bound A.','Competing source-bound B.'].includes(task2(current.checkpoint?.data).attempt.argumentReason));
     const unchanged=JSON.stringify(current);
     for(const mode of ['wrong-source','invalid-state'])await assert.rejects(save(a,current.revision,'Malformed transform should not write.',mode),/проверку версии/);
     await assert.rejects(save(a,current.revision,'Oversized transform should not write.','oversize'),/лимита/);

@@ -1,5 +1,5 @@
 import { findBankSource, parseBankSourceRef, sameBankSource, type BankSource, type BankSourceRef } from './bank-sources';
-import { bankTask2Fingerprint, validBankTask2State, type BankTask2State } from './bank-task2-state';
+import { bankSnapshotFingerprint, validSourceSnapshot, type BankSnapshot } from './bank-snapshots';
 import { utf8Bytes } from './checkpoints';
 import type { TrainerId } from './catalog';
 
@@ -8,7 +8,7 @@ export const BANK_RECORD_LIMITATIONS = 'Local source-bound practice. Free text i
 export const MAX_BANK_RECORD_BYTES = 1_500_000;
 export const MAX_BANK_SNAPSHOT_BYTES = 1_450_000;
 export const MAX_BANK_HISTORY = 20;
-export type BankSnapshot = BankTask2State;
+export type { BankSnapshot } from './bank-snapshots';
 export type BankEntry = { id: string; savedAt: string; data: BankSnapshot };
 export type BankRecord = { format: typeof BANK_RECORD_FORMAT; limitations: typeof BANK_RECORD_LIMITATIONS; source: BankSourceRef; trainer: TrainerId; revision: string; checkpoint: BankEntry | null; history: BankEntry[] };
 const object=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
@@ -17,7 +17,7 @@ const uuid=(v:unknown):v is string=>typeof v==='string'&&/^[a-f0-9]{8}-[a-f0-9]{
 const iso=(v:unknown):v is string=>typeof v==='string'&&v.length===24&&!Number.isNaN(Date.parse(v))&&new Date(v).toISOString()===v;
 export function validBankSnapshot(source: BankSource,value: unknown): value is BankSnapshot {
   const trusted=findBankSource(source.ref);
-  if(!trusted||trusted.exercise.type!=='task2'||!validBankTask2State(value,trusted.exercise.value))return false;
+  if(!trusted||!validSourceSnapshot(trusted,value))return false;
   try{return utf8Bytes(JSON.stringify(value))<=MAX_BANK_SNAPSHOT_BYTES;}catch{return false;}
 }
 export function emptyBankRecord(source: BankSource): BankRecord {
@@ -43,7 +43,7 @@ export function createBankEntry(source: BankSource,data: BankSnapshot,now=new Da
 }
 export function archiveBankEntry(record: BankRecord,entry: BankEntry): BankRecord {
   const checkpoint=record.checkpoint?.id===entry.id?null:record.checkpoint;
-  if(record.history.some(old=>bankTask2Fingerprint(old.data)===bankTask2Fingerprint(entry.data)))return {...record,checkpoint};
+  if(record.history.some(old=>bankSnapshotFingerprint(old.data)===bankSnapshotFingerprint(entry.data)))return {...record,checkpoint};
   return {...record,checkpoint,history:[entry,...record.history].slice(0,MAX_BANK_HISTORY)};
 }
 export function bankRecordKey(scope: string,source: BankSourceRef): string {

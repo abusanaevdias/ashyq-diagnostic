@@ -89,9 +89,13 @@ async function main() {
       if (unit.id === 'M09') await preview.getByText('После помощи число всё ещё отличается от ключа; проверь решение с учителем.', { exact: true }).waitFor();
       if (pair.family === 'translation') await preview.getByText('Выбор модели нужно пересмотреть; верное число не исправляет выбранную модель.', { exact: true }).waitFor();
       if (pair.family === 'method-switch') { await preview.getByText('Число отличается от подготовленного ответа.', { exact: true }).waitFor(); await preview.getByText('Число совпало с подготовленным ответом.', { exact: true }).waitFor(); }
-      await preview.getByRole('button', { name: 'Начать новую временную Math-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Начать новую Math-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую Math-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Пройти Math-черновик', exact: true }).click();
       assert.equal(await preview.getByLabel('Твоя модель или действия до разбора', { exact: true }).inputValue(), '');
       assert.equal(await preview.getByLabel(/^Твой числовой ответ(?: ·|$)/).inputValue(), '');
+      await preview.getByRole('button', { name: 'Начать новую Math-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую Math-пробу', exact: true }).click();
     }
     await page.reload(); await page.getByLabel('Партия материалов', { exact: true }).selectOption('05');
     assert.equal(await page.getByRole('button', { name: 'Пройти Math-черновик', exact: true }).count(), 1);

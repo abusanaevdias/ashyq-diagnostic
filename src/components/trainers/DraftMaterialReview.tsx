@@ -107,8 +107,8 @@ function ReviewUnit({ unit, batchId, batchVersion, contentHash, previous, onSave
     <DraftWritingPreview value={unit.exercise_data} nextValue={nextWriting}/>
     <DraftSatPreview value={unit.exercise_data}/>
     <DraftListeningPreview value={unit.exercise_data} unitId={unit.id}/>
-    <DraftMathPreview value={unit.exercise_data}/>
-    <DraftReadingPreview value={unit.exercise_data}/>
+    <DraftMathPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
+    <DraftReadingPreview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftTask1Preview value={unit.exercise_data}/>
     <DraftTask2Preview value={unit.exercise_data} source={source} onDirty={setPracticeDirty} onBusy={onPracticeBusy}/>
     <DraftSpeakingLaunch value={unit.exercise_data} batchId={batchId} unitId={unit.id} contentHash={contentHash}/>

@@ -1,3 +1,5 @@
+import type { BankSnapshot } from '../src/lib/trainers/bank-records';
+function task2(value:BankSnapshot|undefined){if(!value||value.type!=='task2')throw new Error('Expected Task2 record');return value;}
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {chromium} from 'playwright';
@@ -34,7 +36,7 @@ async function main(){
   await page.getByRole('button',{name:'Сохранить решение в этом браузере',exact:true}).click();await page.getByRole('status').filter({hasText:'Решение для W01 сохранено'}).waitFor();
   await page.getByLabel('Выбери материал',{exact:true}).selectOption('W02');await page.getByRole('alert').filter({hasText:'несохранённое решение или работа'}).waitFor();await page.getByRole('button',{name:'Остаться на материале',exact:true}).click();
   // File export contains the current unsaved work and exact source; download does not overwrite storage.
-  const pending=page.waitForEvent('download');await bank.getByRole('button',{name:'Скачать текущую работу',exact:true}).click();const file=await pending;const filePath=await file.path();assert.ok(filePath);const exported=await fs.readFile(filePath,'utf8');assert.equal(parseBankRecord(exported,source)?.checkpoint?.data.attempt.corrections[0].quote,'Unsaved newer text.');assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),firstRaw);
+  const pending=page.waitForEvent('download');await bank.getByRole('button',{name:'Скачать текущую работу',exact:true}).click();const file=await pending;const filePath=await file.path();assert.ok(filePath);const exported=await fs.readFile(filePath,'utf8');assert.equal(task2(parseBankRecord(exported,source)?.checkpoint?.data).attempt.corrections[0].quote,'Unsaved newer text.');assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),firstRaw);
   await bank.getByRole('button',{name:'Сохранить текущую пробу',exact:true}).click();await bank.getByRole('status').filter({hasText:'Работа сохранена в этом браузере'}).waitFor();
   await page.getByLabel('Замечание',{exact:true}).fill('Synthetic review note remains dirty while practice is saved.');
   await page.evaluate(key=>new Promise<void>(ready=>{void navigator.locks.request(key,()=>new Promise<void>(release=>{(window as unknown as {__releaseBankLock:()=>void}).__releaseBankLock=release;ready();}));}),key);

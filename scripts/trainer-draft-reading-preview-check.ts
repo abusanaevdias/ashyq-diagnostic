@@ -71,8 +71,12 @@ async function main() {
       assert.equal(await preview.getByText('Категории до разбора совпали с ключом: 0 из 3. Это не оценка объяснений.', { exact: true }).count(), 1);
       assert.equal(await preview.getByText('Категории до разбора совпали с ключом: 3 из 3. Это не оценка объяснений.', { exact: true }).count(), 1);
       for (const round of pair.rounds) for (let i=0; i<3; i++) await preview.getByText(`Первое объяснение: Synthetic independent reasoning ${round.id}-${i}.`, { exact: true }).waitFor();
-      await preview.getByRole('button', { name: 'Начать новую временную Reading-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Начать новую Reading-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую Reading-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Пройти Reading-черновик', exact: true }).click();
       assert.equal(await preview.getByLabel('Категория до разбора · 1', { exact: true }).inputValue(), '');
+      await preview.getByRole('button', { name: 'Начать новую Reading-пробу', exact: true }).click();
+      await preview.getByRole('button', { name: 'Подтвердить новую Reading-пробу', exact: true }).click();
     }
     await page.reload(); await page.getByLabel('Партия материалов', { exact: true }).selectOption('06');
     assert.equal(await page.getByRole('button', { name: 'Пройти Reading-черновик', exact: true }).count(), 1);
