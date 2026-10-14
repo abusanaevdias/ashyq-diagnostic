@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useSession } from '@/lib/lms/hooks';
 import { trainerById, trainerCatalog, type TrainerId } from '@/lib/trainers/catalog';
 import { archiveEntry, checkpointKey, createEntry, emptyRecord, MAX_RECORD_BYTES, parseRecord, utf8Bytes, validSnapshot, type Snapshot, type TrainerRecord } from '@/lib/trainers/checkpoints';
@@ -50,8 +50,8 @@ export function downloadTrainerRecord(record: TrainerRecord) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, onRestore, completed, busy = false }: {
-  trainer: TrainerId; data: T; onRestore: (data: T) => void; completed: boolean; busy?: boolean;
+export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, onRestore, completed, busy = false,ephemeral=false }: {
+  trainer: TrainerId; data: T; onRestore: (data: T) => void; completed: boolean; busy?: boolean;ephemeral?:boolean;
 }) {
   const { raw, record, key, ready, scope } = useCheckpointRecord(trainer);
   const [activeKey, setActiveKey] = useState('');
@@ -65,12 +65,27 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   const serialized = JSON.stringify(data);
   const item = trainerById(trainer);
   const saved = enabled && JSON.stringify(record?.checkpoint?.data) === serialized;
+  const initial=useRef(serialized),allowExit=useRef(false),exitGuard=useRef({dirty:false,busy:false});
+  const [exitHref,setExitHref]=useState<string|null>(null),exitPanel=useRef<HTMLDivElement>(null),exitLink=useRef<HTMLAnchorElement|null>(null);
+  const inRecords=!!record&&[record.checkpoint,...record.history].some(entry=>entry&&JSON.stringify(entry.data)===serialized);
+  useLayoutEffect(()=>{exitGuard.current={dirty:ephemeral||!inRecords&&serialized!==initial.current,busy};},[serialized,inRecords,busy,ephemeral]);
+  useEffect(()=>{if(exitHref){exitPanel.current?.focus({preventScroll:true});exitPanel.current?.scrollIntoView({block:'start',behavior:'instant'});}},[exitHref]);
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
-      if (pendingWrites.current > 0) { event.preventDefault(); event.returnValue = ''; }
+      if(!allowExit.current&&(exitGuard.current.dirty||exitGuard.current.busy||pendingWrites.current>0)){event.preventDefault();event.returnValue='';}
+    };
+    const link=(event:MouseEvent)=>{
+      if(event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+      const anchor=event.target instanceof Element?event.target.closest('a'):null;if(!anchor||anchor.hasAttribute('download')||anchor.target&&anchor.target!=='_self')return;
+      let url:URL;try{url=new URL(anchor.href);}catch{return;}if(!['http:','https:'].includes(url.protocol)||url.origin===location.origin&&url.pathname===location.pathname&&url.search===location.search)return;
+      if(!exitGuard.current.dirty&&!exitGuard.current.busy&&!pendingWrites.current)return;
+      event.preventDefault();event.stopImmediatePropagation();exitLink.current=anchor;
+      if(exitGuard.current.busy||pendingWrites.current){setMessage('Сначала закончи запись или воспроизведение и дождись сохранения. Затем повтори переход.');return;}
+      setExitHref(url.href);
     };
     window.addEventListener('beforeunload', warn);
-    return () => window.removeEventListener('beforeunload', warn);
+    document.addEventListener('click',link,true);
+    return () => {window.removeEventListener('beforeunload', warn);document.removeEventListener('click',link,true);};
   }, []);
   async function locked(action: () => void) {
     if (!navigator.locks) throw new Error('Этот браузер не поддерживает безопасное сохранение между вкладками. Скачай работу в файл.');
@@ -222,5 +237,6 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     {deleting && <div className={styles.warning}><p>Удалить локальную запись и историю «{item.title}»? Текущая работа останется на экране. Сначала можно скачать файл.</p><div className={styles.actions}><button type="button" disabled={busy || (enabled && !saved)} onClick={removeSaved}>Подтвердить удаление</button><button type="button" onClick={() => setDeleting(false)}>Отмена</button></div></div>}
     {busy && <p className={styles.note}>Управление сохранением доступно после окончания записи или воспроизведения.</p>}
     {message && <p className={styles.status} role="status">{message}</p>}
+    {exitHref&&<div ref={exitPanel} tabIndex={-1} role="alert" aria-label="Подтверждение выхода из тренажёра" className={styles.warning}><p>Перейти со страницы? Несохранённые ответы и аудио этой вкладки будут потеряны. Сначала можно скачать работу и отдельную аудиозапись.</p><div className={styles.actions}><button type="button" disabled={busy} onClick={()=>{if(exitGuard.current.busy||pendingWrites.current)return;allowExit.current=true;location.assign(exitHref);}}>Перейти без сохранения</button><button type="button" onClick={()=>{setExitHref(null);exitLink.current?.focus();}}>Остаться в тренажёре</button></div></div>}
   </section>;
 }
