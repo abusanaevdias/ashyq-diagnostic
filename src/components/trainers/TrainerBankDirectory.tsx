@@ -2,12 +2,15 @@
 import Link from 'next/link';
 import {useEffect,useMemo,useRef,useState} from 'react';
 import RequireRole from '@/components/lms/RequireRole';
-import {BANK_PAGE_SIZE,bankPage,bankPracticeHref,filterBankSources,readBankSummary,type BankFilters,type BankSummary} from '@/lib/trainers/bank-navigation';
+import {useSession} from '@/lib/lms/hooks';
+import {bankDeliverySources} from '@/lib/trainers/bank-delivery';
+import {isPublishedBankSource,publishedBankSources} from '@/lib/trainers/bank-publication';
+import {BANK_PAGE_SIZE,bankPage,bankPracticeHref,canRehearseBank,filterBankSources,readBankSummary,type BankFilters,type BankSummary} from '@/lib/trainers/bank-navigation';
 import {readBankPresence,type BankPresence} from '@/lib/trainers/bank-presence';
 import {bankSkillLabel} from '@/lib/trainers/bank-skill-labels';
 import {bankRecordKey} from '@/lib/trainers/bank-records';
 import {BANK_RECORD_CHANGED} from '@/lib/trainers/bank-storage';
-import {trainerBank,type BankSource} from '@/lib/trainers/bank-sources';
+import {type BankSource} from '@/lib/trainers/bank-sources';
 import {trainerById,trainerCatalog} from '@/lib/trainers/catalog';
 import styles from './TrainerBankDirectory.module.css';
 
@@ -21,7 +24,7 @@ function Card({source,actor}:{source:BankSource;actor:string}){
  },[summary,actor,source]);
  function read(){try{setSummary(readBankSummary(actor,source.ref,localStorage));}catch{setSummary({kind:'unavailable'});}setStale(false);}
  return <article className={styles.card} aria-labelledby={`bank-card-${source.ref.unitId}`}>
-  <span className={styles.tag}>{trainer.exam} · {trainer.skill} · DRAFT</span><h2 id={`bank-card-${source.ref.unitId}`}>{source.title}</h2><p>{source.practiceType}</p><p>{bankSkillLabel(source.skill)}</p><p>{source.ref.unitId} · версия {source.ref.version}. Сложность ещё не откалибрована.</p>
+  <span className={styles.tag}>{trainer.exam} · {trainer.skill} · {isPublishedBankSource(source.ref)?'ПРАКТИКА':'DRAFT'}</span><h2 id={`bank-card-${source.ref.unitId}`}>{source.title}</h2><p>{source.practiceType}</p><p>{bankSkillLabel(source.skill)}</p><p>{source.ref.unitId} · версия {source.ref.version}. Сложность ещё не откалибрована.</p>
   {summary&&<div className={styles.summary} role="status">
    {stale?<p>Запись могла измениться. Обнови сводку перед продолжением.</p>:summary.kind==='empty'?<p>Сохранённой пробы этой версии пока нет.</p>:summary.kind==='incompatible'?<p>Запись есть, но она несовместима или повреждена. Открой пробу, чтобы скачать исходные данные для восстановления.</p>:summary.kind==='source-unavailable'?<p>Версия задания недоступна. Обнови библиотеку.</p>:summary.kind==='unavailable'?<p>Не удалось прочитать сохранение в этом браузере. Отсутствие записи не подтверждено.</p>:<>
     {summary.current?<p>{entryLabel[summary.current.state]} · {new Date(summary.current.savedAt).toLocaleString('ru-RU')}</p>:<p>Текущего сохранённого черновика нет.</p>}<p>Записей в истории: {summary.history.length}. Завершение пробы не означает освоение навыка.</p>
@@ -32,7 +35,7 @@ function Card({source,actor}:{source:BankSource;actor:string}){
   <div className={styles.actions}>{href&&<a href={href} aria-label={`Открыть пробу ${source.ref.unitId}: ${source.title}`}>Открыть пробу →</a>}<button type="button" className={styles.read} onClick={read}>{summary?'Обновить локальную сводку':'Проверить локальное сохранение'}</button></div>
  </article>;
 }
-function Directory({actor}:{actor:string}){
+function Directory({actor,sources,staff}:{actor:string;sources:BankSource[];staff:boolean}){
  const [filters,setFilters]=useState<BankFilters>({exam:'all',trainer:'all',query:''}),[requestedPage,setPage]=useState(0);
  const [presence,setPresence]=useState<BankPresence|null>(null),[onlyLocal,setOnlyLocal]=useState(false),[presenceStale,setPresenceStale]=useState(false);
  const needsRefresh=onlyLocal&&(presence?.kind!=='ready'||presenceStale);
@@ -48,17 +51,23 @@ function Directory({actor}:{actor:string}){
  },[presence,actor]);
  const results=useRef<HTMLParagraphElement|null>(null);
  function goPage(index:number){setPage(index);requestAnimationFrame(()=>{results.current?.scrollIntoView({block:'start',behavior:'instant'});results.current?.focus({preventScroll:true});});}
- const selected=useMemo(()=>{const all=filterBankSources(filters);return needsRefresh?[]:onlyLocal&&presence?.kind==='ready'?all.filter(source=>presence.currentIds.includes(source.ref.unitId)):all;},[filters,needsRefresh,onlyLocal,presence]),page=bankPage(selected,requestedPage);
+ const selected=useMemo(()=>{const all=filterBankSources(filters,sources);return needsRefresh?[]:onlyLocal&&presence?.kind==='ready'?all.filter(source=>presence.currentIds.includes(source.ref.unitId)):all;},[filters,sources,needsRefresh,onlyLocal,presence]),page=bankPage(selected,requestedPage);
  function change(next:Partial<BankFilters>){setFilters(old=>({...old,...next}));setPage(0);}
- return <><header className={styles.header}><h1>Выбери навык для практики</h1><p>{trainerBank.sources.length} черновиков для учителя и автора. Пройди задание перед методической проверкой.</p><p>Сохранение по кнопке в этом браузере. Аудио скачивается отдельно.</p><nav className={styles.links} aria-label="Проверка материалов"><Link href="/trainers/material-review">Методическая проверка →</Link></nav><details className={styles.explainer}><summary>Открытые примеры и история</summary><nav className={styles.links} aria-label="Другие разделы практики"><Link href="/trainers">Открытые примеры для всех →</Link><Link href="/trainers/history">История открытых примеров →</Link></nav><p>Локальные записи относятся к текущему аккаунту. Они не синхронизируются между устройствами; перенос возможен через файл. Проба не публикует черновик и не подтверждает освоение навыка.</p></details></header>
+ return <><header className={styles.header}><h1>Выбери навык для практики</h1><p>{staff?(publishedBankSources.length?`Заданий и черновиков: ${sources.length}. Материалы без отметки «ПРАКТИКА» ещё на методической проверке.`:`${sources.length} черновиков для учителя и автора. Пройди задание перед методической проверкой.`):`${sources.length} заданий из опубликованного банка. Сначала своя попытка, затем разбор и новая задача.`}</p><p>Сохранение по кнопке в этом браузере. Аудио скачивается отдельно.</p>{staff&&<nav className={styles.links} aria-label="Проверка материалов"><Link href="/trainers/material-review">Методическая проверка →</Link></nav>}<details className={styles.explainer}><summary>Открытые примеры и история</summary><nav className={styles.links} aria-label="Другие разделы практики"><Link href="/trainers">Открытые примеры для всех →</Link><Link href="/trainers/history">История открытых примеров →</Link></nav><p>Локальные записи относятся к текущему аккаунту. Они не синхронизируются между устройствами; перенос возможен через файл. Проба не публикует черновик и не подтверждает освоение навыка.</p></details></header>
   <fieldset className={styles.controls}><legend>Найти задание</legend><div className={styles.exams}>{(['all','IELTS','SAT'] as const).map(exam=><button type="button" key={exam} aria-pressed={filters.exam===exam} onClick={()=>change({exam,trainer:'all'})}>{exam==='all'?'Все экзамены':exam}</button>)}</div><div className={styles.fields}><div><label htmlFor="bank-trainer">Тренажёр</label><select id="bank-trainer" value={filters.trainer} onChange={event=>change({trainer:event.target.value as BankFilters['trainer']})}><option value="all">Все тренажёры</option>{trainerCatalog.filter(t=>filters.exam==='all'||t.exam===filters.exam).map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</select></div><div><label htmlFor="bank-search">Навык, название или номер задания</label><input id="bank-search" type="search" value={filters.query} maxLength={200} placeholder="Например: аргумент или R01" onChange={event=>change({query:event.target.value})}/></div></div></fieldset>
   <div className={styles.exams} role="group" aria-label="Локальные записи"><button type="button" aria-pressed={!onlyLocal} onClick={()=>{setOnlyLocal(false);setPage(0);}}>Все задания</button><button type="button" aria-pressed={onlyLocal&&!needsRefresh} onClick={showLocal}>{presence?'Обновить локальные записи':'Показать локальные записи'}</button></div>
   {presence?.kind==='unavailable'&&<p role="status">{presence.reason==='capacity'?'Список превышает безопасный лимит. Записи не удалены; открой сводку нужного задания отдельно.':presence.reason==='changed'?'Список изменился во время чтения. Повтори обновление; частичный список не показан.':'Не удалось прочитать список записей. Отсутствие сохранений не подтверждено.'}</p>}
   {presence?.kind==='ready'&&!presenceStale&&onlyLocal&&<p>Показаны задания с локальной записью этой версии. Запись может быть пустой или несовместимой; её содержимое проверяется по кнопке на карточке.</p>}
-  {presence?.kind==='ready'&&!presenceStale&&presence.archives.length>0&&<p>Записей предыдущих версий: {presence.archives.length}. <Link href="/trainers/material-review">Открыть архив при проверке материалов →</Link></p>}
+  {staff&&presence?.kind==='ready'&&!presenceStale&&presence.archives.length>0&&<p>Записей предыдущих версий: {presence.archives.length}. <Link href="/trainers/material-review">Открыть архив при проверке материалов →</Link></p>}
   {needsRefresh?<p role="status">Список мог измениться. Обнови локальные записи; прежняя выборка скрыта.</p>:<p ref={results} tabIndex={-1} className={styles.results} role="status">Найдено: {page.total}. {page.total>0&&`На экране ${page.page*BANK_PAGE_SIZE+1}–${Math.min(page.total,(page.page+1)*BANK_PAGE_SIZE)}.`}</p>}
   {needsRefresh?null:page.total?<div className={styles.grid}>{page.items.map(source=><Card key={JSON.stringify(source.ref)} source={source} actor={actor}/>)}</div>:<section className={styles.empty}><h2>Подходящих заданий нет</h2><p>Попробуй другой навык или сбрось фильтры.</p><button type="button" className={styles.read} onClick={()=>change({exam:'all',trainer:'all',query:''})}>Сбросить фильтры</button></section>}
   {!needsRefresh&&page.pages>1&&<nav className={styles.pager} aria-label="Страницы заданий"><button type="button" disabled={page.page===0} onClick={()=>goPage(page.page-1)}>Предыдущая</button><span>Страница {page.page+1} из {page.pages}</span><button type="button" disabled={page.page===page.pages-1} onClick={()=>goPage(page.page+1)}>Следующая</button></nav>}
  </>;
 }
-export default function TrainerBankDirectory(){return <RequireRole roles={['teacher','author']}>{user=><Directory key={`${user.id}:${user.role}`} actor={user.id}/>}</RequireRole>;}
+export default function TrainerBankDirectory(){
+ const {session,ready}=useSession();
+ if(!publishedBankSources.length)return <RequireRole roles={['teacher','author']}>{user=><Directory key={`${user.id}:${user.role}`} actor={user.id} sources={bankDeliverySources(user.role)} staff={true}/>}</RequireRole>;
+ if(!ready)return <p role="status">Проверяем доступ к заданиям…</p>;
+ const actor=session?.user.id??'guest',staff=canRehearseBank(session?.user.role);
+ return <Directory key={`${actor}:${session?.user.role??'guest'}`} actor={actor} sources={bankDeliverySources(session?.user.role)} staff={staff}/>;
+}

@@ -5,6 +5,7 @@ import { mentionsTask2Issue, parseDraftTask2, task2Words, type DraftTask2, type 
 import styles from './TrainerCheckpoint.module.css';
 import BankCheckpoint from './BankCheckpoint';
 import { type BankSource } from '@/lib/trainers/bank-sources';
+import {isPublishedBankSource} from '@/lib/trainers/bank-publication';
 import { blankBankTask2Attempt, type BankTask2Attempt, type BankTask2State } from '@/lib/trainers/bank-task2-state';
 
 type Attempt = BankTask2Attempt;
@@ -40,7 +41,7 @@ function Preview({ pair,source,onDirty,onBusy }: { pair: DraftTask2;source:BankS
     if(index===1) setResult(true); else {setIndex(1);setRevealed(false);setAttempt(blank());setChecked(false);}
   }
   function reset(){setStarted(false);setIndex(0);setRevealed(false);setResult(false);setAttempt(blank());setSaved([]);setChecked(false);setError('');setResetRequested(false);setGeneration(value=>value+1);setFocusTick(value=>value+1);}
-  return <section className={styles.preview} aria-labelledby="task2-draft-title"><h3 ref={heading} tabIndex={-1} id="task2-draft-title">Пробное эссе · DRAFT</h3>
+  return <section className={styles.preview} aria-labelledby="task2-draft-title"><h3 ref={heading} tabIndex={-1} id="task2-draft-title">{source&&isPublishedBankSource(source.ref)?'Практика эссе':'Пробное эссе · DRAFT'}</h3>
     <p>Сам найди языковые проблемы, объясни слабое место аргумента, сравни с разбором и создай отдельную версию. Затем повтори работу на другом эссе. Свободный текст проверяется вручную: нет AI, автоматического band или оценки качества по количеству слов. {source?'Работу и историю можно сохранить в этом браузере отдельной кнопкой ниже; это не публикует материал.':'Проба временная, без истории и решения о публикации.'} Просмотр ключа заранее влияет на независимость.</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Работа с эссе</legend>
     {!started?<button type="button" onClick={()=>setStarted(true)}>Начать пробу эссе</button>:result?<>
