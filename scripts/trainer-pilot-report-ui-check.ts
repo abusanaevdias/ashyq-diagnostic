@@ -6,7 +6,7 @@ import {trainerCatalog} from '../src/lib/trainers/catalog';
 import {checkpointKey,createEntry,emptyRecord} from '../src/lib/trainers/checkpoints';
 import {partialPilotReportState} from './trainer-pilot-report-check';
 async function main(){
- const base=process.env.TRAINER_CHECK_BASE??'http://127.0.0.1:3043';assert.ok(['localhost','127.0.0.1'].includes(new URL(base).hostname));const browser=await chromium.launch({headless:true});
+ const base=process.env.TRAINER_CHECK_BASE??'http://127.0.0.1:3043';assert.ok(['localhost','127.0.0.1'].includes(new URL(base).hostname)||base==='https://ashyq-diagnostic.vercel.app');const browser=await chromium.launch({headless:true});
  try{
   const context=await browser.newContext({acceptDownloads:true});await context.addInitScript({content:String.raw`(()=>{window.reportMicrophoneRequests=0;window.reportPreparationTimers=new Set();const create=window.setInterval.bind(window),clear=window.clearInterval.bind(window);window.setInterval=(callback,ms,...args)=>{const id=create(callback,ms,...args);if(ms===250)window.reportPreparationTimers.add(id);return id;};window.clearInterval=id=>{window.reportPreparationTimers.delete(id);clear(id);};if(navigator.mediaDevices)Object.defineProperty(navigator.mediaDevices,'getUserMedia',{configurable:true,value:()=>{window.reportMicrophoneRequests++;return Promise.reject(new DOMException('Synthetic microphone spy','NotAllowedError'));}});})();`});const page=await context.newPage(),errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/trainers');
   for(const item of trainerCatalog){
