@@ -4,7 +4,7 @@ import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { drillModes, writingDrills, type DrillMode } from '@/lib/writing-trainer/drills';
-import { appendDrillChoice, appendDrillRecord, MAX_DRILL_RECORDS, type DrillRecords } from '@/lib/trainers/drill-records';
+import { appendDrillChoice, appendDrillRecord, MAX_DRILL_RECORDS,validDrillRepair, type DrillRecords } from '@/lib/trainers/drill-records';
 import styles from './WritingDrills.module.css';
 
 export default function WritingDrills() {
@@ -20,6 +20,8 @@ export default function WritingDrills() {
   const [currentChoices, setCurrentChoices] = useState<number[]>([]);
   const [revealedByHelp, setRevealedByHelp] = useState<boolean | null>(false);
   const [drillRecords, setDrillRecords] = useState<DrillRecords>({});
+  const [repairRevision,setRepairRevision]=useState(''),[repairReflection,setRepairReflection]=useState(''),[repairUnchanged,setRepairUnchanged]=useState(false);
+  const [repairError,setRepairError]=useState('');
 
   const items = writingDrills.filter((item) => item.mode === mode);
   const item = items[index];
@@ -37,6 +39,8 @@ export default function WritingDrills() {
     setRevealed(false);
     setCurrentChoices([]);
     setRevealedByHelp(false);
+    setRepairRevision('');setRepairReflection('');setRepairUnchanged(false);
+    setRepairError('');
   }
 
   function chooseMode(next: DrillMode) {
@@ -47,7 +51,11 @@ export default function WritingDrills() {
 
   function finishItem() {
     if (!item) return;
-    const record = { savedAt: new Date().toISOString(), draft, choices: [...currentChoices], attemptCount: attempts, revealedByHelp };
+    const repair={revision:repairRevision,reflection:repairReflection,unchanged:repairUnchanged};
+    if(!validDrillRepair(repair,draft)){setRepairError('Запиши свою правку и объясни изменение. Если решил оставить первый вариант, отметь это явно и объясни почему.');return;}
+    if(draft.length>600){setRepairError('Первый вариант из ранней записи длиннее лимита истории. Скачай его в JSON или Word перед новой пробой; текст не обрезан.');return;}
+    if((drillRecords[item.id]?.length??0)>=MAX_DRILL_RECORDS&&!window.confirm('В истории этого упражнения уже 5 попыток. Сначала скачай работу выше. Сохранить новую попытку и удалить самую старую из этой короткой истории?'))return;
+    const record = { savedAt: new Date().toISOString(), draft, choices: [...currentChoices], attemptCount: attempts, revealedByHelp,repair };
     setDrillRecords(old => appendDrillRecord(old, item.id, record));
     setCompleted((old) => old.includes(item.id) ? old : [...old, item.id]);
     if (index < items.length - 1) {
@@ -90,9 +98,9 @@ export default function WritingDrills() {
     <header className={styles.hero}>
       <p className={styles.eyebrow}>КОРОТКИЕ УПРАЖНЕНИЯ · IELTS TASK 2</p>
       <h1>Отработай один навык за раз</h1>
-      <p>Сначала напиши свой вариант. Затем сравни три решения, получи объяснение и при необходимости попробуй ещё раз. Все задания вымышлены и доступны без входа. Здесь нет автоматической оценки твоего текста или балла IELTS.</p>
+      <p>Напиши свой вариант, сравни три решения и прочитай объяснение. Затем перепиши свою попытку и попробуй другое задание. Все задания вымышлены и доступны без входа. Здесь нет автоматической оценки твоего текста или балла IELTS.</p>
     </header>
-    <TrainerCheckpoint trainer="writing-drills" data={{ mode, index, draft, optionsVisible, choice, attempts, feedback, revealed, completed, currentChoices, revealedByHelp, drillRecords }} completed={mode === null && completed.length > 0} onRestore={saved => { setMode(saved.mode); setIndex(saved.index); setDraft(saved.draft); setOptionsVisible(saved.optionsVisible); setChoice(saved.choice); setAttempts(saved.attempts); setFeedback(saved.feedback); setRevealed(saved.revealed); setCompleted(saved.completed); setCurrentChoices(saved.currentChoices ?? []); setRevealedByHelp(saved.revealedByHelp === undefined ? null : saved.revealedByHelp); setDrillRecords(saved.drillRecords ?? {}); }} />
+    <TrainerCheckpoint trainer="writing-drills" data={{ mode, index, draft, optionsVisible, choice, attempts, feedback, revealed, completed, currentChoices, revealedByHelp, drillRecords,repairRevision,repairReflection,repairUnchanged }} completed={mode === null && completed.length > 0} onRestore={saved => { setMode(saved.mode); setIndex(saved.index); setDraft(saved.draft); setOptionsVisible(saved.optionsVisible); setChoice(saved.choice); setAttempts(saved.attempts); setFeedback(saved.feedback); setRevealed(saved.revealed); setCompleted(saved.completed); setCurrentChoices(saved.currentChoices ?? []); setRevealedByHelp(saved.revealedByHelp === undefined ? null : saved.revealedByHelp); setDrillRecords(saved.drillRecords ?? {});setRepairRevision(saved.repairRevision??'');setRepairReflection(saved.repairReflection??'');setRepairUnchanged(saved.repairUnchanged??false);setRepairError(''); }} />
 
     {!mode ? <section aria-labelledby="drill-modes-title">
       <div className={styles.sectionHeading}><h2 id="drill-modes-title">Выбери упражнение</h2><p>Каждый блок содержит два коротких задания. Для продолжения после обновления включи сохранение выше.</p></div>
@@ -130,10 +138,16 @@ export default function WritingDrills() {
         <div className={styles.compare}><div><span>ТВОЙ ВАРИАНТ</span><p>{draft}</p></div><div><span>УЧЕБНЫЙ ПРИМЕР</span><p>{item.example}</p></div></div>
         <p>{item.explanation}</p>
         <p className={styles.revealNote}>Это пример, а не единственно допустимая формулировка. Выбор из трёх вариантов проверен; твой свободный текст не оценивался.</p>
+        <h3>Теперь перепиши свой вариант</h3><p>Исправь свою первую попытку с опорой на объяснение. Сохрани свою мысль: можно написать иначе, чем в учебном примере.</p>
+        <label className={styles.draftLabel} htmlFor="drill-repair">Твой вариант после разбора</label><textarea id="drill-repair" lang="en" maxLength={600} rows={4} disabled={repairUnchanged} value={repairRevision} onChange={event=>{setRepairRevision(event.target.value);setRepairError('');}}/>
+        <label className={styles.unchanged}><input type="checkbox" disabled={draft.length>600} checked={repairUnchanged} onChange={event=>{setRepairUnchanged(event.target.checked);if(event.target.checked)setRepairRevision(draft);setRepairError('');}}/>Я сверил свой первый вариант и решил оставить его без правок</label>
+        <label className={styles.draftLabel} htmlFor="drill-reflection">Что изменил и почему? Или почему оставил без правок?</label><textarea id="drill-reflection" maxLength={1000} rows={3} value={repairReflection} onChange={event=>{setRepairReflection(event.target.value);setRepairError('');}}/>
+        <p className={styles.revealNote}>Обе версии и объяснение сохранятся отдельно. Правка после подсказки не считается самостоятельным решением; её качество автоматически не оценивается.</p>
+        {repairError&&<p className={styles.feedback} role="alert">{repairError}</p>}
         <button type="button" className={styles.primary} onClick={finishItem}>{index < items.length - 1 ? 'Следующее задание' : 'К упражнениям'} →</button>
       </div>}
     </section>}
-    {Object.keys(drillRecords).length > 0 && <section className={styles.reveal} aria-labelledby="drill-history-title"><h2 id="drill-history-title">Твои завершённые попытки</h2><p>Последние {MAX_DRILL_RECORDS} попыток каждого упражнения. Текст не оценивается автоматически; выполнение не означает освоение навыка. Для хранения после закрытия включи сохранение выше.</p><details><summary>Посмотреть первые варианты, выборы и помощь</summary>{writingDrills.filter(drill => drillRecords[drill.id]?.length).map(drill => <section key={drill.id}><h3>{drill.title}</h3>{drillRecords[drill.id].map((record, index) => <article className={styles.record} key={`${record.savedAt}-${index}`}><p>{new Date(record.savedAt).toLocaleString('ru-RU')} · {record.revealedByHelp === null ? 'Способ открытия разбора не сохранён в ранней версии' : record.revealedByHelp ? 'Разбор открыт через помощь' : 'Разбор открыт после подходящего выбора'}</p><p lang="en">{record.draft}</p><p>Выборы: {record.choices.length ? record.choices.map(choice => `${choice + 1}${drill.choices[choice].best ? ' (подходит)' : ' (нужно пересмотреть)'}`).join(' → ') : 'не сохранились в ранней версии'}. Всего проверок выбора: {record.attemptCount}.</p>{record.attemptCount > record.choices.length && <p>Список неполный: при долгой серии сохраняются первый и последние 19 выборов; ранние версии могли не хранить выборы.</p>}</article>)}</section>)}</details></section>}
+    {Object.keys(drillRecords).length > 0 && <section className={styles.reveal} aria-labelledby="drill-history-title"><h2 id="drill-history-title">Твои завершённые попытки</h2><p>Последние {MAX_DRILL_RECORDS} попыток каждого упражнения. Текст не оценивается автоматически; выполнение не означает освоение навыка. Для хранения после закрытия включи сохранение выше.</p><details><summary>Посмотреть первые варианты, свои правки и помощь</summary>{writingDrills.filter(drill => drillRecords[drill.id]?.length).map(drill => <section key={drill.id}><h3>{drill.title}</h3>{drillRecords[drill.id].map((record, index) => <article className={styles.record} key={`${record.savedAt}-${index}`}><p>{new Date(record.savedAt).toLocaleString('ru-RU')} · {record.revealedByHelp === null ? 'Способ открытия разбора не сохранён в ранней версии' : record.revealedByHelp ? 'Разбор открыт через помощь' : 'Разбор открыт после подходящего выбора'}</p><p>Первая попытка:</p><p lang="en">{record.draft}</p>{record.repair?<><p>После разбора{record.repair.unchanged?" · оставил без правок":""}:</p><p lang="en">{record.repair.revision}</p><p>Объяснение: {record.repair.reflection}</p></>:<p>В ранней версии собственная правка и объяснение не записывались.</p>}<p>Выборы: {record.choices.length ? record.choices.map(choice => `${choice + 1}${drill.choices[choice].best ? ' (подходит)' : ' (нужно пересмотреть)'}`).join(' → ') : 'не сохранились в ранней версии'}. Всего проверок выбора: {record.attemptCount}.</p>{record.attemptCount > record.choices.length && <p>Список неполный: при долгой серии сохраняются первый и последние 19 выборов; ранние версии могли не хранить выборы.</p>}</article>)}</section>)}</details></section>}
     {completed.some(id => !drillRecords[id]?.length) && <p className={styles.note}>Часть выполнений отмечена в ранней версии без текста попытки. Их содержание не восстановлено.</p>}
   </main>;
 }

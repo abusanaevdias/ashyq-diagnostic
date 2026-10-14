@@ -1,10 +1,12 @@
 import type { TrainerId } from './catalog';
 import { writingDrills } from '../writing-trainer/drills';
-import { MAX_DRILL_CHOICES, MAX_DRILL_RECORDS } from './drill-records';
+import { MAX_DRILL_CHOICES, MAX_DRILL_RECORDS,validDrillRepair } from './drill-records';
 
 export const CHECKPOINT_VERSION = 1;
 export const MAX_RECORD_BYTES = 1_500_000;
 export const MAX_SNAPSHOT_BYTES = 100_000;
+export const MAX_DRILL_SNAPSHOT_BYTES=500_000;
+export const snapshotByteLimit=(trainer:TrainerId)=>trainer==='writing-drills'?MAX_DRILL_SNAPSHOT_BYTES:MAX_SNAPSHOT_BYTES;
 export const MAX_HISTORY = 20;
 export const utf8Bytes = (value: string) => new TextEncoder().encode(value).byteLength;
 export type Snapshot = Record<string, unknown>;
@@ -25,8 +27,8 @@ const shape = (fields: Record<string, Check>): Check => v => object(v) && Object
 const shapeWithOptional = (required: Record<string, Check>, optional: Record<string, Check>): Check => v => object(v) && Object.keys(v).every(key => Object.hasOwn(required, key) || Object.hasOwn(optional, key)) && Object.entries(required).every(([key, check]) => Object.hasOwn(v, key) && check(v[key])) && Object.entries(optional).every(([key, check]) => !Object.hasOwn(v, key) || check(v[key]));
 const phase = (...values: string[]) => one(...values);
 const completedDrills: Check = v => array(one(...writingDrills.map(item => item.id)), writingDrills.length)(v) && new Set(v as string[]).size === (v as string[]).length;
-const drillRecordShape = shape({ savedAt: v => typeof v === 'string' && !Number.isNaN(Date.parse(v)), draft: v => typeof v === 'string' && v.length <= 600, choices: array(integer(2), MAX_DRILL_CHOICES), attemptCount: integer(10000), revealedByHelp: nullable(bool) });
-const drillRecord: Check = v => drillRecordShape(v) && ((v as Snapshot).attemptCount as number) >= ((v as Snapshot).choices as unknown[]).length;
+const drillRecordShape = shapeWithOptional({ savedAt: v => typeof v === 'string' && !Number.isNaN(Date.parse(v)), draft: v => typeof v === 'string' && v.length <= 600, choices: array(integer(2), MAX_DRILL_CHOICES), attemptCount: integer(10000), revealedByHelp: nullable(bool) },{repair:object});
+const drillRecord: Check = v => drillRecordShape(v) && ((v as Snapshot).attemptCount as number) >= ((v as Snapshot).choices as unknown[]).length&&(!Object.hasOwn(v as Snapshot,'repair')||validDrillRepair((v as Snapshot).repair,(v as Snapshot).draft as string));
 const drillRecords: Check = v => object(v) && Object.entries(v).every(([id, values]) => writingDrills.some(item => item.id === id) && array(drillRecord, MAX_DRILL_RECORDS)(values));
 const index = nullable(integer(1));
 const confidence = one('', 'low', 'medium', 'high');
@@ -61,10 +63,10 @@ const schemas: Record<TrainerId, Check> = {
   'math-method-switch': shape({ phase: phase('choose', 'solve', 'review', 'result'), index: integer(1), round: integer(1), x: text, y: text, working: text, method: v => v === ' ' || method(v), alternative: v => v === ' ' || method(v), plan: text, attempts: array(methodAttempt, 2) }),
   'speaking-second-take': shape({ phase: phase('start', 'prepare', 'capture', 'review', 'compare', 'result'), takeIndex: integer(2), takes: array(take, 3), notes: text, kind: text, markerNote: text, noMarkers: bool }),
   'writing-task2': shape({ session: writingSession }),
-  'writing-drills': shapeWithOptional({ mode: nullable(one('combine', 'grammar', 'argument')), index: integer(1), draft: text, optionsVisible: bool, choice: nullable(integer(2)), attempts: integer(10000), feedback: text, revealed: bool, completed: completedDrills }, { currentChoices: array(integer(2), MAX_DRILL_CHOICES), revealedByHelp: nullable(bool), drillRecords }),
+  'writing-drills': shapeWithOptional({ mode: nullable(one('combine', 'grammar', 'argument')), index: integer(1), draft: text, optionsVisible: bool, choice: nullable(integer(2)), attempts: integer(10000), feedback: text, revealed: bool, completed: completedDrills }, { currentChoices: array(integer(2), MAX_DRILL_CHOICES), revealedByHelp: nullable(bool), drillRecords,repairRevision:v=>typeof v==='string'&&v.length<=600,repairReflection:v=>typeof v==='string'&&v.length<=1000,repairUnchanged:bool }),
 };
 
-export function validSnapshot(trainer: TrainerId, value: unknown, byteLimit=MAX_SNAPSHOT_BYTES): value is Snapshot {
+export function validSnapshot(trainer: TrainerId, value: unknown, byteLimit=snapshotByteLimit(trainer)): value is Snapshot {
   if(!Number.isSafeInteger(byteLimit)||byteLimit<1||byteLimit>MAX_RECORD_BYTES)return false;
   if (!schemas[trainer](value)) return false;
   const v = value as Snapshot;
@@ -103,6 +105,11 @@ export function validSnapshot(trainer: TrainerId, value: unknown, byteLimit=MAX_
     if(takes.some(value=>{const take=value as {noSpecificMoments?:boolean|null;markers:unknown[]};return take.noSpecificMoments===true&&take.markers.length>0;}))return false;
     if (['review', 'compare'].includes(p as string) && !takes[v.takeIndex as number]) return false;
     if (p === 'result' && takes.length !== 3) return false;
+  }
+  if(trainer==='writing-drills'){
+    const keys=['repairRevision','repairReflection','repairUnchanged'],present=keys.filter(key=>Object.hasOwn(v,key)).length;
+    if(present&&present!==keys.length)return false;
+    if(present){if((!v.revealed||v.mode===null)&&(v.repairRevision!==''||v.repairReflection!==''||v.repairUnchanged!==false))return false;if(v.repairUnchanged===true&&(v.repairRevision as string).trim()!==(v.draft as string).trim())return false;}
   }
   return utf8Bytes(JSON.stringify(value)) <= byteLimit;
 }

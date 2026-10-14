@@ -52,6 +52,9 @@
 .reveal > p { line-height: 1.6; }
 .revealNote { color: var(--ink-soft); font-size: 14px; }
 .reveal .primary { margin-top: 8px; }
+.unchanged { display: flex; align-items: start; gap: 12px; min-height: 44px; margin-block: 18px; line-height: 1.6; }
+.unchanged input { flex: none; width: 20px; height: 20px; margin-top: 3px; accent-color: var(--red-deep); }
+.unchanged input:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 .record { margin-block: 12px; padding: 17px; border-radius: var(--r-sm); background: var(--bg); overflow-wrap: anywhere; }
 .record p { white-space: pre-wrap; line-height: 1.6; }
 .page button:focus-visible, .page a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
