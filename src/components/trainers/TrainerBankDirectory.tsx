@@ -4,6 +4,7 @@ import {useEffect,useMemo,useRef,useState} from 'react';
 import RequireRole from '@/components/lms/RequireRole';
 import {BANK_PAGE_SIZE,bankPage,bankPracticeHref,filterBankSources,readBankSummary,type BankFilters,type BankSummary} from '@/lib/trainers/bank-navigation';
 import {readBankPresence,type BankPresence} from '@/lib/trainers/bank-presence';
+import {bankSkillLabel} from '@/lib/trainers/bank-skill-labels';
 import {bankRecordKey} from '@/lib/trainers/bank-records';
 import {BANK_RECORD_CHANGED} from '@/lib/trainers/bank-storage';
 import {trainerBank,type BankSource} from '@/lib/trainers/bank-sources';
@@ -20,7 +21,7 @@ function Card({source,actor}:{source:BankSource;actor:string}){
  },[summary,actor,source]);
  function read(){try{setSummary(readBankSummary(actor,source.ref,localStorage));}catch{setSummary({kind:'unavailable'});}setStale(false);}
  return <article className={styles.card} aria-labelledby={`bank-card-${source.ref.unitId}`}>
-  <span className={styles.tag}>{trainer.exam} · {trainer.skill} · DRAFT</span><h2 id={`bank-card-${source.ref.unitId}`}>{source.title}</h2><p>{source.practiceType}</p><p>{source.skill}</p><p>{source.ref.unitId} · версия {source.ref.version}. Сложность ещё не откалибрована.</p>
+  <span className={styles.tag}>{trainer.exam} · {trainer.skill} · DRAFT</span><h2 id={`bank-card-${source.ref.unitId}`}>{source.title}</h2><p>{source.practiceType}</p><p>{bankSkillLabel(source.skill)}</p><p>{source.ref.unitId} · версия {source.ref.version}. Сложность ещё не откалибрована.</p>
   {summary&&<div className={styles.summary} role="status">
    {stale?<p>Запись могла измениться. Обнови сводку перед продолжением.</p>:summary.kind==='empty'?<p>Сохранённой пробы этой версии пока нет.</p>:summary.kind==='incompatible'?<p>Запись есть, но она несовместима или повреждена. Открой пробу, чтобы скачать исходные данные для восстановления.</p>:summary.kind==='source-unavailable'?<p>Версия задания недоступна. Обнови библиотеку.</p>:summary.kind==='unavailable'?<p>Не удалось прочитать сохранение в этом браузере. Отсутствие записи не подтверждено.</p>:<>
     {summary.current?<p>{entryLabel[summary.current.state]} · {new Date(summary.current.savedAt).toLocaleString('ru-RU')}</p>:<p>Текущего сохранённого черновика нет.</p>}<p>Записей в истории: {summary.history.length}. Завершение пробы не означает освоение навыка.</p>

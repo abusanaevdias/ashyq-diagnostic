@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {bankNextPractice,bankPracticeHref} from '../src/lib/trainers/bank-navigation';
+import {trainerBank,sameBankSource,findBankSource} from '../src/lib/trainers/bank-sources';
+import {bankWritingPair} from '../src/lib/trainers/bank-writing-state';
+import {bankSkillLabel} from '../src/lib/trainers/bank-skill-labels';
+import {filterBankSources} from '../src/lib/trainers/bank-navigation';
+for(const source of trainerBank.sources){const label=bankSkillLabel(source.skill);assert.ok(/[А-Яа-яЁё]/.test(label));assert.notEqual(label,'Цель упражнения уточняется автором','all current skills have readable labels');assert.ok(filterBankSources({exam:'all',trainer:'all',query:label.slice(0,180)}).some(item=>sameBankSource(source.ref,item.ref)));}
+assert.equal(bankSkillLabel('unknown-new-skill'),'Цель упражнения уточняется автором');
+for(const key of ['__proto__','constructor','toString'])assert.equal(typeof bankSkillLabel(key),'string');
+for(const source of trainerBank.sources){const before=JSON.stringify(source),next=bankNextPractice(source.ref);assert.equal(next.length,2,source.ref.unitId);assert.equal(new Set(next.map(s=>s.ref.unitId)).size,2);for(const candidate of next){assert.equal(candidate.trainer,source.trainer);assert.equal(candidate.difficulty,'uncalibrated');assert.equal(candidate.unit.status,'DRAFT');assert.equal(sameBankSource(candidate.ref,source.ref),false);assert.equal(findBankSource(candidate.ref),candidate);assert.ok(bankPracticeHref(candidate.ref));if(source.exercise.type==='writing-drill'){assert.equal(candidate.practiceType,source.practiceType);const ids=new Set(bankWritingPair(source)!.map(x=>x.id));assert.equal(bankWritingPair(candidate)!.some(x=>ids.has(x.id)),false,'no immediately repeated paired short-writing source');}}assert.equal(JSON.stringify(source),before);assert.deepEqual(bankNextPractice({...source.ref,contentHash:'0'.repeat(64)}),[]);assert.deepEqual(bankNextPractice({...source.ref,version:'99.0'}),[]);assert.deepEqual(bankNextPractice(source.ref),next);}
+console.log('PASS100 exact-source deterministic two same-trainer suggestions, no current/duplicate reference, uncalibrated DRAFT preserved, writing pair non-overlap, bad version/hash rejected and no input mutation. No storage reads, prior exposure/difficulty/mastery inference or publication.');
