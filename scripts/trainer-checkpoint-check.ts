@@ -16,6 +16,8 @@ const context = await browser.newContext();
 const page = await context.newPage();
 const errors: string[] = [];
 page.on('pageerror', error => errors.push(error.message));
+// This regression follows intended positive replacement/reload actions; cancellation is tested separately.
+page.on('dialog', dialog => dialog.accept());
 const defaults: Record<string, Record<string, unknown>> = {};
 try {
   for (const item of trainerCatalog) {
@@ -94,7 +96,7 @@ try {
   assert.equal((finished.checkpoint!.data.first as {answer: string}).answer, 'TRUE');
   assert.equal((finished.checkpoint!.data.repair as {answer: string}).answer, 'FALSE');
   const exportedFinished = JSON.stringify({ format: 'ashyq-trainer-export-v1', ...finished });
-  page.once('dialog', dialog => dialog.accept());
+
   await page.getByRole('button', { name: /Попробовать другую ловушку/ }).click();
   await page.getByText('Перенести работу с другого устройства', { exact: true }).click();
   const beforeImport = await page.evaluate(key => localStorage.getItem(key), key);
@@ -104,7 +106,7 @@ try {
   await page.getByRole('button', { name: 'Восстановить из файла и заменить сохранение', exact: true }).click();
   await page.getByRole('heading', { name: '5. Что изменилось', exact: true }).waitFor();
   assert.equal((parseRecord(await page.evaluate(key => localStorage.getItem(key), key), item.id)!.checkpoint!.data.first as {answer: string}).answer, 'TRUE');
-  page.once('dialog', dialog => dialog.accept());
+
   await page.getByRole('button', { name: /Попробовать другую ловушку/ }).click();
   const second = await context.newPage();
   await second.goto(base + item.href);
@@ -183,7 +185,7 @@ try {
   await page.getByRole('button', { name: 'Продолжить сохранённую', exact: true }).waitFor();
   console.log('PASS guest/account A/account B/sign-out remount and storage separation (LocalDemo fixture only; no RLS claim)');
   await page.getByRole('button', { name: 'Продолжить сохранённую', exact: true }).click();
-  page.once('dialog', dialog => dialog.accept());
+
   await page.getByRole('button', { name: /Попробовать другую ловушку/ }).click();
   await page.getByText('Сохранено на этом устройстве.', { exact: true }).waitFor();
   await page.getByText(/^История этого тренажёра/).click();
@@ -199,11 +201,16 @@ try {
   await lockHolder.evaluate(() => (window as unknown as {releaseCheckpointLock: () => void}).releaseCheckpointLock());
   await page.getByText('Сохранено на этом устройстве.', { exact: true }).waitFor();
   await page.getByRole('button', { name: 'Подтвердить удаление', exact: true }).click();
+  await page.getByText(/Запись изменилась после выбора действия/).waitFor();
+  assert.ok(parseRecord(await page.evaluate(key => localStorage.getItem(key), key), item.id)?.checkpoint, 'stale delete confirmation preserves the updated draft');
+  await page.getByRole('button', { name: 'Отмена', exact: true }).click();
+  await page.getByRole('button', { name: 'Удалить сохранение и историю этого тренажёра', exact: true }).click();
+  await page.getByRole('button', { name: 'Подтвердить удаление', exact: true }).click();
   await page.getByText('Локальная запись удалена. Работа на экране не изменена.', { exact: true }).waitFor();
-  assert.equal(await page.evaluate(key => localStorage.getItem(key), key), null);
+  assert.equal(parseRecord(await page.evaluate(key => localStorage.getItem(key), key), item.id)?.checkpoint, null);
   await page.reload();
-  await page.getByRole('button', { name: 'Сохранять на этом устройстве', exact: true }).waitFor();
-  assert.equal(await page.evaluate(key => localStorage.getItem(key), key), null, 'queued autosave must not recreate deleted storage');
+  await page.getByRole('button', { name: 'Заменить сохранение текущей работой', exact: true }).waitFor();
+  const tombstone=parseRecord(await page.evaluate(key => localStorage.getItem(key), key), item.id)!;assert.equal(tombstone.checkpoint,null,'queued autosave must not recreate deleted work');assert.equal(tombstone.history.length,0);
   await lockHolder.close();
   console.log('PASS pending-write deletion guard and deletion remains effective after reload');
   const empty = await browser.newContext({ viewport: { width: 390, height: 844 } });
