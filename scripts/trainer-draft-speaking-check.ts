@@ -48,7 +48,7 @@ async function main() {
     await page.getByRole('heading', { name: 'Нужно войти для Speaking-черновика', exact: true }).waitFor();
     await checkGate();
     const login = new URL((await page.getByRole('link', { name: 'Войти в учебный кабинет', exact: true }).getAttribute('href'))!, base);
-    assert.equal(login.searchParams.get('next'), '/trainers/speaking-second-take?' + query, 'login preserves the exact draft/version');
+    assert.equal(login.searchParams.get('next'), '/trainers/speaking-second-take?' + query + '&nativeStart=1', 'login preserves the exact draft/version');
     const session = (role: string) => ({ user: { id: 'synthetic-speaking-preview', name: 'Synthetic reviewer', email: 'synthetic@example.invalid', role, avatarColor: 'red' }, expiresAt: new Date(Date.now() + 3600000).toISOString() });
     await page.evaluate(value => { localStorage.setItem('ashyq:v2:session', JSON.stringify(value)); dispatchEvent(new Event('storage')); }, session('student'));
     await page.getByRole('heading', { name: 'Недостаточно прав', exact: true }).waitFor();

@@ -10,6 +10,6 @@ export default function SpeakingPracticeEntry() {
   const params = useSearchParams();
   const names = ['reviewBatch','reviewVersion','reviewUnit','reviewHash'];
   if (!names.some(name => params.has(name))) return <SpeakingSecondTake/>;
-  if (names.some(name => params.getAll(name).length !== 1)) return <main className="container"><h1>Не удалось открыть черновик</h1><p>Нужна полная ссылка на одну версию материала. Публичная тема не подставлена.</p><Link href="/trainers/material-review">К проверке материалов</Link></main>;
-  return <SpeakingDraftEntry key={names.map(name => params.get(name)).join(':')} batchId={params.get('reviewBatch')!} version={params.get('reviewVersion')!} unitId={params.get('reviewUnit')!} contentHash={params.get('reviewHash')!}/>;
+  if (names.some(name => params.getAll(name).length !== 1)||(params.has('nativeStart')&&(params.getAll('nativeStart').length!==1||params.get('nativeStart')!=='1'))) return <main className="container"><h1>Не удалось открыть черновик</h1><p>Нужна полная ссылка на одну версию материала. Публичная тема не подставлена.</p><Link href="/trainers/material-review">К проверке материалов</Link></main>;
+  return <SpeakingDraftEntry key={names.map(name => params.get(name)).join(':')} nativeStart={params.get('nativeStart')==='1'} batchId={params.get('reviewBatch')!} version={params.get('reviewVersion')!} unitId={params.get('reviewUnit')!} contentHash={params.get('reviewHash')!}/>;
 }
