@@ -5,6 +5,8 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useSession } from '@/lib/lms/hooks';
 import { trainerById, trainerCatalog, type TrainerId } from '@/lib/trainers/catalog';
 import { archiveEntry, checkpointKey, createEntry, emptyRecord, MAX_RECORD_BYTES, parseRecord, utf8Bytes, validSnapshot, type Snapshot, type TrainerRecord } from '@/lib/trainers/checkpoints';
+import {pilotReportBlocks} from '@/lib/trainers/pilot-report';
+import {buildPlainDocx,DOCX_MIME} from '@/lib/trainers/docx-package';
 import styles from './TrainerCheckpoint.module.css';
 
 const changed = 'ashyq:trainer-checkpoint-change';
@@ -85,7 +87,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     window.dispatchEvent(new Event(changed));
   }
   async function saveNow() {
-    if (!validSnapshot(trainer, data)) throw new Error('Этот промежуточный шаг пока нельзя сохранить. Заверши текущее действие и попробуй снова.');
+    if (!validSnapshot(trainer, data)) throw new Error(validSnapshot(trainer,data,MAX_RECORD_BYTES)?'Снимок превышает лимит JSON (100 КБ). Скачай отчёт Word для чтения; он не восстанавливает пробу.':'Этот промежуточный шаг пока нельзя сохранить. Заверши текущее действие и попробуй снова.');
     const generation = writeGeneration.current;
     await locked(() => {
       if (generation !== writeGeneration.current) throw new Error('Сохранение было удалено. Включи его заново, если хочешь сохранить текущую работу.');
@@ -101,7 +103,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     const generation = writeGeneration.current;
     const save = async () => { try {
       const value: unknown = JSON.parse(serialized);
-      if (!validSnapshot(trainer, value)) throw new Error('Этот шаг не удалось сохранить. Оставь страницу открытой и скопируй свой текст перед выходом.');
+      if (!validSnapshot(trainer, value)) throw new Error(validSnapshot(trainer,value,MAX_RECORD_BYTES)?'Снимок превышает лимит JSON (100 КБ). Скачай отчёт Word перед выходом; он предназначен для чтения.':'Этот шаг не удалось сохранить. Оставь страницу открытой и скопируй свой текст перед выходом.');
       if (!navigator.locks) throw new Error('Браузер не поддерживает безопасное сохранение между вкладками. Скачай работу.');
       await navigator.locks.request(`ashyq-trainer:${key}`, () => {
       if (generation !== writeGeneration.current) return;
@@ -136,11 +138,17 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   }
   function exportCurrent() {
     try {
-      if (!validSnapshot(trainer, data)) throw new Error('Заверши текущее действие перед скачиванием.');
+      if (!validSnapshot(trainer, data)) throw new Error(validSnapshot(trainer,data,MAX_RECORD_BYTES)?'Текущая работа превышает лимит снимка JSON (100 КБ). Скачай отчёт Word для чтения; он не восстанавливает пробу.':'Заверши текущее действие перед скачиванием.');
       const entry = createEntry(data);
       downloadTrainerRecord({ ...(record ?? emptyRecord(trainer)), checkpoint: entry });
       setMessage('Файл подготовлен. Проверь загрузки браузера. Он содержит текущую попытку и сохранённую историю; аудио в него не входит.');
     } catch (error) { setMessage(error instanceof Error ? error.message : 'Не удалось подготовить файл. Скопируй нужные записи вручную.'); }
+  }
+  function exportWord(value:Snapshot,suffix:string,savedAt?:string){
+    try{
+      const blocks=pilotReportBlocks(trainer,value);if(savedAt)blocks.splice(1,0,{kind:'paragraph',text:`Сохранённое занятие: ${new Date(savedAt).toISOString()}`});
+      const bytes=buildPlainDocx(blocks),url=URL.createObjectURL(new Blob([bytes.buffer as ArrayBuffer],{type:DOCX_MIME})),anchor=document.createElement('a');anchor.href=url;anchor.download=`ASHYQ-${trainer}-${suffix}.docx`;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setMessage('Отчёт Word подготовлен. Он содержит ответы и заметки, без экзаменационного балла. Для восстановления скачай JSON.');
+    }catch(error){setMessage(failureMessage(error,'Не удалось подготовить Word. Скачай JSON или скопируй ответы.'));}
   }
   async function archive() {
     try {
@@ -158,6 +166,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     setImported(null);
     if (!file) return;
     try {
+      if(file.type===DOCX_MIME||/\.docx$/i.test(file.name))throw new Error('Word — отчёт для чтения. Для восстановления выбери JSON, скачанный из тренажёра. Работа и сохранение не заменены.');
       if (file.size > MAX_RECORD_BYTES * 2) throw new Error('Файл слишком большой. Выбери экспорт одного тренажёра ASHYQ.');
       const body = await file.text();
       const parsed: unknown = JSON.parse(body);
@@ -168,7 +177,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
       if (!candidate?.checkpoint) throw new Error('Файл повреждён, относится к другому тренажёру или несовместимой версии.');
       setImported(candidate);
       setMessage('Файл проверен локально. Подтверди восстановление ниже; пока работа и сохранение не изменены.');
-    } catch (error) { setMessage(error instanceof Error ? error.message : 'Не удалось прочитать файл.'); }
+    } catch (error) { setMessage(error instanceof SyntaxError?'Файл не является корректным JSON. Работа и сохранение не заменены.':error instanceof Error ? error.message : 'Не удалось прочитать файл.'); }
   }
   async function confirmImport() {
     if (!imported?.checkpoint || busy) return;
@@ -203,11 +212,13 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
       {record?.checkpoint && !enabled && <button type="button" disabled={!ready || busy} onClick={() => restore(record.checkpoint!.data)}>Продолжить сохранённую</button>}
       {!enabled ? <button type="button" disabled={!ready || busy || raw === '!storage-unavailable'} onClick={enable}>{record?.checkpoint || raw ? 'Заменить сохранение текущей работой' : 'Сохранять на этом устройстве'}</button> : <button type="button" onClick={() => { setActiveKey(''); setMessage('Автосохранение выключено. Предыдущая запись остаётся в браузере.'); }}>Выключить автосохранение</button>}
       <button type="button" disabled={busy} onClick={exportCurrent}>Скачать текущую работу</button>
+      <button type="button" disabled={busy} onClick={()=>exportWord(data,'current')}>Скачать отчёт Word</button>
       {completed && enabled && <button type="button" disabled={busy} onClick={archive}>Добавить занятие в историю</button>}
     </div>
+    <p>Word — читаемый отчёт. JSON — файл для восстановления работы и истории. Скачивание Word не включает автосохранение; аудио скачивается отдельно.</p>
     <details className={styles.history}><summary>Перенести работу с другого устройства</summary><p>Выбери JSON-файл, скачанный из этого тренажёра. Он будет проверен в браузере. После подтверждения файл заменит текущее сохранение и работу на экране; сначала скачай их, если они нужны.</p><label>Файл работы ASHYQ <input type="file" accept=".json,application/json" disabled={busy || !ready} onChange={event => { void readImport(event.target.files?.[0]); event.target.value = ''; }}/></label></details>
     {imported?.checkpoint && <div className={styles.warning}><p>Восстановить работу от {new Date(imported.checkpoint.savedAt).toLocaleString('ru-RU')} и {imported.history.length} записей истории? Текущая работа и локальное сохранение будут заменены.</p><div className={styles.actions}><button type="button" disabled={busy || !ready || raw === '!storage-unavailable'} onClick={confirmImport}>Восстановить из файла и заменить сохранение</button><button type="button" onClick={() => setImported(null)}>Отмена импорта</button></div></div>}
-    {record && <details className={styles.history}><summary>История этого тренажёра · {record.history.length}</summary><p>Хранятся последние 20 разных завершённых занятий. Одобрение учителя и экзаменационные баллы не присваиваются.</p><ul>{record.history.map(entry => <li key={entry.id}><span>{new Date(entry.savedAt).toLocaleString('ru-RU')}</span><button disabled={busy} type="button" onClick={() => restore(entry.data)}>Открыть эту попытку</button></li>)}</ul><button type="button" onClick={() => setDeleting(true)}>Удалить сохранение и историю этого тренажёра</button></details>}
+    {record && <details className={styles.history}><summary>История этого тренажёра · {record.history.length}</summary><p>Хранятся последние 20 разных занятий. Одобрение учителя и экзаменационные баллы не присваиваются.</p><ul>{record.history.map((entry,index) => <li key={entry.id}><span>{new Date(entry.savedAt).toLocaleString('ru-RU')}</span><button disabled={busy} type="button" onClick={() => restore(entry.data)}>Открыть эту попытку</button><button disabled={busy} type="button" onClick={()=>exportWord(entry.data,`history-${index+1}`,entry.savedAt)}>Скачать Word занятия {index+1}</button></li>)}</ul><button type="button" onClick={() => setDeleting(true)}>Удалить сохранение и историю этого тренажёра</button></details>}
     {deleting && <div className={styles.warning}><p>Удалить локальную запись и историю «{item.title}»? Текущая работа останется на экране. Сначала можно скачать файл.</p><div className={styles.actions}><button type="button" disabled={busy || (enabled && !saved)} onClick={removeSaved}>Подтвердить удаление</button><button type="button" onClick={() => setDeleting(false)}>Отмена</button></div></div>}
     {busy && <p className={styles.note}>Управление сохранением доступно после окончания записи или воспроизведения.</p>}
     {message && <p className={styles.status} role="status">{message}</p>}

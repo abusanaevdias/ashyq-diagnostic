@@ -64,7 +64,8 @@ const schemas: Record<TrainerId, Check> = {
   'writing-drills': shapeWithOptional({ mode: nullable(one('combine', 'grammar', 'argument')), index: integer(1), draft: text, optionsVisible: bool, choice: nullable(integer(2)), attempts: integer(10000), feedback: text, revealed: bool, completed: completedDrills }, { currentChoices: array(integer(2), MAX_DRILL_CHOICES), revealedByHelp: nullable(bool), drillRecords }),
 };
 
-export function validSnapshot(trainer: TrainerId, value: unknown): value is Snapshot {
+export function validSnapshot(trainer: TrainerId, value: unknown, byteLimit=MAX_SNAPSHOT_BYTES): value is Snapshot {
+  if(!Number.isSafeInteger(byteLimit)||byteLimit<1||byteLimit>MAX_RECORD_BYTES)return false;
   if (!schemas[trainer](value)) return false;
   const v = value as Snapshot;
   const p = v.phase;
@@ -103,7 +104,7 @@ export function validSnapshot(trainer: TrainerId, value: unknown): value is Snap
     if (['review', 'compare'].includes(p as string) && !takes[v.takeIndex as number]) return false;
     if (p === 'result' && takes.length !== 3) return false;
   }
-  return utf8Bytes(JSON.stringify(value)) <= MAX_SNAPSHOT_BYTES;
+  return utf8Bytes(JSON.stringify(value)) <= byteLimit;
 }
 
 export function emptyRecord(trainer: TrainerId): TrainerRecord {

@@ -114,7 +114,7 @@ export default function ReadingEvidence() {
     </section>}
     {current && phase !== 'choose' && <section className={styles.lesson} aria-labelledby="reading-stage-title">
       <div className={styles.lessonTop}><button type="button" onClick={() => { setPhase('choose'); setCaseIndex(null); window.scrollTo({ top: 0 }); }}>← К выбору</button><span>{current.focus}</span></div>
-      <div className={styles.progress} aria-label={`Шаг ${['first', 'review', 'repair', 'transfer', 'result'].indexOf(phase) + 1} из 5`}><span style={{ width: `${(['first', 'review', 'repair', 'transfer', 'result'].indexOf(phase) + 1) * 20}%` }} /></div>
+      <div className={styles.progress} role="progressbar" aria-label="Этап занятия" aria-valuemin={1} aria-valuemax={5} aria-valuenow={['first', 'review', 'repair', 'transfer', 'result'].indexOf(phase) + 1} aria-valuetext={`Шаг ${['first', 'review', 'repair', 'transfer', 'result'].indexOf(phase) + 1} из 5`}><span style={{ width: `${(['first', 'review', 'repair', 'transfer', 'result'].indexOf(phase) + 1) * 20}%` }} /></div>
       <h2 id="reading-stage-title" tabIndex={-1}>{phase === 'first' ? '1. Ответ и опора в тексте' : phase === 'review' ? '2. Разбери первое решение' : phase === 'repair' ? '3. Исправь сам' : phase === 'transfer' ? '4. Новый текст без подсказки' : '5. Что изменилось'}</h2>
       {phase === 'first' && <TaskView task={current.task} answer={answer} evidenceId={evidenceId} confidence={confidence} onAnswer={setAnswer} onEvidence={setEvidenceId} onConfidence={setConfidence} onSubmit={() => record('first')} submitLabel="Зафиксировать первую попытку" error={error} />}
       {phase === 'review' && first && <div className={styles.review}>
