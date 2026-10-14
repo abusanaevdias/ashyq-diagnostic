@@ -1,0 +1,7 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+async function main(){
+ const base=process.env.TRAINER_CHECK_BASE??'http://127.0.0.1:3043';assert.ok(['localhost','127.0.0.1'].includes(new URL(base).hostname)||base==='https://ashyq-diagnostic.vercel.app');const browser=await chromium.launch({headless:true});
+ try{const context=await browser.newContext(),page=await context.newPage(),errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/writing/trainer/own');await page.getByRole('heading',{name:/^(Личный режим временно недоступен|Нужно войти)$/}).waitFor();assert.equal(await page.locator('#own-prompt,#own-restore-file').count(),0);await page.evaluate(()=>{localStorage.setItem('ashyq:v2:session',JSON.stringify({user:{id:'synthetic-production-spoof',name:'Synthetic role',email:'synthetic@example.invalid',role:'teacher',avatarColor:'red'},expiresAt:new Date(Date.now()+3600000).toISOString()}));dispatchEvent(new Event('storage'));});await page.reload();await page.getByRole('heading',{name:/^(Личный режим временно недоступен|Нужно войти)$/}).waitFor();assert.equal(await page.locator('#own-prompt,#own-restore-file').count(),0);assert.deepEqual(errors,[]);console.log(`PASS own production entry guard at ${base}: anonymous and forged LocalDemo teacher do not expose essay/file inputs; either disabled-local-provider or real-login entry remains. Not authenticated Supabase/RLS or provider readiness.`);}finally{await browser.close();}
+}
+main().catch(error=>{console.error(error);process.exitCode=1;});
