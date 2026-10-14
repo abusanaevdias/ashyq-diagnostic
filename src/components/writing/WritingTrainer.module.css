@@ -27,7 +27,7 @@
 .sectionTop .overline { color: var(--red-deep); }
 .question { font-size: 1.12rem; font-weight: 650; line-height: 1.6; margin: 20px 0 0; }
 .steps { display: flex; gap: 5px; overflow-x: auto; padding: 24px 0; }
-.step { display: flex; flex: 1 0 auto; align-items: center; gap: 6px; padding: 9px 10px; min-height: 44px; border-radius: var(--r-xs); color: var(--ink-soft); background: var(--hairline); font-size: 11px; font-weight: 700; white-space: nowrap; }
+.step { display: flex; flex: 1 0 auto; align-items: center; gap: 6px; padding: 9px 10px; min-height: 44px; border-radius: var(--r-xs); color: var(--ink); background: var(--hairline); font-size: 11px; font-weight: 700; white-space: nowrap; }
 .step b { font-size: 10px; }
 .stepCurrent { background: var(--dark); color: var(--on-dark); }
 .stepDone { background: var(--success-soft); color: var(--success); }

@@ -1,0 +1,142 @@
+{
+  "reading-evidence": {
+    "caseIndex": null,
+    "phase": "choose",
+    "answer": "",
+    "evidenceId": "",
+    "confidence": "",
+    "first": null,
+    "repair": null,
+    "transfer": null,
+    "reason": ""
+  },
+  "listening-replay": {
+    "caseIndex": null,
+    "round": "first",
+    "phase": "choose",
+    "prediction": "",
+    "cue": "",
+    "answer": "",
+    "confidence": "",
+    "diagnosis": "",
+    "repair": "",
+    "level": 0,
+    "attemptedLevel": false,
+    "feedback": "",
+    "textMode": false,
+    "textHelp": false,
+    "stopped": false,
+    "first": null,
+    "transfer": null
+  },
+  "speaking-second-take": {
+    "phase": "start",
+    "takeIndex": 0,
+    "takes": [],
+    "notes": "",
+    "kind": "Долгая пауза",
+    "markerNote": "",
+    "noMarkers": false
+  },
+  "task1-overview": {
+    "round": 0,
+    "phase": "start",
+    "selected": [],
+    "overview": "",
+    "evidence": {},
+    "reasons": {},
+    "correction": "",
+    "first": null,
+    "transfer": null,
+    "draft": "",
+    "revision": "",
+    "focus": "",
+    "noChanges": false
+  },
+  "writing-task2": {
+    "session": {
+      "caseId": "city-transport",
+      "stage": "grammar",
+      "furthestStage": "grammar",
+      "selectedSentenceId": null,
+      "grammarDrafts": {},
+      "grammarChecked": false,
+      "appliedGrammar": {},
+      "revisionDrafts": {},
+      "postFeedbackDrafts": {},
+      "revealed": {},
+      "appliedRevisions": {}
+    }
+  },
+  "writing-drills": {
+    "mode": null,
+    "index": 0,
+    "draft": "",
+    "optionsVisible": false,
+    "choice": null,
+    "attempts": 0,
+    "feedback": "",
+    "revealed": false,
+    "completed": [],
+    "currentChoices": [],
+    "revealedByHelp": false,
+    "drillRecords": {}
+  },
+  "sat-optionless": {
+    "caseIndex": null,
+    "phase": "choose",
+    "round": "first",
+    "prediction": "",
+    "choiceIndex": null,
+    "first": null,
+    "transfer": null
+  },
+  "sat-distractor": {
+    "caseIndex": null,
+    "phase": "choose",
+    "round": "first",
+    "answerIndex": null,
+    "reasons": {},
+    "first": null,
+    "transfer": null
+  },
+  "math-forensics": {
+    "caseIndex": null,
+    "phase": "choose",
+    "stepIndex": null,
+    "mechanism": "",
+    "repairLine": "",
+    "firstAttempt": null,
+    "ownAnswer": "",
+    "transferStep": null,
+    "transferAnswer": "",
+    "transferAttempt": null
+  },
+  "sat-translation": {
+    "phase": "choose",
+    "caseIndex": 0,
+    "round": 0,
+    "variable": "",
+    "setup": "",
+    "rate": "",
+    "total": "",
+    "form": "",
+    "model": null,
+    "answer": "",
+    "working": "",
+    "attempts": [],
+    "repair": ""
+  },
+  "math-method-switch": {
+    "phase": "choose",
+    "index": 0,
+    "round": 0,
+    "x": "",
+    "y": "",
+    "working": "",
+    "method": " ",
+    "alternative": " ",
+    "plan": "",
+    "attempts": []
+  }
+}

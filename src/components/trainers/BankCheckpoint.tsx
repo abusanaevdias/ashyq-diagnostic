@@ -68,6 +68,7 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
   }
   async function importFile(file:File|undefined){
     if(!file||blocked)return;setMessage('');setIntent(null);
+    if(file.type===DOCX_MIME||/\.docx$/i.test(file.name)){setMessage('Word — отчёт для чтения. Для восстановления выбери JSON этой версии задания. Работа и сохранение не заменены.');return;}
     try{if(file.size>MAX_BANK_RECORD_BYTES)throw new Error('Файл больше1.5МБ. Существующая запись не изменена.');const value=parseBankRecord(await file.text(),source);if(!value)throw new Error('Файл повреждён, несовместим или относится к другой версии задания. Ничего не заменено.');setIntent({kind:'import',revision:record?.revision??null,record:value});}catch(error){setMessage(failure(error));}
   }
   async function archive(){if(blocked||!valid||!bankSnapshotComplete(data))return;try{const entry=createBankEntry(source,data);await write(record?.revision??null,old=>archiveBankEntry({...old,checkpoint:old.checkpoint&&bankSnapshotFingerprint(old.checkpoint.data)!==fingerprint?old.checkpoint:null},entry),fingerprint);}catch(error){setMessage(failure(error));}}
