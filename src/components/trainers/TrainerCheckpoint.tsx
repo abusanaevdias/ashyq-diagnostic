@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useSession } from '@/lib/lms/hooks';
 import { trainerById, trainerCatalog, type TrainerId } from '@/lib/trainers/catalog';
-import { archiveEntry, checkpointKey, createEntry, emptyRecord, MAX_RECORD_BYTES, parseRecord, utf8Bytes, validSnapshot, type Snapshot, type TrainerRecord } from '@/lib/trainers/checkpoints';
+import { archiveEntry, checkpointKey, createEntry, emptyRecord, MAX_RECORD_BYTES, snapshotByteLimit, parseRecord, utf8Bytes, validSnapshot, type Snapshot, type TrainerRecord } from '@/lib/trainers/checkpoints';
 import {pilotReportBlocks} from '@/lib/trainers/pilot-report';
 import {buildPlainDocx,DOCX_MIME} from '@/lib/trainers/docx-package';
 import styles from './TrainerCheckpoint.module.css';
@@ -108,7 +108,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     window.dispatchEvent(new Event(changed));
   }
   async function saveNow() {
-    if (!validSnapshot(trainer, data)) throw new Error(validSnapshot(trainer,data,MAX_RECORD_BYTES)?'Снимок превышает лимит JSON (100 КБ). Скачай отчёт Word для чтения; он не восстанавливает пробу.':'Этот промежуточный шаг пока нельзя сохранить. Заверши текущее действие и попробуй снова.');
+    if (!validSnapshot(trainer, data)) throw new Error(validSnapshot(trainer,data,MAX_RECORD_BYTES)?`Снимок превышает лимит JSON (${snapshotByteLimit(trainer)/1000} КБ). Скачай отчёт Word для чтения; он не восстанавливает пробу.`:'Этот промежуточный шаг пока нельзя сохранить. Заверши текущее действие и попробуй снова.');
     const generation = writeGeneration.current;
     await locked(() => {
       if (generation !== writeGeneration.current) throw new Error('Сохранение было удалено. Включи его заново, если хочешь сохранить текущую работу.');
@@ -124,7 +124,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     const generation = writeGeneration.current;
     const save = async () => { try {
       const value: unknown = JSON.parse(serialized);
-      if (!validSnapshot(trainer, value)) throw new Error(validSnapshot(trainer,value,MAX_RECORD_BYTES)?'Снимок превышает лимит JSON (100 КБ). Скачай отчёт Word перед выходом; он предназначен для чтения.':'Этот шаг не удалось сохранить. Оставь страницу открытой и скопируй свой текст перед выходом.');
+      if (!validSnapshot(trainer, value)) throw new Error(validSnapshot(trainer,value,MAX_RECORD_BYTES)?`Снимок превышает лимит JSON (${snapshotByteLimit(trainer)/1000} КБ). Скачай отчёт Word перед выходом; он предназначен для чтения.`:'Этот шаг не удалось сохранить. Оставь страницу открытой и скопируй свой текст перед выходом.');
       if (!navigator.locks) throw new Error('Браузер не поддерживает безопасное сохранение между вкладками. Скачай работу.');
       await navigator.locks.request(`ashyq-trainer:${key}`, () => {
       if (generation !== writeGeneration.current) return;
@@ -159,7 +159,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   }
   function exportCurrent() {
     try {
-      if (!validSnapshot(trainer, data)) throw new Error(validSnapshot(trainer,data,MAX_RECORD_BYTES)?'Текущая работа превышает лимит снимка JSON (100 КБ). Скачай отчёт Word для чтения; он не восстанавливает пробу.':'Заверши текущее действие перед скачиванием.');
+      if (!validSnapshot(trainer, data)) throw new Error(validSnapshot(trainer,data,MAX_RECORD_BYTES)?`Текущая работа превышает лимит снимка JSON (${snapshotByteLimit(trainer)/1000} КБ). Скачай отчёт Word для чтения; он не восстанавливает пробу.`:'Заверши текущее действие перед скачиванием.');
       const entry = createEntry(data);
       downloadTrainerRecord({ ...(record ?? emptyRecord(trainer)), checkpoint: entry });
       setMessage('Файл подготовлен. Проверь загрузки браузера. Он содержит текущую попытку и сохранённую историю; аудио в него не входит.');

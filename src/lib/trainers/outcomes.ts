@@ -9,7 +9,7 @@ import { cases as methodCases } from '../math-method-switch/cases';
 import { writingCases } from '../writing-trainer/cases';
 import { grammarAttemptStatus, type TrainerSession } from '../writing-trainer/engine';
 import { trainerById, type TrainerId } from './catalog';
-import { validSnapshot, MAX_SNAPSHOT_BYTES, type Snapshot } from './checkpoints';
+import { validSnapshot, snapshotByteLimit, type Snapshot } from './checkpoints';
 
 export type OutcomeCheck = { label: string; matches: boolean | null; stage: 'first' | 'repair' | 'transfer' | 'self' };
 export type PracticeOutcome = { complete: boolean; checks: OutcomeCheck[]; repeat: boolean | null; next: TrainerId; advice: string; limitation: string };
@@ -19,7 +19,7 @@ type ReadingAttempt = { answer: TfngAnswer; evidenceId: string };
 type OverviewAttempt = { selected: number[]; evidence: Record<number, number>; reasons: Record<number, number> };
 
 /** Only authored closed-answer checks are scored. Local records are never verified achievements. */
-export function practiceOutcome(trainer: TrainerId, value: unknown, byteLimit=MAX_SNAPSHOT_BYTES): PracticeOutcome | null {
+export function practiceOutcome(trainer: TrainerId, value: unknown, byteLimit=snapshotByteLimit(trainer)): PracticeOutcome | null {
   if (!validSnapshot(trainer, value,byteLimit)) return null;
   const v: Snapshot = value;
   const complete = trainer === 'writing-task2' ? (v.session as TrainerSession).stage === 'report'
