@@ -4,6 +4,7 @@ import { Footer, NavBar } from '@/components/ui/CleanUi';
 import styles from './trainers.module.css';
 import TrainerStaffLinks from '@/components/trainers/TrainerStaffLinks';
 import TrainerPracticeLink from '@/components/trainers/TrainerPracticeLink';
+import {publishedBankSources} from '@/lib/trainers/bank-publication';
 
 export const metadata: Metadata = {
   title: 'Тренажёры IELTS и SAT — ASHYQ',
@@ -30,6 +31,7 @@ export default function TrainersPage() {
       <article className={styles.card}><span>IELTS ACADEMIC · WRITING TASK 2</span><h2>Улучши эссе сам</h2><p>Найди ошибки в готовом учебном эссе и перепиши его по критериям шаг за шагом.</p><TrainerPracticeLink href="/writing/trainer">Попробовать Writing →</TrainerPracticeLink></article>
       <article className={styles.card}><span>IELTS ACADEMIC · WRITING TASK 1</span><h2>Собери overview по графику</h2><p>Выбери главное, проверь опору на данные и убери неточности перед полным ответом.</p><TrainerPracticeLink href="/trainers/task1-overview">Попробовать Task 1 →</TrainerPracticeLink></article>
     </div>
+    {publishedBankSources.length>0&&<section className={styles.card}><h2>Больше заданий для практики</h2><p>Выбери навык и задание из опубликованного банка.</p><a href="/trainers/bank">Открыть банк заданий →</a></section>}
     <p className={styles.note}>Тренажёры не выдают официальный балл IELTS или SAT. Ответы в открытых упражнениях не отправляются на внешний AI.</p>
   </main><Footer /></>;
 }

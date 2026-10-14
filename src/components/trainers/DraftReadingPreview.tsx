@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { isReadingLabel, parseDraftReading, READING_LABELS, type DraftReadingPair, type ReadingLabel } from '@/lib/trainers/draft-reading';
 import styles from './TrainerCheckpoint.module.css';
 import BankCheckpoint from './BankCheckpoint';
+import {isPublishedBankSource} from '@/lib/trainers/bank-publication';
 import type { BankSource } from '@/lib/trainers/bank-sources';
 import { blankBankReadingResponses, type BankReadingState, type BankReadingResponse, type BankReadingAttempt } from '@/lib/trainers/bank-reading-state';
 
@@ -46,10 +47,10 @@ function Preview({ pair,source,onDirty,onBusy }: { pair: DraftReadingPair;source
     if (round === 0) { setRound(1); clear(); } else { setReport(true); setError(''); }
   }
   return <section className={styles.preview} aria-labelledby="reading-draft-preview-title">
-    <h3 ref={heading} tabIndex={-1} id="reading-draft-preview-title">Пробное Reading · DRAFT</h3>
+    <h3 ref={heading} tabIndex={-1} id="reading-draft-preview-title">{source&&isPublishedBankSource(source.ref)?'Практика Reading':'Пробное Reading · DRAFT'}</h3>
     <p>Сначала выбери категорию и объясни её, потом открой разбор. TRUE — текст подтверждает всё утверждение; FALSE — противоречит ему; NOT GIVEN — данных не хватает. Свободные объяснения и уместность цитат проверяются вручную. {source?'Работу можно сохранить отдельной кнопкой ниже в этом браузере.':'Это временная проба без сохранения.'} Нет публикации или балла IELTS. Предварительный просмотр ключа влияет на независимость попытки.</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Работа с Reading-текстами</legend>
-    {!started ? <button type="button" onClick={() => setStarted(true)}>Пройти Reading-черновик</button> : report ? <>
+    {!started ? <button type="button" onClick={() => setStarted(true)}>{source&&isPublishedBankSource(source.ref)?'Начать задание':'Пройти Reading-черновик'}</button> : report ? <>
       <h4 ref={step} tabIndex={-1}>Сравнение двух Reading-попыток</h4>
       {attempts.map((attempt, index) => <div key={pair.rounds[index].id} className={styles.outcome}>
         <h4>{index === 0 ? 'Первый текст' : 'Новый текст'} · {pair.rounds[index].id}</h4>

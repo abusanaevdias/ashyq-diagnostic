@@ -8,6 +8,8 @@ import { archiveBankEntry, bankRecordKey, createBankEntry, emptyBankRecord, MAX_
 import { bankSnapshotFingerprint, bankSnapshotComplete, emptyBankSnapshot } from '@/lib/trainers/bank-snapshots';
 import {bankReportBlocks} from '@/lib/trainers/bank-report';
 import {bankNextPractice,bankPracticeHref} from '@/lib/trainers/bank-navigation';
+import {bankDeliverySources} from '@/lib/trainers/bank-delivery';
+import {isPublishedBankSource} from '@/lib/trainers/bank-publication';
 import {bankSkillLabel} from '@/lib/trainers/bank-skill-labels';
 import {buildPlainDocx,DOCX_MIME} from '@/lib/trainers/docx-package';
 import { BANK_RECORD_CHANGED, clearBankRecord, clearInvalidBankRecord, mutateBankRecord } from '@/lib/trainers/bank-storage';
@@ -38,7 +40,7 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
   const storedFingerprints=useMemo(()=>new Set(record?[...record.history,...record.checkpoint?[record.checkpoint]:[]].map(entry=>bankSnapshotFingerprint(entry.data)):[]),[record]);
   const currentStored=valid&&storedFingerprints.has(fingerprint);
   const empty=emptyBankSnapshot(source);
-  const nextPractice=useMemo(()=>bankNextPractice(source.ref),[source.ref]);
+  const nextPractice=useMemo(()=>bankNextPractice(source.ref,bankDeliverySources(session?.user.role)),[source.ref,session?.user.role]);
   const changed=valid&&!!empty&&fingerprint!==bankSnapshotFingerprint(empty)&&!currentStored;
   const blocked=busy||externalBusy;
   const dirty=blocked||changed;
@@ -111,6 +113,6 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
     {record&&<details className={styles.history}><summary>История этой версии · {record.history.length} из20</summary><p>До20 записей, общий лимит1.5МБ. При достижении лимита скачай историю перед очисткой. Совпадающая работа не добавляется повторно; завершение не является оценкой.</p>{record.history.map(entry=><div className={styles.actions} key={entry.id}><span>{entry.savedAt} · {bankSnapshotComplete(entry.data)?'Проба завершена':'Работа в процессе'}</span><button type="button" disabled={blocked} onClick={()=>chooseIntent({kind:'restore',revision:record.revision,entry})}>Загрузить занятие {entry.savedAt}</button><button type="button" disabled={blocked} onClick={()=>downloadWord(entry.data,`history-${entry.id}`,entry.savedAt)}>Скачать Word занятия {entry.savedAt}</button></div>)}</details>}
     {readingFile&&<div className={styles.warning}><p role="status">Читаем выбранный файл… Проба пока не заменена.</p><button type="button" onClick={cancelImport}>Отменить чтение файла</button></div>}
     {intent&&<div ref={confirmation} tabIndex={-1} data-bank-confirm className={styles.warning} role="alert"><p>{intent.kind==='restore'?'Выбранная версия заменит текст на экране. Текущее несохранённое содержимое нужно сначала скачать.':intent.kind==='replace'?'Текущая проба заменит сохранённый черновик этой версии задания. История останется.':intent.kind==='import'?'Файл заменит локальный черновик и историю этой версии. Текущую работу и прежнюю историю нужно сначала скачать.':intent.kind==='recover'?'Будет очищена только эта несовместимая запись. Скачай исходные данные для восстановления до подтверждения.':'Будут очищены сохранённая работа и история этой версии. Текст на экране останется, сохранение по кнопке.'}</p><div className={styles.actions}><button type="button" disabled={blocked} onClick={()=>{void confirm();}}>Подтвердить {intent.kind==='restore'?'загрузку':intent.kind==='import'?'восстановление':intent.kind==='replace'?'замену':'очистку'}</button><button type="button" disabled={blocked} onClick={()=>{cancelImport();heading.current?.focus({preventScroll:true});heading.current?.scrollIntoView({block:'start',behavior:'instant'});}}>Отменить действие</button></div></div>}
-    {valid&&bankSnapshotComplete(data)&&nextPractice.length>0&&<nav className={styles.outcome} aria-label="Следующие пробы этого тренажёра"><h4>Что попробовать дальше</h4><p>Другие авторские черновики этого тренажёра. Выбор по формату задания; сложность ещё не откалибрована. Сначала сохрани или скачай нужную текущую работу.</p><ul>{nextPractice.map(item=><li key={item.ref.unitId}><a href={bankPracticeHref(item.ref)!}>{item.ref.unitId} · {item.title} →</a><p>{item.practiceType} · {bankSkillLabel(item.skill)}</p></li>)}</ul><div className={styles.actions}><a href="/trainers/bank">Выбрать другой навык →</a></div></nav>}
+    {valid&&bankSnapshotComplete(data)&&nextPractice.length>0&&<nav className={styles.outcome} aria-label="Следующие пробы этого тренажёра"><h4>Что попробовать дальше</h4><p>{isPublishedBankSource(source.ref)?'Другие доступные задания этого тренажёра.':'Другие авторские черновики этого тренажёра.'} Выбор по формату задания; сложность ещё не откалибрована. Сначала сохрани или скачай нужную текущую работу.</p><ul>{nextPractice.map(item=><li key={item.ref.unitId}><a href={bankPracticeHref(item.ref)!}>{item.ref.unitId} · {item.title} →</a><p>{item.practiceType} · {bankSkillLabel(item.skill)}</p></li>)}</ul><div className={styles.actions}><a href="/trainers/bank">Выбрать другой навык →</a></div></nav>}
   </section>;
 }

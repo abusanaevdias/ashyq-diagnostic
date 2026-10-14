@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { draftMathChoiceLabel, parseDraftMath, parseDraftMathNumber, type DraftMathPair } from '@/lib/trainers/draft-math';
 import styles from './TrainerCheckpoint.module.css';
 import BankCheckpoint from './BankCheckpoint';
+import {isPublishedBankSource} from '@/lib/trainers/bank-publication';
 import type { BankSource } from '@/lib/trainers/bank-sources';
 import type { BankMathAttempt, BankMathState } from '@/lib/trainers/bank-math-state';
 
@@ -41,10 +42,10 @@ function Preview({ pair,source,onDirty,onBusy }: { pair: DraftMathPair;source:Ba
     if (round === 0) { setRound(1); clearRound(); } else { setReport(true); setError(''); }
   }
   return <section className={styles.preview} aria-labelledby="math-draft-preview-title">
-    <h3 ref={heading} tabIndex={-1} id="math-draft-preview-title">Пробная математика · DRAFT</h3>
+    <h3 ref={heading} tabIndex={-1} id="math-draft-preview-title">{source&&isPublishedBankSource(source.ref)?'Практика Math':'Пробная математика · DRAFT'}</h3>
     <p>Сначала реши сам, затем сравни модель или переход и проверь число. Записи действий проверяются вручную: выбор подготовленного варианта не доказывает правильность твоего решения. {source?'Работу можно сохранить отдельной кнопкой ниже в этом браузере.':'Это временная проба без сохранения.'} Нет публикации или балла SAT. Просмотр ключа заранее влияет на независимость попытки.</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Работа с Math-задачами</legend>
-    {!started ? <button type="button" onClick={() => setStarted(true)}>Пройти Math-черновик</button> : report ? <>
+    {!started ? <button type="button" onClick={() => setStarted(true)}>{source&&isPublishedBankSource(source.ref)?'Начать задание':'Пройти Math-черновик'}</button> : report ? <>
       <h4 ref={step} tabIndex={-1}>Сравнение двух Math-попыток</h4>{attempts.map((attempt, index) => <div key={pair.rounds[index].id} className={styles.outcome}>
         <h4>{index === 0 ? 'Первая задача' : 'Новая задача'} · {pair.rounds[index].id}</h4><p className={styles.frozenText}>Свои действия: {attempt.working}</p><p>Первый ответ: {attempt.answer} {pair.rounds[index].unit}.</p><p>{attempt.numericAnswer === pair.rounds[index].answer ? 'Число совпало с подготовленным ответом.' : 'Число отличается от подготовленного ответа.'}</p><p>{draftMathChoiceLabel(pair.rounds[index], pair.family, attempt.choice)}</p>{pair.family === 'method-switch' && <p>Отмеченный способ: {pair.rounds[index].methods![attempt.choice].title}.</p>}<p className={styles.frozenText}>Версия решения после помощи: {attempt.repairedWorking}</p><p>Ответ после помощи: {attempt.repairedAnswer} {pair.rounds[index].unit}.</p><p>{attempt.repairedNumericAnswer === pair.rounds[index].answer ? 'После помощи число совпало с ключом; качество действий не оценивалось.' : 'После помощи число всё ещё отличается от ключа; проверь решение с учителем.'}</p><p className={styles.frozenText}>После разбора: {attempt.reflection}</p>
       </div>)}<p>Две задачи не подтверждают устойчивый навык или рост балла. Первые ответы и размышления после помощи показаны отдельно.</p>

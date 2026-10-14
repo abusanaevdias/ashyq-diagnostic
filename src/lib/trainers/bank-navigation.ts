@@ -8,9 +8,10 @@ import {bankSkillLabel} from './bank-skill-labels';
 export type BankFilters={exam:'all'|'IELTS'|'SAT';trainer:'all'|TrainerId;query:string};
 export const BANK_PAGE_SIZE=12;
 /** Author rehearsal suggestions, never inferred difficulty/mastery or prior exposure. */
-export function bankNextPractice(ref:BankSourceRef):BankSource[]{
+export function bankNextPractice(ref:BankSourceRef,sources:BankSource[]=trainerBank.sources):BankSource[]{
  const current=findBankSource(ref);if(!current)return [];
- const pool=trainerBank.sources.filter(source=>source.trainer===current.trainer),index=pool.findIndex(source=>source===current),used=current.exercise.type==='writing-drill'?new Set(bankWritingPair(current)?.map(item=>item.id)??[]):null;
+ const pool=sources.filter(source=>source.trainer===current.trainer),index=pool.findIndex(source=>source===current),used=current.exercise.type==='writing-drill'?new Set(bankWritingPair(current)?.map(item=>item.id)??[]):null;
+ if(index<0)return [];
  const ordered=Array.from({length:pool.length-1},(_,offset)=>pool[(index+offset+1)%pool.length]);
  const candidates=[...ordered.filter(source=>source.practiceType===current.practiceType),...ordered.filter(source=>source.practiceType!==current.practiceType)],next:BankSource[]=[];
  for(const source of candidates){if(next.length===2)break;if(used&&bankWritingPair(source)?.some(item=>used.has(item.id)))continue;next.push(source);}
@@ -24,10 +25,10 @@ export function bankPracticeHref(ref:BankSourceRef):string|null{
  if(source.exercise.type==='speaking')return '/trainers/speaking-second-take?'+new URLSearchParams({reviewBatch:source.ref.batchId,reviewVersion:source.ref.version,reviewUnit:source.ref.unitId,reviewHash:source.ref.contentHash});
  return '/trainers/bank/practice?'+bankSourceQuery(source.ref);
 }
-export function filterBankSources(filters:BankFilters):BankSource[]{
+export function filterBankSources(filters:BankFilters,sources:BankSource[]=trainerBank.sources):BankSource[]{
  if(!['all','IELTS','SAT'].includes(filters.exam)||filters.trainer!=='all'&&!trainerCatalog.some(t=>t.id===filters.trainer)||typeof filters.query!=='string'||filters.query.length>200)return [];
  const query=filters.query.normalize('NFC').trim().toLocaleLowerCase('ru');
- return trainerBank.sources.filter(source=>{
+ return sources.filter(source=>{
   const trainer=trainerCatalog.find(t=>t.id===source.trainer)!;
   return (filters.exam==='all'||trainer.exam===filters.exam)&&(filters.trainer==='all'||source.trainer===filters.trainer)&&(!query||`${source.ref.unitId} ${source.title} ${source.skill} ${bankSkillLabel(source.skill)} ${source.practiceType} ${trainer.title} ${trainer.skill}`.normalize('NFC').toLocaleLowerCase('ru').includes(query));
  });

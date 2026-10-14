@@ -9,6 +9,7 @@ import Task1CategoryChart from './Task1CategoryChart';
 import Task1DiagramChart from './Task1DiagramChart';
 import styles from './TrainerCheckpoint.module.css';
 import BankCheckpoint from './BankCheckpoint';
+import {isPublishedBankSource} from '@/lib/trainers/bank-publication';
 import type { BankSource } from '@/lib/trainers/bank-sources';
 import type { BankTask1Attempt, BankTask1State, BankTask1Pair } from '@/lib/trainers/bank-task1-state';
 
@@ -47,10 +48,10 @@ function Preview({ pair,source,onDirty,onBusy }: { pair: BankTask1Pair;source:Ba
     if (round === 0) { setRound(1); setPhase('overview'); clear(); } else { setPhase('report'); setError(''); }
   }
   return <section className={styles.preview} aria-labelledby="task1-draft-preview-title">
-    <h3 ref={heading} tabIndex={-1} id="task1-draft-preview-title">Пробный Task 1 · DRAFT</h3>
+    <h3 ref={heading} tabIndex={-1} id="task1-draft-preview-title">{source&&isPublishedBankSource(source.ref)?'Практика Task 1':'Пробный Task 1 · DRAFT'}</h3>
     <p>Выбери общую картину, напиши свой overview и полный ответ до образца. Затем проверь данные, пересмотри текст и попробуй {isDiagram ? 'новую схему' : 'новый график'}. Свободный текст и обоснования оцениваются вручную. {source?'Работу можно сохранить отдельной кнопкой ниже в этом браузере.':'Это временная проба без сохранения.'} Нет публикации или band IELTS. Ключ, открытый заранее, влияет на независимость попытки.</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Работа с Task 1</legend>
-    {!started ? <button type="button" onClick={() => setStarted(true)}>Пройти Task 1-черновик</button> : phase === 'report' ? <>
+    {!started ? <button type="button" onClick={() => setStarted(true)}>{source&&isPublishedBankSource(source.ref)?'Начать задание':'Пройти Task 1-черновик'}</button> : phase === 'report' ? <>
       <h4 ref={step} tabIndex={-1}>Сравнение двух Task 1-попыток</h4>
       {attempts.map((attempt, index) => <div key={pair.charts[index].title} className={styles.outcome}>
         <h4>{index ? (isDiagram ? 'Новая схема' : 'Новый график') : (isDiagram ? 'Первая схема' : 'Первый график')} · {pair.charts[index].title}</h4><p>Из выбранных особенностей входят в авторский набор: {attempt.selected.filter(value => pair.charts[index].key.includes(value)).length} из 3. Другой отбор может быть обоснован вручную.</p>

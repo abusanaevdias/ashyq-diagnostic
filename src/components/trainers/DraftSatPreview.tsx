@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { draftSatChoiceText, parseDraftSatPair, type DraftSatPair } from '@/lib/trainers/draft-sat-rw';
 import styles from './TrainerCheckpoint.module.css';
 import BankCheckpoint from './BankCheckpoint';
+import {isPublishedBankSource} from '@/lib/trainers/bank-publication';
 import type { BankSource } from '@/lib/trainers/bank-sources';
 import type { BankSatAttempt, BankSatState } from '@/lib/trainers/bank-sat-state';
 
@@ -43,10 +44,10 @@ function Preview({ pair,source,onDirty,onBusy }: { pair: DraftSatPair;source:Ban
     if (roundIndex === 0) { setRoundIndex(1); clearRound(); } else { setReport(true); setError(''); }
   }
   return <section className={styles.preview} aria-labelledby="sat-draft-preview-title">
-    <h3 ref={heading} tabIndex={-1} id="sat-draft-preview-title">Пробное прохождение SAT · DRAFT</h3>
+    <h3 ref={heading} tabIndex={-1} id="sat-draft-preview-title">{source&&isPublishedBankSource(source.ref)?'Практика SAT':'Пробное прохождение SAT · DRAFT'}</h3>
     <p>Первая задача, разбор и новый текст. {source?'Работу можно сохранить отдельной кнопкой ниже в этом браузере.':'Проба временная, без сохранения.'} Прогноз и объяснения не оцениваются автоматически; совпадение выбранного варианта с ключом не даёт балл SAT. Просмотр ключей заранее влияет на независимость попытки.</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Работа с SAT-текстами</legend>
-    {!started ? <button type="button" onClick={() => setStarted(true)}>Пройти SAT-черновик как ученик</button> : report ? <>
+    {!started ? <button type="button" onClick={() => setStarted(true)}>{source&&isPublishedBankSource(source.ref)?'Начать задание':'Пройти SAT-черновик как ученик'}</button> : report ? <>
       <h4 ref={stepHeading} tabIndex={-1}>Сравнение двух первых выборов</h4>
       {attempts.map((attempt, index) => <div key={attempt.id} className={styles.outcome}><h4>{index === 0 ? 'Первая задача' : 'Новый текст'} · {attempt.id}</h4><p>{attempt.choice === pair.rounds[index].key ? 'Выбор совпал с подготовленным ключом.' : 'Первый выбор не совпал с подготовленным ключом.'}</p><p className={styles.frozenText}>Прогноз: {attempt.prediction}</p><p>Выбран вариант {attempt.choice + 1}: <span lang="en">{draftSatChoiceText(pair.rounds[index].choices[attempt.choice].text)}</span></p>{pair.trainer === 'sat-distractor' && attempt.reasons.map((reason, reasonIndex) => reasonIndex !== attempt.choice && <p key={reasonIndex} className={styles.frozenText}>Объяснение варианта {reasonIndex + 1}: {reason}</p>)}<p className={styles.frozenText}>После разбора: {attempt.repair}</p></div>)}
       <p>Это два отдельных текста, а не доказательство роста навыка. Свободные объяснения требуют ручной проверки.</p>

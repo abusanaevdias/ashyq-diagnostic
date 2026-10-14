@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { compareDraftAnswer, parseDraftListening, type DraftListeningPair } from '@/lib/trainers/draft-listening';
 import styles from './TrainerCheckpoint.module.css';
 import BankCheckpoint from './BankCheckpoint';
+import {isPublishedBankSource} from '@/lib/trainers/bank-publication';
 import type { BankSource } from '@/lib/trainers/bank-sources';
 import {emptyBankListeningEvidence,type BankListeningEvidence,type BankListeningAttempt,type BankListeningState} from '@/lib/trainers/bank-listening-state';
 
@@ -53,10 +54,10 @@ function Preview({ pair,source,onDirty,onBusy }: { pair: DraftListeningPair;sour
     if (round === 0) { setRound(1); clearRound(); } else { setReport(true); setError(''); }
   }
   return <section className={styles.preview} aria-labelledby="listening-draft-preview-title">
-    <h3 ref={heading} tabIndex={-1} id="listening-draft-preview-title">Пробное аудирование · DRAFT</h3>
+    <h3 ref={heading} tabIndex={-1} id="listening-draft-preview-title">{source&&isPublishedBankSource(source.ref)?'Практика Listening':'Пробное аудирование · DRAFT'}</h3>
     <p>Синтетическая речь: {pair.voice}, создана офлайн из авторского вымышленного сценария. Это проба материала, не экзамен и не подтверждение навыка. {source?'Работу можно сохранить отдельной кнопкой ниже в этом браузере. При сохранении и восстановлении плеер останавливается; после восстановления он начинается с нуля без автозапуска. Прежние события и помощь остаются в записи.':'Проба временная, без сохранения.'}</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Работа с аудированием</legend>
-    {!started ? <button type="button" onClick={() => setStarted(true)}>Пройти Listening-черновик</button> : report ? <>
+    {!started ? <button type="button" onClick={() => setStarted(true)}>{source&&isPublishedBankSource(source.ref)?'Начать задание':'Пройти Listening-черновик'}</button> : report ? <>
       <h4 ref={step} tabIndex={-1}>Две попытки аудирования и помощи</h4>{attempts.map((attempt, index) => <div key={index} className={styles.outcome}>
         <h4>{index === 0 ? 'Первая задача' : 'Новая задача'}</h4><p className={styles.frozenText}>Ожидание до записи: {attempt.prediction}</p><p>Первый ответ: <strong>{attempt.answer}</strong> — {answerLabel[compareDraftAnswer(attempt.answer, pair.rounds[index])]}.</p><p>{modeLabel(attempt.before)}</p><p>После разбора: <strong>{attempt.repair}</strong> — {answerLabel[compareDraftAnswer(attempt.repair, pair.rounds[index])]}.</p><p>Помощь за всю попытку: фрагмент {attempt.after.segment ? 'запускался' : 'не запускался'}; текст {attempt.after.transcript ? 'открывался' : 'не открывался'}.</p>
       <p className={styles.frozenText}>План следующей проверки: {attempt.reflection}</p></div>)}<p>События плеера не доказывают внимательное прослушивание. Неизвестный вариант остаётся для ручной проверки; причина ошибки не выводится автоматически из числа или слова.</p>

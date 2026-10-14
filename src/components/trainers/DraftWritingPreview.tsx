@@ -5,6 +5,7 @@ import { parseDraftWriting, type DraftWritingDrill } from '@/lib/trainers/draft-
 import { appendDrillChoice } from '@/lib/trainers/drill-records';
 import styles from './TrainerCheckpoint.module.css';
 import BankCheckpoint from './BankCheckpoint';
+import {isPublishedBankSource} from '@/lib/trainers/bank-publication';
 import type { BankSource } from '@/lib/trainers/bank-sources';
 import {bankWritingPair,emptyBankWritingRound,type BankWritingRound,type BankWritingState} from '@/lib/trainers/bank-writing-state';
 
@@ -74,10 +75,10 @@ function Preview({ item, next,source,onDirty,onBusy }: { item: DraftWritingDrill
   useEffect(() => { if (done) report.current?.focus();else if(!started&&focusTick)heading.current?.focus(); }, [done,started,focusTick]);
   function reset() { setStarted(false);setRecords([]);setRoundState(emptyBankWritingRound(item.id));setGeneration(value => value+1);setResetRequested(false);setFocusTick(value=>value+1); }
   return <section className={styles.preview} aria-labelledby="draft-preview-title">
-    <h3 ref={heading} tabIndex={-1} id="draft-preview-title">Пробное прохождение · DRAFT</h3>
+    <h3 ref={heading} tabIndex={-1} id="draft-preview-title">{source&&isPublishedBankSource(source.ref)?'Практика Writing':'Пробное прохождение · DRAFT'}</h3>
     <p>Проверь путь ученика до решения о материале. {source?'Первую работу, разбор, пересмотр и следующее задание можно сохранить отдельной кнопкой ниже в этом браузере.':'Попытка временная: при закрытии страницы тексты будут потеряны.'} Она не публикует задание и не оценивает свободный текст.</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Короткая Writing-практика</legend>
-    {!started ? <button type="button" onClick={() => setStarted(true)}>Пройти черновик как ученик</button> : <>
+    {!started ? <button type="button" onClick={() => setStarted(true)}>{source&&isPublishedBankSource(source.ref)?'Начать задание':'Пройти черновик как ученик'}</button> : <>
       {!done && current && <Round key={`${generation}:${roundGeneration}:${current.id}`} item={current} following={records.length>0} state={roundState} setState={setRoundState} onComplete={record => {setRecords(old => [...old,record]);if(!records.length&&next)setRoundState(emptyBankWritingRound(next.id));}}/>}
       {done && <div className={styles.outcome}>
         <h4 ref={report} tabIndex={-1}>{source?'Отчёт пробы':'Отчёт временной пробы'}</h4>
