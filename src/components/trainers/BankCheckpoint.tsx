@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import {BankNavigationWarningContext} from './BankNavigationWarningContext';
 import { useSession } from '@/lib/lms/hooks';
 import { type BankSource } from '@/lib/trainers/bank-sources';
 import { archiveBankEntry, bankRecordKey, createBankEntry, emptyBankRecord, MAX_BANK_RECORD_BYTES, parseBankRecord, validBankSnapshot, type BankEntry, type BankRecord, type BankSnapshot } from '@/lib/trainers/bank-records';
@@ -15,6 +16,7 @@ function failure(error:unknown){return error instanceof DOMException&&['QuotaExc
 
 /** Manual, optional source-version checkpoints. Publication and review decisions use separate storage. */
 export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,externalBusy=false,skipUnloadWarning}:{source:BankSource;data:BankSnapshot;onRestore:(data:BankSnapshot)=>void;onDirty:(dirty:boolean)=>void;onBusy:(busy:boolean)=>void;externalBusy?:boolean;skipUnloadWarning?:()=>boolean}){
+  const skipPageWarning=useContext(BankNavigationWarningContext);
   const {session,ready}=useSession(),scope=session?.user.id??'guest';
   const key=ready&&scope.length>0&&scope.length<=200?bankRecordKey(scope,source.ref):null;
   const snapshot=useSyncExternalStore(subscribe,()=>{if(!key)return '{"kind":"not-ready"}';try{return JSON.stringify({kind:'ready',raw:localStorage.getItem(key)});}catch{return '{"kind":"blocked"}';}},()=>'{"kind":"not-ready"}');
@@ -38,7 +40,7 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
   useLayoutEffect(()=>{onBusy(busy);},[busy,onBusy]);
   useEffect(()=>{if(intent){confirmation.current?.focus({preventScroll:true});confirmation.current?.scrollIntoView({block:'start',behavior:'instant'});}},[intent]);
   useEffect(()=>{if(!busy&&focusMessage){messageNode.current?.focus({preventScroll:true});messageNode.current?.scrollIntoView({block:'start',behavior:'instant'});setFocusMessage(false);}},[busy,focusMessage]);
-  useEffect(()=>{if(!dirty)return;const warn=(event:BeforeUnloadEvent)=>{if(skipUnloadWarning?.())return;event.preventDefault();event.returnValue='';};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn);},[dirty,skipUnloadWarning]);
+  useEffect(()=>{if(!dirty)return;const warn=(event:BeforeUnloadEvent)=>{if(skipUnloadWarning?.()||skipPageWarning?.())return;event.preventDefault();event.returnValue='';};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn);},[dirty,skipUnloadWarning,skipPageWarning]);
   function download(content:string,suffix:string,mime:string){try{const url=URL.createObjectURL(new Blob([content],{type:mime})),a=document.createElement('a');a.href=url;a.download=`ASHYQ-${source.ref.unitId}-v${source.ref.version}-${suffix}`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setMessage('Файл скачан. Это локальная учебная работа, без оценки качества или решения о публикации.');}catch(error){setMessage(failure(error));}}
   function downloadCurrent(){try{const entry=createBankEntry(source,data),value={...emptyBankRecord(source),revision:crypto.randomUUID(),checkpoint:entry};const raw=JSON.stringify(value,null,2);if(!parseBankRecord(raw,source))throw new Error('Текущая работа не помещается в проверяемый файл. Скопируй тексты перед выходом.');download(raw,'current.json','application/json;charset=utf-8');}catch(error){setMessage(failure(error));}}
   async function write(expected:string|null,change:(record:BankRecord)=>BankRecord,savedFingerprint:string):Promise<BankRecord|null>{
