@@ -4,7 +4,7 @@ import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, useS
 import {BankNavigationWarningContext} from './BankNavigationWarningContext';
 import { useSession } from '@/lib/lms/hooks';
 import { type BankSource } from '@/lib/trainers/bank-sources';
-import { archiveBankEntry, bankRecordKey, createBankEntry, emptyBankRecord, MAX_BANK_RECORD_BYTES, parseBankRecord, validBankSnapshot, type BankEntry, type BankRecord, type BankSnapshot } from '@/lib/trainers/bank-records';
+import { archiveBankEntry, bankRecordKey, createBankEntry, emptyBankRecord, MAX_BANK_HISTORY, MAX_BANK_RECORD_BYTES, parseBankRecord, validBankSnapshot, type BankEntry, type BankRecord, type BankSnapshot } from '@/lib/trainers/bank-records';
 import { bankSnapshotFingerprint, bankSnapshotComplete, emptyBankSnapshot } from '@/lib/trainers/bank-snapshots';
 import {bankReportBlocks} from '@/lib/trainers/bank-report';
 import {bankNextPractice,bankPracticeHref} from '@/lib/trainers/bank-navigation';
@@ -81,7 +81,13 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
   }
   function chooseIntent(value:Intent){importTicket.current++;setReadingFile(false);setIntent(value);}
   function cancelImport(){importTicket.current++;setReadingFile(false);setIntent(null);}
-  async function archive(){if(blocked||!valid||!bankSnapshotComplete(data))return;importTicket.current++;setReadingFile(false);try{const entry=createBankEntry(source,data);await write(record?.revision??null,old=>archiveBankEntry({...old,checkpoint:old.checkpoint&&bankSnapshotFingerprint(old.checkpoint.data)!==fingerprint?old.checkpoint:null},entry),fingerprint);}catch(error){setMessage(failure(error));}}
+  async function archive(){
+    if(blocked||!compatible||!valid||!bankSnapshotComplete(data))return;
+    if(record?.history.some(entry=>bankSnapshotFingerprint(entry.data)===fingerprint)){setMessage('Эта проба уже есть в истории. Повторная запись не добавлена.');return;}
+    if(record&&record.history.length>=MAX_BANK_HISTORY&&!window.confirm('В истории уже 20 разных проб этой версии задания. Сначала скачай нужные данные. Добавить новую пробу и удалить самую старую запись истории?'))return;
+    importTicket.current++;setReadingFile(false);
+    try{const entry=createBankEntry(source,data);await write(record?.revision??null,old=>{if(!mounted.current||screen.current!==fingerprint)throw Error('Проба изменилась во время ожидания. История не заменена; повтори действие.');return archiveBankEntry({...old,checkpoint:old.checkpoint&&bankSnapshotFingerprint(old.checkpoint.data)!==fingerprint?old.checkpoint:null},entry);},fingerprint);}catch(error){setMessage(failure(error));}
+  }
   return <section className={styles.panel} aria-labelledby={titleId}>
     <h4 ref={heading} tabIndex={-1} id={titleId}>Сохранение пробы · {source.ref.unitId} · версия {source.ref.version}</h4>
     <p>Сохранение по кнопке в этом браузере; записи аккаунтов разделены. На общем устройстве работу могут увидеть другие люди. Первая работа, разбор и пересмотр сохраняются отдельно внутри пробы. Запись не публикует материал, не отправляет текст на AI и не подтверждает освоение.</p>
