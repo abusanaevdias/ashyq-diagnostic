@@ -46,6 +46,10 @@
 .bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 24px; color: var(--ink-soft); font-size: 13px; }
 .bottom .actions { margin-top: 0; }
 .error { color: var(--red-deep); font-size: 13px; }
+.historyList { padding-left: 0; list-style: none; display: grid; gap: 18px; }
+.historyList li { min-width: 0; border: 1px solid var(--hairline); border-radius: var(--r-sm); padding: 18px; }
+.historyList h3 { font-size: 16px; margin: 0; overflow-wrap: anywhere; }
+.historyPrompt { white-space: pre-wrap; overflow-wrap: anywhere; }
 .delete { min-height: 44px; border: 0; background: none; color: var(--red-deep); font-weight: 750; text-decoration: underline; cursor: pointer; }
 .state { max-width: 750px; margin: 30px auto; padding: 30px; border: 1px solid var(--hairline); border-radius: var(--r-lg); background: var(--surface); line-height: 1.6; }
 .state h1 { margin: 0; font-size: 2rem; }
