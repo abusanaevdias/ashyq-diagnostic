@@ -30,6 +30,7 @@
 .outcome ul { padding-left: 20px; }
 .outcome li { margin-bottom: 12px; }
 .outcome li strong { display: block; font-size: 14px; }
+.outcome li a { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; color: var(--red-deep); font-weight: 700; overflow-wrap: anywhere; }
 .materialText { overflow-wrap: anywhere; }
 .materialText h3 { margin: 24px 0 12px; font-size: 18px; }
 .materialText p { color: var(--ink); font-size: 16px; }
