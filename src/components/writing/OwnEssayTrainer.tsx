@@ -9,6 +9,7 @@ import {DOCX_MIME} from '@/lib/trainers/docx-package';
 import { getRepos } from '@/lib/lms/repos';
 import type { User } from '@/lib/lms/types';
 import WritingAiPanel from './WritingAiPanel';
+import OwnEssayHistory from './OwnEssayHistory';
 import styles from './OwnEssayTrainer.module.css';
 
 type Step = 'grammar' | 'task' | 'coherence' | 'lexical';
@@ -81,6 +82,12 @@ function EssayWorkspace({ userId, role }: { userId: string; role: User['role'] }
   async function importFile(file:File|undefined){const ticket=++importTicket.current;setImported(null);if(!file)return;try{if(file.type===DOCX_MIME||/\.docx$/i.test(file.name))throw Error('Word — отчёт для чтения. Для восстановления выбери JSON личной практики.');if(file.size>MAX_OWN_DRAFT_BYTES*2)throw Error('Файл слишком большой. Работа не заменена.');const raw=await file.text();if(ticket!==importTicket.current)return;const value=parseOwnDraftExport(raw);if(!value)throw Error('Файл повреждён или относится к другому формату. Работа и сохранение не заменены.');setImported({draft:value,expected:read.kind==='ready'?baseline.current?.raw:read.kind==='incompatible'?read.raw:undefined});setDownloadError('');}catch(error){if(ticket!==importTicket.current)return;setDownloadError(error instanceof Error?error.message:'Не удалось прочитать файл.');}}
   function restoreFile(){if(!imported)return;try{if(imported.expected===undefined){setDraft(imported.draft);setRead({kind:'blocked'});}else{const raw=writeOwnDraft(userId,imported.draft,imported.expected,sessionStorage);baseline.current={raw,fingerprint:serializeOwnDraft(imported.draft)};setDraft(imported.draft);setRead({kind:'ready',raw,draft:imported.draft});setStorageError('');}setImported(null);importTicket.current++;setDownloadError('');}catch(error){setDownloadError(ownStorageFailure(error));}}
 
+  function openHistory(value:Draft){
+    if(read.kind==='loading')throw Error('Дождись проверки черновика.');
+    if(read.kind==='blocked'){setDraft(value);}else{const expected=read.kind==='ready'?baseline.current?.raw:read.raw;if(expected===undefined)throw Error('Не удалось проверить текущий черновик.');const raw=writeOwnDraft(userId,value,expected,sessionStorage);baseline.current={raw,fingerprint:serializeOwnDraft(value)};setDraft(value);setRead({kind:'ready',raw,draft:value});setStorageError('');}
+    importTicket.current++;setImported(null);setDownloadError('');
+  }
+
   function download() {
     try {
       const content = [`IELTS Academic Writing Task 2 — личная практика`, `Задание: ${draft.prompt}`, ``, `Исходный текст (${words(draft.original)} слов):`, draft.original, ``, `Последняя версия (${words(draft.working)} слов):`, draft.working, ``, ...steps.flatMap(({ id, label }) => [`${label}: ${draft.notes[id] || 'без заметки'}`, `Версия после этапа:`, draft.versions[id] || 'не сохранена', ``])].join('\n');
@@ -113,5 +120,6 @@ function EssayWorkspace({ userId, role }: { userId: string; role: User['role'] }
       {isReport ? <section className={styles.card} aria-labelledby="own-report-title"><p className={styles.eyebrow}>ЛИЧНЫЙ ИТОГ</p><h2 id="own-report-title">Что изменилось</h2><p>Сравни исходный текст с последней версией. Правки не проверены учителем; AI-подсказки, если ты их запросил, остаются предварительными. Здесь нет оценки IELTS.</p><div className={styles.columns}><div><h3>Было · {words(draft.original)} слов</h3><p lang="en" className={styles.essay}>{draft.original}</p></div><div><h3>Стало · {words(draft.working)} слов</h3><p lang="en" className={styles.essay}>{draft.working}</p></div></div><div className={styles.notes}>{steps.map(({ id, label }) => <div key={id}><h3>{label}</h3><p>{draft.notes[id] || 'Заметка не добавлена.'}</p><details><summary>Версия после этапа</summary><p lang="en" className={styles.version}>{draft.versions[id] || 'Версия не сохранена.'}</p></details>{draft.ai[id] ? <p className={styles.aiStale}>AI-разбор был сделан для версии на этом этапе. Вернись к этапу, чтобы посмотреть его.</p> : null}</div>)}</div><div className={styles.actions}><button type="button" className={styles.secondary} onClick={() => setDraft((old) => ({ ...old, step: steps.length - 1 }))}>Вернуться к правке</button><button type="button" className={styles.primary} onClick={download}>Скачать результат .txt</button></div></section> : null}
       <div className={styles.bottom}><p>Черновик сохраняется только в текущей вкладке. На общем устройстве удали его после работы.</p><div className={styles.actions}><button type="button" className={styles.secondary} onClick={download}>Скачать черновик</button><button type="button" className={styles.delete} disabled={read.kind==='blocked'} onClick={clear}>Удалить мой черновик</button></div></div>
     </>}
+    <OwnEssayHistory actor={userId} draft={draft} onLoad={openHistory} onNew={clear} canStartNew={read.kind!=='blocked'}/>
   </div>;
 }

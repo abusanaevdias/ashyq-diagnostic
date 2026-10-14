@@ -24,6 +24,7 @@ export function parseOwnDraft(raw:string|null):OwnDraft|null{
  }catch{return null;}
 }
 export function serializeOwnDraft(draft:OwnDraft){const raw=JSON.stringify(draft);if(!parseOwnDraft(raw))throw Error('Черновик не соответствует формату или превышает лимит. Скопируй текст перед выходом.');return raw;}
+export function ownDraftFingerprint(draft:OwnDraft){serializeOwnDraft(draft);return canonical(draft);}
 export type OwnDraftRead={kind:'ready';raw:string|null;draft:OwnDraft}|{kind:'incompatible';raw:string}|{kind:'blocked'};
 export function readOwnDraft(actor:string,storage:Pick<Storage,'getItem'>):OwnDraftRead{try{const raw=storage.getItem(ownDraftKey(actor));if(raw===null)return {kind:'ready',raw,draft:blankOwnDraft()};const draft=parseOwnDraft(raw);return draft?{kind:'ready',raw,draft}:{kind:'incompatible',raw};}catch{return {kind:'blocked'};}}
 /** sessionStorage is tab-scoped. Synchronous revision check also protects same-origin frames. */
