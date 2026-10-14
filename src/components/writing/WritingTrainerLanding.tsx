@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import TrainerPracticeLink from '../trainers/TrainerPracticeLink';
 import styles from './WritingTrainerLanding.module.css';
 
 const steps = [
@@ -92,7 +93,7 @@ export default function WritingTrainerLanding() {
           <p>Соединяй мысли, исправляй грамматику и усиливай аргументы. В каждом задании сначала напиши свой вариант, а затем сравни решения и прочитай объяснение.</p>
           <p className={styles.drillsNote}>Три вида упражнений по два задания · вымышленные примеры · без регистрации</p>
         </div>
-        <Link href="/writing/trainer/drills" className={styles.drillsLink}>Открыть упражнения <span aria-hidden="true">→</span></Link>
+        <TrainerPracticeLink href="/writing/trainer/drills" className={styles.drillsLink}>Открыть упражнения <span aria-hidden="true">→</span></TrainerPracticeLink>
       </section>
       <Link className={styles.moreTrainersLink} href="/trainers">Смотреть тренажёры IELTS и SAT →</Link>
       <section className={styles.start} aria-labelledby="start-title">
@@ -102,11 +103,11 @@ export default function WritingTrainerLanding() {
           <p>Грамматика, ответ на вопрос, связность и лексика — по одному шагу за раз. Правки остаются только в открытой вкладке.</p>
           <p className={styles.limit}>Числа в разборе — учебные ориентиры для готовых примеров, не оценка твоего текста или официальный балл IELTS.</p>
         </div>
-        <Link href="/writing/trainer/practice" className={styles.startButton}>Попробовать тренажёр <span aria-hidden="true">→</span></Link>
+        <TrainerPracticeLink href="/writing/trainer/practice" className={styles.startButton}>Попробовать тренажёр <span aria-hidden="true">→</span></TrainerPracticeLink>
       </section>
       <section className={styles.own} aria-labelledby="own-title">
         <div><p className={styles.eyebrow}>ДЛЯ УЧЕНИКОВ И УЧИТЕЛЕЙ ASHYQ</p><h2 id="own-title">Есть своё эссе?</h2><p>Если ты учишься в IELTS-классе или ведёшь его, добавь задание и текст, а затем перепиши эссе по четырём критериям. Черновик останется в этой вкладке. {process.env.NEXT_PUBLIC_WRITING_AI_ENABLED === '1' ? 'В закрытом пилоте можно запросить AI-подсказки после своей правки, по отдельному согласию. Оценка IELTS пока недоступна.' : 'AI-разбор и оценка для своего текста пока недоступны.'}</p></div>
-        <Link className={styles.ownLink} href="/writing/trainer/own">Работать со своим эссе →</Link>
+        <TrainerPracticeLink className={styles.ownLink} href="/writing/trainer/own">Работать со своим эссе →</TrainerPracticeLink>
       </section>
     </main>
   );

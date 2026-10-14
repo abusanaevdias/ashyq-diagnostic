@@ -124,7 +124,7 @@ async function main() {
     assert.equal(exportedBody.format, 'ashyq-trainer-export-v1');
     const exportedRecord = parseRecord(JSON.stringify(exportedBody), 'speaking-second-take'); assert.ok(exportedRecord);
     assert.deepEqual((exportedRecord.checkpoint!.data.takes as {preparationNotes: string}[]).map(take => take.preparationNotes), expectedNotes);
-    await page.reload();
+    const unloadPrompt=page.waitForEvent('dialog',{timeout:5000}),reload=page.reload();const prompt=await unloadPrompt;assert.equal(prompt.type(),'beforeunload','saved notes do not suppress volatile audio warning');await prompt.accept();await reload;
     await page.getByRole('button', { name: 'Продолжить сохранённую', exact: true }).click();
     await page.getByRole('heading', { name: 'Три попытки: что ты заметил', exact: true }).waitFor();
     assert.equal(await page.locator('audio').count(), 0, 'restored notes do not pretend audio exists');
