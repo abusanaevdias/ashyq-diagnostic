@@ -265,6 +265,7 @@ export default function MathMethodSwitch() {
         <section className={styles.lesson}>
           <div className={styles.lessonTop}>
             <button
+              data-trainer-replace="math-method-switch"
               onClick={() => {
                 setPhase("choose");
                 window.scrollTo({ top: 0 });
@@ -458,7 +459,7 @@ export default function MathMethodSwitch() {
               </p>
               <button
                 className={styles.primary}
-                onClick={(e) => handleBegin(index, e.timeStamp)}
+                data-trainer-replace="math-method-switch" onClick={(e) => handleBegin(index, e.timeStamp)}
               >
                 Начать заново →
               </button>

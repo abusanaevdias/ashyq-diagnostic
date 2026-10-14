@@ -40,6 +40,7 @@ completed['math-method-switch']={...fixtures['math-method-switch'],phase:'result
 completed['speaking-second-take']={...fixtures['speaking-second-take'],phase:'result',takeIndex:2,takes:[0,1,2].map(i=>({url:null,seconds:null,markers:[],ratings:Array(4).fill('Нужно поработать'),plan:`OWN TAKE PLAN ${i}`,confirmed:true,preparationNotes:`OWN TAKE NOTES ${i}`,noSpecificMoments:true}))};
 completed['writing-task2']={session:{...createSession(writingCases[0].id),stage:'report',furthestStage:'report',grammarDrafts:{[writingCases[0].grammarIssues[0].sentenceId]:'OWN GRAMMAR TEXT'},revisionDrafts:{task:'OWN BEFORE FEEDBACK TEXT'},postFeedbackDrafts:{task:'OWN AFTER FEEDBACK TEXT'}}};
 completed['writing-drills']={...fixtures['writing-drills'],completed:[writingDrills[0].id]};
+export function completedPilotReportState(trainer:TrainerId):Snapshot{const value=completed[trainer];assert.ok(value);return structuredClone(value);}
 for(const item of trainerCatalog){
  for(const value of [fixtures[item.id],partialPilotReportState(item.id),completed[item.id]!]){
   const before=JSON.stringify(value),blocks=pilotReportBlocks(item.id,value),text=blocks.map(b=>b.text).join('\n');assert.equal(JSON.stringify(value),before);assert.ok(text.includes(item.title));assert.ok(text.includes('JSON'));assert.ok(buildPlainDocx(blocks).length>1000);assert.equal(text.includes('blob:'),false);

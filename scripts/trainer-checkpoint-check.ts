@@ -94,6 +94,7 @@ try {
   assert.equal((finished.checkpoint!.data.first as {answer: string}).answer, 'TRUE');
   assert.equal((finished.checkpoint!.data.repair as {answer: string}).answer, 'FALSE');
   const exportedFinished = JSON.stringify({ format: 'ashyq-trainer-export-v1', ...finished });
+  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Попробовать другую ловушку/ }).click();
   await page.getByText('Перенести работу с другого устройства', { exact: true }).click();
   const beforeImport = await page.evaluate(key => localStorage.getItem(key), key);
@@ -103,6 +104,7 @@ try {
   await page.getByRole('button', { name: 'Восстановить из файла и заменить сохранение', exact: true }).click();
   await page.getByRole('heading', { name: '5. Что изменилось', exact: true }).waitFor();
   assert.equal((parseRecord(await page.evaluate(key => localStorage.getItem(key), key), item.id)!.checkpoint!.data.first as {answer: string}).answer, 'TRUE');
+  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Попробовать другую ловушку/ }).click();
   const second = await context.newPage();
   await second.goto(base + item.href);
@@ -181,6 +183,7 @@ try {
   await page.getByRole('button', { name: 'Продолжить сохранённую', exact: true }).waitFor();
   console.log('PASS guest/account A/account B/sign-out remount and storage separation (LocalDemo fixture only; no RLS claim)');
   await page.getByRole('button', { name: 'Продолжить сохранённую', exact: true }).click();
+  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Попробовать другую ловушку/ }).click();
   await page.getByText('Сохранено на этом устройстве.', { exact: true }).waitFor();
   await page.getByText(/^История этого тренажёра/).click();

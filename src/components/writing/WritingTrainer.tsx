@@ -131,7 +131,7 @@ export default function WritingTrainer() {
       <section className={styles.caseBar} aria-label="Выбор эссе">
         <div><span className={styles.overline}>ВЫБЕРИ ЭССЕ</span><p>Оба текста написаны для этого тренажёра.</p></div>
         <div className={styles.caseChoices}>
-          {writingCases.map((item) => <button key={item.id} type="button" className={`${styles.caseButton} ${item.id === essay.id ? styles.caseActive : ''}`} aria-pressed={item.id === essay.id} onClick={() => chooseCase(item.id)}><small>{item.label}</small><strong>{item.topic}</strong></button>)}
+          {writingCases.map((item) => <button key={item.id} type="button" className={`${styles.caseButton} ${item.id === essay.id ? styles.caseActive : ''}`} aria-pressed={item.id === essay.id} data-trainer-replace="writing-task2" data-trainer-own-confirm onClick={() => chooseCase(item.id)}><small>{item.label}</small><strong>{item.topic}</strong></button>)}
         </div>
       </section>
 
@@ -249,7 +249,7 @@ export default function WritingTrainer() {
               return <div key={sentenceId}><strong>Грамматика · {label}</strong><p lang="en">{draft}</p></div>;
             })}{revisionReportCriteria.map((criterion) => <div key={criterion}><strong>{criterionLabels[criterion]}</strong>{session.revisionDrafts[criterion]?.trim() && <><span className={styles.draftPhase}>До разбора · {unverifiedRevisions.includes(criterion) ? 'на проверку учителю' : 'применено к рабочему эссе'}</span><p lang="en">{session.revisionDrafts[criterion]}</p></>}{postFeedbackRevisions.includes(criterion) && <><span className={styles.draftPhase}>После разбора · на проверку учителю</span><p lang="en">{session.postFeedbackDrafts[criterion]}</p></>}</div>)}</section>}
             <div className={styles.nextPractice}><span className={styles.overline}>СЛЕДУЮЩИЙ ШАГ</span><p>{essay.nextPractice}</p></div>
-            <button type="button" className={styles.secondaryButton} onClick={restart}>Начать это эссе заново</button>
+            <button type="button" className={styles.secondaryButton} data-trainer-replace="writing-task2" data-trainer-own-confirm onClick={restart}>Начать это эссе заново</button>
           </section>}
         </main>
 

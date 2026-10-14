@@ -107,7 +107,7 @@ export default function WritingDrills() {
       })}</div>
       <div className={styles.essayCallout}><div><h2>Хочешь поработать с целым эссе?</h2><p>В основном тренажёре ты сам находишь ошибки в готовом тексте и постепенно улучшаешь его по критериям IELTS.</p></div><Link href="/writing/trainer/practice">Перейти к эссе →</Link></div>
     </section> : item && <section className={styles.exercise} aria-labelledby="exercise-title" key={item.id}>
-      <div className={styles.exerciseTop}><button type="button" className={styles.back} onClick={() => { setMode(null); clearAttempt(); }}>← Все упражнения</button><span>Задание {index + 1} из {items.length}</span></div>
+      <div className={styles.exerciseTop}><button type="button" className={styles.back} data-trainer-replace="writing-drills" onClick={() => { setMode(null); clearAttempt(); }}>← Все упражнения</button><span>Задание {index + 1} из {items.length}</span></div>
       <div className={styles.progress} aria-hidden="true"><span style={{ width: `${((index + 1) / items.length) * 100}%` }} /></div>
       <div className={styles.exerciseHead}><p className={styles.eyebrow}>{item.context}</p><h2 id="exercise-title">{item.title}</h2><p>{item.task}</p></div>
       <div className={styles.source} aria-label="Исходные идеи"><span>ИСХОДНЫЕ ИДЕИ</span>{item.source.map((line) => <p key={line}>{line}</p>)}</div>

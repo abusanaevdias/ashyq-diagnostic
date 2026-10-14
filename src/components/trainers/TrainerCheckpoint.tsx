@@ -65,10 +65,10 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   const serialized = JSON.stringify(data);
   const item = trainerById(trainer);
   const saved = enabled && JSON.stringify(record?.checkpoint?.data) === serialized;
-  const initial=useRef(serialized),allowExit=useRef(false),exitGuard=useRef({dirty:false,busy:false});
+  const initial=useRef(serialized),allowExit=useRef(false),exitGuard=useRef({dirty:false,busy:false,replaceWork:false});
   const [exitHref,setExitHref]=useState<string|null>(null),exitPanel=useRef<HTMLDivElement>(null),exitLink=useRef<HTMLAnchorElement|null>(null);
   const inRecords=!!record&&[record.checkpoint,...record.history].some(entry=>entry&&JSON.stringify(entry.data)===serialized);
-  useLayoutEffect(()=>{exitGuard.current={dirty:ephemeral||!inRecords&&serialized!==initial.current,busy};},[serialized,inRecords,busy,ephemeral]);
+  useLayoutEffect(()=>{exitGuard.current={dirty:ephemeral||!inRecords&&serialized!==initial.current,busy,replaceWork:ephemeral||serialized!==initial.current};},[serialized,inRecords,busy,ephemeral]);
   useEffect(()=>{if(exitHref){exitPanel.current?.focus({preventScroll:true});exitPanel.current?.scrollIntoView({block:'start',behavior:'instant'});}},[exitHref]);
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
@@ -76,6 +76,12 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     };
     const link=(event:MouseEvent)=>{
       if(event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+      const replacement=event.target instanceof Element?event.target.closest('button[data-trainer-replace]'):null;
+      if(replacement?.getAttribute('data-trainer-replace')===trainer){
+        if(exitGuard.current.busy||pendingWrites.current){event.preventDefault();event.stopImmediatePropagation();setMessage('Сначала закончи запись или воспроизведение и дождись сохранения. Затем повтори действие.');return;}
+        if(exitGuard.current.replaceWork&&!replacement.hasAttribute('data-trainer-own-confirm')&&!window.confirm('Заменить текущую попытку? Сначала скачай её, если хочешь оставить. Если включено автосохранение, оно запишет новую попытку вместо текущего черновика; отдельная история останется.')){event.preventDefault();event.stopImmediatePropagation();setMessage('Текущая попытка оставлена без изменений.');return;}
+        setExitHref(null);return;
+      }
       const anchor=event.target instanceof Element?event.target.closest('a'):null;if(!anchor||anchor.hasAttribute('download')||anchor.target&&anchor.target!=='_self')return;
       let url:URL;try{url=new URL(anchor.href);}catch{return;}if(!['http:','https:'].includes(url.protocol)||url.origin===location.origin&&url.pathname===location.pathname&&url.search===location.search)return;
       if(!exitGuard.current.dirty&&!exitGuard.current.busy&&!pendingWrites.current)return;
@@ -86,7 +92,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     window.addEventListener('beforeunload', warn);
     document.addEventListener('click',link,true);
     return () => {window.removeEventListener('beforeunload', warn);document.removeEventListener('click',link,true);};
-  }, []);
+  }, [trainer]);
   async function locked(action: () => void) {
     if (!navigator.locks) throw new Error('Этот браузер не поддерживает безопасное сохранение между вкладками. Скачай работу в файл.');
     pendingWrites.current++;
