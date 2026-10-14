@@ -14,7 +14,7 @@ import { BANK_RECORD_CHANGED, clearBankRecord, clearInvalidBankRecord, mutateBan
 import styles from './TrainerCheckpoint.module.css';
 
 type ReadState={kind:'ready';raw:string|null}|{kind:'blocked'|'not-ready'};
-type Intent={kind:'replace'|'clear';revision:string|null}|{kind:'restore';revision:string;entry:BankEntry}|{kind:'import';revision:string|null;record:BankRecord}|{kind:'recover';raw:string};
+type Intent={kind:'replace'|'clear';revision:string|null}|{kind:'restore';revision:string;entry:BankEntry}|{kind:'import';revision:string|null;record:BankRecord;screen:string}|{kind:'recover';raw:string};
 function subscribe(callback:()=>void){window.addEventListener('storage',callback);window.addEventListener(BANK_RECORD_CHANGED,callback);return()=>{window.removeEventListener('storage',callback);window.removeEventListener(BANK_RECORD_CHANGED,callback);};}
 function failure(error:unknown){return error instanceof DOMException&&['QuotaExceededError','SecurityError'].includes(error.name)?'Браузер не разрешил запись. Работа остаётся на экране: скачай её перед выходом.':error instanceof Error?error.message:'Не удалось выполнить действие. Работа остаётся на экране.';}
 
@@ -27,11 +27,14 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
   const read=JSON.parse(snapshot) as ReadState,raw=read.kind==='ready'?read.raw:null;
   const record=useMemo(()=>parseBankRecord(raw,source),[raw,source]);
   const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[intent,setIntent]=useState<Intent|null>(null);
+  const [readingFile,setReadingFile]=useState(false),importTicket=useRef(0),mounted=useRef(true);
+  useEffect(()=>{mounted.current=true;const ticket=importTicket;return()=>{mounted.current=false;ticket.current++;};},[]);
   const heading=useRef<HTMLHeadingElement>(null),confirmation=useRef<HTMLDivElement>(null),messageNode=useRef<HTMLParagraphElement>(null);
   const [focusMessage,setFocusMessage]=useState(false);
   const titleId=`bank-checkpoint-${source.ref.unitId}-${source.ref.contentHash.slice(0,12)}`,importId=`${titleId}-import`;
   const [baseline,setBaseline]=useState<{key:string;revision:string}|null>(null),[persisted,setPersisted]=useState('');
   const valid=validBankSnapshot(source,data),fingerprint=valid?bankSnapshotFingerprint(data):'';
+  const screen=useRef(fingerprint);useLayoutEffect(()=>{screen.current=fingerprint;},[fingerprint]);
   const storedFingerprints=useMemo(()=>new Set(record?[...record.history,...record.checkpoint?[record.checkpoint]:[]].map(entry=>bankSnapshotFingerprint(entry.data)):[]),[record]);
   const currentStored=valid&&storedFingerprints.has(fingerprint);
   const empty=emptyBankSnapshot(source);
@@ -56,7 +59,8 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
   }
   function saveCurrent(confirmed=false,expected=record?.revision??null){
     if(blocked||!compatible||!valid)return;
-    if(record?.checkpoint&&!owns&&!confirmed){setIntent({kind:'replace',revision:record.revision});return;}
+    importTicket.current++;setReadingFile(false);
+    if(record?.checkpoint&&!owns&&!confirmed){chooseIntent({kind:'replace',revision:record.revision});return;}
     try{const entry=createBankEntry(source,data);void write(expected,old=>({...old,checkpoint:entry}),fingerprint);}catch(error){setMessage(failure(error));}
   }
   async function confirm(){
@@ -65,16 +69,19 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
     if(intent.kind==='restore'){
       try{const latest=parseBankRecord(localStorage.getItem(key),source);if(!latest||latest.revision!==intent.revision)throw new Error('Сохранённая запись изменилась. Загрузка не выполнена; выбери актуальную версию.');onRestore(structuredClone(intent.entry.data));setBaseline({key,revision:latest.revision});setPersisted(bankSnapshotFingerprint(intent.entry.data));setIntent(null);setMessage('Загружена выбранная работа с исходной версией задания. Это не новая независимая попытка.');}catch(error){setMessage(failure(error));}return;
     }
-    if(intent.kind==='import'){const imported=intent.record;const written=await write(intent.revision,()=>imported,imported.checkpoint?bankSnapshotFingerprint(imported.checkpoint.data):'');if(written&&imported.checkpoint)onRestore(structuredClone(imported.checkpoint.data));return;}
+    if(intent.kind==='import'){if(intent.screen!==screen.current){setMessage('Проба на экране изменилась после выбора файла. Ничего не заменено; выбери файл заново после скачивания работы.');return;}const imported=intent.record;const written=await write(intent.revision,()=>{if(intent.screen!==screen.current)throw Error('Проба изменилась во время ожидания. Ничего не заменено.');return imported;},imported.checkpoint?bankSnapshotFingerprint(imported.checkpoint.data):'');if(written&&imported.checkpoint)onRestore(structuredClone(imported.checkpoint.data));return;}
     setBusy(true);
     try{const next=intent.kind==='recover'?await clearInvalidBankRecord(scope,source,intent.raw):await clearBankRecord(scope,source,intent.revision);setBaseline({key,revision:next.revision});setPersisted('');setIntent(null);setMessage('Локальная запись и её история очищены. Текст на экране оставлен; он не сохранится снова без твоей кнопки.');}catch(error){setMessage(failure(error));}finally{setBusy(false);setFocusMessage(true);}
   }
   async function importFile(file:File|undefined){
-    if(!file||blocked)return;setMessage('');setIntent(null);
+    const ticket=++importTicket.current;setReadingFile(false);if(!file||blocked)return;setMessage('');setIntent(null);
     if(file.type===DOCX_MIME||/\.docx$/i.test(file.name)){setMessage('Word — отчёт для чтения. Для восстановления выбери JSON этой версии задания. Работа и сохранение не заменены.');return;}
-    try{if(file.size>MAX_BANK_RECORD_BYTES)throw new Error('Файл больше1.5МБ. Существующая запись не изменена.');const value=parseBankRecord(await file.text(),source);if(!value)throw new Error('Файл повреждён, несовместим или относится к другой версии задания. Ничего не заменено.');setIntent({kind:'import',revision:record?.revision??null,record:value});}catch(error){setMessage(failure(error));}
+    setReadingFile(true);
+    try{if(file.size>MAX_BANK_RECORD_BYTES*2)throw new Error('Файл больше 3 МБ. Существующая запись не изменена; лимит самой записи — 1,5 МБ.');const raw=await file.text();if(ticket!==importTicket.current||!mounted.current)return;const value=parseBankRecord(JSON.stringify(JSON.parse(raw)),source);if(!value)throw new Error('Файл повреждён, несовместим или относится к другой версии задания. Ничего не заменено.');setIntent({kind:'import',revision:record?.revision??null,record:value,screen:fingerprint});}catch(error){if(ticket===importTicket.current&&mounted.current)setMessage(error instanceof SyntaxError?'Файл не является корректным JSON. Проба и сохранение не заменены.':failure(error));}finally{if(ticket===importTicket.current&&mounted.current)setReadingFile(false);}
   }
-  async function archive(){if(blocked||!valid||!bankSnapshotComplete(data))return;try{const entry=createBankEntry(source,data);await write(record?.revision??null,old=>archiveBankEntry({...old,checkpoint:old.checkpoint&&bankSnapshotFingerprint(old.checkpoint.data)!==fingerprint?old.checkpoint:null},entry),fingerprint);}catch(error){setMessage(failure(error));}}
+  function chooseIntent(value:Intent){importTicket.current++;setReadingFile(false);setIntent(value);}
+  function cancelImport(){importTicket.current++;setReadingFile(false);setIntent(null);}
+  async function archive(){if(blocked||!valid||!bankSnapshotComplete(data))return;importTicket.current++;setReadingFile(false);try{const entry=createBankEntry(source,data);await write(record?.revision??null,old=>archiveBankEntry({...old,checkpoint:old.checkpoint&&bankSnapshotFingerprint(old.checkpoint.data)!==fingerprint?old.checkpoint:null},entry),fingerprint);}catch(error){setMessage(failure(error));}}
   return <section className={styles.panel} aria-labelledby={titleId}>
     <h4 ref={heading} tabIndex={-1} id={titleId}>Сохранение пробы · {source.ref.unitId} · версия {source.ref.version}</h4>
     <p>Сохранение по кнопке в этом браузере; записи аккаунтов разделены. На общем устройстве работу могут увидеть другие люди. Первая работа, разбор и пересмотр сохраняются отдельно внутри пробы. Запись не публикует материал, не отправляет текст на AI и не подтверждает освоение.</p>
@@ -87,16 +94,17 @@ export default function BankCheckpoint({source,data,onRestore,onDirty,onBusy,ext
       <button type="button" disabled={blocked||!compatible||!valid} onClick={()=>saveCurrent()}>Сохранить текущую пробу</button>
       <button type="button" disabled={blocked||!valid} onClick={downloadCurrent}>Скачать текущую работу</button>
       <button type="button" disabled={blocked||!valid} onClick={()=>downloadWord(data,'current')}>Скачать отчёт Word</button>
-      {record?.checkpoint&&<button type="button" disabled={blocked} onClick={()=>setIntent({kind:'restore',revision:record.revision,entry:record.checkpoint!})}>Продолжить сохранённую пробу</button>}
+      {record?.checkpoint&&<button type="button" disabled={blocked} onClick={()=>chooseIntent({kind:'restore',revision:record.revision,entry:record.checkpoint!})}>Продолжить сохранённую пробу</button>}
       {record&&<button type="button" disabled={blocked} onClick={()=>download(raw!,'saved.json','application/json;charset=utf-8')}>Скачать сохранённую работу и историю</button>}
-      {record&&<button type="button" disabled={blocked} onClick={()=>setIntent({kind:'clear',revision:record.revision})}>Очистить сохранённую работу и историю</button>}
+      {record&&<button type="button" disabled={blocked} onClick={()=>chooseIntent({kind:'clear',revision:record.revision})}>Очистить сохранённую работу и историю</button>}
       {compatible&&valid&&bankSnapshotComplete(data)&&<button type="button" disabled={blocked} onClick={archive}>Добавить завершённую пробу в историю</button>}
-      {read.kind==='ready'&&raw!==null&&!record&&<><button type="button" disabled={blocked} onClick={()=>download(raw,'recovery.txt','text/plain;charset=utf-8')}>Скачать исходную запись пробы</button><button type="button" disabled={blocked} onClick={()=>setIntent({kind:'recover',raw})}>Очистить несовместимую запись</button></>}
+      {read.kind==='ready'&&raw!==null&&!record&&<><button type="button" disabled={blocked} onClick={()=>download(raw,'recovery.txt','text/plain;charset=utf-8')}>Скачать исходную запись пробы</button><button type="button" disabled={blocked} onClick={()=>chooseIntent({kind:'recover',raw})}>Очистить несовместимую запись</button></>}
     </div>
     <p>Word — читаемый отчёт текущего экрана. JSON — файл для восстановления работы и отдельной истории. Word не сохраняет пробу в браузере; аудиозаписи скачиваются отдельно.</p>
     <div className={styles.history}><label htmlFor={importId}>Восстановить файл этой версии задания</label><input id={importId} type="file" accept="application/json,.json" disabled={blocked||!compatible} onChange={event=>{void importFile(event.target.files?.[0]);event.target.value='';}}/></div>
-    {record&&<details className={styles.history}><summary>История этой версии · {record.history.length} из20</summary><p>До20 записей, общий лимит1.5МБ. При достижении лимита скачай историю перед очисткой. Совпадающая работа не добавляется повторно; завершение не является оценкой.</p>{record.history.map(entry=><div className={styles.actions} key={entry.id}><span>{entry.savedAt} · {bankSnapshotComplete(entry.data)?'Проба завершена':'Работа в процессе'}</span><button type="button" disabled={blocked} onClick={()=>setIntent({kind:'restore',revision:record.revision,entry})}>Загрузить занятие {entry.savedAt}</button><button type="button" disabled={blocked} onClick={()=>downloadWord(entry.data,`history-${entry.id}`,entry.savedAt)}>Скачать Word занятия {entry.savedAt}</button></div>)}</details>}
-    {intent&&<div ref={confirmation} tabIndex={-1} data-bank-confirm className={styles.warning} role="alert"><p>{intent.kind==='restore'?'Выбранная версия заменит текст на экране. Текущее несохранённое содержимое нужно сначала скачать.':intent.kind==='replace'?'Текущая проба заменит сохранённый черновик этой версии задания. История останется.':intent.kind==='import'?'Файл заменит локальный черновик и историю этой версии. Текущую работу и прежнюю историю нужно сначала скачать.':intent.kind==='recover'?'Будет очищена только эта несовместимая запись. Скачай исходные данные для восстановления до подтверждения.':'Будут очищены сохранённая работа и история этой версии. Текст на экране останется, сохранение по кнопке.'}</p><div className={styles.actions}><button type="button" disabled={blocked} onClick={()=>{void confirm();}}>Подтвердить {intent.kind==='restore'?'загрузку':intent.kind==='import'?'восстановление':intent.kind==='replace'?'замену':'очистку'}</button><button type="button" disabled={blocked} onClick={()=>{setIntent(null);heading.current?.focus({preventScroll:true});heading.current?.scrollIntoView({block:'start',behavior:'instant'});}}>Отменить действие</button></div></div>}
+    {record&&<details className={styles.history}><summary>История этой версии · {record.history.length} из20</summary><p>До20 записей, общий лимит1.5МБ. При достижении лимита скачай историю перед очисткой. Совпадающая работа не добавляется повторно; завершение не является оценкой.</p>{record.history.map(entry=><div className={styles.actions} key={entry.id}><span>{entry.savedAt} · {bankSnapshotComplete(entry.data)?'Проба завершена':'Работа в процессе'}</span><button type="button" disabled={blocked} onClick={()=>chooseIntent({kind:'restore',revision:record.revision,entry})}>Загрузить занятие {entry.savedAt}</button><button type="button" disabled={blocked} onClick={()=>downloadWord(entry.data,`history-${entry.id}`,entry.savedAt)}>Скачать Word занятия {entry.savedAt}</button></div>)}</details>}
+    {readingFile&&<div className={styles.warning}><p role="status">Читаем выбранный файл… Проба пока не заменена.</p><button type="button" onClick={cancelImport}>Отменить чтение файла</button></div>}
+    {intent&&<div ref={confirmation} tabIndex={-1} data-bank-confirm className={styles.warning} role="alert"><p>{intent.kind==='restore'?'Выбранная версия заменит текст на экране. Текущее несохранённое содержимое нужно сначала скачать.':intent.kind==='replace'?'Текущая проба заменит сохранённый черновик этой версии задания. История останется.':intent.kind==='import'?'Файл заменит локальный черновик и историю этой версии. Текущую работу и прежнюю историю нужно сначала скачать.':intent.kind==='recover'?'Будет очищена только эта несовместимая запись. Скачай исходные данные для восстановления до подтверждения.':'Будут очищены сохранённая работа и история этой версии. Текст на экране останется, сохранение по кнопке.'}</p><div className={styles.actions}><button type="button" disabled={blocked} onClick={()=>{void confirm();}}>Подтвердить {intent.kind==='restore'?'загрузку':intent.kind==='import'?'восстановление':intent.kind==='replace'?'замену':'очистку'}</button><button type="button" disabled={blocked} onClick={()=>{cancelImport();heading.current?.focus({preventScroll:true});heading.current?.scrollIntoView({block:'start',behavior:'instant'});}}>Отменить действие</button></div></div>}
     {valid&&bankSnapshotComplete(data)&&nextPractice.length>0&&<nav className={styles.outcome} aria-label="Следующие пробы этого тренажёра"><h4>Что попробовать дальше</h4><p>Другие авторские черновики этого тренажёра. Выбор по формату задания; сложность ещё не откалибрована. Сначала сохрани или скачай нужную текущую работу.</p><ul>{nextPractice.map(item=><li key={item.ref.unitId}><a href={bankPracticeHref(item.ref)!}>{item.ref.unitId} · {item.title} →</a><p>{item.practiceType} · {bankSkillLabel(item.skill)}</p></li>)}</ul><div className={styles.actions}><a href="/trainers/bank">Выбрать другой навык →</a></div></nav>}
   </section>;
 }
