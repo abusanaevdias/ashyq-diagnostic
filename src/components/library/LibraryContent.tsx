@@ -24,7 +24,7 @@ export default function LibraryContent({ blocks, title }: { blocks: LibraryBlock
     const sourceUrl = block.href || (block.text && /^https?:\/\/\S+$/.test(block.text.trim()) ? block.text.trim() : undefined);
     if (sourceUrl) return <p key={index}><a href={sourceUrl} className={styles.sourceLink} target="_blank" rel="noopener noreferrer">{block.text} <span aria-hidden="true">↗</span><span className="sr-only"> (новая вкладка)</span></a></p>;
     if (block.kind === 'heading') return <h3 key={index}>{block.text}</h3>;
-    if (block.kind === 'criterion') return <p className={styles.criterion} key={index}>{block.text}<span>Учебный ориентир ASHYQ</span></p>;
+    if (block.kind === 'criterion') return <p className={styles.criterion} key={index}>{block.text}<span>Авторский ориентир для примера; не ваш балл</span></p>;
     const english = block.text && !/[А-Яа-яЁё]/.test(block.text) && /[a-z]/i.test(block.text);
     return <p key={index} lang={english ? 'en' : undefined}>{block.text}</p>;
   })}</div>;

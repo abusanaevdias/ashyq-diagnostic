@@ -86,7 +86,7 @@
 .quizTop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.quizTop strong{font-size:1.1rem;font-weight:700}.quizTop>span{font-size:.8rem;color:var(--ink-soft)}
 .quizSteps,.quizActions{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
 .quizSteps button,.quizActions button{min-width:44px;min-height:44px;padding:10px 16px;border:1px solid var(--hairline);border-radius:var(--r-sm);background:var(--surface);color:var(--ink);font-size:.85rem;cursor:pointer}
-.quizSteps button[aria-current='step'],.quizActions .quizCheck{background:var(--red-deep);color:var(--on-red);border-color:var(--red-deep)}
+.quizActions .quizCheck{background:var(--red-deep);color:var(--on-red);border-color:var(--red-deep)}
 .quizActions button:disabled{opacity:.6;cursor:not-allowed}
 .quizHeading{font-weight:700;color:var(--red-deep);font-size:.8rem;scroll-margin-top:152px}.quizPrompt{white-space:pre-line;font-size:1.02rem;line-height:1.8;margin:14px 0 20px;overflow-wrap:anywhere}
 .quizOptions{display:grid;gap:10px;border:0;margin:20px 0}.quizOptions legend{font-size:.8rem;font-weight:600;margin-bottom:12px}.quizOptions label{display:flex;align-items:flex-start;gap:12px;padding:14px;border:1px solid var(--hairline);border-radius:var(--r-sm);min-height:48px;cursor:pointer;font-size:.93rem;line-height:1.7}.quizOptions label:has(input:checked){border-color:var(--red-deep);background:var(--blush-soft)}.quizOptions input{flex-shrink:0;margin-top:6px;accent-color:var(--red-deep)}
@@ -111,3 +111,35 @@
 @media(max-width:360px){.container{padding-inline:16px}.contents nav{grid-template-columns:1fr}.heroCard{padding:24px}.lessonSection{padding:20px 16px}.levels{gap:6px;font-size:.85rem}}
 @media(prefers-reduced-motion:reduce){.card{transition:none}}
 @media print{.contents,.padActions,.filters,.search,.actions,.audio{display:none}.reader{display:block}.lessonSection{padding:16px 0;border:none}.answers:not([open])::after{content:'Откройте ответы перед печатью либо используйте PDF-разбор.';display:block;padding:20px}}
+
+/* Guided library: one stage at a time, source content retained in the document. */
+.workspace{padding-bottom:40px;min-width:0}
+.workspace [hidden]{display:none!important}
+.stageChooser{border-block:1px solid var(--hairline);padding:12px 0;margin-bottom:24px}
+.stageChooser>summary{cursor:pointer;min-height:48px;display:flex;align-items:center;font-weight:700;gap:12px}
+.stageChooser>summary::after{content:'+';margin-left:auto}.stageChooser[open]>summary::after{content:'−'}
+.activePanel{scroll-margin-top:108px;outline:none;min-width:0}
+.practiceFields{border:0;padding:0;margin:0;min-width:0}
+.quizSteps button[aria-current='step']{outline:2px solid var(--ink);outline-offset:3px;font-weight:700}
+.quizSteps button[data-result='correct'],.quizFeedback[data-result='correct']{background:var(--success-soft);color:var(--success);border-color:var(--success)}
+.quizSteps button[data-result='wrong'],.quizFeedback[data-result='wrong']{background:var(--blush-soft);color:var(--red-deep);border-color:var(--red-deep)}
+.quizSteps button[data-result='reviewed']{background:var(--bg);border-style:dashed}
+.quizActions>a{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--hairline);border-radius:var(--r-sm);padding:10px 16px;font-size:.85rem;text-decoration:underline;text-underline-offset:4px}
+.languageHint,.taskCard{background:var(--bg);border:1px solid var(--hairline);border-radius:var(--r-md);padding:20px;margin:20px 0;line-height:1.8;overflow-wrap:anywhere}
+.languageHint{font-size:.9rem;font-weight:600;border-left:4px solid var(--ink)}
+.taskCard>p[lang='en']{font-size:1.05rem;margin-top:12px}
+.annotatedEssay{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:start}
+.essayText{min-width:0;line-height:1.95;overflow-wrap:anywhere}.essayText h3,.reviewPanel>h3{font-family:var(--font-display);font-size:1.3rem;font-weight:800;line-height:1.4;margin:20px 0}.essayText>p[lang='en']{margin:20px 0;font-size:1.05rem}
+.reviewPanel{position:sticky;top:110px;min-width:0;padding:20px;background:var(--bg);border:1px solid var(--hairline);border-radius:var(--r-md);}
+.reviewPanel .quizSteps button{font-size:.78rem;padding:10px}
+.reviewComment h4{font-weight:700;font-size:1.1rem}.reviewComment{animation:reviewEnter var(--t-base) ease-out}.reviewComment .prose{font-size:.95rem}
+.sentenceMark{background:var(--blush);color:var(--ink);box-shadow:0 2px 0 var(--red-deep);transition:background-color var(--t-base);padding:2px 0;scroll-margin-top:140px}
+.quizInstructions ul{list-style:disc;padding-left:22px;margin-top:16px}.quizInstructions li{margin:12px 0}
+@keyframes reviewEnter{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.annotatedEssay{grid-template-columns:1fr}.reviewPanel{position:static}}
+@media(max-width:480px){.stageGrid{grid-template-columns:1fr}.taskCard,.reviewPanel{padding:16px}.quizSteps button{padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){.reviewComment{animation:none}.sentenceMark{transition:none}}
+
+.mobileReviewNav,.inlineReview{display:none}
+@media(max-width:900px){.reviewPanel{display:none}.mobileReviewNav{display:flex}.inlineReview{display:block;background:var(--bg);border-left:4px solid var(--red-deep);padding:16px;margin:20px 0;scroll-margin-top:140px;line-height:1.7}.inlineReview .quizActions{margin-bottom:0}}
+.stageGrid .stageProgress{font-size:.76rem;color:var(--ink);font-weight:500;line-height:1.6}

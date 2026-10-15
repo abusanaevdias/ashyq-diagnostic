@@ -1,3 +1,4 @@
+import { runLibraryLearningCheck } from './library-learning-e2e';
 import assert from 'node:assert/strict';
 import { chromium, type Page } from 'playwright';
 import { mkdir } from 'node:fs/promises';
@@ -10,7 +11,7 @@ async function main() {
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     async function open(slug: string, code: string) {
-      await page.goto(`${base}/library/${slug}`, { waitUntil: 'networkidle' });
+      await page.goto(`${base}/library/${slug}#${code.toLowerCase()}`, { waitUntil: 'networkidle' });
       return page.getByRole('region', { name: `Интерактивная практика ${code}`, exact: true });
     }
     async function noOverflow(page: Page) { assert.equal(await page.evaluate(() => Math.max(0, document.documentElement.scrollWidth - innerWidth)), 0); }
@@ -32,7 +33,7 @@ async function main() {
     assert.equal(await quiz.locator('input[value="B"]').isChecked(), true, 'answer retained between steps');
     await noOverflow(page);
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await quiz.locator('input[value="B"]').isChecked(), false, 'no undisclosed persistence');
+    assert.equal(await quiz.locator('input[value="B"]').isChecked(), true, 'disclosed device persistence survives reload');
     quiz = await open('reading-equipment', 'R01-B');
     await quiz.getByRole('radio', { name: 'FALSE', exact: true }).check();
     await quiz.getByRole('button', { name: 'Проверить ответ', exact: true }).click();
@@ -65,6 +66,7 @@ async function main() {
     await quiz.getByRole('button', { name: 'Проверить ответ', exact: true }).click();
     await quiz.scrollIntoViewIfNeeded();
     await page.screenshot({ path: 'screenshots/library-interactive-mobile.png', fullPage: false });
+    await runLibraryLearningCheck();
     console.log('PASS practice E2E: MCQ wrong/correct/edit, open comparison, score boundaries, step retention, reload, Reading/Grammar/Listening, spelling variants, reset, mobile overflow, console');
   } finally { await browser.close(); }
 }
