@@ -9,6 +9,19 @@ export type WritingFeedback = {
 
 export const feedbackCriteria: readonly FeedbackCriterion[] = ['grammar', 'task', 'coherence', 'lexical'];
 
+/** Bound even an auth adapter promise that does not support AbortSignal. */
+export function awaitWritingRequest<T>(pending: Promise<T>, signal: AbortSignal): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const abort = () => reject(signal.reason);
+    pending.then(
+      value => { signal.removeEventListener('abort', abort); resolve(value); },
+      error => { signal.removeEventListener('abort', abort); reject(error); },
+    );
+    if (signal.aborted) { reject(signal.reason); return; }
+    signal.addEventListener('abort', abort, { once: true });
+  });
+}
+
 /** A schema-conforming model result can still be wrong or ungrounded. */
 export function sanitizeFeedback(value: unknown, essay: string): WritingFeedback | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
