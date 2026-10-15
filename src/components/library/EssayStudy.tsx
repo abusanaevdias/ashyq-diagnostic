@@ -32,7 +32,8 @@ export default function EssayStudy({example, sections, review: explicitReview}: 
     requestAnimationFrame(() => {
       if(window.matchMedia('(max-width:900px)').matches) {
         const note = frame.current?.querySelector<HTMLElement>('[data-inline-review]');
-        note?.focus({preventScroll:true}); note?.scrollIntoView({block:'center',behavior:'instant'});
+        note?.focus({preventScroll:true});
+        (frame.current?.querySelector('mark') ?? note)?.scrollIntoView({block:'start',behavior:'instant'});
       } else frame.current?.querySelector('mark')?.scrollIntoView({block:'center',behavior:'instant'});
     });
   }

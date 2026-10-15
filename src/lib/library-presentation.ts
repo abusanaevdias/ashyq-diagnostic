@@ -22,6 +22,7 @@ export function reviewSteps(section: LibrarySection): {title: string; blocks: Li
   const steps: {title: string; blocks: LibraryBlock[]}[] = [];
   for (const b of section.blocks) {
     if (b.kind === 'criterion') steps.push({title: b.text ?? 'Критерий', blocks: []});
+    else if (b.text?.trim() === 'Что исправить первым') steps.push({title:b.text,blocks:[]});
     else if (b.kind === 'table' && b.rows && b.rows.length > 1) {
       for (const row of b.rows.slice(1)) steps.push({title: row[0], blocks: [{kind:'paragraph', text:row.slice(1).join(' · ')}]});
     } else if (steps.length) steps.at(-1)!.blocks.push(b);
