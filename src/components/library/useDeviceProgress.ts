@@ -1,6 +1,6 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 type Entry = { raw: string; problem: string; snapshot: string };
 const entries = new Map<string, Entry>();
@@ -39,7 +39,8 @@ function subscribe(key: string, listener: () => void) {
 /** Synchronous device writes survive an immediate reload. Compare before writing to avoid overwriting a changed tab. */
 export function useDeviceProgress(code: string) {
   const key = `ashyq:library-progress:v1:${code}`;
-  const snapshot = useSyncExternalStore(listener => subscribe(key, listener), () => entryFor(key).snapshot, server);
+  const subscribeToKey = useCallback((listener: () => void) => subscribe(key, listener), [key]);
+  const snapshot = useSyncExternalStore(subscribeToKey, () => entryFor(key).snapshot, server);
   const {raw, problem}: {raw: string; problem: string} = snapshot ? JSON.parse(snapshot) : {raw:'', problem:''};
   function update(next: string, reset = false) {
     if (!snapshot) return false;
