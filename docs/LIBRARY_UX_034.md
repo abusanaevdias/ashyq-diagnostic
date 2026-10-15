@@ -50,3 +50,11 @@ Late adversarial reproduction: a clean cache snapshot survived SPA navigation wh
 
 
 CI38761826584 correctly blocked release on the new cross-page Back regression. Actual Next16.3.5 reproduction: native same-document fragments create `history.state=null`; after leaving via a Next link, Back changed the URL but left the library catalog rendered. Root fix preserves this route's previous opaque history state for same-route fragments, without depending on private Next field names or changing another route's entries. The stricter Back/Forward checks await actual route/stage rendering, not just a changed address. Fresh production-build hash-state/cross-page Back probe and full42/198 browser suite now pass, including the second-tab edit while the first lesson is unmounted. No failed head was merged. Apple concept and teacher brief are separate local visualization artifacts requested later by the user, not product design changes.
+
+## Released 2026-10-15
+
+PR154 merged verified feature d2a260f0a3c1ebd78f14725df198bd6112f34510 as 78cfc3927a1378a954284936cb918697360ca9b8. Full exact-feature CI38765357170 succeeded in13m18s; production deployment7098014746 succeeded. The merge tree matched the verified feature tree.
+
+Canonical https://ashyq-diagnostic.vercel.app acceptance passed: all42 chapters,198 sections,322 exercise IDs,24 Task2/6 Task1 texts, source digests, HTTP/SEO/sitemap/downloads/404. Representative real-browser acceptance passed wrong cross/correct check/ungraded state, reload persistence, exclusive stages, keyboard Enter, English instruction, all three cited grammar sentence highlights, four viewport widths and no external answer POST; zero page errors. Privacy disclosure was confirmed live. Local all322-control and all198-stage browser audits supplement these canonical checks; synthetic interface checks do not establish learning gains or human content approval.
+
+The separate Apple concept and teacher brief are local review artifacts; no Apple redesign was deployed. The108 DRAFT modules still require actual human review, and TRAINERS-COMPLETE-033 remains separately blocked. Documentation closeout changes no product source.
