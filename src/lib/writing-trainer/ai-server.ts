@@ -1,9 +1,10 @@
 import { createHash } from 'node:crypto';
 import 'server-only';
+import { writingStepSignal } from './request-budget';
 import { sanitizeFeedback, type FeedbackCriterion, type WritingFeedback } from './ai-feedback';
 
 const JWT = /^[\w-]+\.[\w-]+\.[\w-]+$/;
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const MODEL = 'gpt-6-sol';
 const busyUsers = new Set<string>();
 
@@ -24,11 +25,11 @@ function projectUrl(raw: string): string {
   return raw.replace(/(\/(rest|auth)\/v1)?\/?$/, '');
 }
 
-async function supabaseGet(url: string, key: string, token: string): Promise<Response> {
-  return fetch(url, { headers: { apikey: key, Authorization: `Bearer ${token}` }, cache: 'no-store', signal: AbortSignal.timeout(5_000) });
+async function supabaseGet(url: string, key: string, token: string, signal?: AbortSignal): Promise<Response> {
+  return fetch(url, { headers: { apikey: key, Authorization: `Bearer ${token}` }, cache: 'no-store', signal: writingStepSignal(signal, 5_000) });
 }
 
-export async function authorizedPilotUser(request: Request): Promise<string | null> {
+export async function authorizedPilotUser(request: Request, signal: AbortSignal = request.signal): Promise<string | null> {
   const token = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ?? '';
   if (!JWT.test(token) || token.length > 4_096) return null;
   const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
@@ -37,15 +38,15 @@ export async function authorizedPilotUser(request: Request): Promise<string | nu
   if (!/^https:\/\/[^/]+$/.test(url) && !/^http:\/\/127\.0\.0\.1:\d+$/.test(url)) return null;
   if (!key) return null;
   try {
-    const userResponse = await supabaseGet(`${url}/auth/v1/user`, key, token);
+    const userResponse = await supabaseGet(`${url}/auth/v1/user`, key, token, signal);
     if (!userResponse.ok) return null;
     const user = await userResponse.json() as AuthUser;
     if (typeof user.id !== 'string' || !UUID.test(user.id) || typeof user.email !== 'string') return null;
     if (user.email.trim().toLowerCase() !== process.env.WRITING_AI_PILOT_EMAIL?.trim().toLowerCase()) return null;
     if (user.user_metadata?.is_minor === true) return null;
     const [profileResponse, classesResponse] = await Promise.all([
-      supabaseGet(`${url}/rest/v1/profiles?select=role&id=eq.${user.id}&limit=1`, key, token),
-      supabaseGet(`${url}/rest/v1/classes?select=subject&subject=ilike.*IELTS*&limit=20`, key, token),
+      supabaseGet(`${url}/rest/v1/profiles?select=role&id=eq.${user.id}&limit=1`, key, token, signal),
+      supabaseGet(`${url}/rest/v1/classes?select=subject&subject=ilike.*IELTS*&limit=20`, key, token, signal),
     ]);
     if (!profileResponse.ok || !classesResponse.ok) return null;
     const profiles = await profileResponse.json() as Array<{ role?: unknown }>;
@@ -55,7 +56,8 @@ export async function authorizedPilotUser(request: Request): Promise<string | nu
   } catch { return null; }
 }
 
-async function reserve(userId: string): Promise<200 | 429 | 503> {
+async function reserve(userId: string, signal?: AbortSignal): Promise<200 | 429 | 503> {
+  if (signal?.aborted) return 503;
   const day = new Date().toISOString().slice(0, 10);
   const hash = createHash('sha256').update(userId).digest('hex');
   if (busyUsers.has(hash)) return 429;
@@ -68,7 +70,7 @@ async function reserve(userId: string): Promise<200 | 429 | 503> {
       method: 'POST',
       headers: { apikey: key!, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ p_key: limitKey, p_window_seconds: 86_400, p_max: max }),
-      cache: 'no-store', signal: AbortSignal.timeout(5_000),
+      cache: 'no-store', signal: writingStepSignal(signal, 5_000),
     });
     if (!response.ok) return null;
     const allowed: unknown = await response.json();
@@ -104,8 +106,8 @@ const feedbackSchema = {
   required: ['summary', 'strengths', 'issues', 'nextAction'],
 };
 
-export async function generateWritingFeedback(userId: string, input: FeedbackInput): Promise<{ feedback?: WritingFeedback; status: number }> {
-  const reservation = await reserve(userId);
+export async function generateWritingFeedback(userId: string, input: FeedbackInput, signal?: AbortSignal): Promise<{ feedback?: WritingFeedback; status: number }> {
+  const reservation = await reserve(userId, signal);
   if (reservation !== 200) return { status: reservation };
   try {
     const response = await fetch('https://api.openai.com/v1/responses', {
@@ -123,7 +125,7 @@ export async function generateWritingFeedback(userId: string, input: FeedbackInp
         ],
       }),
       cache: 'no-store',
-      signal: AbortSignal.timeout(30_000),
+      signal: writingStepSignal(signal, 30_000),
     });
     if (!response.ok) return { status: response.status === 429 ? 429 : 502 };
     const result = await response.json() as { status?: string; output?: Array<{ type?: string; content?: Array<{ type?: string; text?: string }> }> };
@@ -132,6 +134,6 @@ export async function generateWritingFeedback(userId: string, input: FeedbackInp
     if (!output) return { status: 502 };
     const feedback = sanitizeFeedback(JSON.parse(output) as unknown, input.working);
     return feedback ? { feedback, status: 200 } : { status: 502 };
-  } catch { return { status: 502 }; }
+  } catch { return { status: signal?.aborted ? 503 : 502 }; }
   finally { release(userId); }
 }
