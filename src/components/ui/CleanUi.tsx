@@ -5,6 +5,7 @@ import { BLOG_IS_DEMO } from '@/data/blog';
 import { SOCIAL_LINKS } from '@/lib/site';
 import styles from './CleanUi.module.css';
 import { MobileNavMenu } from './MobileNavMenu';
+import StudyNavigation from './StudyNavigation';
 
 type IconName = 'book' | 'chart' | 'chat' | 'compass' | 'lock' | 'mail' | 'pin' | 'search' | 'send' | 'spark' | 'target';
 
@@ -47,13 +48,14 @@ export function ButtonLink({ href, children, tone = 'red', ariaLabel }: { href: 
   return <Link href={href} className={className} aria-label={ariaLabel}>{children}<ArrowIcon /></Link>;
 }
 
-export function NavBar({ onStart, diagnosticHref = '/diagnostic' }: { onStart?: () => void; diagnosticHref?: string }) {
+export function NavBar({ onStart, diagnosticHref = '/diagnostic', study=false }: { onStart?: () => void; diagnosticHref?: string; study?:boolean }) {
   return (
-    <header className={styles.navWrap}>
+    <header className={`${styles.navWrap} ${study?styles.studyNav:''}`}>
       <nav className={styles.nav} aria-label="Основная навигация">
         <Link className={styles.logoLink} href="/" aria-label="ASHYQ — на главную">
           <Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} priority />
         </Link>
+        {study&&<StudyNavigation/>}
         <div className={styles.navLinks}>
           <Link className={`${styles.navLink} ${styles.freeNavLink}`} href="/library">Бесплатная библиотека</Link>
           <Link className={styles.navLink} href="/courses">Курсы</Link>
@@ -76,13 +78,14 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic' }: { onStart?: 
         <Link className={styles.searchLink} href="/search" aria-label="Открыть поиск по сайту">
           <LineIcon name="search" />
         </Link>
-        <NavAccount variant="bar" />
+        {study?<div className={styles.studyAccount}><NavAccount variant="bar" /></div>:<NavAccount variant="bar" />}
         {onStart ? (
           <button type="button" className={styles.buttonRed} onClick={onStart}>Диагностика<ArrowIcon /></button>
         ) : (
           <ButtonLink href={diagnosticHref}>Диагностика</ButtonLink>
         )}
       </nav>
+      {study&&<StudyNavigation mobile/>}
       <Link className={styles.freeMobileLink} href="/library"><strong>Бесплатная библиотека</strong><span>IELTS · SAT</span><ArrowIcon /></Link>
     </header>
   );

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function WritingCalibrationPage() {
   return <>
-    <NavBar />
+    <NavBar study />
     <WritingCalibration />
     <Footer />
   </>;

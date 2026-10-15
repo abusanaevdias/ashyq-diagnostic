@@ -1,14 +1,18 @@
-.page { max-width: 1160px; margin: 0 auto; padding: 80px 24px 100px; color: var(--ink); }
+.page { max-width: 1220px; margin: 0 auto; padding: 64px 32px 100px; color: var(--ink); }
 .eyebrow { margin: 0 0 16px; color: var(--red-deep); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
-.page h1 { max-width: 820px; margin: 0; font: 800 clamp(2.7rem, 6vw, 5rem)/1.05 var(--font-display); letter-spacing: -.055em; }
+.page h1 { max-width: 900px; margin: 0; font: 650 clamp(2.5rem, 5vw, 4.2rem)/1.08 var(--font-display); letter-spacing: -.05em; }
 .intro { max-width: 770px; margin: 22px 0 42px; color: var(--ink-soft); font-size: 1.1rem; line-height: 1.65; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.card { display: flex; flex-direction: column; min-width: 0; min-height: 290px; padding: 30px; border: 1px solid var(--hairline); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-card); }
+.card { display: flex; flex-direction: column; min-width: 0; min-height: 325px; padding: 28px; border: 1px solid var(--hairline); border-radius: var(--r-xxl); background: var(--surface); }
 .card span { color: var(--red-deep); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
-.card h2 { margin: 20px 0 0; font: 800 2rem/1.18 var(--font-display); letter-spacing: -.04em; }
+.card h2 { margin: 18px 0 0; font: 650 1.5rem/1.2 var(--font-display); letter-spacing: -.03em; }
 .card p { margin: 14px 0 30px; color: var(--ink-soft); line-height: 1.55; }
-.card a { align-self: start; display: inline-flex; align-items: center; min-height: 46px; margin-top: auto; padding: 10px 18px; border-radius: var(--r-pill); background: var(--dark); color: var(--on-dark); font-weight: 800; }
-.card a:hover { background: var(--ink-soft); }
+.card a { align-self: start; display: inline-flex; align-items: center; gap:12px; min-height: 46px; margin-top: auto; padding: 10px 0; color:var(--red-deep); font-weight:600; }
+.card a:hover { text-decoration:underline; text-underline-offset:4px; }
+.card a span { font-size:1.3rem; }
+.controls { display:flex; justify-content:space-between; flex-wrap:wrap; align-items:center; gap:16px; margin:32px 0 24px; }
+.controls p { font-size:.82rem; color:var(--ink-soft); }
+.art { display:flex; align-items:center; min-height:112px; margin-top:12px; font:550 clamp(1.6rem,3vw,2.8rem)/1.2 var(--font-display); letter-spacing:-.045em; color:var(--red-deep); overflow-wrap:anywhere; }
 .note { margin: 26px 0 0; color: var(--ink-soft); font-size: 14px; line-height: 1.55; }
 .page a:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

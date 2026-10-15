@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <NavBar />
+      <NavBar study />
       <TrainerIdentityBoundary><MathMethodSwitch /></TrainerIdentityBoundary>
       <Footer />
     </>

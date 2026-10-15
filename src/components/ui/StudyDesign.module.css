@@ -1,0 +1,33 @@
+.root {
+  --font-display: var(--font-system);
+  --font-body: var(--font-system);
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+.root :is(h1,h2,h3) { font-weight:650; }
+.root h1 { text-wrap:balance; }
+.root :is(button,input,textarea,select) { font-family:var(--font-body); }
+.root :is(button,a,summary) { -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+.root :is(button,a,summary):focus-visible { outline:3px solid var(--red-deep); outline-offset:4px; }
+.root button:not(:disabled):active { transform:scale(.98); transition:transform 80ms ease-out; }
+.root :is(textarea,input,select) { accent-color:var(--red-deep); }
+.root textarea { line-height:1.7; }
+.root :is(input,textarea,select):focus-visible { outline:2px solid var(--red-deep); outline-offset:3px; }
+@media(prefers-reduced-motion:reduce) {
+ .root button:not(:disabled):active { transform:none; transition:none; }
+ .root { scroll-behavior:auto; }
+}
+@media(prefers-contrast:more) {
+ .root { --hairline:var(--ink-soft); }
+}
+
+/* Approved learning surfaces: familiar controls with clearer type and spacing. */
+.root main button { border-radius:var(--r-pill); }
+.root main :is(button,a) { scroll-margin-top:160px; }
+.root main p { text-wrap:pretty; }
