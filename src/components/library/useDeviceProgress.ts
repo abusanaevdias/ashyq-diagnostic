@@ -25,6 +25,15 @@ function subscribe(key: string, listener: () => void) {
     publish(key, old.raw, 'Ответы изменены в другой вкладке. Текущая страница оставлена без изменений. Скопируйте нужные правки и загрузите сохранённую версию.');
   };
   window.addEventListener(event, local); window.addEventListener('storage', external);
+  // SPA navigation keeps this module alive while no lesson is subscribed.
+  // Refresh clean snapshots on remount; never discard an unsaved/conflicting draft.
+  const existing = entryFor(key);
+  if (!existing.problem) {
+    try {
+      const disk = localStorage.getItem(key) ?? '';
+      if (disk !== existing.raw) publish(key, disk);
+    } catch { publish(key, existing.raw, 'Браузер запретил чтение сохранённых ответов. Текущий текст остаётся на странице; скопируйте его перед выходом.'); }
+  }
   return () => {window.removeEventListener(event, local); window.removeEventListener('storage', external);};
 }
 /** Synchronous device writes survive an immediate reload. Compare before writing to avoid overwriting a changed tab. */

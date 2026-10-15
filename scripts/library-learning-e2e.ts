@@ -57,6 +57,11 @@ export async function runLibraryLearningCheck(){
   await sq.getByLabel('Ваш ответ',{exact:true}).fill('Keep this conflicting local draft.');
   assert.ok((await second.evaluate(()=>localStorage.getItem('ashyq:library-progress:v1:U02-Q-2')))!.includes('A newer saved answer from the first tab.'));
   second.once('dialog',d=>d.accept());await sq.getByRole('button',{name:'Загрузить сохранённую версию',exact:true}).click();assert.equal(await sq.getByLabel('Ваш ответ',{exact:true}).inputValue(),'A newer saved answer from the first tab.');await second.close();
+  await page.locator('a[href="/library"]').first().click();await page.waitForURL('**/library');
+  const away=await context.newPage();await away.goto(`${base}/library/u02-talent-practice#u02-q-2`,{waitUntil:'networkidle'});
+  await away.getByRole('region',{name:'Интерактивная практика U02-Q-2',exact:true}).getByLabel('Ваш ответ',{exact:true}).fill('Updated while the first tab was outside the lesson.');
+  await page.goBack();await page.getByRole('region',{name:'Интерактивная практика U02-Q-2',exact:true}).waitFor();
+  assert.equal(await page.getByRole('region',{name:'Интерактивная практика U02-Q-2',exact:true}).getByLabel('Ваш ответ',{exact:true}).inputValue(),'Updated while the first tab was outside the lesson.','SPA remount refreshes a clean snapshot');await away.close();
   for(const [slug,code] of [['task1-courses','T1A-C'],['task1-budget','T1B-C'],['task1-process','T1C-C']]){
    const chapter=LIBRARY_CHAPTERS.find(c=>raw.sections.some(s=>s.code===code&&s.source===c.source&&s.page>=c.start&&s.page<=c.end))!;
    assert.ok(chapter,slug);await page.goto(`${base}/library/${chapter.slug}#${code.toLowerCase()}`,{waitUntil:'networkidle'});
