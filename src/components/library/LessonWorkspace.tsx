@@ -35,13 +35,13 @@ export default function LessonWorkspace({sections, practice, pdf}: {sections: Li
   const active = sections.find(s => s.code.toLowerCase() === selected);
   const panel = useRef<HTMLDivElement>(null);
   const chooser = useRef<HTMLDetailsElement>(null);
-  useEffect(()=>{if(chooser.current) chooser.current.open=!active;if(active){panel.current?.focus({preventScroll:true});panel.current?.scrollIntoView({block:'start',behavior:'instant'});}},[active]);
+  useEffect(()=>{const wide=matchMedia('(min-width:1101px)');const sync=()=>{if(chooser.current)chooser.current.open=!active||wide.matches;};sync();wide.addEventListener('change',sync);if(active){panel.current?.focus({preventScroll:true});panel.current?.scrollIntoView({block:'start',behavior:'instant'});}return()=>wide.removeEventListener('change',sync);},[active]);
   const examples = sections.filter(isEssay);
   const firstPractice = sections.find(s => s.exercise && !s.answer);
   const reference = sections.filter(s => !s.exercise && !s.answer && !isEssay(s) && !reviewExample(s, sections) && !/UPGRADE|KEY/.test(s.code));
   return <div className={styles.workspace}>
     <noscript><p>Для выбора этапов, проверки и сохранения ответов включите JavaScript. Полный материал доступен по ссылке на PDF ниже.</p></noscript>
-    <details ref={chooser} open={!active} className={styles.stageChooser}><summary>Этапы занятия · {active ? 'выбрать другой' : 'выберите, с чего начать'}</summary><LessonGuide sections={sections} practice={practice}/></details>
+    <details ref={chooser} open={!active} className={styles.stageChooser}><summary>Этапы занятия · {active ? 'выбрать другой' : 'выберите, с чего начать'}</summary><LessonGuide sections={sections} practice={practice} activeCode={active?.code}/></details>
     {!active && <p className={styles.small}>{selected && selected!=='lesson-stages' ? 'Этот этап не найден. Выберите доступный этап выше.' : 'Откройте пример или практику. На экране будет только выбранный этап; вернуться к выбору можно в любой момент.'}</p>}
     <div ref={panel} tabIndex={-1} className={styles.activePanel}>
       {sections.map(section => {

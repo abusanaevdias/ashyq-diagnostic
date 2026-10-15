@@ -143,3 +143,39 @@
 .mobileReviewNav,.inlineReview{display:none}
 @media(max-width:900px){.reviewPanel{display:none}.mobileReviewNav{display:flex}.inlineReview{display:block;background:var(--bg);border-left:4px solid var(--red-deep);padding:16px;margin:20px 0;scroll-margin-top:140px;line-height:1.7}.inlineReview .quizActions{margin-bottom:0}}
 .stageGrid .stageProgress{font-size:.76rem;color:var(--ink);font-weight:500;line-height:1.6}
+
+/* APPLE-DESIGN-036 */
+.quickHeader { padding-block:44px 28px; }
+.quickHeader h1,.hero h1,.lessonHead h2 { font-weight:650; letter-spacing:-.04em; }
+.lessonSection,.heroCard,.chapterCard { border-radius:var(--r-xxl); }
+.taskCard { border:0; border-radius:var(--r-lg); padding:24px; }
+.essayText > p[lang='en'] { font-size:1.1rem; line-height:1.9; }
+.reviewPanel { border:0; border-radius:var(--r-xl); padding:24px; }
+.reviewPanel > h3 { font-weight:650; }
+.stageGrid a[aria-current='step'] { background:var(--blush-soft); color:var(--red-deep); border-radius:var(--r-sm); padding-inline:10px; }
+.quizSteps button,.quizActions button { border-radius:var(--r-pill); }
+@media(min-width:1101px) {
+ .workspace { display:grid; grid-template-columns:230px minmax(0,1fr); align-items:start; gap:28px; }
+ .stageChooser { position:sticky; top:96px; grid-column:1; grid-row:1 / span 2; max-height:calc(100dvh - 120px); overflow:auto; margin:0; padding:0 8px 0 0; border:0; scrollbar-width:thin; }
+ .stageChooser > summary { font-size:.85rem; }
+ .stageChooser .lessonGuide { padding:16px 0; border:0; }
+ .stageChooser .lessonGuide > h2 { font-size:1.1rem; }
+ .stageChooser .lessonGuide > p { font-size:.8rem; }
+ .stageChooser .stageGrid { grid-template-columns:minmax(0,1fr); }
+ .stageChooser .stageGrid > div { padding:14px; border:0; background:transparent; }
+ .stageChooser .stageGrid a { font-size:.85rem; }
+ .workspace > .small,.activePanel { grid-column:2; min-width:0; }
+ .workspace > .inlineLink { grid-column:1 / -1; }
+ .lessonSection { padding:32px; }
+ .annotatedEssay { grid-template-columns:minmax(0,1fr); }
+ .reviewPanel { position:static; }
+}
+@media(min-width:1400px) {
+ .workspace { grid-template-columns:210px minmax(0,1fr); gap:24px; }
+ .annotatedEssay { grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:24px; }
+ .reviewPanel { padding:20px; }
+}
+@media(max-width:480px) { .lessonSection { padding:22px 18px; } .essayText > p[lang='en'] { font-size:1rem; } }
+@media(min-width:1101px) {
+ .annotatedEssay { grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:24px; }
+}

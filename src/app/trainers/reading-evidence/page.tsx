@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function ReadingEvidencePage() {
-  return <><NavBar /><TrainerIdentityBoundary><ReadingEvidence /></TrainerIdentityBoundary><Footer /></>;
+  return <><NavBar study /><TrainerIdentityBoundary><ReadingEvidence /></TrainerIdentityBoundary><Footer /></>;
 }

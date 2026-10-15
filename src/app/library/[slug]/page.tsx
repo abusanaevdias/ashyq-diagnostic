@@ -30,7 +30,7 @@ export default async function LibraryChapterPage({ params }: Props) {
   const related = LIBRARY_CHAPTERS.filter((entry) => entry.category === chapter.category && entry.slug !== slug).slice(0, 4);
   const answerSection = chapter.category === 'Listening' ? sections.find((section) => section.answer) : undefined;
   const audio = answerSection?.blocks.filter((block) => block.kind === 'paragraph' && block.text && !/[А-Яа-яЁё]/.test(block.text) && !/^L0\d-\d/.test(block.text)).map((block) => block.text).join('\n\n');
-  return <div className={`v3 ${styles.page}`}><NavBar /><main className={styles.container}>
+  return <div className={`v3 ${styles.page}`}><NavBar study /><main className={styles.container}>
     <JsonLd data={{ '@context': 'https://schema.org', '@type': 'LearningResource', name: chapter.title, description: chapter.description, url: `${SITE_URL}/library/${slug}`, inLanguage: ['ru', 'en'], learningResourceType: 'Practice', isAccessibleForFree: true, provider: { '@type': 'EducationalOrganization', name: 'ASHYQ' } }} />
     <nav className={styles.breadcrumb} aria-label="Хлебные крошки"><Link href="/library">← Библиотека</Link><span>{chapter.category} / {chapter.code}</span></nav>
     <header className={styles.chapterHero}><p className={styles.kicker}>ASHYQ · {chapter.source === 'lab' ? 'Writing Upgrade Lab V3' : 'Free Library V2'} · бесплатно</p><h1>{chapter.title}</h1><p className={styles.lead}>{chapter.description}</p><p className={styles.small}>Учебные образцы: приблизительные профили, не официальные баллы. Сначала своя попытка, затем разбор. Ответы и заметки сохраняются в этом браузере на устройстве. На общем устройстве очищайте их после занятия; облачной синхронизации нет.</p></header>

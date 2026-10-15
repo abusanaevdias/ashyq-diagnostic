@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function ListeningReplayPage() {
-  return <><NavBar /><TrainerIdentityBoundary><ListeningReplay /></TrainerIdentityBoundary><Footer /></>;
+  return <><NavBar study /><TrainerIdentityBoundary><ListeningReplay /></TrainerIdentityBoundary><Footer /></>;
 }

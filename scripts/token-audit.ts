@@ -22,7 +22,7 @@ function check(name: string, ok: boolean, detail = '') {
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ` — ${detail}` : ''}`);
 }
 
-const FONTS = ['manrope', 'inter', 'caveat'];
+const FONTS = ['manrope', 'inter', 'caveat', 'system-ui'];
 const kebab = (name: string) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 const firstFamily = (stack: string) => stack.split(',')[0].trim().replace(/['"]/g, '').toLowerCase();
 
@@ -39,7 +39,7 @@ function tokenParity(): string[] {
   for (const [name, token] of Object.entries(tokens.radius)) {
     if (name !== 'circle') expect(`r-${name}`, token.$value, (v) => v === token.$value); // 50% — без css-переменной
   }
-  for (const name of ['fontDisplay', 'fontBody', 'fontScript'] as const) {
+  for (const name of ['fontDisplay', 'fontBody', 'fontScript', 'fontSystem'] as const) {
     const json = tokens.typography[name].$value;
     expect(kebab(name), json, (v) => firstFamily(v) === firstFamily(json));
   }
@@ -106,12 +106,13 @@ const hexToRgb = (hex: string) => {
   return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
 };
 const TOKEN_RGB = [...new Set(Object.values(tokens.color).map((t) => hexToRgb(t.$value)))];
+const TOKEN_RADII = [0,...Object.values(tokens.radius).filter(token=>/^\d+px$/.test(token.$value)).map(token=>Number.parseFloat(token.$value))];
 
 /** Выполняется в странице (строкой — без трансформаций tsx). */
 const COLLECT = `(() => {
   const allowed = new Set(${JSON.stringify(TOKEN_RGB)});
   const fonts = ${JSON.stringify(FONTS)};
-  const radii = [0, 8, 12, 16, 20, 24];
+  const radii = ${JSON.stringify(TOKEN_RADII)};
   const found = {};
   const describe = (el) => el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\\s+/).slice(0, 2).join('.') : '');
   const add = (kind, value, el) => {

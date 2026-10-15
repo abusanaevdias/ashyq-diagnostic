@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function SatOptionlessPage() {
-  return <><NavBar /><TrainerIdentityBoundary><SatOptionless /></TrainerIdentityBoundary><Footer /></>;
+  return <><NavBar study /><TrainerIdentityBoundary><SatOptionless /></TrainerIdentityBoundary><Footer /></>;
 }
