@@ -112,6 +112,7 @@ ASHYQ — образовательный клуб Казахстана: подг
 
 | ID | Статус | Исполнитель | Ветка / worktree | Результат |
 |---|---|---|---|---|
+| FREE-LIBRARY-UX-034 | IN_PROGRESS | Codex `/root` (Dias Windows) | `codex/library-learning-flow-034`; dedicated worktree `C:/Users/Dias/Documents/ChatGPT/ashyq-library-learning-flow-034` | started 2026-10-15; user requests durable device-local answers with accurate correct/incorrect/ungraded indicators, selectable chapter stages and example-analysis-practice progression, explicit essay boundaries, useful inline/interactive analysis and in-page prerequisite explanations, English production prompts, audit all library exercises and show actual trainer materials awaiting approval. Own library components/lib/routes, focused content presentation metadata, local-storage/privacy disclosure, focused tests and docs plus local approval-preview artifact. Preserve source PDFs/digests and original source text; add clearly labelled teaching explanations separately. No provider, credentials, schema/RLS, package/CI or unrelated owner changes; no fabricated human approval, semantic/band grading or public draft release. Existing TRAINERS-COMPLETE-033 remains BLOCKED on its separate external gates. |
 | MERGE-001 | DONE | Codex `/root` | `main` | Объединены исходные workspace и diagnostic варианты; merge `86bf5a2` |
 | GROWTH-001 | DONE | Codex `/root` | `main` | Public growth/trust pages; commit `3526c1a` |
 | CRM-001 | DONE | Codex `/root` | `main` | CRM по архитектурным идеям MIT OpenCRM; commit `88ce4c7`; e2e 68/68 |
