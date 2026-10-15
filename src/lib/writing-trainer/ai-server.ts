@@ -29,7 +29,8 @@ async function supabaseGet(url: string, key: string, token: string, signal?: Abo
   return fetch(url, { headers: { apikey: key, Authorization: `Bearer ${token}` }, cache: 'no-store', signal: writingStepSignal(signal, 5_000) });
 }
 
-export async function authorizedPilotUser(request: Request, signal: AbortSignal = request.signal): Promise<string | null> {
+export async function authorizedPilotUser(request: Request, signal: AbortSignal = request.signal, pilotEmail: string | undefined = process.env.WRITING_AI_PILOT_EMAIL): Promise<string | null> {
+  if (!pilotEmail?.trim()) return null;
   const token = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ?? '';
   if (!JWT.test(token) || token.length > 4_096) return null;
   const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
@@ -42,7 +43,7 @@ export async function authorizedPilotUser(request: Request, signal: AbortSignal 
     if (!userResponse.ok) return null;
     const user = await userResponse.json() as AuthUser;
     if (typeof user.id !== 'string' || !UUID.test(user.id) || typeof user.email !== 'string') return null;
-    if (user.email.trim().toLowerCase() !== process.env.WRITING_AI_PILOT_EMAIL?.trim().toLowerCase()) return null;
+    if (user.email.trim().toLowerCase() !== pilotEmail?.trim().toLowerCase()) return null;
     if (user.user_metadata?.is_minor === true) return null;
     const [profileResponse, classesResponse] = await Promise.all([
       supabaseGet(`${url}/rest/v1/profiles?select=role&id=eq.${user.id}&limit=1`, key, token, signal),

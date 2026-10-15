@@ -1,6 +1,6 @@
 # Speaking transcript and observable comparison — required continuation
 
-Owner: Codex /root, TRAINERS-COMPLETE-033. Status: planned, not implemented or activated. Scope claim c163f3b was pushed to main on2026-10-15 before implementation. Existing local recording and notes remain available.
+Owner: Codex /root, TRAINERS-COMPLETE-033. Status: contract/server adapter locally implemented and tested; UI/durability integration unfinished, not released or activated. Scope claim c163f3b was pushed to main on2026-10-15 before implementation. Existing local recording and notes remain available.
 
 ## Original requirement and verified gap
 
@@ -26,3 +26,17 @@ The supplied `C:/Users/Dias/Downloads/deep-research-report.md` Speaking scenario
 - [OpenAI data controls](https://developers.openai.com/api/docs/guides/your-data): endpoint-specific retention table distinguishes audio transcription from Responses. Recheck before activation; no claim about an actual account's controls, data region or evaluated accuracy follows from reading it.
 
 No API-key setup tool is available in the current tool inventory. No real provider call, microphone capture, key discovery or account access occurred in this documentation step. Missing provider credentials and evaluation remain launch prerequisites, not reasons to leave the adapter/flow unimplemented.
+
+## Backend slice verified locally
+
+Actual POST handler exists at `/api/speaking/transcription`. Separate `SPEAKING_AI_ENABLED` and build-time `NEXT_PUBLIC_SPEAKING_AI_ENABLED` must both equal1; a nonblank `SPEAKING_AI_PILOT_EMAIL`, existing Supabase credentials/provider and OpenAI key are required. No actual environment files/flags were changed. Speaking identity is checked separately from `WRITING_AI_PILOT_EMAIL`; Writing keeps its original default checks.
+
+Strict canonical WAV: mono16kHz PCM16,0.2–120s, maximum3840044 file bytes. Entire multipart body<=4000000 bytes; provider JSON<=256000 bytes. The55s shared deadline leaves headroom in the60s route; step caps and cancellation also bound pending reads. Fixed-provider multipart contains only file/model/language/response format/timestamp option and uses `take.wav`, not the learner filename. Incoming fields are only audio plus explicit consent. No application audio archive/log payload.
+
+Persistent UTC-day caps are3/user and9/global in a separate `speaking-transcription` RPC namespace: at most6 user audio minutes or18 global minutes. Writing's4/user and12/global text requests remain unchanged. Provider failures can consume a reserved request; no automatic retry/refund. These are request/audio-duration bounds, not a project billing ceiling; a configured provider project budget and real RPC acceptance remain activation gates.
+
+Adversarial actual-handler tests passed with wholly mocked transport and synthetic credentials: disabled/origin/auth/minor/role/class/UUID/separate email/consent/MIME/multipart/byte/duration gates, invalid inputs consume no provider quota, user/global quota, concurrent request and retry, cancellation at auth/reservation/body/provider/response, bounded JSON, unknown timing and a real55015ms total timeout followed by successful retry. Writing's original actual-handler suite also passed at35003ms after shared auth reuse. Pure schema/WAV/Unicode/evidence/nonmutation/bounds tests, focused lint/typecheck and production build pass; real dev/production-build endpoint returns503/no-store with default flags.
+
+Initial cancellation testing exposed Node's async FormData body producer enqueueing into a closed stream. A local native runtime reproducer distinguishes generated multipart from actual wire bytes. Outbound provider multipart now uses a bounded byte buffer; incoming test fixtures use real HTTP wire bytes. The strict unhandled-rejection assertion remains and passes. The runtime itself was not patched or its failures ignored.
+
+Manual/provider transcripts remain distinct; missing, malformed or text-mismatched word times are explicitly unavailable. Editing text invalidates derived alignment/rate. Exact text repetitions and a limited word list are observations, not automatic grammar, fluency or pronunciation judgments. UI/independent-review envelopes, browser conversion, persistence/reporting and feature acceptance remain to be implemented. Check actual codec padding at the120s boundary; do not silently trim an overlong recording or fabricate its duration.
