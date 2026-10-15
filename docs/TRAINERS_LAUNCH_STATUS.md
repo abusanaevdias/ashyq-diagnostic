@@ -2,6 +2,8 @@
 
 Owner: Codex `/root`, TRAINERS-COMPLETE-033. The full launch goal is unfinished.
 
+Requirement-by-requirement audit and fresh canonical11-format flow evidence: `TRAINERS_COMPLETION_AUDIT_033.md`. This separates implemented software from missing human/provider/device/account acceptance; it does not approve or activate any source or provider.
+
 ## Acceptance map
 
 | Requirement | Current evidence | Remaining acceptance |
