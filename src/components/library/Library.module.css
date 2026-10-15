@@ -153,7 +153,8 @@
 .reviewPanel { border:0; border-radius:var(--r-xl); padding:24px; }
 .reviewPanel > h3 { font-weight:650; }
 .stageGrid a[aria-current='step'] { background:var(--blush-soft); color:var(--red-deep); border-radius:var(--r-sm); padding-inline:10px; }
-.quizSteps button,.quizActions button { border-radius:var(--r-pill); }
+.quizSteps button,.quizActions button { border-radius:var(--r-pill); max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+.inlineReview { min-width:0; overflow-wrap:anywhere; }
 @media(min-width:1101px) {
  .workspace { display:grid; grid-template-columns:230px minmax(0,1fr); align-items:start; gap:28px; }
  .stageChooser { position:sticky; top:96px; grid-column:1; grid-row:1 / span 2; max-height:calc(100dvh - 120px); overflow:auto; margin:0; padding:0 8px 0 0; border:0; scrollbar-width:thin; }

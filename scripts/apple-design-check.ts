@@ -31,6 +31,12 @@ async function main(){
   }
   await page.locator('[data-study-design="apple"]').evaluate(node=>{(node as HTMLElement).style.removeProperty('--font-system');});
   const demo=page.getByRole('region',{name:'Учебный пример работы тренажёра',exact:true});await demo.getByRole('button',{name:'Показать объяснение',exact:false}).click();assert.equal(await demo.locator('mark').textContent(),'makes');await demo.getByRole('button',{name:'Вернуться к своей попытке',exact:false}).click();assert.equal(await demo.locator('mark').textContent(),'make');
+  await page.goto(base+libraryReview);await page.setViewportSize({width:320,height:900});
+  await page.getByRole('button',{name:/4 · GRA/}).filter({visible:true}).click();
+  // Long labels must fit the inner comment card even with wider glyph metrics.
+  await page.addStyleTag({content:'[data-inline-review] button {font-size:20px !important}'});
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'expanded GRA controls fit320px');
+  for(const button of await page.locator('[data-inline-review] button').all())assert.ok(await button.evaluate(node=>node.getBoundingClientRect().right<=node.parentElement!.getBoundingClientRect().right+1),'comment controls stay inside their own card');
   const routes=['/','/trainers','/library',libraryReview,...trainerCatalog.map(t=>t.id==='writing-task2'?'/writing/trainer':t.href),'/writing/trainer/practice'];
   const audited=[];
   for(const route of [...new Set(routes)]){
