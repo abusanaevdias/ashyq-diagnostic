@@ -1,3 +1,4 @@
+import {speakingTranscriptReviewBlocks} from '../speaking-second-take/transcript-report';
 import {isPublishedBankSource} from './bank-publication';
 import type {BankSource} from './bank-sources';
 import {findBankSource} from './bank-sources';
@@ -47,7 +48,7 @@ export function bankReportBlocks(source:BankSource,state:BankSnapshot):DocxBlock
    rows.forEach((a,i)=>{round(i);field('Ответ зафиксирован',i<state.attempts.length||state.locked?'да':'нет');field('Прогноз пользователя · не оценён',a.prediction);field('Первый ответ',a.answer);help('До фиксации ответа',a.before);help('Последние события',a.after);field('Ответ после разбора',a.repair);field('Вывод пользователя',a.reflection);});field('Ограничение', 'События проигрывателя не доказывают внимательное прослушивание. Аудио не вложено.');break;
   }
   case 'speaking':{
-   field('Фаза пробы',state.phase);field('Текущие заметки подготовки',state.notes);state.takes.forEach((a,i)=>{heading(i===0?'Первый ответ':i===1?'Повтор той же темы · после саморазбора':'Другая тема · после двух ответов');field('Зафиксированные заметки подготовки',a.preparationNotes);field('Длительность записи в секундах',a.seconds);field('Заявление: конкретные моменты не выделены',a.noSpecificMoments===null?null:a.noSpecificMoments?'да':'нет');a.markers.forEach((m,j)=>{heading(`Момент ${j+1}`);field('Секунда',m.second);field('Тип отметки пользователя',m.kind);field('Заметка',m.note);});a.ratings.forEach((r,j)=>field(`Самооценка ${speakingCriteria[j].name} · не экспертная оценка`,r));field('План пользователя',a.plan);field('Подтверждение пользователя',a.confirmed?'да':'нет');});field('Ограничение','Аудиозаписи не вложены. Нет транскрипции, автоматической оценки речи или IELTS band.');break;
+   field('Фаза пробы',state.phase);field('Текущие заметки подготовки',state.notes);state.takes.forEach((a,i)=>{heading(i===0?'Первый ответ':i===1?'Повтор той же темы · после саморазбора':'Другая тема · после двух ответов');field('Зафиксированные заметки подготовки',a.preparationNotes);field('Длительность записи в секундах',a.seconds);field('Заявление: конкретные моменты не выделены',a.noSpecificMoments===null?null:a.noSpecificMoments?'да':'нет');a.markers.forEach((m,j)=>{heading(`Момент ${j+1}`);field('Секунда',m.second);field('Тип отметки пользователя',m.kind);field('Заметка',m.note);});a.ratings.forEach((r,j)=>field(`Самооценка ${speakingCriteria[j].name} · не экспертная оценка`,r));field('План пользователя',a.plan);field('Подтверждение пользователя',a.confirmed?'да':'нет');blocks.push(...speakingTranscriptReviewBlocks(a.transcriptReview));});field('Ограничение','Аудиозаписи не вложены. Расшифровка, если добавлена, служит самопроверке. Нет автоматической оценки речи или IELTS band.');break;
   }
  }
  return blocks;

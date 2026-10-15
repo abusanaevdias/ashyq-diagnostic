@@ -104,10 +104,10 @@ async function main() {
           await trial.waitForFunction(() => (document.querySelector('audio')?.currentTime ?? 0) > 0.1);
           await trial.locator('audio').evaluate(element => (element as HTMLAudioElement).pause());
         } else await trial.getByRole('button', { name: /Самостоятельная попытка без аудио/ }).click();
-        await trial.getByRole('heading', { name: 'Идеи после попытки · DRAFT', exact: true }).waitFor();
-        for (const idea of topic.ideas) await trial.getByText(idea, { exact: true }).waitFor();
+        assert.equal(await trial.getByRole('heading', { name: 'Идеи после попытки · DRAFT', exact: true }).count(),0,'topic ideas stay hidden until independent self-review is fixed');
         await trial.getByRole('checkbox', { name: /Не выделил отдельные моменты/ }).check();
         for (let criterion = 0; criterion < 4; criterion++) await trial.locator(`#speaking-rating-${criterion}`).selectOption({ label: 'Нужно поработать' });
+        await trial.getByRole('button',{name:'Зафиксировать самооценку и открыть расшифровку',exact:true}).click();await trial.getByRole('button',{name:'Продолжить без расшифровки',exact:true}).click();await trial.getByRole('heading', { name: 'Идеи после попытки · DRAFT', exact: true }).waitFor();for (const idea of topic.ideas) await trial.getByText(idea, { exact: true }).waitFor();
         await trial.getByLabel('План: что конкретно сделаешь в следующем ответе?', { exact: true }).fill(`Post-feedback plan ${unit.id}-${index}.`);
         await trial.getByRole('checkbox', { name: unit.id === 'S05' && index === 0 ? 'Я прослушал запись и заполнил самопроверку' : 'Я ответил вслух самостоятельно и заполнил самопроверку', exact: true }).check();
         await trial.getByRole('button', { name: /Сохранить самопроверку/ }).click();

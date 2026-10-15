@@ -1,12 +1,14 @@
 import type { TrainerId } from './catalog';
 import { writingDrills } from '../writing-trainer/drills';
 import { MAX_DRILL_CHOICES, MAX_DRILL_RECORDS,validDrillRepair } from './drill-records';
+import {validSpeakingTranscriptReview,speakingTranscriptReviewComplete,type SpeakingTranscriptReview} from '../speaking-second-take/transcript-review';
 
 export const CHECKPOINT_VERSION = 1;
 export const MAX_RECORD_BYTES = 1_500_000;
 export const MAX_SNAPSHOT_BYTES = 100_000;
 export const MAX_DRILL_SNAPSHOT_BYTES=500_000;
-export const snapshotByteLimit=(trainer:TrainerId)=>trainer==='writing-drills'?MAX_DRILL_SNAPSHOT_BYTES:MAX_SNAPSHOT_BYTES;
+export const MAX_SPEAKING_SNAPSHOT_BYTES=500_000;
+export const snapshotByteLimit=(trainer:TrainerId)=>trainer==='writing-drills'?MAX_DRILL_SNAPSHOT_BYTES:trainer==='speaking-second-take'?MAX_SPEAKING_SNAPSHOT_BYTES:MAX_SNAPSHOT_BYTES;
 export const MAX_HISTORY = 20;
 export const utf8Bytes = (value: string) => new TextEncoder().encode(value).byteLength;
 export type Snapshot = Record<string, unknown>;
@@ -48,7 +50,7 @@ const translationAttempt = shape({ model, answer: number, working: text, repair:
 const method = one('algebra', 'graph', 'table', 'other');
 const methodAttempt = shape({ x: number, y: number, working: text, method, seconds: nullable(duration), plan: text });
 const marker = shape({ id: integer(1e9), second: nullable(duration), kind: text, note: text });
-const take = shapeWithOptional({ url: one(null), seconds: nullable(duration), markers: array(marker, 100), ratings: v => array(text, 4)(v) && (v as unknown[]).length === 4, plan: text, confirmed: bool }, { preparationNotes: v => typeof v === 'string' && v.length <= 3000, noSpecificMoments: nullable(bool) });
+const take = shapeWithOptional({ url: one(null), seconds: nullable(duration), markers: array(marker, 100), ratings: v => array(text, 4)(v) && (v as unknown[]).length === 4, plan: text, confirmed: bool }, { preparationNotes: v => typeof v === 'string' && v.length <= 3000, noSpecificMoments: nullable(bool), transcriptReview:object });
 const revisions = record(text, /^(task|coherence|lexical)$/);
 const writingSession = shape({ caseId: one('city-transport', 'school-projects'), stage: phase('grammar', 'task', 'coherence', 'lexical', 'report'), furthestStage: phase('grammar', 'task', 'coherence', 'lexical', 'report'), selectedSentenceId: nullable(text), grammarDrafts: record(text), grammarChecked: bool, appliedGrammar: record(text), revisionDrafts: revisions, postFeedbackDrafts: revisions, revealed: record(bool, /^(task|coherence|lexical)$/), appliedRevisions: revisions });
 
@@ -102,6 +104,7 @@ export function validSnapshot(trainer: TrainerId, value: unknown, byteLimit=snap
   }
   if (trainer === 'speaking-second-take') {
     const takes = v.takes as unknown[];
+    for(let i=0;i<takes.length;i++){const t=takes[i] as {seconds:number|null;transcriptReview?:SpeakingTranscriptReview};if(Object.hasOwn(t,'transcriptReview')){if(!validSpeakingTranscriptReview(t.transcriptReview,t.seconds)||t.transcriptReview!.first.markers.some(m=>m.id>1e9))return false;if((p==='compare'||p==='result'||(p==='prepare'||p==='capture')&&i<(v.takeIndex as number))&&!speakingTranscriptReviewComplete(t.transcriptReview!))return false;}}
     if(takes.some(value=>{const take=value as {noSpecificMoments?:boolean|null;markers:unknown[]};return take.noSpecificMoments===true&&take.markers.length>0;}))return false;
     if (['review', 'compare'].includes(p as string) && !takes[v.takeIndex as number]) return false;
     if (p === 'result' && takes.length !== 3) return false;

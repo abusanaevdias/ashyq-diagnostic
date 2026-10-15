@@ -21,6 +21,7 @@ export function transcriptTokens(text: string): Token[] {
   return Array.from(text.matchAll(/[\p{L}\p{N}][\p{L}\p{M}\p{N}]*(?:['’][\p{L}\p{N}][\p{L}\p{M}\p{N}]*)*/gu), match => ({ value: normalize(match[0]), start: match.index!, end: match.index! + match[0].length }));
 }
 const validText = (text: unknown): text is string => typeof text === 'string' && text.length <= MAX_TRANSCRIPT_CHARS && transcriptTokens(text).length > 0 && transcriptTokens(text).length <= MAX_TRANSCRIPT_WORDS;
+export const validSpeakingTranscriptText = validText;
 const iso = (s: unknown): s is string => typeof s === 'string' && Number.isFinite(Date.parse(s)) && new Date(s).toISOString() === s;
 
 /** A literal word sequence and sane times are necessary, not proof of correct recognition. */
