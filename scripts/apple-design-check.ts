@@ -21,6 +21,15 @@ async function main(){
   await filters.getByRole('button',{name:'Все',exact:true}).focus();await page.keyboard.press('Enter');assert.equal(await page.locator('[data-trainer-exam]').count(),11);
   const hrefs=await page.locator('[data-trainer-exam] a').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('href')));for(const item of trainerCatalog)assert.ok(hrefs.includes(item.id==='writing-task2'?'/writing/trainer':item.href));
   await page.goto(base+'/');await page.getByRole('heading',{level:1}).waitFor();
+  // System fonts differ between Windows and the Linux release runner. Keep both
+  // free entry points inside the short phone viewport with either fallback.
+  await page.setViewportSize({width:390,height:664});
+  for(const family of ['system-ui','Arial, sans-serif','sans-serif']){
+   await page.locator('[data-study-design="apple"]').evaluate((node,font)=>{(node as HTMLElement).style.setProperty('--font-system',font);},family);
+   const entry=await page.getByRole('navigation',{name:'Первые шаги: диагностика и библиотека'}).getByRole('link',{name:/Бесплатная библиотека/}).boundingBox();
+   assert.ok(entry&&entry.y+entry.height<=664,`free library above fold with ${family}: ${entry?entry.y+entry.height:'missing'}`);
+  }
+  await page.locator('[data-study-design="apple"]').evaluate(node=>{(node as HTMLElement).style.removeProperty('--font-system');});
   const demo=page.getByRole('region',{name:'Учебный пример работы тренажёра',exact:true});await demo.getByRole('button',{name:'Показать объяснение',exact:false}).click();assert.equal(await demo.locator('mark').textContent(),'makes');await demo.getByRole('button',{name:'Вернуться к своей попытке',exact:false}).click();assert.equal(await demo.locator('mark').textContent(),'make');
   const routes=['/','/trainers','/library',libraryReview,...trainerCatalog.map(t=>t.id==='writing-task2'?'/writing/trainer':t.href),'/writing/trainer/practice'];
   const audited=[];

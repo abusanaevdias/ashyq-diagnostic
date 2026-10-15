@@ -29,3 +29,7 @@ An intermediate outside-scope Career overflow was traced to checking an old loca
 21st deterministic review of7 changed composition components: zero errors/warnings/suggestions. Relevant current Next16 linking and use-client guides read locally. Exact production build, library persistence/navigation regression, main diagnostics, tokens and CI/release results must be recorded only after their actual terminal state.
 
 No role/RLS/provider/schema/package/CI change. No authored-source or learner-storage namespace changes. F03 precise Writing transfer and whole033 human/provider/physical-device acceptance remain separate from visual completion. Browser checks are not physical-phone or learning-quality acceptance.
+
+## Linux CI follow-up
+
+Initial PR156 run38808916967 failed one of164 main checks: on the Linux runner the library entry ended at690px in a664px viewport, despite the local152-check pass. This was not merged. Mobile title scale and the spacing before the lead/actions were reduced, without hiding any text or weakening the fold assertion. The focused design gate now explicitly checks390×664 with system-ui, Arial and generic sans-serif, in addition to its64 route/width audits. A new frozen production build and regression run are required for the corrected head. Host GitHub transport recovered; the source-identical API commit was reconciled by a normal merge, with no force update.
