@@ -53,4 +53,5 @@ for (const chapter of LIBRARY_CHAPTERS) {
 }
 assert.equal(questions,322);assert.equal(essays,30);assert.ok(reviews>=27);
 assert.deepEqual(highlightedSentences('One sentence. Another sentence.', 'No matching text here.'),[{text:'One sentence. ',marked:false},{text:'Another sentence.',marked:false}]);
+assert.equal(highlightedSentences('This means that talent make a big difference.', 'talent make, a person practise и if they will work hard')[0].marked,true,'comma-separated cited mistakes remain individually linked');
 console.log(`PASS ${LIBRARY_CHAPTERS.length} chapters/${questions} questions/${essays} essays/${reviews} paired reviews/${production} English production prompts; storage roundtrip, stale/malformed/bounds, grading, exact source-preserving highlights.`);

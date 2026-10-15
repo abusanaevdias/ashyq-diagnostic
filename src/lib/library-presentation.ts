@@ -31,7 +31,7 @@ export function reviewSteps(section: LibrarySection): {title: string; blocks: Li
 }
 /** Only literal evidence may connect a source review to an essay sentence. */
 export function highlightedSentences(text: string, review: string): {text: string; marked: boolean}[] {
-  const fragments = (review.match(/[A-Za-z][A-Za-z0-9 ,’'\-]+/g) ?? []).map(s => s.trim()).filter(s => s.length >= 10);
+  const fragments = (review.match(/[A-Za-z][A-Za-z0-9 ,’'\-]+/g) ?? []).flatMap(s => s.split(',')).map(s => s.trim()).filter(s => s.length >= 10);
   return (text.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) ?? [text]).map(sentence => ({text:sentence, marked:fragments.some(f => sentence.toLowerCase().includes(f.toLowerCase()))}));
 }
 /** English production, as distinct from Russian reflection about a writing strategy. */
