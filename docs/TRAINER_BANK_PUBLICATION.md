@@ -1,6 +1,6 @@
 # Publication of reviewed trainer materials
 
-The100 source modules remain DRAFT. No human approvals were supplied or generated. `src/data/trainer-publications/release.json` currently contains an empty release list.
+The108 source modules remain DRAFT. No human approvals were supplied or generated. `src/data/trainer-publications/release.json` currently contains an empty release list.
 
 ## Source-bound approval
 
@@ -28,6 +28,6 @@ Directory, direct practice entry, Speaking entry and next-task navigation now co
 
 Unavailable or withdrawn source versions can still offer an explicit opaque download of the current browser actor own exact local record. This reads one key only after the user clicks, does not reopen exercises or grade the content, and does not write or migrate stored work. Storage changes require a fresh check; damaged bytes are preserved in a text recovery file. Actor partitions remain browser conveniences, not authentication.
 
-Tests use an isolated copy under artifacts/trainers-complete-033/publication-fixture-site with34 explicitly synthetic released sources and66 unreleased sources. The actual repository receipt remains empty. The fixture has no copied environment/credentials and must never be deployed or committed. Reproduce it with prepare-trainer-publication-fixture.ts and a localhost-only next dev server; set TRAINER_PUBLICATION_FIXTURE=1 only for the browser test script. This variable is not consumed by the application and cannot bypass publication.
+Tests use an isolated copy under artifacts/trainers-complete-033/publication-fixture-site with38 explicitly synthetic released sources and70 unreleased sources, including the four new Reading modes. The actual repository receipt remains empty. The fixture has no copied environment/credentials and must never be deployed or committed. Reproduce it with prepare-trainer-publication-fixture.ts and a localhost-only next dev server; set TRAINER_PUBLICATION_FIXTURE=1 only for the browser test script. This variable is not consumed by the application and cannot bypass publication.
 
 Current tests prove receipt/route/filter/navigation/recovery behavior with synthetic approval and LocalDemo role fixtures. Actual human approval, publication activation, methodology and difficulty calibration, Supabase classroom acceptance and provider/device quality still need separate evidence.

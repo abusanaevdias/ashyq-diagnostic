@@ -14,7 +14,7 @@ Owner: Codex `/root`, TRAINERS-COMPLETE-033. The full launch goal is unfinished.
 | Own essay | Enrolled-student/teacher entry, tab draft, manual rewrite by four criteria, local dated versions, JSON and Word export. Server pilot has consent, authorization and request caps. | Configured provider account, pilot identity, deployed budget RPC and actual authenticated acceptance; evaluator validation before automated scoring. Canonical nonconsenting request returns503 disabled. |
 | Speaking/Listening | Original tied audio assets; Chromium recording, playback/download and three-take metadata checked using generated sound. | Physical microphone, human voice and actual phone/browser acceptance. No pronunciation or speech-quality score exists. |
 | Access/classroom | Existing role and RLS contracts preserved. Anonymous and forged LocalDemo production guard tests pass. | A real authorized student/teacher/class session and denied-access RLS checks. LocalDemo is a UI fixture. |
-| Release | Exact feature CI, merge and deployment evidence recorded through147, including canonical import/cap/recovery/Word and anonymous bank guards.148 passed exact CI38648771228 and merged as a919a90; production7079196666 succeeded. 149 delivery/recovery passed exact CI and canonical gates. Four new Reading modes/eight pairs are locally verified. | Release the four-mode Reading expansion, then reconcile remaining whole-launch acceptance. |
+| Release | Reading expansion150 exact877fb1c passed CI38658933557, mergedc2c55c7; production7083627507 succeeded. Canonical opaque recovery and anonymous draft/own-work access guards passed. Prior147–149 release evidence is recorded in the loop journal. | Release the verified shared feedback deadline/UUID correction, then reconcile remaining whole-launch acceptance. |
 
 ## Competitor comparison boundary
 
@@ -28,7 +28,7 @@ ASHYQ's current differentiating sequence is independent attempt → disclosed he
 
 ## Safe continuation
 
-1. Release the locally verified Reading expansion against its exact commit and canonical deployment.
+1. Release the locally verified feedback deadline/UUID correction against its exact commit and canonical deployment. Reading expansion150 is deployed; all108 sources still await human methodological approval.
 2. Reconcile every row with observed evidence; repair a reproduced defect before adding optional polish.
 3. Preserve unapproved sources and disabled provider state until the corresponding evidence exists. A missing human review, provider account or physical-device run must remain a missing result.
 
