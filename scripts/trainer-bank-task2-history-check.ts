@@ -21,7 +21,7 @@ async function main(){
   const actor='synthetic-bank-history';
   await page.goto(base+'/trainers/material-review');await page.getByRole('heading',{name:'Нужно войти',exact:true}).waitFor();await page.evaluate(s=>{localStorage.setItem('ashyq:v2:session',JSON.stringify(s));dispatchEvent(new Event('storage'));},session(actor));
   const source=trainerBank.sources.find(s=>s.ref.unitId==='W01')!;if(source.exercise.type!=='task2')throw new Error('W01');
-  const preview=page.getByRole('region',{name:'Пробное эссе · DRAFT',exact:true}),bank=preview.getByRole('region',{name:'Сохранение пробы · W01 · версия 2.0',exact:true}),key=bankRecordKey(actor,source.ref);
+  const preview=page.getByRole('region',{name:'Пробное эссе · DRAFT',exact:true}),bank=preview.getByRole('region',{name:`Сохранение пробы · W01 · версия ${source.ref.version}`,exact:true}),key=bankRecordKey(actor,source.ref);
   const save=async()=>{await bank.getByRole('button',{name:'Сохранить текущую пробу',exact:true}).click();await bank.getByRole('status').filter({hasText:'Работа сохранена в этом браузере'}).waitFor();};
   const reload=async()=>{await page.reload();await bank.getByRole('button',{name:'Продолжить сохранённую пробу',exact:true}).click();await bank.getByRole('button',{name:'Подтвердить загрузку',exact:true}).click();};
   await preview.getByRole('button',{name:'Начать пробу эссе',exact:true}).click();

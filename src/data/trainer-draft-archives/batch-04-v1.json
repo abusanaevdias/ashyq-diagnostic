@@ -1,0 +1,796 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "04",
+  "version": 1,
+  "source_sha256": "632e44aab43301cecd9c7104b6a05e5d13f4590df33a2e1356e393f30ce50aa9",
+  "content_sha256": "632e44aab43301cecd9c7104b6a05e5d13f4590df33a2e1356e393f30ce50aa9",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "RW01",
+      "title": "Главная мысль: пределы пилота",
+      "category": "SAT R&W · ответ до вариантов",
+      "status": "DRAFT",
+      "student_markdown": "Авторские вымышленные тексты для практики чтения. Это не задания College Board и не прогноз балла SAT.\n\n### Первая попытка\nA school library tested a new reservation form with one reading club. Members could request a book before lunch, and staff reported fewer duplicate requests from that club. The librarian proposed testing the form with other clubs before replacing the existing system.\n\nWhich choice best states the main idea?\n\nСначала запиши свою мысль без вариантов. После сравнения объясни ошибку. Новый текст переноса открывается отдельно после разбора.",
+      "teacher_markdown": "### Первая задача: RW01-A\nA school library tested a new reservation form with one reading club. Members could request a book before lunch, and staff reported fewer duplicate requests from that club. The librarian proposed testing the form with other clubs before replacing the existing system.\n\nWhich choice best states the main idea?\n\n1. The library is ready to replace its reservation system because the new form has been successful across the school.\nНужно пересмотреть: Тест охватывал один клуб; замена всей системы ещё не решена.\n\n2. A limited test of a reservation form produced a promising result, and the librarian wants broader testing before a full change.\nПодходит: Сохранены ограниченный тест, результат внутри клуба и следующий шаг.\n\n3. The librarian found that book reservations were unnecessary when club members visited before lunch.\nНужно пересмотреть: Отмена бронирования не обсуждается; before lunch относится к подаче запроса.\n\n4. The reading club persuaded the library to keep duplicate requests as part of its existing system.\nНужно пересмотреть: Снижение дублей не означает намерение их сохранить.\n\nОснование в тексте: The librarian proposed testing the form with other clubs before replacing the existing system.\n\nГлавная мысль объединяет ограниченное наблюдение и осторожное решение, а не только удобство запроса до обеда.\n\n### Свежий перенос: RW01-B\nA museum used reusable labels in a single temporary gallery. Staff could rearrange the labels quickly, but some visitors said the lettering was difficult to read. The museum will revise the lettering and run another small trial before using the labels elsewhere.\n\nWhich choice best states the main idea?\n\n1. Visitors preferred the reusable labels because the lettering made exhibitions easier to understand.\nНужно пересмотреть: В тексте есть жалоба на читаемость, а не такое предпочтение.\n\n2. The museum will use reusable labels throughout its galleries after a successful trial.\nНужно пересмотреть: Перед распространением запланированы правка и новый небольшой тест.\n\n3. A label trial revealed both a practical benefit and a readability problem, so the museum plans a revision and another test.\nПодходит: Охвачены польза, проблема и осторожный следующий шаг.\n\n4. Temporary galleries make museum displays difficult to rearrange.\nНужно пересмотреть: Наблюдение о перестановке относится к пользе новых этикеток, не к сложности временных галерей.\n\nОснование в тексте: The museum will revise the lettering and run another small trial before using the labels elsewhere.\n\nБыстрая перестановка — важная деталь, но ответ должен также учитывать проблему и решение.\n\n### Границы проверки\nСвободный прогноз и объяснения не оцениваются по точному совпадению. Другая обоснованная формулировка допустима. Проверяющий должен самостоятельно решить обе задачи, проверить единственность ключа и понятность отвлекающих вариантов. Сюжеты и наблюдения вымышлены; они не являются реальными исследованиями.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-optionless",
+        "skill": "central-idea",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW01-A",
+            "skill": "central-idea",
+            "passage": "A school library tested a new reservation form with one reading club. Members could request a book before lunch, and staff reported fewer duplicate requests from that club. The librarian proposed testing the form with other clubs before replacing the existing system.",
+            "question": "Which choice best states the main idea?",
+            "choices": [
+              {
+                "text": "The library is ready to replace its reservation system because the new form has been successful across the school.",
+                "feedback": "Тест охватывал один клуб; замена всей системы ещё не решена.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "A limited test of a reservation form produced a promising result, and the librarian wants broader testing before a full change.",
+                "feedback": "Сохранены ограниченный тест, результат внутри клуба и следующий шаг.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "The librarian found that book reservations were unnecessary when club members visited before lunch.",
+                "feedback": "Отмена бронирования не обсуждается; before lunch относится к подаче запроса.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "The reading club persuaded the library to keep duplicate requests as part of its existing system.",
+                "feedback": "Снижение дублей не означает намерение их сохранить.",
+                "trap": "reversal",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "The librarian proposed testing the form with other clubs before replacing the existing system.",
+            "explanation": "Главная мысль объединяет ограниченное наблюдение и осторожное решение, а не только удобство запроса до обеда.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          },
+          {
+            "id": "RW01-B",
+            "skill": "central-idea",
+            "passage": "A museum used reusable labels in a single temporary gallery. Staff could rearrange the labels quickly, but some visitors said the lettering was difficult to read. The museum will revise the lettering and run another small trial before using the labels elsewhere.",
+            "question": "Which choice best states the main idea?",
+            "choices": [
+              {
+                "text": "Visitors preferred the reusable labels because the lettering made exhibitions easier to understand.",
+                "feedback": "В тексте есть жалоба на читаемость, а не такое предпочтение.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "The museum will use reusable labels throughout its galleries after a successful trial.",
+                "feedback": "Перед распространением запланированы правка и новый небольшой тест.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "A label trial revealed both a practical benefit and a readability problem, so the museum plans a revision and another test.",
+                "feedback": "Охвачены польза, проблема и осторожный следующий шаг.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "Temporary galleries make museum displays difficult to rearrange.",
+                "feedback": "Наблюдение о перестановке относится к пользе новых этикеток, не к сложности временных галерей.",
+                "trap": "reversal",
+                "best": false
+              }
+            ],
+            "key": 2,
+            "evidence": "The museum will revise the lettering and run another small trial before using the labels elsewhere.",
+            "explanation": "Быстрая перестановка — важная деталь, но ответ должен также учитывать проблему и решение.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          }
+        ],
+        "review_notes": [
+          "Ключ должен следовать из текста, а не из фоновых знаний.",
+          "Проверь, не становится ли отвлекающий вариант допустимым при разумной интерпретации.",
+          "Свежий перенос меняет текст, а не только порядок вариантов."
+        ]
+      }
+    },
+    {
+      "id": "RW02",
+      "title": "Вывод: область действия правил",
+      "category": "SAT R&W · ответ до вариантов",
+      "status": "DRAFT",
+      "student_markdown": "Авторские вымышленные тексты для практики чтения. Это не задания College Board и не прогноз балла SAT.\n\n### Первая попытка\nDuring the pilot month, the community workshop lends its new tools only to people who have completed the safety session. People who have not completed the session can still borrow older hand tools. Mina has not yet attended the session.\n\nWhich statement about Mina is best supported for the pilot month?\n\nСначала запиши свою мысль без вариантов. После сравнения объясни ошибку. Новый текст переноса открывается отдельно после разбора.",
+      "teacher_markdown": "### Первая задача: RW02-A\nDuring the pilot month, the community workshop lends its new tools only to people who have completed the safety session. People who have not completed the session can still borrow older hand tools. Mina has not yet attended the session.\n\nWhich statement about Mina is best supported for the pilot month?\n\n1. She cannot borrow any workshop tools until the pilot month ends.\nНужно пересмотреть: Ограничение касается новых инструментов; старые доступны.\n\n2. She must already have borrowed older tools because she has not attended the session.\nНужно пересмотреть: Разрешение не доказывает, что она им воспользовалась.\n\n3. She can borrow the new tools if she promises to attend the next safety session.\nНужно пересмотреть: Исключение за обещание в условии не дано.\n\n4. She is not yet eligible to borrow the new tools, although the rule does not prevent her from borrowing older hand tools.\nПодходит: Учтены условие для новых инструментов и отдельное разрешение для старых.\n\nОснование в тексте: People who have not completed the session can still borrow older hand tools.\n\nNot yet attended не доказывает, что Мина вообще не интересуется мастерской; вывод ограничен правилами месяца.\n\n### Свежий перенос: RW02-B\nFor this term, a student may join the advanced ceramics group only after submitting a portfolio. The beginner group does not require a portfolio. Leo wants to try ceramics but has not submitted one.\n\nWhich statement about Leo is best supported for this term?\n\n1. He does not yet meet the stated entry condition for the advanced group, but the portfolio rule does not exclude him from the beginner group.\nПодходит: Разделены условие продвинутой группы и отсутствие такого условия в начальной.\n\n2. He has decided to join the beginner group rather than prepare a portfolio.\nНужно пересмотреть: Желание попробовать не доказывает принятое решение.\n\n3. He is prohibited from studying ceramics in either group for the whole term.\nНужно пересмотреть: Правило для advanced не распространяется на beginner.\n\n4. He must be an inexperienced ceramic artist because he has not submitted a portfolio.\nНужно пересмотреть: Отсутствие заявки не определяет опыт.\n\nОснование в тексте: The beginner group does not require a portfolio.\n\nВывод не гарантирует наличие мест или выполнение любых других возможных правил: он касается только указанного portfolio rule.\n\n### Границы проверки\nСвободный прогноз и объяснения не оцениваются по точному совпадению. Другая обоснованная формулировка допустима. Проверяющий должен самостоятельно решить обе задачи, проверить единственность ключа и понятность отвлекающих вариантов. Сюжеты и наблюдения вымышлены; они не являются реальными исследованиями.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-optionless",
+        "skill": "inference",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW02-A",
+            "skill": "inference",
+            "passage": "During the pilot month, the community workshop lends its new tools only to people who have completed the safety session. People who have not completed the session can still borrow older hand tools. Mina has not yet attended the session.",
+            "question": "Which statement about Mina is best supported for the pilot month?",
+            "choices": [
+              {
+                "text": "She cannot borrow any workshop tools until the pilot month ends.",
+                "feedback": "Ограничение касается новых инструментов; старые доступны.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "She must already have borrowed older tools because she has not attended the session.",
+                "feedback": "Разрешение не доказывает, что она им воспользовалась.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "She can borrow the new tools if she promises to attend the next safety session.",
+                "feedback": "Исключение за обещание в условии не дано.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "She is not yet eligible to borrow the new tools, although the rule does not prevent her from borrowing older hand tools.",
+                "feedback": "Учтены условие для новых инструментов и отдельное разрешение для старых.",
+                "trap": "none",
+                "best": true
+              }
+            ],
+            "key": 3,
+            "evidence": "People who have not completed the session can still borrow older hand tools.",
+            "explanation": "Not yet attended не доказывает, что Мина вообще не интересуется мастерской; вывод ограничен правилами месяца.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          },
+          {
+            "id": "RW02-B",
+            "skill": "inference",
+            "passage": "For this term, a student may join the advanced ceramics group only after submitting a portfolio. The beginner group does not require a portfolio. Leo wants to try ceramics but has not submitted one.",
+            "question": "Which statement about Leo is best supported for this term?",
+            "choices": [
+              {
+                "text": "He does not yet meet the stated entry condition for the advanced group, but the portfolio rule does not exclude him from the beginner group.",
+                "feedback": "Разделены условие продвинутой группы и отсутствие такого условия в начальной.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "He has decided to join the beginner group rather than prepare a portfolio.",
+                "feedback": "Желание попробовать не доказывает принятое решение.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "He is prohibited from studying ceramics in either group for the whole term.",
+                "feedback": "Правило для advanced не распространяется на beginner.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "He must be an inexperienced ceramic artist because he has not submitted a portfolio.",
+                "feedback": "Отсутствие заявки не определяет опыт.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 0,
+            "evidence": "The beginner group does not require a portfolio.",
+            "explanation": "Вывод не гарантирует наличие мест или выполнение любых других возможных правил: он касается только указанного portfolio rule.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          }
+        ],
+        "review_notes": [
+          "Ключ должен следовать из текста, а не из фоновых знаний.",
+          "Проверь, не становится ли отвлекающий вариант допустимым при разумной интерпретации.",
+          "Свежий перенос меняет текст, а не только порядок вариантов."
+        ]
+      }
+    },
+    {
+      "id": "RW03",
+      "title": "Наблюдение и причина",
+      "category": "SAT R&W · ответ до вариантов",
+      "status": "DRAFT",
+      "student_markdown": "Авторские вымышленные тексты для практики чтения. Это не задания College Board и не прогноз балла SAT.\n\n### Первая попытка\nOn four mornings, a volunteer counted cyclists near a station. More cyclists passed on the two mornings when a nearby road was closed than on the other two mornings. The volunteer did not record the weather or the total number of people travelling in the area.\n\nWhich conclusion is best supported by the observations?\n\nСначала запиши свою мысль без вариантов. После сравнения объясни ошибку. Новый текст переноса открывается отдельно после разбора.",
+      "teacher_markdown": "### Первая задача: RW03-A\nOn four mornings, a volunteer counted cyclists near a station. More cyclists passed on the two mornings when a nearby road was closed than on the other two mornings. The volunteer did not record the weather or the total number of people travelling in the area.\n\nWhich conclusion is best supported by the observations?\n\n1. The road closure caused all of the additional cycling near the station.\nНужно пересмотреть: Другие различия не контролировались; причинность не установлена.\n\n2. More cyclists were counted on the observed closure mornings, but the observations alone do not establish why.\nПодходит: Сохранено сравнение и предел причинного вывода.\n\n3. The station had fewer travellers overall when the road was closed.\nНужно пересмотреть: Общее число путешествующих не измеряли.\n\n4. The volunteer found no difference in cycling between the two sets of mornings.\nНужно пересмотреть: Текст прямо сообщает различие.\n\nОснование в тексте: The volunteer did not record the weather or the total number of people travelling in the area.\n\nСравнение четырёх утр — вымышленная ситуация чтения, не эмпирическое доказательство эффективности перекрытий.\n\n### Свежий перенос: RW03-B\nTwo classes used different revision schedules before a short quiz. The class that used spaced sessions had a higher average score. The classes had different teachers, and no information about their previous scores was available.\n\nWhich conclusion is best supported?\n\n1. The class using spaced sessions had a higher quiz average, but the comparison alone does not isolate the effect of the schedule.\nПодходит: Сохранён результат и учтены другие различия.\n\n2. The schedule caused the entire difference because both groups took a quiz.\nНужно пересмотреть: Общий тест не устраняет различия учителей и исходного уровня.\n\n3. The teachers used identical revision methods apart from the session dates.\nНужно пересмотреть: Таких данных в тексте нет.\n\n4. The spaced-session class improved more from its previous score.\nНужно пересмотреть: Предыдущие результаты неизвестны; higher average не равно larger improvement.\n\nОснование в тексте: The classes had different teachers, and no information about their previous scores was available.\n\nНе требуется отрицать возможную пользу расписания: требуется не приписывать ему причинный эффект, который данное сравнение не отделяет.\n\n### Границы проверки\nСвободный прогноз и объяснения не оцениваются по точному совпадению. Другая обоснованная формулировка допустима. Проверяющий должен самостоятельно решить обе задачи, проверить единственность ключа и понятность отвлекающих вариантов. Сюжеты и наблюдения вымышлены; они не являются реальными исследованиями.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-optionless",
+        "skill": "evidence-boundary",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW03-A",
+            "skill": "evidence-boundary",
+            "passage": "On four mornings, a volunteer counted cyclists near a station. More cyclists passed on the two mornings when a nearby road was closed than on the other two mornings. The volunteer did not record the weather or the total number of people travelling in the area.",
+            "question": "Which conclusion is best supported by the observations?",
+            "choices": [
+              {
+                "text": "The road closure caused all of the additional cycling near the station.",
+                "feedback": "Другие различия не контролировались; причинность не установлена.",
+                "trap": "causal",
+                "best": false
+              },
+              {
+                "text": "More cyclists were counted on the observed closure mornings, but the observations alone do not establish why.",
+                "feedback": "Сохранено сравнение и предел причинного вывода.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "The station had fewer travellers overall when the road was closed.",
+                "feedback": "Общее число путешествующих не измеряли.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "The volunteer found no difference in cycling between the two sets of mornings.",
+                "feedback": "Текст прямо сообщает различие.",
+                "trap": "reversal",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "The volunteer did not record the weather or the total number of people travelling in the area.",
+            "explanation": "Сравнение четырёх утр — вымышленная ситуация чтения, не эмпирическое доказательство эффективности перекрытий.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          },
+          {
+            "id": "RW03-B",
+            "skill": "evidence-boundary",
+            "passage": "Two classes used different revision schedules before a short quiz. The class that used spaced sessions had a higher average score. The classes had different teachers, and no information about their previous scores was available.",
+            "question": "Which conclusion is best supported?",
+            "choices": [
+              {
+                "text": "The class using spaced sessions had a higher quiz average, but the comparison alone does not isolate the effect of the schedule.",
+                "feedback": "Сохранён результат и учтены другие различия.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "The schedule caused the entire difference because both groups took a quiz.",
+                "feedback": "Общий тест не устраняет различия учителей и исходного уровня.",
+                "trap": "causal",
+                "best": false
+              },
+              {
+                "text": "The teachers used identical revision methods apart from the session dates.",
+                "feedback": "Таких данных в тексте нет.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "The spaced-session class improved more from its previous score.",
+                "feedback": "Предыдущие результаты неизвестны; higher average не равно larger improvement.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 0,
+            "evidence": "The classes had different teachers, and no information about their previous scores was available.",
+            "explanation": "Не требуется отрицать возможную пользу расписания: требуется не приписывать ему причинный эффект, который данное сравнение не отделяет.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          }
+        ],
+        "review_notes": [
+          "Ключ должен следовать из текста, а не из фоновых знаний.",
+          "Проверь, не становится ли отвлекающий вариант допустимым при разумной интерпретации.",
+          "Свежий перенос меняет текст, а не только порядок вариантов."
+        ]
+      }
+    },
+    {
+      "id": "RW04",
+      "title": "Переход: уступка и следствие",
+      "category": "SAT R&W · ответ до вариантов",
+      "status": "DRAFT",
+      "student_markdown": "Авторские вымышленные тексты для практики чтения. Это не задания College Board и не прогноз балла SAT.\n\n### Первая попытка\nThe town introduced an online booking form for its sports hall. The form reduced repeated telephone enquiries. _____ People without reliable internet access could still make bookings at the reception desk.\n\nWhich transition most logically introduces the final sentence?\n\nСначала запиши свою мысль без вариантов. После сравнения объясни ошибку. Новый текст переноса открывается отдельно после разбора.",
+      "teacher_markdown": "### Первая задача: RW04-A\nThe town introduced an online booking form for its sports hall. The form reduced repeated telephone enquiries. _____ People without reliable internet access could still make bookings at the reception desk.\n\nWhich transition most logically introduces the final sentence?\n\n1. For example,\nНужно пересмотреть: Последняя фраза не пример сокращения звонков; она добавляет отдельное условие доступа.\n\n2. Consequently,\nНужно пересмотреть: Из снижения звонков не следует возможность записи на стойке.\n\n3. Nevertheless,\nПодходит: После пользы онлайн-формы подчёркнуто сохранение офлайн-возможности.\n\n4. Similarly,\nНужно пересмотреть: Вторая мысль не сообщает аналогичный эффект другой системы.\n\nОснование в тексте: People without reliable internet access could still make bookings at the reception desk.\n\nТем не менее показывает, что переход к онлайн-записи не отменил другую возможность. Сравниваются только четыре предложенных перехода.\n\n### Свежий перенос: RW04-B\nThe school greenhouse had only one small watering can. Several groups needed to water their plants during the same break. _____ The teacher assigned each group a different watering time.\n\nWhich transition most logically introduces the final sentence?\n\n1. In contrast,\nНужно пересмотреть: Расписание отвечает ограничению, а не противопоставляет независимый факт.\n\n2. Consequently,\nПодходит: Расписание представлено как ответ на общий ограниченный ресурс.\n\n3. For instance,\nНужно пересмотреть: Последняя фраза — действие в ответ на ситуацию, не пример её общего утверждения.\n\n4. Meanwhile,\nНужно пересмотреть: Время само по себе не передаёт объяснённую связь между ограничением и решением.\n\nОснование в тексте: Several groups needed to water their plants during the same break.\n\nСвязь выводится из конфликта расписаний; это не утверждение, что только такое решение возможно.\n\n### Границы проверки\nСвободный прогноз и объяснения не оцениваются по точному совпадению. Другая обоснованная формулировка допустима. Проверяющий должен самостоятельно решить обе задачи, проверить единственность ключа и понятность отвлекающих вариантов. Сюжеты и наблюдения вымышлены; они не являются реальными исследованиями.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-optionless",
+        "skill": "transition",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW04-A",
+            "skill": "transition",
+            "passage": "The town introduced an online booking form for its sports hall. The form reduced repeated telephone enquiries. _____ People without reliable internet access could still make bookings at the reception desk.",
+            "question": "Which transition most logically introduces the final sentence?",
+            "choices": [
+              {
+                "text": "For example,",
+                "feedback": "Последняя фраза не пример сокращения звонков; она добавляет отдельное условие доступа.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "Consequently,",
+                "feedback": "Из снижения звонков не следует возможность записи на стойке.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "Nevertheless,",
+                "feedback": "После пользы онлайн-формы подчёркнуто сохранение офлайн-возможности.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "Similarly,",
+                "feedback": "Вторая мысль не сообщает аналогичный эффект другой системы.",
+                "trap": "wrong-relation",
+                "best": false
+              }
+            ],
+            "key": 2,
+            "evidence": "People without reliable internet access could still make bookings at the reception desk.",
+            "explanation": "Тем не менее показывает, что переход к онлайн-записи не отменил другую возможность. Сравниваются только четыре предложенных перехода.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          },
+          {
+            "id": "RW04-B",
+            "skill": "transition",
+            "passage": "The school greenhouse had only one small watering can. Several groups needed to water their plants during the same break. _____ The teacher assigned each group a different watering time.",
+            "question": "Which transition most logically introduces the final sentence?",
+            "choices": [
+              {
+                "text": "In contrast,",
+                "feedback": "Расписание отвечает ограничению, а не противопоставляет независимый факт.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "Consequently,",
+                "feedback": "Расписание представлено как ответ на общий ограниченный ресурс.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "For instance,",
+                "feedback": "Последняя фраза — действие в ответ на ситуацию, не пример её общего утверждения.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "Meanwhile,",
+                "feedback": "Время само по себе не передаёт объяснённую связь между ограничением и решением.",
+                "trap": "wrong-relation",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "Several groups needed to water their plants during the same break.",
+            "explanation": "Связь выводится из конфликта расписаний; это не утверждение, что только такое решение возможно.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          }
+        ],
+        "review_notes": [
+          "Ключ должен следовать из текста, а не из фоновых знаний.",
+          "Проверь, не становится ли отвлекающий вариант допустимым при разумной интерпретации.",
+          "Свежий перенос меняет текст, а не только порядок вариантов."
+        ]
+      }
+    },
+    {
+      "id": "RW05",
+      "title": "Дистрактор: деталь вместо главной мысли",
+      "category": "SAT R&W · разбор дистракторов",
+      "status": "DRAFT",
+      "student_markdown": "Авторские вымышленные тексты для практики чтения. Это не задания College Board и не прогноз балла SAT.\n\n### Первая попытка\nAn artist first planned a sculpture with many thin supports. A small model showed that several supports would be difficult to attach. She simplified the arrangement while keeping the curved outline that mattered most to her.\n\nWhich choice best states the main idea?\n\nСначала запиши свою мысль без вариантов. После сравнения объясни ошибку. Новый текст переноса открывается отдельно после разбора.",
+      "teacher_markdown": "### Первая задача: RW05-A\nAn artist first planned a sculpture with many thin supports. A small model showed that several supports would be difficult to attach. She simplified the arrangement while keeping the curved outline that mattered most to her.\n\nWhich choice best states the main idea?\n\n1. The artist abandoned the curved outline after discovering that thin supports were difficult to attach.\nНужно пересмотреть: Сохранение контура прямо указано; это инверсия решения.\n\n2. The artist chose thin supports because she wanted the sculpture to resemble a small model.\nНужно пересмотреть: Модель проверяла план; такого мотива нет.\n\n3. Several supports in the artist’s small model were difficult to attach.\nНужно пересмотреть: Верная деталь, но нет последующего изменения и сохранённого замысла.\n\n4. Testing a model led the artist to simplify a construction detail while preserving her main visual intention.\nПодходит: Обобщены наблюдение, изменение и сохранённый контур.\n\nОснование в тексте: She simplified the arrangement while keeping the curved outline that mattered most to her.\n\nХороший разбор должен признать, что вариант с проблемой крепления частично верен, а не объявлять каждое слово дистрактора ложным.\n\n### Свежий перенос: RW05-B\nA student group planned a long podcast with interviews and a history section. During editing, members found that the history section repeated ideas from the interviews. They shortened that section but kept both interviewees’ different viewpoints.\n\nWhich choice best states the main idea?\n\n1. The group revised a podcast to remove repetition while retaining the interviewees’ contrasting viewpoints.\nПодходит: Учтены причина сокращения и сохранённое содержание.\n\n2. The history section repeated some ideas found in the interviews.\nНужно пересмотреть: Это причина правки, но не вся главная мысль.\n\n3. The group removed the interviews because they repeated the history section.\nНужно пересмотреть: Направление правки перевёрнуто.\n\n4. The interviewees agreed on the historical events discussed in the podcast.\nНужно пересмотреть: Different viewpoints не поддерживает утверждение о согласии.\n\nОснование в тексте: They shortened that section but kept both interviewees’ different viewpoints.\n\nГлавная мысль не требует угадывать тему подкаста, которой в тексте нет.\n\n### Границы проверки\nСвободный прогноз и объяснения не оцениваются по точному совпадению. Другая обоснованная формулировка допустима. Проверяющий должен самостоятельно решить обе задачи, проверить единственность ключа и понятность отвлекающих вариантов. Сюжеты и наблюдения вымышлены; они не являются реальными исследованиями.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-distractor",
+        "skill": "central-idea",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW05-A",
+            "skill": "central-idea",
+            "passage": "An artist first planned a sculpture with many thin supports. A small model showed that several supports would be difficult to attach. She simplified the arrangement while keeping the curved outline that mattered most to her.",
+            "question": "Which choice best states the main idea?",
+            "choices": [
+              {
+                "text": "The artist abandoned the curved outline after discovering that thin supports were difficult to attach.",
+                "feedback": "Сохранение контура прямо указано; это инверсия решения.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "The artist chose thin supports because she wanted the sculpture to resemble a small model.",
+                "feedback": "Модель проверяла план; такого мотива нет.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "Several supports in the artist’s small model were difficult to attach.",
+                "feedback": "Верная деталь, но нет последующего изменения и сохранённого замысла.",
+                "trap": "detail",
+                "best": false
+              },
+              {
+                "text": "Testing a model led the artist to simplify a construction detail while preserving her main visual intention.",
+                "feedback": "Обобщены наблюдение, изменение и сохранённый контур.",
+                "trap": "none",
+                "best": true
+              }
+            ],
+            "key": 3,
+            "evidence": "She simplified the arrangement while keeping the curved outline that mattered most to her.",
+            "explanation": "Хороший разбор должен признать, что вариант с проблемой крепления частично верен, а не объявлять каждое слово дистрактора ложным.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          },
+          {
+            "id": "RW05-B",
+            "skill": "central-idea",
+            "passage": "A student group planned a long podcast with interviews and a history section. During editing, members found that the history section repeated ideas from the interviews. They shortened that section but kept both interviewees’ different viewpoints.",
+            "question": "Which choice best states the main idea?",
+            "choices": [
+              {
+                "text": "The group revised a podcast to remove repetition while retaining the interviewees’ contrasting viewpoints.",
+                "feedback": "Учтены причина сокращения и сохранённое содержание.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "The history section repeated some ideas found in the interviews.",
+                "feedback": "Это причина правки, но не вся главная мысль.",
+                "trap": "detail",
+                "best": false
+              },
+              {
+                "text": "The group removed the interviews because they repeated the history section.",
+                "feedback": "Направление правки перевёрнуто.",
+                "trap": "reversal",
+                "best": false
+              },
+              {
+                "text": "The interviewees agreed on the historical events discussed in the podcast.",
+                "feedback": "Different viewpoints не поддерживает утверждение о согласии.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 0,
+            "evidence": "They shortened that section but kept both interviewees’ different viewpoints.",
+            "explanation": "Главная мысль не требует угадывать тему подкаста, которой в тексте нет.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          }
+        ],
+        "review_notes": [
+          "Ключ должен следовать из текста, а не из фоновых знаний.",
+          "Проверь, не становится ли отвлекающий вариант допустимым при разумной интерпретации.",
+          "Свежий перенос меняет текст, а не только порядок вариантов."
+        ]
+      }
+    },
+    {
+      "id": "RW06",
+      "title": "Дистрактор: возможность не равна действию",
+      "category": "SAT R&W · разбор дистракторов",
+      "status": "DRAFT",
+      "student_markdown": "Авторские вымышленные тексты для практики чтения. Это не задания College Board и не прогноз балла SAT.\n\n### Первая попытка\nTo lead the evening tour, a volunteer guide must both observe two tours and complete a route check. Nura has observed two tours but has not completed the check. She is allowed to assist another guide during a tour.\n\nWhich statement is best supported?\n\nСначала запиши свою мысль без вариантов. После сравнения объясни ошибку. Новый текст переноса открывается отдельно после разбора.",
+      "teacher_markdown": "### Первая задача: RW06-A\nTo lead the evening tour, a volunteer guide must both observe two tours and complete a route check. Nura has observed two tours but has not completed the check. She is allowed to assist another guide during a tour.\n\nWhich statement is best supported?\n\n1. Nura has already assisted another guide on an evening tour.\nНужно пересмотреть: Разрешено не означает уже сделано.\n\n2. Nura is not yet qualified to lead the evening tour under the stated rule, although she may assist another guide.\nПодходит: Для руководства не выполнено одно условие; помощь разрешена.\n\n3. Observing two tours is sufficient for Nura to lead the evening tour.\nНужно пересмотреть: Пропущено второе обязательное условие.\n\n4. Nura failed the route check on her first attempt.\nНужно пересмотреть: Not completed не доказывает попытку или неудачу.\n\nОснование в тексте: Nura has observed two tours but has not completed the check.\n\nНе выводить прошлые действия из eligibility или отсутствие завершения из конкретного провала.\n\n### Свежий перенос: RW06-B\nA laboratory allows club members to reserve a microscope only after they have completed equipment training and registered their project. Aron has completed the training, but his project is not registered. He may attend the club’s discussion meetings.\n\nWhich statement is best supported?\n\n1. Aron is not interested in discussion meetings because his project is unregistered.\nНужно пересмотреть: Интерес не описан.\n\n2. Aron may reserve the microscope because equipment training is the only requirement.\nНужно пересмотреть: В тексте два требования.\n\n3. Aron has attended every discussion meeting this term.\nНужно пересмотреть: May attend не сообщает факта посещения.\n\n4. Aron does not yet satisfy both stated requirements for reserving the microscope, but he may attend discussion meetings.\nПодходит: Не выполнена регистрация, отдельное разрешение на обсуждения сохранено.\n\nОснование в тексте: Aron has completed the training, but his project is not registered.\n\nМестоимение his относится к проекту Арона; нельзя выводить причину отсутствия регистрации.\n\n### Границы проверки\nСвободный прогноз и объяснения не оцениваются по точному совпадению. Другая обоснованная формулировка допустима. Проверяющий должен самостоятельно решить обе задачи, проверить единственность ключа и понятность отвлекающих вариантов. Сюжеты и наблюдения вымышлены; они не являются реальными исследованиями.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-distractor",
+        "skill": "inference",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW06-A",
+            "skill": "inference",
+            "passage": "To lead the evening tour, a volunteer guide must both observe two tours and complete a route check. Nura has observed two tours but has not completed the check. She is allowed to assist another guide during a tour.",
+            "question": "Which statement is best supported?",
+            "choices": [
+              {
+                "text": "Nura has already assisted another guide on an evening tour.",
+                "feedback": "Разрешено не означает уже сделано.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "Nura is not yet qualified to lead the evening tour under the stated rule, although she may assist another guide.",
+                "feedback": "Для руководства не выполнено одно условие; помощь разрешена.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "Observing two tours is sufficient for Nura to lead the evening tour.",
+                "feedback": "Пропущено второе обязательное условие.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "Nura failed the route check on her first attempt.",
+                "feedback": "Not completed не доказывает попытку или неудачу.",
+                "trap": "unsupported",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "Nura has observed two tours but has not completed the check.",
+            "explanation": "Не выводить прошлые действия из eligibility или отсутствие завершения из конкретного провала.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          },
+          {
+            "id": "RW06-B",
+            "skill": "inference",
+            "passage": "A laboratory allows club members to reserve a microscope only after they have completed equipment training and registered their project. Aron has completed the training, but his project is not registered. He may attend the club’s discussion meetings.",
+            "question": "Which statement is best supported?",
+            "choices": [
+              {
+                "text": "Aron is not interested in discussion meetings because his project is unregistered.",
+                "feedback": "Интерес не описан.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "Aron may reserve the microscope because equipment training is the only requirement.",
+                "feedback": "В тексте два требования.",
+                "trap": "scope",
+                "best": false
+              },
+              {
+                "text": "Aron has attended every discussion meeting this term.",
+                "feedback": "May attend не сообщает факта посещения.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "Aron does not yet satisfy both stated requirements for reserving the microscope, but he may attend discussion meetings.",
+                "feedback": "Не выполнена регистрация, отдельное разрешение на обсуждения сохранено.",
+                "trap": "none",
+                "best": true
+              }
+            ],
+            "key": 3,
+            "evidence": "Aron has completed the training, but his project is not registered.",
+            "explanation": "Местоимение his относится к проекту Арона; нельзя выводить причину отсутствия регистрации.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          }
+        ],
+        "review_notes": [
+          "Ключ должен следовать из текста, а не из фоновых знаний.",
+          "Проверь, не становится ли отвлекающий вариант допустимым при разумной интерпретации.",
+          "Свежий перенос меняет текст, а не только порядок вариантов."
+        ]
+      }
+    },
+    {
+      "id": "RW07",
+      "title": "Дистрактор: сравнение без исходной базы",
+      "category": "SAT R&W · разбор дистракторов",
+      "status": "DRAFT",
+      "student_markdown": "Авторские вымышленные тексты для практики чтения. Это не задания College Board и не прогноз балла SAT.\n\n### Первая попытка\nA garden club counted flowers on two plots at the end of summer. The plot with new compost had more flowers. Members had not counted flowers before adding the compost, and the plots received different amounts of sunlight.\n\nWhich conclusion is best supported?\n\nСначала запиши свою мысль без вариантов. После сравнения объясни ошибку. Новый текст переноса открывается отдельно после разбора.",
+      "teacher_markdown": "### Первая задача: RW07-A\nA garden club counted flowers on two plots at the end of summer. The plot with new compost had more flowers. Members had not counted flowers before adding the compost, and the plots received different amounts of sunlight.\n\nWhich conclusion is best supported?\n\n1. The compost plot’s flower count increased more during summer.\nНужно пересмотреть: Без исходных подсчётов нельзя сравнить рост.\n\n2. The compost alone caused the higher flower count.\nНужно пересмотреть: Разные условия и неизвестная исходная база не отделяют эффект компоста.\n\n3. The compost plot had more flowers at the final count, but the observations do not establish the compost’s separate effect.\nПодходит: Разделены наблюдаемый итог и причинное объяснение.\n\n4. Both plots received equal sunlight, making their final counts directly comparable.\nНужно пересмотреть: Текст прямо сообщает разное освещение.\n\nОснование в тексте: Members had not counted flowers before adding the compost, and the plots received different amounts of sunlight.\n\nНужно отдельно объяснить, почему higher final count не означает greater increase.\n\n### Свежий перенос: RW07-B\nAt a local club, members using one reading app completed more stories in June than members using another app. Members chose their own app, and the club did not record how much time each person spent reading.\n\nWhich conclusion is best supported?\n\n1. One app group completed more stories, but the observation does not show that the app itself caused the difference.\nПодходит: Сохранено наблюдение и ограничение сравнения.\n\n2. The first app made its users read faster per hour.\nНужно пересмотреть: Время чтения не измерялось; число историй не даёт скорость.\n\n3. Both groups read for the same number of hours because they belonged to the same club.\nНужно пересмотреть: Членство не уравнивает время; текст прямо говорит об отсутствии данных.\n\n4. Members were assigned randomly to apps, so prior preferences could not affect the comparison.\nНужно пересмотреть: Приложение выбирали сами участники.\n\nОснование в тексте: Members chose their own app, and the club did not record how much time each person spent reading.\n\nВымышленное наблюдение не доказывает реальной эффективности приложения; важно отделять объём от скорости.\n\n### Границы проверки\nСвободный прогноз и объяснения не оцениваются по точному совпадению. Другая обоснованная формулировка допустима. Проверяющий должен самостоятельно решить обе задачи, проверить единственность ключа и понятность отвлекающих вариантов. Сюжеты и наблюдения вымышлены; они не являются реальными исследованиями.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-distractor",
+        "skill": "evidence-boundary",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW07-A",
+            "skill": "evidence-boundary",
+            "passage": "A garden club counted flowers on two plots at the end of summer. The plot with new compost had more flowers. Members had not counted flowers before adding the compost, and the plots received different amounts of sunlight.",
+            "question": "Which conclusion is best supported?",
+            "choices": [
+              {
+                "text": "The compost plot’s flower count increased more during summer.",
+                "feedback": "Без исходных подсчётов нельзя сравнить рост.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "The compost alone caused the higher flower count.",
+                "feedback": "Разные условия и неизвестная исходная база не отделяют эффект компоста.",
+                "trap": "causal",
+                "best": false
+              },
+              {
+                "text": "The compost plot had more flowers at the final count, but the observations do not establish the compost’s separate effect.",
+                "feedback": "Разделены наблюдаемый итог и причинное объяснение.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "Both plots received equal sunlight, making their final counts directly comparable.",
+                "feedback": "Текст прямо сообщает разное освещение.",
+                "trap": "reversal",
+                "best": false
+              }
+            ],
+            "key": 2,
+            "evidence": "Members had not counted flowers before adding the compost, and the plots received different amounts of sunlight.",
+            "explanation": "Нужно отдельно объяснить, почему higher final count не означает greater increase.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          },
+          {
+            "id": "RW07-B",
+            "skill": "evidence-boundary",
+            "passage": "At a local club, members using one reading app completed more stories in June than members using another app. Members chose their own app, and the club did not record how much time each person spent reading.",
+            "question": "Which conclusion is best supported?",
+            "choices": [
+              {
+                "text": "One app group completed more stories, but the observation does not show that the app itself caused the difference.",
+                "feedback": "Сохранено наблюдение и ограничение сравнения.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "The first app made its users read faster per hour.",
+                "feedback": "Время чтения не измерялось; число историй не даёт скорость.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "Both groups read for the same number of hours because they belonged to the same club.",
+                "feedback": "Членство не уравнивает время; текст прямо говорит об отсутствии данных.",
+                "trap": "unsupported",
+                "best": false
+              },
+              {
+                "text": "Members were assigned randomly to apps, so prior preferences could not affect the comparison.",
+                "feedback": "Приложение выбирали сами участники.",
+                "trap": "reversal",
+                "best": false
+              }
+            ],
+            "key": 0,
+            "evidence": "Members chose their own app, and the club did not record how much time each person spent reading.",
+            "explanation": "Вымышленное наблюдение не доказывает реальной эффективности приложения; важно отделять объём от скорости.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          }
+        ],
+        "review_notes": [
+          "Ключ должен следовать из текста, а не из фоновых знаний.",
+          "Проверь, не становится ли отвлекающий вариант допустимым при разумной интерпретации.",
+          "Свежий перенос меняет текст, а не только порядок вариантов."
+        ]
+      }
+    },
+    {
+      "id": "RW08",
+      "title": "Дистрактор: функция последней фразы",
+      "category": "SAT R&W · разбор дистракторов",
+      "status": "DRAFT",
+      "student_markdown": "Авторские вымышленные тексты для практики чтения. Это не задания College Board и не прогноз балла SAT.\n\n### Первая попытка\nThe hiking club moved its route map to a website. Members could check updates without collecting a new paper copy. _____ Printed maps remained available for members who could not access the site.\n\nWhich transition most logically introduces the final sentence?\n\nСначала запиши свою мысль без вариантов. После сравнения объясни ошибку. Новый текст переноса открывается отдельно после разбора.",
+      "teacher_markdown": "### Первая задача: RW08-A\nThe hiking club moved its route map to a website. Members could check updates without collecting a new paper copy. _____ Printed maps remained available for members who could not access the site.\n\nWhich transition most logically introduces the final sentence?\n\n1. Therefore,\nНужно пересмотреть: Печатные карты не являются следствием удобства проверки обновлений.\n\n2. Nevertheless,\nПодходит: Подчёркнуто сохранение исключения после перехода в онлайн.\n\n3. For example,\nНужно пересмотреть: Последняя фраза не пример проверки сайта.\n\n4. Likewise,\nНужно пересмотреть: Не описан второй аналогичный способ онлайн-обновления.\n\nОснование в тексте: Printed maps remained available for members who could not access the site.\n\nНе выбирать переход только по знакомому слову: назови отношение между двумя конкретными мыслями.\n\n### Свежий перенос: RW08-B\nA drama group could book its rehearsal room for only two evenings each week. The original schedule required four evenings. _____ The director combined some scenes into longer sessions.\n\nWhich transition most logically introduces the final sentence?\n\n1. Similarly,\nНужно пересмотреть: Решение не аналогичный пример другого расписания.\n\n2. For instance,\nНужно пересмотреть: Последняя фраза отвечает на ограничение, а не иллюстрирует обобщение.\n\n3. Nevertheless,\nНужно пересмотреть: Решение следует из ограничений, а не происходит вопреки им.\n\n4. Consequently,\nПодходит: Объединение сцен — ответ на нехватку доступных вечеров.\n\nОснование в тексте: The original schedule required four evenings.\n\nРечь о связи ограничения и действия режиссёра; не нужно делать вывод об общей эффективности длинных репетиций.\n\n### Границы проверки\nСвободный прогноз и объяснения не оцениваются по точному совпадению. Другая обоснованная формулировка допустима. Проверяющий должен самостоятельно решить обе задачи, проверить единственность ключа и понятность отвлекающих вариантов. Сюжеты и наблюдения вымышлены; они не являются реальными исследованиями.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "sat-rw-pair-v1",
+        "publication_ready": false,
+        "trainer": "sat-distractor",
+        "skill": "transition",
+        "difficulty": "developing",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "rounds": [
+          {
+            "id": "RW08-A",
+            "skill": "transition",
+            "passage": "The hiking club moved its route map to a website. Members could check updates without collecting a new paper copy. _____ Printed maps remained available for members who could not access the site.",
+            "question": "Which transition most logically introduces the final sentence?",
+            "choices": [
+              {
+                "text": "Therefore,",
+                "feedback": "Печатные карты не являются следствием удобства проверки обновлений.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "Nevertheless,",
+                "feedback": "Подчёркнуто сохранение исключения после перехода в онлайн.",
+                "trap": "none",
+                "best": true
+              },
+              {
+                "text": "For example,",
+                "feedback": "Последняя фраза не пример проверки сайта.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "Likewise,",
+                "feedback": "Не описан второй аналогичный способ онлайн-обновления.",
+                "trap": "wrong-relation",
+                "best": false
+              }
+            ],
+            "key": 1,
+            "evidence": "Printed maps remained available for members who could not access the site.",
+            "explanation": "Не выбирать переход только по знакомому слову: назови отношение между двумя конкретными мыслями.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          },
+          {
+            "id": "RW08-B",
+            "skill": "transition",
+            "passage": "A drama group could book its rehearsal room for only two evenings each week. The original schedule required four evenings. _____ The director combined some scenes into longer sessions.",
+            "question": "Which transition most logically introduces the final sentence?",
+            "choices": [
+              {
+                "text": "Similarly,",
+                "feedback": "Решение не аналогичный пример другого расписания.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "For instance,",
+                "feedback": "Последняя фраза отвечает на ограничение, а не иллюстрирует обобщение.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "Nevertheless,",
+                "feedback": "Решение следует из ограничений, а не происходит вопреки им.",
+                "trap": "wrong-relation",
+                "best": false
+              },
+              {
+                "text": "Consequently,",
+                "feedback": "Объединение сцен — ответ на нехватку доступных вечеров.",
+                "trap": "none",
+                "best": true
+              }
+            ],
+            "key": 3,
+            "evidence": "The original schedule required four evenings.",
+            "explanation": "Речь о связи ограничения и действия режиссёра; не нужно делать вывод об общей эффективности длинных репетиций.",
+            "prediction_guidance": "Сначала сформулируй ответ или нужную связь своими словами, до показа вариантов. Совпадение с образцом не требуется.",
+            "repair_prompt": "Укажи, какую часть текста ты пропустил и почему выбранный вариант оказался слабее. Затем проверь себя на новом тексте."
+          }
+        ],
+        "review_notes": [
+          "Ключ должен следовать из текста, а не из фоновых знаний.",
+          "Проверь, не становится ли отвлекающий вариант допустимым при разумной интерпретации.",
+          "Свежий перенос меняет текст, а не только порядок вариантов."
+        ]
+      }
+    }
+  ]
+}

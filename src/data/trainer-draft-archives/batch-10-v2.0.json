@@ -1,0 +1,525 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "10",
+  "version": "2.0",
+  "source_sha256": "4448bff2da4f5135c02d66245cb500050cbaa7389086682cfd8dc704aeb62298",
+  "content_sha256": "6529e0cedc48e53fd64c93f5e4b8f25fe6ff7bb994007ffa41a95d2aa47f19c8",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "L05",
+      "title": "Окончательное количество участников",
+      "category": "Listening",
+      "status": "DRAFT",
+      "student_markdown": "### Окончательное количество участников\n\nHow many learners are in the final group?\n\nЗапиши только число; сотрудников не включай.\n\nСначала предскажи тип ответа, послушай запись и зафиксируй ответ. После разбора запиши отдельную правку; затем проверь новую ситуацию. Синтетическая авторская речь, не экзаменационная запись. Тексты, ключи и новая ситуация открываются отдельно.",
+      "teacher_markdown": "### Первая ситуация\n\nHow many learners are in the final group?\n\nЗапиши только число; сотрудников не включай.\n\nBefore we print the attendance sheet, I need to update the booking for the craft session. We originally reserved twenty places because we did not know how many people would confirm. Some families have now chosen a different date. The final group has twelve learners, not twenty. Two staff members will help them, but the staff are not enrolled in the session. Please prepare one folder for each learner and leave the extra tables against the wall. We will check the names again when people arrive.\n\nПодготовленный ответ: 12. Варианты: 12.\n\nРазобранные ловушки: 20, 14, 2.\n\nTwelve относится к окончательной группе учащихся. Twenty — предварительная бронь; два сотрудника не учащиеся. 14 ошибочно добавляет сотрудников.\n\nТочный фрагмент: The final group has twelve learners, not twenty. Two staff members will help them, but the staff are not enrolled in the session.\n\n### Новая ситуация\n\nHow many visitors have confirmed for the tour?\n\nЗапиши только число; гидов не включай.\n\nHere is the latest information about the building tour. The first message mentioned sixty places, which was the maximum capacity rather than the number of bookings. We have now received all the replies. Sixteen visitors have confirmed that they will attend. There will also be three guides, each responsible for part of the building. They should not be included on the visitor list. Please use the confirmed number when printing visitor badges. Anyone joining later will need to contact the office before we prepare another badge.\n\nПодготовленный ответ: 16. Варианты: 16.\n\nРазобранные ловушки: 60, 19, 3.\n\nSixteen — подтверждённые посетители. Sixty — вместимость, три гида — сотрудники. Из вместимости нельзя выводить фактическую посещаемость.\n\nТочный фрагмент: Sixteen visitors have confirmed that they will attend. There will also be three guides, each responsible for part of the building.\n\nНеизвестный вариант не объявляется автоматически неверным. Проверь соответствие смыслу и формату вручную. Сначала ответ, затем ремонт и новая ситуация; текстовая помощь отмечается отдельно. Длительность/завершение проигрывания не доказывают понимание, качества произношения или владения навыком.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "listening-pair-v1",
+        "publication_ready": false,
+        "audio_status": "GENERATED_DRAFT",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "focus": "final-count-versus-reservations-and-staff",
+        "rounds": [
+          {
+            "prompt": "How many learners are in the final group?",
+            "instruction": "Запиши только число; сотрудников не включай.",
+            "script": "Before we print the attendance sheet, I need to update the booking for the craft session. We originally reserved twenty places because we did not know how many people would confirm. Some families have now chosen a different date. The final group has twelve learners, not twenty. Two staff members will help them, but the staff are not enrolled in the session. Please prepare one folder for each learner and leave the extra tables against the wall. We will check the names again when people arrive.",
+            "segment": "The final group has twelve learners, not twenty. Two staff members will help them, but the staff are not enrolled in the session.",
+            "answer": "12",
+            "accepted": [
+              "12"
+            ],
+            "distractors": [
+              "20",
+              "14",
+              "2"
+            ],
+            "explanation": "Twelve относится к окончательной группе учащихся. Twenty — предварительная бронь; два сотрудника не учащиеся. 14 ошибочно добавляет сотрудников."
+          },
+          {
+            "prompt": "How many visitors have confirmed for the tour?",
+            "instruction": "Запиши только число; гидов не включай.",
+            "script": "Here is the latest information about the building tour. The first message mentioned sixty places, which was the maximum capacity rather than the number of bookings. We have now received all the replies. Sixteen visitors have confirmed that they will attend. There will also be three guides, each responsible for part of the building. They should not be included on the visitor list. Please use the confirmed number when printing visitor badges. Anyone joining later will need to contact the office before we prepare another badge.",
+            "segment": "Sixteen visitors have confirmed that they will attend. There will also be three guides, each responsible for part of the building.",
+            "answer": "16",
+            "accepted": [
+              "16"
+            ],
+            "distractors": [
+              "60",
+              "19",
+              "3"
+            ],
+            "explanation": "Sixteen — подтверждённые посетители. Sixty — вместимость, три гида — сотрудники. Из вместимости нельзя выводить фактическую посещаемость."
+          }
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l05-1-full.wav",
+              "sha256": "295014207769d62a322d19e433a9c73ad962393347bb9db6909c48ce3bf721d1",
+              "bytes": 1518358
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l05-1-segment.wav",
+              "sha256": "d910bb398c8a5b5d50669ec9aeecb1c8167713193e8a3dff50ed1987199dc085",
+              "bytes": 429048
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l05-2-full.wav",
+              "sha256": "bcaa5ae81b1f7208cba2b70c3286beee9abe553d04102f1c52908232f2c7a5ab",
+              "bytes": 1620428
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l05-2-segment.wav",
+              "sha256": "b9930e123be61db819925249e9c9420f683fd531b6be89ebb0da371abde1047d",
+              "bytes": 401478
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "L06",
+      "title": "Начало программы и время входа",
+      "category": "Listening",
+      "status": "DRAFT",
+      "student_markdown": "### Начало программы и время входа\n\nWhat time will the talk start?\n\nЗапиши время в формате 9:15; время открытия дверей не подходит.\n\nСначала предскажи тип ответа, послушай запись и зафиксируй ответ. После разбора запиши отдельную правку; затем проверь новую ситуацию. Синтетическая авторская речь, не экзаменационная запись. Тексты, ключи и новая ситуация открываются отдельно.",
+      "teacher_markdown": "### Первая ситуация\n\nWhat time will the talk start?\n\nЗапиши время в формате 9:15; время открытия дверей не подходит.\n\nPlease check the revised arrangements for the morning talk. The room will open at eight forty-five so that visitors can find a seat and look at the displays. The old leaflet said the talk would begin at nine, but the speaker needs a little more time to set up. The talk will now start at nine fifteen. It should finish at ten, and questions will follow if time allows. You do not have to arrive when the doors open, although arriving before the talk starts will avoid disturbing other visitors.\n\nПодготовленный ответ: 9:15. Варианты: 9:15, 09:15, 9.15.\n\nРазобранные ловушки: 8:45, 9:00, 10:00.\n\n9:15 — изменённое начало выступления. 8:45 — вход, 9:00 — старое объявление, 10:00 — окончание. Разные упомянутые времена не взаимозаменяемы.\n\nТочный фрагмент: The old leaflet said the talk would begin at nine, but the speaker needs a little more time to set up. The talk will now start at nine fifteen.\n\n### Новая ситуация\n\nWhat time does the demonstration begin?\n\nЗапиши время в формате 14:30; используй 24-часовую запись.\n\nFor the afternoon demonstration, visitors may enter the hall from two o'clock. This gives everyone time to store coats and read the safety information. The demonstration itself begins at half past two, not at three as the first programme suggested. We expect the practical part to finish at four. After that, the team will put the equipment away and the hall will close to visitors. If you are only coming for the demonstration, please make sure you are seated before it begins. Entering the building early is optional.\n\nПодготовленный ответ: 14:30. Варианты: 14:30, 14.30.\n\nРазобранные ловушки: 14:00, 15:00, 16:00.\n\nHalf past two в afternoon — 14:30. Инструкция требует 24-часовой формат. 14:00 — вход, 15:00 — отменённая версия, 16:00 — ожидаемый конец.\n\nТочный фрагмент: The demonstration itself begins at half past two, not at three as the first programme suggested.\n\nНеизвестный вариант не объявляется автоматически неверным. Проверь соответствие смыслу и формату вручную. Сначала ответ, затем ремонт и новая ситуация; текстовая помощь отмечается отдельно. Длительность/завершение проигрывания не доказывают понимание, качества произношения или владения навыком.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "listening-pair-v1",
+        "publication_ready": false,
+        "audio_status": "GENERATED_DRAFT",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "focus": "start-time-versus-doors-and-finish",
+        "rounds": [
+          {
+            "prompt": "What time will the talk start?",
+            "instruction": "Запиши время в формате 9:15; время открытия дверей не подходит.",
+            "script": "Please check the revised arrangements for the morning talk. The room will open at eight forty-five so that visitors can find a seat and look at the displays. The old leaflet said the talk would begin at nine, but the speaker needs a little more time to set up. The talk will now start at nine fifteen. It should finish at ten, and questions will follow if time allows. You do not have to arrive when the doors open, although arriving before the talk starts will avoid disturbing other visitors.",
+            "segment": "The old leaflet said the talk would begin at nine, but the speaker needs a little more time to set up. The talk will now start at nine fifteen.",
+            "answer": "9:15",
+            "accepted": [
+              "9:15",
+              "09:15",
+              "9.15"
+            ],
+            "distractors": [
+              "8:45",
+              "9:00",
+              "10:00"
+            ],
+            "explanation": "9:15 — изменённое начало выступления. 8:45 — вход, 9:00 — старое объявление, 10:00 — окончание. Разные упомянутые времена не взаимозаменяемы."
+          },
+          {
+            "prompt": "What time does the demonstration begin?",
+            "instruction": "Запиши время в формате 14:30; используй 24-часовую запись.",
+            "script": "For the afternoon demonstration, visitors may enter the hall from two o'clock. This gives everyone time to store coats and read the safety information. The demonstration itself begins at half past two, not at three as the first programme suggested. We expect the practical part to finish at four. After that, the team will put the equipment away and the hall will close to visitors. If you are only coming for the demonstration, please make sure you are seated before it begins. Entering the building early is optional.",
+            "segment": "The demonstration itself begins at half past two, not at three as the first programme suggested.",
+            "answer": "14:30",
+            "accepted": [
+              "14:30",
+              "14.30"
+            ],
+            "distractors": [
+              "14:00",
+              "15:00",
+              "16:00"
+            ],
+            "explanation": "Half past two в afternoon — 14:30. Инструкция требует 24-часовой формат. 14:00 — вход, 15:00 — отменённая версия, 16:00 — ожидаемый конец."
+          }
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l06-1-full.wav",
+              "sha256": "c9aec58913f2f4a969a543be6871ce92e6d3ca2470a457c74f51aade07f344e8",
+              "bytes": 1458818
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l06-1-segment.wav",
+              "sha256": "461c5afdd9ade6e6eb2d792c5c8e3632fa89cb77d515bbae4be1b48fef10bc45",
+              "bytes": 441836
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l06-2-full.wav",
+              "sha256": "e5bf5f7ed954f5a474b3833d52ba847541dbfc972a1bedce8a9d1a56c57b14c6",
+              "bytes": 1619764
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l06-2-segment.wav",
+              "sha256": "5b4e3842b5acdb90eecdc5908367da1e685508099f8acaf22ea77d8325f734dc",
+              "bytes": 308450
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "L07",
+      "title": "Цена и дополнительные платежи",
+      "category": "Listening",
+      "status": "DRAFT",
+      "student_markdown": "### Цена и дополнительные платежи\n\nWhat is the workshop ticket price, including materials?\n\nЗапиши только число в фунтах; возвращаемый залог не включай.\n\nСначала предскажи тип ответа, послушай запись и зафиксируй ответ. После разбора запиши отдельную правку; затем проверь новую ситуацию. Синтетическая авторская речь, не экзаменационная запись. Тексты, ключи и новая ситуация открываются отдельно.",
+      "teacher_markdown": "### Первая ситуация\n\nWhat is the workshop ticket price, including materials?\n\nЗапиши только число в фунтах; возвращаемый залог не включай.\n\nThe workshop ticket costs eighteen pounds, and that price includes the materials used during the session. You do not need to buy a separate materials pack. We also ask for a refundable five-pound deposit when you borrow an apron. That deposit is returned when the apron comes back in good condition, so it is not part of the ticket price. Printed copies of the instructions are optional and cost two pounds. You can instead use the free digital version after the workshop. Please tell the desk if you would like a printed copy.\n\nПодготовленный ответ: 18. Варианты: 18.\n\nРазобранные ловушки: 23, 20, 5.\n\nTicket price — 18. 5 — возвращаемый залог, 2 — необязательная копия. Вопрос не спрашивает всю сумму, которую конкретный человек временно отдаст на стойке.\n\nТочный фрагмент: The workshop ticket costs eighteen pounds, and that price includes the materials used during the session.\n\n### Новая ситуация\n\nWhat is the day-course fee, including lunch?\n\nЗапиши только число в фунтах; необязательные напитки не включай.\n\nThe fee for the day course is twenty-four pounds. Lunch is included, so please do not add another payment for the meal. Drinks from the cafe are optional and cost four pounds each. You are welcome to bring your own water instead. There is also an eight-pound refundable deposit if you borrow a locker key. You will get that money back when you return the key at the end of the day. The course fee covers the teaching session and lunch regardless of whether you use the cafe or a locker.\n\nПодготовленный ответ: 24. Варианты: 24.\n\nРазобранные ловушки: 28, 32, 36.\n\n24 включает обучение и обед. 4 — необязательный напиток, 8 — возвращаемый залог. 28/32/36 смешивают цену курса с другими платежами.\n\nТочный фрагмент: The fee for the day course is twenty-four pounds. Lunch is included, so please do not add another payment for the meal.\n\nНеизвестный вариант не объявляется автоматически неверным. Проверь соответствие смыслу и формату вручную. Сначала ответ, затем ремонт и новая ситуация; текстовая помощь отмечается отдельно. Длительность/завершение проигрывания не доказывают понимание, качества произношения или владения навыком.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "listening-pair-v1",
+        "publication_ready": false,
+        "audio_status": "GENERATED_DRAFT",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "focus": "included-cost-versus-deposit-and-option",
+        "rounds": [
+          {
+            "prompt": "What is the workshop ticket price, including materials?",
+            "instruction": "Запиши только число в фунтах; возвращаемый залог не включай.",
+            "script": "The workshop ticket costs eighteen pounds, and that price includes the materials used during the session. You do not need to buy a separate materials pack. We also ask for a refundable five-pound deposit when you borrow an apron. That deposit is returned when the apron comes back in good condition, so it is not part of the ticket price. Printed copies of the instructions are optional and cost two pounds. You can instead use the free digital version after the workshop. Please tell the desk if you would like a printed copy.",
+            "segment": "The workshop ticket costs eighteen pounds, and that price includes the materials used during the session.",
+            "answer": "18",
+            "accepted": [
+              "18"
+            ],
+            "distractors": [
+              "23",
+              "20",
+              "5"
+            ],
+            "explanation": "Ticket price — 18. 5 — возвращаемый залог, 2 — необязательная копия. Вопрос не спрашивает всю сумму, которую конкретный человек временно отдаст на стойке."
+          },
+          {
+            "prompt": "What is the day-course fee, including lunch?",
+            "instruction": "Запиши только число в фунтах; необязательные напитки не включай.",
+            "script": "The fee for the day course is twenty-four pounds. Lunch is included, so please do not add another payment for the meal. Drinks from the cafe are optional and cost four pounds each. You are welcome to bring your own water instead. There is also an eight-pound refundable deposit if you borrow a locker key. You will get that money back when you return the key at the end of the day. The course fee covers the teaching session and lunch regardless of whether you use the cafe or a locker.",
+            "segment": "The fee for the day course is twenty-four pounds. Lunch is included, so please do not add another payment for the meal.",
+            "answer": "24",
+            "accepted": [
+              "24"
+            ],
+            "distractors": [
+              "28",
+              "32",
+              "36"
+            ],
+            "explanation": "24 включает обучение и обед. 4 — необязательный напиток, 8 — возвращаемый залог. 28/32/36 смешивают цену курса с другими платежами."
+          }
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l07-1-full.wav",
+              "sha256": "ff873a9b9095145a0a4ca22559c18be024c86fe6137284207ce1e6e2bd64918d",
+              "bytes": 1629234
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l07-1-segment.wav",
+              "sha256": "f9ea9c2d4f07a72703b57688e59ca100f6ab75be02b4600d1eac23cd69069f1e",
+              "bytes": 323442
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l07-2-full.wav",
+              "sha256": "008d4378667bb08ae4e18e37be2d64e638f9f809e9b52c84473b532e6ecfd257",
+              "bytes": 1459932
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l07-2-segment.wav",
+              "sha256": "a31ccb043ccc6f83c51589eca4d340ba88effaaffc1086970e67b51259076e48",
+              "bytes": 391788
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "L08",
+      "title": "Место события и соседний ориентир",
+      "category": "Listening",
+      "status": "DRAFT",
+      "student_markdown": "### Место события и соседний ориентир\n\nThe sketching session takes place in the ____.\n\nЗапиши одно слово на английском.\n\nСначала предскажи тип ответа, послушай запись и зафиксируй ответ. После разбора запиши отдельную правку; затем проверь новую ситуацию. Синтетическая авторская речь, не экзаменационная запись. Тексты, ключи и новая ситуация открываются отдельно.",
+      "teacher_markdown": "### Первая ситуация\n\nThe sketching session takes place in the ____.\n\nЗапиши одно слово на английском.\n\nWhen you arrive at the visitor centre, follow the signs towards the garden. That is the easiest way to find the correct part of the building, but the session is not held outside. The sketching session takes place in the gallery, which is beside the garden entrance. Please go through the glass door and wait near the chairs inside. The cafe is on the other side of the courtyard and will be open after the session. If the weather is good, you can visit the garden later, but all the teaching will remain indoors.\n\nПодготовленный ответ: gallery. Варианты: gallery.\n\nРазобранные ловушки: garden, cafe, courtyard.\n\nGallery — место занятия. Garden — соседний ориентир, cafe — возможность после занятия. Направление towards the garden не означает, что урок проходит в саду.\n\nТочный фрагмент: The sketching session takes place in the gallery, which is beside the garden entrance.\n\n### Новая ситуация\n\nThe repair demonstration takes place in the ____.\n\nЗапиши одно слово на английском.\n\nYou may have seen the repair tools displayed in the shop window, but the demonstration is in a different room. Go past the shop and follow the corridor towards the courtyard. The repair demonstration takes place in the studio, immediately before the courtyard exit. There will be a sign on the door and seats for the audience inside. Please do not wait in the courtyard, as another group will be using that space. The shop display will stay in place all afternoon, so you can look at it before or after the demonstration.\n\nПодготовленный ответ: studio. Варианты: studio.\n\nРазобранные ловушки: shop, courtyard, corridor.\n\nStudio — место демонстрации. Shop показывает инструменты, corridor — путь, courtyard — ориентир и помещение другой группы. Все эти слова слышны, но выполняют разные роли.\n\nТочный фрагмент: The repair demonstration takes place in the studio, immediately before the courtyard exit.\n\nНеизвестный вариант не объявляется автоматически неверным. Проверь соответствие смыслу и формату вручную. Сначала ответ, затем ремонт и новая ситуация; текстовая помощь отмечается отдельно. Длительность/завершение проигрывания не доказывают понимание, качества произношения или владения навыком.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "listening-pair-v1",
+        "publication_ready": false,
+        "audio_status": "GENERATED_DRAFT",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "focus": "event-location-versus-nearby-landmark",
+        "rounds": [
+          {
+            "prompt": "The sketching session takes place in the ____.",
+            "instruction": "Запиши одно слово на английском.",
+            "script": "When you arrive at the visitor centre, follow the signs towards the garden. That is the easiest way to find the correct part of the building, but the session is not held outside. The sketching session takes place in the gallery, which is beside the garden entrance. Please go through the glass door and wait near the chairs inside. The cafe is on the other side of the courtyard and will be open after the session. If the weather is good, you can visit the garden later, but all the teaching will remain indoors.",
+            "segment": "The sketching session takes place in the gallery, which is beside the garden entrance.",
+            "answer": "gallery",
+            "accepted": [
+              "gallery"
+            ],
+            "distractors": [
+              "garden",
+              "cafe",
+              "courtyard"
+            ],
+            "explanation": "Gallery — место занятия. Garden — соседний ориентир, cafe — возможность после занятия. Направление towards the garden не означает, что урок проходит в саду."
+          },
+          {
+            "prompt": "The repair demonstration takes place in the ____.",
+            "instruction": "Запиши одно слово на английском.",
+            "script": "You may have seen the repair tools displayed in the shop window, but the demonstration is in a different room. Go past the shop and follow the corridor towards the courtyard. The repair demonstration takes place in the studio, immediately before the courtyard exit. There will be a sign on the door and seats for the audience inside. Please do not wait in the courtyard, as another group will be using that space. The shop display will stay in place all afternoon, so you can look at it before or after the demonstration.",
+            "segment": "The repair demonstration takes place in the studio, immediately before the courtyard exit.",
+            "answer": "studio",
+            "accepted": [
+              "studio"
+            ],
+            "distractors": [
+              "shop",
+              "courtyard",
+              "corridor"
+            ],
+            "explanation": "Studio — место демонстрации. Shop показывает инструменты, corridor — путь, courtyard — ориентир и помещение другой группы. Все эти слова слышны, но выполняют разные роли."
+          }
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l08-1-full.wav",
+              "sha256": "b145f4a53fbce8cf81682fe6511672397bc22721d052758690bd494d09d0d86a",
+              "bytes": 1503364
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l08-1-segment.wav",
+              "sha256": "141344918106f13c46c24adcb19a815677b4aee736a8c4ee396e11942bde48ae",
+              "bytes": 258404
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l08-2-full.wav",
+              "sha256": "8d564c48e9ca9c0013b897d7f446accba91afb3a9789d83d08c3140863ee949a",
+              "bytes": 1545898
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l08-2-segment.wav",
+              "sha256": "2a7c56bc26c9958fac3f644f88eab1377ba40f5df650eb8b9b9f567a0c591755",
+              "bytes": 286624
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "L09",
+      "title": "Подтверждённый день вместо старого плана",
+      "category": "Listening",
+      "status": "DRAFT",
+      "student_markdown": "### Подтверждённый день вместо старого плана\n\nOn which day is the meeting now confirmed?\n\nЗапиши одно слово на английском.\n\nСначала предскажи тип ответа, послушай запись и зафиксируй ответ. После разбора запиши отдельную правку; затем проверь новую ситуацию. Синтетическая авторская речь, не экзаменационная запись. Тексты, ключи и новая ситуация открываются отдельно.",
+      "teacher_markdown": "### Первая ситуация\n\nOn which day is the meeting now confirmed?\n\nЗапиши одно слово на английском.\n\nI am calling to confirm the new day for our planning meeting. We first suggested Tuesday, but several people could not attend then. Wednesday was another possibility, although the room is already booked for a training session. The meeting is now confirmed for Thursday. The time and building remain the same as in the original message. Please replace the old day in your calendar rather than creating a second meeting. If Thursday causes a problem, contact the organiser directly. At present there is only one confirmed meeting, not a series of sessions across the week.\n\nПодготовленный ответ: Thursday. Варианты: Thursday.\n\nРазобранные ловушки: Tuesday, Wednesday, Friday.\n\nThursday — текущая подтверждённая договорённость. Tuesday — прежний план, Wednesday — невыбранная возможность. Confirmed не доказывает, что встреча уже состоялась.\n\nТочный фрагмент: Wednesday was another possibility, although the room is already booked for a training session. The meeting is now confirmed for Thursday.\n\n### Новая ситуация\n\nOn which day is the visit now scheduled?\n\nЗапиши одно слово на английском.\n\nThere has been a change to the date of the group visit. The first notice gave Sunday, but the centre will be closed for maintenance that day. We also considered Friday, when the equipment delivery is expected, and decided that visitors should not be in the building during unloading. The visit is now scheduled for Saturday. Please use that day when arranging your journey. The starting time has not changed. This message replaces the earlier notice, and we are not offering an additional visit on Sunday. Contact reception if you need to cancel your place.\n\nПодготовленный ответ: Saturday. Варианты: Saturday.\n\nРазобранные ловушки: Sunday, Friday, Monday.\n\nSaturday — обновлённый день посещения. Sunday отменён из-за закрытия, Friday отклонён из-за разгрузки. Нельзя отвечать первым услышанным днём.\n\nТочный фрагмент: The visit is now scheduled for Saturday. Please use that day when arranging your journey.\n\nНеизвестный вариант не объявляется автоматически неверным. Проверь соответствие смыслу и формату вручную. Сначала ответ, затем ремонт и новая ситуация; текстовая помощь отмечается отдельно. Длительность/завершение проигрывания не доказывают понимание, качества произношения или владения навыком.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "listening-pair-v1",
+        "publication_ready": false,
+        "audio_status": "GENERATED_DRAFT",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "focus": "confirmed-day-versus-superseded-plan",
+        "rounds": [
+          {
+            "prompt": "On which day is the meeting now confirmed?",
+            "instruction": "Запиши одно слово на английском.",
+            "script": "I am calling to confirm the new day for our planning meeting. We first suggested Tuesday, but several people could not attend then. Wednesday was another possibility, although the room is already booked for a training session. The meeting is now confirmed for Thursday. The time and building remain the same as in the original message. Please replace the old day in your calendar rather than creating a second meeting. If Thursday causes a problem, contact the organiser directly. At present there is only one confirmed meeting, not a series of sessions across the week.",
+            "segment": "Wednesday was another possibility, although the room is already booked for a training session. The meeting is now confirmed for Thursday.",
+            "answer": "Thursday",
+            "accepted": [
+              "Thursday"
+            ],
+            "distractors": [
+              "Tuesday",
+              "Wednesday",
+              "Friday"
+            ],
+            "explanation": "Thursday — текущая подтверждённая договорённость. Tuesday — прежний план, Wednesday — невыбранная возможность. Confirmed не доказывает, что встреча уже состоялась."
+          },
+          {
+            "prompt": "On which day is the visit now scheduled?",
+            "instruction": "Запиши одно слово на английском.",
+            "script": "There has been a change to the date of the group visit. The first notice gave Sunday, but the centre will be closed for maintenance that day. We also considered Friday, when the equipment delivery is expected, and decided that visitors should not be in the building during unloading. The visit is now scheduled for Saturday. Please use that day when arranging your journey. The starting time has not changed. This message replaces the earlier notice, and we are not offering an additional visit on Sunday. Contact reception if you need to cancel your place.",
+            "segment": "The visit is now scheduled for Saturday. Please use that day when arranging your journey.",
+            "answer": "Saturday",
+            "accepted": [
+              "Saturday"
+            ],
+            "distractors": [
+              "Sunday",
+              "Friday",
+              "Monday"
+            ],
+            "explanation": "Saturday — обновлённый день посещения. Sunday отменён из-за закрытия, Friday отклонён из-за разгрузки. Нельзя отвечать первым услышанным днём."
+          }
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l09-1-full.wav",
+              "sha256": "5919319e3e6277e0208adcc817b9f93414fab489cc840f305e1249ee57f6fe4b",
+              "bytes": 1758664
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l09-1-segment.wav",
+              "sha256": "1ae36742b73d4d15a0b0d8e8dd47f97cbb4afd565254a08e6b767c079eaa6a9b",
+              "bytes": 411190
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l09-2-full.wav",
+              "sha256": "e609b92155b09d76832f6084f8bb84e1c373a5ce88b7bcded8de1177b9784c15",
+              "bytes": 1714576
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l09-2-segment.wav",
+              "sha256": "b6a33e25c2922c7b2ce0bd984f538e256c1713a1a17aa211c71ff1250b7d7067",
+              "bytes": 282436
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "L10",
+      "title": "Минимальное условие и рекомендация",
+      "category": "Listening",
+      "status": "DRAFT",
+      "student_markdown": "### Минимальное условие и рекомендация\n\nWhat is the minimum booking duration?\n\nЗапиши только число минут; рекомендация — не минимум.\n\nСначала предскажи тип ответа, послушай запись и зафиксируй ответ. После разбора запиши отдельную правку; затем проверь новую ситуацию. Синтетическая авторская речь, не экзаменационная запись. Тексты, ключи и новая ситуация открываются отдельно.",
+      "teacher_markdown": "### Первая ситуация\n\nWhat is the minimum booking duration?\n\nЗапиши только число минут; рекомендация — не минимум.\n\nYou can book a practice room for different lengths of time. The minimum booking is thirty minutes. We recommend forty-five minutes for a first session because it gives you time to become familiar with the equipment, but you are allowed to book the shorter period. A single booking cannot be longer than sixty minutes, so everyone has a chance to use the room. Please choose the duration before confirming your reservation. The recommendation is intended to help new users plan; it is not an extra condition that changes the minimum length available.\n\nПодготовленный ответ: 30. Варианты: 30.\n\nРазобранные ловушки: 45, 60, 15.\n\n30 — разрешённый минимум. 45 — рекомендация для первого раза, 60 — максимум. Вопрос не спрашивает предпочтительную длительность.\n\nТочный фрагмент: The minimum booking is thirty minutes. We recommend forty-five minutes for a first session\n\n### Новая ситуация\n\nWhat is the minimum age for joining the session?\n\nЗапиши только число лет; рекомендация — не правило допуска.\n\nThe introductory session is open to people aged sixteen and over. That is the minimum age in the booking rules. The organiser recommends the longer advanced session mainly for people aged eighteen and over, but that recommendation does not change who may join the introductory session. The assistants are all at least twenty because they completed a separate training programme. Their ages are not an entry requirement for visitors. Please read the introductory session description when you book, rather than using the recommendations for a different course or the rules for assistants.\n\nПодготовленный ответ: 16. Варианты: 16.\n\nРазобранные ловушки: 18, 20, 15.\n\n16 — минимум для introductory session. 18 — рекомендация другого курса, 20 — возраст помощников. Нужно сохранить связь условия с нужной группой.\n\nТочный фрагмент: The introductory session is open to people aged sixteen and over. That is the minimum age in the booking rules.\n\nНеизвестный вариант не объявляется автоматически неверным. Проверь соответствие смыслу и формату вручную. Сначала ответ, затем ремонт и новая ситуация; текстовая помощь отмечается отдельно. Длительность/завершение проигрывания не доказывают понимание, качества произношения или владения навыком.",
+      "language_only_markdown": "",
+      "exercise_data": {
+        "kind": "listening-pair-v1",
+        "publication_ready": false,
+        "audio_status": "GENERATED_DRAFT",
+        "difficulty_status": "AUTHOR_ESTIMATE_UNCALIBRATED",
+        "focus": "minimum-requirement-versus-recommendation",
+        "rounds": [
+          {
+            "prompt": "What is the minimum booking duration?",
+            "instruction": "Запиши только число минут; рекомендация — не минимум.",
+            "script": "You can book a practice room for different lengths of time. The minimum booking is thirty minutes. We recommend forty-five minutes for a first session because it gives you time to become familiar with the equipment, but you are allowed to book the shorter period. A single booking cannot be longer than sixty minutes, so everyone has a chance to use the room. Please choose the duration before confirming your reservation. The recommendation is intended to help new users plan; it is not an extra condition that changes the minimum length available.",
+            "segment": "The minimum booking is thirty minutes. We recommend forty-five minutes for a first session",
+            "answer": "30",
+            "accepted": [
+              "30"
+            ],
+            "distractors": [
+              "45",
+              "60",
+              "15"
+            ],
+            "explanation": "30 — разрешённый минимум. 45 — рекомендация для первого раза, 60 — максимум. Вопрос не спрашивает предпочтительную длительность."
+          },
+          {
+            "prompt": "What is the minimum age for joining the session?",
+            "instruction": "Запиши только число лет; рекомендация — не правило допуска.",
+            "script": "The introductory session is open to people aged sixteen and over. That is the minimum age in the booking rules. The organiser recommends the longer advanced session mainly for people aged eighteen and over, but that recommendation does not change who may join the introductory session. The assistants are all at least twenty because they completed a separate training programme. Their ages are not an entry requirement for visitors. Please read the introductory session description when you book, rather than using the recommendations for a different course or the rules for assistants.",
+            "segment": "The introductory session is open to people aged sixteen and over. That is the minimum age in the booking rules.",
+            "answer": "16",
+            "accepted": [
+              "16"
+            ],
+            "distractors": [
+              "18",
+              "20",
+              "15"
+            ],
+            "explanation": "16 — минимум для introductory session. 18 — рекомендация другого курса, 20 — возраст помощников. Нужно сохранить связь условия с нужной группой."
+          }
+        ],
+        "media_identity": {
+          "format": "ashyq-draft-listening-media-v1",
+          "voice": "Microsoft Zira Desktop",
+          "rate": -1,
+          "assets": [
+            {
+              "round": 0,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l10-1-full.wav",
+              "sha256": "6a2cd045c6e14fec3449e8e46cb92e2c6600533f774612b67a05e5a9c078e11c",
+              "bytes": 1581382
+            },
+            {
+              "round": 0,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l10-1-segment.wav",
+              "sha256": "fd748b74d346faeab871edbdfbd0a06fa073d90a8a89ed973282fb1b694d3c8b",
+              "bytes": 296324
+            },
+            {
+              "round": 1,
+              "kind": "full",
+              "url": "/audio/trainers/drafts/l10-2-full.wav",
+              "sha256": "72677ad79a47aa6cfd1e945e221dfc62dda05b459396392b8f18400c6fe2e532",
+              "bytes": 1642018
+            },
+            {
+              "round": 1,
+              "kind": "segment",
+              "url": "/audio/trainers/drafts/l10-2-segment.wav",
+              "sha256": "4957704cbb7643e897c306ae0c871b545c78956f2cd153e5acd6388238e1acae",
+              "bytes": 344394
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
   "format": "ashyq-draft-bank-v1",
   "batch": "03",
-  "version": 1,
+  "version": "2",
   "source_sha256": "94354553e1e8012c9f10b275a156b7f65191273c96f4f34626cedd65f6dd0c60",
-  "content_sha256": "94354553e1e8012c9f10b275a156b7f65191273c96f4f34626cedd65f6dd0c60",
+  "content_sha256": "9714dddfdbad4c08fd45b427f1bef2697896e867f1c5128ac3603fea46189029",
   "author": "Codex",
   "intended_reviewer": "Dias",
   "methodically_approved": false,
@@ -211,7 +211,7 @@
       "category": "Writing · короткая практика",
       "status": "DRAFT",
       "student_markdown": "Свяжи возможную пользу с условием безопасности. Не делай вывода о пригодности любой крыши.\n\n### Исходные мысли\n- A rooftop garden can provide space for plants.\n- Soil and containers add weight to a roof.\n- An engineer should check the building before the garden is installed.\n\nСначала напиши свой вариант. Затем сравни подготовленные решения. Свободный текст не получает автоматическую оценку или IELTS band.",
-      "teacher_markdown": "### Подготовленные варианты для сравнения после своей попытки\n1. Rooftop gardens are safe on every building because plants are light.\nНужно пересмотреть: Свойства растений не отменяют вес грунта и контейнеров; every building не дано.\n\n2. An engineer should check the building after the garden is installed so that the added weight can be ignored.\nНужно пересмотреть: Проверка перенесена на другое время и её смысл перевёрнут.\n\n3. Although a rooftop garden can provide space for plants, an engineer should check the building before installation because soil and containers add weight.\nПодходит: Сохранены возможность, дополнительная нагрузка и проверка до установки.\n\n### Почему\nУсловие before installation относится к проверке, а не к доказательству безопасности всех крыш. Это языковое упражнение, не инженерная инструкция.\n\n### Допустимые альтернативы\n- Before installing a rooftop garden to create space for plants, the building should be checked by an engineer because the soil and containers add weight.\n\nЭто не полный список верных формулировок. При несовпадении с образцом оцени смысл и выполнение задания отдельно от грамматической корректности.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Не приписывать исходным мыслям охлаждение здания или снижение выбросов: эти эффекты здесь не заданы.",
+      "teacher_markdown": "### Подготовленные варианты для сравнения после своей попытки\n1. Rooftop gardens are safe on every building because plants are light.\nНужно пересмотреть: Свойства растений не отменяют вес грунта и контейнеров; every building не дано.\n\n2. An engineer should check the building after the garden is installed so that the added weight can be ignored.\nНужно пересмотреть: Проверка перенесена на другое время и её смысл перевёрнут.\n\n3. Although a rooftop garden can provide space for plants, an engineer should check the building before installation because soil and containers add weight.\nПодходит: Сохранены возможность, дополнительная нагрузка и проверка до установки.\n\n### Почему\nУсловие before installation относится к проверке, а не к доказательству безопасности всех крыш. Это языковое упражнение, не инженерная инструкция.\n\n### Допустимые альтернативы\n- Before a rooftop garden is installed to provide space for plants, an engineer should check the building because the soil and containers add weight.\n\nЭто не полный список верных формулировок. При несовпадении с образцом оцени смысл и выполнение задания отдельно от грамматической корректности.\n\n### Адверсальные замечания автора — не методическое утверждение\n- Не приписывать исходным мыслям охлаждение здания или снижение выбросов: эти эффекты здесь не заданы.",
       "language_only_markdown": "",
       "exercise_data": {
         "id": "D11",
@@ -244,7 +244,7 @@
         "example": "Although a rooftop garden can provide space for plants, an engineer should check the building before installation because soil and containers add weight.",
         "explanation": "Условие before installation относится к проверке, а не к доказательству безопасности всех крыш. Это языковое упражнение, не инженерная инструкция.",
         "accepted_alternatives": [
-          "Before installing a rooftop garden to create space for plants, the building should be checked by an engineer because the soil and containers add weight."
+          "Before a rooftop garden is installed to provide space for plants, an engineer should check the building because the soil and containers add weight."
         ],
         "review_notes": [
           "Не приписывать исходным мыслям охлаждение здания или снижение выбросов: эти эффекты здесь не заданы."
