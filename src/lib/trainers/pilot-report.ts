@@ -1,3 +1,5 @@
+import {speakingTranscriptReviewBlocks} from '../speaking-second-take/transcript-report';
+import type {SpeakingTranscriptReview} from '../speaking-second-take/transcript-review';
 import {validSnapshot,MAX_RECORD_BYTES,type Snapshot} from './checkpoints';
 import {trainerById,type TrainerId} from './catalog';
 import {practiceOutcome,outcomeLabel} from './outcomes';
@@ -37,7 +39,7 @@ export function pilotReportBlocks(trainer:TrainerId,value:Snapshot):DocxBlock[]{
   if(data===null||typeof data!=='object'){field(name,data===null?'не указано':data===true?'да':data===false?'нет':data===''?'не заполнено':String(data));return;}
   blocks.push({kind:'heading3',text:name});
   if(Array.isArray(data)){if(!data.length)field(name,'пусто');data.forEach((entry,i)=>render(name===labels.ratings?speakingCriteria[i].name:`Пункт ${i+1}`,['selected','choices','currentChoices'].includes(key??'')&&typeof entry==='number'?entry+1:entry,depth+1));return;}
-  for(const [key,entry] of Object.entries(data)){if(key==='url')continue;render(labels[key]??`Идентификатор ${key}`,entry,depth+1,key);}
+  for(const [key,entry] of Object.entries(data)){if(key==='url'||key==='transcriptReview')continue;render(labels[key]??`Идентификатор ${key}`,entry,depth+1,key);}
  };
  heading('Поля текущей работы · могут повторять последнюю зафиксированную попытку');
  for(const key of fields[trainer])if(Object.hasOwn(value,key))render(labels[key],trainer==='listening-replay'&&key==='level'&&value.phase!=='repair'?null:value[key],0,key);
@@ -47,7 +49,7 @@ export function pilotReportBlocks(trainer:TrainerId,value:Snapshot):DocxBlock[]{
   const session=value.session as Snapshot;field('Эссе · ID',String(session.caseId));field('Текущий этап',phaseNames[String(session.stage)]??String(session.stage));
   for(const key of ['grammarDrafts','grammarChecked','appliedGrammar','revisionDrafts','postFeedbackDrafts','revealed','appliedRevisions'])render(labels[key],session[key]);
  }else if(trainer==='speaking-second-take'){
-  (value.takes as Snapshot[]).forEach((take,i)=>{heading(i===0?'Первый ответ':i===1?'Повтор той же темы · после самопроверки':'Другая тема · после двух ответов');render('Заметки и самопроверка ответа',take);for(const key of ['preparationNotes','noSpecificMoments'])if(!Object.hasOwn(take,key))field(labels[key],'нет данных в старой записи');});
+  (value.takes as Snapshot[]).forEach((take,i)=>{heading(i===0?'Первый ответ':i===1?'Повтор той же темы · после самопроверки':'Другая тема · после двух ответов');render('Заметки и самопроверка ответа',take);blocks.push(...speakingTranscriptReviewBlocks(take.transcriptReview as SpeakingTranscriptReview|undefined));for(const key of ['preparationNotes','noSpecificMoments'])if(!Object.hasOwn(take,key))field(labels[key],'нет данных в старой записи');});
  }else if(['sat-translation','math-method-switch'].includes(trainer)){
   (value.attempts as unknown[]).forEach((attempt,i)=>{heading(i===0?'Первая зафиксированная попытка':'Другое задание · после работы с первым');render('Сохранённый ответ',attempt);});
  }else{

@@ -41,3 +41,6 @@
 @media (max-width: 600px) { .page { padding: 20px 16px 72px; } .hero { padding: 40px 0 32px; } .topline, .lessonTop { align-items: start; flex-direction: column; } .panel, .prompt { padding: 21px; } }
 
 .confirmation { scroll-margin-top: 105px; }
+.transcript { min-width: 0; width: 100%; margin-block: 24px; padding-block: 18px; border-block: 1px solid var(--hairline); overflow-wrap: anywhere; }
+.transcript h4 { margin: 20px 0 8px; font-size: 16px; font-weight: 800; line-height: 1.5; }
+.transcriptActions { display: flex; flex-wrap: wrap; align-items: start; gap: 12px; width: 100%; }
