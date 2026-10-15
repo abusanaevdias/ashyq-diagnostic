@@ -5,7 +5,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { draftArchives, draftBatch, emptyDraftReview, parseDraftReview, reviewKey } from '../src/lib/trainers/draft-review';
 
 async function main(){
-  const archived=draftArchives[0];assert.equal(archived.version,'1.0');assert.equal(draftBatch.version,'2.0');assert.notEqual(archived.content_sha256,draftBatch.content_sha256);
+  const archived=draftArchives[0];assert.equal(archived.version,'1.0');assert.equal(draftBatch.version,'3');assert.notEqual(archived.content_sha256,draftBatch.content_sha256);
   const base=process.env.TRAINER_CHECK_BASE??'http://127.0.0.1:3043';assert.ok(['127.0.0.1','localhost'].includes(new URL(base).hostname));
   const actor='synthetic-archive-a',key=reviewKey(actor,archived),currentKey=reviewKey(actor,draftBatch);
   const old=emptyDraftReview(actor,archived);

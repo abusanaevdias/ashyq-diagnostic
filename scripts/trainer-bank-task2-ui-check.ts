@@ -16,7 +16,7 @@ async function main(){
   await page.evaluate(actor=>{localStorage.setItem('ashyq:v2:session',JSON.stringify({user:{id:actor,name:'Synthetic reviewer',email:'synthetic@example.invalid',role:'teacher',avatarColor:'red'},expiresAt:new Date(Date.now()+3600000).toISOString()}));dispatchEvent(new Event('storage'));},actor);
   const source=trainerBank.sources.find(s=>s.ref.unitId==='W01')!,key=bankRecordKey(actor,source.ref);
   const preview=page.getByRole('region',{name:'Пробное эссе · DRAFT',exact:true});
-  const bank=preview.getByRole('region',{name:'Сохранение пробы · W01 · версия 2.0',exact:true});
+  const bank=preview.getByRole('region',{name:`Сохранение пробы · W01 · версия ${source.ref.version}`,exact:true});
   await bank.waitFor();assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),null);
   await preview.getByRole('button',{name:'Начать пробу эссе',exact:true}).click();
   await preview.getByLabel('Исходный фрагмент 1',{exact:true}).fill('Synthetic unfinished first search.');
