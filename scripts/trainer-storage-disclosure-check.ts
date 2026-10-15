@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import {chromium} from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
+async function main(){
+ const base=process.env.TRAINER_CHECK_BASE??'http://127.0.0.1:3045';assert.ok(['localhost','127.0.0.1','ashyq-diagnostic.vercel.app'].includes(new URL(base).hostname));
+ const browser=await chromium.launch({headless:true});try{
+  const context=await browser.newContext(),page=await context.newPage(),errors:string[]=[],aiRequests:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.url().includes('/api/writing/feedback'))aiRequests.push(r.url());});
+  await page.goto(base+'/privacy');await page.getByRole('heading',{name:'Политика конфиденциальности',exact:true}).waitFor();const section=page.locator('section').filter({has:page.getByRole('heading',{name:'6. Тренажёр собственного эссе',exact:true})});const text=await section.innerText();
+  for(const required of ['текущей вкладке','«Сохранить версию в историю»','после закрытия вкладки','не синхронизируется с другими устройствами','«Удалить мой черновик»','отдельно кнопкой «Очистить историю»','не удаляет эти копии','AI-подсказки','только после отдельного согласия','store: false'])assert.ok(text.includes(required),required);
+  assert.equal(await page.locator('main section').count(),7);assert.equal(await section.locator('a').getAttribute('href'),'https://developers.openai.com/api/docs/guides/your-data');assert.equal(await page.locator('link[rel=canonical]').getAttribute('href')?.then(h=>new URL(h!).pathname),'/privacy');assert.deepEqual(aiRequests,[]);
+  for(const width of [320,390,768,1440]){await page.setViewportSize({width,height:900});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,JSON.stringify({width,overflow:await page.evaluate(()=>Array.from(document.querySelectorAll("body *")).filter(e=>e.getBoundingClientRect().right>innerWidth+1||e.clientWidth>0&&e.scrollWidth>e.clientWidth+1).slice(0,20).map(e=>({tag:e.tagName,cls:e.className,text:e.textContent?.slice(0,120),right:e.getBoundingClientRect().right,scroll:e.scrollWidth,client:e.clientWidth})))}));assert.deepEqual((await new AxeBuilder({page}).include('main').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations,[]);}assert.deepEqual(errors,[]);
+  await fs.mkdir('artifacts/trainers-complete-033',{recursive:true});await page.setViewportSize({width:320,height:900});await page.screenshot({path:'artifacts/trainers-complete-033/privacy-heading-320.png'});await page.setViewportSize({width:390,height:900});await section.screenshot({path:'artifacts/trainers-complete-033/privacy-storage-390.png'});
+  console.log(`PASS ${base}/privacy actual trainer storage disclosure: tab versus opt-in durable history, separate deletion/download copies, consent/model caveat, seven sections/canonical and provider link retained, no AI request, four-width axe. Factual behavior text only; no legal certification or real provider/device acceptance.`);
+ }finally{await browser.close();}
+}
+main().catch(e=>{console.error(e);process.exitCode=1;});

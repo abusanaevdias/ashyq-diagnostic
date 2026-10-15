@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+const root=process.cwd(),artifacts=path.resolve(root,'artifacts/trainers-complete-033'),fixture=path.join(artifacts,'feedback-fixture-site');
+fs.mkdirSync(artifacts,{recursive:true});if(fs.existsSync(fixture)&&fs.lstatSync(fixture).isSymbolicLink())throw Error('Fixture root cannot be a link.');fs.mkdirSync(fixture,{recursive:true});assert.ok(fs.realpathSync(fixture).startsWith(fs.realpathSync(artifacts)+path.sep));
+for(const name of ['src','public','design'])fs.cpSync(path.join(root,name),path.join(fixture,name),{recursive:true});
+for(const name of ['package.json','package-lock.json','tsconfig.json','next.config.mjs','postcss.config.mjs','postcss.config.js','tailwind.config.ts'])if(fs.existsSync(path.join(root,name)))fs.copyFileSync(path.join(root,name),path.join(fixture,name));
+const dependencies=path.join(fixture,'node_modules');if(fs.existsSync(dependencies))assert.equal(fs.realpathSync(dependencies),fs.realpathSync(path.join(root,'node_modules')));else fs.symlinkSync(path.join(root,'node_modules'),dependencies,'junction');
+const panel=path.join(fixture,'src/components/writing/WritingAiPanel.tsx'),original=fs.readFileSync(panel,'utf8'),needle="from '@/lib/lms/auth'";assert.ok(original.includes(needle));fs.writeFileSync(panel,original.replace(needle,"from './synthetic-feedback-auth'"));
+fs.writeFileSync(path.join(fixture,'src/components/writing/synthetic-feedback-auth.ts'),`// ISOLATED LOCAL TEST COPY ONLY. Never deploy.\nexport const getAuth=()=>({accessToken:async()=>{const w=window as unknown as {syntheticAuth?:()=>Promise<string|null>};return w.syntheticAuth?w.syntheticAuth():'synthetic.synthetic.synthetic';}});\n`);
+fs.writeFileSync(path.join(fixture,'FIXTURE_ONLY.md'),'ISOLATED SYNTHETIC FEEDBACK TEST COPY. No environment/credentials copied. Only panel auth import replaced with synthetic token adapter; browser mocks all feedback HTTP. Never deploy or commit this copy.\n');
+assert.equal(fs.readFileSync(path.join(root,'src/components/writing/WritingAiPanel.tsx'),'utf8'),original);
+console.log('Prepared localhost-only synthetic feedback copy, actual source unchanged; no env/credentials copied. Set NEXT_PUBLIC_WRITING_AI_ENABLED=1 only in fixture server process, not actual application. Never deploy this fixture.');
