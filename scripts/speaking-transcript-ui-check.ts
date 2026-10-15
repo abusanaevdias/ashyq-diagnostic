@@ -5,7 +5,7 @@ import AxeBuilder from '@axe-core/playwright';
 import {checkpointKey,parseRecord} from '../src/lib/trainers/checkpoints';
 import type {SpeakingTranscriptReview} from '../src/lib/speaking-second-take/transcript-review';
 async function main(){
- const base=process.env.TRAINER_CHECK_BASE??'http://127.0.0.1:3045';assert.ok(['localhost','127.0.0.1'].includes(new URL(base).hostname));const browser=await chromium.launch({headless:true});
+ const base=process.env.TRAINER_CHECK_BASE??'http://127.0.0.1:3045';assert.ok(['localhost','127.0.0.1','ashyq-diagnostic.vercel.app'].includes(new URL(base).hostname));const browser=await chromium.launch({headless:true});
  try{
   const context=await browser.newContext({acceptDownloads:true}),page=await context.newPage(),errors:string[]=[],requests:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.url().includes('/api/speaking/'))requests.push(r.url());});await context.addInitScript({content:`window.syntheticMicRequests=0;if(navigator.mediaDevices)Object.defineProperty(navigator.mediaDevices,'getUserMedia',{value:()=>{window.syntheticMicRequests++;return Promise.reject(new Error('No physical microphone in this test'));}});`});
   await page.goto(base+'/trainers/speaking-second-take');const key=checkpointKey('speaking-second-take','guest'),storage=page.getByRole('region',{name:/^Сохранение:/});await storage.getByRole('button',{name:'Сохранять на этом устройстве',exact:true}).click();await page.getByRole('button',{name:'Начать подготовку →',exact:true}).click();
