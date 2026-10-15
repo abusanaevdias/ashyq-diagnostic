@@ -20,6 +20,8 @@ for (const chapter of LIBRARY_CHAPTERS) {
     const q=set.questions[0], value=q.accepted[0] || 'My English response.';
     const record={...empty,values:{[q.id]:value},checked:{[q.id]:true}};
     assert.deepEqual(readProgress(JSON.stringify(record),source,fields),record);
+    const full={...empty,values:Object.fromEntries(fields.map(f=>[f.id,'\u0000'.repeat(f.max)]))};
+    assert.deepEqual(readProgress(JSON.stringify(full),source,fields),full,'JSON escaping cannot invalidate legal per-field limits');
     for(const bad of ['{', 'null', '[]', JSON.stringify({...record,source:'stale'}), JSON.stringify({...record,current:-1}), JSON.stringify({...record,current:set.questions.length}), JSON.stringify({...record,score:9}), JSON.stringify({...record,values:{unknown:'x'}}), JSON.stringify({...record,values:{[q.id]:'x'.repeat(fields[0].max+1)}}),JSON.stringify({...record,values:{},checked:{[q.id]:true}}),JSON.stringify({...record,checked:{[q.id]:'true'}})]) assert.equal(readProgress(bad,source,fields),null);
     for(const question of set.questions) {
       if(englishProduction(question)) production++;
