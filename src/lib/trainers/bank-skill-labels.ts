@@ -1,5 +1,9 @@
 /** Human-facing descriptions; source skill IDs remain unchanged for exact identity. */
 const labels:Record<string,string>={
+ 'reading-heading-main-idea':'Главная мысль и заголовок',
+ 'reading-fact-inference':'Вывод, ограниченный фактами',
+ 'reading-summary-grammar':'Грамматическая форма и точное слово',
+ 'reading-information-location':'Поиск конкретной информации по абзацам',
  'central-idea':'Главная мысль текста',
  inference:'Вывод в пределах текста',
  'evidence-boundary':'Границы доказательств',

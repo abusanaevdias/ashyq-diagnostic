@@ -1,0 +1,624 @@
+{
+  "format": "ashyq-draft-bank-v1",
+  "batch": "15",
+  "version": 1,
+  "source_sha256": "806bceb1591c765715e93aee14e85b5b36644eaf014b1ef5760cb8fae4bc8e4c",
+  "content_sha256": "806bceb1591c765715e93aee14e85b5b36644eaf014b1ef5760cb8fae4bc8e4c",
+  "author": "Codex",
+  "intended_reviewer": "Dias",
+  "methodically_approved": false,
+  "units": [
+    {
+      "id": "R11",
+      "title": "Заголовок: главное и яркая деталь",
+      "category": "Reading · headings",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная практика. Все места и события вымышлены. Материал ещё не прошёл методическое одобрение.\n\nСформулируй главную мысль абзаца по-английски в 5–8 словах, прежде чем открыть заголовки.\n\nChoose the heading that best describes the whole paragraph.\n\nA. The fictional Elm library kept its usual opening hours, but changed how readers collected reserved books. Staff put numbered boxes beside the entrance and sent each reader a collection code. A reader could now collect a book without joining the enquiry queue. Numbering the boxes was a small practical step; the main aim was to make collection simpler for people arriving in a hurry.",
+      "teacher_markdown": "### R11-A\nChoose the heading that best describes the whole paragraph.\nКлюч: B\nОпора: the main aim was to make collection simpler\nОбъяснение: Абзац описывает изменение способа получения книг. Номера коробок — средство, а не главная тема. Часы и штат не расширялись.\n\n### R11-B\nChoose the heading that best describes the whole paragraph.\nКлюч: C\nОпора: make checking and returning equipment more systematic\nОбъяснение: Главная мысль — организация возврата инструментов. Рисунки на наклейках — деталь; новые инструменты и обучение не описаны.\n\nАдверсальное ревью автора: ключ связан с буквальной опорой; варианты ограничивают вывод данными текста; смысл собственного резюме, цитаты и объяснения проверяется вручную. Два задания не измеряют освоение, качество свободного текста или IELTS band. Summary допускает отдельно отмеченный непроверенный альтернативный ответ после разбора.",
+      "language_only_markdown": null,
+      "exercise_data": {
+        "kind": "reading-lab-pair-v1",
+        "mode": "headings",
+        "skill": "reading-heading-main-idea",
+        "difficulty": "AUTHOR_ESTIMATE_ONLY",
+        "difficulty_status": "UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R11-A",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Elm library kept its usual opening hours, but changed how readers collected reserved books. Staff put numbered boxes beside the entrance and sent each reader a collection code. A reader could now collect a book without joining the enquiry queue. Numbering the boxes was a small practical step; the main aim was to make collection simpler for people arriving in a hurry."
+              }
+            ],
+            "prompt": "Choose the heading that best describes the whole paragraph.",
+            "prePrompt": "Сформулируй главную мысль абзаца по-английски в 5–8 словах, прежде чем открыть заголовки.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Training more enquiry staff"
+              },
+              {
+                "id": "B",
+                "text": "Making book collection more convenient"
+              },
+              {
+                "id": "C",
+                "text": "Replacing printed books with digital copies"
+              }
+            ],
+            "answers": [
+              "B"
+            ],
+            "evidence": "the main aim was to make collection simpler",
+            "explanation": "Абзац описывает изменение способа получения книг. Номера коробок — средство, а не главная тема. Часы и штат не расширялись."
+          },
+          {
+            "id": "R11-B",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "At the fictional Pine workshop, tools had once been returned to whichever drawer was nearest. The organiser introduced outline labels showing where each tool belonged. Volunteers still used the same tools and worked the same shifts. At closing time they could see immediately which spaces were empty. The labels were intended to make checking and returning equipment more systematic, rather than to teach new repair techniques."
+              }
+            ],
+            "prompt": "Choose the heading that best describes the whole paragraph.",
+            "prePrompt": "Сформулируй главную мысль абзаца по-английски в 5–8 словах, прежде чем открыть заголовки.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Learning new repair techniques"
+              },
+              {
+                "id": "B",
+                "text": "Buying a larger collection of tools"
+              },
+              {
+                "id": "C",
+                "text": "Organising the return of shared equipment"
+              }
+            ],
+            "answers": [
+              "C"
+            ],
+            "evidence": "make checking and returning equipment more systematic",
+            "explanation": "Главная мысль — организация возврата инструментов. Рисунки на наклейках — деталь; новые инструменты и обучение не описаны."
+          }
+        ]
+      }
+    },
+    {
+      "id": "R12",
+      "title": "Заголовок: цель изменения",
+      "category": "Reading · headings",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная практика. Все места и события вымышлены. Материал ещё не прошёл методическое одобрение.\n\nСформулируй главную мысль абзаца по-английски в 5–8 словах, прежде чем открыть заголовки.\n\nChoose the heading that best describes the whole paragraph.\n\nA. The fictional Alder museum noticed that visitors asked the same directions at several points. Instead of adding another information desk, it tested a continuous line on the floor between the entrance and the main gallery. Printed arrows were added only where the line divided. The trial concerned finding a route through the building; it did not change the collection or the price of admission.",
+      "teacher_markdown": "### R12-A\nChoose the heading that best describes the whole paragraph.\nКлюч: A\nОпора: finding a route through the building\nОбъяснение: Речь об ориентировании в здании. Линия и стрелки — конкретные средства. Изменение коллекции и стоимости прямо исключено.\n\n### R12-B\nChoose the heading that best describes the whole paragraph.\nКлюч: B\nОпора: avoid two members watering the same bed while another bed was overlooked\nОбъяснение: Главная мысль — согласование действий. Голосование за обложку — отвлекающая деталь. Новый вид растений не обсуждается.\n\nАдверсальное ревью автора: ключ связан с буквальной опорой; варианты ограничивают вывод данными текста; смысл собственного резюме, цитаты и объяснения проверяется вручную. Два задания не измеряют освоение, качество свободного текста или IELTS band. Summary допускает отдельно отмеченный непроверенный альтернативный ответ после разбора.",
+      "language_only_markdown": null,
+      "exercise_data": {
+        "kind": "reading-lab-pair-v1",
+        "mode": "headings",
+        "skill": "reading-heading-main-idea",
+        "difficulty": "AUTHOR_ESTIMATE_ONLY",
+        "difficulty_status": "UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R12-A",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Alder museum noticed that visitors asked the same directions at several points. Instead of adding another information desk, it tested a continuous line on the floor between the entrance and the main gallery. Printed arrows were added only where the line divided. The trial concerned finding a route through the building; it did not change the collection or the price of admission."
+              }
+            ],
+            "prompt": "Choose the heading that best describes the whole paragraph.",
+            "prePrompt": "Сформулируй главную мысль абзаца по-английски в 5–8 словах, прежде чем открыть заголовки.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Helping visitors find their way"
+              },
+              {
+                "id": "B",
+                "text": "Expanding the museum collection"
+              },
+              {
+                "id": "C",
+                "text": "Reducing the admission price"
+              }
+            ],
+            "answers": [
+              "A"
+            ],
+            "evidence": "finding a route through the building",
+            "explanation": "Речь об ориентировании в здании. Линия и стрелки — конкретные средства. Изменение коллекции и стоимости прямо исключено."
+          },
+          {
+            "id": "R12-B",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "Members of the fictional Birch garden had different ideas about when to water each bed. They began a shared notebook recording which beds had already been watered that day. The colour of the cover and the size of the notebook were chosen by a vote, but those details were secondary. Recording the work was intended to avoid two members watering the same bed while another bed was overlooked."
+              }
+            ],
+            "prompt": "Choose the heading that best describes the whole paragraph.",
+            "prePrompt": "Сформулируй главную мысль абзаца по-английски в 5–8 словах, прежде чем открыть заголовки.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Choosing attractive garden stationery"
+              },
+              {
+                "id": "B",
+                "text": "Coordinating daily garden tasks"
+              },
+              {
+                "id": "C",
+                "text": "Studying a new species of plant"
+              }
+            ],
+            "answers": [
+              "B"
+            ],
+            "evidence": "avoid two members watering the same bed while another bed was overlooked",
+            "explanation": "Главная мысль — согласование действий. Голосование за обложку — отвлекающая деталь. Новый вид растений не обсуждается."
+          }
+        ]
+      }
+    },
+    {
+      "id": "R13",
+      "title": "Вывод: ограничения из фактов",
+      "category": "Reading · inference",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная практика. Все места и события вымышлены. Материал ещё не прошёл методическое одобрение.\n\nПосле выбора и цитаты отдельно запиши, какой вывод следует из этих фактов. Не добавляй внешние знания.\n\nWhich conclusion is supported by the information?\n\nA. The fictional Marsh studio offered eight places in a weekend workshop. By Friday, six of the eight places had been reserved. The unreserved places would be allocated at the door. A sign warned that arriving without a reservation did not guarantee a place. The studio did not publish a waiting list.",
+      "teacher_markdown": "### R13-A\nWhich conclusion is supported by the information?\nКлюч: A\nОпора: By Friday, six of the eight places had been reserved.\nОбъяснение: Всего восемь мест, к пятнице шесть уже забронированы: в тот момент не забронированы два. Не предполагаем ничего о будущих отменах. Возможность пройти не равна гарантии, размер списка неизвестен.\n\n### R13-B\nWhich conclusion is supported by the information?\nКлюч: B\nОпора: ten cameras were ready for use on Monday. Members reserved seven of them\nОбъяснение: Десять готовы, семь забронированы — три не забронированы. Бронирование не означает получение; продолжительность пользования не указана.\n\nАдверсальное ревью автора: ключ связан с буквальной опорой; варианты ограничивают вывод данными текста; смысл собственного резюме, цитаты и объяснения проверяется вручную. Два задания не измеряют освоение, качество свободного текста или IELTS band. Summary допускает отдельно отмеченный непроверенный альтернативный ответ после разбора.",
+      "language_only_markdown": null,
+      "exercise_data": {
+        "kind": "reading-lab-pair-v1",
+        "mode": "inference",
+        "skill": "reading-fact-inference",
+        "difficulty": "AUTHOR_ESTIMATE_ONLY",
+        "difficulty_status": "UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R13-A",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Marsh studio offered eight places in a weekend workshop. By Friday, six of the eight places had been reserved. The unreserved places would be allocated at the door. A sign warned that arriving without a reservation did not guarantee a place. The studio did not publish a waiting list."
+              }
+            ],
+            "prompt": "Which conclusion is supported by the information?",
+            "prePrompt": "После выбора и цитаты отдельно запиши, какой вывод следует из этих фактов. Не добавляй внешние знания.",
+            "options": [
+              {
+                "id": "A",
+                "text": "At that point, no more than two places were unreserved"
+              },
+              {
+                "id": "B",
+                "text": "Every visitor without a reservation joined the workshop"
+              },
+              {
+                "id": "C",
+                "text": "The waiting list contained six names"
+              }
+            ],
+            "answers": [
+              "A"
+            ],
+            "evidence": "By Friday, six of the eight places had been reserved.",
+            "explanation": "Всего восемь мест, к пятнице шесть уже забронированы: в тот момент не забронированы два. Не предполагаем ничего о будущих отменах. Возможность пройти не равна гарантии, размер списка неизвестен."
+          },
+          {
+            "id": "R13-B",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "At the fictional Lake club, ten cameras were ready for use on Monday. Members reserved seven of them before the morning desk opened. The club said it would lend any unreserved camera to the first person who requested it. It gave no information about how long a member could keep a camera."
+              }
+            ],
+            "prompt": "Which conclusion is supported by the information?",
+            "prePrompt": "После выбора и цитаты отдельно запиши, какой вывод следует из этих фактов. Не добавляй внешние знания.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Members could keep cameras for seven days"
+              },
+              {
+                "id": "B",
+                "text": "Three cameras had not been reserved when the desk opened"
+              },
+              {
+                "id": "C",
+                "text": "All ten cameras were borrowed before the desk opened"
+              }
+            ],
+            "answers": [
+              "B"
+            ],
+            "evidence": "ten cameras were ready for use on Monday. Members reserved seven of them",
+            "explanation": "Десять готовы, семь забронированы — три не забронированы. Бронирование не означает получение; продолжительность пользования не указана."
+          }
+        ]
+      }
+    },
+    {
+      "id": "R14",
+      "title": "Вывод: возможное не равно обязательному",
+      "category": "Reading · inference",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная практика. Все места и события вымышлены. Материал ещё не прошёл методическое одобрение.\n\nПосле выбора и цитаты отдельно запиши, какой вывод следует из этих фактов. Не добавляй внешние знания.\n\nWhich conclusion is supported by the information?\n\nA. The fictional Oak gallery allowed visitors to book either an audio guide or a printed map. Every booking included one of these aids, and visitors could not select both. Staff did not report how many visitors chose each option.",
+      "teacher_markdown": "### R14-A\nWhich conclusion is supported by the information?\nКлюч: C\nОпора: visitors could not select both\nОбъяснение: Взаимоисключение опций позволяет этот ограниченный вывод. Предпочтения и распределение посетителей неизвестны.\n\n### R14-B\nWhich conclusion is supported by the information?\nКлюч: A\nОпора: published no record of whether those teams later placed an order\nОбъяснение: Подача плана — необходимое условие заказа, но не доказательство последующего заказа. Даты и факт заказа не даны.\n\nАдверсальное ревью автора: ключ связан с буквальной опорой; варианты ограничивают вывод данными текста; смысл собственного резюме, цитаты и объяснения проверяется вручную. Два задания не измеряют освоение, качество свободного текста или IELTS band. Summary допускает отдельно отмеченный непроверенный альтернативный ответ после разбора.",
+      "language_only_markdown": null,
+      "exercise_data": {
+        "kind": "reading-lab-pair-v1",
+        "mode": "inference",
+        "skill": "reading-fact-inference",
+        "difficulty": "AUTHOR_ESTIMATE_ONLY",
+        "difficulty_status": "UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R14-A",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Oak gallery allowed visitors to book either an audio guide or a printed map. Every booking included one of these aids, and visitors could not select both. Staff did not report how many visitors chose each option."
+              }
+            ],
+            "prompt": "Which conclusion is supported by the information?",
+            "prePrompt": "После выбора и цитаты отдельно запиши, какой вывод следует из этих фактов. Не добавляй внешние знания.",
+            "options": [
+              {
+                "id": "A",
+                "text": "All visitors preferred printed maps"
+              },
+              {
+                "id": "B",
+                "text": "Some visitors received both aids"
+              },
+              {
+                "id": "C",
+                "text": "A visitor who booked an audio guide did not also book a printed map"
+              }
+            ],
+            "answers": [
+              "C"
+            ],
+            "evidence": "visitors could not select both",
+            "explanation": "Взаимоисключение опций позволяет этот ограниченный вывод. Предпочтения и распределение посетителей неизвестны."
+          },
+          {
+            "id": "R14-B",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Cedar centre required each project team to submit its plan before ordering materials. Two teams submitted plans on Tuesday. The centre published no record of whether those teams later placed an order."
+              }
+            ],
+            "prompt": "Which conclusion is supported by the information?",
+            "prePrompt": "После выбора и цитаты отдельно запиши, какой вывод следует из этих фактов. Не добавляй внешние знания.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Submitting a plan alone does not prove that materials were ordered"
+              },
+              {
+                "id": "B",
+                "text": "Both Tuesday teams ordered materials on Wednesday"
+              },
+              {
+                "id": "C",
+                "text": "Teams could order materials before submitting a plan"
+              }
+            ],
+            "answers": [
+              "A"
+            ],
+            "evidence": "published no record of whether those teams later placed an order",
+            "explanation": "Подача плана — необходимое условие заказа, но не доказательство последующего заказа. Даты и факт заказа не даны."
+          }
+        ]
+      }
+    },
+    {
+      "id": "R15",
+      "title": "Summary: форма слова перед поиском",
+      "category": "Reading · summary",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная практика. Все места и события вымышлены. Материал ещё не прошёл методическое одобрение.\n\nДо ввода ответа предположи грамматическую форму пропуска: например, существительное во множественном числе. Можно по-русски.\n\nComplete with ONE WORD from the passage: After each session, volunteers wrote ____ about recurring faults.\n\nA. At the fictional North repair club, volunteers discussed recurring faults after each session. They wrote reports describing what had failed and which repairs had been tried. The organiser kept these reports in a shared folder so that the next group could consult them. Receipts for replacement parts were stored separately.",
+      "teacher_markdown": "### R15-A\nComplete with ONE WORD from the passage: After each session, volunteers wrote ____ about recurring faults.\nКлюч: reports\nОпора: They wrote reports describing what had failed\nОбъяснение: После wrote нужен объект. reports — множественное число и именно то, что добровольцы писали после сессии; receipts хранили отдельно.\n\n### R15-B\nComplete with ONE WORD from the passage: The resulting ____ was used around young trees.\nКлюч: compost\nОпора: used the resulting compost around young trees\nОбъяснение: Нужен материал в позиции подлежащего. В тексте compost — получившийся материал; notebook содержит записи и вокруг деревьев не использовался.\n\nАдверсальное ревью автора: ключ связан с буквальной опорой; варианты ограничивают вывод данными текста; смысл собственного резюме, цитаты и объяснения проверяется вручную. Два задания не измеряют освоение, качество свободного текста или IELTS band. Summary допускает отдельно отмеченный непроверенный альтернативный ответ после разбора.",
+      "language_only_markdown": null,
+      "exercise_data": {
+        "kind": "reading-lab-pair-v1",
+        "mode": "summary",
+        "skill": "reading-summary-grammar",
+        "difficulty": "AUTHOR_ESTIMATE_ONLY",
+        "difficulty_status": "UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R15-A",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "At the fictional North repair club, volunteers discussed recurring faults after each session. They wrote reports describing what had failed and which repairs had been tried. The organiser kept these reports in a shared folder so that the next group could consult them. Receipts for replacement parts were stored separately."
+              }
+            ],
+            "prompt": "Complete with ONE WORD from the passage: After each session, volunteers wrote ____ about recurring faults.",
+            "prePrompt": "До ввода ответа предположи грамматическую форму пропуска: например, существительное во множественном числе. Можно по-русски.",
+            "options": [],
+            "answers": [
+              "reports"
+            ],
+            "evidence": "They wrote reports describing what had failed",
+            "explanation": "После wrote нужен объект. reports — множественное число и именно то, что добровольцы писали после сессии; receipts хранили отдельно."
+          },
+          {
+            "id": "R15-B",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional South garden collected fallen leaves in a sheltered pile. Members turned the pile regularly and later used the resulting compost around young trees. A notebook listed the dates on which the pile was turned. The group bought no new soil during this trial."
+              }
+            ],
+            "prompt": "Complete with ONE WORD from the passage: The resulting ____ was used around young trees.",
+            "prePrompt": "До ввода ответа предположи грамматическую форму пропуска: например, существительное во множественном числе. Можно по-русски.",
+            "options": [],
+            "answers": [
+              "compost"
+            ],
+            "evidence": "used the resulting compost around young trees",
+            "explanation": "Нужен материал в позиции подлежащего. В тексте compost — получившийся материал; notebook содержит записи и вокруг деревьев не использовался."
+          }
+        ]
+      }
+    },
+    {
+      "id": "R16",
+      "title": "Summary: близкое слово и точная связь",
+      "category": "Reading · summary",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная практика. Все места и события вымышлены. Материал ещё не прошёл методическое одобрение.\n\nДо ввода ответа предположи грамматическую форму пропуска: например, существительное во множественном числе. Можно по-русски.\n\nComplete with ONE WORD from the passage: Students used ____ to measure the models.\n\nA. In the fictional West museum, students compared the sizes of three models. They measured the models with rulers and recorded each result on a card. The cards helped students compare the results later. Posters near the entrance explained the history of the exhibition.",
+      "teacher_markdown": "### R16-A\nComplete with ONE WORD from the passage: Students used ____ to measure the models.\nКлюч: rulers\nОпора: They measured the models with rulers\nОбъяснение: Нужен инструмент, использованный для измерения. rulers — инструмент, cards — место записи, posters — информация о выставке.\n\n### R16-B\nComplete with ONE WORD from the passage: Bread travelled to collection points in reusable ____.\nКлюч: containers\nОпора: sent bread to local collection points in reusable containers\nОбъяснение: Нужна тара после in reusable. containers — тара; lists содержат заявки, но прямо исключены как упаковка.\n\nАдверсальное ревью автора: ключ связан с буквальной опорой; варианты ограничивают вывод данными текста; смысл собственного резюме, цитаты и объяснения проверяется вручную. Два задания не измеряют освоение, качество свободного текста или IELTS band. Summary допускает отдельно отмеченный непроверенный альтернативный ответ после разбора.",
+      "language_only_markdown": null,
+      "exercise_data": {
+        "kind": "reading-lab-pair-v1",
+        "mode": "summary",
+        "skill": "reading-summary-grammar",
+        "difficulty": "AUTHOR_ESTIMATE_ONLY",
+        "difficulty_status": "UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R16-A",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "In the fictional West museum, students compared the sizes of three models. They measured the models with rulers and recorded each result on a card. The cards helped students compare the results later. Posters near the entrance explained the history of the exhibition."
+              }
+            ],
+            "prompt": "Complete with ONE WORD from the passage: Students used ____ to measure the models.",
+            "prePrompt": "До ввода ответа предположи грамматическую форму пропуска: например, существительное во множественном числе. Можно по-русски.",
+            "options": [],
+            "answers": [
+              "rulers"
+            ],
+            "evidence": "They measured the models with rulers",
+            "explanation": "Нужен инструмент, использованный для измерения. rulers — инструмент, cards — место записи, posters — информация о выставке."
+          },
+          {
+            "id": "R16-B",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional East bakery sent bread to local collection points in reusable containers. A driver brought empty containers back on the following morning. Paper lists inside the vehicle showed how many loaves each point had requested. The lists were not used as packaging."
+              }
+            ],
+            "prompt": "Complete with ONE WORD from the passage: Bread travelled to collection points in reusable ____.",
+            "prePrompt": "До ввода ответа предположи грамматическую форму пропуска: например, существительное во множественном числе. Можно по-русски.",
+            "options": [],
+            "answers": [
+              "containers"
+            ],
+            "evidence": "sent bread to local collection points in reusable containers",
+            "explanation": "Нужна тара после in reusable. containers — тара; lists содержат заявки, но прямо исключены как упаковка."
+          }
+        ]
+      }
+    },
+    {
+      "id": "R17",
+      "title": "Информация: ищи нужное действие",
+      "category": "Reading · information",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная практика. Все места и события вымышлены. Материал ещё не прошёл методическое одобрение.\n\nСначала своими словами сформулируй, какую конкретную информацию нужно найти. Затем выбери абзац.\n\nWhich paragraph explains how a place for a group was arranged?\n\nA. The fictional Hill club began as a small group meeting after school. Its first members borrowed tables from a nearby centre.\n\nB. Members who wanted to join a session entered their names on an online form. The organiser used the form to reserve a table for each group.\n\nC. At the end of a session, each group cleaned its table and returned shared tools to a marked cupboard.",
+      "teacher_markdown": "### R17-A\nWhich paragraph explains how a place for a group was arranged?\nКлюч: B\nОпора: used the form to reserve a table for each group\nОбъяснение: Нужна процедура организации места: форма используется для резервирования стола. История клуба в A, уборка после сессии в C.\n\n### R17-B\nWhich paragraph describes how visitors obtained a digital copy?\nКлюч: C\nОпора: Staff replied with a download link after checking the request.\nОбъяснение: Нужен способ получения цифровой копии: запрос номера и ссылка. A — происхождение коллекции, B — бумажные экземпляры.\n\nАдверсальное ревью автора: ключ связан с буквальной опорой; варианты ограничивают вывод данными текста; смысл собственного резюме, цитаты и объяснения проверяется вручную. Два задания не измеряют освоение, качество свободного текста или IELTS band. Summary допускает отдельно отмеченный непроверенный альтернативный ответ после разбора.",
+      "language_only_markdown": null,
+      "exercise_data": {
+        "kind": "reading-lab-pair-v1",
+        "mode": "information",
+        "skill": "reading-information-location",
+        "difficulty": "AUTHOR_ESTIMATE_ONLY",
+        "difficulty_status": "UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R17-A",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Hill club began as a small group meeting after school. Its first members borrowed tables from a nearby centre."
+              },
+              {
+                "id": "B",
+                "text": "Members who wanted to join a session entered their names on an online form. The organiser used the form to reserve a table for each group."
+              },
+              {
+                "id": "C",
+                "text": "At the end of a session, each group cleaned its table and returned shared tools to a marked cupboard."
+              }
+            ],
+            "prompt": "Which paragraph explains how a place for a group was arranged?",
+            "prePrompt": "Сначала своими словами сформулируй, какую конкретную информацию нужно найти. Затем выбери абзац.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Paragraph A"
+              },
+              {
+                "id": "B",
+                "text": "Paragraph B"
+              },
+              {
+                "id": "C",
+                "text": "Paragraph C"
+              }
+            ],
+            "answers": [
+              "B"
+            ],
+            "evidence": "used the form to reserve a table for each group",
+            "explanation": "Нужна процедура организации места: форма используется для резервирования стола. История клуба в A, уборка после сессии в C."
+          },
+          {
+            "id": "R17-B",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Valley archive displayed a short account of the collection founder near the entrance."
+              },
+              {
+                "id": "B",
+                "text": "Visitors could read paper copies in the main room. Original documents remained in protective folders."
+              },
+              {
+                "id": "C",
+                "text": "A visitor needing a digital copy sent the document number to the desk. Staff replied with a download link after checking the request."
+              }
+            ],
+            "prompt": "Which paragraph describes how visitors obtained a digital copy?",
+            "prePrompt": "Сначала своими словами сформулируй, какую конкретную информацию нужно найти. Затем выбери абзац.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Paragraph A"
+              },
+              {
+                "id": "B",
+                "text": "Paragraph B"
+              },
+              {
+                "id": "C",
+                "text": "Paragraph C"
+              }
+            ],
+            "answers": [
+              "C"
+            ],
+            "evidence": "Staff replied with a download link after checking the request.",
+            "explanation": "Нужен способ получения цифровой копии: запрос номера и ссылка. A — происхождение коллекции, B — бумажные экземпляры."
+          }
+        ]
+      }
+    },
+    {
+      "id": "R18",
+      "title": "Информация: причина, порядок и ограничение",
+      "category": "Reading · information",
+      "status": "DRAFT",
+      "student_markdown": "Оригинальная учебная практика. Все места и события вымышлены. Материал ещё не прошёл методическое одобрение.\n\nСначала своими словами сформулируй, какую конкретную информацию нужно найти. Затем выбери абзац.\n\nWhich paragraph gives a reason for keeping an existing item?\n\nA. The fictional Brook cinema asked arriving visitors to show their booking code at the entrance. Staff then directed them to a numbered seat.\n\nB. The cinema kept the old curtains because replacing them would interrupt scheduled screenings.\n\nC. Tickets for the next month became available on the first working day. A maximum of four tickets could be bought in one transaction.",
+      "teacher_markdown": "### R18-A\nWhich paragraph gives a reason for keeping an existing item?\nКлюч: B\nОпора: replacing them would interrupt scheduled screenings\nОбъяснение: Нужна причина сохранения вещи, а не порядок входа или покупки. Только B объясняет, почему оставили шторы.\n\n### R18-B\nWhich paragraph states a restriction on the number of items a member could borrow?\nКлюч: A\nОпора: a limit of two borrowed items per member\nОбъяснение: Нужно числовое ограничение на выдачу. A — не более двух; B — сортировка списка, C — порядок возврата.\n\nАдверсальное ревью автора: ключ связан с буквальной опорой; варианты ограничивают вывод данными текста; смысл собственного резюме, цитаты и объяснения проверяется вручную. Два задания не измеряют освоение, качество свободного текста или IELTS band. Summary допускает отдельно отмеченный непроверенный альтернативный ответ после разбора.",
+      "language_only_markdown": null,
+      "exercise_data": {
+        "kind": "reading-lab-pair-v1",
+        "mode": "information",
+        "skill": "reading-information-location",
+        "difficulty": "AUTHOR_ESTIMATE_ONLY",
+        "difficulty_status": "UNCALIBRATED",
+        "publication_ready": false,
+        "rounds": [
+          {
+            "id": "R18-A",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Brook cinema asked arriving visitors to show their booking code at the entrance. Staff then directed them to a numbered seat."
+              },
+              {
+                "id": "B",
+                "text": "The cinema kept the old curtains because replacing them would interrupt scheduled screenings."
+              },
+              {
+                "id": "C",
+                "text": "Tickets for the next month became available on the first working day. A maximum of four tickets could be bought in one transaction."
+              }
+            ],
+            "prompt": "Which paragraph gives a reason for keeping an existing item?",
+            "prePrompt": "Сначала своими словами сформулируй, какую конкретную информацию нужно найти. Затем выбери абзац.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Paragraph A"
+              },
+              {
+                "id": "B",
+                "text": "Paragraph B"
+              },
+              {
+                "id": "C",
+                "text": "Paragraph C"
+              }
+            ],
+            "answers": [
+              "B"
+            ],
+            "evidence": "replacing them would interrupt scheduled screenings",
+            "explanation": "Нужна причина сохранения вещи, а не порядок входа или покупки. Только B объясняет, почему оставили шторы."
+          },
+          {
+            "id": "R18-B",
+            "paragraphs": [
+              {
+                "id": "A",
+                "text": "The fictional Grove studio placed a limit of two borrowed items per member. This rule applied to all equipment on the loan list."
+              },
+              {
+                "id": "B",
+                "text": "The equipment list was arranged by purchase date so that staff could identify older items quickly."
+              },
+              {
+                "id": "C",
+                "text": "On returning an item, members placed it on a checking shelf rather than putting it directly into storage."
+              }
+            ],
+            "prompt": "Which paragraph states a restriction on the number of items a member could borrow?",
+            "prePrompt": "Сначала своими словами сформулируй, какую конкретную информацию нужно найти. Затем выбери абзац.",
+            "options": [
+              {
+                "id": "A",
+                "text": "Paragraph A"
+              },
+              {
+                "id": "B",
+                "text": "Paragraph B"
+              },
+              {
+                "id": "C",
+                "text": "Paragraph C"
+              }
+            ],
+            "answers": [
+              "A"
+            ],
+            "evidence": "a limit of two borrowed items per member",
+            "explanation": "Нужно числовое ограничение на выдачу. A — не более двух; B — сортировка списка, C — порядок возврата."
+          }
+        ]
+      }
+    }
+  ]
+}

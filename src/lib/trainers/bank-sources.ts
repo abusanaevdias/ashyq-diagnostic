@@ -3,6 +3,7 @@ import type { TrainerId } from './catalog';
 import { parseDraftWriting } from './draft-writing';
 import { parseDraftTask2 } from './draft-task2';
 import { parseDraftReading } from './draft-reading';
+import {parseDraftReadingLab} from './draft-reading-lab';
 import { parseDraftListening } from './draft-listening';
 import { parseDraftSpeaking } from './draft-speaking';
 import { parseDraftMath } from './draft-math';
@@ -16,6 +17,7 @@ export type BankExercise =
   | { type: 'writing-drill'; value: NonNullable<ReturnType<typeof parseDraftWriting>> }
   | { type: 'task2'; value: NonNullable<ReturnType<typeof parseDraftTask2>> }
   | { type: 'reading'; value: NonNullable<ReturnType<typeof parseDraftReading>> }
+  | { type: 'reading-lab'; value: NonNullable<ReturnType<typeof parseDraftReadingLab>> }
   | { type: 'listening'; value: NonNullable<ReturnType<typeof parseDraftListening>> }
   | { type: 'speaking'; value: NonNullable<ReturnType<typeof parseDraftSpeaking>> }
   | { type: 'math'; value: NonNullable<ReturnType<typeof parseDraftMath>> }
@@ -37,9 +39,10 @@ export const sameBankSource = (a: BankSourceRef,b: BankSourceRef) => bankSourceI
 /** Exact kind adapter. A malformed source cannot fall through to another exercise type. */
 export function parseBankExercise(value: unknown,unitId: string): BankExercise | null {
   if(!object(value))return null;
-  const prefixes:Record<string,RegExp>={'writing-drill-v1':/^D\d{2,4}$/,'task2-pair-v1':/^W\d{2,4}$/,'reading-evidence-pair-v1':/^R\d{2,4}$/,'listening-pair-v1':/^L\d{2}$/,'speaking-pair-v1':/^S\d{2,4}$/,'sat-math-pair-v1':/^M\d{2,4}$/,'sat-rw-pair-v1':/^RW\d{2,4}$/,'task1-pair-v1':/^T\d{3,5}$/,'task1-categories-pair-v1':/^T\d{3,5}$/,'task1-diagrams-pair-v1':/^T\d{3,5}$/};
+  const prefixes:Record<string,RegExp>={'reading-lab-pair-v1':/^R\d{2,4}$/,'writing-drill-v1':/^D\d{2,4}$/,'task2-pair-v1':/^W\d{2,4}$/,'reading-evidence-pair-v1':/^R\d{2,4}$/,'listening-pair-v1':/^L\d{2}$/,'speaking-pair-v1':/^S\d{2,4}$/,'sat-math-pair-v1':/^M\d{2,4}$/,'sat-rw-pair-v1':/^RW\d{2,4}$/,'task1-pair-v1':/^T\d{3,5}$/,'task1-categories-pair-v1':/^T\d{3,5}$/,'task1-diagrams-pair-v1':/^T\d{3,5}$/};
   if(typeof value.kind!=='string'||!Object.hasOwn(prefixes,value.kind)||!prefixes[value.kind].test(unitId))return null;
   switch(value.kind){
+    case 'reading-lab-pair-v1': {if(!/^R\d{2,4}$/.test(unitId))return null;const parsed=parseDraftReadingLab(value,unitId);return parsed?{type:'reading-lab',value:parsed}:null;}
     case 'writing-drill-v1': {const parsed=parseDraftWriting(value);return parsed&&parsed.id===unitId?{type:'writing-drill',value:parsed}:null;}
     case 'task2-pair-v1': {const parsed=parseDraftTask2(value);return parsed?{type:'task2',value:parsed}:null;}
     case 'reading-evidence-pair-v1': {const parsed=parseDraftReading(value);return parsed&&parsed.rounds.every((r,i)=>r.id===`${unitId}-${i?'B':'A'}`)?{type:'reading',value:parsed}:null;}
@@ -55,6 +58,7 @@ export function parseBankExercise(value: unknown,unitId: string): BankExercise |
 }
 function metadata(exercise: BankExercise): Pick<BankSource,'trainer'|'skill'|'practiceType'> {
   switch(exercise.type){
+    case 'reading-lab':return {trainer:'reading-evidence',skill:exercise.value.skill,practiceType:{headings:'Главная мысль перед выбором заголовка',inference:'Вывод из фактов',summary:'Грамматическая форма и слово для summary',information:'Поиск информации по абзацам'}[exercise.value.mode]};
     case 'writing-drill':return {trainer:'writing-drills',skill:exercise.value.criterion,practiceType:{combine:'Объединение мыслей',grammar:'Грамматическая правка',argument:'Развитие аргумента'}[exercise.value.mode]};
     case 'task2':return {trainer:'writing-task2',skill:exercise.value.skill,practiceType:'Полное эссе: язык и аргумент'};
     case 'reading':return {trainer:'reading-evidence',skill:exercise.value.skill,practiceType:'TRUE / FALSE / NOT GIVEN с опорой'};
