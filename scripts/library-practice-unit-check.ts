@@ -1,3 +1,4 @@
+import './library-learning-unit-check';
 import assert from 'node:assert/strict';
 import raw from '../src/data/free-library-content.json';
 import { LIBRARY_CHAPTERS } from '../src/data/free-library';
