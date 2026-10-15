@@ -43,3 +43,5 @@ Device storage is local to this browser/site, visible to other people using the 
 - `npm run lint`, `npm run typecheck`, `npm run build`, and `21st review src/components/library src/app/library src/lib/library-presentation.ts src/lib/library-progress.ts`.
 
 Screenshots and generated approval material are local artifacts under `artifacts/library-ux-034/`; they are not public bank releases. Mobile/desktop audits are browser emulation, not physical-phone acceptance. Existing TRAINERS-COMPLETE-033 external acceptance remains separately BLOCKED; this task does not imply its completion.
+
+Production-build repeat passed all42/198 browser, storage and SEO/source gates. Source token audit detected its terminal border-radius parser convention; added the final semicolon without changing computed CSS. Token and final exact-head CI acceptance are tracked separately from the earlier local checks.

@@ -130,7 +130,7 @@
 .taskCard>p[lang='en']{font-size:1.05rem;margin-top:12px}
 .annotatedEssay{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:start}
 .essayText{min-width:0;line-height:1.95;overflow-wrap:anywhere}.essayText h3,.reviewPanel>h3{font-family:var(--font-display);font-size:1.3rem;font-weight:800;line-height:1.4;margin:20px 0}.essayText>p[lang='en']{margin:20px 0;font-size:1.05rem}
-.reviewPanel{position:sticky;top:110px;min-width:0;padding:20px;background:var(--bg);border:1px solid var(--hairline);border-radius:var(--r-md)}
+.reviewPanel{position:sticky;top:110px;min-width:0;padding:20px;background:var(--bg);border:1px solid var(--hairline);border-radius:var(--r-md);}
 .reviewPanel .quizSteps button{font-size:.78rem;padding:10px}
 .reviewComment h4{font-weight:700;font-size:1.1rem}.reviewComment{animation:reviewEnter var(--t-base) ease-out}.reviewComment .prose{font-size:.95rem}
 .sentenceMark{background:var(--blush);color:var(--ink);box-shadow:0 2px 0 var(--red-deep);transition:background-color var(--t-base);padding:2px 0}
