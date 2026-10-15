@@ -9,5 +9,5 @@ for(const source of trainerBank.sources){
  const entry=createBankEntry(source,empty),record={...emptyBankRecord(source),revision:crypto.randomUUID(),checkpoint:entry};assert.ok(parseBankRecord(JSON.stringify(record),source));counts[source.trainer]=(counts[source.trainer]??0)+1;
  assert.equal(source.unit.status,'DRAFT');assert.equal(source.difficulty,'uncalibrated');
 }
-assert.equal(trainerBank.sources.length,100);assert.deepEqual(counts,{'reading-evidence':10,'listening-replay':8,'speaking-second-take':10,'task1-overview':8,'writing-task2':8,'writing-drills':24,'sat-optionless':8,'sat-distractor':8,'math-forensics':7,'sat-translation':5,'math-method-switch':4});
-console.log('PASS100 source-bound pristine snapshot/record adapters across11 bank families. This checks adapter coverage only; full attempt/UI evidence is in family suites. All sources remain DRAFT and uncalibrated, with no publication or quality claim.');
+assert.equal(trainerBank.sources.length,108);assert.deepEqual(counts,{'reading-evidence':18,'listening-replay':8,'speaking-second-take':10,'task1-overview':8,'writing-task2':8,'writing-drills':24,'sat-optionless':8,'sat-distractor':8,'math-forensics':7,'sat-translation':5,'math-method-switch':4});
+console.log('PASS108 source-bound pristine snapshot/record adapters across11 bank families. This checks adapter coverage only; full attempt/UI evidence is in family suites. All sources remain DRAFT and uncalibrated, with no publication or quality claim.');

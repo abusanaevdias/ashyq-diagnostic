@@ -13,7 +13,7 @@ const text=(v:unknown,min:number,max:number):v is string=>typeof v==='string'&&v
  * Validation establishes source/checklist integrity, not the truth of a human attestation.
  * Deployment operators must verify the supplied approval evidence before publication. */
 export function parseBankPublication(value:unknown):BankPublicationManifest|null{
- if(!object(value)||!exact(value,['format','preparedAt','releases'])||value.format!=='ashyq-bank-publication-v1'||!Array.isArray(value.releases)||value.releases.length>100)return null;
+ if(!object(value)||!exact(value,['format','preparedAt','releases'])||value.format!=='ashyq-bank-publication-v1'||!Array.isArray(value.releases)||value.releases.length>200)return null;
  if(value.releases.length?(typeof value.preparedAt!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value.preparedAt)||!Number.isFinite(Date.parse(value.preparedAt))||new Date(value.preparedAt).toISOString()!==value.preparedAt):value.preparedAt!==null)return null;
  const releases:BankPublication[]=[],seen=new Set<string>();
  for(const item of value.releases){
