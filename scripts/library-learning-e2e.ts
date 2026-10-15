@@ -47,7 +47,9 @@ export async function runLibraryLearningCheck(){
    await page.evaluate(()=>scrollTo(0,0));
    if(width===390||width===1440)await page.screenshot({path:`${out}/essay-review-${width}.png`,fullPage:true});
   }
-  await page.goBack();assert.ok(page.url().endsWith('#u02-a'),'browser Back restores example');await page.goForward();assert.ok(page.url().endsWith('#u02-a-review'));
+  await page.goBack();await page.waitForURL('**/u02-talent-practice#u02-a');await page.locator('#u02-a').waitFor();
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  await page.goForward();await page.waitForURL('**/u02-talent-practice#u02-a-review');await page.locator('#u02-a-review').waitFor();
   // Another tab cannot silently replace the current screen or its draft.
   const second=await context.newPage();await second.goto(`${base}/library/u02-talent-practice#u02-q-2`,{waitUntil:'networkidle'});
   await page.goto(`${base}/library/u02-talent-practice#u02-q-2`,{waitUntil:'networkidle'});
@@ -58,6 +60,8 @@ export async function runLibraryLearningCheck(){
   assert.ok((await second.evaluate(()=>localStorage.getItem('ashyq:library-progress:v1:U02-Q-2')))!.includes('A newer saved answer from the first tab.'));
   second.once('dialog',d=>d.accept());await sq.getByRole('button',{name:'Загрузить сохранённую версию',exact:true}).click();assert.equal(await sq.getByLabel('Ваш ответ',{exact:true}).inputValue(),'A newer saved answer from the first tab.');await second.close();
   await page.locator('a[href="/library"]').first().click();await page.waitForURL('**/library');
+  await page.getByRole('heading',{level:1,name:'Бесплатная библиотека',exact:true}).waitFor();
+  await page.waitForLoadState('networkidle');
   const away=await context.newPage();await away.goto(`${base}/library/u02-talent-practice#u02-q-2`,{waitUntil:'networkidle'});
   await away.getByRole('region',{name:'Интерактивная практика U02-Q-2',exact:true}).getByLabel('Ваш ответ',{exact:true}).fill('Updated while the first tab was outside the lesson.');
   await page.goBack();await page.getByRole('region',{name:'Интерактивная практика U02-Q-2',exact:true}).waitFor();

@@ -12,7 +12,22 @@ import StudyPad from './StudyPad';
 import EssayStudy, { CriteriaHelp } from './EssayStudy';
 import styles from './Library.module.css';
 
-const subscribe = (fn: () => void) => {window.addEventListener('hashchange', fn); window.addEventListener('popstate',fn); return ()=>{window.removeEventListener('hashchange',fn);window.removeEventListener('popstate',fn);};};
+const subscribe = (fn: () => void) => {
+  const route = location.pathname + location.search;
+  let routeState = history.state;
+  const notify = () => {
+    if(location.pathname + location.search === route) {
+      // Native fragment navigation can create a null-state history entry.
+      // Keep this route's existing state so App Router can restore it from another page.
+      // Reuse the opaque state unchanged; do not depend on Next's internal field names.
+      if(history.state === null && routeState !== null) history.replaceState(routeState, '', location.href);
+      else if(history.state !== null) routeState = history.state;
+    }
+    fn();
+  };
+  window.addEventListener('hashchange', notify); window.addEventListener('popstate',notify);
+  return ()=>{window.removeEventListener('hashchange',notify);window.removeEventListener('popstate',notify);};
+};
 const hash = () => window.location.hash.slice(1).toLowerCase();
 const server = () => '';
 export default function LessonWorkspace({sections, practice, pdf}: {sections: LibrarySection[]; practice: PracticeSet[]; pdf: string}) {
