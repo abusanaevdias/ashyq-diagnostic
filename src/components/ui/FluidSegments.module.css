@@ -1,4 +1,5 @@
 .group { position:relative; display:inline-flex; align-items:stretch; gap:2px; max-width:100%; padding:4px; border-radius:var(--r-pill); background:var(--hairline); isolation:isolate; }
+.decoration { position:absolute; inset:0; z-index:0; overflow:clip; border-radius:inherit; pointer-events:none; }
 .group > :is(button,a) { position:relative; z-index:1; display:inline-flex; flex:1 1 auto; min-width:0; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:9px 22px; border:0; border-radius:var(--r-pill); background:transparent; color:var(--ink); font:550 .9rem/1.3 var(--font-body); overflow-wrap:anywhere; text-align:center; cursor:pointer; text-decoration:none; }
 .group > :is([aria-current="page"],[aria-pressed="true"]) { color:var(--ink); background:var(--surface); }
 .group[data-fluid-ready] > :is([aria-current="page"],[aria-pressed="true"]) { background:transparent; }

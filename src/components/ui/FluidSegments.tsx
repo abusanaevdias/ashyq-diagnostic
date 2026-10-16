@@ -30,5 +30,5 @@ export default function FluidSegments({value,label,children}:{value:string;label
   reduced.addEventListener('change',measure);
   return()=>{cancelAnimationFrame(frame);resize.disconnect();reduced.removeEventListener('change',measure);};
  },[value]);
- return <div ref={root} className={styles.group} role="group" aria-label={label}><span ref={pill} className={styles.pill} aria-hidden="true"/>{children}</div>;
+ return <div ref={root} className={styles.group} role="group" aria-label={label}><span className={styles.decoration}><span ref={pill} className={styles.pill} aria-hidden="true"/></span>{children}</div>;
 }
