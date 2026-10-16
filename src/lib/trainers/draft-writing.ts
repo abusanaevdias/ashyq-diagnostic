@@ -5,6 +5,8 @@ export type DraftWritingDrill = WritingDrill & {
   publication_ready: false;
   accepted_alternatives: string[];
   review_notes: string[];
+  transfer_goal?: string;
+  transfer?: DraftWritingDrill;
 };
 
 /** Next existing source of the same mode; exposure is asked separately, never inferred. */
@@ -12,6 +14,7 @@ export function nextDraftWriting(item: DraftWritingDrill, values: unknown[]): Dr
   const pool = values.map(parseDraftWriting).filter((value): value is DraftWritingDrill => !!value && value.mode === item.mode).sort((a,b) => a.id.localeCompare(b.id));
   const start = pool.findIndex(value => value.id === item.id);
   if (start < 0) return null;
+  if (pool[start].transfer) return pool[start].transfer!;
   for (let offset = 1; offset < pool.length; offset++) {
     const next = pool[(start + offset) % pool.length];
     if (next.id !== item.id && next.example !== item.example && JSON.stringify(next.source) !== JSON.stringify(item.source)) return next;
@@ -24,6 +27,18 @@ const texts = (value: unknown, max: number): value is string[] => Array.isArray(
 
 /** Draft-only adapter. Invalid data is never substituted with another exercise. */
 export function parseDraftWriting(value: unknown): DraftWritingDrill | null {
+  const item = parseCore(value);
+  if (!item) return null;
+  const raw = value as Record<string, unknown>;
+  if (!Object.hasOwn(raw,'transfer') && !Object.hasOwn(raw,'transfer_goal')) return item;
+  const child = parseCore(raw.transfer);
+  if (!text(raw.transfer_goal) || !child || child.id !== `${item.id}-B` || child.mode !== item.mode || child.example === item.example || JSON.stringify(child.source) === JSON.stringify(item.source)) return null;
+  const childRaw = raw.transfer as Record<string, unknown>;
+  if (Object.hasOwn(childRaw,'transfer') || Object.hasOwn(childRaw,'transfer_goal')) return null;
+  return {...item,transfer_goal:raw.transfer_goal,transfer:child};
+}
+
+function parseCore(value: unknown): DraftWritingDrill | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
   const v = value as Record<string, unknown>;
   if (v.kind !== 'writing-drill-v1' || v.publication_ready !== false || !text(v.id) || !text(v.title) || !text(v.context) || !text(v.task) || !text(v.example) || !text(v.explanation) || !text(v.criterion)) return null;

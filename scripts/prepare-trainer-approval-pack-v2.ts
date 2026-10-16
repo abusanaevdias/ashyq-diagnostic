@@ -12,7 +12,7 @@ async function main(){
  await mkdir(output,{recursive:true});
  const materials=trainerBank.sources.map(source=>{
   const material=approvalMaterial(source),pair=source.exercise.type==='writing-drill'?bankWritingPair(source):null;
-  const next=pair?trainerBank.sources.find(s=>s.ref.batchId===source.ref.batchId&&s.ref.contentHash===source.ref.contentHash&&s.ref.unitId===pair[1].id):null;
+  const next=pair&&material.rounds.length===1?trainerBank.sources.find(s=>s.ref.batchId===source.ref.batchId&&s.ref.contentHash===source.ref.contentHash&&s.ref.unitId===pair[1].id):null;
   if(next){material.rounds.push(approvalMaterial(next).rounds[0]);material.notes+=` B — отдельный существующий модуль ${next.ref.unitId} в том же пакете и редакции. Это близкая практика направления, не доказательство переноса конкретного правила. Не показывать его ключ до попытки.`;}
   return {source,material};
  });

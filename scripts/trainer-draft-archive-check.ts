@@ -5,7 +5,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { draftArchives, draftBatch, emptyDraftReview, parseDraftReview, reviewKey } from '../src/lib/trainers/draft-review';
 
 async function main(){
-  const archived=draftArchives[0];assert.equal(archived.version,'1.0');assert.equal(draftBatch.version,'3');assert.notEqual(archived.content_sha256,draftBatch.content_sha256);
+  const archived=draftArchives[0];assert.equal(archived.version,'1.0');assert.equal(draftBatch.version,'4');assert.notEqual(archived.content_sha256,draftBatch.content_sha256);
   const base=process.env.TRAINER_CHECK_BASE??'http://127.0.0.1:3043';assert.ok(['127.0.0.1','localhost'].includes(new URL(base).hostname));
   const actor='synthetic-archive-a',key=reviewKey(actor,archived),currentKey=reviewKey(actor,draftBatch);
   const old=emptyDraftReview(actor,archived);
@@ -58,7 +58,7 @@ async function main(){
     await page.evaluate(value=>{localStorage.setItem('ashyq:v2:session',JSON.stringify(value));dispatchEvent(new Event('storage'));},session(actor,'student'));
     await page.getByRole('heading',{name:'Недостаточно прав',exact:true}).waitFor();assert.equal(await page.getByRole('button',{name:'Скачать материалы прежней версии',exact:true}).count(),0);
     assert.deepEqual(errors,[]);assert.deepEqual(posts,[]);
-    console.log('PASS archive v1/current v2 source-bound decisions, no attestation migration, exact old source/review bytes and empty/corrupt/UTF8-large recovery, new-source save/reload leaves old intact, escaped long comment/tables/four widths/axe, account/role/batch separation and no server writes. UI gate is not server RLS or methodology approval.');
+    console.log(`PASS archive ${archived.version}/current ${draftBatch.version} source-bound decisions, no attestation migration, exact old source/review bytes and empty/corrupt/UTF8-large recovery, new-source save/reload leaves old intact, escaped long comment/tables/four widths/axe, account/role/batch separation and no server writes. UI gate is not server RLS or methodology approval.`);
   }finally{await browser.close();}
 }
 main().catch(error=>{console.error(error);process.exitCode=1;});

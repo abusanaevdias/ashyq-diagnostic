@@ -18,10 +18,14 @@ async function main() {
   for (const {unit} of units) {
     const item = parseDraftWriting(unit.exercise_data)!, next = nextDraftWriting(item,values)!;
     assert.ok(next); assert.notEqual(item.id,next.id); assert.equal(item.mode,next.mode); assert.notDeepEqual(item.source,next.source);
-    assert.equal(nextDraftWriting(item,[item]),null);
+    assert.equal(nextDraftWriting(item,[item])?.id,`${item.id}-B`,'embedded B works without unrelated modules');
+    assert.ok(item.transfer_goal);
+    const legacy={...item};delete legacy.transfer;delete legacy.transfer_goal;
+    assert.equal(nextDraftWriting(legacy,[legacy]),null);
     assert.equal(nextDraftWriting(item,values.filter(value=>parseDraftWriting(value)?.mode!==item.mode)),null);
-    assert.equal(nextDraftWriting(item,[item,{...item,id:'DISTINCT-ID'}]),null,'renamed identical source is not a different task');
-    assert.equal(nextDraftWriting(item,[item,{...item,id:'OTHER',source:['Different source']}]),null,'same prepared example is rejected');
+    assert.equal(nextDraftWriting(legacy,[legacy,{...legacy,id:'DISTINCT-ID'}]),null,'renamed identical source is not a different task');
+    assert.equal(nextDraftWriting(legacy,[legacy,{...legacy,id:'OTHER',source:['Different source']}]),null,'same prepared example is rejected');
+    for(const broken of [{...item,transfer:null},{...item,transfer_goal:''},{...item,transfer:{...next,mode:'unknown'}},{...item,transfer:{...next,id:'OTHER'}},{...item,transfer:{...next,transfer:next}},{...item,transfer:{...next,source:item.source}},{...item,transfer:{...next,example:item.example}}])assert.equal(parseDraftWriting(broken),null,'malformed B never falls back to another module');
     assert.equal(nextDraftWriting(item,[null,{},...values])?.id,next.id);
     assert.equal(nextDraftWriting(item,[...values].reverse())?.id,next.id,'deterministic source order');
   }
@@ -48,9 +52,11 @@ async function main() {
       for (const [round,item] of [first,next].entries()) {
         const stage=preview.getByRole('heading',{name:`${round?'Следующее задание того же типа практики':'Самостоятельная попытка'} · ${item.id} · ${item.title}`,exact:true}); await stage.waitFor();
         assert.equal(await stage.evaluate(node=>document.activeElement===node),true,'stage focus');
+        if(round)assert.ok(await stage.evaluate((node,goal)=>node.nextElementSibling?.textContent?.includes(goal),first.transfer_goal!),'B goal/plan follow the focused heading instead of being skipped above it');
         const options=preview.getByRole('group',{name:'Какой вариант выполняет задание?',exact:true});
         assert.equal(await options.count(),0,'options hidden before own attempt');
         const exposure=preview.getByRole('group',{name:'Знаком ли тебе этот материал или его разбор?',exact:true});
+        assert.equal(await exposure.evaluate(node=>node.previousElementSibling?.getAttribute('lang')),'en','learner sees the actual material before deciding whether it is familiar');
         const exposureIndex=(index+round)%3;
         await exposure.getByRole('radio').nth(exposureIndex).check();
         await preview.getByRole('button',{name:'Зафиксировать попытку и показать варианты',exact:true}).click();

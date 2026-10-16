@@ -21,7 +21,7 @@ async function main(){
  }
  for(const s of trainerBank.sources){
   const m=approvalMaterial(s),e=s.exercise;
-  assert.equal(m.rounds.length,e.type==='writing-drill'?1:2,s.ref.unitId);
+  assert.equal(m.rounds.length,e.type==='writing-drill'&&!e.value.transfer?1:2,s.ref.unitId);
   assert.ok(m.rounds.every(r=>r.student.trim()&&r.teacher.trim()));
   for(const r of m.rounds)assert.ok(!r.student.includes('Подходит:')&&!r.student.includes('Ключ:'));
   if(e.type==='task2')e.value.rounds.forEach((r,i)=>{assert.ok(m.rounds[i].student.includes(r.prompt)&&m.rounds[i].student.includes(r.text));assert.ok(!m.rounds[i].student.includes(r.languageOnly));assert.ok(m.rounds[i].teacher.includes(r.example));});
