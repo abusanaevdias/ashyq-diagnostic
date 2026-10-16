@@ -1,9 +1,9 @@
 {
   "format": "ashyq-draft-bank-v1",
   "batch": "01",
-  "version": "3",
+  "version": "4",
   "source_sha256": "2854e1937321d3472b1d432578d135372768d35122ccad7959ae49a5dd32c422",
-  "content_sha256": "adc8a3c4f4a628b461ebd0e0720d709b13b8b9c22c4ff73d2b5b409f050d03c2",
+  "content_sha256": "d1cf47cb3444b6992bf45cf6c56314c0056e21c9c2a8daf0b0d87515e79c68aa",
   "author": "Codex",
   "intended_reviewer": "Dias",
   "methodically_approved": false,
@@ -439,7 +439,7 @@
       "category": "Writing · короткая практика",
       "status": "DRAFT",
       "student_markdown": "объедини все три мысли в одно предложение. Покажи, почему предложенное время подходит этим ученикам. Сохрани осторожное could; не обещай результат, которого нет в исходных мыслях.\n\n### Исходные мысли или текст\n- Some students cannot afford private tutoring.\n- Many of these students have jobs after school.\n- The school could offer free tutoring at lunchtime.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
-      "teacher_markdown": "**Один допустимый вариант:** Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.\n\n**Другой вариант:** The school could offer free lunchtime tutoring to support students who cannot afford private lessons and have jobs after school.\n\nКритерии: сохранены стоимость, занятость и время; одно связное предложение; could не заменено обещанием результата. Название частного преподавания tutoring/private lessons может различаться.\n\n**Варианты для сравнения после своего черновика:**\n\n1. Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime. — подходит.\n2. Free lunchtime tutoring will ensure that every student achieves excellent examination results. — добавлен гарантированный результат; потеряна причина выбора времени.\n3. The school could offer free tutoring after school because every student is available then. — противоречит занятости части учеников и заменяет lunchtime.\n\nРазбор: предложение объясняет, почему помощь должна быть и бесплатной, и доступной в другое время. Другую правильную формулировку принимать по смыслу, не по совпадению с образцом.\n\n### Варианты интерактивной версии 2\n\n1. Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.\nПодходит: подходит.\n\n2. Free lunchtime tutoring will ensure that every student achieves excellent examination results.\nНужно пересмотреть: добавлен гарантированный результат; потеряна причина выбора времени.\n\n3. The school could offer free tutoring after school because every student is available then.\nНужно пересмотреть: противоречит занятости части учеников и заменяет lunchtime.\n\nСохрани все исходные ограничения и степень уверенности. Связанное предложение не должно добавлять результат или причину, которых нет в источнике.\n\nДопустимая альтернатива: The school could offer free lunchtime tutoring to support students who cannot afford private lessons and have jobs after school.\n\nДругие правильные связки и порядок частей допустимы при сохранении смысла и осторожности.",
+      "teacher_markdown": "**Один допустимый вариант:** Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.\n\n**Другой вариант:** The school could offer free lunchtime tutoring to support students who cannot afford private lessons and have jobs after school.\n\nКритерии: сохранены стоимость, занятость и время; одно связное предложение; could не заменено обещанием результата. Название частного преподавания tutoring/private lessons может различаться.\n\n**Варианты для сравнения после своего черновика:**\n\n1. Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime. — подходит.\n2. Free lunchtime tutoring will ensure that every student achieves excellent examination results. — добавлен гарантированный результат; потеряна причина выбора времени.\n3. The school could offer free tutoring after school because every student is available then. — противоречит занятости части учеников и заменяет lunchtime.\n\nРазбор: предложение объясняет, почему помощь должна быть и бесплатной, и доступной в другое время. Другую правильную формулировку принимать по смыслу, не по совпадению с образцом.\n\n### Варианты интерактивной версии 2\n\n1. Because many students who cannot afford private tutoring work after school, the school could offer free tutoring at lunchtime.\nПодходит: подходит.\n\n2. Free lunchtime tutoring will ensure that every student achieves excellent examination results.\nНужно пересмотреть: добавлен гарантированный результат; потеряна причина выбора времени.\n\n3. The school could offer free tutoring after school because every student is available then.\nНужно пересмотреть: противоречит занятости части учеников и заменяет lunchtime.\n\nСохрани все исходные ограничения и степень уверенности. Связанное предложение не должно добавлять результат или причину, которых нет в источнике.\n\nДопустимая альтернатива: The school could offer free lunchtime tutoring to support students who cannot afford private lessons and have jobs after school.\n\nДругие правильные связки и порядок частей допустимы при сохранении смысла и осторожности.\n\nВ этой редакции упражнение B встроено в тот же источник и fingerprint. Цель переноса: Связать время доступной помощи с конкретным конфликтом расписания; сохранить could.. Преподаватель должен проверить A, B, альтернативы и разбор; автоматической оценки свободного ответа нет.",
       "language_only_markdown": "",
       "exercise_data": {
         "kind": "writing-drill-v1",
@@ -479,7 +479,50 @@
         ],
         "review_notes": [
           "Другие правильные связки и порядок частей допустимы при сохранении смысла и осторожности."
-        ]
+        ],
+        "transfer_goal": "Связать время доступной помощи с конкретным конфликтом расписания; сохранить could.",
+        "transfer": {
+          "id": "D01-B",
+          "mode": "combine",
+          "title": "Время для библиотеки",
+          "context": "IELTS Task 2 · авторская короткая практика",
+          "task": "Ответ напиши на английском. Сначала запиши собственный вариант до просмотра вариантов. Объедини три мысли в одно предложение. Свяжи время открытия с расписанием учеников; сохрани осторожное could.",
+          "source": [
+            "Some students attend sports practice immediately after school.",
+            "These students cannot visit the library at that time.",
+            "The library could offer a lunchtime borrowing session."
+          ],
+          "choices": [
+            {
+              "text": "Because some students have sports practice immediately after school, the library could offer a lunchtime borrowing session so that they can use it at another time.",
+              "best": true,
+              "feedback": "Сохранены занятость части учеников, другое время и осторожное предложение could."
+            },
+            {
+              "text": "The library could open only after school because all students are free then.",
+              "best": false,
+              "feedback": "All students подменяет some students; выбранное время противоречит ограничению."
+            },
+            {
+              "text": "A lunchtime library session will make every student read more books and achieve higher marks.",
+              "best": false,
+              "feedback": "Добавлены гарантированные результаты, которых нет в исходных мыслях; причина выбора времени потеряна."
+            }
+          ],
+          "example": "Because some students have sports practice immediately after school, the library could offer a lunchtime borrowing session so that they can use it at another time.",
+          "explanation": "Сначала объясни, кому мешает текущее расписание, затем свяжи это ограничение с предлагаемым временем. Доступ к библиотеке не доказывает рост оценок.",
+          "accepted_alternatives": [
+            "The library could offer lunchtime borrowing for students whose after-school sports practice prevents them from visiting it then."
+          ],
+          "review_notes": [
+            "Then может относиться к after school: при оценке свободного варианта проверять ясность отсылки, а не точное совпадение.",
+            "Не требовать, чтобы школьная библиотека полностью меняла часы работы: исходная идея — дополнительная сессия.",
+            "Адаптация собственного учебного модуля D07, партия 03, версия 2, content_sha256 9714dddfdbad4c08fd45b427f1bef2697896e867f1c5128ac3603fea46189029. Это другой контекст внутри текущего A+B, а не новый незнакомый материал по умолчанию."
+          ],
+          "criterion": "Связность и грамматика",
+          "kind": "writing-drill-v1",
+          "publication_ready": false
+        }
       }
     },
     {
@@ -488,7 +531,7 @@
       "category": "Writing · короткая практика",
       "status": "DRAFT",
       "student_markdown": "объедини мысли в одно предложение. Сохрани пользу дорожек и ограничение. Не превращай can make cycling safer в обещание полной безопасности.\n\n### Исходные мысли или текст\n- Protected cycle lanes can make cycling safer.\n- Some streets are too narrow for them.\n- The council should consider street width before building them.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
-      "teacher_markdown": "**Один допустимый вариант:** Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.\n\n**Другой вариант:** The council should consider street width before building protected cycle lanes because, although they can make cycling safer, some streets are too narrow for them.\n\nОба варианта грамматически допустимы. Второй тяжелее для чтения; это предмет обсуждения ясности, не основание назвать его грамматически неверным.\n\n**Варианты для сравнения:**\n\n1. Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow. — подходит.\n2. Protected cycle lanes make every street completely safe, so width does not matter. — усилена уверенность и потеряно ограничение.\n3. The council should avoid cycle lanes because cyclists are not interested in them. — причины нет в исходных мыслях.\n\nПроверка: польза can сохранена; some streets не превращено в all streets; действие совета связано с ограничением.\n\n### Варианты интерактивной версии 2\n\n1. Protected cycle lanes make every street completely safe, so width does not matter.\nНужно пересмотреть: усилена уверенность и потеряно ограничение.\n\n2. Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.\nПодходит: подходит.\n\n3. The council should avoid cycle lanes because cyclists are not interested in them.\nНужно пересмотреть: причины нет в исходных мыслях.\n\nСохрани все исходные ограничения и степень уверенности. Связанное предложение не должно добавлять результат или причину, которых нет в источнике.\n\nДопустимая альтернатива: The council should consider street width before building protected cycle lanes because, although they can make cycling safer, some streets are too narrow for them.\n\nДругие правильные связки и порядок частей допустимы при сохранении смысла и осторожности.",
+      "teacher_markdown": "**Один допустимый вариант:** Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.\n\n**Другой вариант:** The council should consider street width before building protected cycle lanes because, although they can make cycling safer, some streets are too narrow for them.\n\nОба варианта грамматически допустимы. Второй тяжелее для чтения; это предмет обсуждения ясности, не основание назвать его грамматически неверным.\n\n**Варианты для сравнения:**\n\n1. Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow. — подходит.\n2. Protected cycle lanes make every street completely safe, so width does not matter. — усилена уверенность и потеряно ограничение.\n3. The council should avoid cycle lanes because cyclists are not interested in them. — причины нет в исходных мыслях.\n\nПроверка: польза can сохранена; some streets не превращено в all streets; действие совета связано с ограничением.\n\n### Варианты интерактивной версии 2\n\n1. Protected cycle lanes make every street completely safe, so width does not matter.\nНужно пересмотреть: усилена уверенность и потеряно ограничение.\n\n2. Although protected cycle lanes can make cycling safer, the council should consider street width before building them, as some streets are too narrow.\nПодходит: подходит.\n\n3. The council should avoid cycle lanes because cyclists are not interested in them.\nНужно пересмотреть: причины нет в исходных мыслях.\n\nСохрани все исходные ограничения и степень уверенности. Связанное предложение не должно добавлять результат или причину, которых нет в источнике.\n\nДопустимая альтернатива: The council should consider street width before building protected cycle lanes because, although they can make cycling safer, some streets are too narrow for them.\n\nДругие правильные связки и порядок частей допустимы при сохранении смысла и осторожности.\n\nВ этой редакции упражнение B встроено в тот же источник и fingerprint. Цель переноса: Соединить возможную пользу с необходимой предварительной проверкой ограничения; не обещать безопасность для всех.. Преподаватель должен проверить A, B, альтернативы и разбор; автоматической оценки свободного ответа нет.",
       "language_only_markdown": "",
       "exercise_data": {
         "kind": "writing-drill-v1",
@@ -528,7 +571,49 @@
         ],
         "review_notes": [
           "Другие правильные связки и порядок частей допустимы при сохранении смысла и осторожности."
-        ]
+        ],
+        "transfer_goal": "Соединить возможную пользу с необходимой предварительной проверкой ограничения; не обещать безопасность для всех.",
+        "transfer": {
+          "id": "D02-B",
+          "mode": "combine",
+          "title": "Сад на крыше",
+          "context": "IELTS Task 2 · авторская короткая практика",
+          "task": "Ответ напиши на английском. Сначала запиши собственный вариант до просмотра вариантов. Свяжи возможную пользу с условием безопасности. Не делай вывода о пригодности любой крыши.",
+          "source": [
+            "A rooftop garden can provide space for plants.",
+            "Soil and containers add weight to a roof.",
+            "An engineer should check the building before the garden is installed."
+          ],
+          "choices": [
+            {
+              "text": "Although a rooftop garden can provide space for plants, an engineer should check the building before installation because soil and containers add weight.",
+              "best": true,
+              "feedback": "Сохранены возможность, дополнительная нагрузка и проверка до установки."
+            },
+            {
+              "text": "Rooftop gardens are safe on every building because plants are light.",
+              "best": false,
+              "feedback": "Свойства растений не отменяют вес грунта и контейнеров; every building не дано."
+            },
+            {
+              "text": "An engineer should check the building after the garden is installed so that the added weight can be ignored.",
+              "best": false,
+              "feedback": "Проверка перенесена на другое время и её смысл перевёрнут."
+            }
+          ],
+          "example": "Although a rooftop garden can provide space for plants, an engineer should check the building before installation because soil and containers add weight.",
+          "explanation": "Условие before installation относится к проверке, а не к доказательству безопасности всех крыш. Это языковое упражнение, не инженерная инструкция.",
+          "accepted_alternatives": [
+            "Before a rooftop garden is installed to provide space for plants, an engineer should check the building because the soil and containers add weight."
+          ],
+          "review_notes": [
+            "Не приписывать исходным мыслям охлаждение здания или снижение выбросов: эти эффекты здесь не заданы.",
+            "Адаптация собственного учебного модуля D11, партия 03, версия 2, content_sha256 9714dddfdbad4c08fd45b427f1bef2697896e867f1c5128ac3603fea46189029. Это другой контекст внутри текущего A+B, а не новый незнакомый материал по умолчанию."
+          ],
+          "criterion": "Связность и грамматика",
+          "kind": "writing-drill-v1",
+          "publication_ready": false
+        }
       }
     },
     {
@@ -537,7 +622,7 @@
       "category": "Writing · короткая практика",
       "status": "DRAFT",
       "student_markdown": "исправь согласование подлежащего и глагола. Для минимальной правки измени только have. Если хочешь предложить переформулировку, запиши её отдельно.\n\n### Исходные мысли или текст\n- Each of the students in the two clubs have a separate task.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
-      "teacher_markdown": "**Минимальная правка:** Each of the students in the two clubs has a separate task.\n\nГлавное слово each задаёт единственное число. Students и clubs находятся внутри групп, уточняющих подлежащее.\n\n**Варианты для сравнения:**\n\n1. Each of the students in the two clubs has a separate task. — минимальная правка.\n2. Each of the student in the two clubs has a separate task. — после of the нужен plural students в этой конструкции.\n3. Each of the students in the two clubs have a separate task. — исходная целевая проблема сохранена.\n\n**Допустимая переформулировка:** Every student in the two clubs has a separate task. Она не соответствует инструкции «измени только have», но грамматически корректна. Обратная связь должна различать соблюдение формата и качество английского.\n\n### Варианты интерактивной версии 2\n\n1. Each of the student in the two clubs has a separate task.\nНужно пересмотреть: после of the нужен plural students в этой конструкции.\n\n2. Each of the students in the two clubs have a separate task.\nНужно пересмотреть: исходная целевая проблема сохранена.\n\n3. Each of the students in the two clubs has a separate task.\nПодходит: минимальная правка.\n\nПроверь целевую форму, сохраняя остальной смысл. Соблюдение минимального формата и грамматическая корректность переформулировки — разные вопросы.\n\nДопустимая альтернатива: Every student in the two clubs has a separate task.\n\nEvery student грамматически корректно, но не выполняет ограничение изменить только have.",
+      "teacher_markdown": "**Минимальная правка:** Each of the students in the two clubs has a separate task.\n\nГлавное слово each задаёт единственное число. Students и clubs находятся внутри групп, уточняющих подлежащее.\n\n**Варианты для сравнения:**\n\n1. Each of the students in the two clubs has a separate task. — минимальная правка.\n2. Each of the student in the two clubs has a separate task. — после of the нужен plural students в этой конструкции.\n3. Each of the students in the two clubs have a separate task. — исходная целевая проблема сохранена.\n\n**Допустимая переформулировка:** Every student in the two clubs has a separate task. Она не соответствует инструкции «измени только have», но грамматически корректна. Обратная связь должна различать соблюдение формата и качество английского.\n\n### Варианты интерактивной версии 2\n\n1. Each of the student in the two clubs has a separate task.\nНужно пересмотреть: после of the нужен plural students в этой конструкции.\n\n2. Each of the students in the two clubs have a separate task.\nНужно пересмотреть: исходная целевая проблема сохранена.\n\n3. Each of the students in the two clubs has a separate task.\nПодходит: минимальная правка.\n\nПроверь целевую форму, сохраняя остальной смысл. Соблюдение минимального формата и грамматическая корректность переформулировки — разные вопросы.\n\nДопустимая альтернатива: Every student in the two clubs has a separate task.\n\nEvery student грамматически корректно, но не выполняет ограничение изменить только have.\n\nВ этой редакции упражнение B встроено в тот же источник и fingerprint. Цель переноса: Согласовать each с единственным числом, несмотря на ближайшее существительное во множественном числе.. Преподаватель должен проверить A, B, альтернативы и разбор; автоматической оценки свободного ответа нет.",
       "language_only_markdown": "",
       "exercise_data": {
         "kind": "writing-drill-v1",
@@ -575,7 +660,46 @@
         ],
         "review_notes": [
           "Every student грамматически корректно, но не выполняет ограничение изменить только have."
-        ]
+        ],
+        "transfer_goal": "Согласовать each с единственным числом, несмотря на ближайшее существительное во множественном числе.",
+        "transfer": {
+          "kind": "writing-drill-v1",
+          "publication_ready": false,
+          "id": "D03-B",
+          "title": "Each и рабочие группы",
+          "mode": "grammar",
+          "context": "IELTS Task 2 · авторская короткая практика",
+          "task": "Ответ напиши на английском. Сначала запиши собственный вариант до просмотра вариантов. Напиши минимальную правку на английском: измени только have.",
+          "source": [
+            "Each of the volunteers in the two teams have a safety badge."
+          ],
+          "choices": [
+            {
+              "text": "Each of the volunteer in the two teams has a safety badge.",
+              "best": false,
+              "feedback": "Целевое правило или исходный смысл нарушены. Главное слово each требует has; volunteers после of the остаётся во множественном числе."
+            },
+            {
+              "text": "Each of the volunteers in the two teams has a safety badge.",
+              "best": true,
+              "feedback": "Главное слово each требует has; volunteers после of the остаётся во множественном числе."
+            },
+            {
+              "text": "Each of the volunteers in the two teams have a safety badge.",
+              "best": false,
+              "feedback": "Эта формулировка не выполняет ограничение задания. Главное слово each требует has; volunteers после of the остаётся во множественном числе."
+            }
+          ],
+          "example": "Each of the volunteers in the two teams has a safety badge.",
+          "explanation": "Главное слово each требует has; volunteers после of the остаётся во множественном числе.",
+          "criterion": "Грамматическая точность",
+          "accepted_alternatives": [
+            "Each of the volunteers in the two teams has a safety badge."
+          ],
+          "review_notes": [
+            "Новый авторский учебный контекст; требуется отдельная проверка преподавателем в составе этой редакции A+B. Другие корректные ответы допустимы."
+          ]
+        }
       }
     },
     {
@@ -584,7 +708,7 @@
       "category": "Writing · короткая практика",
       "status": "DRAFT",
       "student_markdown": "исправь форму существительного, сохранив общий смысл. Если есть другой корректный вариант, запиши его отдельно.\n\n### Исходные мысли или текст\n- Teachers should give students useful advices before the exam.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
-      "teacher_markdown": "**Минимальная правка:** Teachers should give students useful advice before the exam.\n\nAdvice в этом значении неисчисляемое. Можно сказать `a useful piece of advice` или `useful pieces of advice`. Число отдельных советов при такой переформулировке может стать более конкретным, чем в исходной фразе.\n\n**Варианты для сравнения:**\n\n1. Teachers should give students useful advice before the exam. — подходит.\n2. Teachers should give students a useful advice before the exam. — article a не делает advice исчисляемым.\n3. Teachers should give students useful advices before the exam. — исходная проблема сохранена.\n\n### Варианты интерактивной версии 2\n\n1. Teachers should give students useful advice before the exam.\nПодходит: подходит.\n\n2. Teachers should give students a useful advice before the exam.\nНужно пересмотреть: article a не делает advice исчисляемым.\n\n3. Teachers should give students useful advices before the exam.\nНужно пересмотреть: исходная проблема сохранена.\n\nПроверь целевую форму, сохраняя остальной смысл. Соблюдение минимального формата и грамматическая корректность переформулировки — разные вопросы.\n\nДопустимая альтернатива: Teachers should give students useful pieces of advice before the exam.\n\nPieces of advice конкретизирует отдельные советы; advice не становится исчисляемым после артикля.",
+      "teacher_markdown": "**Минимальная правка:** Teachers should give students useful advice before the exam.\n\nAdvice в этом значении неисчисляемое. Можно сказать `a useful piece of advice` или `useful pieces of advice`. Число отдельных советов при такой переформулировке может стать более конкретным, чем в исходной фразе.\n\n**Варианты для сравнения:**\n\n1. Teachers should give students useful advice before the exam. — подходит.\n2. Teachers should give students a useful advice before the exam. — article a не делает advice исчисляемым.\n3. Teachers should give students useful advices before the exam. — исходная проблема сохранена.\n\n### Варианты интерактивной версии 2\n\n1. Teachers should give students useful advice before the exam.\nПодходит: подходит.\n\n2. Teachers should give students a useful advice before the exam.\nНужно пересмотреть: article a не делает advice исчисляемым.\n\n3. Teachers should give students useful advices before the exam.\nНужно пересмотреть: исходная проблема сохранена.\n\nПроверь целевую форму, сохраняя остальной смысл. Соблюдение минимального формата и грамматическая корректность переформулировки — разные вопросы.\n\nДопустимая альтернатива: Teachers should give students useful pieces of advice before the exam.\n\nPieces of advice конкретизирует отдельные советы; advice не становится исчисляемым после артикля.\n\nВ этой редакции упражнение B встроено в тот же источник и fingerprint. Цель переноса: Использовать advice как неисчисляемое существительное; отличать advice от a piece of advice.. Преподаватель должен проверить A, B, альтернативы и разбор; автоматической оценки свободного ответа нет.",
       "language_only_markdown": "",
       "exercise_data": {
         "kind": "writing-drill-v1",
@@ -622,7 +746,46 @@
         ],
         "review_notes": [
           "Pieces of advice конкретизирует отдельные советы; advice не становится исчисляемым после артикля."
-        ]
+        ],
+        "transfer_goal": "Использовать advice как неисчисляемое существительное; отличать advice от a piece of advice.",
+        "transfer": {
+          "kind": "writing-drill-v1",
+          "publication_ready": false,
+          "id": "D04-B",
+          "title": "Совет новому сотруднику",
+          "mode": "grammar",
+          "context": "IELTS Task 2 · авторская короткая практика",
+          "task": "Ответ напиши на английском. Сначала запиши собственный вариант до просмотра вариантов. Исправь на английском только форму advices, сохранив смысл.",
+          "source": [
+            "The manager offered new employees practical advices about the equipment."
+          ],
+          "choices": [
+            {
+              "text": "The manager offered new employees practical advice about the equipment.",
+              "best": true,
+              "feedback": "Advice в этом значении неисчисляемое: без -s и без a. Для отдельного совета допустимо a piece of advice."
+            },
+            {
+              "text": "The manager offered new employees practical advices about the equipment.",
+              "best": false,
+              "feedback": "Эта формулировка не выполняет ограничение задания. Advice в этом значении неисчисляемое: без -s и без a. Для отдельного совета допустимо a piece of advice."
+            },
+            {
+              "text": "The manager offered new employees a practical advice about the equipment.",
+              "best": false,
+              "feedback": "Целевое правило или исходный смысл нарушены. Advice в этом значении неисчисляемое: без -s и без a. Для отдельного совета допустимо a piece of advice."
+            }
+          ],
+          "example": "The manager offered new employees practical advice about the equipment.",
+          "explanation": "Advice в этом значении неисчисляемое: без -s и без a. Для отдельного совета допустимо a piece of advice.",
+          "criterion": "Грамматическая точность",
+          "accepted_alternatives": [
+            "The manager offered new employees practical pieces of advice about the equipment."
+          ],
+          "review_notes": [
+            "Новый авторский учебный контекст; требуется отдельная проверка преподавателем в составе этой редакции A+B. Другие корректные ответы допустимы."
+          ]
+        }
       }
     },
     {
@@ -631,7 +794,7 @@
       "category": "Writing · короткая практика",
       "status": "DRAFT",
       "student_markdown": "развей тезис в 50–70 слов. Объясни, как возникает польза, добавь конкретный вымышленный пример и одно существенное ограничение. Не придумывай исследование или процент успешности.\n\n### Исходные мысли или текст\n- Online lessons can help teenagers who live far from school.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
-      "teacher_markdown": "**Один допустимый пример:**\n\nOnline lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.\n\n**Альтернативное развитие:** доступ к конкретному предмету или преподавателю, которого нет поблизости, при наличии связи и подходящего расписания. Другой механизм тоже допустим.\n\n**Варианты для сравнения:**\n\n1. Online lessons can reduce travel time; for example, a village student could join an evening class from home if the connection is reliable. — объяснение, пример и условие связаны.\n2. Online lessons are useful because they are helpful and beneficial for students. — повтор тезиса без механизма и примера.\n3. Online lessons guarantee better grades for every teenager because all students prefer computers. — универсальный необоснованный вывод и неподтверждённое предпочтение.\n\nChecklist: конкретная польза; понятная цепочка; пример согласуется с ней; ограничение существенно; нет выдуманной статистики. Диапазон слов — ориентир задания, не шкала качества или band.\n\n### Варианты интерактивной версии 2\n\n1. Online lessons are useful because they are helpful and beneficial for students.\nНужно пересмотреть: повтор тезиса без механизма и примера.\n\n2. Online lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.\nПодходит: Есть адресат, механизм, вымышленный пример и существенное условие; это один полный вариант, а не единственный правильный ответ.\n\n3. Online lessons guarantee better grades for every teenager because all students prefer computers.\nНужно пересмотреть: универсальный необоснованный вывод и неподтверждённое предпочтение.\n\nРазвитие связывает адресата, механизм, пример и условие; количество слов помогает держать фокус, но не оценивает качество.\n\nДопустимая альтернатива: Online lessons may give a teenager access to a subject that is not taught nearby. For instance, a rural student could join a small evening class with a specialist teacher in another town. This opportunity depends on a suitable timetable and reliable internet access; being able to join a class does not itself guarantee learning or higher examination marks.\n\nКороткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ.",
+      "teacher_markdown": "**Один допустимый пример:**\n\nOnline lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.\n\n**Альтернативное развитие:** доступ к конкретному предмету или преподавателю, которого нет поблизости, при наличии связи и подходящего расписания. Другой механизм тоже допустим.\n\n**Варианты для сравнения:**\n\n1. Online lessons can reduce travel time; for example, a village student could join an evening class from home if the connection is reliable. — объяснение, пример и условие связаны.\n2. Online lessons are useful because they are helpful and beneficial for students. — повтор тезиса без механизма и примера.\n3. Online lessons guarantee better grades for every teenager because all students prefer computers. — универсальный необоснованный вывод и неподтверждённое предпочтение.\n\nChecklist: конкретная польза; понятная цепочка; пример согласуется с ней; ограничение существенно; нет выдуманной статистики. Диапазон слов — ориентир задания, не шкала качества или band.\n\n### Варианты интерактивной версии 2\n\n1. Online lessons are useful because they are helpful and beneficial for students.\nНужно пересмотреть: повтор тезиса без механизма и примера.\n\n2. Online lessons can help teenagers who live far from school by reducing the time they spend travelling. For example, a student in a nearby village could attend an evening revision class from home instead of arranging another journey. This makes participation easier, provided that the student has a reliable internet connection and a quiet place to work.\nПодходит: Есть адресат, механизм, вымышленный пример и существенное условие; это один полный вариант, а не единственный правильный ответ.\n\n3. Online lessons guarantee better grades for every teenager because all students prefer computers.\nНужно пересмотреть: универсальный необоснованный вывод и неподтверждённое предпочтение.\n\nРазвитие связывает адресата, механизм, пример и условие; количество слов помогает держать фокус, но не оценивает качество.\n\nДопустимая альтернатива: Online lessons may give a teenager access to a subject that is not taught nearby. For instance, a rural student could join a small evening class with a specialist teacher in another town. This opportunity depends on a suitable timetable and reliable internet access; being able to join a class does not itself guarantee learning or higher examination marks.\n\nКороткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ.\n\nВ этой редакции упражнение B встроено в тот же источник и fingerprint. Цель переноса: Объяснить пользу через высвобождение времени поездки и указать условие доступности дистанционной работы.. Преподаватель должен проверить A, B, альтернативы и разбор; автоматической оценки свободного ответа нет.",
       "language_only_markdown": "",
       "exercise_data": {
         "kind": "writing-drill-v1",
@@ -669,7 +832,48 @@
         ],
         "review_notes": [
           "Короткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ."
-        ]
+        ],
+        "transfer_goal": "Объяснить пользу через высвобождение времени поездки и указать условие доступности дистанционной работы.",
+        "transfer": {
+          "id": "D05-B",
+          "mode": "argument",
+          "title": "Работа из дома",
+          "context": "IELTS Task 2 · авторская короткая практика",
+          "task": "Ответ напиши на английском. Сначала запиши собственный вариант до просмотра вариантов. Развей возможную пользу, сохранив условие. Не делай один пример доказательством для всех профессий.",
+          "source": [
+            "Claim: Working from home can make some employees’ schedules easier to manage.",
+            "Explain one reason and an important limitation."
+          ],
+          "choices": [
+            {
+              "text": "An employee who no longer commutes could use that time for an earlier start or a family responsibility. This flexibility depends on the work being suitable for remote delivery and on the employee having an adequate place to work.",
+              "best": true,
+              "feedback": "Время поездки связано с конкретной возможностью; названы границы применимости."
+            },
+            {
+              "text": "All jobs can be done at home, so offices and hospitals should close.",
+              "best": false,
+              "feedback": "All jobs и вывод о закрытии учреждений не следуют из some employees."
+            },
+            {
+              "text": "Working from home is convenient because it is more convenient than inconvenient work.",
+              "best": false,
+              "feedback": "Тезис повторён другими словами; причины и ограничения нет."
+            }
+          ],
+          "example": "An employee who no longer commutes could use that time for an earlier start or a family responsibility. This flexibility depends on the work being suitable for remote delivery and on the employee having an adequate place to work.",
+          "explanation": "Аргумент ограничен подходящими видами работы. Можно развить другой механизм, но не следует переносить его на профессии, требующие физического присутствия.",
+          "accepted_alternatives": [
+            "For tasks that can be completed online, avoiding a long commute may make it easier to fit work around other responsibilities, although a quiet workspace and clear working hours still matter."
+          ],
+          "review_notes": [
+            "Рассуждение не утверждает, что каждый работник получает дополнительное свободное время или работает эффективнее.",
+            "Адаптация собственного учебного модуля D22, партия 03, версия 2, content_sha256 9714dddfdbad4c08fd45b427f1bef2697896e867f1c5128ac3603fea46189029. Это другой контекст внутри текущего A+B, а не новый незнакомый материал по умолчанию."
+          ],
+          "criterion": "Ответ на вопрос",
+          "kind": "writing-drill-v1",
+          "publication_ready": false
+        }
       }
     },
     {
@@ -678,7 +882,7 @@
       "category": "Writing · короткая практика",
       "status": "DRAFT",
       "student_markdown": "развей аргумент в 50–70 слов. Назови, кому это помогает, объясни механизм и предложи конкретный пример. Укажи условие, от которого зависит польза. Не обещай, что библиотека гарантирует высокие оценки.\n\n### Исходные мысли или текст\n- Schools should keep their libraries open after lessons.\n\nСначала напиши свой вариант. После разбора запиши отдельный пересмотр и попробуй другое задание того же типа. Свободный текст оценивается вручную.",
-      "teacher_markdown": "**Один допустимый пример:**\n\nSchools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.\n\n**Альтернатива:** доступ к книгам или совместная подготовка при правилах пользования. Обязательно показать связь с временем после уроков.\n\n**Варианты для сравнения:**\n\n1. An after-school library can give students a quiet place to study when their homes are crowded, provided that suitable supervision is available. — есть адресат, механизм и условие.\n2. Libraries are good, so schools should open them because good libraries are important. — круговое повторение тезиса.\n3. Every student will achieve the highest grades if the library stays open for one extra hour. — выдуманная универсальная гарантия.\n\nНе требовать одного «идеального» аргумента. Вымышленный пример не должен выглядеть как опубликованное исследование или реальный результат ASHYQ.\n\n### Варианты интерактивной версии 2\n\n1. Libraries are good, so schools should open them because good libraries are important.\nНужно пересмотреть: круговое повторение тезиса.\n\n2. Every student will achieve the highest grades if the library stays open for one extra hour.\nНужно пересмотреть: выдуманная универсальная гарантия.\n\n3. Schools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.\nПодходит: Есть адресат, механизм, вымышленный пример и существенное условие; это один полный вариант, а не единственный правильный ответ.\n\nРазвитие связывает адресата, механизм, пример и условие; количество слов помогает держать фокус, но не оценивает качество.\n\nДопустимая альтернатива: An after-school library could help students who cannot obtain suitable books at home. For example, a teenager preparing a presentation might use the collection and ask a librarian for help before travelling home. This benefit depends on relevant resources and realistic staffing arrangements, and it does not mean that longer opening hours alone will improve every student's results.\n\nКороткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ.",
+      "teacher_markdown": "**Один допустимый пример:**\n\nSchools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.\n\n**Альтернатива:** доступ к книгам или совместная подготовка при правилах пользования. Обязательно показать связь с временем после уроков.\n\n**Варианты для сравнения:**\n\n1. An after-school library can give students a quiet place to study when their homes are crowded, provided that suitable supervision is available. — есть адресат, механизм и условие.\n2. Libraries are good, so schools should open them because good libraries are important. — круговое повторение тезиса.\n3. Every student will achieve the highest grades if the library stays open for one extra hour. — выдуманная универсальная гарантия.\n\nНе требовать одного «идеального» аргумента. Вымышленный пример не должен выглядеть как опубликованное исследование или реальный результат ASHYQ.\n\n### Варианты интерактивной версии 2\n\n1. Libraries are good, so schools should open them because good libraries are important.\nНужно пересмотреть: круговое повторение тезиса.\n\n2. Every student will achieve the highest grades if the library stays open for one extra hour.\nНужно пересмотреть: выдуманная универсальная гарантия.\n\n3. Schools should keep their libraries open after lessons because some students lack a suitable place to study at home. A teenager who shares a small room with younger siblings could use a library desk to read or complete an assignment. The benefit depends on supervision and reasonable opening hours, so schools should plan staffing rather than simply leave the doors unlocked.\nПодходит: Есть адресат, механизм, вымышленный пример и существенное условие; это один полный вариант, а не единственный правильный ответ.\n\nРазвитие связывает адресата, механизм, пример и условие; количество слов помогает держать фокус, но не оценивает качество.\n\nДопустимая альтернатива: An after-school library could help students who cannot obtain suitable books at home. For example, a teenager preparing a presentation might use the collection and ask a librarian for help before travelling home. This benefit depends on relevant resources and realistic staffing arrangements, and it does not mean that longer opening hours alone will improve every student's results.\n\nКороткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ.\n\nВ этой редакции упражнение B встроено в тот же источник и fingerprint. Цель переноса: Связать доступ к общей услуге с конкретной задачей человека без домашнего ресурса и назвать условие полезного доступа.. Преподаватель должен проверить A, B, альтернативы и разбор; автоматической оценки свободного ответа нет.",
       "language_only_markdown": "",
       "exercise_data": {
         "kind": "writing-drill-v1",
@@ -716,7 +920,48 @@
         ],
         "review_notes": [
           "Короткие фразы в старом текстовом разборе иллюстрируют механизм; интерактивный пример развёрнут до полного ответа. Вымышленный пример не является исследованием или результатом ASHYQ."
-        ]
+        ],
+        "transfer_goal": "Связать доступ к общей услуге с конкретной задачей человека без домашнего ресурса и назвать условие полезного доступа.",
+        "transfer": {
+          "id": "D06-B",
+          "mode": "argument",
+          "title": "Интернет в библиотеке",
+          "context": "IELTS Task 2 · авторская короткая практика",
+          "task": "Ответ напиши на английском. Сначала запиши собственный вариант до просмотра вариантов. Развей пользу конкретной услуги для конкретной группы и сохрани ограничения.",
+          "source": [
+            "Claim: Public libraries can support people who lack reliable internet access.",
+            "Explain a practical use and a condition for that use."
+          ],
+          "choices": [
+            {
+              "text": "A library computer could allow someone without reliable home internet to complete an online application. To make that access useful, the service would need suitable opening hours and, for some users, help with basic digital tasks.",
+              "best": true,
+              "feedback": "Услуга связана с конкретной задачей и условиями использования; результат не гарантируется."
+            },
+            {
+              "text": "Free internet means that every visitor will find a job immediately.",
+              "best": false,
+              "feedback": "Доступ к интернету не гарантирует трудоустройство."
+            },
+            {
+              "text": "Libraries contain books, so a computer service can never help anyone.",
+              "best": false,
+              "feedback": "Наличие книг не исключает пользу другой услуги; never не обосновано."
+            }
+          ],
+          "example": "A library computer could allow someone without reliable home internet to complete an online application. To make that access useful, the service would need suitable opening hours and, for some users, help with basic digital tasks.",
+          "explanation": "Пример показывает возможность выполнить действие, а не гарантирует положительный исход заявки. Другие конкретные цифровые задачи тоже подходят.",
+          "accepted_alternatives": [
+            "Shared computers can give residents a place to access online information or services, provided the equipment is available when needed and users can get appropriate assistance."
+          ],
+          "review_notes": [
+            "Не требовать раскрытия реальных заявок, аккаунтов, адресов или личных данных.",
+            "Адаптация собственного учебного модуля D24, партия 03, версия 2, content_sha256 9714dddfdbad4c08fd45b427f1bef2697896e867f1c5128ac3603fea46189029. Это другой контекст внутри текущего A+B, а не новый незнакомый материал по умолчанию."
+          ],
+          "criterion": "Ответ на вопрос",
+          "kind": "writing-drill-v1",
+          "publication_ready": false
+        }
       }
     },
     {

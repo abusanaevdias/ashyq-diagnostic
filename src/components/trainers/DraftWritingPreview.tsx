@@ -28,6 +28,7 @@ function Round({ item, following, state, setState, onComplete }: { item: DraftWr
     <p><strong>{item.task}</strong></p>
     <div className={styles.materialText} lang="en">{item.source.map((line,index) => <p key={index}>{line}</p>)}</div>
     <label htmlFor="draft-preview-answer">Твоя первая попытка</label>
+    <p>Ответ напиши на английском. Объяснение своего способа проверки можно дать на русском.</p>
     <textarea id="draft-preview-answer" maxLength={4000} rows={4} value={draft} disabled={locked} onChange={event => { setDraft(event.target.value); setFeedback(''); }}/>
     {!locked ? <button type="button" onClick={() => { if (draft.trim().length < 12) { setFeedback('Сначала напиши свой вариант: хотя бы 12 символов.'); return; } setLocked(true); setFeedback(''); }}>Зафиксировать попытку и показать варианты</button> : <>
       <p>Первая попытка и знакомство с материалом зафиксированы. Варианты проверяют выбор, а не качество написанного тобой текста.</p>
@@ -49,6 +50,7 @@ function Round({ item, following, state, setState, onComplete }: { item: DraftWr
       <textarea id="draft-writing-revision" maxLength={4000} rows={5} value={revision} onChange={event => { setRevision(event.target.value); setFeedback(''); }}/>
       <p>Перепиши с учётом разбора. Корректную первую версию можно оставить без изменений. Наличие правки не означает улучшение.</p>
       <label htmlFor="draft-writing-reflection">Что проверишь в следующем задании?</label>
+      {item.transfer_goal&&<p><strong>Приём для следующей пробы:</strong> {item.transfer_goal}</p>}
       <textarea id="draft-writing-reflection" maxLength={1500} rows={3} value={reflection} onChange={event => { setReflection(event.target.value); setFeedback(''); }}/>
       <label className={styles.consent}><input type="checkbox" checked={acknowledged} onChange={event => setAcknowledged(event.target.checked)}/> Понимаю: мои тексты и объяснение требуют ручной проверки; совпадение с образцом и число слов не являются оценкой.</label>
       <div className={styles.actions}><button type="button" onClick={() => {
@@ -79,7 +81,10 @@ function Preview({ item, next,source,onDirty,onBusy }: { item: DraftWritingDrill
     <p>Проверь путь ученика до решения о материале. {source?'Первую работу, разбор, пересмотр и следующее задание можно сохранить отдельной кнопкой ниже в этом браузере.':'Попытка временная: при закрытии страницы тексты будут потеряны.'} Она не публикует задание и не оценивает свободный текст.</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Короткая Writing-практика</legend>
     {!started ? <button type="button" onClick={() => setStarted(true)}>{source&&isPublishedBankSource(source.ref)?'Начать задание':'Пройти черновик как ученик'}</button> : <>
-      {!done && current && <Round key={`${generation}:${roundGeneration}:${current.id}`} item={current} following={records.length>0} state={roundState} setState={setRoundState} onComplete={record => {setRecords(old => [...old,record]);if(!records.length&&next)setRoundState(emptyBankWritingRound(next.id));}}/>}
+      {!done && current && <>
+        {records.length>0&&item.transfer_goal&&<div className={styles.outcome}><p><strong>Тот же приём в другом контексте:</strong> {item.transfer_goal}</p><p>Твой план перед этой пробой:</p><p className={styles.frozenText}>{records[0].reflection}</p><p>Сначала примени его самостоятельно. Новый контекст мог встречаться раньше; наличие ответа не доказывает освоение.</p></div>}
+        <Round key={`${generation}:${roundGeneration}:${current.id}`} item={current} following={records.length>0} state={roundState} setState={setRoundState} onComplete={record => {setRecords(old => [...old,record]);if(!records.length&&next)setRoundState(emptyBankWritingRound(next.id));}}/>
+      </>}
       {done && <div className={styles.outcome}>
         <h4 ref={report} tabIndex={-1}>{source?'Отчёт пробы':'Отчёт временной пробы'}</h4>
         <p>Первый ответ, пересмотр после помощи и другое задание показаны отдельно. Это не band, не доказательство освоения и не автоматическая оценка улучшения.</p>
@@ -108,6 +113,6 @@ export default function DraftWritingPreview({ value, nextValue,source=null,onDir
   const bankPair=source?bankWritingPair(source):null;
   if(source&&(!bankPair||JSON.stringify(item)!==JSON.stringify(bankPair[0])))return <p role="alert">Версия пары Writing не прошла проверку. Другой материал не подставлен.</p>;
   const candidate = parseDraftWriting(nextValue);
-  const next = candidate && candidate.mode === item.mode && candidate.id !== item.id && candidate.example !== item.example && JSON.stringify(candidate.source) !== JSON.stringify(item.source) ? candidate : null;
+  const next = item.transfer ?? (candidate && candidate.mode === item.mode && candidate.id !== item.id && candidate.example !== item.example && JSON.stringify(candidate.source) !== JSON.stringify(item.source) ? candidate : null);
   return <Preview key={`${item.id}:${bankPair?.[1].id??next?.id??'none'}`} item={item} next={bankPair?.[1]??next} source={source} onDirty={onDirty} onBusy={onBusy}/>;
 }
