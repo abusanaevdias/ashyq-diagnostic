@@ -67,6 +67,7 @@ async function main(){
   // links/focus outside that layer and usable even before the next paint.
   for(const reducedMotion of ['reduce','no-preference'] as const){
    const resizing=await browser.newContext({viewport:{width:768,height:844},reducedMotion});
+   await resizing.route('**/_vercel/insights/**',route=>route.fulfill({status:204}));
    await resizing.addInitScript(()=>{const Native=window.ResizeObserver;window.ResizeObserver=class extends Native{constructor(callback:ResizeObserverCallback){super((entries,observer)=>{setTimeout(()=>callback(entries,observer),2000);});}};});
    const narrow=await resizing.newPage();await narrow.goto(base+'/library/grammar-block-1#g1-q');await narrow.locator('[data-fluid-ready]').filter({visible:true}).waitFor();
    await narrow.setViewportSize({width:320,height:844});assert.equal(await narrow.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,`no transient decoration overflow: ${reducedMotion}`);
