@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function SatDistractorPage() {
-  return <><NavBar /><TrainerIdentityBoundary><SatDistractor /></TrainerIdentityBoundary><Footer /></>;
+  return <><NavBar study /><TrainerIdentityBoundary><SatDistractor /></TrainerIdentityBoundary><Footer /></>;
 }

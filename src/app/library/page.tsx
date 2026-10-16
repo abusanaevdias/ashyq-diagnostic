@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default function LibraryPage() {
-  return <div className={`v3 ${styles.page}`}><NavBar /><main className={styles.container}>
+  return <div className={`v3 ${styles.page}`}><NavBar study /><main className={styles.container}>
     <JsonLd data={{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Бесплатные материалы ASHYQ', url: `${SITE_URL}/library`, inLanguage: ['ru', 'en'], description: metadata.description, hasPart: [...LIBRARY_CHAPTERS.map((chapter) => ({ title: chapter.title, href: `/library/${chapter.slug}` })), ...FREE_STARTERS.filter((entry) => !entry.href.startsWith('/library/'))].map((entry) => ({ '@type': 'LearningResource', name: entry.title, url: `${SITE_URL}${entry.href}`, learningResourceType: 'Practice', isAccessibleForFree: true })) }} />
     <header className={styles.quickHeader}><p className={styles.kicker}>ASHYQ · бесплатно · без регистрации</p><h1>Бесплатная библиотека</h1><p>IELTS и Digital SAT. Выберите карточку — и сразу переходите к практике. Искать и скачивать PDF не обязательно.</p></header>
     <FreeStarters />

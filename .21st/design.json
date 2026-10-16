@@ -42,6 +42,10 @@
       "successSoft": "--success-soft"
     },
     "typography": {
+      "--font-system": {
+        "value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "source": "design/tokens.css"
+      },
       "--font-display": {
         "value": "'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif",
         "source": "design/tokens.css"
@@ -65,6 +69,7 @@
       "--r-md": "16px",
       "--r-lg": "20px",
       "--r-xl": "24px",
+      "--r-xxl": "28px",
       "--r-pill": "999px"
     },
     "shadows": {
@@ -94,7 +99,7 @@
     "must": [
       "Colors, radii, fonts, shadows and durations come only from design/tokens.css; scripts/token-audit.ts enforces it.",
       "Text smaller than 18px never uses --ink-muted; red text on blush uses --red-deep.",
-      "Durations stay at or below 300ms and prefers-reduced-motion disables transitions.",
+      "Fixed durations stay at or below 300ms and prefers-reduced-motion disables transitions. Approved study segmented controls may use a retargetable critically damped spring, with static reduced-motion feedback and no input lock.",
       "Tap targets are at least 44px."
     ],
     "avoid": [
@@ -104,6 +109,7 @@
     ]
   },
   "decisions": [
+    "2026-10-16: user explicitly approved the local Apple-design concept for implementation. Learning surfaces use scoped StudyDesign system type,650 display weight,28px surfaces, native controls and interruptible spring navigation. Existing palette, logo, actual content, roles and source-bound progress remain. Separate blog/commercial layouts keep their existing owner scope.",
     "The public product site adopts v3 Clean Premium EdTech: warm off-white space, Manrope display type, token-only soft cards, warm real photography, and red limited to primary actions and data accents.",
     "Lead forms keep the action primary and place explicit privacy consent immediately before submission.",
     "Legacy v2 class and variable names stay as a compatibility API but resolve only to v3 tokens (src/app/globals.css).",

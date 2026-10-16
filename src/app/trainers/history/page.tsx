@@ -6,5 +6,5 @@ import styles from '../trainers.module.css';
 
 export const metadata: Metadata = { title: 'Мои занятия — тренажёры ASHYQ', robots: { index: false, follow: false } };
 export default function TrainerHistoryPage() {
-  return <><NavBar/><main className={styles.page}><Link href="/trainers">← Все тренажёры</Link><h1>Мои занятия</h1><TrainerHistory/></main><Footer/></>;
+  return <><NavBar study/><main className={styles.page}><Link href="/trainers">← Все тренажёры</Link><h1>Мои занятия</h1><TrainerHistory/></main><Footer/></>;
 }

@@ -11,6 +11,8 @@ import styles from './HomeV3.module.css';
 import FreeStarters from './library/FreeStarters';
 import ClubOffer from './ClubOffer';
 import CohortResults from './CohortResults';
+import StudyDesign from './ui/StudyDesign';
+import HomeLearningPreview from './HomeLearningPreview';
 
 type ValueStyle = CSSProperties & { '--value': string };
 
@@ -45,8 +47,8 @@ function HeroArrow() {
 
 export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunState | null>; onSelect: (exam: ExamId) => void }) {
   return (
-    <div className={styles.page}>
-      <NavBar onStart={() => onSelect('ielts')} />
+    <StudyDesign><div className={styles.page}>
+      <NavBar study onStart={() => onSelect('ielts')} />
 
       <main>
         <section id="hero" className={`${styles.container} ${styles.hero}`}>
@@ -54,7 +56,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
             <div className={styles.heroCopy}>
               <MicroLabel>ASHYQ · образовательный клуб Казахстана</MicroLabel>
               <h1 className={styles.title}>ASHYQ. IELTS и SAT.<span className={styles.titleAccent}>Начните бесплатно.</span></h1>
-              <p className={styles.lead}>Онлайн-подготовка к IELTS и SAT в Казахстане. Библиотека, практика и диагностика — бесплатно, без регистрации. Курсы с преподавателем и менторство — платные программы.</p>
+              <p className={styles.lead}>Онлайн-подготовка к IELTS и SAT в Казахстане. Библиотека, практика и диагностика — бесплатно, без регистрации.</p>
               <nav className={styles.entryChoices} aria-label="Первые шаги: диагностика и библиотека">
                 <Link href="/diagnostic"><strong>Бесплатная диагностика <HeroArrow /></strong><span>IELTS или SAT · узнайте свой уровень</span></Link>
                 <Link href="/library"><strong>Бесплатная библиотека <HeroArrow /></strong><span>Материалы, задания и разборы · 0 ₸</span></Link>
@@ -75,8 +77,10 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
               </div>
               <p className={styles.diagnosticNote}>Диагностика: ≈20 минут. Предварительная оценка навыков, не официальный балл IELTS или SAT.</p>
               <div className={styles.statsWrap}><StatsRow items={[CLUB_FACTS[0], CLUB_FACTS[2], CLUB_FACTS[3]]} /></div>
+              <p className={styles.paidNote}>Курсы с преподавателем и менторство — платные программы.</p>
             </div>
 
+            <HomeLearningPreview/>
             <aside className={styles.heroResources} aria-labelledby="home-free-title">
               <MicroLabel>0 ₸ · без регистрации</MicroLabel>
               <h2 id="home-free-title">Бесплатная библиотека</h2>
@@ -160,6 +164,6 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
       </main>
 
       <Footer />
-    </div>
+    </div></StudyDesign>
   );
 }

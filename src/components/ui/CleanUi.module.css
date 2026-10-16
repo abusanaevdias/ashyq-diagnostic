@@ -5,6 +5,8 @@
   border-bottom: 1px solid var(--hairline);
   background: var(--bg);
 }
+.studyNav .navLinks, .studyNav .freeMobileLink { display:none; }
+.studyNav { background:var(--bg); }
 
 .nav {
   width: 100%;
@@ -449,4 +451,10 @@
   .direction:hover {
     transform: none;
   }
+}
+.studyNav .mobilePanel { top:100%; }
+@media(max-width:560px) {
+ .studyAccount { display:none; }
+ .studyNav .nav { gap:8px; padding-inline:16px; flex-wrap:wrap; }
+ .studyNav .nav .buttonRed { padding-inline:12px; font-size:.8rem; }
 }
