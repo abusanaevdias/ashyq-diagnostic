@@ -28,6 +28,7 @@
   --font-display: 'Manrope', 'Manrope Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-script: 'Caveat', 'Segoe Script', cursive;
+  --font-system: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* radius */
   --r-xs: 8px;
@@ -35,6 +36,7 @@
   --r-md: 16px;
   --r-lg: 20px;
   --r-xl: 24px;
+  --r-xxl: 28px;
   --r-pill: 999px;
 
   /* shadow */

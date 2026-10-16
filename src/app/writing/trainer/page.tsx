@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function WritingTrainerLandingPage() {
   return <>
-    <NavBar />
+    <NavBar study />
     <WritingTrainerLanding />
     <Footer />
   </>;

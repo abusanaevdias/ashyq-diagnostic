@@ -42,7 +42,10 @@ export async function runLibraryLearningCheck(){
   await page.waitForURL('**/u02-talent-practice#u02-a-review');assert.ok(await page.locator('#u02-a-review mark:visible').count()>0);
   await page.locator('#u02-a-review').getByRole('button',{name:/4 · GRA/}).click();assert.ok(await page.locator('#u02-a-review mark:visible').count()>0);
   for(const width of [320,390,768,1440]){
-   await page.setViewportSize({width,height:900});assert.equal(await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-innerWidth)),0,`review overflow ${width}`);
+   await page.setViewportSize({width,height:900});
+   const overflow=await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-innerWidth));
+   if(overflow)console.error('Review overflow elements',await page.evaluate(()=>[...document.querySelectorAll('main *')].filter(node=>node.getBoundingClientRect().right>innerWidth+1&&node.getBoundingClientRect().width>0).map(node=>({tag:node.tagName,class:node.className,text:node.textContent?.slice(0,100),right:node.getBoundingClientRect().right,font:getComputedStyle(node).fontFamily})).slice(-20)));
+   assert.equal(overflow,0,`review overflow ${width}`);
    const a11y=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();assert.deepEqual(a11y.violations.map(v=>({id:v.id,nodes:v.nodes.length})),[],`a11y ${width}`);
    await page.evaluate(()=>scrollTo(0,0));
    if(width===390||width===1440)await page.screenshot({path:`${out}/essay-review-${width}.png`,fullPage:true});

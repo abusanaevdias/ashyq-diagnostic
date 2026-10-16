@@ -1,5 +1,9 @@
 # ASHYQ Design System v3 — «Clean Premium EdTech»
 
+## Approved learning extension — 2026-10-16
+
+The user approved the three-screen `apple-design` concept and requested implementation. For the home learning entry, `/trainers/**`, `/writing/**` and `/library/**`, `StudyDesign` scopes system typography (`--font-system`),650 heading weight, spacious surfaces (`--r-xxl`,28px), immediate press feedback and native route/filter controls with a retargetable critically damped indicator. Reduced motion uses static feedback. This approved extension supersedes the Manrope/Inter-only and24px maximum rules within those surfaces; base typography/layout elsewhere stays unchanged. No translucent layer or third-party motion dependency is required. Source token parity and runtime audits include the explicit new system-font/radius tokens, without disabling other checks. See `docs/APPLE_DESIGN_036.md` for scope, source preservation and evidence.
+
 Источник стиля: макет `uploads/image-1.png` (6 экранов: Главная, Курсы,
 Диагностика, О нас, Блог, Контакты). Цвета семплированы из макета
 (`design/tokens.json`, `design/tokens.css`). Этот документ заменяет v2

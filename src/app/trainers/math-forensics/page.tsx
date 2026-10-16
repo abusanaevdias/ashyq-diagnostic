@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function MathForensicsPage() {
-  return <><NavBar /><TrainerIdentityBoundary><MathForensics /></TrainerIdentityBoundary><Footer /></>;
+  return <><NavBar study /><TrainerIdentityBoundary><MathForensics /></TrainerIdentityBoundary><Footer /></>;
 }

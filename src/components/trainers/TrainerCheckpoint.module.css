@@ -76,3 +76,11 @@
 .readingClaim :is(select,textarea):focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 .readingClaim blockquote { margin: 16px 0; padding-left: 16px; border-left: 3px solid var(--ink-soft); white-space: pre-wrap; }
 @media (max-width: 500px) { .panel { padding: 16px; } .actions { flex-direction: column; } .actions button { width: 100%; } }
+
+/* APPLE-DESIGN-036 */
+.panel,.preview { border-radius:var(--r-xxl); padding:clamp(1.25rem,3vw,2rem); }
+.panel h2,.preview h4 { font-weight:650; }
+.panel button { border-radius:var(--r-pill); padding:12px 20px; font-weight:550; }
+.filters { border-radius:var(--r-xl); padding:20px; }
+.preview textarea,.previewReasons textarea,.practiceBody textarea { border-radius:var(--r-lg); padding:18px; font-size:1rem; }
+.essaySource { font-size:1.1rem; line-height:1.85; }
