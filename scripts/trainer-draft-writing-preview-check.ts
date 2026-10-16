@@ -52,9 +52,11 @@ async function main() {
       for (const [round,item] of [first,next].entries()) {
         const stage=preview.getByRole('heading',{name:`${round?'Следующее задание того же типа практики':'Самостоятельная попытка'} · ${item.id} · ${item.title}`,exact:true}); await stage.waitFor();
         assert.equal(await stage.evaluate(node=>document.activeElement===node),true,'stage focus');
+        if(round)assert.ok(await stage.evaluate((node,goal)=>node.nextElementSibling?.textContent?.includes(goal),first.transfer_goal!),'B goal/plan follow the focused heading instead of being skipped above it');
         const options=preview.getByRole('group',{name:'Какой вариант выполняет задание?',exact:true});
         assert.equal(await options.count(),0,'options hidden before own attempt');
         const exposure=preview.getByRole('group',{name:'Знаком ли тебе этот материал или его разбор?',exact:true});
+        assert.equal(await exposure.evaluate(node=>node.previousElementSibling?.getAttribute('lang')),'en','learner sees the actual material before deciding whether it is familiar');
         const exposureIndex=(index+round)%3;
         await exposure.getByRole('radio').nth(exposureIndex).check();
         await preview.getByRole('button',{name:'Зафиксировать попытку и показать варианты',exact:true}).click();

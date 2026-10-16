@@ -10,7 +10,7 @@ import type { BankSource } from '@/lib/trainers/bank-sources';
 import {bankWritingPair,emptyBankWritingRound,type BankWritingRound,type BankWritingState} from '@/lib/trainers/bank-writing-state';
 
 const unchanged=()=>{};
-function Round({ item, following, state, setState, onComplete }: { item: DraftWritingDrill; following: boolean;state:BankWritingRound;setState:Dispatch<SetStateAction<BankWritingRound>>;onComplete: (record: BankWritingRound) => void }) {
+function Round({ item, following, guide, state, setState, onComplete }: { item: DraftWritingDrill; following: boolean;guide?:{goal:string;plan:string};state:BankWritingRound;setState:Dispatch<SetStateAction<BankWritingRound>>;onComplete: (record: BankWritingRound) => void }) {
   const {draft,locked,choice,revealed,trail,help,attempts,revision,reflection,acknowledged,exposure}=state;
   function setter<K extends keyof BankWritingRound>(key:K):Dispatch<SetStateAction<BankWritingRound[K]>>{return action=>setState(old=>({...old,[key]:typeof action==='function'?(action as (value:BankWritingRound[K])=>BankWritingRound[K])(old[key]):action}));}
   const setDraft=setter('draft'),setLocked=setter('locked'),setChoice=setter('choice'),setRevealed=setter('revealed'),setTrail=setter('trail'),setHelp=setter('help'),setAttempts=setter('attempts'),setRevision=setter('revision'),setReflection=setter('reflection'),setAcknowledged=setter('acknowledged'),setExposure=setter('exposure');
@@ -21,12 +21,13 @@ function Round({ item, following, state, setState, onComplete }: { item: DraftWr
   useEffect(() => { if (revealed) repair.current?.focus(); }, [revealed]);
   return <>
     <h4 ref={heading} tabIndex={-1}>{following ? 'Следующее задание того же типа практики' : 'Самостоятельная попытка'} · {item.id} · {item.title}</h4>
-    <p>{following ? 'Это другой материал из авторского банка. Он мог встречаться раньше: повторение знакомого задания не доказывает перенос навыка.' : 'Если ключ уже знаком, отметь это. Незнакомый текст сам по себе также не доказывает независимость ответа.'}</p>
+    {guide&&<div className={styles.outcome}><p><strong>Тот же приём в другом контексте:</strong> {guide.goal}</p><p>Твой план перед этой пробой:</p><p className={styles.frozenText}>{guide.plan}</p></div>}
+    <p>{following ? 'Сначала напиши свой вариант. Если уже видел этот материал или его разбор, отметь это ниже.' : 'Если ключ уже знаком, отметь это. Незнакомый текст сам по себе также не доказывает независимость ответа.'}</p>
+    <p><strong>{item.task}</strong></p>
+    <div className={styles.materialText} lang="en">{item.source.map((line,index) => <p key={index}>{line}</p>)}</div>
     <fieldset className={styles.filters} disabled={locked}><legend>Знаком ли тебе этот материал или его разбор?</legend>
       {([['unknown','Не уверен'],['unseen','Не видел раньше'],['seen','Уже видел материал или ключ']] as const).map(([value,label]) => <label key={value}><input type="radio" name="draft-writing-exposure" checked={exposure === value} onChange={() => setExposure(value)}/>{label}</label>)}
     </fieldset>
-    <p><strong>{item.task}</strong></p>
-    <div className={styles.materialText} lang="en">{item.source.map((line,index) => <p key={index}>{line}</p>)}</div>
     <label htmlFor="draft-preview-answer">Твоя первая попытка</label>
     <p>Ответ напиши на английском. Объяснение своего способа проверки можно дать на русском.</p>
     <textarea id="draft-preview-answer" maxLength={4000} rows={4} value={draft} disabled={locked} onChange={event => { setDraft(event.target.value); setFeedback(''); }}/>
@@ -81,10 +82,7 @@ function Preview({ item, next,source,onDirty,onBusy }: { item: DraftWritingDrill
     <p>Проверь путь ученика до решения о материале. {source?'Первую работу, разбор, пересмотр и следующее задание можно сохранить отдельной кнопкой ниже в этом браузере.':'Попытка временная: при закрытии страницы тексты будут потеряны.'} Она не публикует задание и не оценивает свободный текст.</p>
     <fieldset className={styles.practiceBody} disabled={bankBusy}><legend>Короткая Writing-практика</legend>
     {!started ? <button type="button" onClick={() => setStarted(true)}>{source&&isPublishedBankSource(source.ref)?'Начать задание':'Пройти черновик как ученик'}</button> : <>
-      {!done && current && <>
-        {records.length>0&&item.transfer_goal&&<div className={styles.outcome}><p><strong>Тот же приём в другом контексте:</strong> {item.transfer_goal}</p><p>Твой план перед этой пробой:</p><p className={styles.frozenText}>{records[0].reflection}</p><p>Сначала примени его самостоятельно. Новый контекст мог встречаться раньше; наличие ответа не доказывает освоение.</p></div>}
-        <Round key={`${generation}:${roundGeneration}:${current.id}`} item={current} following={records.length>0} state={roundState} setState={setRoundState} onComplete={record => {setRecords(old => [...old,record]);if(!records.length&&next)setRoundState(emptyBankWritingRound(next.id));}}/>
-      </>}
+      {!done && current && <Round key={`${generation}:${roundGeneration}:${current.id}`} item={current} following={records.length>0} guide={records.length>0&&item.transfer_goal?{goal:item.transfer_goal,plan:records[0].reflection}:undefined} state={roundState} setState={setRoundState} onComplete={record => {setRecords(old => [...old,record]);if(!records.length&&next)setRoundState(emptyBankWritingRound(next.id));}}/>}
       {done && <div className={styles.outcome}>
         <h4 ref={report} tabIndex={-1}>{source?'Отчёт пробы':'Отчёт временной пробы'}</h4>
         <p>Первый ответ, пересмотр после помощи и другое задание показаны отдельно. Это не band, не доказательство освоения и не автоматическая оценка улучшения.</p>
