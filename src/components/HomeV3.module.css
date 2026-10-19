@@ -5,6 +5,21 @@
   color: var(--ink);
 }
 
+/* Opt-in site presentation. Blog composition remains owned independently. */
+.applePage {
+  --font-display: var(--font-system);
+  --font-body: var(--font-system);
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+.applePage main :is(h1,h2,h3) { font-weight:650; }
+.applePage main h1 { letter-spacing:-.045em; overflow-wrap:break-word; }
+.applePage main :is(input,textarea,select) { font-family:inherit; }
+.applePage main :is(input,textarea,select):not([type='checkbox']):not([type='radio']) { font-size:1rem; }
+.applePage main :is(button,a,summary) { touch-action:manipulation; scroll-margin-top:160px; }
+.applePage main :is(button,a,summary):focus-visible { outline:2px solid var(--red-deep); outline-offset:4px; }
+
 .container {
   width: 100%;
   max-width: var(--container);
@@ -717,6 +732,26 @@
  .page .section { padding-block:48px; }
 }
 .paidNote { max-width:56ch; margin:16px auto 0; color:var(--ink-soft); font-size:.82rem; line-height:1.6; }
+
+/* One hero, then two complementary ways to begin learning. */
+@media(min-width:1100px) {
+ .applePage .heroGrid { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); align-items:stretch; gap:24px; }
+ .applePage .heroCopy { grid-column:1 / -1; padding-block:24px 32px; }
+ .applePage .heroResources { grid-column:auto; margin:8px 0 0; padding:32px; }
+}
+.applePage .title { max-width:1000px; }
+.applePage .heading { max-width:18em; font-size:clamp(1.75rem,3.4vw,2.65rem); line-height:1.13; }
+.applePage .directionGrid { gap:16px; margin-top:32px; }
+.applePage .sectionHead { gap:24px; }
+.applePage .sectionIntro { font-size:1rem; line-height:1.7; }
+.applePage .heroResources > p:not(:first-child) { font-size:.9375rem; }
+.applePage .allResources { font-size:.875rem; }
+@media(max-width:700px) {
+ .applePage .heroGrid { gap:20px; }
+ .applePage .heroCopy { padding-bottom:8px; }
+ .applePage .title { line-height:1.1; }
+ .applePage .directionGrid { grid-template-columns:minmax(0,1fr); gap:12px; }
+}
 @media(max-width:700px) {
  .page .hero { padding-top:20px; }
  .page .lead { margin-top:12px; }

@@ -31,3 +31,11 @@
 .root main button { border-radius:var(--r-pill); }
 .root main :is(button,a) { scroll-margin-top:160px; }
 .root main p { text-wrap:pretty; }
+
+/* A quieter work surface; status colors and checked-answer semantics stay local. */
+.root main h1 { overflow-wrap:break-word; line-height:1.12; }
+.root main :is(input,textarea,select):not([type='checkbox']):not([type='radio']):not([type='range']) { font-size:1rem; max-width:100%; }
+.root main :is(textarea,select) { border-radius:var(--r-md); }
+.root main textarea { padding:16px; }
+.root main button { line-height:1.4; }
+.root main fieldset { min-width:0; }

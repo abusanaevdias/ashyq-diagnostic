@@ -4,6 +4,9 @@
 .title { max-width:24ch; margin-top:18px; font-family:var(--font-system); font-size:clamp(1.8rem,4vw,3.2rem); font-weight:650; letter-spacing:-.04em; line-height:1.15; text-wrap:balance; }
 .ratio { display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 20px; margin-top:32px; color:var(--ink); font-family:var(--font-system); line-height:.95; }
 .ratio strong { font-size:clamp(8rem,40vw,20rem); font-weight:750; letter-spacing:-.075em; font-variant-numeric:lining-nums tabular-nums; }
+.ratio > strong { position:relative; isolation:isolate; }
+.ratio > strong::before { content:''; position:absolute; z-index:-1; inset:12% -1% 1%; border:2px solid var(--red-deep); border-radius:50%; transform:rotate(-9deg); opacity:.65; pointer-events:none; }
+.ratio > strong::after { content:''; position:absolute; z-index:-1; inset:20% 0 6%; border-radius:50%; background:var(--blush-soft); transform:rotate(-9deg); pointer-events:none; }
 .ratio > span { font-size:clamp(1.75rem,7vw,4.5rem); font-weight:650; letter-spacing:-.05em; white-space:nowrap; }
 .statement { margin-top:20px; font-size:clamp(1.75rem,5.2vw,4.2rem); font-weight:650; letter-spacing:-.04em; line-height:1.15; text-wrap:balance; }
 .statement strong { color:var(--red-deep); font-weight:750; white-space:nowrap; }
@@ -31,3 +34,11 @@
 .note { margin-top: 24px; max-width: 100ch; color: var(--ink-soft); font-size: .8125rem; line-height: 1.65; }
 @media (max-width: 700px) { .grid { grid-template-columns:1fr; } .ratio { margin-top:28px; gap:8px 14px; } .facts { gap:6px 12px; } }
 @media (max-width: 360px) { .scores { grid-template-columns: 1fr; } .card { padding: 18px; } }
+@media(prefers-reduced-motion:no-preference) {
+ .ratio > strong[data-motion-visible='true']::before { animation:cohort-ink-arrive 1100ms 180ms cubic-bezier(.16,1,.3,1) both; }
+}
+@keyframes cohort-ink-arrive { from { opacity:0; transform:rotate(-17deg) scale(.9); } to { opacity:.65; transform:rotate(-9deg) scale(1); } }
+:global(html[data-motion-background='true']) .ratio > strong::before { animation-play-state:paused; }
+:global(html[data-motion-paused='true']) .ratio > strong::before { animation:none; }
+@media(prefers-reduced-motion:reduce) { .ratio > strong::before { animation:none; } }
+@media print { .ratio > strong::before,.ratio > strong::after { display:none; } }

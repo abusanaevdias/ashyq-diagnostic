@@ -5,7 +5,7 @@
   border-bottom: 1px solid var(--hairline);
   background: var(--bg);
 }
-.studyNav .navLinks, .studyNav .freeMobileLink { display:none; }
+.studyNav .freeMobileLink { display:none; }
 .studyNav { background:var(--bg); }
 
 .nav {
@@ -526,3 +526,39 @@
   .navWrap .mobilePanel, .menuSearch { border-color:var(--ink); }
   .menuLink[aria-current='page'] { outline:1px solid currentColor; outline-offset:-1px; }
 }
+
+/* Shared Apple presentation, including routes with older content layouts. */
+.navWrap, .footer { font-family:var(--font-system); }
+.nav { min-height:76px; gap:16px; }
+.navLinks { gap:4px; }
+.navLink { min-height:44px; padding-inline:14px; border-radius:var(--r-pill); font-size:.875rem; white-space:nowrap; }
+.navLink:hover { background:var(--hairline); }
+.navLink[aria-current='page'] { background:var(--surface); color:var(--ink); box-shadow:var(--shadow-card); font-weight:650; }
+.mobileMenuTrigger { background:var(--surface); border:1px solid var(--hairline); padding-inline:16px; }
+.navWrap .mobilePanel { border-radius:var(--r-xxl); padding:28px; }
+.menuTitle { font-size:1.75rem; letter-spacing:-.035em; }
+.menuSearch { border-radius:var(--r-md); }
+.menuGroup h2 { font-size:.8125rem; }
+.menuLink { padding:12px; }
+.direction { border-radius:var(--r-xxl); padding:28px; box-shadow:none; }
+.directionTitle { font-weight:650; font-size:1.4rem; letter-spacing:-.035em; }
+.directionText { font-size:.9375rem; line-height:1.65; }
+.directionFooter { padding-top:28px; }
+.iconChip { background:var(--blush-soft); color:var(--red-deep); border-radius:var(--r-sm); }
+.chip { min-height:44px; padding-inline:18px; }
+.footer { background:var(--bg); }
+.footerInner { padding-block:64px 28px; }
+.footerTitle { font-size:.75rem; letter-spacing:.06em; color:var(--ink); }
+.footerTagline { font-size:.9375rem; line-height:1.65; }
+.footerLink { font-size:.875rem; }
+.footerBottom { font-size:.75rem; letter-spacing:0; text-transform:none; }
+.buttonRed, .buttonBlack, .buttonOutline { line-height:1.4; text-align:center; }
+@media(max-width:1180px) { .navLink { padding-inline:10px; } }
+@media(max-width:1024px) { .nav { min-height:64px; } .navLinks { display:none; } }
+@media(max-width:700px) {
+ .navWrap .mobilePanel { padding:22px 16px max(22px,env(safe-area-inset-bottom)); }
+ .direction { padding:24px; min-height:240px; }
+ .directionTitle { margin-top:18px; }
+ .footerInner { padding-top:40px; }
+}
+@media(max-width:560px) { .mobileMenuTrigger { padding-inline:10px; } }

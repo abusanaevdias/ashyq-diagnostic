@@ -11,4 +11,11 @@
 .card { padding: 24px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: var(--surface); }
 .card h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; }
 .card p { margin-top: 12px; color: var(--ink-soft); line-height: 1.65; }
+.hero { padding-block:72px 32px; }
+.title { max-width:20ch; font-weight:650; letter-spacing:-.045em; }
+.destinations { display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; list-style:none; }
+.destinations li { padding:8px 16px; border:1px solid var(--hairline); border-radius:var(--r-pill); background:var(--surface); font-size:.875rem; }
+.priceCard { border-radius:var(--r-xxl); padding:32px; margin-top:40px; }
+.price { font-weight:650; letter-spacing:-.035em; }
+.card { border-radius:var(--r-xxl); padding:28px; }
 @media (max-width: 640px) { .priceCard, .grid { grid-template-columns: 1fr; } .priceCard { padding: 22px; } .hero { padding-top: 40px; } }

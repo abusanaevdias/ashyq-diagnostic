@@ -13,7 +13,7 @@
 .sectionHeading h2 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; }
 .sectionHeading > p { max-width: 380px; margin: 0; color: var(--ink-soft); line-height: 1.55; }
 .steps { display: grid; gap: 18px; }
-.step { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); min-width: 0; overflow: hidden; border: 1px solid var(--hairline); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-card); }
+.step { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); min-width: 0; overflow: hidden; border: 1px solid var(--hairline); border-radius: var(--r-xxl); background: var(--surface); }
 .illustration { display: flex; flex-direction: column; justify-content: center; gap: 12px; min-width: 0; padding: 24px; border-right: 1px solid var(--hairline); background: var(--bg); }
 .illustrationLabel { color: var(--ink-soft); font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 .illustrationCard { min-width: 0; padding: 24px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: var(--surface); box-shadow: var(--shadow-card); }

@@ -43,7 +43,7 @@ export default async function CareerProfilePage({ params }: { params: Promise<{ 
   if (!profile) notFound();
 
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${home.applePage}`}>
       <SiteHeader />
       <CareerResultView profile={profile} matches={matchProfessions(profile.code)} variant="profile" />
       <SiteFooter />

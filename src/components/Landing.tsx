@@ -14,6 +14,7 @@ import CohortResults from './CohortResults';
 import StudyDesign from './ui/StudyDesign';
 import HomeLearningPreview from './HomeLearningPreview';
 import MotionToggle from './ui/MotionToggle';
+import LearningPathAccent from './ui/LearningPathAccent';
 
 type ValueStyle = CSSProperties & { '--value': string };
 
@@ -48,7 +49,7 @@ function HeroArrow() {
 
 export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunState | null>; onSelect: (exam: ExamId) => void }) {
   return (
-    <StudyDesign><div className={styles.page}>
+    <StudyDesign><div className={`${styles.page} ${styles.applePage}`}>
       <NavBar study onStart={() => onSelect('ielts')} />
 
       <main>
@@ -90,13 +91,14 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
               <FreeStarters compact />
               <Link className={styles.allResources} href="/library">Все материалы: Listening, грамматика, SAT и 42 раздела IELTS <HeroArrow /></Link>
             </aside>
+            <LearningPathAccent />
           </div>
         </section>
 
         <Reveal>
           <section id="directions" className={`${styles.container} ${styles.section}`}>
             <div className={styles.sectionHead}>
-              <div><MicroLabel>Четыре точки входа</MicroLabel><h2 className={styles.heading}>Выберите свой следующий шаг</h2></div>
+              <div><MicroLabel>Четыре точки входа</MicroLabel><h2 className={styles.heading}>Выберите свой <span data-motion-accent="heading" data-motion-ambient="accent">следующий шаг</span></h2></div>
               <p className={styles.sectionIntro}>Можно сразу проверить уровень, а можно начать с вопроса «куда я вообще иду». В каждом направлении остаётся понятный следующий шаг.</p>
             </div>
             <div className={styles.directionGrid}>

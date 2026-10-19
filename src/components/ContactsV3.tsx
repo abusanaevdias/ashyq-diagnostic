@@ -16,7 +16,7 @@ import { AiBadge } from './AiBadge';
  */
 export default function ContactsV3() {
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${home.applePage}`}>
       <NavBar />
 
       <main>

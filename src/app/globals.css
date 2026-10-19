@@ -435,6 +435,9 @@
      формы v3 поверх v2-классов (V3-QUIZ-SCREENS-001).
      В @layer components намеренно: tailwind-утилиты по-прежнему главнее. */
   .v3 {
+    --font-display: var(--font-system);
+    --font-body: var(--font-system);
+    font-family: var(--font-body);
     --lh-display: 1.05;
     --lh-heading: 1.15;
     --fs-display: clamp(2.6rem, 6vw, 4.6rem);
@@ -443,19 +446,19 @@
   }
 
   .v3 .display {
-    font-weight: 800;
+    font-weight: 650;
     line-height: 1.1;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.04em;
     text-transform: none;
   }
 
   .v3 .serif {
-    font-weight: 800;
+    font-weight: 650;
     letter-spacing: -0.02em;
   }
 
   .v3 .label {
-    letter-spacing: 0.14em;
+    letter-spacing: 0.08em;
   }
 
   .v3 .btn,
@@ -470,7 +473,7 @@
 
   .v3 .card-ink {
     border-color: var(--hairline);
-    border-radius: var(--r-lg);
+    border-radius: var(--r-xxl);
     background: var(--surface);
   }
 

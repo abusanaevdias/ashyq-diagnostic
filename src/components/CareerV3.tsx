@@ -183,7 +183,7 @@ export default function CareerV3() {
     const percent = Math.round((index / CAREER_STATEMENT_COUNT) * 100);
 
     return (
-      <div className={home.page}>
+      <div className={`${home.page} ${home.applePage}`}>
         <NavBar />
         <main className={`${home.container} ${styles.testWrap}`}>
           <div className={styles.testHead}>
@@ -238,7 +238,7 @@ export default function CareerV3() {
 
   if (stage === 'result' && profile && matches) {
     return (
-      <div className={home.page}>
+      <div className={`${home.page} ${home.applePage}`}>
         <NavBar />
         <CareerResultView profile={profile} matches={matches} result={result} variant="own" onRestart={start} />
         <Footer />
@@ -249,7 +249,7 @@ export default function CareerV3() {
   /* ───────────────────────── интро ───────────────────────── */
 
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${home.applePage}`}>
       <NavBar />
       <main>
         <section className={`${home.container} ${home.hero}`}>

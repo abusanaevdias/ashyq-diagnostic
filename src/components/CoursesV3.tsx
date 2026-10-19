@@ -72,7 +72,7 @@ export default function CoursesV3() {
   const diagnosticHref =
     filter === 'all' ? '/diagnostic' : COURSE_DETAILS[filter].diagnosticHref;
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${home.applePage}`}>
       <NavBar diagnosticHref={diagnosticHref} />
       <main>
         <section className={`${home.container} ${styles.hero}`}>

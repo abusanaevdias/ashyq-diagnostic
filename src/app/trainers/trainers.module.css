@@ -1,4 +1,4 @@
-.page { max-width: 1220px; margin: 0 auto; padding: 64px 32px 100px; color: var(--ink); }
+.page { max-width: var(--container); margin: 0 auto; padding: 64px var(--pad) 100px; color: var(--ink); }
 .eyebrow { margin: 0 0 16px; color: var(--red-deep); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
 .page h1 { max-width: 900px; margin: 0; font: 650 clamp(2.5rem, 5vw, 4.2rem)/1.08 var(--font-display); letter-spacing: -.05em; }
 .intro { max-width: 770px; margin: 22px 0 42px; color: var(--ink-soft); font-size: 1.1rem; line-height: 1.65; }
@@ -12,8 +12,19 @@
 .card a span { font-size:1.3rem; }
 .controls { display:flex; justify-content:space-between; flex-wrap:wrap; align-items:center; gap:16px; margin:32px 0 24px; }
 .controls p { font-size:.82rem; color:var(--ink-soft); }
-.art { display:flex; align-items:center; min-height:112px; margin-top:12px; font:550 clamp(1.6rem,3vw,2.8rem)/1.2 var(--font-display); letter-spacing:-.045em; color:var(--red-deep); overflow-wrap:anywhere; }
+.art { display:flex; align-items:center; min-height:112px; margin-top:20px; padding:20px; border-radius:var(--r-lg); background:var(--bg); font:550 clamp(1.6rem,3vw,2.8rem)/1.2 var(--font-display); letter-spacing:-.045em; color:var(--red-deep); overflow-wrap:anywhere; }
 .note { margin: 26px 0 0; color: var(--ink-soft); font-size: 14px; line-height: 1.55; }
+.art { position:relative; isolation:isolate; overflow:hidden; }
+.art::after { content:''; position:absolute; z-index:-1; width:100px; height:100px; right:-22px; bottom:-48px; border:1px solid currentColor; border-radius:50%; opacity:.18; pointer-events:none; }
+.card[data-trainer-exam='IELTS'] .art { background:var(--blush-soft); }
+.card[data-trainer-exam='SAT'] .art { background:var(--ink); color:var(--on-dark); }
+@media(prefers-reduced-motion:no-preference) {
+ .art[data-motion-visible='true']::after { animation:catalog-orbit 12s ease-in-out infinite; }
+}
+@keyframes catalog-orbit { 0%,100% { transform:translate(0,0); } 50% { transform:translate(-10px,-8px); } }
+:global(html[data-motion-background='true']) .art::after { animation-play-state:paused; }
+:global(html[data-motion-paused='true']) .art::after { animation:none; }
+@media(prefers-reduced-motion:reduce), print { .art::after { animation:none; } }
 .page a:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .page { padding: 60px 16px 72px; } .grid { grid-template-columns: 1fr; } .card { min-height: 250px; padding: 24px; } }

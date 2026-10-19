@@ -20,10 +20,11 @@ const SUPPORT = [
 ];
 
 export default function MentoringPage() {
-  return <div className={`v3 ${home.page}`}><NavBar /><main>
+  return <div className={`v3 ${home.page} ${home.applePage}`}><NavBar /><main>
     <section className={`${home.container} ${styles.hero}`}>
       <MicroLabel>ASHYQ · менторство по поступлению</MicroLabel>
       <h1 className={styles.title}>Помогаем поступать<br />за рубеж.</h1>
+      <ul className={styles.destinations} aria-label="Направления поступления"><li>Европа</li><li>США</li><li>ОАЭ</li><li>Другие страны</li></ul>
       <p className={styles.lead}>{CLUB_OFFER.mentoring.description} Подбираем университеты, помогаем с документами и сопровождаем подачу.</p>
       <div className={styles.priceCard}>
         <div><p className={styles.eyebrow}>Индивидуальное сопровождение</p><p className={styles.price}>Ваш план поступления</p><p className={styles.previous}>{CLUB_OFFER.mentoring.pricing}</p></div>
