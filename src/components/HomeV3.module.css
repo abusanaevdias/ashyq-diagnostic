@@ -733,6 +733,14 @@
 }
 .paidNote { max-width:56ch; margin:16px auto 0; color:var(--ink-soft); font-size:.82rem; line-height:1.6; }
 
+.titleBrand,.titleSubject { display:block; }
+.heroResult { display:flex; align-items:center; flex-wrap:wrap; gap:6px 12px; width:fit-content; max-width:100%; min-height:44px; margin-top:16px; padding:8px 14px; border:1px solid var(--hairline); border-radius:var(--r-pill); background:var(--surface); color:var(--ink); font-size:.8125rem; }
+.heroResult strong { font-weight:700; color:var(--red-deep); }
+.heroResult > span { color:var(--ink-soft); }
+.heroResult svg { flex-shrink:0; }
+.heroSummary { grid-column:1 / -1; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:24px; padding-top:28px; border-top:1px solid var(--hairline); overflow-wrap:anywhere; }
+.heroSummary > p { color:var(--ink-soft); font-size:.875rem; line-height:1.65; }
+
 /* One hero, then two complementary ways to begin learning. */
 @media(min-width:1100px) {
  .applePage .heroGrid { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); align-items:stretch; gap:24px; }
@@ -756,4 +764,51 @@
  .page .hero { padding-top:20px; }
  .page .lead { margin-top:12px; }
  .page .entryChoices { margin-top:20px; }
+}
+
+/* HERO-CONTRAST-048: a distinct first fold, scoped to the home route only. */
+.homePage .hero { padding-block:40px; }
+.homePage .heroGrid { gap:28px; }
+.homePage .heroCopy { text-align:left; padding:8px 0; }
+.homePage .title { margin:18px 0 0; line-height:1.04; letter-spacing:-.055em; }
+.homePage .titleBrand { width:fit-content; color:var(--red-deep); font-size:clamp(3.8rem,7vw,6.4rem); font-weight:750; }
+.homePage .titleSubject { margin-top:8px; font-size:clamp(2.6rem,4.4vw,4.3rem); }
+.homePage .titleAccent { margin-top:14px; color:var(--ink-soft); font-size:clamp(1.4rem,2.2vw,1.9rem); line-height:1.2; letter-spacing:-.035em; }
+.homePage .lead { margin:20px 0 0; max-width:48ch; font-size:1rem; line-height:1.65; }
+.homePage .entryChoices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); justify-content:start; gap:10px; margin-top:24px; }
+.homePage .entryChoices a { min-width:0; padding:14px 16px; border-radius:var(--r-xl); }
+.homePage .entryChoices strong { min-width:0; font-size:.875rem; line-height:1.4; }
+.homePage .entryChoices strong svg { flex-shrink:0; }
+.homePage .entryChoices span { font-size:.75rem; line-height:1.5; }
+.homePage .actions { display:flex; justify-content:start; gap:20px; margin-top:12px; }
+.homePage .heroCopy :is(.heroButtonRed,.heroButtonOutline) { min-height:44px; padding:8px 0; border:0; border-bottom:1px solid var(--hairline); border-radius:0; background:transparent; color:var(--ink); box-shadow:none; font-size:.8125rem; }
+.homePage .continue { text-align:left; max-width:24ch; }
+.homePage .diagnosticNote { margin-top:12px; font-size:.75rem; }
+.homePage .paidNote { margin:10px 0 0; font-size:.75rem; }
+.homePage .heroSummary .statsWrap { margin:0; flex:1 1 400px; max-width:650px; }
+.homePage .heroResources { margin:0; padding:28px; }
+.homePage .heroGrid > [data-motion-ambient='learning-path'] { grid-column:auto; max-width:none; margin:0; }
+@media(min-width:1100px) {
+ .homePage .heroGrid { grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); align-items:start; }
+ .homePage .heroCopy { grid-column:1; grid-row:1; }
+ .homePage .heroGrid > [data-home-preview] { grid-column:2; grid-row:1; align-self:stretch; }
+ .homePage .heroResources { grid-column:1; grid-row:2; }
+ .homePage .heroGrid > [data-motion-ambient='learning-path'] { grid-column:2; grid-row:2; }
+ .homePage .heroSummary { grid-row:3; }
+}
+@media(max-width:700px) {
+ .homePage .hero { padding-top:24px; }
+ .homePage .heroCopy { padding:0; }
+ .homePage .title { margin-top:16px; }
+ .homePage .titleBrand { font-size:clamp(3.6rem,16vw,5rem); }
+ .homePage .titleSubject { margin-top:6px; font-size:clamp(2.25rem,10vw,3.1rem); }
+ .homePage .titleAccent { margin-top:10px; font-size:1.4rem; }
+ .homePage .lead { margin-top:16px; }
+ .homePage .entryChoices { margin-top:20px; }
+ .homePage .entryChoices a { padding:12px; }
+ .homePage .entryChoices strong { font-size:.8125rem; }
+ .homePage .heroResult { padding-inline:12px; font-size:.75rem; gap:5px 8px; }
+ .homePage .heroSummary { gap:20px; }
+ .homePage .heroSummary .statsWrap { flex-basis:auto; width:100%; }
+ .homePage .heroResources { padding:24px 20px; }
 }

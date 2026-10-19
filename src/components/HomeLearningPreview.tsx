@@ -5,7 +5,7 @@ import styles from './HomeLearningPreview.module.css';
 
 export default function HomeLearningPreview(){
  const [revealed,setRevealed]=useState(false);
- return <section className={styles.preview} aria-label="Учебный пример работы тренажёра">
+ return <section className={styles.preview} aria-label="Учебный пример работы тренажёра" data-home-preview>
   <span data-motion-outline data-motion-ambient="outline" aria-hidden="true"><svg width="100%" height="100%" focusable="false"><rect width="100%" height="100%" rx="28" pathLength="1" /></svg></span>
   <header data-motion-piece="heading" data-motion-ambient="piece"><strong>Сначала своя попытка. Затем понятный разбор.</strong><span>Короткий учебный пример</span></header>
   <div className={styles.grid}>
