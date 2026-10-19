@@ -497,7 +497,7 @@ async function main() {
   check('enrolment: выбранные дни, группа и двухчасовой слот в заявке', prepared.includes('Понедельник, Суббота') && prepared.includes('Группа 08 (21:00–23:00)') && prepared.includes('не бронирует место'));
   check('enrolment: WhatsApp GET без автоматической отправки и оплаты', (await planner.getAttribute('method')) === 'get' && (await planner.getAttribute('action'))?.startsWith('https://wa.me/') === true);
   const cohort = p3.locator('section[aria-labelledby="cohort-results-title"]');
-  check('cohort: четыре профиля вместо дублирования скриншота', (await cohort.locator('article').count()) === 4 && has(await cohort.innerText(), '112') && has(await cohort.innerText(), 'Средний балл — по данным ASHYQ') && has(await cohort.innerText(), 'не подтверждают среднее'));
+  check('cohort: четыре профиля вместо дублирования скриншота', (await cohort.locator('article').count()) === 4 && has(await cohort.innerText(), '112') && has(await cohort.innerText(), 'Рекордный 3-й поток') && has(await cohort.innerText(), '89') && has(await cohort.innerText(), 'Сдали IELTS на 7.0+'));
   await cohort.getByText('Посмотреть скриншот результата', { exact: true }).first().click();
   await cohort.locator('img').first().evaluate((image: HTMLImageElement) => image.decode());
   check('cohort: доказательство раскрывается и изображение загружается', await cohort.locator('details').first().getAttribute('open') !== null && await cohort.locator('img').first().evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0));
