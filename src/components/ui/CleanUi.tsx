@@ -6,6 +6,7 @@ import { SOCIAL_LINKS } from '@/lib/site';
 import styles from './CleanUi.module.css';
 import { MobileNavMenu } from './MobileNavMenu';
 import StudyNavigation from './StudyNavigation';
+import SiteMenuLinks from './SiteMenuLinks';
 
 type IconName = 'book' | 'chart' | 'chat' | 'compass' | 'lock' | 'mail' | 'pin' | 'search' | 'send' | 'spark' | 'target';
 
@@ -57,23 +58,17 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic', study=false }:
         </Link>
         {study&&<StudyNavigation/>}
         <div className={styles.navLinks}>
-          <Link className={`${styles.navLink} ${styles.freeNavLink}`} href="/library">Бесплатная библиотека</Link>
           <Link className={styles.navLink} href="/courses">Курсы</Link>
-          <Link className={styles.navLink} href="/season">Чемпионат</Link>
-          <Link className={styles.navLink} href="/about">О нас</Link>{BLOG_IS_DEMO ? null : <Link className={styles.navLink} href="/blog">Блог</Link>}
-          <Link className={styles.navLink} href="/contacts">Контакты</Link>
+          <Link className={styles.navLink} href="/mentoring">Менторство</Link>
+          <Link className={styles.navLink} href="/trainers">Тренажёры</Link>
+          <Link className={`${styles.navLink} ${styles.freeNavLink}`} href="/library">Библиотека</Link>
         </div>
         <MobileNavMenu>
-            <Link className={styles.navLink} href="/library">Бесплатная библиотека</Link>
-            <Link className={styles.navLink} href="/courses">Курсы</Link>
-            <Link className={styles.navLink} href="/season">Чемпионат</Link>
-            <Link className={styles.navLink} href="/program">Программа</Link>
-            <Link className={styles.navLink} href="/about">О нас</Link>{BLOG_IS_DEMO ? null : <Link className={styles.navLink} href="/blog">Блог</Link>}
-            <Link className={styles.navLink} href="/community">Сообщество</Link>
-            <Link className={styles.navLink} href="/faq">FAQ</Link>
-            <Link className={styles.navLink} href="/search">Поиск</Link>
-            <Link className={styles.navLink} href="/contacts">Контакты</Link>
-            <NavAccount variant="panel" />
+            <SiteMenuLinks />
+            <div className={styles.menuBottom}>
+              <div className={styles.menuAccount}><span className={styles.menuCaption}>Личный кабинет</span><NavAccount variant="panel" /></div>
+              <div className={styles.menuLegal}><Link href="/privacy">Конфиденциальность</Link><Link href="/terms">Условия</Link></div>
+            </div>
         </MobileNavMenu>
         <Link className={styles.searchLink} href="/search" aria-label="Открыть поиск по сайту">
           <LineIcon name="search" />

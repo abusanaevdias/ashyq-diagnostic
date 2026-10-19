@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { getAuth } from '@/lib/lms/auth';
 import { useSession } from '@/lib/lms/hooks';
-import { roleLinks } from '@/lib/lms/permissions';
+import { can, roleLinks } from '@/lib/lms/permissions';
 import ui from '@/components/ui/CleanUi.module.css';
 import { Avatar, RoleBadge } from './Identity';
 import styles from './Lms.module.css';
@@ -31,7 +31,17 @@ export default function NavAccount({ variant }: { variant: 'bar' | 'panel' }) {
   }
 
   const { user } = session;
-  const links = [{ href: '/me', label: 'Кабинет' }, ...roleLinks(user.role)];
+  const links = [{ href: '/me', label: 'Кабинет' }, ...roleLinks(user.role),
+    ...(can(user.role, 'content.create') ? [
+      { href: '/writing/trainer/own', label: 'Работа со своим эссе' },
+      { href: '/trainers/material-review', label: 'Проверка материалов' },
+      { href: '/writing/calibration', label: 'Ориентиры Writing' },
+    ] : []),
+    ...(user.crm ? [
+      { href: '/crm', label: 'CRM: заявки' },
+      { href: '/me/roles', label: 'Управление ролями' },
+    ] : []),
+  ];
 
   if (variant === 'panel') {
     return (

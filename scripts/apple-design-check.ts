@@ -51,7 +51,7 @@ async function main(){
    }
   }
   // The menu still gives access to the remaining public pages and login on small screens.
-  await page.goto(base+'/trainers');await page.setViewportSize({width:390,height:844});const menu=page.getByLabel('Открыть меню',{exact:true});await menu.click();await page.getByRole('navigation',{name:'Основная навигация',exact:true}).getByRole('link',{name:'Курсы',exact:true}).filter({visible:true}).waitFor();await page.keyboard.press('Escape');assert.equal(await menu.evaluate(node=>node===document.activeElement),true);
+  await page.goto(base+'/trainers');await page.setViewportSize({width:390,height:844});const menu=page.getByLabel('Открыть меню',{exact:true});await menu.click();await page.getByRole('navigation',{name:'Основная навигация',exact:true}).getByRole('link',{name:'Все курсы',exact:true}).filter({visible:true}).waitFor();await page.keyboard.press('Escape');assert.equal(await menu.evaluate(node=>node===document.activeElement),true);
   await page.addStyleTag({content:'html {font-size:200% !important}'});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'200% text does not overflow');
   await page.emulateMedia({contrast:'more'});assert.deepEqual((await new AxeBuilder({page}).include('main').analyze()).violations.map(v=>v.id),[],'high contrast and200% text');
   assert.ok(await page.getByRole('group',{name:'Фильтр по экзамену',exact:true}).evaluate(group=>{const selected=group.querySelector('[aria-pressed="true"]')!.getBoundingClientRect(),pill=group.querySelector('span[aria-hidden]')!.getBoundingClientRect();return Math.abs(selected.left-pill.left)<1&&Math.abs(selected.width-pill.width)<1;}),'high contrast border preserves indicator alignment');
