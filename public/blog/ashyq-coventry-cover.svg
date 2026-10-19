@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">ASHYQ сотрудничает с Coventry University Kazakhstan</title>
+  <desc id="desc">Текстовая обложка новости ASHYQ. Без фотографии кампуса и логотипа университета.</desc>
+  <rect width="1200" height="630" fill="#f8f7f3"/>
+  <rect x="56" y="56" width="1088" height="518" rx="28" fill="#ffffff" stroke="#dedbd5"/>
+  <text x="104" y="142" font-family="Arial,sans-serif" font-size="50" font-weight="700" fill="#c42b2b">ASHYQ</text>
+  <text x="1096" y="137" text-anchor="end" font-family="Arial,sans-serif" font-size="23" fill="#5f5b56">НОВОСТИ КОМАНДЫ</text>
+  <path d="M104 185H1096" stroke="#dedbd5" stroke-width="2"/>
+  <text x="104" y="265" font-family="Arial,sans-serif" font-size="30" fill="#5f5b56">Сотрудничество с</text>
+  <text x="104" y="347" font-family="Arial,sans-serif" font-size="66" font-weight="700" fill="#282522">Coventry University</text>
+  <text x="104" y="426" font-family="Arial,sans-serif" font-size="66" font-weight="700" fill="#282522">Kazakhstan</text>
+  <path d="M104 474H1096" stroke="#dedbd5" stroke-width="2"/>
+  <text x="104" y="532" font-family="Arial,sans-serif" font-size="26" fill="#5f5b56">Подготовка к IELTS и образовательные цели</text>
+</svg>
