@@ -46,7 +46,7 @@ export function MicroLabel({ children }: { children: React.ReactNode }) {
 
 export function ButtonLink({ href, children, tone = 'red', ariaLabel }: { href: string; children: React.ReactNode; tone?: 'red' | 'black' | 'outline'; ariaLabel?: string }) {
   const className = tone === 'black' ? styles.buttonBlack : tone === 'outline' ? styles.buttonOutline : styles.buttonRed;
-  return <Link href={href} className={className} aria-label={ariaLabel}>{children}<ArrowIcon /></Link>;
+  return <Link href={href} className={className} aria-label={ariaLabel} data-motion-press>{children}<ArrowIcon /></Link>;
 }
 
 export function NavBar({ onStart, diagnosticHref = '/diagnostic', study=false }: { onStart?: () => void; diagnosticHref?: string; study?:boolean }) {
@@ -75,7 +75,7 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic', study=false }:
         </Link>
         {study?<div className={styles.studyAccount}><NavAccount variant="bar" /></div>:<NavAccount variant="bar" />}
         {onStart ? (
-          <button type="button" className={styles.buttonRed} onClick={onStart}>Диагностика<ArrowIcon /></button>
+          <button type="button" className={styles.buttonRed} onClick={onStart} data-motion-press>Диагностика<ArrowIcon /></button>
         ) : (
           <ButtonLink href={diagnosticHref}>Диагностика</ButtonLink>
         )}
@@ -100,7 +100,7 @@ export function IconChip({ name, solid = false }: { name: IconName; solid?: bool
 
 export function DirectionCard({ href, icon, eyebrow, title, children }: { href: string; icon: IconName; eyebrow: string; title: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className={styles.direction}>
+    <Link href={href} className={styles.direction} data-motion-card>
       <IconChip name={icon} />
       <h3 className={styles.directionTitle}>{title}</h3>
       <p className={styles.directionText}>{children}</p>

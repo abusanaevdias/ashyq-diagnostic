@@ -1,25 +1,2 @@
-/* Контент виден по умолчанию (SSR, без JS, медленная гидрация — пустых зон нет).
-   Скрывается только элемент ниже первого экрана — и только после гидрации,
-   когда JS успевает пометить его data-pending до попадания в поле зрения. */
-
-.reveal[data-pending] {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.reveal[data-visible='true'] {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 260ms cubic-bezier(0.2, 0.7, 0.2, 1), transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal[data-pending] {
-    opacity: 1;
-    transform: none;
-  }
-
-  .reveal[data-visible='true'] {
-    transition: none;
-  }
-}
+/* SiteMotion progressively animates these sections; the base content stays visible. */
+.reveal { min-width: 0; }
