@@ -102,6 +102,8 @@ ASHYQ — образовательный клуб Казахстана: подг
 - IELTS и SAT считаются раздельно;
 - начало и квалификация онлайн, финал офлайн в Астане.
 
+| SEO-COVENTRY-050 | IN_PROGRESS | Codex /root (Dias Windows SEO) | codex/seo-coventry-050; C:/Users/Dias/Documents/ChatGPT/ashyq-coventry-050 | started 2026-10-20; publish owner-authorized ASHYQ cooperation news about Coventry University Kazakhstan. Own new article data/cover/research note and minimal blog registry registration only. Verify admissions facts with official Kazakhstan sources; cooperation fact is owner-supplied, no invented exclusive info, benefits, endorsements, guarantees or photos. Preserve shared blog UI, homepage/offers/navigation, trainer and GSC owners. |
+
 ## 4. Реестр выполненной работы
 
 | Task | Status | Owner | Branch / worktree | Scope |
