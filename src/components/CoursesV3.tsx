@@ -18,7 +18,7 @@ import home from './HomeV3.module.css';
 import styles from './CoursesV3.module.css';
 import { AiBadge } from './AiBadge';
 import EnrollmentPlanner from './EnrollmentPlanner';
-import { CLUB_OFFER } from '@/data/club-offer';
+import { CLUB_OFFER, formatTenge } from '@/data/club-offer';
 import ClubOffer from './ClubOffer';
 import CohortResults from './CohortResults';
 
@@ -129,7 +129,7 @@ export default function CoursesV3() {
         >
           <div className={home.sectionHead}>
             <div>
-              <MicroLabel>Два направления</MicroLabel>
+              <MicroLabel>Курсы и сопровождение</MicroLabel>
               <h2 id="programs-title" className={home.heading}>
                 Выберите онлайн-курс: IELTS или Digital SAT
               </h2>
@@ -156,7 +156,7 @@ export default function CoursesV3() {
           </div>
           <p className={styles.resultCount} role="status" aria-live="polite">
             {visible.length === 2
-              ? 'Два направления подготовки'
+              ? 'Четыре услуги: IELTS, SAT, менторство и «Всё включено»'
               : `Направление: ${filter === 'ielts' ? 'IELTS' : 'Digital SAT'}`}
           </p>
           <div className={styles.grid}>
@@ -208,6 +208,10 @@ export default function CoursesV3() {
                 </article>
               );
             })}
+            {filter === 'all' ? <>
+              <article className={styles.card} data-motion-reveal data-motion-card><div className={styles.cardBody}><MicroLabel>03 · Менторство</MicroLabel><h3 className={styles.cardTitle}>Поступление за рубеж</h3><p className={styles.cardText}>Выбор вузов, документы и сопровождение подачи. Европа, США, ОАЭ и другие страны. Стоимость согласуем на встрече.</p><div className={styles.cardFooter}><ButtonLink href="/mentoring" tone="outline">О менторстве</ButtonLink></div></div></article>
+              <article className={styles.card} data-motion-reveal data-motion-card><div className={styles.cardBody}><MicroLabel>04 · Всё включено</MicroLabel><h3 className={styles.cardTitle}>IELTS + SAT + менторство</h3><p className={styles.cardText}>Подготовка к двум экзаменам, приоритетная помощь тренеров и сопровождение до начала учёбы в университете.</p><p className={styles.cardText}>Было <s>{formatTenge(CLUB_OFFER.allInclusive.previous)}</s> · Теперь <strong>{formatTenge(CLUB_OFFER.allInclusive.current)}</strong></p><div className={styles.cardFooter}><ButtonLink href="/all-inclusive">Состав пакета</ButtonLink></div></div></article>
+            </> : null}
           </div>
           <p className={styles.conditions}>Работаем Пн–Сб, {CLUB_OFFER.workingHours} по Астане. Выберите вариант группы ниже — команда подтвердит уровень и полные условия.</p>
           <p className={styles.conditions}>Нужна стратегия поступления и помощь с документами? <Link href="/mentoring">Менторство ASHYQ →</Link></p>

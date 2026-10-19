@@ -12,4 +12,11 @@
 .description { margin-block: 20px; color: var(--ink-soft); line-height: 1.65; }
 .note, .source { margin-top: 18px; color: var(--ink-soft); font-size: .8125rem; line-height: 1.65; }
 .source { max-width: 95ch; }
+.bundle { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; background: var(--blush-soft); border-color: var(--red-deep); scroll-margin-top: 180px; }
+.bundle h3 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.035em; }
+.bundleSubtitle { margin-top: 12px; font-weight: 600; font-size: 1.125rem; }
+.bundleActions { margin-top: 24px; }
+.benefits { display: grid; gap: 14px; padding-left: 22px; line-height: 1.5; }
+.benefits li::marker { color: var(--red-deep); }
+@media (max-width: 700px) { .bundle { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
 @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } .card { padding: 22px; } }

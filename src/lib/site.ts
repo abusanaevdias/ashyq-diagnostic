@@ -29,6 +29,7 @@ export const SITE_ROUTES = [
   '/press',
   '/contacts',
   '/mentoring',
+  '/all-inclusive',
   '/library',
   '/diagnostic',
   '/blog',
