@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { BLOG_CATEGORIES, BLOG_IS_DEMO, type BlogCategory } from '@/data/blog';
-import { formatDay, postCover } from '@/lib/lms/format';
+import { postCover } from '@/lib/lms/format';
 import { useLmsData } from '@/lib/lms/hooks';
 import { getRepos } from '@/lib/lms/repos';
 import type { BlogPost, User } from '@/lib/lms/types';
@@ -84,7 +84,11 @@ export default function BlogPostView({ slug, language = 'ru', initialData }: { s
 }
 
 function formatArticleDay(iso: string, language: 'en' | 'ru'): string {
-  return language === 'en'
-    ? new Intl.DateTimeFormat('en', { day: 'numeric', month: 'short' }).format(new Date(iso))
-    : formatDay(iso);
+  // Publication dates follow the Kazakhstan editorial calendar on both the
+  // server and the reader's device, including releases around UTC midnight.
+  return new Intl.DateTimeFormat(language === 'en' ? 'en' : 'ru-KZ', {
+    day: 'numeric',
+    month: 'short',
+    timeZone: 'Asia/Almaty',
+  }).format(new Date(iso));
 }

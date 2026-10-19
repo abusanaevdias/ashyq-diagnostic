@@ -7,6 +7,7 @@
 import { IELTS_OVERALL_SCORE_POST } from './ielts-overall-score-post';
 import { IELTS_SELF_STUDY_POST } from './ielts-self-study-post';
 import { ASHYQ_BLUESCREEN_POST } from './ashyq-bluescreen-post';
+import { ASHYQ_COVENTRY_POST } from './ashyq-coventry-post';
 
 export type BlogCategory = 'ielts' | 'sat' | 'season' | 'news';
 
@@ -36,6 +37,7 @@ export type BlogPost = {
 export const BLOG_IS_DEMO = false;
 
 export const BLOG_POSTS: BlogPost[] = [
+  ASHYQ_COVENTRY_POST,
   ASHYQ_BLUESCREEN_POST,
   IELTS_SELF_STUDY_POST,
   IELTS_OVERALL_SCORE_POST,
