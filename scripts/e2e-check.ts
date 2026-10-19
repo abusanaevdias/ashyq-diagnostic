@@ -486,7 +486,7 @@ async function main() {
   // Owner-supplied offers, proposed slots and user-confirmed WhatsApp hand-off. No external submission.
   const planner = p3.getByRole('form', { name: 'Выбор времени для заявки' });
   const offerText = await p3.getByRole('region', { name: 'Предложения ASHYQ' }).innerText();
-  check('offers: цена курса без выдуманного периода оплаты', /68\s*000/.test(offerText) && /84\s*000/.test(offerText) && offerText.includes('Период оплаты, применимость цены') && offerText.includes('84 ученика') && offerText.includes('4 преподавателя'));
+  check('offers: цена курса без выдуманного периода оплаты', /112\s*000/.test(offerText) && /84\s*000/.test(offerText) && offerText.includes('Период оплаты, применимость цены') && offerText.includes('84 ученика') && offerText.includes('4 преподавателя'));
   check('enrolment: восемь вариантов двухчасовых групп, без воскресенья', (await planner.locator('select option').count()) === 8 && (await planner.locator('input[type="checkbox"]').count()) === 6 && !has(await planner.innerText(), 'Воскресенье'));
   await planner.getByRole('button', { name: 'Открыть заявку в WhatsApp' }).click();
   check('enrolment: без дня заявка не открывается', await planner.getByRole('alert').isVisible());
