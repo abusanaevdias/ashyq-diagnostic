@@ -56,3 +56,15 @@ screenshots, then failed the existing runtime token audit: the derived alpha
 divider color was outside the project's accepted border set. The divider now
 uses the existing ink-soft token directly; the audit is not weakened or changed.
 The screenshots remain useful visual evidence, not a claim that that run passed.
+
+## Released evidence
+
+Final exact6c94291d5130d27ff906f9e1d43ef24bfee6348f passed full automatic
+CI39294131711; final390/1440 first-fold images were visually inspected. PR169
+merged at pinned ec380987a624ee8942c762014aab9f76515fdbeb; Vercel
+Production7180683757 succeeded. Canonical `/?design=048` returned200 with the
+048 publication marker and titleBrand class, without Vercel login. Original
+unedited before/after PNGs and exact provenance are retained in HERO-048-EVIDENCE.md.
+Text palette ratios: on-dark/dark16.85, ink-soft/surface5.08, red-deep/bg6.44.
+The refresh URL does not clear saved answers or alter diagnostic state.
+No physical-iPhone input/animation acceptance is inferred from these captures.
