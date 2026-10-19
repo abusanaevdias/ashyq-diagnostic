@@ -8,7 +8,7 @@ export const CLUB_OFFER = {
   timezone: 'Астана, UTC+5',
   course: { previous: 112_000, current: 84_000, period: null as 'month' | 'course' | null, exams: [] as Array<'ielts' | 'sat'> },
   mentoring: { previous: 180_000, current: 127_000, period: 'month' as const },
-  previousCohort: { students: 112, average: '7.0', months: 'Июль — сентябрь' },
+  previousCohort: { number: 3, students: 112, achievedTarget: 89, targetBand: '7.0+', months: 'Июль — сентябрь', updated: '19 октября 2026' },
   // No invented expiry, live seat inventory, billing unit or exam verification.
 };
 
