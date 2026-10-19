@@ -14,6 +14,17 @@
 .controls p { font-size:.82rem; color:var(--ink-soft); }
 .art { display:flex; align-items:center; min-height:112px; margin-top:20px; padding:20px; border-radius:var(--r-lg); background:var(--bg); font:550 clamp(1.6rem,3vw,2.8rem)/1.2 var(--font-display); letter-spacing:-.045em; color:var(--red-deep); overflow-wrap:anywhere; }
 .note { margin: 26px 0 0; color: var(--ink-soft); font-size: 14px; line-height: 1.55; }
+.art { position:relative; isolation:isolate; overflow:hidden; }
+.art::after { content:''; position:absolute; z-index:-1; width:100px; height:100px; right:-22px; bottom:-48px; border:1px solid currentColor; border-radius:50%; opacity:.18; pointer-events:none; }
+.card[data-trainer-exam='IELTS'] .art { background:var(--blush-soft); }
+.card[data-trainer-exam='SAT'] .art { background:var(--ink); color:var(--on-dark); }
+@media(prefers-reduced-motion:no-preference) {
+ .art[data-motion-visible='true']::after { animation:catalog-orbit 12s ease-in-out infinite; }
+}
+@keyframes catalog-orbit { 0%,100% { transform:translate(0,0); } 50% { transform:translate(-10px,-8px); } }
+:global(html[data-motion-background='true']) .art::after { animation-play-state:paused; }
+:global(html[data-motion-paused='true']) .art::after { animation:none; }
+@media(prefers-reduced-motion:reduce), print { .art::after { animation:none; } }
 .page a:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .page { padding: 60px 16px 72px; } .grid { grid-template-columns: 1fr; } .card { min-height: 250px; padding: 24px; } }

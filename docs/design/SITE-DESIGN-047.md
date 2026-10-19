@@ -82,6 +82,36 @@ this visual change. No new tests are added or manually run for this request.
 
 ## Recorded local checks
 
+### Expressive accents extension
+
+The owner requested a more interesting design with accents and smooth animation.
+Added a native server-rendered `LearningPathAccent` below the home example/library
+pair: three method stages, simple line icons, a moving decorative ink segment and
+staggered icon halos. It describes the training method; it does not display or
+change the learner's current stage or completion. On narrow screens the stages
+stack, and the horizontal connector is removed.
+
+The cohort89 receives a red editorial oval with a soft fill and a one-time reveal.
+The number itself remains literal89, alongside112 and7.0+. Catalog illustrations
+use soft IELTS and dark SAT panels with a quiet moving circular detail; exam names
+remain written out, so color is not the only distinction. One directions heading
+reuses the existing animated underline.
+
+New motion uses existing viewport attributes, CSS only, with no library, request,
+timer, or input handler. Every new animated child has an explicit manual pause,
+background-tab pause, reduced-motion and print rule. No text is hidden pending JS.
+
+Adversarial source review: the path was moved below the usable example/library
+pair to avoid increasing the wait before the first actual interaction. Connectors
+are decorative and pointer-transparent, and disappear on mobile. New layering is
+isolated inside each card/number; answer markers, stored responses, menu activation,
+source IDs and permissions are untouched. Browser inventory is still empty; no
+new runtime/phone animation acceptance is claimed. The repeat 21st reference search
+again returned401. Focused review of all5 changed UI sources returned0 findings.
+Final extension webpack build generated155 pages successfully, including TypeScript;
+focused ESLint and diff checks passed. Tests were not added or manually run.
+`ACCENTS-047.svg`/`.png` show an editable schematic of the new visual accents.
+
 Next16.3.5 production build with webpack generated155 pages successfully;
 TypeScript --noEmit and focused ESLint passed. 21st review inspected28 files
 with0 errors/warnings/suggestions. git diff --check passed. These are compilation
