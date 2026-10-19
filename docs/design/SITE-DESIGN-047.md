@@ -117,3 +117,16 @@ TypeScript --noEmit and focused ESLint passed. 21st review inspected28 files
 with0 errors/warnings/suggestions. git diff --check passed. These are compilation
 and deterministic source checks, not real browser or physical-device acceptance.
 Feature PR: https://github.com/abusanaevdias/ashyq-diagnostic/pull/168 .
+
+## Public release after phone access feedback
+
+Exact feature0b62fd57d5f554a3a1d6ba69a670c59d30f53a8f passed full automatic
+CI39288583462. The saved CI mobile390px and desktop1440px home screenshots were
+visually inspected: first-fold headings/actions/header fit. This does not prove
+physical-phone input or animation fluidity. Pinned PR168 merged asdd9cbb9,
+Vercel Production7179849197 succeeded. Canonical `/` and `/trainers` returned200
+without Vercel login and contained the new learning-path/SAT catalog hooks.
+The owner can now open https://ashyq-diagnostic.vercel.app/ on a phone.
+No preview protection, application roles or private-data access was changed.
+Earlier preview-only acceptance notes above describe the pre-release boundary;
+physical-device feedback remains welcome and is not falsely certified.
