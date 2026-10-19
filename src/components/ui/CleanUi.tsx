@@ -7,6 +7,7 @@ import styles from './CleanUi.module.css';
 import { MobileNavMenu } from './MobileNavMenu';
 import StudyNavigation from './StudyNavigation';
 import SiteMenuLinks from './SiteMenuLinks';
+import MotionToggle from './MotionToggle';
 
 type IconName = 'book' | 'chart' | 'chat' | 'compass' | 'lock' | 'mail' | 'pin' | 'search' | 'send' | 'spark' | 'target';
 
@@ -54,7 +55,7 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic', study=false }:
     <header className={`${styles.navWrap} ${study?styles.studyNav:''}`}>
       <nav className={styles.nav} aria-label="Основная навигация">
         <Link className={styles.logoLink} href="/" aria-label="ASHYQ — на главную">
-          <Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} priority />
+          <Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} priority data-motion-logo data-motion-ambient="logo" />
         </Link>
         {study&&<StudyNavigation/>}
         <div className={styles.navLinks}>
@@ -67,7 +68,7 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic', study=false }:
             <SiteMenuLinks />
             <div className={styles.menuBottom}>
               <div className={styles.menuAccount}><span className={styles.menuCaption}>Личный кабинет</span><NavAccount variant="panel" /></div>
-              <div className={styles.menuLegal}><Link href="/privacy">Конфиденциальность</Link><Link href="/terms">Условия</Link></div>
+              <div className={styles.menuLegal}><MotionToggle /><Link href="/privacy">Конфиденциальность</Link><Link href="/terms">Условия</Link></div>
             </div>
         </MobileNavMenu>
         <Link className={styles.searchLink} href="/search" aria-label="Открыть поиск по сайту">
