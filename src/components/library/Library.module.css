@@ -145,6 +145,13 @@
 .stageGrid .stageProgress{font-size:.76rem;color:var(--ink);font-weight:500;line-height:1.6}
 
 /* APPLE-DESIGN-036 */
+.card { border-radius:var(--r-xxl); padding:28px; }
+.card h3 { font-weight:650; font-size:1.4rem; letter-spacing:-.035em; }
+.card > p { font-size:.9375rem; }
+.cardMeta,.cardEnd { font-size:.8125rem; }
+.quickLinks { gap:8px; }
+.quickLinks a { padding:8px 16px; border:1px solid var(--hairline); border-radius:var(--r-pill); background:var(--surface); font-size:.875rem; text-decoration:none; }
+.search input { border-radius:var(--r-md); }
 .quickHeader { padding-block:44px 28px; }
 .quickHeader h1,.hero h1,.lessonHead h2 { font-weight:650; letter-spacing:-.04em; }
 .lessonSection,.heroCard,.chapterCard { border-radius:var(--r-xxl); }

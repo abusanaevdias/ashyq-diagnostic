@@ -43,7 +43,7 @@
   position: relative;
   min-height: 480px;
   overflow: hidden;
-  border-radius: var(--r-xl);
+  border-radius: var(--r-xxl);
   background: var(--surface);
   box-shadow: var(--shadow-card);
 }

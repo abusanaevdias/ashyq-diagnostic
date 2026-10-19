@@ -48,7 +48,7 @@ function HeroArrow() {
 
 export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunState | null>; onSelect: (exam: ExamId) => void }) {
   return (
-    <StudyDesign><div className={styles.page}>
+    <StudyDesign><div className={`${styles.page} ${styles.applePage}`}>
       <NavBar study onStart={() => onSelect('ielts')} />
 
       <main>

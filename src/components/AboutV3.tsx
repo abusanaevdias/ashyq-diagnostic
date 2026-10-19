@@ -19,7 +19,7 @@ const VALUES = [
 
 export default function AboutV3() {
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${home.applePage}`}>
       <NavBar />
       <main>
         <section className={`${home.container} ${styles.hero}`}>

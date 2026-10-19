@@ -14,3 +14,11 @@
 .tip :is(button,a) { min-height:44px; display:flex; align-items:center; gap:16px; padding:12px 0; border:0; background:transparent; color:var(--red-deep); font-size:.85rem; font-weight:600; text-align:left; }
 .tip a { border-top:1px solid var(--hairline); }
 @media(max-width:700px) { .preview { padding:0 20px 20px; } .grid { grid-template-columns:minmax(0,1fr); gap:24px; padding-top:24px; } .tip { padding:22px; } .sentence br { display:none; } }
+
+@media(min-width:1100px) {
+ .preview { max-width:none; padding-inline:30px; box-shadow:none; }
+ .grid { grid-template-columns:minmax(0,1fr); gap:24px; }
+ .tip { padding:24px; }
+ .sentence { font-size:1.3rem; }
+ .sentence br { display:none; }
+}

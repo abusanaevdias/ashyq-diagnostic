@@ -15,7 +15,7 @@ export default function CourseLessonV3({ course, lesson }: { course: CourseDetai
   const lessonsHref = `/courses/${course.slug}/lessons`;
 
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${home.applePage}`}>
       <NavBar />
       <main className={`${home.container} ${styles.main}`}>
         <nav className={styles.crumbs} aria-label="Хлебные крошки">

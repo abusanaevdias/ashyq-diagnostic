@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1160" viewBox="0 0 1600 1160">
+ <rect width="1600" height="1160" fill="#efeeea"/>
+ <g font-family="Segoe UI,Arial,sans-serif" fill="#161311">
+  <text x="48" y="58" font-size="29" font-weight="650">ASHYQ — единая визуальная система</text>
+  <text x="48" y="88" font-size="17" fill="#6e6d6b">Редактируемая схема · не скриншот сайта · Apple design / версия 047</text>
+  <rect x="40" y="122" width="1050" height="652" rx="28" fill="#f8f7f3"/>
+  <text x="74" y="170" fill="#de0b1b" font-size="28" font-weight="800">ashyq</text>
+  <text x="380" y="164" font-size="14">Курсы</text><text x="456" y="164" font-size="14">Поступление</text><text x="576" y="164" font-size="14">Тренажёры</text><text x="686" y="164" font-size="14">Библиотека</text>
+  <rect x="822" y="141" width="68" height="40" rx="20" fill="#fdfdfd"/><text x="835" y="166" font-size="13">Меню</text>
+  <rect x="902" y="141" width="148" height="40" rx="20" fill="#de0b1b"/><text x="925" y="166" font-size="13" fill="white">Диагностика →</text>
+  <path d="M40 198H1090" stroke="#efeeea"/>
+  <text x="565" y="240" font-size="11" letter-spacing="2" text-anchor="middle" fill="#6e6d6b">ASHYQ · ОБРАЗОВАТЕЛЬНЫЙ КЛУБ КАЗАХСТАНА</text>
+  <text x="565" y="303" font-size="56" font-weight="650" letter-spacing="-2" text-anchor="middle">ASHYQ. IELTS и SAT.</text>
+  <text x="565" y="363" font-size="56" font-weight="650" letter-spacing="-2" text-anchor="middle" fill="#6e6d6b">Начните бесплатно.</text>
+  <text x="565" y="401" font-size="17" text-anchor="middle" fill="#6e6d6b">Библиотека, практика и диагностика — без регистрации.</text>
+  <rect x="316" y="427" width="244" height="48" rx="24" fill="#b60916"/><text x="438" y="456" text-anchor="middle" font-size="14" font-weight="600" fill="white">Бесплатная диагностика →</text>
+  <rect x="572" y="427" width="244" height="48" rx="24" fill="#fdfdfd" stroke="#efeeea"/><text x="694" y="456" text-anchor="middle" font-size="14" font-weight="600">Бесплатная библиотека →</text>
+  <text x="565" y="504" font-size="12" text-anchor="middle" fill="#6e6d6b">Предварительная оценка навыков, не официальный балл IELTS или SAT.</text>
+  <rect x="72" y="540" width="576" height="204" rx="28" fill="#fdfdfd"/>
+  <text x="100" y="574" font-size="11" fill="#6e6d6b">IELTS WRITING · СОГЛАСОВАНИЕ</text>
+  <text x="100" y="615" font-size="27" font-weight="650" letter-spacing="-.7">Одно предложение. Один понятный шаг.</text>
+  <text x="100" y="650" font-size="17">Natural talent make a difference.</text>
+  <path d="M220 657H262" stroke="#b60916" stroke-width="3"/>
+  <text x="100" y="707" font-size="14" font-weight="600" fill="#b60916">Показать объяснение →</text>
+  <rect x="668" y="540" width="390" height="204" rx="28" fill="#fdfdfd"/>
+  <text x="694" y="574" font-size="11" fill="#6e6d6b">0 ₸ · БЕЗ РЕГИСТРАЦИИ</text>
+  <text x="694" y="615" font-size="27" font-weight="650" letter-spacing="-.7">Бесплатная библиотека</text>
+  <text x="694" y="650" font-size="16" fill="#6e6d6b">Выберите навык — начните сразу.</text>
+  <text x="694" y="707" font-size="14" font-weight="600" fill="#b60916">Все материалы →</text>
+  <rect x="1120" y="122" width="440" height="990" rx="32" fill="#f8f7f3"/>
+  <text x="1146" y="168" fill="#de0b1b" font-size="26" font-weight="800">ashyq</text>
+  <rect x="1302" y="141" width="72" height="40" rx="20" fill="#fdfdfd"/><text x="1314" y="166" font-size="13">Меню</text>
+  <rect x="1386" y="141" width="148" height="40" rx="20" fill="#de0b1b"/><text x="1409" y="166" font-size="13" fill="white">Диагностика</text>
+  <rect x="1152" y="200" width="376" height="48" rx="24" fill="#efeeea"/>
+  <rect x="1258" y="204" width="137" height="40" rx="20" fill="#fdfdfd"/>
+  <text x="1172" y="229" font-size="13">Главная</text><text x="1276" y="229" font-size="13" font-weight="650">Тренажёры</text><text x="1408" y="229" font-size="13">Библиотека</text>
+  <text x="1148" y="307" font-size="12" font-weight="600" fill="#b60916">IELTS · SAT</text>
+  <text x="1148" y="354" font-size="38" font-weight="650" letter-spacing="-1.5">Навык за навыком.</text>
+  <text x="1148" y="392" font-size="16" fill="#6e6d6b">Сначала попытка. Затем разбор.</text>
+  <rect x="1148" y="422" width="218" height="42" rx="21" fill="#efeeea"/><rect x="1152" y="426" width="62" height="34" rx="17" fill="#fdfdfd"/>
+  <text x="1167" y="449" font-size="13">Все</text><text x="1236" y="449" font-size="13">IELTS</text><text x="1310" y="449" font-size="13">SAT</text>
+  <rect x="1146" y="490" width="388" height="274" rx="28" fill="#fdfdfd"/>
+  <text x="1172" y="526" font-size="12" fill="#b60916" font-weight="600">IELTS · WRITING</text>
+  <rect x="1172" y="547" width="336" height="72" rx="20" fill="#f8f7f3"/><text x="1192" y="595" font-size="32" fill="#b60916" letter-spacing="-1">make → makes</text>
+  <text x="1172" y="657" font-size="25" font-weight="650">Исправь своё решение</text>
+  <text x="1172" y="688" font-size="15" fill="#6e6d6b">Найди ошибку и объясни правку.</text>
+  <text x="1172" y="733" font-size="15" fill="#b60916" font-weight="600">Попробовать Writing →</text>
+  <rect x="1146" y="786" width="388" height="274" rx="28" fill="#fdfdfd"/>
+  <text x="1172" y="822" font-size="12" fill="#b60916" font-weight="600">SAT · MATH</text>
+  <rect x="1172" y="843" width="336" height="72" rx="20" fill="#f8f7f3"/><text x="1192" y="891" font-size="32" fill="#b60916">× → ✓</text>
+  <text x="1172" y="953" font-size="25" font-weight="650">Механизм ошибки</text>
+  <text x="1172" y="984" font-size="15" fill="#6e6d6b">Найди первый неверный переход.</text>
+  <text x="1172" y="1029" font-size="15" fill="#b60916" font-weight="600">Попробовать SAT Math →</text>
+  <rect x="40" y="798" width="1050" height="314" rx="28" fill="#f8f7f3"/>
+  <text x="72" y="843" font-size="12" fill="#6e6d6b">КАБИНЕТ · ОБЩИЙ УЧЕБНЫЙ СТИЛЬ</text>
+  <text x="72" y="888" font-size="34" font-weight="650" letter-spacing="-1">Следующее действие — на виду.</text>
+  <rect x="72" y="918" width="466" height="160" rx="28" fill="#fdfdfd"/>
+  <text x="98" y="954" font-size="20" font-weight="650">Материалы и задания</text>
+  <text x="98" y="988" font-size="15" fill="#6e6d6b">Ясные заголовки. Спокойная плотность.</text>
+  <text x="98" y="1044" font-size="14" font-weight="600" fill="#b60916">Открыть раздел →</text>
+  <rect x="558" y="918" width="500" height="160" rx="28" fill="#fdfdfd"/>
+  <text x="584" y="954" font-size="20" font-weight="650">Понятные состояния</text>
+  <rect x="584" y="974" width="112" height="38" rx="19" fill="#e8efe2"/><text x="602" y="999" font-size="14" fill="#2e5e3a">✓ Верно</text>
+  <rect x="708" y="974" width="178" height="38" rx="19" fill="#fcf3f0"/><text x="726" y="999" font-size="14" fill="#b60916">× Пока неверно</text>
+  <text x="584" y="1044" font-size="14" fill="#6e6d6b">Ответы и история сохраняют прежнюю логику.</text>
+ </g>
+</svg>

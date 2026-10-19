@@ -33,7 +33,7 @@ const STEPS = [
 
 export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, RunState | null>; onSelect: (exam: ExamId) => void }) {
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${home.applePage}`}>
       <NavBar onStart={() => onSelect('ielts')} />
 
       <main>

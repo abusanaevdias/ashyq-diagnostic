@@ -21,7 +21,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
   const pending = course.facts.filter((fact) => fact.provisional);
   const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Здравствуйте! Хочу узнать стоимость и расписание курса ${course.exam} в ASHYQ.`)}`;
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${home.applePage}`}>
       <NavBar diagnosticHref={course.diagnosticHref} />
 
       <main>
