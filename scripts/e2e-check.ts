@@ -476,10 +476,12 @@ async function main() {
   await menuTrigger.click();
   check('nav: мобильное меню открывается', await p3.locator('header details').getAttribute('open') !== null);
   await p3.keyboard.press('Escape');
+  await p3.waitForFunction(() => !document.querySelector('header details')?.hasAttribute('open'), undefined, { timeout: 2000 });
   check('nav: Escape закрывает меню и возвращает фокус', await p3.locator('header details').getAttribute('open') === null && await menuTrigger.evaluate((element) => element === document.activeElement));
   await menuTrigger.click();
   // The menu covers the hero: click the empty outer gutter, not an obscured heading.
   await p3.mouse.click(5, (p3.viewportSize()?.height ?? 664) - 5);
+  await p3.waitForFunction(() => !document.querySelector('header details')?.hasAttribute('open'), undefined, { timeout: 2000 });
   check('nav: клик вне меню закрывает панель', await p3.locator('header details').getAttribute('open') === null);
   const coursesScroll = await p3.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check('courses: нет горизонтального скролла', coursesScroll <= 0, `${coursesScroll}px`);

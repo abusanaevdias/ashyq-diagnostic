@@ -1,0 +1,18 @@
+/* Native reversible hover/press feedback; visual motion never delays an action. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion-press] {
+    transition: scale 220ms cubic-bezier(.2,.75,.25,1), box-shadow 220ms ease;
+  }
+  [data-motion-press]:active { scale:.97; transition-duration:80ms; }
+  [data-motion-card] { transition:translate 360ms cubic-bezier(.2,.75,.25,1), box-shadow 360ms ease, border-color 220ms ease; }
+  [data-motion-card] img { transition:scale 650ms cubic-bezier(.2,.75,.25,1); }
+  @media (hover:hover) and (pointer:fine) {
+    [data-motion-card]:hover { translate:0 -4px; box-shadow:var(--shadow-card-hover); }
+    [data-motion-card]:hover img { scale:1.025; }
+    [data-motion-press]:hover { scale:1.015; }
+    [data-motion-press]:active { scale:.97; }
+  }
+}
+@media (prefers-reduced-motion:reduce), print {
+  [data-motion-reveal], [data-motion-card], [data-motion-press], [data-motion-card] img { translate:none; scale:none; }
+}

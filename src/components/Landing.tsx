@@ -67,7 +67,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
                   const continuation = saved ? continueLabel(saved) : null;
                   return (
                     <div key={exam}>
-                      <button type="button" className={exam === 'ielts' ? styles.heroButtonRed : styles.heroButtonOutline} onClick={() => onSelect(exam)} aria-label={`${exam === 'ielts' ? 'Начать с IELTS' : 'Проверить SAT'}. Начать диагностику ${EXAMS[exam].name}`}>
+                      <button type="button" data-motion-press className={exam === 'ielts' ? styles.heroButtonRed : styles.heroButtonOutline} onClick={() => onSelect(exam)} aria-label={`${exam === 'ielts' ? 'Начать с IELTS' : 'Проверить SAT'}. Начать диагностику ${EXAMS[exam].name}`}>
                         {exam === 'ielts' ? 'Начать с IELTS' : 'Проверить SAT'}<HeroArrow />
                       </button>
                       {continuation ? <span className={styles.continue}>{continuation}</span> : null}

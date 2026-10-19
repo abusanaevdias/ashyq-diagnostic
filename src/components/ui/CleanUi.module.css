@@ -468,6 +468,7 @@
 
 /* Full site directory: one discoverable, native disclosure on every screen size. */
 .navWrap .mobilePanel {
+  transform-origin: top right;
   top: calc(100% + 8px);
   left: max(var(--pad), calc((100% - 1120px) / 2));
   right: max(var(--pad), calc((100% - 1120px) / 2));

@@ -163,7 +163,7 @@ export default function CoursesV3() {
             {visible.map((course) => {
               const slug = course.href === '/courses/ielts' ? 'ielts' : 'sat';
               return (
-                <article className={styles.card} key={course.href}>
+                <article className={styles.card} key={course.href} data-motion-reveal data-motion-card>
                   <Link
                     href={course.href}
                     className={styles.courseLink}
