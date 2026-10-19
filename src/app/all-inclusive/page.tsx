@@ -34,6 +34,6 @@ export default function AllInclusivePage() {
       <p className={styles.lead}>Для старшеклассников и абитуриентов, которые планируют зарубежный университет и хотят связать подготовку к экзаменам со сроками подачи. Приоритетную помощь тренеров получаете в рамках пакета; канал связи и порядок ответов согласуем перед стартом.</p>
       <p className={styles.note}>Экзаменационные, университетские и визовые сборы, переводы и заверение документов, билеты, проживание и обучение в университете оплачиваются отдельно. Решения о зачислении, гранте и визе принимают университеты и уполномоченные органы; конкретный балл и положительное решение не гарантируются.</p>
     </section>
-    <section id="package-enrolment" className={`${home.container} ${home.section}`}><EnrollmentPlanner fixedProgram="all-inclusive" /></section>
+    <section id="package-enrolment" className={`${home.container} ${home.section} ${styles.enrolment}`}><EnrollmentPlanner fixedProgram="all-inclusive" /></section>
   </main><Footer /></div>;
 }

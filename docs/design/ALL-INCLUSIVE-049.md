@@ -33,3 +33,10 @@ SAT and mentoring, previous price 370,000 KZT and current price 250,000 KZT.
 Local compilation/lint and static design review are recorded at release; existing
 CI remains the release gate. No physical-device or animation-fluidity claim is
 inferred from source review or emulated screenshots.
+
+First CI39297813638 passed build/type/lint/units and 163/164 main E2E
+assertions. Its sole failure was the previous exact two-card catalog expectation;
+the owner now explicitly requests four services. Update that existing assertion
+to four (retain all four free resources and the exam filter checks), without
+removing or disguising service cards. Add package enrollment scroll offset so
+the native CTA target clears the sticky navigation.
