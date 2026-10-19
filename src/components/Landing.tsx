@@ -13,6 +13,7 @@ import ClubOffer from './ClubOffer';
 import CohortResults from './CohortResults';
 import StudyDesign from './ui/StudyDesign';
 import HomeLearningPreview from './HomeLearningPreview';
+import MotionToggle from './ui/MotionToggle';
 
 type ValueStyle = CSSProperties & { '--value': string };
 
@@ -55,9 +56,9 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
               <MicroLabel>ASHYQ · образовательный клуб Казахстана</MicroLabel>
-              <h1 className={styles.title}>ASHYQ. IELTS и SAT.<span className={styles.titleAccent}>Начните бесплатно.</span></h1>
-              <p className={styles.lead}>Онлайн-подготовка к IELTS и SAT в Казахстане. Библиотека, практика и диагностика — бесплатно, без регистрации.</p>
-              <nav className={styles.entryChoices} aria-label="Первые шаги: диагностика и библиотека">
+              <h1 className={styles.title} data-motion-intro="title"><span data-motion-brand data-motion-ambient="brand">ASHYQ.</span> IELTS и SAT.<span className={styles.titleAccent} data-motion-intro="accent">Начните бесплатно.</span></h1>
+              <p className={styles.lead} data-motion-intro="copy">Онлайн-подготовка к IELTS и SAT в Казахстане. Библиотека, практика и диагностика — бесплатно, без регистрации.</p>
+              <nav className={styles.entryChoices} aria-label="Первые шаги: диагностика и библиотека" data-motion-intro="actions">
                 <Link href="/diagnostic"><strong>Бесплатная диагностика <HeroArrow /></strong><span>IELTS или SAT · узнайте свой уровень</span></Link>
                 <Link href="/library"><strong>Бесплатная библиотека <HeroArrow /></strong><span>Материалы, задания и разборы · 0 ₸</span></Link>
               </nav>
@@ -78,10 +79,11 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
               <p className={styles.diagnosticNote}>Диагностика: ≈20 минут. Предварительная оценка навыков, не официальный балл IELTS или SAT.</p>
               <div className={styles.statsWrap}><StatsRow items={[CLUB_FACTS[0], CLUB_FACTS[2], CLUB_FACTS[3]]} /></div>
               <p className={styles.paidNote}>Курсы с преподавателем и менторство — платные программы.</p>
+              <MotionToggle />
             </div>
 
             <HomeLearningPreview/>
-            <aside className={styles.heroResources} aria-labelledby="home-free-title">
+            <aside className={styles.heroResources} aria-labelledby="home-free-title" data-motion-ambient="card">
               <MicroLabel>0 ₸ · без регистрации</MicroLabel>
               <h2 id="home-free-title">Бесплатная библиотека</h2>
               <p>Выберите навык — начните сразу.</p>

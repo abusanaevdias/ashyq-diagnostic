@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { MOTION_PREFERENCE_EVENT, motionPaused } from '@/lib/motion-preference';
 import styles from './CleanUi.module.css';
 
 /** Native details stays usable before hydration; navigation is not a modal. */
@@ -45,7 +46,7 @@ export function MobileNavMenu({ children }: { children: ReactNode }) {
       }
       state.target = target;
       panel.inert = target === 0;
-      if (immediate || reduced.matches || document.hidden) { settle(); return; }
+      if (immediate || motionPaused() || document.hidden) { settle(); return; }
       if (target === 1) menu.open = true;
       if (!menu.open) { settle(); return; }
       panel.style.willChange = 'opacity, transform';
@@ -69,12 +70,13 @@ export function MobileNavMenu({ children }: { children: ReactNode }) {
     const outside = (event: PointerEvent) => {
       if (menu.open && event.target instanceof Node && !menu.contains(event.target)) setTarget(0);
     };
-    const preference = () => { if (reduced.matches) settle(); };
+    const preference = () => { if (motionPaused()) settle(); };
     const visibility = () => { if (document.hidden) setTarget(0, true); };
     document.addEventListener('keydown', escape);
     document.addEventListener('pointerdown', outside);
     document.addEventListener('visibilitychange', visibility);
     reduced.addEventListener('change', preference);
+    window.addEventListener(MOTION_PREFERENCE_EVENT, preference);
     return () => {
       cancelAnimationFrame(focusFrame);
       if (linkCloseTimer.current !== null) clearTimeout(linkCloseTimer.current);
@@ -85,6 +87,7 @@ export function MobileNavMenu({ children }: { children: ReactNode }) {
       document.removeEventListener('pointerdown', outside);
       document.removeEventListener('visibilitychange', visibility);
       reduced.removeEventListener('change', preference);
+      window.removeEventListener(MOTION_PREFERENCE_EVENT, preference);
     };
   }, []);
   useEffect(() => { closeRef.current(true); }, [pathname]);
