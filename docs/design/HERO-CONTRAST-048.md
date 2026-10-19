@@ -50,3 +50,9 @@ ESLint, diff and21st5-file source review passed with zero findings. Production
 build/automatic CI and actual screenshot/release evidence are recorded in HANDOFF.
 No tests are added or manually run; the existing CI executes automatically.
 Physical iPhone viewing and animation fluidity are not inferred from screenshots.
+
+Initial CI39292907065 passed the functional suites and produced actual first-fold
+screenshots, then failed the existing runtime token audit: the derived alpha
+divider color was outside the project's accepted border set. The divider now
+uses the existing ink-soft token directly; the audit is not weakened or changed.
+The screenshots remain useful visual evidence, not a claim that that run passed.
