@@ -7,7 +7,7 @@ export const CLUB_OFFER = {
   workingHours: '19:00–23:00',
   timezone: 'Астана, UTC+5',
   course: { previous: 112_000, current: 84_000, period: null as 'month' | 'course' | null, exams: [] as Array<'ielts' | 'sat'> },
-  mentoring: { previous: 180_000, current: 127_000, period: 'month' as const },
+  mentoring: { description: 'Помогаем поступать в Европу, США, ОАЭ и другие страны.', pricing: 'Стоимость и условия согласовываем на встрече.' },
   previousCohort: { number: 3, students: 112, achievedTarget: 89, targetBand: '7.0+', months: 'Июль — сентябрь', updated: '19 октября 2026' },
   // No invented expiry, live seat inventory, billing unit or exam verification.
 };
