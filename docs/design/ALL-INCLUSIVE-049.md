@@ -40,3 +40,7 @@ the owner now explicitly requests four services. Update that existing assertion
 to four (retain all four free resources and the exam filter checks), without
 removing or disguising service cards. Add package enrollment scroll offset so
 the native CTA target clears the sticky navigation.
+
+## Released 2026-10-20
+
+PR170 exact26c5fc31f70a5b7c1117d0661dc94d69ef4f4779 passed full CI39329219970. Merge ec95ac12e6e76b07ac903ed923f94d45a3d38255, production7185982636 SUCCESS. Canonical package HTTP200, correct title and both prices, preselected package inquiry, home restored without048 marker plus new shared offer, catalog fourth service and sitemap entry confirmed. Actual CI restored-home images inspected; CUA browser inventory empty, no dedicated package-page browser/physical-device claim. Local build156, lint/typecheck/diff and21st5+2 files zero findings.
