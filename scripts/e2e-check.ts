@@ -465,7 +465,7 @@ async function main() {
 
   // courses: v3 каталог и рабочий фильтр
   await p3.goto(`${BASE}/courses`, { waitUntil: 'networkidle' });
-  check('courses: два курса отдельно от бесплатной практики', (await p3.locator('#programs article').count()) === 2 && (await p3.locator('#free-practice h3').count()) === 4 && has(await p3.locator('body').innerText(), 'Не знаете, с чего начать?'));
+  check('courses: четыре услуги отдельно от бесплатной практики', (await p3.locator('#programs article').count()) === 4 && (await p3.locator('#free-practice h3').count()) === 4 && has(await p3.locator('body').innerText(), 'Не знаете, с чего начать?'));
   check('courses: общий вход даёт выбор экзамена', await p3.getByRole('link', { name: 'Пройти диагностику', exact: true }).getAttribute('href') === '/diagnostic');
   await p3.getByRole('button', { name: 'SAT', exact: true }).click();
   check('courses: фильтр SAT показывает только программу SAT', (await p3.locator('#programs article').count()) === 1 && (await p3.getByRole('heading', { name: 'Подготовка к IELTS' }).count()) === 0);

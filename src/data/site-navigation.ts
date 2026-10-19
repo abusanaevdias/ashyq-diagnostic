@@ -6,6 +6,7 @@ export const SITE_NAVIGATION = [
     { href: '/courses/ielts', label: 'Подготовка к IELTS' },
     { href: '/courses/sat', label: 'Подготовка к SAT' },
     { href: '/mentoring', label: 'Поступление за рубеж' },
+    { href: '/all-inclusive', label: 'Всё включено: IELTS + SAT + менторство' },
     { href: '/program', label: 'Программа обучения' },
     { href: '/courses/ielts/lessons', label: 'Уроки IELTS' },
     { href: '/courses/sat/lessons', label: 'Уроки SAT' },
