@@ -9,6 +9,7 @@ import styles from './CleanUi.module.css';
 export function MobileNavMenu({ children }: { children: ReactNode }) {
   const menuRef = useRef<HTMLDetailsElement>(null);
   const closeRef = useRef<(immediate?: boolean) => void>(() => {});
+  const linkCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toggleRef = useRef<(() => void) | null>(null);
   const pathname = usePathname();
   useEffect(() => {
@@ -17,6 +18,7 @@ export function MobileNavMenu({ children }: { children: ReactNode }) {
     if (!menu || !panel) return;
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const state = { value: menu.open ? 1 : 0, velocity: 0, target: menu.open ? 1 : 0, frame: 0, last: 0 };
+    let focusFrame = 0;
     const paint = () => {
       panel.style.opacity = String(Math.max(0, Math.min(1, state.value)));
       panel.style.transform = `translateY(${(1 - state.value) * -12}px) scale(${.985 + .015 * state.value})`;
@@ -38,6 +40,9 @@ export function MobileNavMenu({ children }: { children: ReactNode }) {
       else state.frame = requestAnimationFrame(tick);
     };
     const setTarget = (target: number, immediate = false) => {
+      if (target === 1 && linkCloseTimer.current !== null) {
+        clearTimeout(linkCloseTimer.current); linkCloseTimer.current = null;
+      }
       state.target = target;
       panel.inert = target === 0;
       if (immediate || reduced.matches || document.hidden) { settle(); return; }
@@ -50,6 +55,14 @@ export function MobileNavMenu({ children }: { children: ReactNode }) {
     closeRef.current = (immediate = false) => setTarget(0, immediate);
     toggleRef.current = () => setTarget(state.target === 1 ? 0 : 1);
     const escape = (event: KeyboardEvent) => {
+      if (event.key === 'Tab' && menu.open) {
+        cancelAnimationFrame(focusFrame);
+        focusFrame = requestAnimationFrame(() => {
+          focusFrame = 0;
+          if (!menu.contains(document.activeElement)) setTarget(0);
+        });
+        return;
+      }
       if (event.key !== 'Escape' || !menu.open) return;
       setTarget(0); menu.querySelector('summary')?.focus();
     };
@@ -63,6 +76,8 @@ export function MobileNavMenu({ children }: { children: ReactNode }) {
     document.addEventListener('visibilitychange', visibility);
     reduced.addEventListener('change', preference);
     return () => {
+      cancelAnimationFrame(focusFrame);
+      if (linkCloseTimer.current !== null) clearTimeout(linkCloseTimer.current);
       cancelAnimationFrame(state.frame);
       panel.style.removeProperty('opacity'); panel.style.removeProperty('transform'); panel.style.removeProperty('will-change'); panel.inert = false;
       toggleRef.current = null; closeRef.current = () => { menu.open = false; };
@@ -78,12 +93,15 @@ export function MobileNavMenu({ children }: { children: ReactNode }) {
       ref={menuRef}
       className={styles.mobileMenu}
       onClick={(event) => {
-        if (event.target instanceof Element && event.target.closest('a'))
-          closeRef.current();
-      }}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget))
-          closeRef.current();
+        if (event.target instanceof Element && event.target.closest('a')) {
+          // Keep the clicked link active through the browser's default action.
+          // Safari may cancel activation when its ancestor becomes inert during dispatch.
+          if (linkCloseTimer.current !== null) clearTimeout(linkCloseTimer.current);
+          linkCloseTimer.current = setTimeout(() => {
+            linkCloseTimer.current = null;
+            closeRef.current();
+          }, 0);
+        }
       }}
     >
       <summary className={styles.mobileMenuTrigger} aria-label="Открыть меню" onClick={event => { if (toggleRef.current) { event.preventDefault(); toggleRef.current(); } }}>
