@@ -79,3 +79,11 @@ answers after refresh, wrong/correct markers, pause/reduced motion, and zoom.
 
 No trainer methodology/provider/RLS/physical-device launch gate is closed by
 this visual change. No new tests are added or manually run for this request.
+
+## Recorded local checks
+
+Next16.3.5 production build with webpack generated155 pages successfully;
+TypeScript --noEmit and focused ESLint passed. 21st review inspected28 files
+with0 errors/warnings/suggestions. git diff --check passed. These are compilation
+and deterministic source checks, not real browser or physical-device acceptance.
+Feature PR: https://github.com/abusanaevdias/ashyq-diagnostic/pull/168 .
