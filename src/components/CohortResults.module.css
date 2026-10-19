@@ -2,7 +2,6 @@
 .spotlight { max-width:960px; }
 .spotlight::before { content:''; display:block; width:48px; height:3px; margin-bottom:24px; background:var(--red-deep); }
 .title { max-width:24ch; margin-top:18px; font-family:var(--font-system); font-size:clamp(1.8rem,4vw,3.2rem); font-weight:650; letter-spacing:-.04em; line-height:1.15; text-wrap:balance; }
-.title { scroll-margin-top:160px; }
 .ratio { display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 20px; margin-top:32px; color:var(--ink); font-family:var(--font-system); line-height:.95; }
 .ratio strong { font-size:clamp(8rem,40vw,20rem); font-weight:750; letter-spacing:-.075em; font-variant-numeric:lining-nums tabular-nums; }
 .ratio > strong { position:relative; isolation:isolate; }

@@ -4,7 +4,6 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { EXAMS } from '@/lib/config';
 import { CLUB_FACTS } from '@/lib/site';
-import { CLUB_OFFER } from '@/data/club-offer';
 import type { ExamId, RunState } from '@/lib/types';
 import { ButtonLink, DirectionCard, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
@@ -50,7 +49,7 @@ function HeroArrow() {
 
 export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunState | null>; onSelect: (exam: ExamId) => void }) {
   return (
-    <StudyDesign><div className={`${styles.page} ${styles.applePage} ${styles.homePage}`} data-home-design="048">
+    <StudyDesign><div className={`${styles.page} ${styles.applePage}`}>
       <NavBar study onStart={() => onSelect('ielts')} />
 
       <main>
@@ -58,13 +57,12 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
               <MicroLabel>ASHYQ · образовательный клуб Казахстана</MicroLabel>
-              <h1 className={styles.title} data-motion-intro="title"><span className={styles.titleBrand} data-motion-brand data-motion-ambient="brand">ASHYQ.</span>{' '}<span className={styles.titleSubject}>IELTS и SAT.</span>{' '}<span className={styles.titleAccent} data-motion-intro="accent">Начните бесплатно.</span></h1>
+              <h1 className={styles.title} data-motion-intro="title"><span data-motion-brand data-motion-ambient="brand">ASHYQ.</span> IELTS и SAT.<span className={styles.titleAccent} data-motion-intro="accent">Начните бесплатно.</span></h1>
               <p className={styles.lead} data-motion-intro="copy">Онлайн-подготовка к IELTS и SAT в Казахстане. Библиотека, практика и диагностика — бесплатно, без регистрации.</p>
               <nav className={styles.entryChoices} aria-label="Первые шаги: диагностика и библиотека" data-motion-intro="actions">
                 <Link href="/diagnostic"><strong>Бесплатная диагностика <HeroArrow /></strong><span>IELTS или SAT · узнайте свой уровень</span></Link>
                 <Link href="/library"><strong>Бесплатная библиотека <HeroArrow /></strong><span>Материалы, задания и разборы · 0 ₸</span></Link>
               </nav>
-              <Link className={styles.heroResult} href="#cohort-results-title"><strong>{CLUB_OFFER.previousCohort.achievedTarget} из {CLUB_OFFER.previousCohort.students}</strong><span>IELTS {CLUB_OFFER.previousCohort.targetBand} · {CLUB_OFFER.previousCohort.number}-й поток</span><HeroArrow /></Link>
               <div className={styles.actions}>
                 {(['ielts', 'sat'] as const).map((exam) => {
                   const saved = runs[exam];
@@ -80,6 +78,7 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
                 })}
               </div>
               <p className={styles.diagnosticNote}>Диагностика: ≈20 минут. Предварительная оценка навыков, не официальный балл IELTS или SAT.</p>
+              <div className={styles.statsWrap}><StatsRow items={[CLUB_FACTS[0], CLUB_FACTS[2], CLUB_FACTS[3]]} /></div>
               <p className={styles.paidNote}>Курсы с преподавателем и менторство — платные программы.</p>
               <MotionToggle />
             </div>
@@ -93,7 +92,6 @@ export default function Landing({ runs, onSelect }: { runs: Record<ExamId, RunSt
               <Link className={styles.allResources} href="/library">Все материалы: Listening, грамматика, SAT и 42 раздела IELTS <HeroArrow /></Link>
             </aside>
             <LearningPathAccent />
-            <div className={styles.heroSummary}><div className={styles.statsWrap}><StatsRow items={[CLUB_FACTS[0], CLUB_FACTS[2], CLUB_FACTS[3]]} /></div><p>Сначала бесплатная практика.<br/>Затем — ваш следующий шаг.</p></div>
           </div>
         </section>
 

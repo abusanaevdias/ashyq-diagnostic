@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 /** Служебная страница: служебные страницы поиска принято закрывать от индексации. */
 
 const PAGES: Array<{ title: string; text: string; href: string }> = [
+  { title: 'Всё включено — IELTS + SAT + менторство', text: '250 000 ₸ вместо 370 000 ₸. Подготовка к двум экзаменам, приоритетная помощь тренеров, сопровождение поступления и помощь с визовыми документами.', href: '/all-inclusive' },
   { title: 'Бесплатная библиотека IELTS', text: 'Writing Upgrade Lab, полные эссе, Reading, Listening, Speaking и языковые упражнения с объяснениями.', href: '/library' },
   { title: 'Менторство по поступлению', text: 'Стратегия поступления, документы, CV, Personal Statement, дедлайны и онлайн-сопровождение ASHYQ.', href: '/mentoring' },
   { title: 'Главная', text: 'Диагностика IELTS и SAT, направления клуба и статистика подготовки.', href: '/' },
