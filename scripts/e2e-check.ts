@@ -506,7 +506,7 @@ async function main() {
   await p3.setViewportSize({ width: 390, height: 844 });
   await p3.goto(`${BASE}/mentoring`, { waitUntil: 'networkidle' });
   const mentoringText = await p3.locator('main').innerText();
-  check('mentoring: месячная цена и состав без гарантии поступления', /127\s*000/.test(mentoringText) && /180\s*000/.test(mentoringText) && mentoringText.includes('/ месяц') && mentoringText.includes('Personal Statement') && mentoringText.includes('не обещание оффера'));
+  check('mentoring: направления и условия на встрече без фиксированной цены', mentoringText.includes('Европу, США, ОАЭ и другие страны') && mentoringText.includes('Стоимость и условия согласовываем на встрече') && !/127\s*000|180\s*000/.test(mentoringText) && mentoringText.includes('Personal Statement') && mentoringText.includes('не обещание оффера'));
   check('mentoring: время связи не выдаётся за расписание группы', (await p3.getByLabel('Предпочтительное время для связи, Астана (UTC+5)').count()) === 1 && (await p3.getByLabel('Вариант группы, Астана (UTC+5)').count()) === 0);
 
   // blog: реальная статья опубликована, доступна в категориях и индексируется

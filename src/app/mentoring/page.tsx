@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import EnrollmentPlanner from '@/components/EnrollmentPlanner';
 import { ButtonLink, Footer, MicroLabel, NavBar } from '@/components/ui/CleanUi';
-import { CLUB_OFFER, formatTenge } from '@/data/club-offer';
+import { CLUB_OFFER } from '@/data/club-offer';
 import home from '@/components/HomeV3.module.css';
 import styles from '@/components/Mentoring.module.css';
 
 export const metadata: Metadata = {
   title: 'Менторство по поступлению — ASHYQ, Казахстан',
-  description: 'Стратегия поступления, документы и дедлайны с ментором ASHYQ. Онлайн по Казахстану. Формат работы и условия согласуются до начала.',
+  description: 'Помогаем поступать в Европу, США, ОАЭ и другие страны. Подбор вузов, документы и сопровождение подачи с ASHYQ. Стоимость и условия согласовываем на встрече.',
   alternates: { canonical: '/mentoring' },
 };
 
@@ -23,12 +23,12 @@ export default function MentoringPage() {
   return <div className={`v3 ${home.page}`}><NavBar /><main>
     <section className={`${home.container} ${styles.hero}`}>
       <MicroLabel>ASHYQ · менторство по поступлению</MicroLabel>
-      <h1 className={styles.title}>Не просто список вузов.<br />Понятный маршрут поступления.</h1>
-      <p className={styles.lead}>Для абитуриентов Казахстана, которым нужна поддержка в стратегии, документах и дедлайнах. Работаем онлайн: вы сохраняете контроль над решениями, ментор помогает организовать процесс.</p>
+      <h1 className={styles.title}>Помогаем поступать<br />за рубеж.</h1>
+      <p className={styles.lead}>{CLUB_OFFER.mentoring.description} Подбираем университеты, помогаем с документами и сопровождаем подачу.</p>
       <div className={styles.priceCard}>
-        <div><p className={styles.eyebrow}>Текущее предложение команды ASHYQ</p><p className={styles.price}><span>{formatTenge(CLUB_OFFER.mentoring.current)}</span><span className={styles.period}>/ месяц</span></p><p className={styles.previous}>Ранее: <s>{formatTenge(CLUB_OFFER.mentoring.previous)}</s> / месяц · разница {formatTenge(CLUB_OFFER.mentoring.previous - CLUB_OFFER.mentoring.current)}</p></div>
+        <div><p className={styles.eyebrow}>Индивидуальное сопровождение</p><p className={styles.price}>Ваш план поступления</p><p className={styles.previous}>{CLUB_OFFER.mentoring.pricing}</p></div>
         <ButtonLink href="#mentoring-enrolment">Обсудить менторство</ButtonLink>
-        <p className={styles.note}>Цена предоставлена владельцем 28 сентября 2026. Дата окончания предложения не объявлена; актуальность цены, состав сопровождения и условия подтверждаются до записи. Это не обещание оффера, гранта или визы.</p>
+        <p className={styles.note}>На встрече обсудим страны, университеты, сроки и объём помощи. Менторство — это не обещание оффера, гранта или визы.</p>
       </div>
     </section>
     <section className={`${home.container} ${home.section}`} aria-labelledby="mentoring-scope">
