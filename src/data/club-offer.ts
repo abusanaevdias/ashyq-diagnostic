@@ -6,7 +6,7 @@ export const CLUB_OFFER = {
   workingDays: 'Понедельник — суббота',
   workingHours: '19:00–23:00',
   timezone: 'Астана, UTC+5',
-  course: { previous: 84_000, current: 68_000, period: null as 'month' | 'course' | null, exams: [] as Array<'ielts' | 'sat'> },
+  course: { previous: 112_000, current: 84_000, period: null as 'month' | 'course' | null, exams: [] as Array<'ielts' | 'sat'> },
   mentoring: { previous: 180_000, current: 127_000, period: 'month' as const },
   previousCohort: { students: 112, average: '7.0', months: 'Июль — сентябрь' },
   // No invented expiry, live seat inventory, billing unit or exam verification.
