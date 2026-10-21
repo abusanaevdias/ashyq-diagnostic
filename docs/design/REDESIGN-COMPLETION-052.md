@@ -96,3 +96,9 @@ Journey entry now focuses its h1 and returns to the top only when entering a
 stage/setup step. Question navigation similarly focuses its count and resets the
 view only when question.id changes. Timer ticks and answer edits do not trigger
 these effects. This presentation correction does not modify run state or storage.
+
+Second CI39684872184 on a439f1a passed functional gates but failed the unchanged
+token gate7/9: 23 source radius literals/custom references and runtime14px/18px
+outside the registered scale. The CSS now uses the existing radius tokens directly;
+14/18/22px were aligned to16/20/24px. No token or audit allowlist changed. The
+accessibility/performance gate had not run, so its success is not inferred.

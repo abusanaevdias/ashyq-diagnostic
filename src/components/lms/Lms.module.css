@@ -7,12 +7,12 @@
 .workspaceNav a[aria-current=page]{background:var(--ink);color:var(--on-dark);border-color:var(--ink);font-weight:700}
 .workspaceNav a:hover{transform:translateY(-2px)}
 .workspaceShell .title{font-size:clamp(2.4rem,5vw,4rem);line-height:1.06;letter-spacing:-.045em;font-weight:700}
-.workspaceShell .card{border-radius:24px;padding:28px;box-shadow:none}
+.workspaceShell .card{border-radius:var(--r-xl);padding:28px;box-shadow:none}
 .workspaceShell .cardTitle{font-size:1.35rem;letter-spacing:-.025em}
-.workspaceShell .field{border-radius:14px;background:var(--surface);min-height:50px}
+.workspaceShell .field{border-radius:var(--r-md);background:var(--surface);min-height:50px}
 .workspaceShell .fieldLabel{font-size:.9rem;gap:9px}
 .workspaceShell .muted{font-size:.95rem;line-height:1.65}
-.workspaceShell .notice,.workspaceShell .error{padding:18px 20px;border:1px solid var(--hairline);border-radius:16px;line-height:1.65}
+.workspaceShell .notice,.workspaceShell .error{padding:18px 20px;border:1px solid var(--hairline);border-radius:var(--r-md);line-height:1.65}
 .workspaceShell :is(h1,h2,h3,p,a){overflow-wrap:break-word}
 .workspaceShell :is(section,article,form){min-width:0}
 .workspaceShell button:active{transform:scale(.98)}
