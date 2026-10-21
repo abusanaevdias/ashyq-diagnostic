@@ -1,4 +1,5 @@
 'use client';
+import {FeedbackSummary,LearningRoute} from '@/components/ui/LearningFeedback';
 
 import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
@@ -14,7 +15,7 @@ function Feedback({ attempt, item }: { attempt: Attempt; item: TranslationItem }
   const correctAnswer = attempt.answer === item.answer;
   const definedVariable = attempt.model.variable === item.variable;
   const ownArithmetic = definedVariable && near(attempt.answer, modelSolution(attempt.model));
-  return <div className={styles.feedback}>
+  return <div className={styles.feedback}><FeedbackSummary title={correctModel&&correctAnswer?'Модель и ответ верны':correctModel?'Модель верна. Исправь расчёт':correctAnswer?'Число совпало, но модель нужно исправить':'Пересмотри модель и ответ'} checks={[{label:'Модель по условию',state:correctModel?'good':'bad',value:correctModel?'Верно':'Нужно исправить'},{label:'Итоговое число',state:correctAnswer?'good':'bad',value:correctAnswer?'Совпало':'Не совпало'},{label:'Записанные действия',state:'neutral',value:'Не оценены автоматически'}]} next="Сверь разовый платёж, ставку и смысл переменной. Запиши, что проверишь в следующей задаче."/>
     <h3>{correctModel ? correctAnswer ? 'Модель и итоговое число совпали' : 'Модель совпала. Проверь расчёт' : 'Сначала пересмотри модель'}</h3>
     <p>{correctModel ? 'Величины, смысл x и структура уравнения совпали с условием.' : 'Один или несколько элементов модели не совпали с условием. Правильное итоговое число само по себе это не исправляет.'}</p>
     <dl><div><dt>Смысл x</dt><dd>{definedVariable ? 'Совпал с вопросом' : 'Не совпал с вопросом'}</dd></div><div><dt>Разовый платёж</dt><dd>{attempt.model.setup} → {item.setup}</dd></div><div><dt>Ставка за единицу</dt><dd>{attempt.model.rate} → {item.rate}</dd></div><div><dt>Общая сумма</dt><dd>{attempt.model.total} → {item.total}</dd></div><div><dt>Структура</dt><dd>{attempt.model.form === 'once' ? 'Разовый платёж прибавлен один раз' : attempt.model.form === 'repeated' ? 'Разовый платёж ошибочно повторяется' : 'Разовый платёж пропущен'}</dd></div></dl>
@@ -65,7 +66,7 @@ export default function SatTranslation() {
     <TrainerCheckpoint trainer="sat-translation" data={{ phase, caseIndex, round, variable, setup, rate, total, form, model, answer, working, attempts, repair }} completed={phase === 'result'} onRestore={saved => { setPhase(saved.phase); setCaseIndex(saved.caseIndex); setRound(saved.round); setVariable(saved.variable); setSetup(saved.setup); setRate(saved.rate); setTotal(saved.total); setForm(saved.form); setModel(saved.model); setAnswer(saved.answer); setWorking(saved.working); setAttempts(saved.attempts); setRepair(saved.repair); setError(''); }} />
     {phase === 'choose' ? <section><h2>Выбери задачу</h2><div className={styles.caseGrid}>{translationCases.map((entry, index) => <article key={entry.title} className={styles.card}><span>CONTEXTUAL MATH</span><h3>{entry.title}</h3><p>Собери модель, сравни разбор и попробуй новую задачу.</p><button className={styles.primary} type="button" onClick={() => begin(index)}>Начать →</button></article>)}</div></section> : <section className={styles.lesson} aria-labelledby="translation-stage-title">
       <div className={styles.lessonTop}><button type="button" data-trainer-replace="sat-translation" onClick={() => { setPhase('choose'); window.scrollTo({ top: 0 }); }}>← К выбору задачи</button><span>{round === 0 ? 'Первая попытка' : 'Новая задача'}</span></div>
-      <h2 id="translation-stage-title" tabIndex={-1}>{phase === 'model' ? '1. Собери математическую модель' : phase === 'calculate' ? '2. Посчитай по своей модели' : phase === 'review' ? '3. Сравни модель и расчёт' : 'Что получилось на двух задачах'}</h2>
+      <LearningRoute phase={phase} steps={[["model","Модель"],["calculate","Расчёт"],["review","Проверка"],["result","Итог"]]} round={round===1?"Новый пример":"Первый пример"}/><h2 id="translation-stage-title" tabIndex={-1}>{phase === 'model' ? '1. Собери математическую модель' : phase === 'calculate' ? '2. Посчитай по своей модели' : phase === 'review' ? '3. Сравни модель и расчёт' : 'Что получилось на двух задачах'}</h2>
       {phase !== 'result' && <p className={styles.problem} lang="en">{item.prompt}</p>}
       {phase === 'model' && <div className={styles.panel}>
         <label htmlFor="model-variable">Что обозначает x?</label><select id="model-variable" value={variable} onChange={event => setVariable(event.target.value)}><option value="">Выбери смысл переменной</option><option value="total">Общая сумма в долларах</option><option value={item.variable}>Количество {item.variable === 'months' ? 'месяцев' : 'постеров'}</option><option value="rate">Ставка в долларах за единицу</option></select>

@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
-import { PHOTOS } from '@/data/media';
 import { EXAMS } from '@/lib/config';
 import type { ExamId, RunState } from '@/lib/types';
 import { continueLabel } from './Landing';
@@ -10,7 +8,9 @@ import { ArrowIcon, Footer, IconChip, MicroLabel, NavBar } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import home from './HomeV3.module.css';
 import styles from './DiagnosticV3.module.css';
-import { AiBadge } from './AiBadge';
+import HeroScene from './public-design/HeroScene';
+import ServiceArtwork from './public-design/ServiceArtwork';
+import ApprovedMotion from './public-design/ApprovedMotion';
 
 /**
  * Интро /diagnostic по DESIGN_V3 §6.3. Только оболочка: запуск идёт через
@@ -37,34 +37,32 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
       <NavBar onStart={() => onSelect('ielts')} />
 
       <main>
-        <section id="hero" className={`${home.container} ${home.hero}`}>
-          <div className={home.heroGrid}>
-            <div className={home.heroCopy}>
+        <section id="hero" className={`${home.container} ${styles.intro}`}>
+          <div className={styles.introGrid}>
+            <div className={styles.introCopy}>
               <MicroLabel>Quick Diagnostic</MicroLabel>
-              <h1 className={home.title}>Узнайте свой уровень до старта</h1>
-              <p className={home.lead}>Короткий тест поможет определить стартовый фокус подготовки. Около 20 минут, бесплатно, без регистрации. Результат — предварительная оценка по выбранным заданиям, не прогноз официального экзаменационного балла.</p>
-              <div className={home.actions}>
-                {(['ielts', 'sat'] as const).map((exam) => {
-                  const saved = runs[exam];
-                  const continuation = saved ? continueLabel(saved) : null;
-                  return (
-                    <div key={exam}>
-                      <button type="button" className={exam === 'ielts' ? home.heroButtonRed : home.heroButtonOutline} onClick={() => onSelect(exam)} aria-label={`Начать диагностику ${EXAMS[exam].name}`}>
-                        {exam === 'ielts' ? 'Начать с IELTS' : 'Проверить SAT'}<ArrowIcon />
-                      </button>
-                      {continuation ? <span className={home.continue}>{continuation}</span> : null}
-                    </div>
-                  );
-                })}
-              </div>
+              <h1 className={styles.introTitle}>Узнайте свой уровень до старта</h1>
+              <p className={styles.introLead}>Короткий тест поможет определить стартовый фокус подготовки. Около 20 минут, бесплатно, без регистрации. Результат — предварительная оценка по выбранным заданиям, не прогноз официального экзаменационного балла.</p>
+              <p className={styles.choiceHint}>Выберите IELTS или SAT. Если вы уже начинали, продолжите сохранённую попытку на этом устройстве.</p>
+              <p className={styles.asideLink}>Ещё не решили, какой экзамен вам нужен? Начните с <Link href="/career">Компаса</Link> — ориентир по интересам поможет выбрать направление.</p>
             </div>
-            <aside className={styles.aside}>
-              <IconChip name="spark" solid />
-              <p className={styles.asideTitle}>Точнее точка А — точнее план</p>
-              <p className={styles.asideText}>Диагностика даёт предварительную оценку, а не официальный IELTS Band Score или SAT score. Её задача — показать, с чего начать.</p>
-              <p className={styles.asideLink}>Ещё не решили, какой экзамен вам нужен? Начните с <Link href="/career">Компаса</Link> — шесть минут, и станет понятно направление.</p>
-              <p className={styles.script}>20 минут — и план готов</p>
-            </aside>
+            <div className={styles.examChoices} aria-label="Выберите диагностику">
+              {(['ielts', 'sat'] as const).map((exam) => {
+                const saved = runs[exam];
+                const continuation = saved ? continueLabel(saved) : null;
+                return <article className={styles.examChoice} key={exam}>
+                  <ServiceArtwork kind={exam} caption={exam === 'ielts' ? 'Reading + Listening' : undefined} />
+                  <div className={styles.examChoiceBody}>
+                    <h2>{EXAMS[exam].name}</h2>
+                    <p>{exam === 'ielts' ? '12 вопросов · Reading и Listening' : '16 вопросов · Reading & Writing и Math'}</p>
+                    <button type="button" className={exam === 'ielts' ? home.heroButtonRed : home.heroButtonOutline} onClick={() => onSelect(exam)} aria-label={`Начать диагностику ${EXAMS[exam].name}`}>
+                      {continuation ? 'Продолжить' : 'Начать'}<ArrowIcon />
+                    </button>
+                    {continuation ? <span className={home.continue}>{continuation}</span> : null}
+                  </div>
+                </article>;
+              })}
+            </div>
           </div>
         </section>
 
@@ -77,7 +75,7 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
                 <ul className={styles.checklist}>{GAINS.map((gain) => <li key={gain.text}><IconChip name={gain.icon} />{gain.text}</li>)}</ul>
                 <div className={styles.gainAction}><button type="button" className={home.heroButtonRed} onClick={() => onSelect('ielts')}>Пройти диагностику<ArrowIcon /></button></div>
               </div>
-              <div className={styles.photo}><Image src={PHOTOS.diagnostic.src} alt={PHOTOS.diagnostic.alt} fill sizes="(max-width: 900px) 100vw, 45vw" /><AiBadge /></div>
+              <div className={styles.scene}><HeroScene /></div>
             </div>
           </section>
         </Reveal>
@@ -108,6 +106,7 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
       </main>
 
       <Footer />
+      <ApprovedMotion />
     </div>
   );
 }

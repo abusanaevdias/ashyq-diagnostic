@@ -8,6 +8,7 @@ import { archiveEntry, checkpointKey, createEntry, emptyRecord, MAX_RECORD_BYTES
 import {pilotReportBlocks} from '@/lib/trainers/pilot-report';
 import {buildPlainDocx,DOCX_MIME} from '@/lib/trainers/docx-package';
 import styles from './TrainerCheckpoint.module.css';
+import '@/components/ui/LearningFeedback.css';
 import {replacePublicRecord,clearPublicRecord} from '@/lib/trainers/public-storage';
 
 const changed = 'ashyq:trainer-checkpoint-change';
@@ -56,7 +57,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
 }) {
   const { raw, record, key, ready, scope } = useCheckpointRecord(trainer);
   const [activeKey, setActiveKey] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('');const [saveOpen,setSaveOpen]=useState(true);
   const [deleting, setDeleting] = useState(false);
   const deleteExpected=useRef<string|null|undefined>(undefined);
   const [imported, setImported] = useState<TrainerRecord | null>(null);
@@ -69,11 +70,12 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   const serialized = JSON.stringify(data);
   useLayoutEffect(()=>{screen.current=serialized;},[serialized]);
   useEffect(()=>{mounted.current=true;const ticket=importTicket;return()=>{mounted.current=false;ticket.current++;};},[]);
-  const item = trainerById(trainer);
+  function showMessage(text:string){if(text)setSaveOpen(true);setMessage(text);}const item = trainerById(trainer);
   const saved = enabled && JSON.stringify(record?.checkpoint?.data) === serialized;
   const initial=useRef(serialized),allowExit=useRef(false),exitGuard=useRef({dirty:false,busy:false,replaceWork:false});
   const [exitHref,setExitHref]=useState<string|null>(null),exitPanel=useRef<HTMLDivElement>(null),exitLink=useRef<HTMLAnchorElement|null>(null);
-  const inRecords=!!record&&[record.checkpoint,...record.history].some(entry=>entry&&JSON.stringify(entry.data)===serialized);
+  const hasSavedCheckpoint=!!record?.checkpoint,invalidStoredRecord=!!raw&&!record;
+  useEffect(()=>{if(exitHref||deleting||imported||hasSavedCheckpoint&&!enabled||invalidStoredRecord)setSaveOpen(true);},[exitHref,deleting,imported,hasSavedCheckpoint,enabled,invalidStoredRecord]);const inRecords=!!record&&[record.checkpoint,...record.history].some(entry=>entry&&JSON.stringify(entry.data)===serialized);
   useLayoutEffect(()=>{exitGuard.current={dirty:ephemeral||!inRecords&&serialized!==initial.current,busy,replaceWork:ephemeral||serialized!==initial.current};},[serialized,inRecords,busy,ephemeral]);
   useEffect(()=>{if(exitHref){exitPanel.current?.focus({preventScroll:true});exitPanel.current?.scrollIntoView({block:'start',behavior:'instant'});}},[exitHref]);
   useEffect(() => {
@@ -84,15 +86,15 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
       if(event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
       const replacement=event.target instanceof Element?event.target.closest('button[data-trainer-replace]'):null;
       if(replacement?.getAttribute('data-trainer-replace')===trainer){
-        if(exitGuard.current.busy||pendingWrites.current){event.preventDefault();event.stopImmediatePropagation();setMessage('Сначала закончи запись или воспроизведение и дождись сохранения. Затем повтори действие.');return;}
-        if(exitGuard.current.replaceWork&&!replacement.hasAttribute('data-trainer-own-confirm')&&!window.confirm('Заменить текущую попытку? Сначала скачай её, если хочешь оставить. Если включено автосохранение, оно запишет новую попытку вместо текущего черновика; отдельная история останется.')){event.preventDefault();event.stopImmediatePropagation();setMessage('Текущая попытка оставлена без изменений.');return;}
+        if(exitGuard.current.busy||pendingWrites.current){event.preventDefault();event.stopImmediatePropagation();showMessage('Сначала закончи запись или воспроизведение и дождись сохранения. Затем повтори действие.');return;}
+        if(exitGuard.current.replaceWork&&!replacement.hasAttribute('data-trainer-own-confirm')&&!window.confirm('Заменить текущую попытку? Сначала скачай её, если хочешь оставить. Если включено автосохранение, оно запишет новую попытку вместо текущего черновика; отдельная история останется.')){event.preventDefault();event.stopImmediatePropagation();showMessage('Текущая попытка оставлена без изменений.');return;}
         setExitHref(null);return;
       }
       const anchor=event.target instanceof Element?event.target.closest('a'):null;if(!anchor||anchor.hasAttribute('download')||anchor.target&&anchor.target!=='_self')return;
       let url:URL;try{url=new URL(anchor.href);}catch{return;}if(!['http:','https:'].includes(url.protocol)||url.origin===location.origin&&url.pathname===location.pathname&&url.search===location.search)return;
       if(!exitGuard.current.dirty&&!exitGuard.current.busy&&!pendingWrites.current)return;
-      event.preventDefault();event.stopImmediatePropagation();exitLink.current=anchor;
-      if(exitGuard.current.busy||pendingWrites.current){setMessage('Сначала закончи запись или воспроизведение и дождись сохранения. Затем повтори переход.');return;}
+      event.preventDefault();event.stopImmediatePropagation();setSaveOpen(true);exitLink.current=anchor;
+      if(exitGuard.current.busy||pendingWrites.current){showMessage('Сначала закончи запись или воспроизведение и дождись сохранения. Затем повтори переход.');return;}
       setExitHref(url.href);
     };
     window.addEventListener('beforeunload', warn);
@@ -121,56 +123,56 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
       });
     } catch (error) {
       // Storage is an external system: surface failure and stop further writes.
-      setMessage(failureMessage(error, 'Не удалось сохранить работу. Скачай её перед закрытием.'));
+      showMessage(failureMessage(error, 'Не удалось сохранить работу. Скачай её перед закрытием.'));
       setActiveKey('');
     } finally {clearTimeout(timeout);pendingWrites.current--; } };
     void save();
   }, [serialized, enabled, ready, key, trainer]);
 
   async function enable() {
-    if(busy||pendingWrites.current){setMessage('Дождись завершения записи перед заменой сохранения.');return;}
+    if(busy||pendingWrites.current){showMessage('Дождись завершения записи перед заменой сохранения.');return;}
     if(raw==='!storage-unavailable')return;
     if(raw&&(!record||record.checkpoint&&JSON.stringify(record.checkpoint.data)!==serialized)&&!window.confirm('Текущая работа заменит прежний черновик. Сначала скачай нужные данные. История совместимой записи останется.'))return;
     pendingWrites.current++;
-    try{const next={...(record??emptyRecord(trainer)),checkpoint:createEntry(data)};const written=await replacePublicRecord(scope,trainer,raw,next,()=>{if(screen.current!==serialized)throw Error('Работа изменилась во время ожидания. Сохранение не заменено; повтори действие.');return mounted.current;});revision.current=written.revision;cancelImport();setActiveKey(key);setMessage('Сохранение включено. Ответы и заметки останутся в этом браузере.');}
-    catch(error){setMessage(failureMessage(error,'Сохранение недоступно. Используй скачивание.'));}finally{pendingWrites.current--;}
+    try{const next={...(record??emptyRecord(trainer)),checkpoint:createEntry(data)};const written=await replacePublicRecord(scope,trainer,raw,next,()=>{if(screen.current!==serialized)throw Error('Работа изменилась во время ожидания. Сохранение не заменено; повтори действие.');return mounted.current;});revision.current=written.revision;cancelImport();setActiveKey(key);showMessage('Сохранение включено. Ответы и заметки останутся в этом браузере.');}
+    catch(error){showMessage(failureMessage(error,'Сохранение недоступно. Используй скачивание.'));}finally{pendingWrites.current--;}
   }
   function restore(value: Snapshot) {
-    if(busy||pendingWrites.current){setMessage('Дождись завершения записи перед загрузкой попытки.');return;}
-    if (!validSnapshot(trainer, value)) { setMessage('Эта запись не подходит текущей версии тренажёра.'); return; }
+    if(busy||pendingWrites.current){showMessage('Дождись завершения записи перед загрузкой попытки.');return;}
+    if (!validSnapshot(trainer, value)) { showMessage('Эта запись не подходит текущей версии тренажёра.'); return; }
     if(serialized!==initial.current&&serialized!==JSON.stringify(value)&&!window.confirm('Выбранная попытка заменит работу на экране и текущий черновик при автосохранении. Сначала скачай нужный текст.'))return;
-    try{if(localStorage.getItem(key)!==raw)throw Error('Запись изменилась перед загрузкой. Выбери актуальную попытку заново.');}catch(error){setMessage(failureMessage(error,'Не удалось проверить актуальное сохранение.'));return;}
+    try{if(localStorage.getItem(key)!==raw)throw Error('Запись изменилась перед загрузкой. Выбери актуальную попытку заново.');}catch(error){showMessage(failureMessage(error,'Не удалось проверить актуальное сохранение.'));return;}
     cancelImport();
     onRestore(value as T);
     revision.current = record?.revision ?? '';
     setActiveKey(key);
-    setMessage(trainer === 'speaking-second-take' ? 'Заметки восстановлены. Аудиозаписи не сохранялись; незавершённый ответ можно записать заново.' : trainer === 'math-method-switch' ? 'Попытка восстановлена. Таймер текущего решения начат заново; его длительность нельзя сравнивать с непрерывной попыткой.' : 'Сохранённая попытка восстановлена. Продолжай с её текущего шага.');
+    showMessage(trainer === 'speaking-second-take' ? 'Заметки восстановлены. Аудиозаписи не сохранялись; незавершённый ответ можно записать заново.' : trainer === 'math-method-switch' ? 'Попытка восстановлена. Таймер текущего решения начат заново; его длительность нельзя сравнивать с непрерывной попыткой.' : 'Сохранённая попытка восстановлена. Продолжай с её текущего шага.');
   }
   function exportCurrent() {
     try {
       if (!validSnapshot(trainer, data)) throw new Error(validSnapshot(trainer,data,MAX_RECORD_BYTES)?`Текущая работа превышает лимит снимка JSON (${snapshotByteLimit(trainer)/1000} КБ). Скачай отчёт Word для чтения; он не восстанавливает пробу.`:'Заверши текущее действие перед скачиванием.');
       const entry = createEntry(data);
       downloadTrainerRecord({ ...(record ?? emptyRecord(trainer)), checkpoint: entry });
-      setMessage('Файл подготовлен. Проверь загрузки браузера. Он содержит текущую попытку и сохранённую историю; аудио в него не входит.');
-    } catch (error) { setMessage(error instanceof Error ? error.message : 'Не удалось подготовить файл. Скопируй нужные записи вручную.'); }
+      showMessage('Файл подготовлен. Проверь загрузки браузера. Он содержит текущую попытку и сохранённую историю; аудио в него не входит.');
+    } catch (error) { showMessage(error instanceof Error ? error.message : 'Не удалось подготовить файл. Скопируй нужные записи вручную.'); }
   }
   function exportWord(value:Snapshot,suffix:string,savedAt?:string){
     try{
       const blocks=pilotReportBlocks(trainer,value);if(savedAt)blocks.splice(1,0,{kind:'paragraph',text:`Сохранённое занятие: ${new Date(savedAt).toISOString()}`});
-      const bytes=buildPlainDocx(blocks),url=URL.createObjectURL(new Blob([bytes.buffer as ArrayBuffer],{type:DOCX_MIME})),anchor=document.createElement('a');anchor.href=url;anchor.download=`ASHYQ-${trainer}-${suffix}.docx`;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setMessage('Отчёт Word подготовлен. Он содержит ответы и заметки, без экзаменационного балла. Для восстановления скачай JSON.');
-    }catch(error){setMessage(failureMessage(error,'Не удалось подготовить Word. Скачай JSON или скопируй ответы.'));}
+      const bytes=buildPlainDocx(blocks),url=URL.createObjectURL(new Blob([bytes.buffer as ArrayBuffer],{type:DOCX_MIME})),anchor=document.createElement('a');anchor.href=url;anchor.download=`ASHYQ-${trainer}-${suffix}.docx`;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);showMessage('Отчёт Word подготовлен. Он содержит ответы и заметки, без экзаменационного балла. Для восстановления скачай JSON.');
+    }catch(error){showMessage(failureMessage(error,'Не удалось подготовить Word. Скачай JSON или скопируй ответы.'));}
   }
   async function archive() {
-    if(busy||pendingWrites.current){setMessage('Дождись сохранения перед добавлением в историю.');return;}
+    if(busy||pendingWrites.current){showMessage('Дождись сохранения перед добавлением в историю.');return;}
     if(!record||raw===null||raw==='!storage-unavailable')return;
-    if(record.history.some(entry=>JSON.stringify(entry.data)===serialized)){setMessage('Эта работа уже есть в истории. Повторная запись не добавлена.');return;}
+    if(record.history.some(entry=>JSON.stringify(entry.data)===serialized)){showMessage('Эта работа уже есть в истории. Повторная запись не добавлена.');return;}
     if(record.history.length>=MAX_HISTORY&&!window.confirm('В истории уже 20 разных занятий. Сначала скачай нужные данные. Добавить новое занятие и удалить самую старую запись истории?'))return;
     pendingWrites.current++;
     try {
       const entry=createEntry(data),next=archiveEntry({...record,checkpoint:entry},entry);
       const written=await replacePublicRecord(scope,trainer,raw,next,()=>{if(screen.current!==serialized)throw Error('Работа изменилась во время ожидания. История не заменена; повтори действие.');return mounted.current;});revision.current=written.revision;cancelImport();
-      setMessage('Занятие добавлено в историю. Это запись работы, а не подтверждение освоения навыка. Повторное нажатие не увеличивает счётчик.');
-    } catch (error) { setMessage(failureMessage(error, 'Не удалось сохранить историю. Скачай работу.')); }finally{pendingWrites.current--;}
+      showMessage('Занятие добавлено в историю. Это запись работы, а не подтверждение освоения навыка. Повторное нажатие не увеличивает счётчик.');
+    } catch (error) { showMessage(failureMessage(error, 'Не удалось сохранить историю. Скачай работу.')); }finally{pendingWrites.current--;}
   }
   async function readImport(file: File | undefined) {
     const ticket=++importTicket.current;
@@ -191,13 +193,13 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
       if (!candidate?.checkpoint) throw new Error('Файл повреждён, относится к другому тренажёру или несовместимой версии.');
       setImported(candidate);
       importExpected.current=expected;
-      setMessage('Файл проверен локально. Подтверди восстановление ниже; пока работа и сохранение не изменены.');
-    } catch (error) { if(ticket===importTicket.current&&mounted.current)setMessage(error instanceof SyntaxError?'Файл не является корректным JSON. Работа и сохранение не заменены.':failureMessage(error,'Не удалось прочитать файл.')); }finally{if(ticket===importTicket.current&&mounted.current)setReadingFile(false);}
+      showMessage('Файл проверен локально. Подтверди восстановление ниже; пока работа и сохранение не изменены.');
+    } catch (error) { if(ticket===importTicket.current&&mounted.current)showMessage(error instanceof SyntaxError?'Файл не является корректным JSON. Работа и сохранение не заменены.':failureMessage(error,'Не удалось прочитать файл.')); }finally{if(ticket===importTicket.current&&mounted.current)setReadingFile(false);}
   }
   function cancelImport(){importTicket.current++;importExpected.current=null;setReadingFile(false);setImported(null);}
   async function confirmImport() {
     if (!imported?.checkpoint || busy||!importExpected.current) return;
-    if(pendingWrites.current){setMessage('Дождись сохранения перед восстановлением файла.');return;}
+    if(pendingWrites.current){showMessage('Дождись сохранения перед восстановлением файла.');return;}
     const expected=importExpected.current,ticket=importTicket.current;
     try {
       // Explicit confirmation replaces the local record. No file leaves the browser.
@@ -206,24 +208,24 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
       revision.current=restored.revision;
       onRestore(imported.checkpoint.data as T);
       setActiveKey(key);cancelImport();
-      setMessage('Работа из файла восстановлена; локальное сохранение заменено. Аудио в экспорт не входит.');
-    } catch (error) { setMessage(failureMessage(error, 'Не удалось восстановить файл. Текущая работа не изменена.')); }finally{pendingWrites.current--;}
+      showMessage('Работа из файла восстановлена; локальное сохранение заменено. Аудио в экспорт не входит.');
+    } catch (error) { showMessage(failureMessage(error, 'Не удалось восстановить файл. Текущая работа не изменена.')); }finally{pendingWrites.current--;}
   }
   async function removeSaved() {
-    if(deleteExpected.current===undefined||busy||pendingWrites.current){setMessage('Дождись завершения записи перед удалением.');return;}
+    if(deleteExpected.current===undefined||busy||pendingWrites.current){showMessage('Дождись завершения записи перед удалением.');return;}
     const expected=deleteExpected.current;pendingWrites.current++;
     try {
       const tombstone=await clearPublicRecord(scope,trainer,expected,()=>{if(deleteExpected.current!==expected)throw Error('Очистка отменена. Запись не удалена.');return mounted.current;});
       writeGeneration.current++;revision.current=tombstone.revision;deleteExpected.current=undefined;cancelImport();
       setActiveKey(''); setDeleting(false);
-      setMessage('Локальная запись удалена. Работа на экране не изменена.');
-    } catch(error) { setMessage(failureMessage(error,'Браузер не разрешил удалить запись.')); }finally{pendingWrites.current--;}
+      showMessage('Локальная запись удалена. Работа на экране не изменена.');
+    } catch(error) { showMessage(failureMessage(error,'Браузер не разрешил удалить запись.')); }finally{pendingWrites.current--;}
   }
-  function askDelete(){if(busy||pendingWrites.current){setMessage('Дождись завершения записи перед очисткой.');return;}deleteExpected.current=raw;setDeleting(true);cancelImport();}
+  function askDelete(){if(busy||pendingWrites.current){showMessage('Дождись завершения записи перед очисткой.');return;}deleteExpected.current=raw;setDeleting(true);cancelImport();}
   function cancelDelete(){deleteExpected.current=undefined;setDeleting(false);}
-  function downloadRaw(){if(!raw||raw==='!storage-unavailable')return;try{const url=URL.createObjectURL(new Blob([raw],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=`ASHYQ-${trainer}-recovery.txt`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setMessage('Исходная запись скачана без изменения. Это файл восстановления, не проверенная учебная работа.');}catch(error){setMessage(failureMessage(error,'Не удалось скачать исходные данные.'));}}
+  function downloadRaw(){if(!raw||raw==='!storage-unavailable')return;try{const url=URL.createObjectURL(new Blob([raw],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=`ASHYQ-${trainer}-recovery.txt`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);showMessage('Исходная запись скачана без изменения. Это файл восстановления, не проверенная учебная работа.');}catch(error){showMessage(failureMessage(error,'Не удалось скачать исходные данные.'));}}
 
-  return <section className={styles.panel} aria-label={`Сохранение: ${item.title}`}>
+  return <section className={styles.panel} aria-label={`Сохранение: ${item.title}`}><details open={saveOpen} onToggle={event=>setSaveOpen(event.currentTarget.open)}><summary className="learning-save-summary"><span>Сохранение и файлы</span><small>{enabled ? saved ? "Сохранено на устройстве" : "Сохраняем…" : record?.checkpoint ? "Есть сохранённая попытка" : "Автосохранение выключено"}</small></summary>
     <div className={styles.heading}><div><h2>Продолжи с того же места</h2><p>{enabled ? 'Автосохранение включено для этого тренажёра.' : 'Сохранение выключено. Можно скачать текущую работу без включения.'}</p></div><Link href="/trainers/history">Мои занятия →</Link></div>
     <details className={styles.history}><summary>Хранение ответов и общее устройство</summary><p className={styles.note}>Текст сохраняется только в этом браузере {scope === 'guest' ? 'в гостевом режиме' : 'для текущего аккаунта'}. На общем устройстве записи могут быть доступны другим людям с этим браузером. Автоматической синхронизации между устройствами нет; перенос возможен через файл.{trainer === 'speaking-second-take' ? ' Аудио не сохраняется; сохраняются заметки и самопроверка.' : ''}</p></details>
     {enabled && <p role="status">{saved ? 'Сохранено на этом устройстве.' : 'Сохраняем изменения… Дождись сообщения «Сохранено» перед закрытием.'}</p>}
@@ -232,7 +234,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     {record?.checkpoint && !enabled && <p className={styles.resume}>Есть попытка от {new Date(record.checkpoint.savedAt).toLocaleString('ru-RU')}. Продолжи её или явно замени текущей работой.</p>}
     <div className={styles.actions}>
       {record?.checkpoint && !enabled && <button type="button" disabled={!ready || busy} onClick={() => restore(record.checkpoint!.data)}>Продолжить сохранённую</button>}
-      {!enabled ? <button type="button" disabled={!ready || busy || raw === '!storage-unavailable'} onClick={enable}>{record?.checkpoint || raw ? 'Заменить сохранение текущей работой' : 'Сохранять на этом устройстве'}</button> : <button type="button" onClick={() => { setActiveKey(''); setMessage('Автосохранение выключено. Предыдущая запись остаётся в браузере.'); }}>Выключить автосохранение</button>}
+      {!enabled ? <button type="button" disabled={!ready || busy || raw === '!storage-unavailable'} onClick={enable}>{record?.checkpoint || raw ? 'Заменить сохранение текущей работой' : 'Сохранять на этом устройстве'}</button> : <button type="button" onClick={() => { setActiveKey(''); showMessage('Автосохранение выключено. Предыдущая запись остаётся в браузере.'); }}>Выключить автосохранение</button>}
       <button type="button" disabled={busy} onClick={exportCurrent}>Скачать текущую работу</button>
       <button type="button" disabled={busy} onClick={()=>exportWord(data,'current')}>Скачать отчёт Word</button>
       {completed && enabled && <button type="button" disabled={busy} onClick={archive}>Добавить занятие в историю</button>}
@@ -246,5 +248,5 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     {busy && <p className={styles.note}>Управление сохранением доступно после окончания записи или воспроизведения.</p>}
     {message && <p className={styles.status} role="status">{message}</p>}
     {exitHref&&<div ref={exitPanel} tabIndex={-1} role="alert" aria-label="Подтверждение выхода из тренажёра" className={styles.warning}><p>Перейти со страницы? Несохранённые ответы и аудио этой вкладки будут потеряны. Сначала можно скачать работу и отдельную аудиозапись.</p><div className={styles.actions}><button type="button" disabled={busy} onClick={()=>{if(exitGuard.current.busy||pendingWrites.current)return;allowExit.current=true;location.assign(exitHref);}}>Перейти без сохранения</button><button type="button" onClick={()=>{setExitHref(null);exitLink.current?.focus();}}>Остаться в тренажёре</button></div></div>}
-  </section>;
+  </details></section>;
 }
