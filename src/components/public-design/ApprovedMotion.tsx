@@ -19,7 +19,7 @@ type MotionWindow = Window & { gsap?: Gsap; ScrollTrigger?: ScrollPlugin };
 export default function ApprovedMotion() {
   const pathname = usePathname();
   const [coreReady, setCoreReady] = useState(false), [scrollReady, setScrollReady] = useState(false);
-  const used = pathname === '/' || pathname === '/diagnostic' || pathname.startsWith('/courses') || pathname === '/mentoring' || pathname === '/all-inclusive';
+  const used = pathname === '/' || pathname === '/diagnostic' || pathname === '/program' || pathname.startsWith('/courses') || pathname === '/mentoring' || pathname === '/all-inclusive';
   useEffect(() => {
     if (!used || !coreReady || !scrollReady) return;
     const root = document.querySelector<HTMLElement>('[data-public-design="051"]');

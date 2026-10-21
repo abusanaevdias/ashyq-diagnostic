@@ -1,0 +1,15 @@
+/* Shared by the eleven native trainers through CSS Modules composition. */
+.workspace{--learning-radius:24px;font-family:var(--font-body);font-optical-sizing:auto}
+.workspace :is(article,fieldset){min-width:0;border-radius:var(--learning-radius);box-shadow:none}
+.workspace :is(h1,h2,h3){font-family:var(--font-display);font-weight:700;overflow-wrap:break-word}
+.workspace h1{letter-spacing:-.055em;line-height:1.06}
+.workspace h2{letter-spacing:-.035em;line-height:1.2}
+.workspace :is(button,summary){min-height:44px;touch-action:manipulation}
+.workspace :is(input,textarea,select):not([type=radio]):not([type=checkbox]){border-radius:14px;padding:14px 16px;font:400 1rem/1.6 var(--font-body);max-width:100%;background:var(--surface);color:var(--ink)}
+.workspace :is(button,a,summary):focus-visible{outline:3px solid var(--red-deep);outline-offset:4px}
+.workspace textarea{min-height:150px}
+.workspace :is(p,li,label){overflow-wrap:break-word}
+.workspace :is(button,input,textarea):disabled{cursor:not-allowed}
+.workspace :is(article,fieldset)>h3{font-size:clamp(1.4rem,3vw,1.85rem);line-height:1.2;letter-spacing:-.03em}
+.workspace :is(section,article)>p{line-height:1.7}
+@media(max-width:600px){.workspace{--learning-radius:20px;padding-inline:20px}.workspace h1{font-size:clamp(2.25rem,9vw,3rem)}.workspace :is(article,fieldset)>h3{font-size:1.5rem}}

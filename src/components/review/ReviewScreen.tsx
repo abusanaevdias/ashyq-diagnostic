@@ -8,6 +8,8 @@ import { buildWhatsAppLink } from '@/lib/whatsapp';
 import type { DiagnosticResult, Question, RunState, UtmParams } from '@/lib/types';
 import { Wordmark } from '@/components/ui/Brand';
 import MaterialView from '@/components/quiz/MaterialView';
+import DiagnosticJourney from '../public-design/DiagnosticJourney';
+import experience from '../public-design/DiagnosticExperience.module.css';
 
 /**
  * Разбор вопросов после Finish: мой ответ, правильный ответ, объяснение.
@@ -51,7 +53,7 @@ export default function ReviewScreen({
   });
 
   return (
-    <div className="v3 min-h-dvh pb-16">
+    <div className={`v3 min-h-dvh pb-16 ${experience.page}`}>
       <header className="sticky top-0 z-30 border-b border-line bg-paper">
         <div className="shell-wide flex items-center justify-between gap-3 py-3">
           <Wordmark size="md" />
@@ -66,6 +68,7 @@ export default function ReviewScreen({
       </header>
 
       <main className="shell pt-7">
+        <DiagnosticJourney stage="review" />
         <p className="label flex items-center gap-2 text-red"><span aria-hidden="true" className="inline-block h-1.5 w-1.5 bg-red" />Разбор</p>
         <h1 className="display mt-3 text-h1">
           {result.totalCorrect} из {result.totalQuestions}
@@ -101,7 +104,7 @@ export default function ReviewScreen({
             const state = !record?.answered ? 'skipped' : record.correct ? 'correct' : 'wrong';
 
             return (
-              <article key={q.id} className="card-ink overflow-hidden rounded-md">
+              <article key={q.id} className={`card-ink overflow-hidden rounded-md ${experience.reviewCard}`} data-answer-state={state}>
                 <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-2.5">
                   <span className="label text-ink-faint">
                     Вопрос {i + 1} · {q.difficulty}

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { SiteFooter, SiteHeader } from '@/components/ui/SiteChrome';
 import { ButtonLink, MicroLabel } from '@/components/ui/CleanUi';
+import presentation from '@/components/public-design/PublicPresentation.module.css';
+import secondary from '@/components/public-design/SecondaryPresentation.module.css';
 
 export const metadata: Metadata = {
   title: 'Страница не найдена — ASHYQ',
@@ -10,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="v3 min-h-dvh">
+    <div className={`v3 min-h-dvh ${presentation.root} ${secondary.page}`}>
       <SiteHeader />
       <main className="shell-wide flex min-h-[60vh] flex-col justify-center py-16 sm:py-24">
         <MicroLabel>Ошибка 404</MicroLabel>

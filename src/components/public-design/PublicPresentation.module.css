@@ -2,7 +2,7 @@
 @font-face{font-family:Onest;src:url('/design/onest-700.ttf') format('truetype');font-style:normal;font-weight:700;font-display:optional}
 .root{--font-system:var(--font-approved);--font-display:var(--font-system);--font-body:var(--font-system);--container:1280px;--pad:clamp(20px,4vw,58px);min-height:100dvh;font-family:var(--font-body);font-size:1rem;font-optical-sizing:auto;color:var(--ink);background:var(--bg)}
 .root h1,.root h2,.root h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.045em}.root :is(button,input,textarea,select){font-family:var(--font-body)}.root :is(a,button,summary){touch-action:manipulation;-webkit-tap-highlight-color:transparent}.root :is(button,a,summary):focus-visible{outline:3px solid var(--red-deep);outline-offset:4px}.root :is(input,textarea,select):not([type=radio]):not([type=checkbox]){font-size:1rem;max-width:100%}.root :is(h1,h2,h3,p){overflow-wrap:break-word}.root :is(section,article){min-width:0}.root main :is(a,button,summary){scroll-margin-top:140px}.root main :is(button,a):active{transition-duration:80ms}
-/* Public-only surface; independently owned blog/private trees never receive this root. */
+/* Approved presentation surface; blog and CRM are excluded by the route wrapper. */
 .root>div{--font-display:var(--font-system);--font-body:var(--font-system)}
 .root main :is(h1,h2,h3){scroll-margin-top:155px}
 .root :global([data-public-header]){background:var(--bg);border-bottom-color:var(--hairline)}
