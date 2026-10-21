@@ -115,3 +115,10 @@ the corrected text AND a numeric Gap0; the old assertion accepted the old phrase
 OR any approximate positive gap. No test was added or manually run, and no threshold
 or workflow changed. All scoring code and the fixture's target7.0/range7.5–9.0 stay
 unchanged. Final exact-head run remains authoritative.
+
+CI39687194081 on8c1927d passed the functional gates and all runtime token categories
+over80 screens. Token8/9 stopped only on six source lines where compact CSS ended
+a radius declaration without a semicolon, so the line-based guard included its
+closing brace. Five new CSS Modules are now conventionally formatted with explicit
+semicolons, using PostCSS formatting only. Declaration values/order and all checks
+are retained. Accessibility/performance had still not run; final CI remains pending.
