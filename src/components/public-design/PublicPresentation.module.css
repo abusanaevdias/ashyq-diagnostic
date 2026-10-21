@@ -1,5 +1,5 @@
-@font-face{font-family:Onest;src:url('/design/onest-400.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
-@font-face{font-family:Onest;src:url('/design/onest-700.ttf') format('truetype');font-style:normal;font-weight:700;font-display:swap}
+@font-face{font-family:Onest;src:url('/design/onest-400.ttf') format('truetype');font-style:normal;font-weight:400;font-display:optional}
+@font-face{font-family:Onest;src:url('/design/onest-700.ttf') format('truetype');font-style:normal;font-weight:700;font-display:optional}
 .root{--font-system:var(--font-approved);--font-display:var(--font-system);--font-body:var(--font-system);--container:1280px;--pad:clamp(20px,4vw,58px);min-height:100dvh;font-family:var(--font-body);font-size:1rem;font-optical-sizing:auto;color:var(--ink);background:var(--bg)}
 .root h1,.root h2,.root h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.045em}.root :is(button,input,textarea,select){font-family:var(--font-body)}.root :is(a,button,summary){touch-action:manipulation;-webkit-tap-highlight-color:transparent}.root :is(button,a,summary):focus-visible{outline:3px solid var(--red-deep);outline-offset:4px}.root :is(input,textarea,select):not([type=radio]):not([type=checkbox]){font-size:1rem;max-width:100%}.root :is(h1,h2,h3,p){overflow-wrap:break-word}.root :is(section,article){min-width:0}.root main :is(a,button,summary){scroll-margin-top:140px}.root main :is(button,a):active{transition-duration:80ms}
 /* Public-only surface; independently owned blog/private trees never receive this root. */
@@ -12,7 +12,7 @@
 .root :global([data-public-header])>nav>details>summary:hover{box-shadow:var(--shadow-card-hover)}
 .root :global([data-public-footer]){background:var(--ink);color:var(--on-dark);margin-top:30px}
 .root :global([data-public-footer]) :is(a,p,span){color:var(--on-dark)}
-.root :global([data-public-footer]) img{filter:brightness(0) invert(1);height:32px;width:auto}
+.root :global([data-public-footer]) img{filter:brightness(0) invert(1);height:32px;width:119.42px;aspect-ratio:668/179;object-fit:contain}
 .root :global([data-public-footer])>div{padding-inline:var(--pad);max-width:var(--container)}
 @media(max-width:700px){.root :global([data-public-header])>nav{min-height:72px;padding-inline:20px}.root :global([data-public-header])>nav>a:first-child img{height:22px}}
 @media(max-width:360px){.root :global([data-public-header])>nav{padding-inline:14px;gap:6px}.root :global([data-public-header])>nav>a:first-child img{height:19px}}

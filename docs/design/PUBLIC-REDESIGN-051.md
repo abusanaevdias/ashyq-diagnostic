@@ -15,6 +15,8 @@ vertical and use native scrolling. No loader or forced smooth-scrolling engine.
 Keep ASHYQ's cream, ink and red palette, actual logo, literal cohort figures,
 central offer data and real calls to action. Onest 400/700 is an opt-in public
 font token; independently owned blog and private routes keep their fonts.
+Public fonts preload early and use optional display to prevent late layout
+shifts. Slow first visits may keep the system fallback for that page view.
 
 ## Native implementation
 

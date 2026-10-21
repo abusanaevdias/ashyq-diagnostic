@@ -71,6 +71,23 @@ decorative rotating HTML scene to its own frame, and explicitly retain
 `не официальный балл IELTS или SAT` in the diagnostic limitation. Existing
 checks are unchanged. Final automatic run is tracked on PR172.
 
+## Second automatic PR run
+
+Run `39673097095`, head `95dd4f3`, passed the prior three failures and all
+functional gates through token audit (9/9), including LMS91/91 and season64/64
+synthetic engineering scenarios. Its final accessibility/performance gate failed:
+country labels on the globe had4.45:1 contrast, two example-stage buttons were
+38px high, and mentoring/season had font-related CLS0.203/0.206 and performance
+88/89. LCP was about1s and TBT0ms; the whole run was not successful.
+
+Corrections use the existing ink token for country labels, 44px stage buttons,
+active-public-only font preloads plus `font-display:optional`, and an explicit
+footer-logo size matching its source ratio. On a slow first load the browser may
+keep the system fallback font until a later visit. Existing root preload,
+metadata, private/blog fonts and all audit thresholds are retained. Independent
+source review found no blocker. Final CLS/accessibility/CI acceptance is tracked
+on PR172, not inferred from these code changes.
+
 ## Screenshots
 
 Unedited CUA viewport captures exported through the existing localhost-only

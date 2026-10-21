@@ -12,6 +12,10 @@ export default function PublicPresentation({ children }: { children: ReactNode }
   const pathname = usePathname();
   const active = pages.has(pathname) || trees.some(prefix => pathname.startsWith(prefix));
   return <div className={active ? styles.root : undefined} data-public-design={active ? '051' : undefined}>
+    {active && <>
+      <link rel="preload" href="/design/onest-400.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+      <link rel="preload" href="/design/onest-700.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+    </>}
     {children}
   </div>;
 }
