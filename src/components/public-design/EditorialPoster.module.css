@@ -2,6 +2,9 @@
 .label,.footnote{position:relative;z-index:1;font-size:.82rem;line-height:1.6;letter-spacing:.03em;margin:0;color:var(--on-dark)}
 .poster .title{position:relative;z-index:1;margin:48px 0;font-size:clamp(2.3rem,4vw,4.7rem);font-weight:700;letter-spacing:-.055em;line-height:1.06;color:var(--on-dark)}
 .title span{display:block;color:inherit}
+.media{display:grid;gap:16px;min-width:0}
+.photo{position:relative;margin:0;border-radius:24px;overflow:hidden;background:var(--surface)}
+.photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:center 40%}
 .sheets{position:absolute;inset:0;z-index:0;pointer-events:none}
 .sheets i{position:absolute;inset:24% -25% -45% 38%;border:1px solid var(--on-dark);opacity:.16;transform:rotate(-12deg)}
 .sheets i:last-child{inset:30% -35% -40% 32%;border:12px solid var(--red);opacity:1;transform:rotate(-18deg)}

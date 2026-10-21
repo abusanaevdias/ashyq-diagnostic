@@ -102,7 +102,7 @@ export default function ResultScreen({
       <main className="shell pt-4">
         <DiagnosticJourney stage="result" />
         <EditorialLabel>Your Ashyq Diagnostic</EditorialLabel>
-        <h1 className="serif mt-4 max-w-[10.8em] text-h1 text-red">Твоя точка А</h1>
+        <h1 tabIndex={-1} className="serif mt-4 max-w-[10.8em] text-h1 text-red">Твоя точка А</h1>
         <div className={experience.reviewAction}>
           <p>Сначала посмотри общий результат, затем открой свои ответы и объяснения к каждому заданию.</p>
           <button type="button" className="btn btn-ink" onClick={onReview}>Посмотреть свои ответы →</button>

@@ -74,3 +74,25 @@ The preview-only instruction remains: no product merge or deployment. This slice
 is stacked on draft PR172, whose exact e4eecf6 CI39675932678 passed. That earlier
 result does not prove the successor changes pass. Repeat Reading stage return and
 mobile/keyboard workspace views when a real browser is available.
+
+First successor CI39681654890 on514d42f passed lint/typecheck/build but stopped at
+162/164 basic checks: About/Community image counts fell after the HTML poster
+replacement. The original labelled illustrations are restored as visible companion
+figures; poster text remains separate and readable. Existing checks are unchanged.
+Later gates are not inferred from this failed run; final exact-head CI is tracked
+in the successor PR.
+
+A fresh critic inspected five actual mobile CI screenshots. Map states now have
+explicit current/answered/unanswered wording and a neutral answered border; Continue
+is the primary action. Review header is static so it cannot overlap the reading
+cards; the existing return controls remain at both ends. Wrong/skipped answers open
+their source material by default. Program has an early real anchor to service
+selection; Progress explicitly labels chart points as range midpoints. No scoring
+or persistence changed. The screenshot review does not prove live keyboard/motion
+behaviour or the restored companion-photo layout.
+
+Source reconciliation also found stage callbacks do not reset viewport position.
+Journey entry now focuses its h1 and returns to the top only when entering a
+stage/setup step. Question navigation similarly focuses its count and resets the
+view only when question.id changes. Timer ticks and answer edits do not trigger
+these effects. This presentation correction does not modify run state or storage.

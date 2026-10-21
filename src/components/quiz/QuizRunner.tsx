@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { EXAMS } from '@/lib/config';
 import type { Question, RunState } from '@/lib/types';
 import { Wordmark } from '@/components/ui/Brand';
@@ -49,6 +49,11 @@ export default function QuizRunner({
 
   const index = run.currentIndex;
   const question = questions[index];
+  const questionStart = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    questionStart.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    questionStart.current?.focus({ preventScroll: true });
+  }, [question?.id]);
   const total = questions.length;
   const answeredCount = useMemo(
     () => questions.filter((q) => Boolean(run.answers[q.id])).length,
@@ -167,7 +172,7 @@ export default function QuizRunner({
 
       {/* ---------- question ---------- */}
       <main className="shell flex-1 py-6 pb-36">
-        <div className={experience.quizHeader}>
+        <div ref={questionStart} tabIndex={-1} className={experience.quizHeader}>
           <p>Вопрос {index + 1} из {total}</p>
           <p>Отвечено: {answeredCount} из {total}</p>
         </div>
@@ -269,7 +274,7 @@ export default function QuizRunner({
                       current
                         ? 'border-ink bg-ink text-paper'
                         : answered
-                          ? 'border-red bg-red-wash text-red'
+                          ? 'border-ink bg-paper text-ink'
                           : 'border-line bg-paper text-ink-faint'
                     }`}
                   >
@@ -281,13 +286,16 @@ export default function QuizRunner({
 
             <p className="mt-4 text-[0.8rem] text-ink-faint">
               Можно возвращаться к любому вопросу и менять ответ до завершения.
-              {' '}Выделенный номер означает выбранный ответ, а не правильность. Проверка будет в разборе.
+              {' '}Чёрная заливка — текущий вопрос. Тёмная рамка — ответ выбран. Светлая рамка — без ответа. Правильность будет видна в разборе.
             </p>
 
             <div className="mt-5 grid gap-2.5">
+              <button type="button" className="btn btn-ink" onClick={() => setMapOpen(false)}>
+                Продолжить диагностику
+              </button>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-quiet"
                 onClick={() => {
                   setMapOpen(false);
                   setFinishOpen(true);

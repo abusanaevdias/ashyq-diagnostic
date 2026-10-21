@@ -27,7 +27,7 @@
 .reviewCard>div:first-child{min-height:58px;background:var(--bg)}
 .reviewCard>div:last-child{padding:clamp(20px,4vw,32px)}
 .page footer{background:var(--bg);box-shadow:0 -8px 30px var(--hairline)}
-.quizHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.quizHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap;scroll-margin-top:140px}
 .quizHeader p{margin:0;font-size:.82rem;color:var(--ink-soft)}
 @media(max-width:600px){.page main{padding-inline:20px}.page :global(.option){padding:15px;min-height:64px}.page :global(.option)[data-selected=true]{padding:14px}.stage{gap:6px;margin:14px 0 24px;font-size:.72rem}.stage li{padding:8px 10px}.page :global([role=dialog])>div{padding:22px;border-bottom-left-radius:0;border-bottom-right-radius:0}.page main>h1{font-size:2.5rem}.page :global(.label){letter-spacing:.04em}}
 @media(prefers-reduced-motion:reduce){.page :global(.option){transition:none}.page :global(.option):hover:not(:disabled){transform:none}}

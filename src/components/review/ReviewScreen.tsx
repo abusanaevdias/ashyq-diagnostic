@@ -54,7 +54,7 @@ export default function ReviewScreen({
 
   return (
     <div className={`v3 min-h-dvh pb-16 ${experience.page}`}>
-      <header className="sticky top-0 z-30 border-b border-line bg-paper">
+      <header className="border-b border-line bg-paper">
         <div className="shell-wide flex items-center justify-between gap-3 py-3">
           <Wordmark size="md" />
           <button
@@ -70,7 +70,7 @@ export default function ReviewScreen({
       <main className="shell pt-7">
         <DiagnosticJourney stage="review" />
         <p className="label flex items-center gap-2 text-red"><span aria-hidden="true" className="inline-block h-1.5 w-1.5 bg-red" />Разбор</p>
-        <h1 className="display mt-3 text-h1">
+        <h1 tabIndex={-1} className="display mt-3 text-h1">
           {result.totalCorrect} из {result.totalQuestions}
         </h1>
         <p className="mt-3 max-w-md text-[0.98rem] text-ink-soft">
@@ -133,7 +133,7 @@ export default function ReviewScreen({
 
                   {material ? (
                     <div className="mb-4">
-                      <MaterialView material={material} compactByDefault={material.kind !== 'audio'} />
+                      <MaterialView material={material} compactByDefault={state === 'correct' && material.kind !== 'audio'} />
                     </div>
                   ) : null}
 

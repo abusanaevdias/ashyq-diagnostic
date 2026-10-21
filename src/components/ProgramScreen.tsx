@@ -123,6 +123,7 @@ export default function ProgramScreen() {
           <span aria-hidden="true">·</span>
           <span>IELTS / Digital SAT</span>
         </p>
+        <a href="#approved-services-title" className="btn btn-ink mt-7 w-fit">Выбрать программу ↓</a>
       </section>
 
       <ApprovedServices />
