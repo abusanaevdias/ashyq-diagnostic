@@ -57,6 +57,20 @@ it is evidence of feedback presentation, not of the corrected return position.
 No answer or stage-transition rules changed. Repeat this check when the browser
 is available; do not claim final visual acceptance from the old capture.
 
+## First automatic PR run
+
+Run `39672072400`, head `e66d0e5`: lint/typecheck/bank validation/build passed.
+The initial end-to-end runner passed 161/164 assertions, then stopped the job:
+library entry ended at675px on a664px-high emulated phone, landing had9px
+horizontal overflow, and diagnostic copy lacked the explicit `не официальный`
+wording expected by the preserved contract. Success of later gates is not
+inferred from this failed run.
+
+Corrections: compact only the short-phone first-fold rhythm, clip only the
+decorative rotating HTML scene to its own frame, and explicitly retain
+`не официальный балл IELTS или SAT` in the diagnostic limitation. Existing
+checks are unchanged. Final automatic run is tracked on PR172.
+
 ## Screenshots
 
 Unedited CUA viewport captures exported through the existing localhost-only

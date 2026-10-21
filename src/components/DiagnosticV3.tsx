@@ -42,7 +42,7 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
             <div className={styles.introCopy}>
               <MicroLabel>Quick Diagnostic</MicroLabel>
               <h1 className={styles.introTitle}>Узнайте свой уровень до старта</h1>
-              <p className={styles.introLead}>Короткий тест поможет определить стартовый фокус подготовки. Около 20 минут, бесплатно, без регистрации. Результат — предварительная оценка по выбранным заданиям, не прогноз официального экзаменационного балла.</p>
+              <p className={styles.introLead}>Короткий тест поможет определить стартовый фокус подготовки. Около 20 минут, бесплатно, без регистрации. Результат — предварительная оценка по выбранным заданиям, не официальный балл IELTS или SAT и не прогноз экзаменационного результата.</p>
               <p className={styles.choiceHint}>Выберите IELTS или SAT. Если вы уже начинали, продолжите сохранённую попытку на этом устройстве.</p>
               <p className={styles.asideLink}>Ещё не решили, какой экзамен вам нужен? Начните с <Link href="/career">Компаса</Link> — ориентир по интересам поможет выбрать направление.</p>
             </div>
