@@ -47,8 +47,8 @@ remount with course filters. All new animation listeners have cleanup.
   https://github.com/iconify/icon-sets; Apache-2.0 license retained. SVG IDs are
   isolated with React useId, mask colors use ASHYQ palette variables.
 - GSAP + ScrollTrigger 3.15.0: approved preview distributions, self-hosted under
-  `public/design/`. Original upstream license headers remain; only an ESLint
-  vendor-file directive is added. https://gsap.com/standard-license.
+  `public/design/`. Original upstream license headers remain; an ESLint
+  vendor-file directive and trailing-whitespace normalization are the only edits. https://gsap.com/standard-license.
 - Globe: pinned Natural Earth public-domain land, recorded in
   `public/design/GLOBE-SOURCE.md`. Point extraction used d3-geo 3.1.1 (ISC;
   `public/design/D3-LICENSE`); production has no d3 runtime dependency.
