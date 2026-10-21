@@ -131,7 +131,7 @@ export default function ResultScreen({
             value={result.gapLabel ?? '—'}
             note={
               result.targetReached
-                ? 'цель уже в диапазоне'
+                ? 'диапазон не ниже цели'
                 : result.gapLabel
                   ? 'до цели'
                   : 'выбери цель на разборе'
@@ -190,7 +190,7 @@ export default function ResultScreen({
           <div>
             <h2 className="label flex items-center gap-2 text-red">
               <RedStar className="h-2.5 w-2.5" />
-              Стоит подтянуть
+              {result.weakest.length === 0 ? 'По этим заданиям' : 'Стоит подтянуть'}
             </h2>
             <ul className="mt-3 space-y-2">
               {result.weakest.length === 0 ? (

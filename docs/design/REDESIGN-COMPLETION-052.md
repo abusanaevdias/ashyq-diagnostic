@@ -102,3 +102,9 @@ token gate7/9: 23 source radius literals/custom references and runtime14px/18px
 outside the registered scale. The CSS now uses the existing radius tokens directly;
 14/18/22px were aligned to16/20/24px. No token or audit allowlist changed. The
 accessibility/performance gate had not run, so its success is not inferred.
+
+Second fresh stills review found no visible clipping/overlap/action blocker in the
+five updated captures. It caught two pre-existing result-copy contradictions: the
+gap flag also covers targets below band.low, and an empty weakest list should not
+be titled "Стоит подтянуть". Labels now say "диапазон не ниже цели" and "По этим
+заданиям" in those existing branches. gapToTarget and all calculations are unchanged.
