@@ -122,3 +122,12 @@ a radius declaration without a semicolon, so the line-based guard included its
 closing brace. Five new CSS Modules are now conventionally formatted with explicit
 semicolons, using PostCSS formatting only. Declaration values/order and all checks
 are retained. Accessibility/performance had still not run; final CI remains pending.
+
+CI39688348044 onf44f116 passed all gates: basic164/164, LMS91/91,
+season64/64, tokens9/9; 72 route/viewport audits reported zero axe violations,
+overflow, undersized targets, reduced-motion or focus-indicator failures.
+Its final Library320px capture still exposed a visual issue missed by those
+structural gates: the three study-navigation names wrapped inside words.
+StudyNavigation now reduces only mobile link padding responsively and keeps
+these short destination names on one line; no shared segment controls, labels,
+targets, motion or route behavior changed. Final successor CI is tracked in PR173.
