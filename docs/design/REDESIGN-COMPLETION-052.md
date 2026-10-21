@@ -108,3 +108,10 @@ five updated captures. It caught two pre-existing result-copy contradictions: th
 gap flag also covers targets below band.low, and an empty weakest list should not
 be titled "Стоит подтянуть". Labels now say "диапазон не ниже цели" and "По этим
 заданиям" in those existing branches. gapToTarget and all calculations are unchanged.
+
+CI39686437814 on3b7c8ee stopped163/164 because the existing perfect-IELTS gap check
+expected the old, inaccurate phrase. Its single assertion is updated to require
+the corrected text AND a numeric Gap0; the old assertion accepted the old phrase
+OR any approximate positive gap. No test was added or manually run, and no threshold
+or workflow changed. All scoring code and the fixture's target7.0/range7.5–9.0 stay
+unchanged. Final exact-head run remains authoritative.
