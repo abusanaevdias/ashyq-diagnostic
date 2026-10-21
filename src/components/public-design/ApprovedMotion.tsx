@@ -4,8 +4,7 @@ import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { motionPaused, MOTION_PREFERENCE_EVENT } from '@/lib/motion-preference';
-import points from './globe-points.json';
-import { projectPoint } from './ServiceArtwork';
+import { landPaths, projectPoint } from './globe-geometry';
 
 type Target = object | string | Element | Element[] | NodeListOf<Element>;
 type Vars = Record<string, unknown>;
@@ -51,13 +50,14 @@ export default function ApprovedMotion() {
         watch(node, gs.timeline({ paused: true, repeat: -1, yoyo: true }).to(cursor, { progress: .95, duration: 3.2, ease: 'sine.inOut', onUpdate: paint }), () => { cursor.progress = .3; paint(); });
       });
       root.querySelectorAll<HTMLElement>('[data-approved-art="mentoring"]').forEach(node => {
-        const dots = [...node.querySelectorAll<SVGCircleElement>('[data-land-point]')];
+        const layers = [...node.querySelectorAll<SVGPathElement>('[data-land-layer]')];
         const cities = [...node.querySelectorAll<SVGCircleElement>('[data-city-point]')];
         const cityPoints = [[-.2,.7,.68],[.4,.45,.79],[.7,.1,.7]], spin = { angle: -.45 }; let last = 0;
         const paint = (force = false) => {
           const now = performance.now(); if (!force && now - last < 33) return; last = now;
           const render = (dot: SVGCircleElement, point: number[]) => { const p = projectPoint(point, spin.angle); dot.setAttribute('cx', p.cx.toFixed(2)); dot.setAttribute('cy', p.cy.toFixed(2)); dot.setAttribute('opacity', p.opacity.toFixed(2)); };
-          dots.forEach((dot, i) => render(dot, points[i])); cities.forEach((dot, i) => render(dot, cityPoints[i]));
+          const paths = landPaths(spin.angle);
+          layers.forEach((layer, i) => layer.setAttribute('d', paths[i])); cities.forEach((dot, i) => render(dot, cityPoints[i]));
         };
         watch(node, gs.timeline({ paused: true, repeat: -1 }).to(spin, { angle: -.45 + Math.PI * 2, duration: 26, ease: 'none', onUpdate: () => paint() }), () => { spin.angle = -.45; paint(true); });
       });

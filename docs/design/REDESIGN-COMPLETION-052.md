@@ -131,3 +131,15 @@ structural gates: the three study-navigation names wrapped inside words.
 StudyNavigation now reduces only mobile link padding responsively and keeps
 these short destination names on one line; no shared segment controls, labels,
 targets, motion or route behavior changed. Final successor CI is tracked in PR173.
+
+CI39690312331 on53fb7d9 passed functional/token/72 structural-a11y gates, but
+failed Lighthouse Mentoring88<90 (previous exact head97). The new320px Library
+capture confirms all study-tab labels fit on one line. Mentoring LCP stayed1.1s,
+TBT0 and CLS.0013, but Speed Index rose to5.3s with a36s animation trace. The
+globe's real hot path updated3488 SVG circles/10464 attributes per frame. Land
+dots now share12 vector stroke paths grouped by depth, keeping the same source
+coordinates, projection, radius, crop, rotation and motion lifecycle. Trigonometry
+is shared per frame; rear points are omitted. Opacity is quantized into12 levels
+(maximum difference .028). This removes thousands of DOM writes and layout nodes
+without rasterizing the globe or suppressing motion for audits. No gate changed;
+successor CI and actual captures remain authoritative.
