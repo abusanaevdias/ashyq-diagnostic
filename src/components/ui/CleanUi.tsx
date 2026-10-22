@@ -5,7 +5,6 @@ import { BLOG_IS_DEMO } from '@/data/blog';
 import { SOCIAL_LINKS } from '@/lib/site';
 import styles from './CleanUi.module.css';
 import { MobileNavMenu } from './MobileNavMenu';
-import StudyNavigation from './StudyNavigation';
 import SiteMenuLinks from './SiteMenuLinks';
 import MotionToggle from './MotionToggle';
 import PrimaryNavigation from './PrimaryNavigation';
@@ -79,7 +78,6 @@ export function NavBar({ onStart, diagnosticHref = '/diagnostic', study=false }:
           <ButtonLink href={diagnosticHref}>Диагностика</ButtonLink>
         )}
       </nav>
-      <StudyNavigation mobile/>
     </header>
   );
 }
