@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import {
   ArrowIcon,
@@ -13,10 +12,11 @@ import {
   NavBar,
 } from './ui/CleanUi';
 import { COURSES, COURSE_DETAILS } from '@/data/courses';
-import { PHOTOS } from '@/data/media';
 import home from './HomeV3.module.css';
 import styles from './CoursesV3.module.css';
-import { AiBadge } from './AiBadge';
+import ServiceArtwork from './public-design/ServiceArtwork';
+import ApprovedMotion from './public-design/ApprovedMotion';
+import HeroScene from './public-design/HeroScene';
 import EnrollmentPlanner from './EnrollmentPlanner';
 import { CLUB_OFFER, formatTenge } from '@/data/club-offer';
 import ClubOffer from './ClubOffer';
@@ -101,25 +101,7 @@ export default function CoursesV3() {
                 <li>Практика и разборы</li>
               </ul>
             </div>
-            <div className={styles.heroVisual}>
-              <div className={styles.heroPhoto}>
-                <Image
-                  src={PHOTOS.courseCardDiagnostic.src}
-                  alt={PHOTOS.courseCardDiagnostic.alt}
-                  fill
-                  sizes="(max-width: 900px) 1px, 40vw"
-                />
-                <AiBadge />
-              </div>
-              <div className={styles.visualNote}>
-                <IconChip name="compass" />
-                <div>
-                  <p className={styles.noteTitle}>Начните с точки А</p>
-                  <p>Диагностика → план → практика</p>
-                </div>
-              </div>
-              <p className={styles.script}>ваш маршрут начинается здесь</p>
-            </div>
+            <div className={styles.heroVisual}><HeroScene /></div>
           </div>
         </section>
         <section
@@ -168,18 +150,7 @@ export default function CoursesV3() {
                     href={course.href}
                     className={styles.courseLink}
                   >
-                    <div className={styles.photo}>
-                      <Image
-                        src={COURSE_DETAILS[slug].photo}
-                        alt={COURSE_DETAILS[slug].alt}
-                        fill
-                        sizes="(max-width: 600px) 100vw, 50vw"
-                      />
-                      <AiBadge />
-                      <span className={styles.badge}>
-                        {slug === 'ielts' ? 'IELTS' : 'Digital SAT'}
-                      </span>
-                    </div>
+                    <div className={styles.photo}><ServiceArtwork kind={slug} /></div>
                     <div className={styles.cardBody}>
                       <h3
                         id={`course-title-${slug}`}
@@ -209,8 +180,8 @@ export default function CoursesV3() {
               );
             })}
             {filter === 'all' ? <>
-              <article className={styles.card} data-motion-reveal data-motion-card><div className={styles.cardBody}><MicroLabel>03 · Менторство</MicroLabel><h3 className={styles.cardTitle}>Поступление за рубеж</h3><p className={styles.cardText}>Выбор вузов, документы и сопровождение подачи. Европа, США, ОАЭ и другие страны. Стоимость согласуем на встрече.</p><div className={styles.cardFooter}><ButtonLink href="/mentoring" tone="outline">О менторстве</ButtonLink></div></div></article>
-              <article className={styles.card} data-motion-reveal data-motion-card><div className={styles.cardBody}><MicroLabel>04 · Всё включено</MicroLabel><h3 className={styles.cardTitle}>IELTS + SAT + менторство</h3><p className={styles.cardText}>Подготовка к двум экзаменам, приоритетная помощь тренеров и сопровождение до начала учёбы в университете.</p><p className={styles.cardText}>Было <s>{formatTenge(CLUB_OFFER.allInclusive.previous)}</s> · Теперь <strong>{formatTenge(CLUB_OFFER.allInclusive.current)}</strong></p><div className={styles.cardFooter}><ButtonLink href="/all-inclusive">Состав пакета</ButtonLink></div></div></article>
+              <article className={styles.card} data-motion-reveal data-motion-card><ServiceArtwork kind="mentoring" /><div className={styles.cardBody}><MicroLabel>03 · Менторство</MicroLabel><h3 className={styles.cardTitle}>Поступление за рубеж</h3><p className={styles.cardText}>Выбор вузов, документы и сопровождение подачи. Европа, США, ОАЭ и другие страны. Стоимость согласуем на встрече.</p><div className={styles.cardFooter}><ButtonLink href="/mentoring" tone="outline">О менторстве</ButtonLink></div></div></article>
+              <article className={styles.card} data-motion-reveal data-motion-card><ServiceArtwork kind="package" /><div className={styles.cardBody}><MicroLabel>04 · Всё включено</MicroLabel><h3 className={styles.cardTitle}>IELTS + SAT + менторство</h3><p className={styles.cardText}>Подготовка к двум экзаменам, приоритетная помощь тренеров и сопровождение до начала учёбы в университете.</p><p className={styles.cardText}>Было <s>{formatTenge(CLUB_OFFER.allInclusive.previous)}</s> · Теперь <strong>{formatTenge(CLUB_OFFER.allInclusive.current)}</strong></p><div className={styles.cardFooter}><ButtonLink href="/all-inclusive">Состав пакета</ButtonLink></div></div></article>
             </> : null}
           </div>
           <p className={styles.conditions}>Работаем Пн–Сб, {CLUB_OFFER.workingHours} по Астане. Выберите вариант группы ниже — команда подтвердит уровень и полные условия.</p>
@@ -302,7 +273,7 @@ export default function CoursesV3() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer /><ApprovedMotion key={filter} />
     </div>
   );
 }

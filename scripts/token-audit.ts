@@ -22,7 +22,7 @@ function check(name: string, ok: boolean, detail = '') {
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ` — ${detail}` : ''}`);
 }
 
-const FONTS = ['manrope', 'inter', 'caveat', 'system-ui'];
+const FONTS = ['manrope', 'inter', 'caveat', 'system-ui', 'onest'];
 const kebab = (name: string) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 const firstFamily = (stack: string) => stack.split(',')[0].trim().replace(/['"]/g, '').toLowerCase();
 
@@ -39,7 +39,7 @@ function tokenParity(): string[] {
   for (const [name, token] of Object.entries(tokens.radius)) {
     if (name !== 'circle') expect(`r-${name}`, token.$value, (v) => v === token.$value); // 50% — без css-переменной
   }
-  for (const name of ['fontDisplay', 'fontBody', 'fontScript', 'fontSystem'] as const) {
+  for (const name of ['fontDisplay', 'fontBody', 'fontScript', 'fontSystem', 'fontApproved'] as const) {
     const json = tokens.typography[name].$value;
     expect(kebab(name), json, (v) => firstFamily(v) === firstFamily(json));
   }

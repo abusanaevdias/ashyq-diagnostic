@@ -11,7 +11,9 @@ import {
   BrandIcon,
 } from './ui/Brand';
 import { Footer, NavBar } from './ui/CleanUi';
-import { Glyph, GlyphBadge, type GlyphName } from './ui/Glyphs';
+import { Glyph, GlyphBadge, type GlyphName } from './public-design/SelectedGlyph';
+import ApprovedServices from './public-design/ApprovedServices';
+import ApprovedMotion from './public-design/ApprovedMotion';
 
 /**
  * /program — витрина программы ASHYQ: то, что мы обещаем ученикам
@@ -91,6 +93,7 @@ export default function ProgramScreen() {
 
   return (
     <div className="v3 min-h-dvh">
+      <ApprovedMotion />
       <NavBar />
       <main>
 
@@ -120,7 +123,10 @@ export default function ProgramScreen() {
           <span aria-hidden="true">·</span>
           <span>IELTS / Digital SAT</span>
         </p>
+        <a href="#approved-services-title" className="btn btn-ink mt-7 w-fit">Выбрать программу ↓</a>
       </section>
+
+      <ApprovedServices />
 
       {/* ---------- 01 progress tracking ---------- */}
       <section className="border-t border-line">

@@ -20,3 +20,5 @@
 .price { font-weight:650; letter-spacing:-.035em; }
 .card { border-radius:var(--r-xxl); padding:28px; }
 @media (max-width: 640px) { .priceCard, .grid { grid-template-columns: 1fr; } .priceCard { padding: 22px; } .hero { padding-top: 40px; } }
+.hero{position:relative}.hero>.title,.hero>.lead,.hero>.destinations{max-width:54%}.artPanel{position:absolute;right:var(--pad);top:90px;width:40%;height:360px}.artPanel>div{height:100%;aspect-ratio:auto}.hero>.priceCard{margin-top:65px;position:relative}.artPanel strong{font-size:clamp(2rem,4vw,4rem)}
+@media(max-width:800px){.hero>.title,.hero>.lead,.hero>.destinations{max-width:100%}.artPanel{position:relative;top:auto;right:auto;width:100%;height:auto;margin-top:35px}.artPanel>div{height:auto;aspect-ratio:1.8}.hero>.priceCard{margin-top:28px}}

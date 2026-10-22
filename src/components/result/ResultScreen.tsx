@@ -16,6 +16,8 @@ import {
   HandNote,
 } from '@/components/ui/Brand';
 import type { CardData } from '@/lib/card-image';
+import DiagnosticJourney from '../public-design/DiagnosticJourney';
+import experience from '../public-design/DiagnosticExperience.module.css';
 
 export default function ResultScreen({
   run,
@@ -91,15 +93,20 @@ export default function ResultScreen({
   };
 
   return (
-    <div className="v3 min-h-dvh pb-16">
+    <div className={`v3 min-h-dvh pb-16 ${experience.page}`}>
       <header className="shell-wide flex items-center justify-between py-5">
         <Wordmark size="md" />
         <span className="label text-ink-faint">Результат</span>
       </header>
 
       <main className="shell pt-4">
+        <DiagnosticJourney stage="result" />
         <EditorialLabel>Your Ashyq Diagnostic</EditorialLabel>
-        <h1 className="serif mt-4 max-w-[10.8em] text-h1 text-red">Твоя точка А</h1>
+        <h1 tabIndex={-1} className="serif mt-4 max-w-[10.8em] text-h1 text-red">Твоя точка А</h1>
+        <div className={experience.reviewAction}>
+          <p>Сначала посмотри общий результат, затем открой свои ответы и объяснения к каждому заданию.</p>
+          <button type="button" className="btn btn-ink" onClick={onReview}>Посмотреть свои ответы →</button>
+        </div>
 
         {/* ---------- карточка для скриншота ---------- */}
         <div className="mt-7">
@@ -124,7 +131,7 @@ export default function ResultScreen({
             value={result.gapLabel ?? '—'}
             note={
               result.targetReached
-                ? 'цель уже в диапазоне'
+                ? 'диапазон не ниже цели'
                 : result.gapLabel
                   ? 'до цели'
                   : 'выбери цель на разборе'
@@ -183,7 +190,7 @@ export default function ResultScreen({
           <div>
             <h2 className="label flex items-center gap-2 text-red">
               <RedStar className="h-2.5 w-2.5" />
-              Стоит подтянуть
+              {result.weakest.length === 0 ? 'По этим заданиям' : 'Стоит подтянуть'}
             </h2>
             <ul className="mt-3 space-y-2">
               {result.weakest.length === 0 ? (

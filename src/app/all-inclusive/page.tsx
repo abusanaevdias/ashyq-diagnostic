@@ -1,3 +1,5 @@
+import ApprovedMotion from '@/components/public-design/ApprovedMotion';
+import ServiceArtwork from '@/components/public-design/ServiceArtwork';
 import type { Metadata } from 'next';
 import EnrollmentPlanner from '@/components/EnrollmentPlanner';
 import { ButtonLink, Footer, MicroLabel, NavBar } from '@/components/ui/CleanUi';
@@ -19,6 +21,7 @@ export default function AllInclusivePage() {
       <h1 className={styles.title}>Всё включено.<br />От экзаменов до университета.</h1>
       <ul className={styles.destinations} aria-label="Состав пакета"><li>IELTS</li><li>Digital SAT</li><li>Менторство</li></ul>
       <p className={styles.lead}>Два экзамена и поступление по одному плану. Готовимся к IELTS и SAT, разбираем ошибки с преподавателями и вместе с ментором проходим путь от выбора вузов до начала учёбы.</p>
+      <div className={styles.artPanel}><ServiceArtwork kind="package" /></div>
       <div className={styles.priceCard} data-motion-reveal>
         <div><p className={styles.eyebrow}>Стоимость комплексного пакета</p><p className={styles.previous}>Было <s>{formatTenge(offer.previous)}</s></p><p className={styles.price}><strong data-motion-accent="price">{formatTenge(offer.current)}</strong></p><p className={styles.previous}>Экономия {formatTenge(offer.previous - offer.current)}</p></div>
         <ButtonLink href="#package-enrolment">Обсудить пакет</ButtonLink>
@@ -35,5 +38,5 @@ export default function AllInclusivePage() {
       <p className={styles.note}>Экзаменационные, университетские и визовые сборы, переводы и заверение документов, билеты, проживание и обучение в университете оплачиваются отдельно. Решения о зачислении, гранте и визе принимают университеты и уполномоченные органы; конкретный балл и положительное решение не гарантируются.</p>
     </section>
     <section id="package-enrolment" className={`${home.container} ${home.section} ${styles.enrolment}`}><EnrollmentPlanner fixedProgram="all-inclusive" /></section>
-  </main><Footer /></div>;
+  </main><Footer /><ApprovedMotion /></div>;
 }

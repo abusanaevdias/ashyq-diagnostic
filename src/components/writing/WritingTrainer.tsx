@@ -1,4 +1,5 @@
 'use client';
+import {FeedbackSummary} from '@/components/ui/LearningFeedback';
 
 import { useEffect, useRef, useState } from 'react';
 import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
@@ -68,7 +69,7 @@ export default function WritingTrainer() {
     const justRevealed = session.grammarChecked && !previousGrammarChecked.current;
     previousGrammarChecked.current = session.grammarChecked;
     if (!justRevealed) return;
-    const firstResult = document.querySelector<HTMLElement>('[data-grammar-result="missed"]')
+    const firstResult = document.getElementById('grammar-feedback-summary') ?? document.querySelector<HTMLElement>('[data-grammar-result="missed"]')
       ?? document.querySelector<HTMLElement>('[data-grammar-result="review"]')
       ?? document.querySelector<HTMLElement>('[data-grammar-result="found"]');
     firstResult?.focus({ preventScroll: true });
@@ -79,7 +80,7 @@ export default function WritingTrainer() {
   const currentStageIndex = stages.indexOf(session.stage);
   const furthestStageIndex = Math.max(currentStageIndex, stages.indexOf(session.furthestStage));
   const issueIds = new Set(essay.grammarIssues.map((issue) => issue.sentenceId));
-  const foundCount = essay.grammarIssues.filter((issue) => grammarAttemptStatus(essay, session, issue.sentenceId) === 'found').length;
+  const reviewGrammarCount=essay.paragraphs.flatMap(p=>p.sentences).filter(sentence=>grammarAttemptStatus(essay,session,sentence.id)==='review').length;const extraGrammarCount=essay.paragraphs.flatMap(p=>p.sentences).filter(sentence=>grammarAttemptStatus(essay,session,sentence.id)==='unnecessary').length;const foundCount = essay.grammarIssues.filter((issue) => grammarAttemptStatus(essay, session, issue.sentenceId) === 'found').length;
   const appliedGrammarCount = essay.grammarIssues.filter((issue) => Boolean(session.appliedGrammar[issue.sentenceId])).length;
   const appliedLearnerGrammarCount = essay.grammarIssues.filter((issue) => isLearnerDraftApplied(session.grammarDrafts[issue.sentenceId], session.appliedGrammar[issue.sentenceId])).length;
   const latestAppliedGrammarId = Object.keys(session.appliedGrammar).at(-1);
@@ -148,7 +149,7 @@ export default function WritingTrainer() {
 
           {session.stage === 'grammar' && <section id="exercise" className={styles.workCard} aria-labelledby="grammar-title">
             <div className={styles.roundHeading}><span className={styles.overline}>РАУНД 01 / 04</span><h2 id="grammar-title" tabIndex={-1}>Охота за ошибками</h2><p>Прочитай эссе. Нажми на предложение, в котором подозреваешь грамматическую ошибку, и перепиши его. Подсказки появятся после проверки.</p></div>
-            <div className={styles.essayPaper} lang="en">
+            {session.grammarChecked&&<div id="grammar-feedback-summary" tabIndex={-1}><FeedbackSummary title="Проверка грамматических правок" checks={[{label:'Проверенные варианты',state:foundCount===essay.grammarIssues.length?'good':'review',value:foundCount+' из '+essay.grammarIssues.length+' совпали с ключом'},{label:'Пропущенные ошибки',state:essay.grammarIssues.filter(issue=>grammarAttemptStatus(essay,session,issue.sentenceId)==='missed').length===0?'good':'review',value:String(essay.grammarIssues.filter(issue=>grammarAttemptStatus(essay,session,issue.sentenceId)==='missed').length)},...(reviewGrammarCount>0?[{label:'Другие формулировки',state:'neutral' as const,value:reviewGrammarCount+' требуют проверки',detail:'Это не отметка «неверно». Другую формулировку можно обсудить с учителем.'}]:[]),...(extraGrammarCount>0?[{label:'Дополнительные правки',state:'neutral' as const,value:extraGrammarCount+' не оценены',detail:'Это правки в предложениях без размеченной ошибки. Они не считаются неверными.'}]:[])]} next="Сравни отмеченные фразы ниже. Примени свою проверенную правку или пример к рабочему эссе."/></div>}<div className={styles.essayPaper} lang="en">
               {essay.paragraphs.map((paragraph) => <p key={paragraph.id}>{paragraph.sentences.map((sentence) => {
                 const touched = Boolean(session.grammarDrafts[sentence.id]?.trim());
                 const status = session.grammarChecked ? grammarAttemptStatus(essay, session, sentence.id) : null;
@@ -203,10 +204,10 @@ export default function WritingTrainer() {
               <button type="button" className={styles.backButton} onClick={() => setSession(moveToPrevious)}>← Предыдущий этап</button>
               <div className={styles.roundHeading}><span className={styles.overline}>РАУНД {String(currentStageIndex + 1).padStart(2, '0')} / 04</span><h2 id="round-title" tabIndex={-1}>{criterionLabels[criterion]}</h2><p>{target.instruction}</p></div>
               <div className={styles.sourceBlock}><span className={styles.overline}>ИСХОДНЫЙ АБЗАЦ</span><p lang="en">{original}</p></div>
-              <label className={styles.fieldLabel} htmlFor="paragraph-edit">Твой переписанный абзац</label>
+              <label className={styles.fieldLabel} htmlFor="paragraph-edit">Твой переписанный абзац на английском</label>
               <textarea id="paragraph-edit" className={styles.paragraphEditor} lang="en" rows={7} value={draft} disabled={revealed} placeholder="Напиши свой вариант до просмотра примера" onChange={(event) => setSession((current) => ({ ...current, revisionDrafts: { ...current.revisionDrafts, [criterion]: event.target.value } }))} />
               {!revealed && <div className={styles.actionRow}><button type="button" className={styles.primaryButton} disabled={!changed} onClick={() => setSession((current) => ({ ...current, revealed: { ...current.revealed, [criterion]: true } }))}>Сравнить с примером</button><span>{changed ? 'Готово к сравнению' : 'Сначала перепиши абзац своими словами'}</span></div>}
-              {revealed && <>
+              {revealed && <><FeedbackSummary title="Твой текст готов к сравнению" checks={[{label:'Содержание, связность и формулировка',state:'neutral',value:'Не оценены автоматически'}]} next="Сверь свой абзац с критерием и объяснением. Пример — одна из возможных формулировок, а не единственный верный ответ."/>
                 <div className={styles.comparison}>
                   <div><span className={styles.overline}>ТВОЙ ВАРИАНТ</span><p lang="en">{draft}</p></div>
                   <div><span className={styles.overline}>ОДИН ИЗ УДАЧНЫХ ВАРИАНТОВ</span><p lang="en">{target.example}</p></div>

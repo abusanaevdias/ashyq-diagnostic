@@ -1,6 +1,7 @@
 .hero {
   padding-block: 72px 56px;
 }
+.heroPhoto > [data-approved-art] { width:100%; height:100%; border-radius:inherit; }
 
 .heroGrid {
   display: grid;

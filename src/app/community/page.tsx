@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { EditorialLabel, RedStar } from '@/components/ui/Brand';
-import { GlyphBadge, type GlyphName } from '@/components/ui/Glyphs';
+import { GlyphBadge, type GlyphName } from '@/components/public-design/SelectedGlyph';
 import { PHOTOS } from '@/data/media';
 import { SiteFooter, SiteHeader } from '@/components/ui/SiteChrome';
 import { AiBadge } from '@/components/AiBadge';
+import EditorialMedia from '@/components/public-design/EditorialMedia';
 
 export const metadata: Metadata = {
   title: 'Сообщество ASHYQ',
@@ -30,7 +31,7 @@ export default function CommunityPage() {
               <h1 className="display max-w-[8.8em] text-display text-red">Люди делают знания живыми</h1>
               <p className="mt-6 max-w-lg text-[1.05rem] leading-relaxed text-ink-soft">ASHYQ — это не только уроки и баллы. Это среда, где ученики тренируются в команде, пробуют себя под давлением и учатся показывать прогресс.</p>
             </div>
-            <div className="relative lg:col-span-6"><img src={PHOTOS.communityMain.src} alt={PHOTOS.communityMain.alt} width={PHOTOS.communityMain.width} height={PHOTOS.communityMain.height} className="w-full rounded-md object-cover" /><AiBadge /></div>
+            <div className="lg:col-span-6"><EditorialMedia label="ASHYQ / Сообщество" lines={['Знания.', 'Голос.', 'Команда.']} footnote="Учимся вместе · пробуем · поддерживаем" photo={PHOTOS.communityMain} /></div>
           </div>
         </section>
         <section className="border-y border-line bg-paper-deep/50">
