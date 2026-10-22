@@ -58,6 +58,8 @@ shared study-navigation labels get blog-scoped mobile padding/nowrap only.
 Cover paths still pass through postCover. SVG diagrams use contain, raster covers
 use cover; no invented editorial recommendation or content label is attached.
 An empty result offers a local reset of the same search/category controls.
+Reset returns focus to the persistent search input; the mobile input uses1rem
+text to avoid the small-input focus zoom common on iOS browsers.
 
 ## Validation and release evidence
 

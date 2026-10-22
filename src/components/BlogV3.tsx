@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BLOG_CATEGORIES, BLOG_IS_DEMO, type BlogCategory } from '@/data/blog';
@@ -26,6 +26,7 @@ const isPhoto = (url: string) => /\.(?:jpe?g|png|webp|avif)(?:[?#]|$)/i.test(url
 export default function BlogV3() {
   const [filter, setFilter] = useState<Filter>('all');
   const [query, setQuery] = useState('');
+  const searchInput = useRef<HTMLInputElement>(null);
   const { data } = useLmsData(() => getRepos().blog.listPublished(), 'blog:published');
   const q = query.trim().toLowerCase();
   const posts = (data ?? defaultPosts()).filter((post) =>
@@ -56,7 +57,7 @@ export default function BlogV3() {
             <div className={styles.chips} role="group" aria-label="Категории">
               {FILTERS.map((item) => <FilterChip key={item.id} active={filter === item.id} onClick={() => setFilter(item.id)}>{item.label}</FilterChip>)}
             </div>
-            <input type="search" className={styles.search} placeholder="Поиск по статьям" aria-label="Поиск по статьям" value={query} onChange={(event) => setQuery(event.target.value)} />
+            <input ref={searchInput} type="search" className={styles.search} placeholder="Поиск по статьям" aria-label="Поиск по статьям" value={query} onChange={(event) => setQuery(event.target.value)} />
           </div>
 
           {featured ? (
@@ -106,7 +107,7 @@ export default function BlogV3() {
           ) : (
             <div className={styles.empty} role="status">
               <p>Ничего не нашлось. Попробуйте другой запрос или категорию.</p>
-              <button type="button" onClick={() => { setQuery(''); setFilter('all'); }}>Сбросить поиск и фильтры</button>
+              <button type="button" onClick={() => { setQuery(''); setFilter('all'); searchInput.current?.focus(); }}>Сбросить поиск и фильтры</button>
             </div>
           )}
         </section>
