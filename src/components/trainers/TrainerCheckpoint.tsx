@@ -41,7 +41,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
 }) {
   const { raw, record, key, ready, scope } = useCheckpointRecord(trainer);
   const [activeKey, setActiveKey] = useState('');
-  const [message, setMessage] = useState('');const [saveOpen,setSaveOpen]=useState(true);
+  const [message, setMessage] = useState('');const [saveOpen,setSaveOpen]=useState(false);
   const [deleting, setDeleting] = useState(false);
   const deleteExpected=useRef<string|null|undefined>(undefined);
   const [imported, setImported] = useState<TrainerRecord | null>(null);
