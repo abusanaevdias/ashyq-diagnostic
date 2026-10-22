@@ -189,7 +189,11 @@ async function main() {
   const diagnosticBox = await page.getByRole('navigation', { name: 'Первые шаги: диагностика и библиотека' }).getByRole('link', { name: /Бесплатная диагностика/ }).boundingBox();
   check('landing: бесплатная диагностика выше сгиба', Boolean(diagnosticBox) && diagnosticBox!.y + diagnosticBox!.height <= vp.height);
   check('landing: четыре прямые бесплатные карточки без поиска', (await page.getByRole('navigation', { name: 'Начать бесплатную практику' }).getByRole('link').count()) === 4);
-  check('nav: бесплатные материалы видны без открытия меню', (await page.locator('header a[href="/library"]').filter({visible:true}).count())>0);
+  check('nav: компактная шапка сохраняет все учебные переходы в меню',
+    (await page.locator('header [data-study-nav]').count()) === 0 &&
+    (await page.locator('header a[href="/"]').count()) > 0 &&
+    (await page.locator('header a[href="/trainers"]').count()) > 0 &&
+    (await page.locator('header a[href="/library"]').count()) > 0);
   check('landing: секции лендинга на месте', has(landing, 'Что вы узнаете') && has(landing, 'Как это работает'));
   const landingScroll = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
