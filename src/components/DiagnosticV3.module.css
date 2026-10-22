@@ -165,3 +165,18 @@ ol.steps {
     width: 100%;
   }
 }
+
+/* Approved public presentation: real exam choices, unchanged diagnostic callbacks. */
+.introGrid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(28px,5vw,72px);align-items:start}
+.choiceHint{margin-top:28px;color:var(--ink);font-weight:600;line-height:1.6}
+.examChoices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.examChoice{min-width:0;overflow:hidden;border:1px solid var(--hairline);border-radius:var(--r-xl);background:var(--surface)}
+.examChoice>div:first-child{border-radius:0;aspect-ratio:1.3}
+.examChoice>div:first-child>strong{font-size:clamp(2rem,4.5vw,4rem)}
+.examChoiceBody{padding:22px}.examChoiceBody h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.04em}.examChoiceBody p{font-size:.875rem;line-height:1.65;color:var(--ink-soft);margin:12px 0 22px}.examChoiceBody button{width:100%}
+.scene{grid-column:span 6;min-width:0}
+@media(max-width:1000px){.introGrid{grid-template-columns:1fr}.scene{grid-column:auto}.choiceHint{max-width:48ch}}
+@media(max-width:480px){.examChoices{grid-template-columns:1fr}.examChoice{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}.examChoice>div:first-child{aspect-ratio:auto;height:100%;min-height:210px}.examChoiceBody{padding:20px 16px}.examChoiceBody p{margin:10px 0 16px}.examChoiceBody button{padding-inline:16px}}
+
+.intro{padding-block:70px 80px}.introCopy{min-width:0}.introTitle{font-size:clamp(2.6rem,4.5vw,4.5rem);line-height:1.03;letter-spacing:-.06em;margin:22px 0 26px;text-wrap:balance}.introLead{font-size:1.05rem;line-height:1.75;color:var(--ink-soft);max-width:55ch}
+@media(max-width:700px){.intro{padding-block:35px 50px}.introTitle{font-size:clamp(2.4rem,9vw,3.5rem)}.introLead{font-size:1rem}}

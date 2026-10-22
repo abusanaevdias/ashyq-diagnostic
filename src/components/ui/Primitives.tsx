@@ -1,22 +1,25 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import useDialogFocus from './useDialogFocus';
 
 export function Meter({
   value,
   ink = false,
   className = '',
+  label = 'Прогресс',
 }: {
   /** 0..1 */
   value: number;
   ink?: boolean;
   className?: string;
+  label?: string;
 }) {
   const pct = Math.max(0, Math.min(1, value)) * 100;
   return (
     <div
       className={`meter ${className}`}
       role="progressbar"
+      aria-label={label}
       aria-valuenow={Math.round(pct)}
       aria-valuemin={0}
       aria-valuemax={100}
@@ -64,25 +67,7 @@ export function ConfirmDialog({
   onCancel: () => void;
   danger?: boolean;
 }) {
-  const confirmRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    confirmRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        onCancel();
-      }
-    };
-    document.addEventListener('keydown', onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [open, onCancel]);
+  const panelRef = useDialogFocus(open, onCancel);
 
   if (!open) return null;
 
@@ -100,7 +85,7 @@ export function ConfirmDialog({
         onClick={onCancel}
         tabIndex={-1}
       />
-      <div className="animate-pop relative w-full max-w-md rounded-lg border border-line bg-paper-card p-5 shadow-card sm:p-6">
+      <div ref={panelRef} tabIndex={-1} className="animate-pop relative w-full max-w-md rounded-lg border border-line bg-paper-card p-5 shadow-card sm:p-6">
         <p className="label flex items-center gap-2 text-red">
           <span aria-hidden="true" className="inline-block h-1.5 w-1.5 bg-red" />
           Подтверждение
@@ -111,7 +96,6 @@ export function ConfirmDialog({
         {body ? <p className="mt-3 text-[0.98rem] text-ink-soft">{body}</p> : null}
         <div className="mt-6 flex flex-col gap-2.5 sm:flex-row-reverse">
           <button
-            ref={confirmRef}
             type="button"
             className={`btn ${danger ? 'btn-primary' : 'btn-ink'}`}
             onClick={onConfirm}

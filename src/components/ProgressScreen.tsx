@@ -136,7 +136,7 @@ export default function ProgressScreen() {
               </div>
               <BandChart list={list} exam={tab} />
               <p className="mt-2 text-[0.75rem] leading-snug text-ink-faint">
-                Предварительные диапазоны короткой диагностики, не официальный
+                Точки — середины предварительных диапазонов короткой диагностики, не официальный
                 результат {tab === 'sat' ? 'SAT' : 'IELTS'}.
               </p>
             </section>

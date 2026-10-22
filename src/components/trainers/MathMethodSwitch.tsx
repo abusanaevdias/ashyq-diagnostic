@@ -1,4 +1,5 @@
 "use client";
+import { FeedbackSummary } from '@/components/ui/LearningFeedback';
 import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -135,7 +136,7 @@ function Feedback({ item, attempt }: { item: Item; attempt: Attempt }) {
   const match = attempt.x === item.x && attempt.y === item.y;
   const otherRoot = item.quadratic && attempt.x === -1 && attempt.y === 1;
   return (
-    <>
+    <><FeedbackSummary title={match?"Координаты верны":otherRoot?"Пересечение найдено. Ограничение пропущено":"Координаты пока неверны"} checks={[{label:"Координаты по условию",state:match?"good":otherRoot?"review":"bad",value:match?"Верно":otherRoot?"Проверь ограничение":"Нужно исправить"},{label:"Способ и записанные действия",state:"neutral",value:"Не оценены автоматически"}]} next="Сверь результат с условием и объясни выбор способа. Затем реши новую задачу."/>
       <h3>
         {match
           ? "Координаты совпали"

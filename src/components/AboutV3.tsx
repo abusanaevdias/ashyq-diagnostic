@@ -9,6 +9,7 @@ import styles from './AboutV3.module.css';
 import { ButtonLink, Footer, IconChip, MicroLabel, NavBar, StatsRow } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import { AiBadge } from './AiBadge';
+import EditorialMedia from './public-design/EditorialMedia';
 
 const VALUES = [
   { icon: 'spark', title: 'Команда', text: 'Задачи решаются вместе: вклад каждого виден в общем результате.' },
@@ -30,9 +31,7 @@ export default function AboutV3() {
               <p className={styles.lead}>{SITE_DESCRIPTION} Занятия проходят онлайн; ASHYQ — образовательный клуб, а не официальный оператор экзаменов.</p>
               <p className={styles.script}>растём вместе</p>
             </div>
-            <div className={styles.heroPhoto}>
-              <Image src={PHOTOS.aboutHero.src} alt={PHOTOS.aboutHero.alt} fill priority sizes="(max-width: 900px) 100vw, 42vw" /><AiBadge />
-            </div>
+            <EditorialMedia label="ASHYQ / О клубе" lines={['Знания', 'открывают', 'возможности.']} footnote="IELTS · Digital SAT · Поступление" photo={PHOTOS.aboutHero} />
           </div>
         </section>
 

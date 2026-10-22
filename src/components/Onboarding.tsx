@@ -5,6 +5,8 @@ import { EXAMS } from '@/lib/config';
 import type { ExamId, RunState } from '@/lib/types';
 import { Wordmark, EditorialLabel } from './ui/Brand';
 import { ConfirmDialog } from './ui/Primitives';
+import DiagnosticJourney from './public-design/DiagnosticJourney';
+import experience from './public-design/DiagnosticExperience.module.css';
 
 /**
  * Onboarding: ровно 2 экрана, без имени/телефона/email.
@@ -42,7 +44,7 @@ export default function Onboarding({
   };
 
   return (
-    <div className="v3 flex min-h-dvh flex-col">
+    <div className={`v3 flex min-h-dvh flex-col ${experience.page}`}>
       <header className="shell-wide flex items-center justify-between py-5">
         <Wordmark size="md" />
         <span className="label text-ink-faint">
@@ -51,10 +53,11 @@ export default function Onboarding({
       </header>
 
       <main className="shell flex flex-1 flex-col justify-center py-10">
+        <DiagnosticJourney stage="setup" entryKey={step} />
         {step === 1 ? (
           <div className="animate-fade-up">
             <EditorialLabel>Перед стартом</EditorialLabel>
-            <h1 className="display mt-4 max-w-[14.8em] text-h2">{cfg.targetQuestion}</h1>
+            <h1 tabIndex={-1} className="display mt-4 max-w-[14.8em] text-h2">{cfg.targetQuestion}</h1>
             <div className="mt-8 grid gap-2.5 sm:grid-cols-2">
               {cfg.targets.map((t) => {
                 const selected = run.target === t.value;
@@ -77,7 +80,7 @@ export default function Onboarding({
         ) : (
           <div className="animate-fade-up">
             <EditorialLabel>И последнее</EditorialLabel>
-            <h1 className="display mt-4 max-w-[14.8em] text-h2">{cfg.whenQuestion}</h1>
+            <h1 tabIndex={-1} className="display mt-4 max-w-[14.8em] text-h2">{cfg.whenQuestion}</h1>
             <div className="mt-8 grid gap-2.5">
               {cfg.whenOptions.map((opt) => {
                 const selected = run.plannedWhen === opt.value;

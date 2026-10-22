@@ -3,6 +3,7 @@
 import { getMaterial } from '@/data/materials';
 import type { Question } from '@/lib/types';
 import MaterialView from './MaterialView';
+import experience from '../public-design/DiagnosticExperience.module.css';
 
 /**
  * Один вопрос на экран — бумажная карточка в духе экзаменационного бланка:
@@ -110,6 +111,12 @@ export default function QuestionCard({
               })}
             </div>
           )}
+          {!locked && <div className={experience.status}>
+            <span aria-hidden="true">{value ? '●' : '○'}</span>
+            <p><strong>{value ? 'Ответ выбран' : 'Выбери или впиши ответ'}</strong>
+              {value ? 'Можно изменить его до завершения. Правильность увидишь в разборе.' : 'Можно пропустить вопрос и вернуться к нему через список вопросов.'}
+            </p>
+          </div>}
         </div>
       </div>
     </div>

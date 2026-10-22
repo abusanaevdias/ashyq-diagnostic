@@ -1,4 +1,5 @@
 'use client';
+import {FeedbackSummary} from '@/components/ui/LearningFeedback';
 
 import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
@@ -119,7 +120,7 @@ export default function WritingDrills() {
       <div className={styles.progress} aria-hidden="true"><span style={{ width: `${((index + 1) / items.length) * 100}%` }} /></div>
       <div className={styles.exerciseHead}><p className={styles.eyebrow}>{item.context}</p><h2 id="exercise-title">{item.title}</h2><p>{item.task}</p></div>
       <div className={styles.source} aria-label="Исходные идеи"><span>ИСХОДНЫЕ ИДЕИ</span>{item.source.map((line) => <p key={line}>{line}</p>)}</div>
-      <label className={styles.draftLabel} htmlFor="writing-drill-draft">Твой вариант <span>сначала попробуй сам</span></label>
+      <label className={styles.draftLabel} htmlFor="writing-drill-draft">Твой вариант на английском <span>сначала попробуй сам</span></label>
       <textarea id="writing-drill-draft" value={draft} onChange={(event) => { setDraft(event.target.value); setFeedback(''); }} maxLength={600} rows={3} placeholder="Напиши предложение своими словами…" disabled={optionsVisible} />
       <p className={styles.note}>Свободный текст не оценивается автоматически. Сравни смысл своей правки с разбором ниже.</p>
       {!optionsVisible && <button type="button" className={styles.primary} onClick={showOptions}>Я написал свой вариант · показать решения →</button>}
@@ -131,7 +132,7 @@ export default function WritingDrills() {
         </label>)}
       </fieldset>
       {!revealed && <div className={styles.actions}><button type="button" className={styles.primary} onClick={checkChoice}>Проверить выбор →</button>{attempts >= 2 && <button type="button" className={styles.secondary} onClick={() => { setRevealed(true); setRevealedByHelp(true); setFeedback('Разбор открыт. Сравни свой вариант с примером и объяснением.'); }}>Показать разбор</button>}</div>}</>}
-      {feedback && <p className={revealed ? styles.feedbackGood : styles.feedback} role="status">{feedback}{!revealed && attempts > 0 ? ' Попробуй ещё раз.' : ''}</p>}
+      {feedback && currentChoices.length>0 && <FeedbackSummary title={revealedByHelp?'Разбор открыт после помощи':item.choices[currentChoices[currentChoices.length-1]].best?'Выбранный вариант верный':'Выбранный вариант пока неверный'} checks={[{label:'Последний проверенный выбор',state:item.choices[currentChoices[currentChoices.length-1]].best?'good':'bad',value:item.choices[currentChoices[currentChoices.length-1]].best?'Верно':'Пока неверно'},{label:'Твоё предложение',state:'neutral',value:'Не оценено автоматически'}]} next={revealed?'Сравни смысл своей первой попытки с примером. Перепиши её или объясни, почему оставляешь без изменений.':'Прочитай объяснение и выбери вариант ещё раз. Первая попытка остаётся в истории.'}/>} {feedback && <p className={revealedByHelp ? 'learning-neutral' : revealed ? styles.feedbackGood : styles.feedback} role="status">{feedback}{!revealed && attempts > 0 ? ' Попробуй ещё раз.' : ''}</p>}
       {revealed && <div className={styles.reveal}>
         <span className={styles.modeSkill}>РАЗБОР · {item.criterion}</span>
         <h3>Сравни с собственной попыткой</h3>

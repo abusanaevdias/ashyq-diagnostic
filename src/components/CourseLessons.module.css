@@ -1,6 +1,7 @@
 /* Программа уроков и страница бесплатного урока (COURSE-LESSONS-002). Только токены v3. */
 
 .main {
+  composes: workspace from './public-design/LearningWorkspace.module.css';
   padding-block: 32px 96px;
 }
 

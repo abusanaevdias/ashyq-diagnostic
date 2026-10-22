@@ -8,6 +8,7 @@ import JsonLd from '@/components/JsonLd';
 import { ORGANIZATION } from '@/lib/schema';
 import PublicAnalytics from '@/components/analytics/PublicAnalytics';
 import SiteMotion from '@/components/ui/SiteMotion';
+import PublicPresentation from '@/components/public-design/PublicPresentation';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -55,7 +56,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-dvh antialiased">
         <JsonLd data={ORGANIZATION} />
-        {children}
+        <PublicPresentation>{children}</PublicPresentation>
         <SiteMotion />
         <PublicAnalytics />
       </body>

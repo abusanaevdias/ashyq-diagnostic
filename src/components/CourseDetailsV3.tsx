@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { courseLessons, freeLessons, lessonsWord, type CourseDetail } from '@/data/courses';
 import { WHATSAPP_NUMBER } from '@/lib/config';
@@ -7,7 +6,8 @@ import ui from './ui/CleanUi.module.css';
 import { Reveal } from './ui/Reveal';
 import home from './HomeV3.module.css';
 import styles from './CourseDetailsV3.module.css';
-import { AiBadge } from './AiBadge';
+import ServiceArtwork from './public-design/ServiceArtwork';
+import ApprovedMotion from './public-design/ApprovedMotion';
 import EnrollmentPlanner from './EnrollmentPlanner';
 import ClubOffer from './ClubOffer';
 import CohortResults from './CohortResults';
@@ -39,16 +39,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
               </div>
             </div>
 
-            <div className={styles.heroPhoto}>
-              <Image
-                src={course.photo}
-                alt={course.alt}
-                fill
-                preload
-                sizes="(max-width: 900px) 100vw, 42vw"
-              />
-              <AiBadge />
-            </div>
+            <div className={styles.heroPhoto}><ServiceArtwork kind={course.slug} /></div>
           </div>
         </section>
 
@@ -219,7 +210,7 @@ export default function CourseDetailsV3({ course }: { course: CourseDetail }) {
         </Reveal>
       </main>
 
-      <Footer />
+      <Footer /><ApprovedMotion />
     </div>
   );
 }

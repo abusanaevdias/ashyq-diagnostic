@@ -220,7 +220,7 @@ async function main() {
   const ieltsGood = await runExam(browser, 'ielts', 'correct', '7.0');
   check('ielts: результат показан', has(ieltsGood.bodyText, 'Твоя точка А'));
   check('ielts: максимальный band при всех верных', has(ieltsGood.bodyText, '7.5–9.0'));
-  check('ielts: gap считается', has(ieltsGood.bodyText, 'цель уже в диапазоне') || has(ieltsGood.bodyText, '≈ +'));
+  check('ielts: gap считается', has(ieltsGood.bodyText, 'диапазон не ниже цели') && /gap\s+0(?:\s|$)/i.test(ieltsGood.bodyText));
   check('ielts: disclaimer про Writing/Speaking', has(ieltsGood.bodyText, 'Writing и Speaking'));
   check('ielts: WhatsApp CTA', ieltsGood.waLinks >= 2, `${ieltsGood.waLinks} ссылок`);
   check('ielts: нет горизонтального скролла', ieltsGood.scrollWidth <= 0, `${ieltsGood.scrollWidth}px`);

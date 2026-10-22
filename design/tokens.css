@@ -25,6 +25,7 @@
   --success-soft: #e8efe2;
 
   /* type */
+  --font-approved: 'Onest', system-ui, sans-serif;
   --font-display: 'Manrope', 'Manrope Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-script: 'Caveat', 'Segoe Script', cursive;

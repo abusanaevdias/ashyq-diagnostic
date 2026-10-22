@@ -9,6 +9,7 @@ import StudyNavigation from './StudyNavigation';
 import SiteMenuLinks from './SiteMenuLinks';
 import MotionToggle from './MotionToggle';
 import PrimaryNavigation from './PrimaryNavigation';
+import BrandIcon from '@/components/public-design/BrandIcon';
 
 type IconName = 'book' | 'chart' | 'chat' | 'compass' | 'lock' | 'mail' | 'pin' | 'search' | 'send' | 'spark' | 'target';
 
@@ -27,6 +28,8 @@ const ICON_PATHS: Record<IconName, React.ReactNode> = {
 };
 
 export function LineIcon({ name, size = 22 }: { name: IconName; size?: number }) {
+  const selected = { book: 'book-open', chart: 'chart-histogram-two', compass: 'compass', search: 'search', chat: 'message', lock: 'lock', mail: 'mail', pin: 'local' } as const;
+  if (name in selected) return <BrandIcon name={selected[name as keyof typeof selected]} size={size} />;
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       {ICON_PATHS[name]}
@@ -53,7 +56,7 @@ export function ButtonLink({ href, children, tone = 'red', ariaLabel }: { href: 
 
 export function NavBar({ onStart, diagnosticHref = '/diagnostic', study=false }: { onStart?: () => void; diagnosticHref?: string; study?:boolean }) {
   return (
-    <header className={`${styles.navWrap} ${study?styles.studyNav:''}`}>
+    <header className={`${styles.navWrap} ${study?styles.studyNav:''}`} data-public-header>
       <nav className={styles.nav} aria-label="Основная навигация">
         <Link className={styles.logoLink} href="/" aria-label="ASHYQ — на главную">
           <Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} priority data-motion-logo data-motion-ambient="logo" />
@@ -117,7 +120,7 @@ const FOOTER_GROUPS = [
 
 export function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} data-public-footer>
       <div className={styles.footerInner}>
         <div className={styles.footerTop}>
           <div><Image className={styles.wordmark} src="/brand/wordmark-red.png" alt="ASHYQ" width={668} height={179} /><p className={styles.footerTagline}>Знания, прогресс и люди, с которыми хочется двигаться дальше.</p></div>

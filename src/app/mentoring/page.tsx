@@ -1,3 +1,5 @@
+import ApprovedMotion from '@/components/public-design/ApprovedMotion';
+import ServiceArtwork from '@/components/public-design/ServiceArtwork';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import EnrollmentPlanner from '@/components/EnrollmentPlanner';
@@ -26,6 +28,7 @@ export default function MentoringPage() {
       <h1 className={styles.title}>Помогаем поступать<br />за рубеж.</h1>
       <ul className={styles.destinations} aria-label="Направления поступления"><li>Европа</li><li>США</li><li>ОАЭ</li><li>Другие страны</li></ul>
       <p className={styles.lead}>{CLUB_OFFER.mentoring.description} Подбираем университеты, помогаем с документами и сопровождаем подачу.</p>
+      <div className={styles.artPanel}><ServiceArtwork kind="mentoring" /></div>
       <div className={styles.priceCard}>
         <div><p className={styles.eyebrow}>Индивидуальное сопровождение</p><p className={styles.price}>Ваш план поступления</p><p className={styles.previous}>{CLUB_OFFER.mentoring.pricing}</p></div>
         <ButtonLink href="#mentoring-enrolment">Обсудить менторство</ButtonLink>
@@ -39,5 +42,5 @@ export default function MentoringPage() {
       <p className={styles.note}>Нужна именно подготовка к экзаменам? <Link className="link-underline" href="/courses">Посмотреть IELTS и SAT</Link>.</p>
     </section>
     <section id="mentoring-enrolment" className={`${home.container} ${home.section}`}><EnrollmentPlanner fixedProgram="mentoring" /></section>
-  </main><Footer /></div>;
+  </main><Footer /><ApprovedMotion /></div>;
 }

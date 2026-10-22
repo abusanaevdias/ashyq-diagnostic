@@ -1,4 +1,5 @@
-.page { max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px; color: var(--ink); }
+.page { composes: workspace from "../public-design/LearningWorkspace.module.css"; max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px; color: var(--ink); }
+.page .lessonTop { scroll-margin-top: 155px; }
 .topline { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--hairline); padding-bottom: 16px; color: var(--ink-soft); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
 .topline a { color: var(--ink); letter-spacing: 0; }
 .hero { max-width: 850px; padding: 64px 0 50px; }
