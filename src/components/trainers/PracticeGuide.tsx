@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSession } from '@/lib/lms/hooks';
 import { trainerById } from '@/lib/trainers/catalog';
 import { practiceNeeds } from '@/lib/trainers/journey';
 import TrainerPracticeLink from './TrainerPracticeLink';
@@ -8,6 +9,13 @@ import styles from './LearnerJourney.module.css';
 
 export default function PracticeGuide() {
   const [selected, setSelected] = useState<string | null>(null);
+  const { ready } = useSession();
+  useEffect(() => {
+    if (!ready || !['#choose-practice', '#all-trainers'].includes(window.location.hash)) return;
+    // Local continuation appears after hydration and can move the native anchor.
+    const frame = requestAnimationFrame(() => document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ block: 'start', behavior: 'instant' }));
+    return () => cancelAnimationFrame(frame);
+  }, [ready]);
   const need = practiceNeeds.find(item => item.id === selected);
   const trainer = need && trainerById(need.trainer);
   return <section id="choose-practice" className={styles.panel} aria-labelledby="practice-guide-title">
