@@ -3,20 +3,16 @@
 import Link from 'next/link';
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useSession } from '@/lib/lms/hooks';
-import { trainerById, trainerCatalog, type TrainerId } from '@/lib/trainers/catalog';
+import { trainerById, type TrainerId } from '@/lib/trainers/catalog';
 import { archiveEntry, checkpointKey, createEntry, emptyRecord, MAX_RECORD_BYTES, MAX_HISTORY, snapshotByteLimit, parseRecord, utf8Bytes, validSnapshot, type Snapshot, type TrainerRecord } from '@/lib/trainers/checkpoints';
 import {pilotReportBlocks} from '@/lib/trainers/pilot-report';
 import {buildPlainDocx,DOCX_MIME} from '@/lib/trainers/docx-package';
 import styles from './TrainerCheckpoint.module.css';
 import '@/components/ui/LearningFeedback.css';
 import {replacePublicRecord,clearPublicRecord} from '@/lib/trainers/public-storage';
+import { checkpointChanged as changed, subscribeCheckpoints as subscribeChanges } from './checkpoint-hooks';
+export { useCheckpointLibrary } from './checkpoint-hooks';
 
-const changed = 'ashyq:trainer-checkpoint-change';
-function subscribeChanges(callback: () => void) {
-  window.addEventListener('storage', callback);
-  window.addEventListener(changed, callback);
-  return () => { window.removeEventListener('storage', callback); window.removeEventListener(changed, callback); };
-}
 function failureMessage(error: unknown, fallback: string) {
   if (error instanceof DOMException && ['QuotaExceededError', 'SecurityError'].includes(error.name)) return 'Браузер не разрешил сохранить работу или место закончилось. Работа остаётся на экране: скачай файл перед закрытием.';
   return error instanceof Error ? error.message : fallback;
@@ -30,18 +26,6 @@ export function useCheckpointRecord(trainer: TrainerId) {
     try { return localStorage.getItem(key); } catch { return '!storage-unavailable'; }
   }, () => null);
   return { raw, key, ready, scope, record: parseRecord(raw, trainer) };
-}
-
-export function useCheckpointLibrary() {
-  const { session, ready } = useSession();
-  const scope = session?.user.id ?? 'guest';
-  const raw = useSyncExternalStore(subscribeChanges, () => {
-    if (!ready) return '[]';
-    try { return JSON.stringify(trainerCatalog.map(item => localStorage.getItem(checkpointKey(item.id, scope)))); }
-    catch { return JSON.stringify(trainerCatalog.map(() => '!storage-unavailable')); }
-  }, () => '[]');
-  const values = JSON.parse(raw) as (string | null)[];
-  return { ready, entries: trainerCatalog.map((item, index) => ({ item, raw: values[index] ?? null, record: parseRecord(values[index] ?? null, item.id) })) };
 }
 
 export function downloadTrainerRecord(record: TrainerRecord) {
@@ -72,6 +56,18 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   useEffect(()=>{mounted.current=true;const ticket=importTicket;return()=>{mounted.current=false;ticket.current++;};},[]);
   function showMessage(text:string){if(text)setSaveOpen(true);setMessage(text);}const item = trainerById(trainer);
   const saved = enabled && JSON.stringify(record?.checkpoint?.data) === serialized;
+  const savePanel = useRef<HTMLElement>(null);
+  const resumeAnchored = useRef('');
+  const resumeAvailable = Boolean(record?.checkpoint);
+  useEffect(() => {
+    if (!ready || !resumeAvailable || resumeAnchored.current === key || window.location.hash !== '#saved-work') return;
+    const frame = requestAnimationFrame(() => {
+      resumeAnchored.current = key;
+      savePanel.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
+      savePanel.current?.querySelector<HTMLElement>('[data-resume-checkpoint]')?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [ready, key, resumeAvailable]);
   const initial=useRef(serialized),allowExit=useRef(false),exitGuard=useRef({dirty:false,busy:false,replaceWork:false});
   const [exitHref,setExitHref]=useState<string|null>(null),exitPanel=useRef<HTMLDivElement>(null),exitLink=useRef<HTMLAnchorElement|null>(null);
   const hasSavedCheckpoint=!!record?.checkpoint,invalidStoredRecord=!!raw&&!record;
@@ -225,7 +221,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   function cancelDelete(){deleteExpected.current=undefined;setDeleting(false);}
   function downloadRaw(){if(!raw||raw==='!storage-unavailable')return;try{const url=URL.createObjectURL(new Blob([raw],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=`ASHYQ-${trainer}-recovery.txt`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);showMessage('Исходная запись скачана без изменения. Это файл восстановления, не проверенная учебная работа.');}catch(error){showMessage(failureMessage(error,'Не удалось скачать исходные данные.'));}}
 
-  return <section className={styles.panel} aria-label={`Сохранение: ${item.title}`}><details open={saveOpen} onToggle={event=>setSaveOpen(event.currentTarget.open)}><summary className="learning-save-summary"><span>Сохранение и файлы</span><small>{enabled ? saved ? "Сохранено на устройстве" : "Сохраняем…" : record?.checkpoint ? "Есть сохранённая попытка" : "Автосохранение выключено"}</small></summary>
+  return <section id="saved-work" ref={savePanel} className={styles.panel} aria-label={`Сохранение: ${item.title}`}><details open={saveOpen} onToggle={event=>setSaveOpen(event.currentTarget.open)}><summary className="learning-save-summary"><span>Сохранение и файлы</span><small>{enabled ? saved ? "Сохранено на устройстве" : "Сохраняем…" : record?.checkpoint ? "Есть сохранённая попытка" : "Автосохранение выключено"}</small></summary>
     <div className={styles.heading}><div><h2>Продолжи с того же места</h2><p>{enabled ? 'Автосохранение включено для этого тренажёра.' : 'Сохранение выключено. Можно скачать текущую работу без включения.'}</p></div><Link href="/trainers/history">Мои занятия →</Link></div>
     <details className={styles.history}><summary>Хранение ответов и общее устройство</summary><p className={styles.note}>Текст сохраняется только в этом браузере {scope === 'guest' ? 'в гостевом режиме' : 'для текущего аккаунта'}. На общем устройстве записи могут быть доступны другим людям с этим браузером. Автоматической синхронизации между устройствами нет; перенос возможен через файл.{trainer === 'speaking-second-take' ? ' Аудио не сохраняется; сохраняются заметки и самопроверка.' : ''}</p></details>
     {enabled && <p role="status">{saved ? 'Сохранено на этом устройстве.' : 'Сохраняем изменения… Дождись сообщения «Сохранено» перед закрытием.'}</p>}
@@ -233,7 +229,7 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
     {raw&&raw!=="!storage-unavailable"&&!record&&<div className={styles.actions}><button type="button" disabled={busy} onClick={downloadRaw}>Скачать исходную повреждённую запись</button><button type="button" disabled={busy} onClick={askDelete}>Очистить повреждённую запись</button></div>}
     {record?.checkpoint && !enabled && <p className={styles.resume}>Есть попытка от {new Date(record.checkpoint.savedAt).toLocaleString('ru-RU')}. Продолжи её или явно замени текущей работой.</p>}
     <div className={styles.actions}>
-      {record?.checkpoint && !enabled && <button type="button" disabled={!ready || busy} onClick={() => restore(record.checkpoint!.data)}>Продолжить сохранённую</button>}
+      {record?.checkpoint && !enabled && <button data-resume-checkpoint type="button" disabled={!ready || busy} onClick={() => restore(record.checkpoint!.data)}>Продолжить сохранённую</button>}
       {!enabled ? <button type="button" disabled={!ready || busy || raw === '!storage-unavailable'} onClick={enable}>{record?.checkpoint || raw ? 'Заменить сохранение текущей работой' : 'Сохранять на этом устройстве'}</button> : <button type="button" onClick={() => { setActiveKey(''); showMessage('Автосохранение выключено. Предыдущая запись остаётся в браузере.'); }}>Выключить автосохранение</button>}
       <button type="button" disabled={busy} onClick={exportCurrent}>Скачать текущую работу</button>
       <button type="button" disabled={busy} onClick={()=>exportWord(data,'current')}>Скачать отчёт Word</button>
