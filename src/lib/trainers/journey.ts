@@ -21,6 +21,7 @@ export function checkpointStage(data: Snapshot): string {
   const labels: Record<string, string> = {
     choose: 'Выбор примера', start: 'Подготовка', first: 'Первая попытка', predict: 'Свой прогноз', options: 'Выбор ответа',
     review: 'Разбор', feedback: 'Разбор', repair: 'Исправление', transfer: 'Новый пример', result: 'Итог занятия',
+    answer: 'Свой ответ', locate: 'Поиск первой ошибки', evidence: 'Опора на данные', accuracy: 'Проверка точности',
     reasons: 'Обоснование', continue: 'Продолжение решения', diagnose: 'Разбор затруднения', model: 'Модель условия',
     calculate: 'Расчёт', solve: 'Своё решение', select: 'Главное на графике', draft: 'Свой текст', revise: 'Редактура',
     prepare: 'Подготовка ответа', capture: 'Запись ответа', compare: 'Сравнение', grammar: 'Грамматика', task: 'Аргументы',
