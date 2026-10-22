@@ -60,14 +60,14 @@ export default function TrainerCheckpoint<T extends Snapshot>({ trainer, data, o
   const resumeAnchored = useRef('');
   const resumeAvailable = Boolean(record?.checkpoint);
   useEffect(() => {
-    if (!ready || !resumeAvailable || resumeAnchored.current === key || window.location.hash !== '#saved-work') return;
+    if (!ready || !resumeAvailable || !saveOpen || resumeAnchored.current === key || window.location.hash !== '#saved-work') return;
     const frame = requestAnimationFrame(() => {
       resumeAnchored.current = key;
       savePanel.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
       savePanel.current?.querySelector<HTMLElement>('[data-resume-checkpoint]')?.focus({ preventScroll: true });
     });
     return () => cancelAnimationFrame(frame);
-  }, [ready, key, resumeAvailable]);
+  }, [ready, key, resumeAvailable, saveOpen]);
   const initial=useRef(serialized),allowExit=useRef(false),exitGuard=useRef({dirty:false,busy:false,replaceWork:false});
   const [exitHref,setExitHref]=useState<string|null>(null),exitPanel=useRef<HTMLDivElement>(null),exitLink=useRef<HTMLAnchorElement|null>(null);
   const hasSavedCheckpoint=!!record?.checkpoint,invalidStoredRecord=!!raw&&!record;
