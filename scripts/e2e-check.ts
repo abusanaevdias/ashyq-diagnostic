@@ -191,9 +191,9 @@ async function main() {
   check('landing: четыре прямые бесплатные карточки без поиска', (await page.getByRole('navigation', { name: 'Начать бесплатную практику' }).getByRole('link').count()) === 4);
   check('nav: компактная шапка сохраняет все учебные переходы в меню',
     (await page.locator('header [data-study-nav]').count()) === 0 &&
-    (await page.locator('header a[href="/"]').count()) > 0 &&
-    (await page.locator('header a[href="/trainers"]').count()) > 0 &&
-    (await page.locator('header a[href="/library"]').count()) > 0);
+    (await page.locator('header [data-menu-panel] a[href="/"]').count()) > 0 &&
+    (await page.locator('header [data-menu-panel] a[href="/trainers"]').count()) > 0 &&
+    (await page.locator('header [data-menu-panel] a[href="/library"]').count()) > 0);
   check('landing: секции лендинга на месте', has(landing, 'Что вы узнаете') && has(landing, 'Как это работает'));
   const landingScroll = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
