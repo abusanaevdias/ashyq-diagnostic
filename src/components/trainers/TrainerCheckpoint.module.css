@@ -84,3 +84,4 @@
 .filters { border-radius:var(--r-xl); padding:20px; }
 .preview textarea,.previewReasons textarea,.practiceBody textarea { border-radius:var(--r-lg); padding:18px; font-size:1rem; }
 .essaySource { font-size:1.1rem; line-height:1.85; }
+.panel[id='saved-work'] { scroll-margin-top:110px; }
