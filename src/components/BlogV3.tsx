@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BLOG_CATEGORIES, BLOG_IS_DEMO, type BlogCategory } from '@/data/blog';
-import { PHOTOS } from '@/data/media';
 import { formatDay, postCover } from '@/lib/lms/format';
 import { useLmsData } from '@/lib/lms/hooks';
 import { defaultPosts } from '@/lib/lms/local-repos';
@@ -12,13 +11,6 @@ import { getRepos } from '@/lib/lms/repos';
 import { ButtonLink, FilterChip, Footer, MicroLabel, NavBar } from './ui/CleanUi';
 import home from './HomeV3.module.css';
 import styles from './BlogV3.module.css';
-import { AiBadge } from './AiBadge';
-
-/**
- * /blog по DESIGN_V3 §6.5. Статьи — опубликованные посты из BlogRepo (LMS-001);
- * на сервере и до загрузки показываем публикации из кода.
- * Подписка без бэкенда — ведём в заявку сезона.
- */
 
 type Filter = 'all' | BlogCategory;
 
@@ -28,35 +20,38 @@ const FILTERS: Array<{ id: Filter; label: string }> = [
 ];
 
 const categoryLabel = (category: string) => BLOG_CATEGORIES[category as BlogCategory] ?? category;
+const isPhoto = (url: string) => /\.(?:jpe?g|png|webp|avif)(?:[?#]|$)/i.test(url);
 
+/** Public blog index. The first published match is featured; filters and search keep repository order. */
 export default function BlogV3() {
   const [filter, setFilter] = useState<Filter>('all');
   const [query, setQuery] = useState('');
   const { data } = useLmsData(() => getRepos().blog.listPublished(), 'blog:published');
   const q = query.trim().toLowerCase();
-  const posts = (data ?? defaultPosts()).filter((post) => (filter === 'all' || post.category === filter) && (!q || `${post.title} ${post.excerpt}`.toLowerCase().includes(q)));
+  const posts = (data ?? defaultPosts()).filter((post) =>
+    (filter === 'all' || post.category === filter) &&
+    (!q || `${post.title} ${post.excerpt}`.toLowerCase().includes(q)),
+  );
   const [featured, ...rest] = posts;
-  // дата в часовом поясе устройства — только после загрузки, иначе расхождение SSR/клиента
+  // Keep the existing SSR/client date contract: device-local dates only after data loads.
   const day = (iso?: string) => (data && iso ? formatDay(iso) : '');
 
   return (
-    <div className={home.page}>
+    <div className={`${home.page} ${styles.page}`}>
       <NavBar />
       {BLOG_IS_DEMO ? <p className={styles.demoBar} role="note">Демо-контент: статьи ещё готовятся. Ниже — примеры тем, а не опубликованные материалы.</p> : null}
 
       <main>
-        <section className={`${home.container} ${styles.hero}`}>
-          <div className={styles.heroGrid}>
-            <div className={styles.heroCopy}>
-              <MicroLabel>Блог ASHYQ</MicroLabel>
-              <h1 className={styles.title}>Разборы, стратегии и жизнь сезона</h1>
-              <p className={home.lead}>Короткие материалы о подготовке к IELTS и SAT, типичных ошибках и о том, как устроены Match Days.</p>
-            </div>
-            <div className={styles.thumb}><Image src={PHOTOS.blogHero.src} alt={PHOTOS.blogHero.alt} fill priority sizes="(max-width: 900px) 100vw, 40vw" /><AiBadge /></div>
+        <header className={`${home.container} ${styles.masthead}`}>
+          <p className={styles.eyebrow}>Журнал ASHYQ / IELTS · SAT · Поступление</p>
+          <h1 className={styles.title}>БЛОГ<span aria-hidden="true">.</span></h1>
+          <div className={styles.mastheadBottom}>
+            <p>Понятные разборы экзаменов и практические решения для следующего шага.</p>
+            <span>Материалы для подготовки и поступления</span>
           </div>
-        </section>
+        </header>
 
-        <section className={`${home.container} ${home.section}`} aria-label="Статьи">
+        <section className={`${home.container} ${styles.library}`} aria-label="Статьи">
           <div className={styles.controls}>
             <div className={styles.chips} role="group" aria-label="Категории">
               {FILTERS.map((item) => <FilterChip key={item.id} active={filter === item.id} onClick={() => setFilter(item.id)}>{item.label}</FilterChip>)}
@@ -65,38 +60,54 @@ export default function BlogV3() {
           </div>
 
           {featured ? (
-            <div className={styles.grid}>
+            <>
+              <div className={styles.sectionHeading}>
+                <h2>{filter === 'all' && !q ? 'Новый материал' : 'Материалы по запросу'}</h2>
+                <span role="status" aria-live="polite">{filter === 'all' && !q ? 'Сначала новые' : `Найдено: ${posts.length}`}</span>
+              </div>
               <article className={styles.featured}>
-                <Link href={`/blog/${featured.slug}`} className={styles.postLink}>
+                <Link href={`/blog/${featured.slug}`} className={styles.featuredLink}>
                   <div className={styles.featuredPhoto}>
-                    <Image src={postCover(featured.coverUrl)} alt="" fill sizes="(max-width: 900px) 100vw, 58vw" />
+                    <Image src={postCover(featured.coverUrl)} alt="" fill priority sizes="(max-width: 900px) 100vw, 53vw" className={isPhoto(postCover(featured.coverUrl)) ? styles.photo : styles.illustration} />
                   </div>
                   <div className={styles.featuredBody}>
-                    <span className={styles.badge}>{categoryLabel(featured.category)}</span>
-                    <h2 className={styles.featuredTitle}>{featured.title}</h2>
+                    <span className={styles.category}>{categoryLabel(featured.category)}</span>
+                    <h3 className={styles.featuredTitle}>{featured.title}</h3>
                     <p className={styles.excerpt}>{featured.excerpt}</p>
-                    <div className={styles.metaRow}><span>{day(featured.publishedAt)}</span><span className={styles.soon}>Читать →</span></div>
+                    <time className={styles.date} dateTime={featured.publishedAt}>{day(featured.publishedAt)}</time>
+                    <span className={styles.readMore}>Читать материал <span aria-hidden="true">↗</span></span>
                   </div>
                 </Link>
               </article>
-              {rest.length ? (
-                <div className={styles.side}>
-                  {rest.map((post) => (
-                    <article key={post.id}>
-                      <Link href={`/blog/${post.slug}`} className={styles.sideItem}>
-                        <div className={styles.sideThumb}><Image src={postCover(post.coverUrl)} alt="" fill sizes="72px" /></div>
-                        <div>
-                          <h3 className={styles.sideTitle}>{post.title}</h3>
-                          <p className={styles.sideMeta}>{categoryLabel(post.category)}{day(post.publishedAt) ? ` · ${day(post.publishedAt)}` : ''}</p>
-                        </div>
-                      </Link>
-                    </article>
-                  ))}
+
+              {rest.length > 0 ? (
+                <div className={styles.moreSection}>
+                  <div className={styles.sectionHeading}>
+                    <h2>{filter === 'all' && !q ? 'Последние статьи' : 'Другие материалы'}</h2>
+                    <span>Сначала новые</span>
+                  </div>
+                  <div className={styles.grid}>
+                    {rest.map((post) => (
+                      <article className={styles.card} key={post.id}>
+                        <Link href={`/blog/${post.slug}`} className={styles.cardLink}>
+                          <div className={styles.cardPhoto}>
+                            <Image src={postCover(post.coverUrl)} alt="" fill sizes="(max-width: 360px) 100vw, (max-width: 600px) 50vw, (max-width: 900px) 33vw, 25vw" className={isPhoto(postCover(post.coverUrl)) ? styles.photo : styles.illustration} />
+                          </div>
+                          <span className={styles.category}>{categoryLabel(post.category)}</span>
+                          <h3 className={styles.cardTitle}>{post.title}</h3>
+                          <time className={styles.date} dateTime={post.publishedAt}>{day(post.publishedAt)}</time>
+                        </Link>
+                      </article>
+                    ))}
+                  </div>
                 </div>
               ) : null}
-            </div>
+            </>
           ) : (
-            <p className={styles.empty}>Ничего не нашлось. Попробуйте другой запрос или категорию.</p>
+            <div className={styles.empty} role="status">
+              <p>Ничего не нашлось. Попробуйте другой запрос или категорию.</p>
+              <button type="button" onClick={() => { setQuery(''); setFilter('all'); }}>Сбросить поиск и фильтры</button>
+            </div>
           )}
         </section>
 
