@@ -154,7 +154,9 @@ async function runExam(
     path: `screenshots/${exam}-${mode}-result.png`,
     fullPage: true,
   });
-  const cardShot = page.locator('.relative.mx-auto.w-full').first();
+  const summary = page.getByText('Полная сводка и квадратная карточка результата', { exact: true });
+  if (await summary.isVisible()) await summary.click();
+  const cardShot = page.locator('[data-card="ashyq-player-card"]').filter({ visible: true }).first();
   if (await cardShot.count()) {
     await cardShot.screenshot({ path: `screenshots/${exam}-${mode}-card.png` });
   }

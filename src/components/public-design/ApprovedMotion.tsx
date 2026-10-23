@@ -22,7 +22,7 @@ export default function ApprovedMotion() {
   useEffect(() => {
     if (!used || !coreReady || !scrollReady) return;
     const root = document.querySelector<HTMLElement>('[data-public-design="051"]');
-    const gs = (window as MotionWindow).gsap, plugin = (window as MotionWindow).ScrollTrigger;
+    const gs = (window as unknown as MotionWindow).gsap, plugin = (window as unknown as MotionWindow).ScrollTrigger;
     if (!root || !gs || !plugin || !('IntersectionObserver' in window)) return;
     gs.registerPlugin(plugin);
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
