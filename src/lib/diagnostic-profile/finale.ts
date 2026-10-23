@@ -27,6 +27,14 @@ export function diagnosticFinale(run: RunState, result: DiagnosticResult) {
   const focusLabels = new Set(result.perQuestion.filter(q => recommendation?.evidence.includes(q.questionId) && q.answered && !q.correct).map(q => `${result.sections.find(s => s.section === q.section)?.label ?? q.section} · ${q.domain}`));
   const growth = observed.filter(g => g.wrong > 0)
     .sort((a, b) => Number(focusLabels.has(b.label)) - Number(focusLabels.has(a.label)) || b.wrong / b.answered - a.wrong / a.answered || b.wrong - a.wrong).slice(0, 1);
+  const practice: Record<string, { skill: string; purpose: string }> = {
+    tfng: { skill: 'Отличать FALSE от NOT GIVEN', purpose: 'Находить опору в тексте и отличать противоречие от отсутствия информации.' },
+    'audio-correction': { skill: 'Находить итоговый ответ в аудио', purpose: 'Замечать, когда говорящий исправляет себя, и выбирать окончательный ответ.' },
+    'sat-model': { skill: 'Переводить условие задачи в уравнение', purpose: 'Выделять неизвестную величину и записывать связь из условия до расчётов.' },
+    'sat-inference': { skill: 'Доказывать ответ текстом', purpose: 'Отсеивать варианты, которые добавляют лишний смысл или не подтверждаются текстом.' },
+    'sat-transition': { skill: 'Выбирать переход между мыслями', purpose: 'Определять причину, контраст или продолжение до выбора слова-связки.' },
+  };
+  const training = recommendation ? practice[recommendation.id] : undefined;
   const noAnswers = result.answeredQuestions === 0;
   // Conservative display rule, not a new score/confidence model.
   const noRange = result.answeredQuestions < Math.ceil(result.totalQuestions / 2);
@@ -34,9 +42,17 @@ export function diagnosticFinale(run: RunState, result: DiagnosticResult) {
     ? { title: 'Пока мало данных.', tip: 'Пропуск не доказывает слабый навык. Сначала ответь на задания; затем выбирай, что тренировать.', signal: 'Ответы важнее догадки об уровне.', tokens: ['Попробуй', 'Проверь', 'Выбери фокус'] }
     : { title: 'Проверь себя в новом примере.', tip: 'Выбери упражнение своего экзамена. Сначала реши самостоятельно, затем сравни ответ и объяснение.', signal: 'Новый пример — следующий шаг.', tokens: ['Своя попытка', 'Разбор', 'Новый пример'] };
   const detail = !noAnswers && recommendation ? tips[recommendation.id] ?? generic : generic;
-  return { ...detail, strengths, growth, noAnswers, noRange, recommendation: noAnswers ? undefined : recommendation,
+  return { ...detail, strengths, growth, noAnswers, noRange,
+    trainingSkill: training?.skill ?? 'Выбрать навык для практики',
+    trainingPurpose: training?.purpose ?? 'Выбери короткое упражнение своего экзамена и сравни самостоятельный ответ с разбором.',
+    trainingEvidence: recommendation && !noAnswers
+      ? recommendation.wrong > 0
+        ? `Неверных ответов в этой теме: ${recommendation.wrong}. Заданий по теме: ${recommendation.total}.`
+        : `В этой теме пропущено ${recommendation.skipped} из ${recommendation.total} заданий. Пропуск не доказывает слабый навык.`
+      : 'Точного соответствия между ошибкой и тренажёром пока нет. Выбери навык для практики самостоятельно.',
+ recommendation: noAnswers ? undefined : recommendation,
     href: !noAnswers && recommendation ? recommendation.item.href : '/trainers',
-    action: !noAnswers && recommendation ? 'Попробовать мой тренажёр' : 'Выбрать упражнение',
+    action: !noAnswers && recommendation ? 'Начать тренировку' : 'Выбрать упражнение',
     focus: !noAnswers && recommendation ? recommendation.label : 'Самостоятельная практика',
     band: noRange ? '—' : result.band.rangeLabel,
     caution: noRange ? `Для ориентира пока мало ответов: ${result.answeredQuestions} из ${result.totalQuestions}.` : 'Ориентир по короткой диагностике, не официальный балл.',

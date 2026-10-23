@@ -55,3 +55,12 @@ Two fresh still-only critic passes; native mobile full/static paths plus desktop
 - Screenshots finale-057-award-*-final.jpg are native local-production-preview captures. Static path forced with the native control, not an actual OS preference or physical iPhone acceptance. Temporary tunnel only exposes read-only preview/assets; APIs disabled. Production and cloud profile activation remain unchanged.
 
 Review3 input stills are preserved separately as finale-057-award-*-review3.jpg. The *-final.jpg captures were refreshed after the last bounds, disclosure and dark-meta fixes. Native final dark-meta computed color rgb(248,247,243) confirmed. Final source critic reports no remaining confirmed blocker. Final build157/types/focused ESLint pass. Public temporary preview refreshed; production not deployed.
+
+
+## Client-clarity follow-up — 2026-10-23
+
+The first frame now names the exact recommended skill, observed wrong/total counts, actual published trainer and immediate Start training link. The focus frame repeats the selected recommendation counts rather than a broader domain count. The route frame names the actual trainer and its real solve / compare / retry sequence. Skipped-only and unmatched runs use different honest copy; no invented weakness or improvement promise.
+
+All four scenes stay mounted in a stable grid. Scoped idle contexts retain their poses; interruptible wrapper transitions fade outgoing text away over 0.32s, then reveal the incoming scene over 0.6s. This avoids overlapping paragraphs and abrupt unmount cuts. Inactive scenes are inert and aria-hidden. Explicit internal Why navigation focuses the target heading; autoplay never moves keyboard focus. Pause settles to one readable pane; static/reduced modes clear GSAP wrapper state.
+
+Acceptance: focused ESLint, TypeScript and production build157 passed. Native IAB phone390/375 and narrow320/305 have no horizontal overflow; Why focuses its target heading, static has exactly one visible active pane. Native Start training opened /trainers/reading-evidence with the expected trainer heading. Transition opacity was observed at 0 then intermediate .9017/.9986, followed by full visibility. This is browser evidence, not a physical iPhone/FPS claim. Source adversarial review found hidden-pane focus and generic error-label issues; both fixed. Preview proxy now permits only the five recommended public trainer routes/catalog, forwards RSC headers, and still blocks API/mutations/private routes. Production and cloud activation remain unchanged.
