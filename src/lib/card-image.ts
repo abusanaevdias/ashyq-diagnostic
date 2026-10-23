@@ -50,7 +50,7 @@ const ON_DARK = COLOR.onDark;
 const DISPLAY = "'ManropeCard','Arial Black','Helvetica Neue',Helvetica,Arial,sans-serif";
 const UI = "'InterCard','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
-interface BrandAssets {
+export interface BrandAssets {
   wordmark: string | null; // data URI оригинального красного wordmark
   fontCss: string; // Manrope 700 + Inter 400/600, embedded woff2
 }
@@ -70,7 +70,7 @@ async function blobToDataUrl(url: string): Promise<string> {
 }
 
 /** Бренд-ассеты для автономного SVG: wordmark + v3-шрифты. */
-function loadBrandAssets(): Promise<BrandAssets> {
+export function loadBrandAssets(): Promise<BrandAssets> {
   if (!assetsCache) {
     assetsCache = (async () => {
       const [wordmark, manropeCyr, manropeLat, interCyr, interLat, interCyr600, interLat600] = await Promise.all([

@@ -15,7 +15,7 @@ export default function SaveDiagnostic({ run }: { run: RunState }) {
   let snapshot;
   try { snapshot = run.finished ? freezeDiagnostic(run) : null; } catch { snapshot = null; }
   const recommendations = snapshot ? diagnosticRecommendations(snapshot) : [];
-  return <section className={styles.panel} aria-labelledby="save-diagnostic-title">
+  return <section id="save-my-diagnostic" className={styles.panel} aria-labelledby="save-diagnostic-title">
     <p className={styles.label}>После диагностики</p>
     <h2 id="save-diagnostic-title">От результата — к нужной практике</h2>
     {recommendations[0] ? <><p>Начни с «{recommendations[0].label}». Ошибки: {recommendations[0].wrong}. Пропуски: {recommendations[0].skipped}. Всего заданий по теме: {recommendations[0].total}. {recommendations[0].why}</p><p className={styles.note}>Это наблюдение по короткой попытке, а не устойчивый диагноз. Пропуск сам по себе не доказывает, что навык слабый.</p></> : <p>Сохрани исходную попытку и свои ответы в профиле. Рекомендации появятся только там, где есть подходящее упражнение и основания в ответах.</p>}

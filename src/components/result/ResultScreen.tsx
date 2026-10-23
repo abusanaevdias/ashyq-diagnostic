@@ -19,6 +19,7 @@ import type { CardData } from '@/lib/card-image';
 import DiagnosticJourney from '../public-design/DiagnosticJourney';
 import experience from '../public-design/DiagnosticExperience.module.css';
 import SaveDiagnostic from '../diagnostic-profile/SaveDiagnostic';
+import ResultFinale from './ResultFinale';
 
 export default function ResultScreen({
   run,
@@ -102,24 +103,19 @@ export default function ResultScreen({
 
       <main className="shell pt-4">
         <DiagnosticJourney stage="result" />
-        <EditorialLabel>Your Ashyq Diagnostic</EditorialLabel>
-        <h1 tabIndex={-1} className="serif mt-4 max-w-[10.8em] text-h1 text-red">Твоя точка А</h1>
-        <div className={experience.reviewAction}>
-          <p>Сначала посмотри общий результат, затем открой свои ответы и объяснения к каждому заданию.</p>
-          <button type="button" className="btn btn-ink" onClick={onReview}>Посмотреть свои ответы →</button>
-        </div>
+        <ResultFinale run={run} result={result} onReview={onReview} />
 
         {/* ---------- карточка для скриншота ---------- */}
-        <div className="mt-7">
+        {result.answeredQuestions >= Math.ceil(result.totalQuestions / 2) && <details className="mt-7"><summary className="cursor-pointer py-4 font-semibold">Полная сводка и квадратная карточка результата</summary><div>
           <DiagnosticCard data={cardData} />
-        </div>
+          <ShareButtons result={result} cardData={cardData} />
+        </div></details>}
         <SaveDiagnostic key={run.runId} run={run} />
 
-        <div className="mt-5">
-          <ShareButtons result={result} cardData={cardData} />
-        </div>
+        <button type="button" className="btn btn-quiet mt-5" onClick={onReview}>Посмотреть свои ответы →</button>
 
         {/* ---------- цифры ---------- */}
+        {result.answeredQuestions >= Math.ceil(result.totalQuestions / 2) && <>
         <section className="mt-10 grid gap-px overflow-hidden rounded-md border border-line bg-line sm:grid-cols-3">
           <Stat
             label="Твоя точка А"
@@ -239,6 +235,7 @@ export default function ResultScreen({
           </p>
         ) : null}
 
+        </>}
         {/* ---------- главный CTA ---------- */}
         <section className="band-dark relative mt-14 overflow-hidden">
           <div className="relative px-5 py-9 sm:px-7">

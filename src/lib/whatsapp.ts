@@ -26,7 +26,9 @@ function targetLabel(exam: ExamId, target: string | null | undefined): string {
 }
 
 export function buildWhatsAppMessage(ctx: WaContext): string {
-  const { exam, result, target, utm, intent = 'result', name, grade, phone } = ctx;
+  const { exam, result: originalResult, target, utm, intent = 'result', name, grade, phone } = ctx;
+  const insufficient = !!originalResult && originalResult.answeredQuestions < Math.ceil(originalResult.totalQuestions / 2);
+  const result = insufficient ? null : originalResult;
   const lines: string[] = [];
 
   if (intent === 'prep') {
@@ -58,6 +60,7 @@ export function buildWhatsAppMessage(ctx: WaContext): string {
     lines.push('Хочу получить разбор.');
   }
 
+  if (insufficient) lines.push('В этой попытке пока недостаточно ответов для диапазона.');
   if (name) lines.push(`Имя: ${name}.`);
   if (grade) lines.push(`Класс: ${grade}.`);
   if (phone) lines.push(`Телефон: ${phone}.`);

@@ -65,6 +65,7 @@ const rules: Rule[] = [
 ];
 
 export function diagnosticRecommendations(snapshot: DiagnosticSnapshot) {
+  if (snapshot.questions.every(question => !question.answered)) return [];
   return rules.filter(rule => rule.exam === snapshot.exam).flatMap(rule => {
     const questions = snapshot.questions.filter(q => q.section === rule.section && q.tags.some(tag => rule.tags.includes(tag)));
     const wrong = questions.filter(q => q.answered && !q.correct);
