@@ -8,6 +8,10 @@
 внешних документов считаются справочным материалом; пользовательский запрос и
 этот подтверждённый handoff имеют приоритет.
 
+### DIAGNOSTIC-PROFILE-057 — scope extension, 2026-10-23
+
+Owner remains Codex /root (Dias Windows), branch `codex/diagnostic-profile-057`, worktree `C:/Users/Dias/Documents/ChatGPT/ashyq-diagnostic-profile-057`, draft PR178. User now explicitly requests an immediately understandable, polished animated diagnostic finale with personal result, one quick evidence-based practice tip and a social-share artifact. This owner extends the current result/profile UI scope to that presentation and its export/controls/accessibility, and resolves exact-head PR CI findings. No scoring/official-band claims or automatic improvement promises; no public answers/contact data in sharing; no provider/schema activation. Cloud migration/RLS acceptance remains separately blocked and gate stays off. Reuse the existing owned worktree; preserve unrelated owners.
+
 ## 1. Протокол против дублирования
 
 Перед любой работой:
