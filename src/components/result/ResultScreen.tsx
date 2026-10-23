@@ -16,7 +16,6 @@ import {
   HandNote,
 } from '@/components/ui/Brand';
 import type { CardData } from '@/lib/card-image';
-import DiagnosticJourney from '../public-design/DiagnosticJourney';
 import experience from '../public-design/DiagnosticExperience.module.css';
 import SaveDiagnostic from '../diagnostic-profile/SaveDiagnostic';
 import ResultFinale from './ResultFinale';
@@ -102,7 +101,6 @@ export default function ResultScreen({
       </header>
 
       <main className="shell pt-4">
-        <DiagnosticJourney stage="result" />
         <ResultFinale run={run} result={result} onReview={onReview} />
 
         {/* ---------- карточка для скриншота ---------- */}
