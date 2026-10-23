@@ -26,4 +26,3 @@
 .confirm input { width: 20px; height: 20px; flex: 0 0 20px; margin-top: 3px; accent-color: var(--red); }
 @media (max-width: 480px) { .actions > * { width: 100%; } }
 @media (prefers-reduced-motion: no-preference) { .action, .secondary { transition: transform 120ms ease-out, background 180ms ease-out; } }
-

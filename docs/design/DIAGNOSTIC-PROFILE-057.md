@@ -43,6 +43,7 @@ Final source review reported no further confirmed blocker in those changes. This
 - TypeScript and targeted ESLint passed during implementation.
 - Production build passed; final exact-head receipt recorded in PR/HANDOFF.
 - CUA mobile walkthrough on synthetic local IELTS: two answered wrong, ten skipped; complete → selected transfer → demo sign-in → explicit email confirmation → saved baseline and T/F/NG recommendation. No real student data was used.
+- Reload retained the baseline and recommendation in the same demo browser. Actual mobile DOM width/scrollWidth: 375/375. Original screenshots: `diagnostic-profile-057-mobile.jpg` and `diagnostic-profile-057-answers-mobile.jpg` in this directory. Independent image reviewer found no blocker in the pictured areas; this does not validate backend or a physical phone.
 - No new test suite was added or manually executed.
 
 ## Required cloud activation — NOT COMPLETE
