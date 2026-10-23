@@ -18,6 +18,7 @@ import {
 import type { CardData } from '@/lib/card-image';
 import DiagnosticJourney from '../public-design/DiagnosticJourney';
 import experience from '../public-design/DiagnosticExperience.module.css';
+import SaveDiagnostic from '../diagnostic-profile/SaveDiagnostic';
 
 export default function ResultScreen({
   run,
@@ -112,6 +113,7 @@ export default function ResultScreen({
         <div className="mt-7">
           <DiagnosticCard data={cardData} />
         </div>
+        <SaveDiagnostic key={run.runId} run={run} />
 
         <div className="mt-5">
           <ShareButtons result={result} cardData={cardData} />

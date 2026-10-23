@@ -10,6 +10,7 @@ import ui from '@/components/ui/CleanUi.module.css';
 import { Avatar, RoleBadge } from './Identity';
 import RequireRole from './RequireRole';
 import styles from './Lms.module.css';
+import DiagnosticProfile from '@/components/diagnostic-profile/DiagnosticProfile';
 
 /** Своё имя можно исправить (EDIT-MORE-001) — его видят учитель и одноклассники. */
 function NameForm({ name }: { name: string }) {
@@ -64,6 +65,7 @@ export default function MeView() {
           <h1 className={styles.title}>Привет, {user.name}</h1>
           <p className={styles.lead}>{user.email}</p>
 
+          <DiagnosticProfile key={user.id} user={user} />
           <div className={styles.grid3}>
             {roleLinks(user.role).map((link) => (
               <Link key={link.href} href={link.href} className={`${styles.card} ${styles.cardLink}`}>
