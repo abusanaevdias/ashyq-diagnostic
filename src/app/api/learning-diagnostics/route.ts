@@ -6,7 +6,9 @@ export const dynamic = 'force-dynamic';
 const reply = (body: unknown, status = 200) => NextResponse.json(body, { status, headers: { 'Cache-Control': 'private, no-store', Vary: 'Authorization' } });
 
 async function context(request: Request) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '');
+  // Match the existing auth adapter: deployed configuration may contain the
+  // REST/Auth endpoint rather than the project's root URL.
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/(\/(rest|auth)\/v1)?\/?$/, '');
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (process.env.DIAGNOSTIC_PROFILE_ENABLED !== 'true' || !url || !key) return { error: reply({ error: 'Сохранение диагностики в облачном профиле ещё не подключено. Ответы остаются в этом браузере; перенос можно повторить позже.' }, 503) };
   const authorization = request.headers.get('authorization') ?? '';
