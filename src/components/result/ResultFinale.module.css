@@ -6,12 +6,12 @@
 .intro > p:last-child { margin-top: 18px; font-size: 1.05rem; line-height: 1.6; }
 .player { border: 1px solid var(--hairline); border-radius: var(--r-xxl); background: var(--surface); overflow: hidden; isolation: isolate; }
 .playerTop { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 28px 8px; flex-wrap: wrap; }
-.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 0 28px; }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 0 28px; }
 .steps button { min-height: 56px; min-width: 0; text-align: left; color: var(--ink-soft); font-size: .8rem; line-height: 1.3; }
 .steps button[aria-pressed=true] { color: var(--ink); font-weight: 700; }
 .stepTrack { display: block; height: 3px; background: var(--hairline); margin-bottom: 10px; position: relative; overflow: hidden; }
 .steps button[aria-pressed=true] .stepTrack { background: var(--ink); }
-.stepFill { position: absolute; inset: 0; background: var(--red); transform-origin: left; animation: progress 7s linear both; }
+.stepFill { position: absolute; inset: 0; background: var(--red); transform-origin: left; animation: progress 6s linear both; }
 .scene { padding: 30px clamp(22px, 5vw, 60px); min-height: 430px; }
 .scene h2 { font: 800 clamp(1.7rem, 4.4vw, 3.5rem)/1.1 var(--font-display); letter-spacing: -.045em; margin: 16px 0 24px; max-width: 18ch; }
 .scene p { line-height: 1.65; }
@@ -91,3 +91,77 @@
   .actions > :is(button, a) { width: 100%; }
   .nextMark { font-size: 3rem; }
 }
+
+/* A finite editorial film, built from live diagnostic evidence. */
+.intro { margin-bottom: 18px; }
+.intro h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
+.intro > p:last-child { margin-top: 12px; }
+.player { position: relative; background: var(--ink); color: var(--on-dark); border-color: var(--ink); }
+.playerTop, .steps, .scene, .controls { position: relative; z-index: 1; }
+.player .eyebrow, .player .textButton, .player .steps button, .player .note, .player .scope, .player .caution, .player .resultFacts small { color: var(--on-dark); }
+.player .steps button { opacity: .65; }
+.player .steps button[aria-pressed=true] { opacity: 1; color: var(--on-dark); }
+.player .stepTrack { background: var(--ink-soft); }
+.player .steps button[aria-pressed=true] .stepTrack { background: var(--on-dark); }
+.player .scene { min-height: 480px; }
+.stageBackdrop { position: absolute; inset: 100px 0 70px; z-index: 0; pointer-events: none; overflow: hidden; opacity: .32; }
+.stageBackdrop svg { width: 100%; height: 100%; fill: none; }
+.ribbonBack { stroke: var(--ink-soft); stroke-width: 1; }
+.ribbonFront { stroke: var(--red); stroke-width: 6; stroke-dasharray: 1800; stroke-dashoffset: 0; }
+.stageWord { position: absolute; bottom: 4%; left: 5%; font: 800 clamp(3rem, 10vw, 9rem)/1 var(--font-display); letter-spacing: -.07em; white-space: nowrap; opacity: .15; }
+.scoreArt { z-index: 0; pointer-events: none; opacity: .6; }
+.scoreCopy, .resultFacts, .scope { position: relative; z-index: 1; }
+.player .track { stroke: var(--ink-soft); }
+.scoreCopy { padding-block: 38px 22px; }
+.score { font-size: clamp(3.2rem, 12vw, 8rem); }
+.player .resultFacts > span, .player .controls { border-color: var(--ink-soft); }
+.player .control { border-color: var(--ink-soft); }
+.player .primary { background: var(--on-dark); color: var(--ink); }
+.player .thoughtPath > span { background: var(--ink); color: var(--on-dark); border-color: var(--ink-soft); }
+.player .thoughtPath b { color: var(--on-dark); }
+.skillCards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 28px 0; }
+.skillCard { padding: 24px; border: 1px solid var(--ink-soft); border-radius: var(--r-xl); background: var(--ink); }
+.skillCard h3 { font: 700 1.1rem/1.4 var(--font-display); margin: 14px 0; overflow-wrap: anywhere; }
+.skillCard p { font-size: .85rem; }
+.skillCard strong { font-size: 1.8rem; font-variant-numeric: tabular-nums; }
+.skillCard small { font-size: .75rem; line-height: 1.6; display: block; margin-top: 14px; }
+.skillIcon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--on-dark); border-radius: var(--r-pill); font-size: 1.5rem; }
+.skillRail { margin-top: 20px; height: 4px; background: var(--ink-soft); overflow: hidden; }
+.skillRail span { display: block; width: var(--fill); height: 100%; background: var(--on-dark); transform-origin: left; }
+.growthChips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.growthChips > span { display: block; border-left: 3px solid var(--red); padding: 8px 14px; font-size: .8rem; line-height: 1.5; max-width: 100%; overflow-wrap: anywhere; }
+.growthChips small { display: block; }
+.player[data-scene="1"] .stageBackdrop { opacity: .18; }
+.player[data-scene="2"] .stageBackdrop { opacity: .18; }
+.player[data-scene="3"] .stageBackdrop { opacity: .4; }
+@keyframes scoreReveal { from { opacity: 0; transform: translateY(32px) scale(.88); } to { opacity: 1; transform: none; } }
+@keyframes lineReveal { from { stroke-dashoffset: 1800; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  .player[data-motion=full] .score { animation: scoreReveal 1s cubic-bezier(.16,1,.3,1) .12s both; }
+  .player[data-motion=full] .ribbonFront { animation: lineReveal 2.8s cubic-bezier(.16,1,.3,1) both; }
+  .player[data-motion=full] .skillCard { animation: scoreReveal .8s cubic-bezier(.16,1,.3,1) var(--delay) both; }
+  .player[data-motion=full] .skillRail span { animation: progress 1.2s cubic-bezier(.16,1,.3,1) .25s both; }
+  .player[data-motion=full] .growthChips > span { animation: arrive .65s cubic-bezier(.16,1,.3,1) both; }
+  .player[data-paused=true] :is(.score, .ribbonFront, .skillCard, .skillRail span, .growthChips > span) { animation: none; }
+}
+@media (max-width: 600px) {
+  .intro h1 { font-size: 1.8rem; }
+  .intro > p:last-child { font-size: .9rem; margin-top: 8px; }
+  .player .scene { min-height: 430px; padding: 22px 20px; }
+  .scoreCopy { padding-block: 30px 22px; }
+  .score { font-size: clamp(3rem, 13vw, 5rem); }
+  .steps { gap: 6px; }
+  .steps button { font-size: .65rem; }
+  .skillCards { grid-template-columns: minmax(0, 1fr); gap: 12px; margin: 20px 0; }
+  .skillCard { padding: 18px; }
+  .skillCard h3 { margin: 8px 0; }
+  .skillIcon { float: right; width: 32px; height: 32px; margin-left: 12px; }
+  .scene h2 { font-size: 1.8rem; margin-block: 12px 20px; }
+  .thoughtPath { margin-block: 20px; }
+}
+
+.player .evidence { margin-top: 24px; }
+.player .evidence summary { min-height: 44px; display: list-item; cursor: pointer; padding-block: 12px; font-size: .85rem; }
+
+.player :is(button, a, summary):focus-visible { outline-color: var(--on-dark); }
+@media (max-width: 600px) { .steps button { font-size: .75rem; } }
