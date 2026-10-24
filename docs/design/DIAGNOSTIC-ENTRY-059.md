@@ -54,3 +54,32 @@ Build, lint, browser observations and independent visual review are recorded at
 closeout. No new tests or test-suite runs are part of this slice. Full release
 requires existing exact-head CI. Physical-device performance and official score
 calibration cannot be inferred from browser viewport checks.
+
+## Released 2026-10-24
+
+- PR180: feature `b8b5ffb2c4098eec25562d303eea4d565e74300f`, exact-head
+  CI40098079340 SUCCESS; merge `2440dbc42d0efa1ec283e6afdb390d7ce9a0fc66`.
+- Existing CI: basic164/164, LMS91/91, season64/64, tokens9/9,
+  72 responsive audits and36 Lighthouse routes. `/diagnostic` Lighthouse:
+  performance99, accessibility100 (lab results, not physical-phone certification).
+- Initial CI40097351324 found implicit black SVG fills. Explicit inherited
+  `fill="none"` fixed the source; the release gate was not modified.
+- Final local build157/TypeScript, full plus scoped lint and diff checks passed.
+- Actual CUA320/390/768/1280: no positive horizontal overflow; native IELTS/SAT
+  starts, synthetic saved IELTS setup continuation/reload, one GSAP core,
+  client home-to-entry motion, manual pause/resume/reload persistence, offscreen
+  freeze and visible keyboard focus observed. Start controls48px at320.
+- Two independent actual-screenshot visual passes found no visual release blocker.
+  No award, measured FPS or actual system reduced-motion runtime is claimed.
+- Vercel Production7299433563 SUCCESS for the merge. Canonical `/diagnostic`
+  HTTP200 includes the new heading and all three SVG markers, without Friday
+  copy. Actual canonical390px page shows changing selection/marker and no
+  horizontal overflow. Public page was left open for the user.
+- Original screenshots, CI logs and acceptance receipt are retained locally in
+  the implementation worktree under `.data/entry059/`; final production proof
+  is `production-mobile.jpg`. They are evidence, not bundled UI assets.
+
+Nonblocking future polish: provide a short exam-purpose explanation for undecided
+visitors and clarify the SAT Russian eyebrow. Next safe design step is a trainer
+catalog concept; obtain concept selection before edits and preserve033 gates.
+Diagnostic result/profile/finale057 remains a separate unfinished owned task.
