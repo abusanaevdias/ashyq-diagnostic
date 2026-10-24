@@ -38,12 +38,14 @@
 .panels {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .panel {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  border-radius: var(--r-xxl);
   padding: clamp(24px, 2.5vw, 32px);
   color: var(--on-red);
 }
@@ -106,7 +108,6 @@
   .conditions { margin-bottom: 16px; }
   .panels { grid-template-columns: 1fr; }
   .panel { padding: 24px; }
-  .sat { border-top: 2px solid var(--bg); }
   .panel .examTitle { font-size: 3rem; margin-top: 10px; }
   .scope { font-size: 1.05rem; }
   .ieltsArt, .satArt { margin-block: 20px; }
