@@ -83,3 +83,7 @@ Nonblocking future polish: provide a short exam-purpose explanation for undecide
 visitors and clarify the SAT Russian eyebrow. Next safe design step is a trainer
 catalog concept; obtain concept selection before edits and preserve033 gates.
 Diagnostic result/profile/finale057 remains a separate unfinished owned task.
+
+## Rounded-panel follow-up, 2026-10-24
+
+User requested softer corners like the existing explanation artwork. Claim7ebea4a was published first. Scoped CSS uses existing --r-xxl (28px), adds16px grid gap and removes the obsolete mobile2px divider. No overflow clipping is introduced, so keyboard focus remains visible. Callbacks, text and motion implementation are unchanged. Local build157/TypeScript, lint and diff checks passed; actual screenshot review and exact-head CI are the follow-up release gates.
