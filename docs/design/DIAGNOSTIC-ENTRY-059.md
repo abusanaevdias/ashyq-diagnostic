@@ -87,3 +87,15 @@ Diagnostic result/profile/finale057 remains a separate unfinished owned task.
 ## Rounded-panel follow-up, 2026-10-24
 
 User requested softer corners like the existing explanation artwork. Claim7ebea4a was published first. Scoped CSS uses existing --r-xxl (28px), adds16px grid gap and removes the obsolete mobile2px divider. No overflow clipping is introduced, so keyboard focus remains visible. Callbacks, text and motion implementation are unchanged. Local build157/TypeScript, lint and diff checks passed; actual screenshot review and exact-head CI are the follow-up release gates.
+
+
+Follow-up released: PR181 feature `f230cc5367360227854bed77a9549abd9d0463eb`,
+merge `030b13ef7e7c4fa600d38ec3ded10ce0cf10f2ed`. Exact-head CI40100253327
+SUCCESS, including72 responsive audits and36 Lighthouse routes.
+Vercel Production7299741320 SUCCESS. Canonical `/diagnostic` HTTP200 and
+actual public390px DOM show both28px radii,16px gap and no positive horizontal
+overflow. Actual production screenshot: `.data/entry059/rounded-production-mobile.jpg`.
+Local320/390/1280 checks and independent complete-desktop/mobile/keyboard JPEG
+review found no blocker. Focus is unclipped. No physical-phone/FPS acceptance
+or result/profile057 completion is claimed. Next safe scope remains a separately
+selected trainer-catalog concept;033 external launch gates are unchanged.
