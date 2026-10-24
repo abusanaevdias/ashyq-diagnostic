@@ -15,7 +15,7 @@ type Review = { attempt: Attempt; open: boolean; onToggle: () => void };
 // Literal excerpts from the existing public passages. No generated offsets,
 // new answer keys or hidden hints before the first attempt is frozen.
 const reviewExcerpts: Record<string, { passage: string[]; statement: string[] }> = {
-  'City Museum': { passage: ['local residents', 'on Fridays', 'Visitors from outside the city still paid the usual price', 'weekend tickets remained unchanged'], statement: ['every visitor', 'every day of the week'] },
+  'City Museum': { passage: ['local residents', 'on Fridays', 'outside the city', 'still paid', 'weekend tickets', 'remained unchanged'], statement: ['every visitor', 'every day of the week'] },
   'Solar Lights Pilot': { passage: ['installation costs', 'assess maintenance costs next year'], statement: ['reduced', 'annual maintenance costs'] },
   'Community Pool': { passage: ['Adults pay the standard entry fee', 'including when they accompany a child'], statement: ['Adults', 'without paying'] },
   'Library Evening Hours': { passage: ['A survey about why visitors came will be carried out at the end of the year'], statement: ['Most evening visitors', 'borrow books for school'] },
@@ -37,16 +37,16 @@ function ReviewVerdict({ task, attempt, label }: { task: ReadingTask; attempt: A
   const answerOk = attempt.answer === task.answer;
   const evidenceOk = evidenceMatches(task, attempt.evidenceId);
   const ng = task.answer === 'NOT GIVEN';
-  return <div className={styles.verdict} data-answer-correct={answerOk}>
+  return <div id="reading-verdict" className={styles.verdict} data-answer-correct={answerOk}>
     <div role="status" aria-atomic="true">
       <p className={styles.miniLabel}>{label}</p>
-      <h3><span>{answerOk ? 'Ответ верный.' : 'Пока неверно.'}</span><span className={answerOk ? styles.goodSymbol : styles.badSymbol} aria-hidden="true">{answerOk ? '✓' : '×'}</span></h3>
+      <h3 id="reading-verdict-title" tabIndex={-1}><span>{answerOk ? 'Ответ верный.' : 'Пока неверно.'}</span><span className={answerOk ? styles.goodSymbol : styles.badSymbol} aria-hidden="true">{answerOk ? '✓' : '×'}</span></h3>
       <p>{answerOk && evidenceOk ? (ng ? 'Область подходит. Теперь проверь логику по всему отрывку.' : 'И ответ, и выбранная опора подходят.') : answerOk ? 'Но выбранное предложение нужно заменить.' : evidenceOk ? 'Нужная область найдена. Сравни её смысл с утверждением.' : 'Нужно пересмотреть и ответ, и выбранное предложение.'}</p>
     </div>
     <dl className={styles.verdictRows}>
       <div><dt>Твой ответ</dt><dd className={answerOk ? styles.goodText : styles.badText}>{attempt.answer} <span aria-hidden="true">{answerOk ? '✓' : '×'}</span></dd></div>
       <div><dt>Верный ответ</dt><dd>{task.answer}</dd></div>
-      <div><dt>{ng ? 'Область проверки' : 'Опора в тексте'}</dt><dd className={evidenceOk ? styles.goodText : styles.badText}>{evidenceOk ? 'Подходит ✓' : 'Нужно заменить ×'}</dd></div>
+      <div><dt>{ng ? 'Область проверки' : 'Опора в тексте'}</dt><dd className={evidenceOk ? styles.goodText : styles.badText}>{evidenceOk ? 'Подходит ✓' : ng ? 'Область не подходит ×' : 'Опора не подходит ×'}</dd></div>
     </dl>
   </div>;
 }
@@ -97,6 +97,7 @@ function TaskView({ task, answer, evidenceId, confidence, onAnswer, onEvidence, 
           {review.open && <div id="reading-explanation" className={styles.explanation}>
             <p className={styles.explanationLabel}>{ng ? 'ПОЧЕМУ НЕ ХВАТАЕТ ДАННЫХ' : task.answer === 'FALSE' ? 'ВОТ ПРОТИВОРЕЧИЕ' : 'ВОТ ПОДТВЕРЖДЕНИЕ'}</p>
             <h4>{ng ? 'Факт не сообщается.' : task.answer === 'FALSE' ? 'Текст говорит иначе.' : 'Смысл совпадает.'}</h4>
+            <blockquote className={styles.explanationQuote}><span>{ng ? 'Область проверки · не доказательство отсутствия' : 'Сравни с этой строкой'}</span><p lang="en">{task.sentences.find(sentence => sentence.id === task.evidenceId)?.text}</p></blockquote>
             <p>{task.explanation}</p>
             <p lang="en" className={styles.relationLine}>{task.relation}</p>
           </div>}
@@ -158,9 +159,10 @@ export default function ReadingEvidence() {
 
   useEffect(() => {
     if (phase !== 'choose') {
-      const heading = document.getElementById('reading-stage-title');
+      const isFeedback = phase === 'review' || phase === 'result';
+      const heading = document.getElementById(isFeedback ? 'reading-verdict-title' : 'reading-stage-title');
       const stageStart = document.getElementById('reading-stage-start');
-      (stageStart ?? heading)?.scrollIntoView({ block: 'start' });
+      (isFeedback ? document.getElementById('reading-verdict') : stageStart ?? heading)?.scrollIntoView({ block: 'start' });
       heading?.focus({ preventScroll: true });
     }
   }, [phase, caseIndex]);

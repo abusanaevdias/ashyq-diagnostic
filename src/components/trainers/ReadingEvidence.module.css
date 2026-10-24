@@ -16,7 +16,7 @@
 .caseCard h3 { margin: 0 0 28px; font: 800 1.9rem var(--font-display); }
 .caseCard button { align-self: start; margin-top: auto; }
 .primary { min-height: 48px; padding: 11px 20px; border: 0; border-radius: var(--r-pill); background: var(--dark); color: var(--on-dark); font: 800 14px var(--font-body); cursor: pointer; }
-.primary:hover { background: var(--ink-soft); }
+.primary:hover { background: var(--dark-warm); }
 .lesson { scroll-margin-top: 105px; }
 .lesson h2 { scroll-margin-top: 105px; }
 .lessonTop { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-soft); }
@@ -71,6 +71,7 @@
   flex: 1 1 auto;
 }
 .verdict {
+  scroll-margin-top: 100px;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
   gap: 32px;
@@ -146,6 +147,9 @@
 .explanation h4 { margin: 0; font: 700 1.5rem/1.2 var(--font-display); letter-spacing: -.03em; }
 .explanation p { margin: 16px 0 0; font-size: 15px; line-height: 1.65; }
 .explanation .relationLine { padding-top: 16px; border-top: 1px solid currentColor; font-size: 13px; }
+.explanationQuote { margin: 20px 0 0; padding-left: 16px; border-left: 2px solid currentColor; }
+.explanationQuote > span { display: block; font-size: 11px; line-height: 1.5; font-weight: 750; }
+.explanation .explanationQuote p { margin-top: 10px; font-size: 15px; }
 .confidenceNote { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
 .nextStep { max-width: 650px; padding-top: 16px; }
 .nextStep h3 { margin: 0; font: 700 clamp(1.65rem, 3vw, 2.2rem)/1.15 var(--font-display); letter-spacing: -.04em; }
