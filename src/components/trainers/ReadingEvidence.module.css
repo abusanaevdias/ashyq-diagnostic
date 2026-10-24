@@ -58,3 +58,126 @@
 .page button:focus-visible, .page a:focus-visible, .page input:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 800px) { .taskGrid { grid-template-columns: 1fr; } .resultGrid { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .page { padding: 20px 16px 70px; } .hero { padding: 46px 0 38px; } .topline, .sectionHead { align-items: start; flex-direction: column; } .caseGrid, .compare { grid-template-columns: 1fr; } .passage, .response, .caseCard { padding: 21px; } .lessonTop { align-items: start; flex-direction: column; } }
+
+/* The same paper and question remain mounted across attempt / review / repair. */
+.passage { view-transition-name: reading-passage; }
+.response { view-transition-name: reading-response; }
+.primary { transition: transform var(--t-fast), background var(--t-fast); }
+.primary:active { transform: scale(.97); }
+.sentence .sentenceText, .sentenceSelected .sentenceText {
+  color: var(--ink);
+  font: inherit;
+  line-height: inherit;
+  flex: 1 1 auto;
+}
+.verdict {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: 32px;
+  align-items: center;
+  margin-top: 28px;
+  padding: 28px 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.verdict h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin: 0;
+  font: 700 clamp(2rem, 4.5vw, 3.4rem)/1.08 var(--font-display);
+  letter-spacing: -.05em;
+}
+.verdict > div > p:last-child {
+  max-width: 480px;
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.goodSymbol, .goodText { color: var(--success); }
+.badSymbol, .badText { color: var(--red-deep); }
+.verdictRows { margin: 0; }
+.verdictRows > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.verdictRows > div:last-child { border-bottom: 0; }
+.verdictRows dt { font-size: 14px; }
+.verdictRows dd { margin: 0; text-align: right; font-size: 15px; font-weight: 750; }
+.reviewSentence {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--hairline);
+}
+.reviewSentence > div { min-width: 0; }
+.reviewSentence p { margin: 0; font-size: 17px; line-height: 1.65; }
+.sentenceId { flex: 0 0 auto; color: var(--ink-soft); font-size: 11px; font-weight: 750; }
+.chosenLabel, .keyLabel { display: block; margin-top: 9px; font-size: 12px; line-height: 1.5; }
+.chosenLabel { color: var(--ink-soft); }
+.keyLabel { color: var(--red-deep); font-weight: 750; }
+.keySentence { border-top-color: var(--red-deep); }
+.mark, .markActive {
+  color: inherit;
+  background: transparent;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  text-decoration: underline solid transparent 2px;
+  text-underline-offset: 4px;
+  transition: background var(--t-base), text-decoration-color var(--t-base);
+}
+.markActive { background: var(--blush); text-decoration-color: var(--red-deep); }
+.reviewControls { display: grid; gap: 20px; }
+.reviewControls > button { justify-self: start; }
+.explanation {
+  padding: 25px;
+  border-radius: var(--r-md);
+  background: var(--dark);
+  color: var(--on-dark);
+  animation: explain-in 280ms cubic-bezier(.2, .7, .2, 1) both;
+}
+.explanation .explanationLabel { margin: 0 0 12px; font-size: 11px; letter-spacing: .08em; font-weight: 750; }
+.explanation h4 { margin: 0; font: 700 1.5rem/1.2 var(--font-display); letter-spacing: -.03em; }
+.explanation p { margin: 16px 0 0; font-size: 15px; line-height: 1.65; }
+.explanation .relationLine { padding-top: 16px; border-top: 1px solid currentColor; font-size: 13px; }
+.confidenceNote { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
+.nextStep { max-width: 650px; padding-top: 16px; }
+.nextStep h3 { margin: 0; font: 700 clamp(1.65rem, 3vw, 2.2rem)/1.15 var(--font-display); letter-spacing: -.04em; }
+.nextStep > p:last-child { color: var(--ink-soft); line-height: 1.6; margin-bottom: 25px; }
+@keyframes explain-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+:global(html):has(.page)::view-transition { pointer-events: none; }
+:global(::view-transition-group(reading-passage)),
+:global(::view-transition-group(reading-response)) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(.2, .7, .2, 1);
+}
+@media (max-width: 800px) {
+  .verdict { grid-template-columns: 1fr; gap: 16px; }
+  .verdictRows { max-width: 500px; }
+}
+@media (max-width: 600px) {
+  .verdict { margin-top: 22px; padding: 22px 0; }
+  .verdict h3 { font-size: clamp(1.9rem, 8.5vw, 2.6rem); gap: 10px; }
+  .verdictRows dd { max-width: 58%; overflow-wrap: break-word; }
+  .verdictRows dt { max-width: 42%; }
+  .reviewSentence p { font-size: 16px; }
+  .reviewControls > button { width: 100%; }
+  .explanation { padding: 21px; }
+  .review > .primary { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .primary, .mark, .markActive { transition: none; }
+  .primary:active { transform: none; }
+  .explanation { animation: none; }
+  :global(::view-transition-group(reading-passage)),
+  :global(::view-transition-group(reading-response)) { animation-duration: 0s; }
+}
