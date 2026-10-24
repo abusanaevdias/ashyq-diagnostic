@@ -1,15 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { EXAMS } from '@/lib/config';
 import type { ExamId, RunState } from '@/lib/types';
-import { continueLabel } from './Landing';
 import { ArrowIcon, Footer, IconChip, MicroLabel, NavBar } from './ui/CleanUi';
 import { Reveal } from './ui/Reveal';
 import home from './HomeV3.module.css';
 import styles from './DiagnosticV3.module.css';
 import HeroScene from './public-design/HeroScene';
-import ServiceArtwork from './public-design/ServiceArtwork';
+import DiagnosticDoors from './DiagnosticDoors';
 import ApprovedMotion from './public-design/ApprovedMotion';
 
 /**
@@ -33,37 +31,21 @@ const STEPS = [
 
 export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, RunState | null>; onSelect: (exam: ExamId) => void }) {
   return (
-    <div className={`${home.page} ${home.applePage}`}>
+    <div className={`${home.page} ${home.applePage} ${styles.entryPage}`}>
+      <ApprovedMotion />
       <NavBar onStart={() => onSelect('ielts')} />
 
       <main>
         <section id="hero" className={`${home.container} ${styles.intro}`}>
           <div className={styles.introGrid}>
             <div className={styles.introCopy}>
-              <MicroLabel>Quick Diagnostic</MicroLabel>
-              <h1 className={styles.introTitle}>Узнайте свой уровень до старта</h1>
-              <p className={styles.introLead}>Короткий тест поможет определить стартовый фокус подготовки. Около 20 минут, бесплатно, без регистрации. Результат — предварительная оценка по выбранным заданиям, не официальный балл IELTS или SAT и не прогноз экзаменационного результата.</p>
-              <p className={styles.choiceHint}>Выберите IELTS или SAT. Если вы уже начинали, продолжите сохранённую попытку на этом устройстве.</p>
-              <p className={styles.asideLink}>Ещё не решили, какой экзамен вам нужен? Начните с <Link href="/career">Компаса</Link> — ориентир по интересам поможет выбрать направление.</p>
+              <p className={styles.introEyebrow}>Бесплатная диагностика</p>
+              <h1 className={styles.introTitle}>С чего начать подготовку?</h1>
             </div>
-            <div className={styles.examChoices} aria-label="Выберите диагностику">
-              {(['ielts', 'sat'] as const).map((exam) => {
-                const saved = runs[exam];
-                const continuation = saved ? continueLabel(saved) : null;
-                return <article className={styles.examChoice} key={exam}>
-                  <ServiceArtwork kind={exam} caption={exam === 'ielts' ? 'Reading + Listening' : undefined} />
-                  <div className={styles.examChoiceBody}>
-                    <h2>{EXAMS[exam].name}</h2>
-                    <p>{exam === 'ielts' ? '12 вопросов · Reading и Listening' : '16 вопросов · Reading & Writing и Math'}</p>
-                    <button type="button" className={exam === 'ielts' ? home.heroButtonRed : home.heroButtonOutline} onClick={() => onSelect(exam)} aria-label={`Начать диагностику ${EXAMS[exam].name}`}>
-                      {continuation ? 'Продолжить' : 'Начать'}<ArrowIcon />
-                    </button>
-                    {continuation ? <span className={home.continue}>{continuation}</span> : null}
-                  </div>
-                </article>;
-              })}
-            </div>
+            <p className={styles.introLead}>Узнай примерный уровень. Пойми, какие навыки требуют практики и с чего начать.</p>
           </div>
+          <DiagnosticDoors runs={runs} onSelect={onSelect} />
+          <p className={styles.asideLink}>Ещё не решили, какой экзамен вам нужен? Начните с <Link href="/career">Компаса</Link> — ориентир по интересам поможет выбрать направление.</p>
         </section>
 
         <Reveal>
@@ -106,7 +88,6 @@ export default function DiagnosticV3({ runs, onSelect }: { runs: Record<ExamId, 
       </main>
 
       <Footer />
-      <ApprovedMotion />
     </div>
   );
 }
