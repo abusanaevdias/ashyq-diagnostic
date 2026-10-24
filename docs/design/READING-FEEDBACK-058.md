@@ -38,3 +38,16 @@ Accepted findings: guard queued ViewTransition callbacks (skipTransition alone d
 ## Evidence and release
 
 Build, lint/type checking and final browser/CI evidence are recorded below at closeout. No test files or suites added or manually invoked. Existing repository CI runs its established release gates when a PR is opened. Human material approval/provider/RLS/physical-phone launch gates of033 remain unchanged.
+
+### Released 2026-10-24
+
+- PR179 feature478474e41b335db844e0bd8523b05c4e1f19f3b6, mergeb35e3ab489f059d9aa985186e6941d9c8e66fff2. Product source/package/design document match the verified feature head exactly; main differed only in the cleaned ownership ledger.
+- Exact-head CI40046932234 SUCCESS20m17s: basic164/164, LMS91/91, season64/64, tokens9/9,72 responsive audits/36 Lighthouse routes. These common-site gates are not a full Reading-state or physical-device certificate.
+- Local production build157, component ESLint, TypeScript and diff checks pass. No new test files or manual test-suite runs.
+- Actual Chromium390px wrong-category/right-evidence verdict, in-text reveal, explicit local save/reload/restore, own reason, corrected repair, clean fresh text and correct final comparison observed. Fresh task: zero marks, zero checked inputs, no old correct-answer text, heading focus. One completed lesson added to history and visible from a new tab. Earlier wrong-category/wrong-evidence desktop flow also inspected.
+- Two independent visual passes on original JPEGs; focused mobile fixes add the exact evidence quote beside explanation, focus the verdict, clarify evidence wording, keep hover dark and narrow the marked phrases. Final critic found no visible blocker in its two viewport crops, with full-page/motion/device limits stated.
+- Original screenshots and detailed receipt retained in `C:/Users/Dias/Documents/ChatGPT/ashyq-reading-feedback-058/.data/reading058/`. Final verdict JPEG SHA2562997D7948820070AB2BBEA5BD6EDFB6870666A93E02FF70FE789F491A4A142AD; explanation4C8F8E4CC9167F8FFAB2F0F71CFBC26158E1F6C6211A6FAA9385679294484DEF.
+- Vercel Production7292093099 SUCCESS for exact mergeb35e3ab. Canonical Reading HTTP200 and served `3w0ux4ksrok8_.js` contains the new verdict, quote and independent-transfer copy. Deployment success checked through both commit status and deployment status, not inferred from merge.
+- Existing native replacement confirmation blocked CUA input and was not exposed through its dialog API; asynchronous user notice sent. Native reset acceptance, additional NOT GIVEN runtime, reduced-motion/fallback runtime, complete final-page crops and physical phone/FPS remain unclaimed. No corresponding source failure established; existing confirmation code is unchanged. Source critic accepted the NG and generation-guard branches.
+
+Next safe slice: show the next ordered concept before implementing another page. Keep diagnostic-profile057, whole-trainer033 external acceptance and other owners separate.
