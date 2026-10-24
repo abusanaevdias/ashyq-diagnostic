@@ -24,7 +24,7 @@ function ReadingListeningArtwork() {
   return <div className={styles.ieltsArt} data-entry-art="ielts">
     <div className={styles.skill}>
       <span>Reading</span>
-      <svg viewBox="0 0 440 68" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <svg viewBox="0 0 440 68" preserveAspectRatio="none" fill="none" aria-hidden="true" focusable="false">
         <g stroke="currentColor" strokeWidth="2" opacity=".8">
           <path d="M2 10H380M2 34H305M2 58H420" />
         </g>
@@ -34,7 +34,7 @@ function ReadingListeningArtwork() {
     </div>
     <div className={styles.skill}>
       <span>Listening</span>
-      <svg viewBox="0 0 440 102" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <svg viewBox="0 0 440 102" preserveAspectRatio="none" fill="none" aria-hidden="true" focusable="false">
         <g stroke="currentColor" strokeWidth="3" strokeLinecap="round">
           {WAVE_HEIGHTS.map((height, index) => <line key={index} data-entry-wave x1={10 + index * 16} x2={10 + index * 16} y1={51 - height} y2={51 + height} />)}
         </g>
@@ -45,7 +45,7 @@ function ReadingListeningArtwork() {
 
 function SatArtwork() {
   return <div className={styles.satArt} data-entry-art="sat" aria-hidden="true">
-    <svg viewBox="0 0 480 230" focusable="false">
+    <svg viewBox="0 0 480 230" fill="none" focusable="false">
       <g stroke="currentColor" strokeWidth="1.5" fill="none" opacity=".75">
         <path d="M36 170H442M72 211V18" />
         <path d="m435 165 7 5-7 5M67 25l5-7 5 7" />
