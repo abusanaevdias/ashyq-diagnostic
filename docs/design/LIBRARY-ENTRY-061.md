@@ -53,3 +53,12 @@ visual pass no blocker; faint helper text/320px placeholder truncation are noted
 nonblocking polish. Existing exact-head CI and release acceptance still required.
 No new tests or manual test-suite execution; physical-device FPS and actual system
 reduced-motion runtime are unclaimed. Independent057 and033 gates unchanged.
+
+
+First exact CI40383971672 passed basic/free-source/322-question gates, then timed
+out solely waiting for the old library entrance H1 in existing library-learning-
+e2e.ts66. Main scope amendment68dea79 published before updating this one wait
+to the approved actual heading (anchored regex tolerates only whitespace at br).
+Original lesson/stage/storage assertions and workflow remain intact. Product
+source identical to reviewed68fb028; no new tests/manual test-suite runs.
+Successor exact CI is required; first failure is not claimed green.

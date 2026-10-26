@@ -63,7 +63,7 @@ export async function runLibraryLearningCheck(){
   assert.ok((await second.evaluate(()=>localStorage.getItem('ashyq:library-progress:v1:U02-Q-2')))!.includes('A newer saved answer from the first tab.'));
   second.once('dialog',d=>d.accept());await sq.getByRole('button',{name:'Загрузить сохранённую версию',exact:true}).click();assert.equal(await sq.getByLabel('Ваш ответ',{exact:true}).inputValue(),'A newer saved answer from the first tab.');await second.close();
   await page.locator('a[href="/library"]').first().click();await page.waitForURL('**/library');
-  await page.getByRole('heading',{level:1,name:'Бесплатная библиотека',exact:true}).waitFor();
+  await page.getByRole('heading',{level:1,name:/^Разберись\s*на примере\.$/}).waitFor();
   await page.waitForLoadState('networkidle');
   const away=await context.newPage();await away.goto(`${base}/library/u02-talent-practice#u02-q-2`,{waitUntil:'networkidle'});
   await away.getByRole('region',{name:'Интерактивная практика U02-Q-2',exact:true}).getByLabel('Ваш ответ',{exact:true}).fill('Updated while the first tab was outside the lesson.');
