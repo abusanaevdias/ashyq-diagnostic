@@ -84,3 +84,32 @@ system reduced-motion, corrupt/unavailable storage and every imported variant
 were not manually forced. Their source handling was reviewed. Trainer033 and
 Diagnostic/Profile057 gates remain unchanged. Existing exact-head CI and live
 production verification still required before claiming publication.
+# Additional acceptance062
+
+Actual local UI acceptance after feature commit (product source unchanged):
+- Completed Reading via correct initial/repair and intentionally incorrect new-text answer.
+- History removes unfinished resume, shows repeat queue and red repeat-review status.
+- Expanded preserved PracticeOutcomeView shows5 matching checks and1 new-text-answer mismatch, original advice and limitations.
+- All-records toggle lists11 native trainer articles; SAT5, IELTS6.
+- Tab navigation gives visible solid outline on storage disclosure.
+- Additional independent visual review of320/1280/completed390 screenshots: no blockers; completed status is truthful and narrow rail contained. Detailed result rows were inspected in DOM, not certified visually by critic.
+
+No new code, tests or test-suite runs. Existing exact-head CI pending.
+
+## Release2026-10-27
+
+PR184 feature f756cb9d82ff5aafdd8d60ffd7e05e03fc48a99b passed existing CI
+40400725939 SUCCESS:164/164 basic checks, full LMS/season/token gates,
+72 responsive accessibility audits and36 Lighthouse routes. No new/manual tests.
+Merged b8390021287da49f671dd037e9463da3f4c693fe; product source diff against
+reviewed feature is empty. Vercel Production7343834400 SUCCESS.
+
+Canonical https://ashyq-diagnostic.vercel.app/trainers/history returned HTTP200
+and new entrance copy. Actual public browser reached honest empty state after
+loading,390px no positive horizontal overflow, all-records SAT filter5 articles.
+Production screenshot: .data/history062/production-mobile.png in dedicated worktree.
+Filled-state screenshot uses only synthetic local UI answers, not production data.
+
+Next safe task: user feedback or separately approved next-section concept.
+No new launch-readiness claim for trainer033/provider/real-account/RLS gates,
+and no changes to diagnostic/profile057 ownership.
