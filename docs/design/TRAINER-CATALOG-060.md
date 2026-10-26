@@ -43,3 +43,32 @@ No provider/scoring/storage/auth/schema/package/CI changes. Initial source criti
 found entrance running before intersection and ambiguous empty-state CTA; both
 corrected, independently re-reviewed without remaining source findings. Actual
 production-build viewport/keyboard/selection captures and exact-head CI are next.
+
+
+## Release, 2026-10-26
+
+- PR182, exact feature `3ec7f185ef06f1673e78e79de0672256ee537e2f`;
+  CI40103866210 SUCCESS. Existing gates include LMS91/91, season64/64,
+  tokens9/9,72 responsive audits and36 Lighthouse routes. No new tests added
+  or manually executed; automatic repository CI remained the release gate.
+- Guarded merge `4216b5bf381f1bb454d2052be1cfe9a0d5601634` has identical product
+  source to reviewed feature. Vercel Production7340142631 SUCCESS.
+- Local lint, production build157/TypeScript and diff checks passed. Actual
+  CUA320/390/1280 have no positive horizontal overflow; all10 need mappings
+  recorded in .data/catalog060/need-mappings.json. SAT filter5of11, explicit
+  recommendation/directory anchors, native Reading entry/client return,
+  manual pause/resume and visible keyboard focus observed. No console errors
+  observed during those local navigations.
+- Source critic's entrance lifecycle finding was corrected and re-reviewed.
+  Two independent actual-JPEG visual passes found no blocker; small helper
+  text and320px wrapping of English labels noted as nonblocking polish.
+- Canonical /trainers HTTP200 shows the new heading and all11 entries.
+  Actual public390px selected Reading maps to /trainers/reading-evidence;
+  explicit anchor positions card at110px, content/CTA fit, underline changes
+  while visible, no positive horizontal overflow. Final public proof is
+  .data/catalog060/production-mobile.jpg, retained locally, not bundled UI.
+- Physical-phone performance/FPS and actual system reduced-motion runtime
+  remain unclaimed. No provider/score/storage/auth/schema/package/CI changes;
+  diagnostic/profile057 and full trainer033 external acceptance are separate.
+
+Next safe step: user feedback or a separately selected next-section concept.
