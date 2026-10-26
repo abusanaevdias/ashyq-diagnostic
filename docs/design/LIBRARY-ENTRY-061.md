@@ -62,3 +62,31 @@ to the approved actual heading (anchored regex tolerates only whitespace at br).
 Original lesson/stage/storage assertions and workflow remain intact. Product
 source identical to reviewed68fb028; no new tests/manual test-suite runs.
 Successor exact CI is required; first failure is not claimed green.
+
+
+## Released 2026-10-27
+
+- PR183 exact `27bc041aa1e982ad5cd830aaf3bd40d9d000bc0f`, successor
+  CI40395358661 SUCCESS. Guarded merge `948f23b1e2dceb695940625989a36c273ae8acd7`
+  has identical reviewed product source. First40383971672 failure remains recorded.
+- Full existing CI: basic164/164, LMS91/91, season64/64, tokens9/9,
+  72 responsive audits and36 Lighthouse routes. Library lab99 performance /
+  100 accessibility; no physical-device certification implied.
+- Local lint/build157/TypeScript/diff pass. Actual CUA320/390/1280 no positive
+  overflow;42 chapters/8 quick entries/3PDFs,3 manual preview stages, SAT2-result
+  search, Reading3-result filter, empty/reset42, native U02 entry/client return,
+  PDF anchor, manual pause/resume and visible keyboard focus observed.
+- Independent source review found SAT search disappearing; corrected and re-reviewed.
+  Existing return-selector correction independently reviewed, no weakened checks.
+  Two independent actual-JPEG visual passes no blocker; faint helper text and
+  clipped320px placeholder remain nonblocking polish, visible input label intact.
+- Vercel Production7343101313 SUCCESS. Canonical /library HTTP200/new heading;
+  actual public390px42/8/3, SAT query2/reset and manual example/review states
+  verified. Final folio top72px and complete width/CTA fit, animated line changing.
+  Actual public proof .data/library061/production-mobile.jpg retained locally.
+- No new tests added or manual test-suite runs. Auth/provider/schema/package/CI
+  workflow/shared navigation/source PDFs/JSON and chapter storage remain intact.
+  Physical phone/FPS and actual system reduced-motion runtime unclaimed.
+  Diagnostic057 and full trainer033 acceptance remain separate unfinished scopes.
+
+Next safe task: user feedback or a separately selected next-section concept.
