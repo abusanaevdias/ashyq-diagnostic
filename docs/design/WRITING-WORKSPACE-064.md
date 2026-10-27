@@ -116,8 +116,8 @@ cancel it; cleanup removes all listeners. No perpetual motion beside the caret.
   locks, DOM/ARIA and motion cleanup reviewed. No reviewer edits/tests.
 - Actual390px UI: before-check marker count0; two distinct drafts preserved on
   selection switching; opt-in save, reload and explicit Continue Saved recovered
-  both. Native field-to-selected-sentence gap about106px, versus2183px observed
-  before redesign. Final textarea18px,220px high and no internal scroll for the
+  both. Native field-to-selected-sentence gap about106px. Before redesign the field
+  sat2183px below the viewport top in the observed selection state. Final textarea18px,220px high and no internal scroll for the
   tested long sentence. Selection16px corners, neutral before check.
 - Actual checking: own exact key match found; untouched keyed issue missed;
   edited unmarked sentence ungraded with no penalty. Explicit application uses
@@ -138,3 +138,22 @@ Limits: viewport emulation is not physical-phone/virtual-keyboard/FPS proof.
 System reduced-motion runtime not forced; source handling reviewed. No new
 provider/teacher/RLS readiness claim;033 and057 gates stay separate. Final CI,
 merge and canonical production proof are still required before publication claim.
+
+## Release2026-10-27
+
+PR186 featurecea1bdcfed5b3b6bf912590fb1da5e98a5eb743f passed exact existing
+CI40526283874 SUCCESS:164/164 basic checks, full existing LMS/season/token gates,
+72 responsive audits and36 Lighthouse routes. Merge45d04a61b4dd3e5947ca161ad3d903bb7763368d
+has identical scoped product source. Vercel Production7362459431 SUCCESS.
+
+Canonical /writing/trainer/practice HTTP200. Actual public390px selected sentence
+opens adjacent editor with18px textarea,16px sentence corner, no positive
+horizontal overflow and no internal textarea scroll for tested long draft;
+pre-check marker count0. Public autosave stayed off; temporary synthetic draft
+was cleared after screenshot, leaving the selected empty editor for the user.
+Proof .data/writing064/production-mobile.png in dedicated worktree. It contains
+only a synthetic local UI draft of the public authored example.
+
+No physical-phone keyboard/FPS, system-reduced-runtime, real-account/provider/RLS
+acceptance claim. Next safe task user feedback or separately approved next concept.
+Trainer033 and Diagnostic/Profile057 boundaries stay unchanged.
