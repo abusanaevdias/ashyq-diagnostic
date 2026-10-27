@@ -118,3 +118,21 @@ Limits: physical-phone/FPS and runtime system reduced-motion not manually
 certified. Own-text backend disabled locally; no backend activation/role claim.
 Trainer033 and Diagnostic/Profile057 work stays separate. Exact CI and canonical
 production acceptance still required before publication claim.
+
+## Release2026-10-27
+
+PR185 featurebc4d51863841e5c824a7328060e294852095410d passed exact-head existing
+CI40405732719 SUCCESS:164/164 basic checks; full existing LMS/season/token gates;
+72 responsive audits and36 Lighthouse routes. Mergec37a1c0a53ce1696cc6b035af9d6a02a5c33cc73
+has identical product source to the reviewed feature. Production7349961274 SUCCESS.
+
+Canonical /writing/trainer returned HTTP200/new heading/proof markup. Actual
+published390px UI: CTA bottom396px in844px viewport; no positive horizontal
+overflow; accent opacity changed; manual pause and resume worked; native CTA
+opened original two-case practice and client return restored the new entrance.
+Public proof .data/writing063/production-mobile.png in dedicated worktree.
+Additional local client-return/offscreen checks observed paused marker style
+outside viewport and no browser warning/error entries. No physical-phone claim.
+
+Next safe task: user feedback or separately approved next-section concept.
+Trainer033 and Diagnostic/Profile057 release boundaries remain unchanged.
