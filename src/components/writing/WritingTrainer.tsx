@@ -4,7 +4,7 @@ import {FeedbackSummary} from '@/components/ui/LearningFeedback';
 import { useEffect, useRef, useState } from 'react';
 import TrainerCheckpoint from '@/components/trainers/TrainerCheckpoint';
 import Link from 'next/link';
-import { criterionLabels, writingCases, type Criterion, type GrammarIssue } from '@/lib/writing-trainer/cases';
+import { criterionLabels, writingCases, type Criterion, type GrammarIssue, type Sentence } from '@/lib/writing-trainer/cases';
 import {
   canApplyGrammar,
   canApplyRevision,
@@ -20,6 +20,7 @@ import {
   type TrainerSession,
 } from '@/lib/writing-trainer/engine';
 import styles from './WritingTrainer.module.css';
+import { motionPaused, MOTION_PREFERENCE_EVENT } from '@/lib/motion-preference';
 
 const criterionOrder: Criterion[] = ['grammar', 'task', 'coherence', 'lexical'];
 const stageLabels = ['Найди ошибки', 'Ответ на вопрос', 'Связность', 'Лексика', 'Итог'];
@@ -69,17 +70,25 @@ export default function WritingTrainer() {
     const justRevealed = session.grammarChecked && !previousGrammarChecked.current;
     previousGrammarChecked.current = session.grammarChecked;
     if (!justRevealed) return;
-    const firstResult = document.getElementById('grammar-feedback-summary') ?? document.querySelector<HTMLElement>('[data-grammar-result="missed"]')
+    const firstResult = document.getElementById('grammar-feedback-' + session.selectedSentenceId) ?? document.getElementById('grammar-feedback-summary') ?? document.querySelector<HTMLElement>('[data-grammar-result="missed"]')
       ?? document.querySelector<HTMLElement>('[data-grammar-result="review"]')
       ?? document.querySelector<HTMLElement>('[data-grammar-result="found"]');
     firstResult?.focus({ preventScroll: true });
-    firstResult?.scrollIntoView({ block: 'center', behavior: 'auto' });
-  }, [session.grammarChecked]);
+    firstResult?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+  }, [session.grammarChecked, session.selectedSentenceId]);
+  useEffect(() => {
+    const node = document.getElementById(session.grammarChecked ? 'grammar-feedback-' + session.selectedSentenceId : 'writing-inline-editor');
+    if (!node || motionPaused()) return;
+    const animation = node.animate([{ opacity: .6, transform: 'translateY(5px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 300, easing: 'cubic-bezier(.2,.7,.2,1)' });
+    const stop = () => { if (motionPaused() || document.hidden) animation.cancel(); };
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    window.addEventListener(MOTION_PREFERENCE_EVENT, stop); document.addEventListener('visibilitychange', stop); reduced.addEventListener('change', stop);
+    return () => { animation.cancel(); window.removeEventListener(MOTION_PREFERENCE_EVENT, stop); document.removeEventListener('visibilitychange', stop); reduced.removeEventListener('change', stop); };
+  }, [session.caseId, session.selectedSentenceId, session.grammarChecked]);
   const essay = writingCases.find((item) => item.id === session.caseId) ?? writingCases[0];
   const scores = practiceScores(essay, session);
   const currentStageIndex = stages.indexOf(session.stage);
   const furthestStageIndex = Math.max(currentStageIndex, stages.indexOf(session.furthestStage));
-  const issueIds = new Set(essay.grammarIssues.map((issue) => issue.sentenceId));
   const reviewGrammarCount=essay.paragraphs.flatMap(p=>p.sentences).filter(sentence=>grammarAttemptStatus(essay,session,sentence.id)==='review').length;const extraGrammarCount=essay.paragraphs.flatMap(p=>p.sentences).filter(sentence=>grammarAttemptStatus(essay,session,sentence.id)==='unnecessary').length;const foundCount = essay.grammarIssues.filter((issue) => grammarAttemptStatus(essay, session, issue.sentenceId) === 'found').length;
   const appliedGrammarCount = essay.grammarIssues.filter((issue) => Boolean(session.appliedGrammar[issue.sentenceId])).length;
   const appliedLearnerGrammarCount = essay.grammarIssues.filter((issue) => isLearnerDraftApplied(session.grammarDrafts[issue.sentenceId], session.appliedGrammar[issue.sentenceId])).length;
@@ -107,8 +116,42 @@ export default function WritingTrainer() {
     setSession((current) => ({ ...current, selectedSentenceId: sentenceId }));
   }
 
-  const selectedText = session.selectedSentenceId ? originalSentence(essay, session.selectedSentenceId) : '';
   const grammarDraft = session.selectedSentenceId ? session.grammarDrafts[session.selectedSentenceId] ?? '' : '';
+
+  function renderCheckActions() {
+    return <div className={styles.actionRow}>
+      <button type="button" className={styles.primaryButton} disabled={!hasGrammarAttempt} onClick={() => setSession(current => ({ ...current, grammarChecked: true }))}>Проверить мои правки</button>
+      {!hasGrammarAttempt && <button type="button" className={styles.textButton} onClick={() => setSession(current => ({ ...current, grammarChecked: true }))}>Не нашёл ошибок — показать разбор</button>}
+      <span>{hasGrammarAttempt ? 'Будут проверены все твои правки. Разбор откроется после проверки.' : 'Можно закончить поиск и без правки'}</span>
+    </div>;
+  }
+
+  function renderGrammarEditor() {
+    return <div id="writing-inline-editor" className={`${styles.editPanel} ${styles.inlinePanel}`} lang="ru">
+      <span className={styles.overline}>ТВОЯ ПРАВКА</span>
+      <label htmlFor="grammar-edit">Перепиши выбранное предложение</label>
+      <textarea id="grammar-edit" lang="en" rows={3} value={grammarDraft} placeholder="Твой вариант предложения" aria-describedby="grammar-edit-note" onChange={event => {
+        const id = session.selectedSentenceId;
+        if (!id) return;
+        setSession(current => ({ ...current, grammarDrafts: { ...current.grammarDrafts, [id]: event.target.value } }));
+      }} />
+      <p id="grammar-edit-note" className={styles.hint}>Ещё не проверено. Можно исправить несколько предложений. Пустые поля не считаются попыткой.</p>
+      {renderCheckActions()}
+    </div>;
+  }
+  function renderGrammarFeedback(sentence: Sentence) {
+                  const issue = essay.grammarIssues.find((item) => item.sentenceId === sentence.id);
+                  const status = grammarAttemptStatus(essay, session, sentence.id);
+                  return <article id={`grammar-feedback-${sentence.id}`} tabIndex={-1} key={sentence.id} className={`${styles.feedbackItem} ${status === 'missed' ? styles.feedbackMissed : ''} ${status === 'found' ? styles.feedbackFound : ''}`}>
+                    <div className={styles.feedbackTitle}><span className={`${styles.statusTag} ${status === 'found' ? styles.positive : ''} ${status === 'review' || status === 'unnecessary' || status === 'clean' ? styles.neutral : ''}`}>{status === 'found' ? 'НАЙДЕНО' : status === 'missed' ? 'ПРОПУЩЕНО' : status === 'review' ? 'НУЖЕН УЧИТЕЛЬ' : 'БЕЗ РАЗМЕТКИ'}</span><span>{statusText[status]}</span></div>
+                    <p lang="en"><b>Было:</b> {highlightedError(sentence.text, issue)}</p>
+                    {session.grammarDrafts[sentence.id]?.trim() && <p lang="en"><b>Твой вариант:</b> {session.grammarDrafts[sentence.id]}</p>}
+                    {issue && <><p lang="en"><b>Пример:</b> {issue.accepted[0]}</p><p>{issue.explanation}</p>
+                      {!session.appliedGrammar[sentence.id] && <button type="button" className={styles.textButton} onClick={() => setSession((current) => ({ ...current, appliedGrammar: { ...current.appliedGrammar, [sentence.id]: canApplyGrammar(essay, current, sentence.id) ? current.grammarDrafts[sentence.id].trim() : issue.accepted[0] } }))}>{status === 'found' ? 'Применить мою проверенную правку' : 'Применить пример к эссе'}</button>}
+                      {session.appliedGrammar[sentence.id] && (latestAppliedGrammarId === sentence.id ? <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>Источник: {isLearnerDraftApplied(session.grammarDrafts[sentence.id], session.appliedGrammar[sentence.id]) ? 'твоя проверенная правка' : 'подготовленный пример'}.</span><span>{appliedGrammarCount === essay.grammarIssues.length ? `Учебный ориентир по грамматике: ${essay.baseline.grammar.toFixed(1)} → ${scores.grammar.toFixed(1)}. Это не официальный балл IELTS.` : `Применено ${appliedGrammarCount} из ${essay.grammarIssues.length} размеченных правок. Ориентир изменится после обеих.`}</span></div> : <span className={styles.applied}>✓ Применено к рабочей версии</span>)}
+                    </>}
+                  </article>;
+  }
 
   return (
     <div className={styles.page}>
@@ -116,18 +159,18 @@ export default function WritingTrainer() {
       <header className={styles.hero}>
         <div>
           <p className={styles.eyebrow}>УЧЕБНЫЙ ТРЕНАЖЁР · ПИЛОТ</p>
-          <h1>Перепиши сильнее.</h1>
-          <p className={styles.lead}>Сначала найди слабые места сам. Потом сравни правку с разбором и посмотри, как меняется рабочая версия эссе.</p>
+          <h1>{session.stage === 'grammar' ? 'Найди и перепиши.' : 'Перепиши сильнее.'}</h1>
+          <p className={styles.lead}>Сначала своя попытка. Затем разбор и правка рабочего эссе.</p>
           <div className={styles.heroLinks}>
             <Link className={styles.jumpLink} href="/writing/trainer">← Как пользоваться</Link>
             <a className={styles.jumpLink} href="#exercise">К текущему этапу ↓</a>
           </div>
         </div>
-        <div className={styles.heroNumber} aria-hidden="true">02<span>кейса</span></div>
+
       </header>
     <TrainerCheckpoint trainer="writing-task2" data={{ session }} completed={session.stage === 'report'} onRestore={saved => { setSession(saved.session); }} />
 
-      <div className={styles.notice}><strong>Как читать оценки</strong><span>Это учебные ориентиры для заранее размеченных вымышленных эссе. Они не являются официальным IELTS band score и не оценивают твой свободный текст автоматически. Чтобы продолжить после обновления страницы, включи сохранение выше.</span></div>
+      <details className={styles.notice}><summary>Как читать оценки · это учебные ориентиры, не официальный балл IELTS</summary><p>Это учебные ориентиры для заранее размеченных вымышленных эссе. Они не являются официальным IELTS band score и не оценивают твой свободный текст автоматически. Чтобы продолжить после обновления страницы, включи сохранение выше.</p></details>
 
       <section className={styles.caseBar} aria-label="Выбор эссе">
         <div><span className={styles.overline}>ВЫБЕРИ ЭССЕ</span><p>Оба текста написаны для этого тренажёра.</p></div>
@@ -138,58 +181,43 @@ export default function WritingTrainer() {
 
       <div className={styles.layout}>
         <main className={styles.main}>
-          <section className={styles.promptCard}>
-            <div className={styles.sectionTop}><span className={styles.overline}>ЗАДАНИЕ IELTS TASK 2</span><span>Черновик · {originalWordCount} слов</span></div>
+          <details className={styles.promptCard} open>
+            <summary className={styles.sectionTop}><span className={styles.overline}>ЗАДАНИЕ IELTS TASK 2</span><span>Показать / скрыть</span></summary>
             <p lang="en" className={styles.question}>{essay.question}</p>
-          </section>
+          </details>
 
-          <nav className={styles.steps} aria-label="Этапы тренажёра">
-            {stageLabels.map((label, index) => <span key={label} className={`${styles.step} ${index === currentStageIndex ? styles.stepCurrent : index <= furthestStageIndex ? styles.stepDone : ''}`} aria-current={index === currentStageIndex ? 'step' : undefined}><b>{String(index + 1).padStart(2, '0')}</b>{label}</span>)}
-          </nav>
+          <details className={styles.stageMenu}><summary>Сейчас: {stageLabels[currentStageIndex]} <span>Все этапы ↓</span></summary><nav className={styles.steps} aria-label="Этапы тренажёра">
+            {stageLabels.map((label, index) => <button type="button" key={label} disabled={index > furthestStageIndex} onClick={() => setSession(current => ({ ...current, stage: stages[index] }))} className={`${styles.step} ${index === currentStageIndex ? styles.stepCurrent : index <= furthestStageIndex ? styles.stepDone : ''}`} aria-current={index === currentStageIndex ? 'step' : undefined}><b>{String(index + 1).padStart(2, '0')}</b>{label}</button>)}
+          </nav></details>
 
           {session.stage === 'grammar' && <section id="exercise" className={styles.workCard} aria-labelledby="grammar-title">
             <div className={styles.roundHeading}><span className={styles.overline}>РАУНД 01 / 04</span><h2 id="grammar-title" tabIndex={-1}>Охота за ошибками</h2><p>Прочитай эссе. Нажми на предложение, в котором подозреваешь грамматическую ошибку, и перепиши его. Подсказки появятся после проверки.</p></div>
-            {session.grammarChecked&&<div id="grammar-feedback-summary" tabIndex={-1}><FeedbackSummary title="Проверка грамматических правок" checks={[{label:'Проверенные варианты',state:foundCount===essay.grammarIssues.length?'good':'review',value:foundCount+' из '+essay.grammarIssues.length+' совпали с ключом'},{label:'Пропущенные ошибки',state:essay.grammarIssues.filter(issue=>grammarAttemptStatus(essay,session,issue.sentenceId)==='missed').length===0?'good':'review',value:String(essay.grammarIssues.filter(issue=>grammarAttemptStatus(essay,session,issue.sentenceId)==='missed').length)},...(reviewGrammarCount>0?[{label:'Другие формулировки',state:'neutral' as const,value:reviewGrammarCount+' требуют проверки',detail:'Это не отметка «неверно». Другую формулировку можно обсудить с учителем.'}]:[]),...(extraGrammarCount>0?[{label:'Дополнительные правки',state:'neutral' as const,value:extraGrammarCount+' не оценены',detail:'Это правки в предложениях без размеченной ошибки. Они не считаются неверными.'}]:[])]} next="Сравни отмеченные фразы ниже. Примени свою проверенную правку или пример к рабочему эссе."/></div>}<div className={styles.essayPaper} lang="en">
-              {essay.paragraphs.map((paragraph) => <p key={paragraph.id}>{paragraph.sentences.map((sentence) => {
-                const touched = Boolean(session.grammarDrafts[sentence.id]?.trim());
-                const status = session.grammarChecked ? grammarAttemptStatus(essay, session, sentence.id) : null;
-                const issue = session.grammarChecked ? essay.grammarIssues.find((item) => item.sentenceId === sentence.id) : undefined;
-                return <button key={sentence.id} type="button" className={`${styles.sentence} ${session.selectedSentenceId === sentence.id ? styles.sentenceSelected : ''} ${touched && !session.grammarChecked ? styles.sentenceTouched : ''} ${status === 'found' ? styles.sentenceFound : ''} ${status === 'missed' ? styles.sentenceMissed : ''} ${status === 'review' && issue ? styles.sentenceReview : ''}`} data-grammar-result={issue ? status : undefined} aria-pressed={session.selectedSentenceId === sentence.id} onClick={() => selectSentence(sentence.id)}>{issue && <span className={`${styles.sentenceBadge} ${status === 'found' ? styles.sentenceBadgeFound : ''} ${status === 'review' ? styles.sentenceBadgeReview : ''}`} lang="ru">{status === 'found' ? 'Найдено' : status === 'review' ? 'Нужен учитель' : 'Пропущено'}</span>}{highlightedError(sentence.text, issue)}</button>;
-              })}</p>)}
-            </div>
-            <div className={styles.editPanel}>
-              <span className={styles.overline}>ТВОЯ ПРАВКА</span>
-              {session.selectedSentenceId ? <>
-                <p lang="en" className={styles.originalLine}>{selectedText}</p>
-                <label htmlFor="grammar-edit">Перепиши выбранное предложение</label>
-                <textarea id="grammar-edit" lang="en" rows={3} value={grammarDraft} disabled={session.grammarChecked} placeholder="Твой вариант предложения" onChange={(event) => {
-                  const id = session.selectedSentenceId;
-                  if (!id) return;
-                  setSession((current) => ({ ...current, grammarDrafts: { ...current.grammarDrafts, [id]: event.target.value } }));
-                }} />
-                {!session.grammarChecked && <p className={styles.hint}>Можно выбрать и исправить несколько предложений. Пустые поля не считаются попыткой.</p>}
-              </> : <p className={styles.hint}>Выбери любое предложение в тексте выше.</p>}
-            </div>
-            {!session.grammarChecked ? <div className={styles.actionRow}><button type="button" className={styles.primaryButton} disabled={!hasGrammarAttempt} onClick={() => setSession((current) => ({ ...current, grammarChecked: true }))}>Проверить мои правки</button>{!hasGrammarAttempt && <button type="button" className={styles.textButton} onClick={() => setSession((current) => ({ ...current, grammarChecked: true }))}>Не нашёл ошибок — показать разбор</button>}<span>{hasGrammarAttempt ? 'Ошибки пока скрыты' : 'Можно закончить поиск и без правки'}</span></div> : <>
-              <div className={styles.feedbackHeader} role="status"><strong>Ты самостоятельно нашёл {foundCount} из {essay.grammarIssues.length} размеченных ошибок.</strong><span>Другие корректные варианты может оценить учитель.</span></div>
-              <div className={styles.feedbackList}>
-                {essay.paragraphs.flatMap((paragraph) => paragraph.sentences).filter((sentence) => issueIds.has(sentence.id) || session.grammarDrafts[sentence.id]?.trim()).map((sentence) => {
-                  const issue = essay.grammarIssues.find((item) => item.sentenceId === sentence.id);
-                  const status = grammarAttemptStatus(essay, session, sentence.id);
-                  return <article key={sentence.id} className={`${styles.feedbackItem} ${status === 'missed' ? styles.feedbackMissed : ''} ${status === 'found' ? styles.feedbackFound : ''}`}>
-                    <div className={styles.feedbackTitle}><span className={`${styles.statusTag} ${status === 'found' ? styles.positive : ''}`}>{status === 'found' ? 'НАЙДЕНО' : status === 'missed' ? 'ПРОПУЩЕНО' : status === 'review' ? 'НУЖЕН УЧИТЕЛЬ' : 'БЕЗ РАЗМЕТКИ'}</span><span>{statusText[status]}</span></div>
-                    <p lang="en"><b>Было:</b> {highlightedError(sentence.text, issue)}</p>
-                    {session.grammarDrafts[sentence.id]?.trim() && <p lang="en"><b>Твой вариант:</b> {session.grammarDrafts[sentence.id]}</p>}
-                    {issue && <><p lang="en"><b>Пример:</b> {issue.accepted[0]}</p><p>{issue.explanation}</p>
-                      {!session.appliedGrammar[sentence.id] && <button type="button" className={styles.textButton} onClick={() => setSession((current) => ({ ...current, appliedGrammar: { ...current.appliedGrammar, [sentence.id]: canApplyGrammar(essay, current, sentence.id) ? current.grammarDrafts[sentence.id].trim() : issue.accepted[0] } }))}>{status === 'found' ? 'Применить мою проверенную правку' : 'Применить пример к эссе'}</button>}
-                      {session.appliedGrammar[sentence.id] && (latestAppliedGrammarId === sentence.id ? <div className={styles.applicationFeedback} role="status"><span className={styles.applied}>✓ Применено к рабочей версии</span><span>Источник: {isLearnerDraftApplied(session.grammarDrafts[sentence.id], session.appliedGrammar[sentence.id]) ? 'твоя проверенная правка' : 'подготовленный пример'}.</span><span>{appliedGrammarCount === essay.grammarIssues.length ? `Учебный ориентир по грамматике: ${essay.baseline.grammar.toFixed(1)} → ${scores.grammar.toFixed(1)}. Это не официальный балл IELTS.` : `Применено ${appliedGrammarCount} из ${essay.grammarIssues.length} размеченных правок. Ориентир изменится после обеих.`}</span></div> : <span className={styles.applied}>✓ Применено к рабочей версии</span>)}
-                    </>}
-                  </article>;
+            {session.grammarChecked&&<div id="grammar-feedback-summary" tabIndex={-1}><FeedbackSummary title="Проверка грамматических правок" checks={[{label:'Проверенные варианты',state:foundCount===essay.grammarIssues.length?'good':'review',value:foundCount+' из '+essay.grammarIssues.length+' совпали с ключом'},{label:'Пропущенные ошибки',state:essay.grammarIssues.filter(issue=>grammarAttemptStatus(essay,session,issue.sentenceId)==='missed').length===0?'good':'review',value:String(essay.grammarIssues.filter(issue=>grammarAttemptStatus(essay,session,issue.sentenceId)==='missed').length)},...(reviewGrammarCount>0?[{label:'Другие формулировки',state:'neutral' as const,value:reviewGrammarCount+' требуют проверки',detail:'Это не отметка «неверно». Другую формулировку можно обсудить с учителем.'}]:[]),...(extraGrammarCount>0?[{label:'Дополнительные правки',state:'neutral' as const,value:extraGrammarCount+' не оценены',detail:'Это правки в предложениях без размеченной ошибки. Они не считаются неверными.'}]:[])]} next="Сравни отмеченные фразы ниже. Примени свою проверенную правку или пример к рабочему эссе."/></div>}<div className={styles.essayPaper}>
+              <p className={styles.essayLabel}>УЧЕБНОЕ ЭССЕ · {originalWordCount} СЛОВ</p>
+              {essay.paragraphs.map((paragraph, paragraphIndex) => <div className={styles.essayParagraph} key={paragraph.id} role="group" aria-label={`Абзац ${paragraphIndex + 1}`}>
+                {paragraph.sentences.map(sentence => {
+                  const touched = Boolean(session.grammarDrafts[sentence.id]?.trim());
+                  const selected = session.selectedSentenceId === sentence.id;
+                  const status = session.grammarChecked ? grammarAttemptStatus(essay, session, sentence.id) : null;
+                  const issue = session.grammarChecked ? essay.grammarIssues.find(item => item.sentenceId === sentence.id) : undefined;
+                  const showFeedback = session.grammarChecked && (Boolean(issue) || touched || selected);
+                  return <div key={sentence.id} className={`${styles.sentenceUnit} ${selected || showFeedback ? styles.sentenceOpen : ''}`}>
+                    <button type="button" lang="en" className={`${styles.sentence} ${selected ? styles.sentenceSelected : ''} ${touched && !session.grammarChecked ? styles.sentenceTouched : ''} ${status === 'found' ? styles.sentenceFound : ''} ${status === 'missed' ? styles.sentenceMissed : ''} ${status === 'review' && issue ? styles.sentenceReview : ''}`} data-grammar-result={issue ? status : undefined} aria-pressed={selected} aria-label={sentence.text} aria-controls={showFeedback ? `grammar-feedback-${sentence.id}` : selected ? 'writing-inline-editor' : undefined} onClick={() => selectSentence(sentence.id)}>
+                      {selected && !session.grammarChecked && <span className={styles.selectionLabel} lang="ru">Выбрано для правки</span>}
+                      {issue && <span className={`${styles.sentenceBadge} ${status === 'found' ? styles.sentenceBadgeFound : ''} ${status === 'review' ? styles.sentenceBadgeReview : ''}`} lang="ru">{status === 'found' ? 'Найдено' : status === 'review' ? 'Нужен учитель' : 'Пропущено'}</span>}
+                      {highlightedError(sentence.text, issue)}
+                    </button>{' '}
+                    {selected && !session.grammarChecked && renderGrammarEditor()}
+                    {showFeedback && renderGrammarFeedback(sentence)}
+                  </div>;
                 })}
-              </div>
+              </div>)}
+            </div>
+            {!session.grammarChecked && !session.selectedSentenceId && <div className={styles.emptyEditor}><p>Выбери любое предложение в тексте выше. Поле правки откроется прямо под ним.</p>{renderCheckActions()}</div>}
+            {session.grammarChecked && <>
+              <div className={styles.feedbackHeader} role="status"><strong>Ты самостоятельно нашёл {foundCount} из {essay.grammarIssues.length} размеченных ошибок.</strong><span>Другие корректные варианты может оценить учитель.</span></div>
               <div className={styles.actionRow}><button type="button" className={styles.primaryButton} onClick={() => setSession(moveToNext)}>Дальше: ответ на вопрос →</button><span>Примеры можно применить и позже, пока ты здесь</span></div>
-            </>}
-          </section>}
+            </>}          </section>}
 
           {(session.stage === 'task' || session.stage === 'coherence' || session.stage === 'lexical') && (() => {
             const criterion = session.stage;
