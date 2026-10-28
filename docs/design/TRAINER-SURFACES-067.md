@@ -20,8 +20,7 @@ charts, recorder and model fields. Choose A, with concise native stage navigatio
 Reuse ASHYQ actual identity, Onest/approved fonts, ink/offwhite/red/success tokens,
 16/28px shapes.18px source and inputs, normal-width compact stage headings,
 13-14px supporting notes; neutral pre-check selection. Original type, source/audio
-limits and DRAFT provenance remain accessible. Intro instructions open initially,
-fold into native details during practice; Speaking source provenance stays pinned.
+limits and DRAFT provenance remain accessible. Intro instructions use a compact native disclosure; Speaking source provenance stays pinned.
 One work surface for source+response; desktop columns/mobile natural reading order.
 No idle motion at caret, fake mastery, extra timers, unofficial bands or AI claims.
 Existing feedback animation/pause/reduced behavior retained; press feedback is
@@ -52,8 +51,7 @@ provider or package changes. The separate remote visual workflow is expressly sc
 to these seven. Existing six-stage/five-stage etc flows preserved individually.
 Independent source review found one misleading green alternative/classification
 boundary; fixed with explicit per-row outcome scope before final review.
-Local lint and initial production157 build passed. Final row-copy build and actual
-visual/native acceptance plus full exact-head CI required before release.
+Local lint and initial production157 build passed. Final acceptance and release evidence is recorded below.
 Native app confirmation from066 currently prevents DOM clicks while the desktop
 app is minimized; user informed asynchronously, no storage/evaluation bypass.
 No new tests or manual test-suite execution. No phone/FPS/provider/real-account
@@ -85,3 +83,15 @@ Stage scroll offset includes the route context; remote capture aligns heading at
 
 
 Second remote pass40684695888 on d12284a:111 geometry records, no reported failures; fullCI40684703394 SUCCESS. Fresh critics inspected all148PNG. Confirmed preserved numeric/model/step and ungraded writing boundaries; found Task1 editor height still overridden, now corrected through scoped inherited CSS variable rather than another specificity escalation. Initial instructions now collapsed to expose task start earlier; redundant Task1/SAT heading numerals removed;066 transfer says step and answer. Third source review accepted those changes, including corrected Translation final-prop call sites. Full-page capture now starts at scrolltop so sticky header is not composited midway down a long image. Earlier visual claim of missing Listening320 question is contradicted by the actual artifact viewed by root: full ONE WORD ONLY/question/source present. Final production-source rerun follows.
+
+
+## Released2026-10-29
+- Final product source4b6d077d5e2c40b9faf97738677b73e584f93ec0; PR189 merged as7fe839c1aa2e16efadbbe4a42e568ff8852cdefa.
+- Existing exact-head fullCI40782126379 SUCCESS, including72responsive audits/36Lighthouse routes. Existing ci.yml unchanged.
+- Exact-source isolated visual40782119802 SUCCESS:37states ×320/390/1280 =111geometry records,148PNG, no reported overflow or serious/critical axe failures at1280. Actual full essay field height340px mobile/420px desktop;18px input font.
+- Final fresh independent critic inspected40changed-state/entry PNGs and found no visual blocker. Earlier independent full batches inspected all148states. Source reviewer accepted final delta with no handlers/state/keys/checkpoints/audio changes. Literal award-level/physical-phone/animation-FPS certification is not claimed.
+- VercelProduction7399425723 SUCCESS at2026-10-28T22:59:31Z. Canonical eleven native routesHTTP200; current JS assets for seven new surfaces contain expected component/work-surface and instruction-disclosure markers. Initial HTML intentionally shows identity-boundary loading, so asset delivery was checked instead of incorrectly expecting client-only attributes in SSR. No public interactive-session or microphone test inferred.
+- All11 public native trainer interfaces in this redesign series are released: Reading, full Writing, Writing drills, Math Forensics and the seven surfaces listed above. Diagnostic/profile057 and teacher/provider/auth/RLS/content approval033 remain independent.
+- Local retained evidence: dedicated worktree .data/surfaces067/visual-final/manifest.json and148PNG, public-delivery.json. GitHub visual artifacts expire after3days; preserve these ignored local files if the worktree is archived.
+
+Nonblocking follow-ups from static review: full Task1 draft has spare desktop space while chart is collapsed; final Task1 report could expose both charts without returning; some entry buttons need a scroll; long native Speaking selected labels can truncate. These do not block current tasks, outcomes or source access in the working/review stages. No further product changes were made after final exact-head capture/CI.
