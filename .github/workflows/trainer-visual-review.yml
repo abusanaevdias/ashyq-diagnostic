@@ -5,6 +5,9 @@ on:
     branches: [codex/trainer-surfaces-067]
 permissions:
   contents: read
+concurrency:
+  group: trainer-visual-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   capture:
     runs-on: ubuntu-latest

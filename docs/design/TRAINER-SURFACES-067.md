@@ -72,3 +72,5 @@ uses no-audio self-check. This cannot prove hearing quality or physical recordin
 It also captures the066 percentage follow-up against the merged product source.
 No local/manual browser scripts are executed. Real artifacts, not generated
 concept images, will be used for independent visual review before release.
+
+Adversarial ordering pass: checked verdict/summary stays before the optional restored source context in both SAT review/result paths. The original question must not push correctness feedback below a phone screen. No grading/state changes.
