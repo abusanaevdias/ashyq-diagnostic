@@ -19,7 +19,7 @@
 .surface [data-study-sheet] > [data-study-response] { border-left: 1px solid var(--hairline); }
 .surface [data-study-source] p[lang='en'], .surface [data-study-source] h3[lang='en'] { font: 400 var(--study-reading)/1.75 var(--font-approved); letter-spacing: 0; }
 .surface [data-study-source] h3[lang='en'] { margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--hairline); font-weight: 650; }
-.surface.surface [data-study-lesson] :is(input,textarea,select):not([type='checkbox']):not([type='radio']):not([type='range']) { font: 400 var(--study-reading)/1.65 var(--font-approved); border-radius: var(--r-md); min-height: 52px; padding: 14px 16px; }
+.surface.surface [data-study-lesson] :is(input,textarea,select):not([type='checkbox']):not([type='radio']):not([type='range']) { font: 400 var(--study-reading)/1.65 var(--font-approved); border-radius: var(--r-md); min-height: var(--study-field-height, 52px); padding: 14px 16px; }
 .surface [data-study-lesson] textarea { resize: vertical; }
 .surface [data-study-lesson] :is(p,li)[lang='en'] { font-size: var(--study-reading); line-height: 1.75; }
 .surface [data-study-lesson] label:has(> input[type='radio']), .surface [data-study-lesson] label:has(> input[type='checkbox']) { min-height: 48px; font-weight: 400; line-height: 1.65; }
@@ -60,8 +60,8 @@
 .surface [data-study-header] { padding-block: 26px; }
 .surface [data-study-instructions] { margin-top: 8px; }
 .surface [data-study-lesson] > :global(.learning-route) { margin-top: 12px; }
-.surface.surface [data-study-lesson] textarea[data-study-long-draft] { min-height: 420px; }
+.surface.surface [data-study-lesson] textarea[data-study-long-draft] { --study-field-height: 420px; }
 @media (max-width:600px) {
  .surface [data-study-header] { padding-block: 20px; }
- .surface.surface [data-study-lesson] textarea[data-study-long-draft] { min-height: 340px; }
+ .surface.surface [data-study-lesson] textarea[data-study-long-draft] { --study-field-height: 340px; }
 }

@@ -227,7 +227,7 @@ export default function MathMethodSwitch() {
       </div>
       <header className={styles.hero} data-study-header>
         <p className={styles.eyebrow}>SAT MATH · ВЫБОР СПОСОБА</p>
-        <h1>Одна задача. Несколько путей.</h1><details data-study-instructions open={phase === 'choose'}><summary>Инструкции и ограничения</summary>
+        <h1>Одна задача. Несколько путей.</h1><details data-study-instructions><summary>Инструкции и ограничения</summary>
         <p>
           Сначала реши сам. Затем сравни алгебру, график и таблицу и попробуй
           другой способ на новой задаче.

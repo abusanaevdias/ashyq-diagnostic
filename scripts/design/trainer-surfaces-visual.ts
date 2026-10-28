@@ -23,10 +23,13 @@ async function capture(p: Page, name: string) {
     if (await heading.count()) await heading.evaluate(n => n.scrollIntoView({block:'start',behavior:'instant'}));
     const geometry = await p.evaluate(() => ({
       width: innerWidth, overflow: document.documentElement.scrollWidth > innerWidth + 1,
-      fields: [...document.querySelectorAll('main input:not([type=checkbox]):not([type=radio]),main textarea')].map(n => ({id:n.id,font:getComputedStyle(n).fontSize})),
+      fields: [...document.querySelectorAll('main input:not([type=checkbox]):not([type=radio]),main textarea')].map(n => ({id:n.id,font:getComputedStyle(n).fontSize,height:Math.round(n.getBoundingClientRect().height)})),
     }));
     await p.screenshot({ path: `${dir}/${name}-${width}.png`, fullPage: false });
-    if (width === 390) await p.screenshot({ path: `${dir}/${name}-full.png`, fullPage: true });
+    if (width === 390) {
+      await p.evaluate(() => window.scrollTo({top:0,behavior:'instant'}));
+      await p.screenshot({ path: `${dir}/${name}-full.png`, fullPage: true });
+    }
     manifest.push({ name, ...geometry });
     if (geometry.overflow) failures.push({ name, width, problem: 'horizontal overflow' });
   }
