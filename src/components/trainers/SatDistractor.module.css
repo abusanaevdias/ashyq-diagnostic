@@ -1,4 +1,4 @@
-.page { composes: workspace from "../public-design/LearningWorkspace.module.css"; max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px; color: var(--ink); }
+.page { composes: workspace from "../public-design/LearningWorkspace.module.css"; composes: surface from "./TrainerWorkSurface.module.css"; max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px; color: var(--ink); }
 .topline { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline); color: var(--ink-soft); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
 .topline a { color: var(--ink); letter-spacing: 0; }
 .hero { max-width: 850px; padding: 64px 0 50px; }
@@ -61,3 +61,17 @@
 .page button:focus-visible, .page input:focus-visible, .page select:focus-visible, .page a:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 900px) { .taskGrid { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .page { padding: 20px 16px 72px; } .hero { padding: 46px 0 38px; } .topline, .sectionHead, .lessonTop { align-items: start; flex-direction: column; } .caseGrid, .summary { grid-template-columns: 1fr; } .passage, .response, .caseCard, .autopsy { padding: 21px; } }
+.page .choices label { align-items: start; gap: 12px; padding: 18px; font: 400 1.125rem/1.65 var(--font-approved); }
+.page .choices label input { margin-top: 5px; }
+.page .reasonRow { padding: 22px; border: 1px solid var(--hairline); border-radius: var(--r-md); margin-block: 14px; }
+.page .reasonRow > p { font-size: 1.125rem; line-height: 1.75; }
+.page .locked strong { font: 500 1.125rem/1.75 var(--font-approved); }
+.page .autopsy { padding: 24px; border: 1px solid var(--hairline); border-radius: var(--r-xxl); background: var(--surface); }
+.page .autopsy > div { margin-block: 14px; padding: 22px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: transparent; }
+.page .autopsy > div[data-study-verdict='good'] { border-left: 3px solid var(--success); }
+.page .autopsy > div[data-study-verdict='bad'] { border-left: 3px solid var(--red-deep); background: var(--blush-soft); }
+.page .autopsy > div[data-study-verdict='review'] { border-left: 3px solid var(--ink-soft); }
+.page .autopsy .optionText { margin-block: 14px; font: 500 1.125rem/1.75 var(--font-approved); }
+.page .autopsy small { display: block; margin-top: 16px; font-size: .875rem; line-height: 1.6; }
+@media(max-width:600px) { .page .autopsy { padding: 20px 16px; } .page .autopsy > div { padding: 18px 16px; } }
+.page .autopsy .rowVerdict { font-size: .9375rem; font-weight: 650; line-height: 1.65; }
