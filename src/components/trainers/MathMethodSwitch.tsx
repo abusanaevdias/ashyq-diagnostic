@@ -226,14 +226,14 @@ export default function MathMethodSwitch() {
     setPhase("review");
   }
   return (
-    <main className={styles.page}>
+    <main className={styles.page} data-study-active={phase !== 'choose'} data-study-phase={phase} data-study-kind="MathMethodSwitch">
       <div className={styles.topline}>
         <Link href="/trainers">← Все тренажёры</Link>
         <span>ASHYQ · METHOD SWITCH</span>
       </div>
-      <header className={styles.hero}>
+      <header className={styles.hero} data-study-header>
         <p className={styles.eyebrow}>SAT MATH · ВЫБОР СПОСОБА</p>
-        <h1>Одна задача. Несколько путей.</h1>
+        <h1>Одна задача. Несколько путей.</h1><details data-study-instructions open={phase === 'choose'}><summary>Инструкции и ограничения</summary>
         <p>
           Сначала реши сам. Затем сравни алгебру, график и таблицу и попробуй
           другой способ на новой задаче.
@@ -242,7 +242,7 @@ export default function MathMethodSwitch() {
           Четыре авторские задачи. Нет AI или официального SAT score.
           Для продолжения после обновления включи сохранение ниже.
         </p>
-      </header>
+      </details></header>
     <TrainerCheckpoint trainer="math-method-switch" data={{ phase, index, round, x, y, working, method, alternative, plan, attempts }} completed={phase === 'result'} onRestore={saved => { resumedTimer.current = true; setStarted(performance.now()); setPhase(saved.phase); setIndex(saved.index); setRound(saved.round); setX(saved.x); setY(saved.y); setWorking(saved.working); setMethod(saved.method); setAlternative(saved.alternative); setPlan(saved.plan); setAttempts(saved.attempts); setError(''); }} />
       {phase === "choose" ? (
         <section>
@@ -263,7 +263,7 @@ export default function MathMethodSwitch() {
           </div>
         </section>
       ) : (
-        <section className={styles.lesson}>
+        <section className={styles.lesson} data-study-lesson>
           <div className={styles.lessonTop}>
             <button
               data-trainer-replace="math-method-switch"
@@ -284,7 +284,7 @@ export default function MathMethodSwitch() {
                 : "Две попытки рядом"}
           </h2>
           {phase !== "result" && (
-            <div className={styles.problem}>
+            <div className={styles.problem} data-study-problem>
               <p>
                 {item.first}
                 <br />
@@ -298,7 +298,7 @@ export default function MathMethodSwitch() {
             </div>
           )}
           {phase === "solve" && (
-            <div className={styles.panel}>
+            <div className={styles.panel} data-study-panel>
               {round === 1 && alternative !== " " && (
                 <>
                   <p className={styles.saved}>
@@ -360,7 +360,7 @@ export default function MathMethodSwitch() {
             </div>
           )}
           {phase === "review" && attempts[round] && (
-            <div className={styles.panel}>
+            <div className={styles.panel} data-study-panel>
               <Feedback item={item} attempt={attempts[round]} />
               {round === 1 && attempts[round].method !== 'other' && <Representation item={item} method={attempts[round].method} />}
               <details>
@@ -437,7 +437,7 @@ export default function MathMethodSwitch() {
             <>
               <div className={styles.caseGrid}>
                 {attempts.map((a, i) => (
-                  <article className={styles.panel} key={i}>
+                  <article className={styles.panel} data-study-panel key={i}>
                     <h3>{i ? "Новая задача" : "Первая задача"}</h3>
                     <p>
                       Отмеченный тобой способ: {methods[a.method]}
