@@ -132,18 +132,12 @@ function Representation({ item, method }: { item: Item; method: Method }) {
     </>
   );
 }
-function Feedback({ item, attempt }: { item: Item; attempt: Attempt }) {
+function Feedback({ item, attempt, final = false }: { item: Item; attempt: Attempt; final?: boolean }) {
   const match = attempt.x === item.x && attempt.y === item.y;
   const otherRoot = item.quadratic && attempt.x === -1 && attempt.y === 1;
   return (
-    <><FeedbackSummary title={match?"Координаты верны":otherRoot?"Пересечение найдено. Ограничение пропущено":"Координаты пока неверны"} checks={[{label:"Координаты по условию",state:match?"good":otherRoot?"review":"bad",value:match?"Верно":otherRoot?"Проверь ограничение":"Нужно исправить"},{label:"Способ и записанные действия",state:"neutral",value:"Не оценены автоматически"}]} next="Сверь результат с условием и объясни выбор способа. Затем реши новую задачу."/>
-      <h3>
-        {match
-          ? "Координаты совпали"
-          : otherRoot
-            ? "Пересечение найдено, но условие пропущено"
-            : "Проверь координаты"}
-      </h3>
+    <><FeedbackSummary title={match?"Координаты верны":otherRoot?"Пересечение найдено. Ограничение пропущено":"Координаты пока неверны"} checks={[{label:"Координаты по условию",state:match?"good":otherRoot?"review":"bad",value:match?"Верно":otherRoot?"Проверь ограничение":"Нужно исправить"},{label:"Способ и записанные действия",state:"neutral",value:"Не оценены автоматически"}]} next={final ? "В следующей практике сначала проверь ограничения, затем координаты и удобство выбранного способа." : "Сверь результат с условием и объясни выбор способа. Затем реши новую задачу."}/>
+      <h3>Сравнение с решением</h3>
       <p>
         Твой ответ: ({attempt.x}, {attempt.y}). По условию:{" "}
         <strong>
@@ -444,7 +438,7 @@ export default function MathMethodSwitch() {
                       <br />
                       {a.seconds === null ? 'Длительность не измерена: попытка продолжена из сохранения.' : `Время открытой попытки: ${a.seconds} сек.`}
                     </p>
-                    <Feedback item={cases[index].items[i]} attempt={a} />
+                    <Feedback final item={cases[index].items[i]} attempt={a} />
                     <details>
                       <summary>Мои действия и план</summary>
                       <p className={styles.saved}>{a.working}</p>

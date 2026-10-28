@@ -48,7 +48,7 @@ small, immediate and suppressed for reduced/paused motion. No artificial waits.
 
 ## Source and acceptance
 No authored source, handler, state, recorder transport, checkpoint schema, auth,
-provider, package or CI changes. Two readonly context helpers/styles only scoped
+provider or package changes. The separate remote visual workflow is expressly scoped below; existing release CI is unchanged. Two readonly context helpers/styles only scoped
 to these seven. Existing six-stage/five-stage etc flows preserved individually.
 Independent source review found one misleading green alternative/classification
 boundary; fixed with explicit per-row outcome scope before final review.
@@ -74,3 +74,11 @@ No local/manual browser scripts are executed. Real artifacts, not generated
 concept images, will be used for independent visual review before release.
 
 Adversarial ordering pass: checked verdict/summary stays before the optional restored source context in both SAT review/result paths. The original question must not push correctness feedback below a phone screen. No grading/state changes.
+
+
+## First actual visual pass and corrections
+Remote production capture40682808996 succeeded on ad95a8b:37 states at320/390/1280,148 actual PNGs including390px full pages, no manifest geometry/serious-critical1280px axe failures. Three independent image-only critics inspected every assigned image (60R&W/Task1,40Listening/Speaking,48Math including066 percentages). This is synthetic/native-control UI evidence, not real hearing, microphone, device FPS, teacher acceptance or a design award.
+
+Their actionable findings were fixed: mode-specific Listening instructions/final action; Speaking no-audio final action and collapsible repeated cue; first checked verdict before optional SAT source; full selected classification labels; definite wrong-answer letters vs alternative classification count; Task1 source collapsed during full drafting/review, larger340/420px editor with sufficient specificity, no duplicated unchanged essay; clearer separate066 final step/cause wording (claim mainbb0c251). SAT numeric reports now compare with solution and offer a future-use check rather than promising another already-completed transfer.
+
+Stage scroll offset includes the route context; remote capture aligns heading at native start, rather than Playwright centering it (which obscured the preceding stage label). Save controls remain available as a compact native disclosure; no saving/restore/import semantics changed. Source/state/keys and recorder code are unchanged. Final exact-source screenshots and fresh independent critics still required before release.

@@ -76,3 +76,9 @@
 @media(max-width:900px) { .page .workGrid { grid-template-columns: minmax(0,1fr); } .page .workGrid .response { border-left: 0; border-top: 1px solid var(--hairline); } }
 @media(max-width:600px) { .page .workGrid .chart, .page .workGrid .response { padding: 20px 18px; } .page .chart svg text { font-size: 32px; } }
 .page .reviewDetails { margin-block: 24px; border-block: 1px solid var(--hairline); padding-block: 6px; }
+
+.page .chartContext { min-width: 0; padding: 16px 22px; align-self: start; }
+.page .chartContext > summary { cursor: pointer; font-weight: 650; }
+.page [data-study-task1-review='true'] { display: flex; flex-direction: column; }
+.page [data-study-task1-review='true'] > .response { order: -1; width: 100%; border-left: 0; }
+.page [data-study-task1-review='true'] > .chartContext { position: static; width: 100%; border-top: 1px solid var(--hairline); }

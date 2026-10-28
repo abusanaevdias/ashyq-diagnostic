@@ -20,7 +20,7 @@ async function capture(p: Page, name: string) {
   for (const width of [320, 390, 1280]) {
     await p.setViewportSize({ width, height: 900 });
     const heading = p.locator('h2[tabindex="-1"]').first();
-    if (await heading.count()) await heading.scrollIntoViewIfNeeded();
+    if (await heading.count()) await heading.evaluate(n => n.scrollIntoView({block:'start',behavior:'instant'}));
     const geometry = await p.evaluate(() => ({
       width: innerWidth, overflow: document.documentElement.scrollWidth > innerWidth + 1,
       fields: [...document.querySelectorAll('main input:not([type=checkbox]):not([type=radio]),main textarea')].map(n => ({id:n.id,font:getComputedStyle(n).fontSize})),
