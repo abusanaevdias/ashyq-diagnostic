@@ -116,3 +116,5 @@ are required; no physical-device, virtual-keyboard, FPS, real account/provider o
 teacher-content acceptance inferred.033/057 boundaries remain unchanged.
 
 Final fresh-tab production-build320px confirms ownDraftText18px/pre-wrap, no page overflow; mobile320-text-final.png. Source reviewer accepted final text-block and catalogue delta. Local compilation157 routes and lint/diff PASS. Exact CI and canonical publication remain pending.
+
+Initial exactCI40619947845 failed at source-token audit:3 literal radii (18/17/18px). Corrected to existing --r-md16px, preserving token audit and all gates. All preceding lint/type/bank/build/basic/LMS/season stages passed. No CI weakening or test changes. Final build, visual spot check and new exact-head CI required. Additional actual grammar2/argument2 flows completed; longest320px alternative18px/no overflow and argument-desktop.png inspected.
