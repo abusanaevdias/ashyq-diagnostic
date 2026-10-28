@@ -118,3 +118,24 @@ teacher-content acceptance inferred.033/057 boundaries remain unchanged.
 Final fresh-tab production-build320px confirms ownDraftText18px/pre-wrap, no page overflow; mobile320-text-final.png. Source reviewer accepted final text-block and catalogue delta. Local compilation157 routes and lint/diff PASS. Exact CI and canonical publication remain pending.
 
 Initial exactCI40619947845 failed at source-token audit:3 literal radii (18/17/18px). Corrected to existing --r-md16px, preserving token audit and all gates. All preceding lint/type/bank/build/basic/LMS/season stages passed. No CI weakening or test changes. Final build, visual spot check and new exact-head CI required. Additional actual grammar2/argument2 flows completed; longest320px alternative18px/no overflow and argument-desktop.png inspected.
+
+## Release2026-10-28
+
+PR187 final featurea2d0b49a24670e5e146ada31eda92c8af768e19e passed full exact
+CI40620790427 SUCCESS:164/164 basic,91/91 LMS,64/64 season,9/9 token checks,
+72 responsive audits and36 Lighthouse routes. Initial radius-token failure is
+recorded above and fixed without weakening checks. Merge084c1f633c0e02851e064e6fcbfcc0dfa5e51dcb
+has identical scoped product source. Vercel Production7375763354 SUCCESS.
+
+Canonical /writing/trainer/drills HTTP200. Actual public390px first draft ->
+comparison -> wrong checked alternative shows exactly one bad result with local
+explanation,18px English,16px token radius, no positive page overflow; first-draft
+text disclosure18px/pre-wrap. Autosave stayed off and synthetic text was not
+persisted. Test tab closed; clean public catalogue left open for user.
+Proof .data/drills065/production-mobile.png in dedicated worktree.
+
+All6 authored exercises manually traversed across the local acceptance passes;
+no tests added/manually run. Independent source and actual-image reviews accepted
+final text/disclosure and shared-radius corrections. Physical-phone keyboard/FPS,
+system-reduced runtime, teacher/provider/auth/RLS acceptance remain unclaimed.
+033/057 unchanged. Next safe task user feedback or separately approved next concept.
