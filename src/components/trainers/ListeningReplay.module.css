@@ -1,4 +1,4 @@
-.page { composes: workspace from "../public-design/LearningWorkspace.module.css"; max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px; color: var(--ink); }
+.page { composes: workspace from "../public-design/LearningWorkspace.module.css"; composes: surface from "./TrainerWorkSurface.module.css"; max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px; color: var(--ink); }
 .topline { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline); color: var(--ink-soft); font-size: 12px; font-weight: 800; }
 .topline a { color: var(--ink); min-height: 44px; display: inline-flex; align-items: center; }
 .hero { max-width: 850px; padding: 54px 0 42px; }
@@ -35,3 +35,10 @@
 .page button:focus-visible, .page input:focus-visible, .page select:focus-visible, .page a:focus-visible, .page summary:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 800px) { .taskGrid, .resultGrid { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .page { padding: 20px 16px 72px; } .hero { padding: 40px 0 32px; } .topline, .lessonTop { align-items: start; flex-direction: column; } .caseGrid { grid-template-columns: 1fr; } .passage, .response, .report, .caseCard { padding: 21px; } }
+.page .report { border-radius: var(--r-xxl); padding: 28px; }
+.page .report > p:not(.note):not(.miniLabel) { font-size: 1.125rem; line-height: 1.75; }
+.page .report :global(.learning-feedback) { margin: 22px 0; padding: 22px 0; border: 0; border-block: 1px solid var(--hairline); border-radius: 0; background: transparent; }
+.page .transcript { border: 1px solid var(--hairline); background: var(--bg); border-radius: var(--r-md); padding: 20px; font-size: 1.125rem; line-height: 1.75; }
+.page .response > button { margin-block: 8px; }
+.page .passage { align-self: stretch; }
+@media(max-width:600px) { .page .report { padding: 22px 20px; } }

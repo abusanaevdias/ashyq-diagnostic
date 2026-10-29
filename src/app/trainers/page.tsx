@@ -16,16 +16,16 @@ export const metadata: Metadata = {
 };
 
 export default function TrainersPage() {
-  return <><NavBar study /><main className={styles.page}>
-    <p className={styles.eyebrow}>ASHYQ · УЧЕБНЫЕ ТРЕНАЖЁРЫ</p>
-    <h1>Учись на своей первой попытке</h1>
-    <p className={styles.intro}>Здесь важен не только ответ. Сначала попробуй сам, затем сравни ход мысли с разбором и примени навык к новому примеру. Все открытые задания вымышлены.</p>
-    <p><Link href="/trainers/history">Мои занятия и сохранённые попытки →</Link></p>
+  return <><NavBar study /><main className={`${styles.page} ${styles.entry}`}>
+    <p className={styles.eyebrow}>ASHYQ / ТРЕНАЖЁРЫ</p>
+    <h1>Одна трудность.<br />Понятная практика.</h1>
+    <p className={styles.intro}>Выбери, что пока не получается. Начни с одного упражнения.</p>
+    <div className={styles.entryLinks}><a href="#all-trainers">Все тренажёры ↓</a><Link href="/trainers/history">Мои сохранённые занятия ↗</Link></div>
     <LearningNext />
     <PracticeGuide />
     <TrainerStaffLinks/>
     <TrainerCatalog/>
     {publishedBankSources.length>0&&<section className={styles.card}><h2>Больше заданий для практики</h2><p>Выбери навык и задание из опубликованного банка.</p><a href="/trainers/bank">Открыть банк заданий →</a></section>}
-    <p className={styles.note}>Тренажёры не выдают официальный балл IELTS или SAT. Ответы в открытых упражнениях не отправляются на внешний AI.</p>
+    <p className={styles.note}>Все открытые задания вымышлены. Тренажёры не выдают официальный балл IELTS или SAT. Ответы в открытых упражнениях не отправляются на внешний AI.</p>
   </main><Footer /></>;
 }

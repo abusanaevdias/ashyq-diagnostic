@@ -132,18 +132,12 @@ function Representation({ item, method }: { item: Item; method: Method }) {
     </>
   );
 }
-function Feedback({ item, attempt }: { item: Item; attempt: Attempt }) {
+function Feedback({ item, attempt, final = false }: { item: Item; attempt: Attempt; final?: boolean }) {
   const match = attempt.x === item.x && attempt.y === item.y;
   const otherRoot = item.quadratic && attempt.x === -1 && attempt.y === 1;
   return (
-    <><FeedbackSummary title={match?"Координаты верны":otherRoot?"Пересечение найдено. Ограничение пропущено":"Координаты пока неверны"} checks={[{label:"Координаты по условию",state:match?"good":otherRoot?"review":"bad",value:match?"Верно":otherRoot?"Проверь ограничение":"Нужно исправить"},{label:"Способ и записанные действия",state:"neutral",value:"Не оценены автоматически"}]} next="Сверь результат с условием и объясни выбор способа. Затем реши новую задачу."/>
-      <h3>
-        {match
-          ? "Координаты совпали"
-          : otherRoot
-            ? "Пересечение найдено, но условие пропущено"
-            : "Проверь координаты"}
-      </h3>
+    <><FeedbackSummary title={match?"Координаты верны":otherRoot?"Пересечение найдено. Ограничение пропущено":"Координаты пока неверны"} checks={[{label:"Координаты по условию",state:match?"good":otherRoot?"review":"bad",value:match?"Верно":otherRoot?"Проверь ограничение":"Нужно исправить"},{label:"Способ и записанные действия",state:"neutral",value:"Не оценены автоматически"}]} next={final ? "В следующей практике сначала проверь ограничения, затем координаты и удобство выбранного способа." : "Сверь результат с условием и объясни выбор способа. Затем реши новую задачу."}/>
+      <h3>Сравнение с решением</h3>
       <p>
         Твой ответ: ({attempt.x}, {attempt.y}). По условию:{" "}
         <strong>
@@ -226,14 +220,14 @@ export default function MathMethodSwitch() {
     setPhase("review");
   }
   return (
-    <main className={styles.page}>
+    <main className={styles.page} data-study-active={phase !== 'choose'} data-study-phase={phase} data-study-kind="MathMethodSwitch">
       <div className={styles.topline}>
         <Link href="/trainers">← Все тренажёры</Link>
         <span>ASHYQ · METHOD SWITCH</span>
       </div>
-      <header className={styles.hero}>
+      <header className={styles.hero} data-study-header>
         <p className={styles.eyebrow}>SAT MATH · ВЫБОР СПОСОБА</p>
-        <h1>Одна задача. Несколько путей.</h1>
+        <h1>Одна задача. Несколько путей.</h1><details data-study-instructions><summary>Инструкции и ограничения</summary>
         <p>
           Сначала реши сам. Затем сравни алгебру, график и таблицу и попробуй
           другой способ на новой задаче.
@@ -242,7 +236,7 @@ export default function MathMethodSwitch() {
           Четыре авторские задачи. Нет AI или официального SAT score.
           Для продолжения после обновления включи сохранение ниже.
         </p>
-      </header>
+      </details></header>
     <TrainerCheckpoint trainer="math-method-switch" data={{ phase, index, round, x, y, working, method, alternative, plan, attempts }} completed={phase === 'result'} onRestore={saved => { resumedTimer.current = true; setStarted(performance.now()); setPhase(saved.phase); setIndex(saved.index); setRound(saved.round); setX(saved.x); setY(saved.y); setWorking(saved.working); setMethod(saved.method); setAlternative(saved.alternative); setPlan(saved.plan); setAttempts(saved.attempts); setError(''); }} />
       {phase === "choose" ? (
         <section>
@@ -263,7 +257,7 @@ export default function MathMethodSwitch() {
           </div>
         </section>
       ) : (
-        <section className={styles.lesson}>
+        <section className={styles.lesson} data-study-lesson>
           <div className={styles.lessonTop}>
             <button
               data-trainer-replace="math-method-switch"
@@ -284,7 +278,7 @@ export default function MathMethodSwitch() {
                 : "Две попытки рядом"}
           </h2>
           {phase !== "result" && (
-            <div className={styles.problem}>
+            <div className={styles.problem} data-study-problem>
               <p>
                 {item.first}
                 <br />
@@ -298,7 +292,7 @@ export default function MathMethodSwitch() {
             </div>
           )}
           {phase === "solve" && (
-            <div className={styles.panel}>
+            <div className={styles.panel} data-study-panel>
               {round === 1 && alternative !== " " && (
                 <>
                   <p className={styles.saved}>
@@ -360,7 +354,7 @@ export default function MathMethodSwitch() {
             </div>
           )}
           {phase === "review" && attempts[round] && (
-            <div className={styles.panel}>
+            <div className={styles.panel} data-study-panel>
               <Feedback item={item} attempt={attempts[round]} />
               {round === 1 && attempts[round].method !== 'other' && <Representation item={item} method={attempts[round].method} />}
               <details>
@@ -437,14 +431,14 @@ export default function MathMethodSwitch() {
             <>
               <div className={styles.caseGrid}>
                 {attempts.map((a, i) => (
-                  <article className={styles.panel} key={i}>
+                  <article className={styles.panel} data-study-panel key={i}>
                     <h3>{i ? "Новая задача" : "Первая задача"}</h3>
                     <p>
                       Отмеченный тобой способ: {methods[a.method]}
                       <br />
                       {a.seconds === null ? 'Длительность не измерена: попытка продолжена из сохранения.' : `Время открытой попытки: ${a.seconds} сек.`}
                     </p>
-                    <Feedback item={cases[index].items[i]} attempt={a} />
+                    <Feedback final item={cases[index].items[i]} attempt={a} />
                     <details>
                       <summary>Мои действия и план</summary>
                       <p className={styles.saved}>{a.working}</p>

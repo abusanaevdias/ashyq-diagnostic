@@ -1,4 +1,4 @@
-.page { composes: workspace from "../public-design/LearningWorkspace.module.css"; max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px; color: var(--ink); }
+.page { composes: workspace from "../public-design/LearningWorkspace.module.css"; composes: surface from "./TrainerWorkSurface.module.css"; max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px; color: var(--ink); }
 .topline { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline); color: var(--ink-soft); font-size: 12px; font-weight: 800; }
 .topline a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); }
 .hero { max-width: 850px; padding: 54px 0 42px; }
@@ -42,3 +42,12 @@
 .page button:focus-visible, .page input:focus-visible, .page textarea:focus-visible, .page select:focus-visible, .page a:focus-visible, .page summary:focus-visible { outline: 2px solid var(--red-deep); outline-offset: 3px; }
 @media (max-width: 700px) { .amounts { grid-template-columns: 1fr; gap: 0; } }
 @media (max-width: 600px) { .page { padding: 20px 16px 72px; } .hero { padding: 40px 0 32px; } .topline, .lessonTop { align-items: start; flex-direction: column; } .card, .panel { padding: 21px; } }
+.page .panel { max-width: 900px; }
+.page .problem { max-width: 900px; margin-block: 24px; }
+.page .amounts { gap: 18px; }
+.page .panel .saved { padding: 20px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: var(--bg); font-size: 1.125rem; line-height: 1.7; }
+.page .feedback dl { padding: 4px 22px; border: 1px solid var(--hairline); border-radius: var(--r-md); }
+.page .feedback dl > div { gap: 20px; padding-block: 16px; }
+.page .feedback dl > div:last-child { border-bottom: 0; }
+.page .feedback dd { font-weight: 650; overflow-wrap: anywhere; }
+@media(max-width:600px) { .page .amounts { grid-template-columns: 1fr; gap: 0; } .page .feedback dl { padding-inline: 16px; } }
