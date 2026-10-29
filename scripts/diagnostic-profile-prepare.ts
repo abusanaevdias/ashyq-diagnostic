@@ -133,18 +133,29 @@ async function prepare() {
     }
     requireCheck(ready,'SCHEMA_CACHE_NOT_READY');
     phase = 'AUTH_QA';
+    const settingsResponse=await request('/auth/v1/settings',anon,null);
+    requireCheck(settingsResponse.ok,'AUTH_SETTINGS_UNAVAILABLE');
+    const settings=await settingsResponse.json();
+    // Exercise the actual configured public signup. Never disable confirmation,
+    // change provider settings or send real confirmation emails for acceptance.
+    requireCheck(settings.external?.email===true && settings.disable_signup===false && settings.mailer_autoconfirm===true,'PUBLIC_SIGNUP_NEEDS_INTERACTIVE_CONFIRMATION');
     const users: { id: string; token: string; email: string; password: string }[] = [];
     for (let i = 0; i < 2; i++) {
       const email = `diagnostic-qa-${randomBytes(18).toString('hex')}@example.invalid`;
-      const password = randomBytes(32).toString('base64url');
+      const password = 'Aa9!'+randomBytes(32).toString('base64url');
       qaEmails.push(email); // Recover exact own ID after an ambiguous response.
       console.log(JSON.stringify({syntheticQaPlannedEmail:email}));
-      const created = await request('/auth/v1/admin/users', service, service, 'POST', { email, password, email_confirm: true, user_metadata: { name: 'Synthetic diagnostic acceptance', is_minor: false } });
-      requireCheck(created.ok, 'QA_USER_CREATE_FAILED');
-      const user = await created.json(); requireCheck(typeof user.id === 'string', 'QA_USER_RESPONSE_INVALID'); qaIds.add(user.id);
+      const created = await request('/auth/v1/signup',anon,null,'POST',{email,password,data:{name:'Synthetic diagnostic acceptance',is_minor:false}});
+      requireCheck(created.ok,'QA_PUBLIC_SIGNUP_FAILED');
+      const registered=await created.json();const user=registered.user;
+      requireCheck(user && typeof user.id==='string' && user.email===email && typeof registered.access_token==='string','QA_PUBLIC_SIGNUP_RESPONSE_INVALID');qaIds.add(user.id);
       const signed = await request('/auth/v1/token?grant_type=password', anon, null, 'POST', { email, password });
       requireCheck(signed.ok, 'QA_SIGNIN_FAILED');
       const session = await signed.json(); requireCheck(session.user?.id === user.id && typeof session.access_token === 'string', 'QA_TOKEN_RESPONSE_INVALID');
+      const profileResponse=await request('/rest/v1/profiles?select=display_name,role,avatar_color&id=eq.'+encodeURIComponent(user.id),anon,session.access_token);
+      requireCheck(profileResponse.ok,'PUBLIC_SIGNUP_PROFILE_READ');
+      const profiles=await profileResponse.json();
+      requireCheck(profiles.length===1 && profiles[0].role==='student' && profiles[0].display_name==='Synthetic diagnostic acceptance','PUBLIC_SIGNUP_STUDENT_PROFILE');
       users.push({ id: user.id, token: session.access_token, email, password });
     }
     const [a,b] = users;
