@@ -251,15 +251,15 @@ function buildInsights(
     }
 
     if (reading && reading.readiness >= 0.7) {
-      out.push('Reading выглядит сильной стороной: темп и понимание текста на уровне.');
+      out.push(`В этой попытке Reading: ${reading.correct} из ${reading.total} верно. Темп чтения нужно проверить отдельно в задании на время.`);
     } else if (reading && reading.readiness < 0.45) {
       out.push('Reading сейчас главный резерв: начни со сканирования текста под конкретный вопрос.');
     }
 
     if (listening && listening.readiness >= 0.75) {
-      out.push('Listening держится хорошо — детали на слух ловишь.');
+      out.push(`В этой попытке Listening: ${listening.correct} из ${listening.total} верно. Для вывода о навыке нужна дополнительная практика без подсказок.`);
     } else if (listening && listening.readiness < 0.5) {
-      out.push('В Listening внимание теряется на заданиях с деталями: цифры, имена, сроки.');
+      out.push('В коротком наборе Listening есть ошибки или пропуски. Сверь детали в записи: цифры, имена и сроки. Причину ошибки стоит проверить отдельно.');
     }
 
     out.push('Writing и Speaking в этой диагностике не оценивались — их стоит проверить отдельно с тренером.');
