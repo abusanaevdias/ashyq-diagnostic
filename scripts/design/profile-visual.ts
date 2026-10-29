@@ -27,7 +27,8 @@ async function capture(p:Page,name:string,anchor?:string) {
 async function main() {
 const browser=await chromium.launch({headless:true});
 await mkdir(dir,{recursive:true});
-const p=await browser.newPage({viewport:{width:390,height:900}});
+const context=await browser.newContext({viewport:{width:390,height:900}});
+const p=await context.newPage();
 p.on('pageerror',e=>failures.push({pageerror:e.message}));
 try {
   await p.goto(base);
