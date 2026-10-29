@@ -1,0 +1,48 @@
+name: Diagnostic profile visual review
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/diagnostic-profile-057]
+permissions:
+  contents: read
+concurrency:
+  group: profile-visual-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  capture:
+    env:
+      NEXT_PUBLIC_AUTH_PROVIDER: demo
+      DIAGNOSTIC_PROFILE_ENABLED: "false"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+      - name: Capture isolated public learning surfaces
+        env:
+          TRAINER_VISUAL_BASE: http://127.0.0.1:3000
+        run: |
+          npm run start > "$RUNNER_TEMP/trainer-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 60); do
+            if curl -sf -o /dev/null "$TRAINER_VISUAL_BASE/"; then break; fi
+            sleep 1
+          done
+          curl -sf -o /dev/null "$TRAINER_VISUAL_BASE/"
+          npx tsx scripts/design/profile-visual.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: profile-visual-${{ github.run_id }}
+          path: artifacts/profile-visual/
+          if-no-files-found: error
+          retention-days: 3

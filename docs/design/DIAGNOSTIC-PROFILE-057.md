@@ -23,7 +23,7 @@ The baseline answers a narrow question: **what did this person answer in this sp
 - JWT is checked through Supabase Auth; expected actor must match the verified user before database access. This closes the raw-token/cached-profile account-switch interval.
 - Same-owner same-snapshot retries are idempotent; changed payload or another owner returns a generic conflict. No upsert.
 - Table shape validation fails closed, including JSON version type and safe integer dates. Authenticated direct REST writes still represent self-assessments, **not server-certified achievements**.
-- No service-role key is used by this feature. No external AI request or AI token cost for recommendations.
+- Ordinary application routes use only the owner JWT and public anon key. A separately gated server-build operational runner uses service role solely to create/delete its disposable acceptance users; it never exports credentials to the app/client. No external AI request or AI token cost for recommendations.
 - Pending result can be inspected on a shared browser; it is not account-private until confirmed upload. Explicit decline/clear-site-data removes the pending copy.
 
 ## Adversarial review
@@ -59,3 +59,15 @@ Before production activation:
 5. Set server `DIAGNOSTIC_PROFILE_ENABLED=true` only after acceptance. Deploy verified code, then verify canonical public profile flow.
 
 Until then: keep PR draft and describe cloud feature as prepared, not released. Existing TRAINERS-COMPLETE-033 teacher/provider/device gates remain separate.
+
+
+## Resumed operational activation2026-10-29
+Main claime9e01cd permits a one-shot server-build runner. Authorized Vercel config identifies aozhoefgtfrdlllnmdkn; database host matches Auth project. Production sensitive variables cannot be pulled and are not exposed. Anonymous real table probe404/PGRST205 confirms missing migration, not absent credentials. No runtime flag has been enabled.
+
+Runner scripts/diagnostic-profile-prepare.ts is skipped unless DIAGNOSTIC_PROFILE_PREPARE_SHA exactly equals the reviewed production VERCEL_GIT_COMMIT_SHA, VERCEL_ENV=production, exact PROJECT_REF and runtime gate all agree. It uses original migration only, verified TLS/project, bounded transactions and advisory lock, source-matched Auth trigger preflight, schema/grant/policy checks and tracked history when present. Privileged operations are separate from ordinary owner-JWT feature calls.
+
+Real A/B Auth sessions exercise API/REST save/read/actor-switch/idempotency/immutability/cross-owner/anonymous/no-update/malformed/new-session/delete and persisted state. QA uses admin-confirmed unique example.invalid identities without sending email, records no tokens/keys, and cleans only exact own IDs recovered by exact unique emails. Failed cleanup fails acceptance. A committed additive migration can remain after a later build failure; the old deployment remains active, and no table is automatically dropped.
+
+Activation sequence: independent source/security review, full exact-head CI, merge initially disabled, pin that exact reviewed merge for one production redeploy, require real acceptance/cleanup receipt before production success, verify canonical flow, then remove operational SHA flag. Do not infer signup/email delivery/real mailbox return, canonical physical-phone recording, external AI quality, or teacher approval from A/B synthetic runtime acceptance. Those remain distinct evidence requirements.
+
+Primary operational references: https://node-postgres.com/features/ssl (connection-string SSL overrides); https://supabase.com/docs/reference/javascript/auth-admin-createuser (server-only admin and email_confirm). No hosted Auth confirmation setting is changed.
