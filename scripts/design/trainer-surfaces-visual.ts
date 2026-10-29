@@ -22,7 +22,7 @@ async function capture(p: Page, name: string) {
     const heading = p.locator('h2[tabindex="-1"]').first();
     if (await heading.count()) await heading.evaluate(n => n.scrollIntoView({block:'start',behavior:'instant'}));
     const geometry = await p.evaluate(() => ({
-      width: innerWidth, overflow: document.documentElement.scrollWidth > innerWidth + 1,
+      width: innerWidth, firstStartTop: [...document.querySelectorAll('main button')].find(n=>/^Начать/.test(n.textContent??''))?.getBoundingClientRect().top ?? null, overflow: document.documentElement.scrollWidth > innerWidth + 1,
       fields: [...document.querySelectorAll('main input:not([type=checkbox]):not([type=radio]),main textarea')].map(n => ({id:n.id,font:getComputedStyle(n).fontSize,height:Math.round(n.getBoundingClientRect().height)})),
     }));
     await p.screenshot({ path: `${dir}/${name}-${width}.png`, fullPage: false });
@@ -139,6 +139,8 @@ async function task1(p: Page) {
     }else await button(p,'Сравнить две попытки →').click();
   }
   await capture(p,'task1-result');
+  await p.getByText('Графики и таблицы двух заданий',{exact:true}).click();
+  await capture(p,'task1-result-charts');
 }
 async function listening(p: Page) {
   await choose(p,'listening-replay');
