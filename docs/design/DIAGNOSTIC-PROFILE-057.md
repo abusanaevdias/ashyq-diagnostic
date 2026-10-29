@@ -1,3 +1,5 @@
+> Current status2026-10-30: profile/cloud engineering scope DONE and production enabled. Actual bootstrap+canonical A/B JWT/API/RLS/signup/cleanup acceptance passed on reviewed merge dee6c411b5692b81b1329ac6ffce38094db78ddb. Full receipts and limits: [DIAGNOSTIC_PROFILE_RELEASE_057.md](../DIAGNOSTIC_PROFILE_RELEASE_057.md). Pre-activation notes below are historical, not current blockers. Full trainer033 teacher/provider/device gates remain separate.
+
 # DIAGNOSTIC-PROFILE-057 — diagnostic → profile → targeted practice
 
 ## Product contract
@@ -46,7 +48,7 @@ Final source review reported no further confirmed blocker in those changes. This
 - Reload retained the baseline and recommendation in the same demo browser. Actual mobile DOM width/scrollWidth: 375/375. Original screenshots: `diagnostic-profile-057-mobile.jpg` and `diagnostic-profile-057-answers-mobile.jpg` in this directory. Independent image reviewer found no blocker in the pictured areas; this does not validate backend or a physical phone.
 - No new test suite was added or manually executed.
 
-## Required cloud activation — NOT COMPLETE
+## Historical cloud activation checklist — subsequently completed
 
 At implementation time the Supabase connector was not installed/connected and the CLI had no access token. `DIAGNOSTIC_PROFILE_ENABLED` stays false by default. No remote schema or RLS verification is claimed.
 
