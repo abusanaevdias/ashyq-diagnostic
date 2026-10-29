@@ -1,6 +1,7 @@
 /** One-shot, server-build-only operations. Never imported by the application. */
 import { readFile } from 'node:fs/promises';
 import { randomBytes, randomUUID } from 'node:crypto';
+import { rootCertificates } from 'node:tls';
 import { Client } from 'pg';
 import { QUESTION_BANK } from '../src/data/questions';
 import { EXAMS } from '../src/lib/config';
@@ -49,7 +50,8 @@ async function prepare() {
   // pg connection-string SSL options replace the explicit SSL object. Remove
   // them, then require CA + hostname verification; never retry with insecure TLS.
   for (const key of ['sslmode', 'sslcert', 'sslkey', 'sslrootcert', 'ssl', 'uselibpqcompat']) dsn.searchParams.delete(key);
-  const db = new Client({ connectionString: dsn.toString(), ssl: { rejectUnauthorized: true }, connectionTimeoutMillis: 10000, statement_timeout: 10000, query_timeout: 12000 });
+  const ca = await Promise.all([2021,2025].map(year=>readFile(`scripts/certs/supabase-prod-ca-${year}.crt`,'utf8')));
+  const db = new Client({ connectionString: dsn.toString(), ssl: { ca:[...rootCertificates,...ca], rejectUnauthorized: true }, connectionTimeoutMillis: 10000, statement_timeout: 10000, query_timeout: 12000 });
   let connectionFailed = false;
   db.on('error',()=>{ connectionFailed=true; });
   const qaEmails: string[] = [];
