@@ -1,6 +1,7 @@
 /** One-shot, server-build-only operations. Never imported by the application. */
 import { readFile } from 'node:fs/promises';
 import { randomBytes, randomUUID } from 'node:crypto';
+import { rootCertificates } from 'node:tls';
 import { Client } from 'pg';
 import { QUESTION_BANK } from '../src/data/questions';
 import { EXAMS } from '../src/lib/config';
@@ -32,6 +33,14 @@ async function prepare() {
   const service = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   requireCheck(service && anon, 'SERVER_KEYS_UNAVAILABLE');
+  for (const key of ['POSTGRES_URL','POSTGRES_PRISMA_URL','POSTGRES_URL_NON_POOLING'] as const) {
+    if (!process.env[key]) continue;
+    try {
+      const candidate=new URL(process.env[key]!);
+      const mode=candidate.hostname===`db.${expectedProject}.supabase.co`?'DIRECT':candidate.hostname.endsWith('.pooler.supabase.com') && decodeURIComponent(candidate.username)===`postgres.${expectedProject}`?'POOLED':'UNRECOGNIZED';
+      receipt(`${key}_${mode}`);
+    } catch { receipt(`${key}_INVALID`); }
+  }
   const rawDsn = process.env.POSTGRES_URL ?? process.env.POSTGRES_URL_NON_POOLING;
   requireCheck(rawDsn, 'DATABASE_UNAVAILABLE');
   const dsn = new URL(rawDsn);
@@ -41,7 +50,8 @@ async function prepare() {
   // pg connection-string SSL options replace the explicit SSL object. Remove
   // them, then require CA + hostname verification; never retry with insecure TLS.
   for (const key of ['sslmode', 'sslcert', 'sslkey', 'sslrootcert', 'ssl', 'uselibpqcompat']) dsn.searchParams.delete(key);
-  const db = new Client({ connectionString: dsn.toString(), ssl: { rejectUnauthorized: true }, connectionTimeoutMillis: 10000, statement_timeout: 10000, query_timeout: 12000 });
+  const ca = await Promise.all([2021,2025].map(year=>readFile(`scripts/certs/supabase-prod-ca-${year}.crt`,'utf8')));
+  const db = new Client({ connectionString: dsn.toString(), ssl: { ca:[...rootCertificates,...ca], rejectUnauthorized: true }, connectionTimeoutMillis: 10000, statement_timeout: 10000, query_timeout: 12000 });
   let connectionFailed = false;
   db.on('error',()=>{ connectionFailed=true; });
   const qaEmails: string[] = [];
@@ -213,6 +223,18 @@ async function prepare() {
     receipt(mode==='canonical'?'REAL_CANONICAL_A_B_JWT_RLS_API_PASS':'REAL_A_B_JWT_RLS_API_PASS');
   } catch (error) {
     failure = error instanceof PreparationError ? error.message : phase; // Never expose a raw pg/Auth error, DSN, token or response.
+    if (phase === 'DATABASE_CONNECT' && error && typeof error === 'object' && 'code' in error) {
+      const codes: Record<string,string> = {
+        SELF_SIGNED_CERT_IN_CHAIN:'DATABASE_CA_UNTRUSTED', DEPTH_ZERO_SELF_SIGNED_CERT:'DATABASE_CA_UNTRUSTED',
+        UNABLE_TO_VERIFY_LEAF_SIGNATURE:'DATABASE_CA_UNTRUSTED', UNABLE_TO_GET_ISSUER_CERT_LOCALLY:'DATABASE_CA_UNTRUSTED',
+        CERT_HAS_EXPIRED:'DATABASE_CERT_EXPIRED', ERR_TLS_CERT_ALTNAME_INVALID:'DATABASE_HOSTNAME_INVALID',
+        ENETUNREACH:'DATABASE_NETWORK_UNREACHABLE', EHOSTUNREACH:'DATABASE_NETWORK_UNREACHABLE',
+        ENOTFOUND:'DATABASE_DNS_FAILED', EAI_AGAIN:'DATABASE_DNS_FAILED', ECONNREFUSED:'DATABASE_CONNECTION_REFUSED',
+        ETIMEDOUT:'DATABASE_CONNECTION_TIMEOUT', '28P01':'DATABASE_CREDENTIAL_REJECTED',
+      };
+      const code = (error as {code:unknown}).code;
+      if (typeof code === 'string' && Object.hasOwn(codes,code)) failure=codes[code];
+    }
   } finally {
     // Cleanup known identities does not depend on a still-working DB socket.
     // First attempt exact-email recovery for an ambiguous create response.
