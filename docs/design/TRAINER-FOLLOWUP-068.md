@@ -9,3 +9,7 @@ Explicit user request2026-10-29 resumes finish-all goal. Claimd564843 on main be
 - Existing remote production-build native-control visual workflow extended only to owned068 branch and original Task1 chart disclosure capture. This is synthetic UI evidence, not physical microphone/phone or teacher/provider acceptance. Existing full release CI unchanged.
 
 Independent source and actual image acceptance plus exact-head CI required before publication. Diagnostic/profile057 and original033 external gates remain separately recorded.
+
+
+## Release2026-10-29
+PR190 finalf0752402091f6a5aca25ca397a4b24caf2de17e5, merge48a2c1afe3e6e8ee37fa4e5557255fe1b54c2bbb. Exact existingCI40925352715 SUCCESS; isolated final visual40925344783 SUCCESS114geometry records/152PNG, no reported overflow or serious/critical1280px axe failures. Two fresh independent image passes and source review no blocker after correcting save-position wording and narrowing section gaps. Both first start buttons fully visible at320/390/1280 (SAT320top847). VercelProduction7420427089 SUCCESS; canonical Math Forensics/Distractor/Task1/Speaking HTTP200 and current native-entry/chart/selected-observation JS markers verified. Ordinary HTTP/asset delivery proof does not imply physical phone/microphone or cloud account acceptance. Dedicated ignored .data/068/final-spacing captures retained. Core cloud/profile057 and original033 quality/provider/teacher/device gates remain separate.
