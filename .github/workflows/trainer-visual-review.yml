@@ -2,7 +2,7 @@ name: Trainer visual review
 on:
   workflow_dispatch:
   push:
-    branches: [codex/trainer-surfaces-067]
+    branches: [codex/trainer-surfaces-067, codex/trainer-followup-068]
 permissions:
   contents: read
 concurrency:

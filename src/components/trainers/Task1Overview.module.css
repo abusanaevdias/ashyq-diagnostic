@@ -82,3 +82,6 @@
 .page [data-study-task1-review='true'] { display: flex; flex-direction: column; }
 .page [data-study-task1-review='true'] > .response { order: -1; width: 100%; border-left: 0; }
 .page [data-study-task1-review='true'] > .chartContext { position: static; width: 100%; border-top: 1px solid var(--hairline); }
+
+.page .workGrid:has(> .chartContext:not([open])) { grid-template-columns: minmax(0,1fr); }
+.page .workGrid:has(> .chartContext:not([open])) > .response { border-left: 0; border-top: 1px solid var(--hairline); }

@@ -75,3 +75,18 @@
 .page .autopsy small { display: block; margin-top: 16px; font-size: .875rem; line-height: 1.6; }
 @media(max-width:600px) { .page .autopsy { padding: 20px 16px; } .page .autopsy > div { padding: 18px 16px; } }
 .page .autopsy .rowVerdict { font-size: .9375rem; font-weight: 650; line-height: 1.65; }
+
+.page[data-study-entry='true'] .hero { padding-block: 24px; }
+@media(max-width:600px) {
+ .page[data-study-entry='true'] .hero h1 { font-size: 2.25rem; }
+ .page[data-study-entry='true'] .caseCard { min-height: 0; padding: 20px; }
+ .page[data-study-entry='true'] .caseCard h3 { margin-top: 10px; font-size: 1.5rem; }
+ .page[data-study-entry='true'] .sectionHead p { margin-block: 8px 16px; }
+}
+
+@media(max-width:600px) {
+ .page[data-study-entry='true'] .sectionHead { margin-bottom: 12px; gap: 8px; }
+ .page[data-study-entry='true'] .sectionHead h2 { margin-block: 8px; font-size: 1.6rem; }
+ .page[data-study-entry='true'] .caseCard p { margin-bottom: 16px; }
+ .page[data-study-entry='true'] .hero summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
+}
