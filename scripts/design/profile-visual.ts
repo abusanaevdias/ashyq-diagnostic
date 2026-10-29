@@ -24,6 +24,7 @@ async function capture(p:Page,name:string,anchor?:string) {
   const serious=axe.violations.filter(v=>v.impact==='serious'||v.impact==='critical');
   if(serious.length)failures.push({name,axe:serious.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))});
 }
+async function main() {
 const browser=await chromium.launch({headless:true});
 await mkdir(dir,{recursive:true});
 const p=await browser.newPage({viewport:{width:390,height:900}});
@@ -77,3 +78,6 @@ finally {
   await browser.close();
 }
 if(failures.length)process.exitCode=1;
+
+}
+main().catch(()=>{console.error('PROFILE_CAPTURE_FAILED');process.exitCode=1;});

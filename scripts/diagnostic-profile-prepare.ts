@@ -136,6 +136,7 @@ async function prepare() {
       const email = `diagnostic-qa-${randomBytes(18).toString('hex')}@example.invalid`;
       const password = randomBytes(32).toString('base64url');
       qaEmails.push(email); // Recover exact own ID after an ambiguous response.
+      console.log(JSON.stringify({syntheticQaPlannedEmail:email}));
       const created = await request('/auth/v1/admin/users', service, service, 'POST', { email, password, email_confirm: true, user_metadata: { name: 'Synthetic diagnostic acceptance', is_minor: false } });
       requireCheck(created.ok, 'QA_USER_CREATE_FAILED');
       const user = await created.json(); requireCheck(typeof user.id === 'string', 'QA_USER_RESPONSE_INVALID'); qaIds.add(user.id);
