@@ -105,3 +105,18 @@
 @media (max-width: 600px) { .hero[data-exercising='true'] { padding: 20px 0; } .reviewSource, .repairComparison { padding: 22px 20px; } .review > .primary { width: 100%; } .failedLine { flex-direction: column; gap: 8px; padding: 16px; } }
 @media (max-width: 800px) { .taskGrid, .resultGrid { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .page { padding: 20px 16px 72px; } .hero { padding: 46px 0 38px; } .topline, .sectionHead, .lessonTop { align-items: start; flex-direction: column; } .caseGrid, .compare { grid-template-columns: 1fr; } .problemCard, .responseCard, .narrowPanel, .caseCard { padding: 21px; } }
+
+.page[data-study-entry='true'] .hero { padding-block: 24px; }
+@media(max-width:600px) {
+ .page[data-study-entry='true'] .hero h1 { font-size: 2.25rem; }
+ .page[data-study-entry='true'] .caseCard { min-height: 0; padding: 20px; }
+ .page[data-study-entry='true'] .caseCard h3 { margin-top: 10px; font-size: 1.5rem; }
+ .page[data-study-entry='true'] .sectionHead p { margin-block: 8px 16px; }
+}
+
+@media(max-width:600px) {
+ .page[data-study-entry='true'] .sectionHead { margin-bottom: 12px; gap: 8px; }
+ .page[data-study-entry='true'] .sectionHead h2 { margin-block: 8px; font-size: 1.6rem; }
+ .page[data-study-entry='true'] .caseCard p { margin-bottom: 16px; }
+ .page[data-study-entry='true'] .hero summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
+}
