@@ -32,6 +32,14 @@ async function prepare() {
   const service = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   requireCheck(service && anon, 'SERVER_KEYS_UNAVAILABLE');
+  for (const key of ['POSTGRES_URL','POSTGRES_PRISMA_URL','POSTGRES_URL_NON_POOLING'] as const) {
+    if (!process.env[key]) continue;
+    try {
+      const candidate=new URL(process.env[key]!);
+      const mode=candidate.hostname===`db.${expectedProject}.supabase.co`?'DIRECT':candidate.hostname.endsWith('.pooler.supabase.com') && decodeURIComponent(candidate.username)===`postgres.${expectedProject}`?'POOLED':'UNRECOGNIZED';
+      receipt(`${key}_${mode}`);
+    } catch { receipt(`${key}_INVALID`); }
+  }
   const rawDsn = process.env.POSTGRES_URL ?? process.env.POSTGRES_URL_NON_POOLING;
   requireCheck(rawDsn, 'DATABASE_UNAVAILABLE');
   const dsn = new URL(rawDsn);
