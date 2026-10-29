@@ -83,3 +83,10 @@
  .page[data-study-entry='true'] .caseCard h3 { margin-top: 10px; font-size: 1.5rem; }
  .page[data-study-entry='true'] .sectionHead p { margin-block: 8px 16px; }
 }
+
+@media(max-width:600px) {
+ .page[data-study-entry='true'] .sectionHead { margin-bottom: 12px; }
+ .page[data-study-entry='true'] .sectionHead h2 { margin-block: 8px; font-size: 1.6rem; }
+ .page[data-study-entry='true'] .caseCard p { margin-bottom: 16px; }
+ .page[data-study-entry='true'] .hero summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
+}
