@@ -137,7 +137,7 @@ export default function ResultScreen({
 
         {/* ---------- секции ---------- */}
         <section className="mt-12">
-          <EditorialLabel>Где ты сейчас</EditorialLabel>
+          <EditorialLabel>Ответы по разделам</EditorialLabel>
           <div className="mt-6 space-y-5">
             {result.sections.map((s) => (
               <div key={s.section}>
@@ -148,7 +148,7 @@ export default function ResultScreen({
                   </span>
                 </div>
                 <Meter value={s.readiness} className="mt-2" />
-                <p className="label mt-1.5 text-ink-soft">{s.level}</p>
+                <p className="label mt-1.5 text-ink-soft">Короткий набор: {s.total} заданий</p>
               </div>
             ))}
           </div>

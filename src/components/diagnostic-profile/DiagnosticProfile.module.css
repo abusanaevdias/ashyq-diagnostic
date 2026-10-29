@@ -1,4 +1,4 @@
-.panel { margin-block: 24px; padding: clamp(20px, 4vw, 36px); border: 1px solid var(--hairline); border-radius: var(--r-xl); background: var(--surface); color: var(--ink); overflow-wrap: anywhere; scroll-margin-top: 110px; }
+.panel { margin-block: 24px; padding: clamp(20px, 4vw, 36px); border: 1px solid var(--hairline); border-radius: var(--r-xl); background: var(--surface); color: var(--ink); overflow-wrap: anywhere; scroll-margin-top: 176px; }
 .panel h2 { font-size: clamp(25px, 4vw, 36px); line-height: 1.15; letter-spacing: -.035em; margin: 10px 0 16px; }
 .panel h3 { font-size: 21px; line-height: 1.3; margin: 8px 0; }
 .panel p { line-height: 1.6; margin-block: 10px; }

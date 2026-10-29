@@ -71,7 +71,7 @@ export default function DiagnosticProfile({ user }: { user: User }) {
         void action(async signal => { await saveDiagnostic(user.id, input, signal); if (!signal.aborted && getAuth().getSession()?.user.id === user.id) { forgetPending(input.runId); setPending(null); setConfirmed(false); setSelected(input.runId); } }, profileUsesCloud ? 'Результат сохранён в облачном профиле.' : 'Результат сохранён в демо-профиле этого браузера.');
       }}>{busy ? 'Сохраняем…' : 'Подтвердить сохранение'}</button>
       <button className={styles.secondary} disabled={busy} onClick={() => { try { forgetPending(pending!.runId); setPending(null); setConfirmed(false); } catch { setError('Не удалось убрать запрос. Проверь настройки хранения браузера.'); } }}>Не переносить</button></div>
-      <p className={styles.note}>Исходная диагностика в браузере не удаляется. Если подтверждаешь почту в другом браузере, вернись к этому результату на исходном устройстве и войди в аккаунт.</p>
+      <p className={styles.note}>Исходная диагностика в браузере не удаляется.{profileUsesCloud&&' Если подтверждаешь почту в другом браузере, вернись к этому результату на исходном устройстве и войди в аккаунт.'}</p>
     </div>}
     {error && <div className={styles.error} role="alert"><p>{error}</p><button className={styles.secondary} disabled={busy} onClick={() => { setError(''); setRevision(v => v + 1); }}>Обновить список</button></div>}
     {notice && <p className={styles.status} role="status">{notice}</p>}
@@ -79,7 +79,7 @@ export default function DiagnosticProfile({ user }: { user: User }) {
     {loaded && !records.length && !error && <p>Сохранённых диагностик пока нет. Пройди диагностику и на экране результата выбери «Сохранить результат в моём профиле».</p>}
     {current && <>
       <label className={styles.field}>Исходная попытка{profileUsesCloud ? ' · до 50 последних сохранений' : ''}<select value={current.runId} onChange={e => { setSelected(e.target.value); setRemove(''); }}>{records.map(row => <option value={row.runId} key={row.runId}>{row.exam.toUpperCase()} · {date(row.finishedAt)} · {row.correct}/{row.total}</option>)}</select></label>
-      <h3>{current.exam.toUpperCase()} · {current.correct} из {current.total} верно</h3><p>{current.questions.filter(q => q.answered).length >= Math.ceil(current.total / 2) ? `Предварительный диапазон: ${current.band}.` : 'Для диапазона пока недостаточно ответов.'} Пропущено: {current.questions.filter(q => !q.answered).length}.</p>
+      <h3>{current.exam.toUpperCase()} · {current.correct} из {current.total} верно</h3><p className={styles.note}>Попытка от {date(current.finishedAt)}</p><p>{current.questions.filter(q => q.answered).length >= Math.ceil(current.total / 2) ? `Предварительный диапазон: ${current.band}.` : 'Для диапазона пока недостаточно ответов.'} Пропущено: {current.questions.filter(q => !q.answered).length}.</p>
       {current.exam === 'ielts' && <p className={styles.note}>Проверены Reading и Listening. По этой попытке нельзя оценить Writing и Speaking.</p>}
       <div className={styles.queue}>{recommendations.map((row, index) => {
         const record = entries.find(entry => entry.item.id === row.trainer)?.record;
