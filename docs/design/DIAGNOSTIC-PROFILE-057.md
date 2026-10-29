@@ -58,7 +58,7 @@ Before production activation:
 4. Verify signup/email-confirmation/return on the actual auth provider, network retry and refresh/new-device persistence with disposable diagnostic data.
 5. Set server `DIAGNOSTIC_PROFILE_ENABLED=true` only after acceptance. Deploy verified code, then verify canonical public profile flow.
 
-Until then: keep PR draft and describe cloud feature as prepared, not released. Existing TRAINERS-COMPLETE-033 teacher/provider/device gates remain separate.
+Keep PR draft until source, exact-head CI and actual UI acceptance pass. Initial disabled code delivery is not cloud acceptance. Only call cloud activated after the pinned operational migration/RLS and canonical receipts described below. Existing TRAINERS-COMPLETE-033 teacher/provider/device gates remain separate.
 
 
 ## Resumed operational activation2026-10-29
@@ -74,3 +74,6 @@ Primary operational references: https://node-postgres.com/features/ssl (connecti
 
 
 First complete isolated native UI capture40927433755 on a61f308 passed7states/21geometry records/28PNG (320/390/1280/full) with no reported overflow/serious-critical1280px axe failure. Fresh image-only reviewer found no blocker but identified overly confident legacy section labels/advice. Display now uses question counts and observed-answer wording, not ADVANCED or an unsupported reading-speed inference; thresholds/scoring/bank unchanged. Saved attempt date is repeated in wrapping text, demo pending copy omits real-email instructions, and profile anchor has more header clearance. New exact-head captures/CI required. Ops source reviewer accepted current runner after guard/cleanup/canonical/consent corrections; synthetic planned identity is logged before creation for hard-kill recovery, never its password/JWT. No production flag set yet.
+
+
+Canonical acceptance follow-up: after the reviewed bootstrap deployment is active and anonymous canonical API returns401, the same pinned source can run once more with DIAGNOSTIC_PROFILE_ACCEPTANCE_MODE=canonical. Ordinary feature calls then use HTTPS on the fixed canonical owned domain (actual A/B JWTs, never service key); response private/no-store/Vary is checked. Direct RLS tests and exact cleanup still apply. The same source is redeployed after this receipt; remove PREPARE_SHA and mode afterward. This verifies actual production HTTP behavior, not real email delivery, browser UI across physical devices, or provider/teacher readiness.

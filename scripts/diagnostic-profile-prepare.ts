@@ -23,6 +23,8 @@ async function prepare() {
   requireCheck(/^[a-f0-9]{40}$/.test(pinned), 'COMMIT_PIN_INVALID');
   requireCheck(process.env.VERCEL_ENV === 'production', 'NOT_PRODUCTION');
   requireCheck(process.env.DIAGNOSTIC_PROFILE_ENABLED === 'true', 'RUNTIME_GATE_REQUIRED');
+  const mode=process.env.DIAGNOSTIC_PROFILE_ACCEPTANCE_MODE??'bootstrap';
+  requireCheck(mode==='bootstrap'||mode==='canonical','ACCEPTANCE_MODE_INVALID');
   requireCheck(process.env.DIAGNOSTIC_PROFILE_PROJECT_REF === expectedProject, 'PROJECT_PIN_REQUIRED');
   const root = process.env.SUPABASE_URL?.replace(/(\/(rest|auth)\/v1)?\/?$/, '');
   requireCheck(root === `https://${expectedProject}.supabase.co`, 'AUTH_PROJECT_MISMATCH');
@@ -150,13 +152,20 @@ async function prepare() {
     const input: DiagnosticInput = { runId: randomUUID(), exam: 'ielts', questionIds, answers: Object.fromEntries(questionIds.map(id=>[id,null])), target: null, elapsedMs: 60000, finishedAt: Date.now() };
     runIds.push(input.runId);
     const snapshot = freezeDiagnostic(input);
+    const privateResponse = (response: Response) => {
+      const cache=(response.headers.get('cache-control')??'').toLowerCase().split(',').map(value=>value.trim());
+      const vary=(response.headers.get('vary')??'').toLowerCase().split(',').map(value=>value.trim());
+      requireCheck(cache.includes('private') && cache.includes('no-store') && vary.includes('authorization'),'PRIVATE_RESPONSE_CACHE_GUARD');
+      return response;
+    };
     const call = async (method: 'GET'|'POST'|'DELETE', user = a, value?: unknown, actor = user.id) => {
       checks.throwIfAborted(); requireCheck(!connectionFailed,'DATABASE_CONNECTION_LOST');
       const req = new Request('https://ashyq-diagnostic.vercel.app/api/learning-diagnostics',{method,headers:{ Authorization: `Bearer ${user.token}`, 'X-Expected-Actor': actor, 'Content-Type':'application/json' },body:method==='GET'?undefined:JSON.stringify(value)});
-      return method==='GET'?GET(req):method==='POST'?POST(req):DELETE(req);
+      const response = mode==='canonical' ? await fetch(req,{signal:AbortSignal.any([checks,AbortSignal.timeout(15000)]),cache:'no-store',redirect:'error'}) : method==='GET'?await GET(req):method==='POST'?await POST(req):await DELETE(req);
+      return privateResponse(response);
     };
     phase = 'RLS_API_QA';
-    requireCheck((await GET(new Request('https://ashyq-diagnostic.vercel.app/api/learning-diagnostics'))).status === 401, 'ANONYMOUS_API_GUARD');
+    requireCheck(privateResponse(mode==='canonical' ? await fetch('https://ashyq-diagnostic.vercel.app/api/learning-diagnostics',{signal:AbortSignal.any([checks,AbortSignal.timeout(10000)]),cache:'no-store',redirect:'error'}) : await GET(new Request('https://ashyq-diagnostic.vercel.app/api/learning-diagnostics'))).status === 401, 'ANONYMOUS_API_GUARD');
     requireCheck((await call('POST',a,input,b.id)).status === 409, 'ACTOR_SWITCH_GUARD');
     requireCheck((await call('POST',a,input)).ok, 'OWNER_SAVE');
     requireCheck((await call('POST',a,input)).ok, 'IDEMPOTENT_RETRY');
@@ -190,7 +199,7 @@ async function prepare() {
     requireCheck(persisted.length===1 && persisted[0].runId===input.runId,'FRESH_SESSION_PERSISTENCE');
     requireCheck((await call('DELETE',a,{runId:input.runId})).ok,'OWNER_DELETE');
     requireCheck((await (await call('GET',a)).json()).length===0,'OWNER_DELETE_PERSISTED');
-    receipt('REAL_A_B_JWT_RLS_API_PASS');
+    receipt(mode==='canonical'?'REAL_CANONICAL_A_B_JWT_RLS_API_PASS':'REAL_A_B_JWT_RLS_API_PASS');
   } catch (error) {
     failure = error instanceof PreparationError ? error.message : phase; // Never expose a raw pg/Auth error, DSN, token or response.
   } finally {
