@@ -83,6 +83,8 @@ Loaded: Sepia professional-pass, tech-articles, discourse1–3, style-pass, GPT 
 
 ## Выпуск и после публикации
 
+Первый фактический browser review нашёл на узкой таблице `scrollable-region-focusable`. Под опубликованным scope amendment070 общий table wrapper получает keyboard focus и именованный region; парсинг Markdown и содержание старых материалов сохраняются. Повторная проверка должна включать ArrowRight/Tab и реальные картинки, а не отключение правила axe. В модельном примере SAT добавлен контрпример n=2 и совпадение при n=1.
+
 [ ] Проверить indexability, self-canonical, BlogPosting и sitemap каждого URL.
 [ ] Проверить ссылки из каталога/связанных статей и на коммерческую страницу.
 [ ] Просмотреть обложки и страницы320/390/1440, проверить длинные таблицы и реальные цифры.
