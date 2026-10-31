@@ -31,6 +31,10 @@ export default function BlogPostView({ slug, language = 'ru', initialData }: { s
     // reader's older localStorage snapshot may not contain a newly added post.
     // Keep the server-provided editorial entry visible without rewriting it.
     if (!post) return initialData ?? null;
+    // A saved seed is a snapshot, not the current public editorial version.
+    // Prefer the server article when its revision changed; leave stored records
+    // and separately authored posts untouched.
+    if (initialData && post.id === initialData.post.id && post.id.startsWith('default-') && initialData.post.updatedAt && post.updatedAt !== initialData.post.updatedAt) return initialData;
     const [author, all] = await Promise.all([repos.users.get(post.authorId), repos.blog.listPublished()]);
     return { post, author, more: all.filter((p) => p.id !== post.id && p.category === post.category).slice(0, 3) };
   }, `post:${slug}`, initialData);
