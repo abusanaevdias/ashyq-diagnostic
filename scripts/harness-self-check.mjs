@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { matches, safePath, validateTask, assess, requireLoopback, validateReport } from './harness.mjs';
+import { matches, safePath, validateTask, assess, requireLoopback, validateReport, validateDependencies } from './harness.mjs';
 
 const policy = JSON.parse(readFileSync(new URL('../harness/policy.json', import.meta.url)));
 const task = { id: 'EXAMPLE-001', owner: 'synthetic fixture', objective: 'verify contract refusal', scope: ['src/data/*post*.ts'], acceptance: ['clear answer'], counterexamples: ['unsupported claim'], checks: ['lint', 'types', 'build', 'seo', 'content'], reviews: ['source', 'sources-and-claims', 'visual'], routes: ['/blog/example'] };
@@ -18,6 +18,9 @@ assert.deepEqual(evaluated.missingReviews, []);
 assert.equal(assess(['src/lib/scoring.ts'], [task], policy).uncovered.length, 1);
 assert.ok(assess(['src/data/new-post.ts'], [{ ...task, checks: [] }], policy).missingChecks.includes('seo'));
 assert.ok(assess(['src/data/new-post.ts'], [{ ...task, reviews: [] }], policy).missingReviews.includes('sources-and-claims'));
+assert.ok(assess(['src/lib/config.ts'], [], policy).checks.includes('bank'));
+assert.doesNotThrow(() => validateDependencies('src/lib/scoring.ts', "import type { ExamId } from './types';", policy.dependencyRules));
+for (const source of ["import React from 'react';", "import UI from '@/components/Example';", "const db = import('pg');", "const route = require('../app/page');"]) assert.throws(() => validateDependencies('src/lib/scoring.ts', source, policy.dependencyRules));
 for (const value of ['https://ashyq-diagnostic.vercel.app', 'http://127.0.0.1.attacker.test', 'file:///tmp', 'http://user:pass@localhost']) assert.throws(() => requireLoopback(value));
 for (const value of ['http://127.0.0.1:3000', 'http://localhost:3050', 'http://[::1]:3000']) assert.doesNotThrow(() => requireLoopback(value));
 const state = { head: 'a'.repeat(40), base: 'b'.repeat(40), fingerprint: 'c'.repeat(64) };

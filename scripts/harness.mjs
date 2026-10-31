@@ -47,6 +47,16 @@ export function assess(files, tasks, policy) {
   return { files, areas: rules.map(rule => rule.id), checks, reviews, uncovered, missingChecks: checks.filter(check => !declared.has(check)), missingReviews: reviews.filter(review => !declaredReviews.has(review)) };
 }
 
+export function validateDependencies(file, source, rules) {
+  const imports = [...source.matchAll(/\b(?:from\s*|import\s*\(\s*|require\s*\(\s*|import\s*)['"]([^'"]+)['"]/g)].map(match => match[1]);
+  for (const rule of rules.filter(rule => rule.paths.some(glob => matches(file, glob)))) {
+    for (const specifier of imports) {
+      const target = specifier.startsWith('@/') ? `src/${specifier.slice(2)}` : specifier.startsWith('.') ? path.posix.normalize(path.posix.join(path.posix.dirname(file), specifier)) : specifier;
+      if (rule.forbidden.some(glob => matches(target, glob))) fail(`${file}: forbidden dependency ${specifier}. ${rule.reason}. Move UI/provider access outside the diagnostic rules.`);
+    }
+  }
+}
+
 function snapshot(baseRef) {
   const base = git(['rev-parse', '--verify', '--end-of-options', `${baseRef}^{commit}`]).trim();
   const head = git(['rev-parse', 'HEAD']).trim();
@@ -66,6 +76,9 @@ function collect(base) {
   const policy = json('harness/policy.json');
   if (policy.version !== 1) fail('Unsupported harness policy version');
   for (const file of policy.requiredDocs) if (!safePath(file) || !existsSync(path.join(root, file))) fail(`Missing harness reference: ${file}`);
+  for (const file of git(['ls-files', '-z']).split('\0').filter(Boolean)) {
+    if (policy.dependencyRules.some(rule => rule.paths.some(glob => matches(file, glob))) && existsSync(path.join(root, file))) validateDependencies(file, readFileSync(path.join(root, file), 'utf8'), policy.dependencyRules);
+  }
   const all = readdirSync(path.join(root, 'harness/tasks')).filter(file => file.endsWith('.json')).map(file => validateTask(json(`harness/tasks/${file}`), policy));
   const state = snapshot(base);
   const selected = all.filter(task => state.files.includes(`harness/tasks/${task.id}.json`));

@@ -2,6 +2,9 @@
   "version": 1,
   "requiredDocs": ["AGENTS.md", "HANDOFF.md", "docs/harness/README.md", "docs/harness/architecture.md", "docs/harness/content.md"],
   "metadataOnly": ["HANDOFF.md"],
+  "dependencyRules": [
+    {"paths": ["src/lib/scoring.ts", "src/lib/config.ts", "src/lib/mistakes.ts", "src/data/questions/**"], "forbidden": ["react", "react/**", "next", "next/**", "@supabase/**", "pg", "node:fs*", "src/components/**", "src/app/**"], "reason": "Diagnostic rules and question data stay independent of UI, routing and database access"}
+  ],
   "checks": {
     "harness": {"node": "scripts/harness-self-check.mjs"},
     "lint": {"npm": "lint"},
@@ -14,7 +17,7 @@
   },
   "rules": [
     {"id": "application", "paths": ["src/**", "next.config.*", "package*.json"], "checks": ["lint", "types", "build"], "reviews": ["source"]},
-    {"id": "learning-state", "paths": ["src/lib/trainers/**", "src/components/trainers/**", "src/lib/diagnostic-profile/**", "src/lib/useDiagnostic*", "src/data/questions/**", "src/lib/scoring*"], "checks": ["units", "bank"], "reviews": ["state-and-privacy"]},
+    {"id": "learning-state", "paths": ["src/lib/trainers/**", "src/components/trainers/**", "src/lib/diagnostic-profile/**", "src/lib/useDiagnostic*", "src/data/questions/**", "src/lib/config.ts", "src/lib/scoring*"], "checks": ["units", "bank"], "reviews": ["state-and-privacy"]},
     {"id": "access-and-data", "paths": ["src/app/api/**", "src/lib/*auth*", "supabase/**", "src/lib/lms/**"], "checks": ["units"], "reviews": ["authorization", "state-and-privacy"]},
     {"id": "public-content", "paths": ["src/data/*post*.ts", "src/data/blog.ts", "src/app/blog/**", "public/blog/**", "harness/content/**"], "checks": ["seo", "content"], "reviews": ["sources-and-claims", "visual"]},
     {"id": "presentation", "paths": ["src/components/**", "src/app/**/page.tsx", "src/**/*.css", "public/**"], "checks": [], "reviews": ["visual"]},
