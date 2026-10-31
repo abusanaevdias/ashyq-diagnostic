@@ -520,6 +520,24 @@ textarea.field {
   white-space: pre-line;
 }
 
+.article .md a {
+  color: var(--red-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
+  overflow-wrap: anywhere;
+}
+
+.article .md a:hover {
+  text-decoration-thickness: 2.5px;
+}
+
+.article .md a:focus-visible {
+  outline: 2px solid var(--red-deep);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 .mdFigure {
   display: grid;
   gap: 8px;

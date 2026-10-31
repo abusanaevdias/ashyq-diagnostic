@@ -1,0 +1,46 @@
+{
+  "id": "BLOG-READER-071",
+  "owner": "Codex /root (Dias Windows)",
+  "objective": "Make practice articles useful to prospective learners with visible direct links and genuine current exercise screenshots",
+  "scope": [
+    "harness/tasks/BLOG-READER-071.json",
+    "src/data/practice-guides-posts.ts",
+    "public/blog/trainer-*.png",
+    "src/components/lms/Lms.module.css",
+    "src/components/lms/BlogPostView.tsx",
+    "docs/harness/content.md",
+    "docs/content/BLOG_READER_071.md",
+    "src/components/lms/Markdown.tsx"
+  ],
+  "acceptance": [
+    "Each depicted trainer has an adjacent descriptive direct exercise link",
+    "Screenshots show actual current anonymous practice UI without learner data",
+    "Article links are visibly identifiable without hover and have keyboard focus",
+    "Images and captions are useful and readable on narrow screens"
+  ],
+  "counterexamples": [
+    "An invisible link is not an adequate reader path",
+    "A decorative cover is not a product screenshot",
+    "A working HTTP route alone does not prove that the reader reaches the described exercise",
+    "No screenshot can imply a real learner result or automatic score guarantee"
+  ],
+  "checks": [
+    "harness",
+    "content",
+    "lint",
+    "types",
+    "build",
+    "seo"
+  ],
+  "reviews": [
+    "source",
+    "visual",
+    "sources-and-claims",
+    "guardrails"
+  ],
+  "routes": [
+    "/blog/ielts-practice-websites",
+    "/blog/ielts-mistakes-practice",
+    "/blog/digital-sat-practice-tools"
+  ]
+}

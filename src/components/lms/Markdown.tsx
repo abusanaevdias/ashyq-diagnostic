@@ -47,16 +47,19 @@ export default function Markdown({ text }: { text: string }) {
         const lines = block.split('\n');
         const image = block.match(IMAGE_BLOCK);
         if (image) {
+          const illustration = <Image
+            className={styles.mdImage}
+            src={image[2]}
+            alt={image[1]}
+            width={1200}
+            height={630}
+            sizes="(max-width: 800px) 100vw, 760px"
+          />;
           return (
             <figure key={index} className={styles.mdFigure}>
-              <Image
-                className={styles.mdImage}
-                src={image[2]}
-                alt={image[1]}
-                width={1200}
-                height={630}
-                sizes="(max-width: 800px) 100vw, 760px"
-              />
+              {image[2].startsWith('/blog/trainer-')
+                ? <a href={image[2]} aria-label={`Открыть скриншот крупнее: ${image[1]}`}>{illustration}</a>
+                : illustration}
               {image[3] ? <figcaption>{renderInline(image[3])}</figcaption> : null}
             </figure>
           );
