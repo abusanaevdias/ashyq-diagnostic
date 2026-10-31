@@ -65,7 +65,7 @@ export default function Markdown({ text }: { text: string }) {
           const headers = tableCells(lines[0]);
           const rows = lines.slice(2).map(tableCells);
           return (
-            <div key={index} className={styles.mdTableWrap}>
+            <div key={index} className={styles.mdTableWrap} role="region" aria-label={headers.join(' / ')} tabIndex={0}>
               <table>
                 <thead><tr>{headers.map((cell, i) => <th key={i} scope="col">{renderInline(cell)}</th>)}</tr></thead>
                 <tbody>{rows.map((row, rowIndex) => (

@@ -1,0 +1,11 @@
+{
+  "id": "SEO-PRACTICE-070",
+  "owner": "Codex /root (Dias Windows)",
+  "objective": "Publish three useful practice guides under plausible learner questions with fair primary-source comparisons",
+  "scope": ["src/data/practice-guides-posts.ts", "src/data/blog.ts", "src/components/lms/Markdown.tsx", "public/blog/practice-*.svg", "harness/tasks/SEO-PRACTICE-070.json", "harness/content/**", "docs/content/**"],
+  "acceptance": ["Three distinct intents avoid existing course and preparation-plan pages", "Official resource facts use dated primary sources", "ASHYQ capabilities match current public trainers", "Every article is indexable, internally linked and usable on mobile", "Only owner-corrected official section results are published with first-party attribution and no invented individual details"],
+  "counterexamples": ["A comparison must not invent competitor ratings or observed score gains", "A synthetic exercise must not be presented as a student case", "A source citation must not be treated as proof that an AI recommended ASHYQ", "A noindex practice route must not be described as an indexed AI citation"],
+  "checks": ["harness", "lint", "types", "build", "seo", "content"],
+  "reviews": ["guardrails", "source", "sources-and-claims", "visual"],
+  "routes": ["/blog/ielts-practice-websites", "/blog/ielts-mistakes-practice", "/blog/digital-sat-practice-tools"]
+}

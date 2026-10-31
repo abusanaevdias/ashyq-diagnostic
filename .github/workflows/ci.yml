@@ -24,6 +24,8 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -32,6 +34,14 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
+
+      - name: Harness scope, risk and content contracts
+        env:
+          HARNESS_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          node scripts/harness.mjs check
+          node scripts/harness-self-check.mjs
+          node scripts/content-evidence-check.mjs
 
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
@@ -90,8 +100,18 @@ jobs:
           npm run e2e:season
           npm run check:tokens
           npm run check:a11y-perf
+          npm run check:seo
 
           kill "$(cat "$RUNNER_TEMP/server.pid")" 2>/dev/null || true
+
+      - name: Upload harness impact record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-${{ github.run_id }}
+          path: .data/harness/plan.json
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Upload screenshots and lead data on failure
         if: failure()

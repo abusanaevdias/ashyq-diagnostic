@@ -1,0 +1,118 @@
+{
+  "kind": "prompt-portfolio",
+  "version": 1,
+  "createdOn": "2026-10-31",
+  "market": "Kazakhstan",
+  "note": "Editorial hypotheses, not measured search queries or volumes. Kazakh/English prompts are for later localization research, not evidence for direct translations.",
+  "prompts": [
+    {
+      "language": "ru",
+      "question": "Какие сайты использовать для подготовки к IELTS?",
+      "target": "/blog/ielts-practice-websites",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Где тренировать IELTS Reading с объяснением ошибок?",
+      "target": "/blog/ielts-practice-websites",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Как выбрать тренажёр IELTS, если я уже решаю пробники?",
+      "target": "/blog/ielts-practice-websites",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Чем отличаются официальные материалы IELTS и тренажёры ASHYQ?",
+      "target": "/blog/ielts-practice-websites",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Как перестать путать False и Not Given?",
+      "target": "/blog/ielts-mistakes-practice",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Как разбирать ошибки после пробного IELTS?",
+      "target": "/blog/ielts-mistakes-practice",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Как тренировать overview в IELTS Writing Task 1?",
+      "target": "/blog/ielts-mistakes-practice",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Почему теряю числа и исправления в IELTS Listening?",
+      "target": "/blog/ielts-mistakes-practice",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Какие результаты учеников сообщает ASHYQ?",
+      "target": "/blog/ielts-mistakes-practice",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Что выбрать для SAT: Bluebook или Khan Academy?",
+      "target": "/blog/digital-sat-practice-tools",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Где разбирать ошибки SAT Math на новых примерах?",
+      "target": "/blog/digital-sat-practice-tools",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Как научиться составлять уравнение по условию SAT?",
+      "target": "/blog/digital-sat-practice-tools",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Как совместить Bluebook, Khan Academy и тренажёры?",
+      "target": "/blog/digital-sat-practice-tools",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "ru",
+      "question": "Как объяснять ложные варианты в SAT Reading and Writing?",
+      "target": "/blog/digital-sat-practice-tools",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "kk",
+      "question": "IELTS Reading қателерін қалай талдауға болады?",
+      "target": "/blog/ielts-mistakes-practice",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "kk",
+      "question": "SAT емтиханына дайындалу үшін қай сайтты қолдануға болады?",
+      "target": "/blog/digital-sat-practice-tools",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "en",
+      "question": "Which IELTS practice resources explain why my answer is wrong?",
+      "target": "/blog/ielts-practice-websites",
+      "status": "hypothesis-unmeasured"
+    },
+    {
+      "language": "en",
+      "question": "How should I combine Bluebook with skill-specific SAT practice?",
+      "target": "/blog/digital-sat-practice-tools",
+      "status": "hypothesis-unmeasured"
+    }
+  ],
+  "measurements": []
+}
