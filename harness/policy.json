@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "requiredDocs": ["AGENTS.md", "HANDOFF.md", "docs/harness/README.md", "docs/harness/architecture.md", "docs/harness/content.md"],
+  "metadataOnly": ["HANDOFF.md"],
+  "checks": {
+    "harness": {"node": "scripts/harness-self-check.mjs"},
+    "lint": {"npm": "lint"},
+    "types": {"npm": "typecheck"},
+    "bank": {"npm": "validate:bank"},
+    "build": {"npm": "build"},
+    "units": {"npm": "check:units"},
+    "seo": {"npm": "check:seo", "loopback": true},
+    "content": {"node": "scripts/content-evidence-check.mjs"}
+  },
+  "rules": [
+    {"id": "application", "paths": ["src/**", "next.config.*", "package*.json"], "checks": ["lint", "types", "build"], "reviews": ["source"]},
+    {"id": "learning-state", "paths": ["src/lib/trainers/**", "src/components/trainers/**", "src/lib/diagnostic-profile/**", "src/lib/useDiagnostic*", "src/data/questions/**", "src/lib/scoring*"], "checks": ["units", "bank"], "reviews": ["state-and-privacy"]},
+    {"id": "access-and-data", "paths": ["src/app/api/**", "src/lib/*auth*", "supabase/**", "src/lib/lms/**"], "checks": ["units"], "reviews": ["authorization", "state-and-privacy"]},
+    {"id": "public-content", "paths": ["src/data/*post*.ts", "src/data/blog.ts", "src/app/blog/**", "public/blog/**", "harness/content/**"], "checks": ["seo", "content"], "reviews": ["sources-and-claims", "visual"]},
+    {"id": "presentation", "paths": ["src/components/**", "src/app/**/page.tsx", "src/**/*.css", "public/**"], "checks": [], "reviews": ["visual"]},
+    {"id": "harness", "paths": ["harness/**", "scripts/harness*", "scripts/content-evidence-check.mjs", ".github/**", "AGENTS.md"], "checks": ["harness"], "reviews": ["guardrails"]}
+  ]
+}

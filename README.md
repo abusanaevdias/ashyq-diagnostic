@@ -18,6 +18,11 @@ SAT score или IELTS Band: используются формулировки �
 
 ## Быстрый старт
 
+Разработка с агентом: [рабочий цикл ASHYQ](docs/harness/README.md),
+[карта областей и рисков](docs/harness/architecture.md),
+[правила контента и доказательств](docs/harness/content.md).
+Начните с `node scripts/harness.mjs plan --base origin/main`.
+
 ```bash
 npm install
 npm run dev          # http://localhost:3000

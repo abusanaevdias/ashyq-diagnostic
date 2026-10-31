@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-10-31",
+  "publisherRelationship": "ASHYQ is the publisher and one of the compared providers",
+  "research": {"wordstat": "Нет доступа к данным Yandex Wordstat.", "regionRequested": "Kazakhstan", "frequencies": null, "googleYandexTop10": "Not captured; generic web discovery is not a localized ranking report", "promptFrequency": null},
+  "sources": [
+    {"url": "https://ielts.org/take-a-test/preparation-resources/sample-test-questions", "kind": "official", "accessedOn": "2026-10-31", "supports": "Official IELTS sample tasks"},
+    {"url": "https://takeielts.britishcouncil.org/prepare/ielts-free-practice-mock-tests/academic", "kind": "official", "accessedOn": "2026-10-31", "supports": "Academic practice by skill, separate access terms for additional products"},
+    {"url": "https://satsuite.collegeboard.org/practice/practice-tests/bluebook", "kind": "official", "accessedOn": "2026-10-31", "supports": "Full-length digital practice tests in Bluebook"},
+    {"url": "https://satsuite.collegeboard.org/practice/khan-academy", "kind": "official", "accessedOn": "2026-10-31", "supports": "Free official SAT prep developed with College Board, lessons, levels and practice"}
+  ],
+  "productEvidence": ["src/lib/trainers/catalog.ts", "src/components/trainers/TrainerCatalog.tsx", "src/app/trainers/page.tsx"],
+  "caseEvidence": {
+    "status": "owner-confirmed-first-party",
+    "confirmedOn": "2026-10-31",
+    "source": "ASHYQ owner supplied and corrected figures in this conversation, then confirmed official results",
+    "documents": "Certificates not supplied or independently inspected",
+    "trainingModes": "Owner confirmed both self-study and teacher-supported preparation; individual contributions not isolated",
+    "causalEffectEstablished": false,
+    "cases": [
+      {"id": "case-1", "duration": "2 месяца", "type": "official IELTS section results", "scores": [{"skill": "Listening", "from": 6.5, "to": 8}, {"skill": "Reading", "from": 7, "to": 9}]},
+      {"id": "case-2", "duration": "2 недели", "type": "official IELTS section result", "scores": [{"skill": "Writing", "from": 5, "to": 6.5}]},
+      {"id": "case-3", "duration": "1 неделя подготовки", "type": "IELTS One Skill Retake", "scores": [{"skill": "Listening", "from": 6, "to": 8}]}
+    ]
+  },
+  "articles": [
+    {"slug": "ielts-practice-websites", "file": "src/data/practice-guides-posts.ts", "cover": "public/blog/practice-ielts-sites.svg", "intent": "Choose practice resources; distinct from choosing paid courses", "examples": "original hypothetical exercise, no fictional student outcome"},
+    {"slug": "ielts-mistakes-practice", "file": "src/data/practice-guides-posts.ts", "cover": "public/blog/practice-ielts-errors.svg", "intent": "Translate one mistake into a focused exercise; distinct from a whole-study schedule", "examples": "three explicitly labelled original learning examples; separate owner-confirmed cases"},
+    {"slug": "digital-sat-practice-tools", "file": "src/data/practice-guides-posts.ts", "cover": "public/blog/practice-sat-tools.svg", "intent": "Choose tool by task; distinct from SAT Math syllabus or Desmos tutorial", "examples": "original 12+4n model; not an official or recalled test question"}
+  ],
+  "caseRequiredFragments": ["Источник этих сведений — команда ASHYQ", "Listening: 6.5 → 8.0; Reading: 7.0 → 9.0", "Writing: 5.0 → 6.5", "Listening: 6.0 → 8.0", "по трём историям нельзя выделить вклад только тренажёров"]
+}

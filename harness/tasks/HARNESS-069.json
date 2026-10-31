@@ -1,0 +1,11 @@
+{
+  "id": "HARNESS-069",
+  "owner": "Codex /root (Dias Windows)",
+  "objective": "Make agent planning, check selection, provenance and closeout repeatable across this ASHYQ repository",
+  "scope": ["AGENTS.md", "README.md", "harness/policy.json", "harness/tasks/HARNESS-069.json", "docs/harness/**", "scripts/harness*.mjs", "scripts/content-evidence-check.mjs", ".github/workflows/ci.yml"],
+  "acceptance": ["New non-ledger changes require scoped task plans", "Changed domains imply declared checks and reviews", "Allowlisted commands produce source-bound reports", "Existing full CI remains intact and SEO is actually executed", "Future agents find the operating contract from AGENTS and README"],
+  "counterexamples": ["An unrelated scoring edit must fail scope coverage", "A stale success report must fail after source changes", "A failed or timed-out command must not count as success", "The local runner must reject remote network-check targets and arbitrary shell commands"],
+  "checks": ["harness", "lint", "types", "build", "units", "content", "seo"],
+  "reviews": ["guardrails", "source"],
+  "routes": []
+}

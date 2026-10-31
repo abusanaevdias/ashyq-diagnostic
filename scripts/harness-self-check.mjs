@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { matches, safePath, validateTask, assess, requireLoopback, validateReport } from './harness.mjs';
+
+const policy = JSON.parse(readFileSync(new URL('../harness/policy.json', import.meta.url)));
+const task = { id: 'EXAMPLE-001', owner: 'synthetic fixture', objective: 'verify contract refusal', scope: ['src/data/*post*.ts'], acceptance: ['clear answer'], counterexamples: ['unsupported claim'], checks: ['lint', 'types', 'build', 'seo', 'content'], reviews: ['source', 'sources-and-claims', 'visual'], routes: ['/blog/example'] };
+assert.equal(matches('src/data/new-post.ts', 'src/data/*post*.ts'), true);
+assert.equal(matches('src/data/deep/new-post.ts', 'src/data/*post*.ts'), false);
+assert.equal(matches('src/lib/trainers/nested/state.ts', 'src/lib/trainers/**'), true);
+assert.equal(matches('src/data/new-postXts', 'src/data/*post.ts'), false);
+for (const unsafe of ['../outside', '/absolute', 'C:/outside', 'src/../outside', 'src\\outside']) assert.equal(safePath(unsafe), false);
+assert.doesNotThrow(() => validateTask(task, policy));
+for (const patch of [{ checks: ['rm -rf /'] }, { scope: ['**'] }, { scope: ['../outside'] }, { acceptance: [] }, { routes: ['//external.example'] }]) assert.throws(() => validateTask({ ...task, ...patch }, policy));
+const evaluated = assess(['src/data/new-post.ts'], [task], policy);
+assert.deepEqual(evaluated.uncovered, []);
+assert.deepEqual(evaluated.missingChecks, []);
+assert.deepEqual(evaluated.missingReviews, []);
+assert.equal(assess(['src/lib/scoring.ts'], [task], policy).uncovered.length, 1);
+assert.ok(assess(['src/data/new-post.ts'], [{ ...task, checks: [] }], policy).missingChecks.includes('seo'));
+assert.ok(assess(['src/data/new-post.ts'], [{ ...task, reviews: [] }], policy).missingReviews.includes('sources-and-claims'));
+for (const value of ['https://ashyq-diagnostic.vercel.app', 'http://127.0.0.1.attacker.test', 'file:///tmp', 'http://user:pass@localhost']) assert.throws(() => requireLoopback(value));
+for (const value of ['http://127.0.0.1:3000', 'http://localhost:3050', 'http://[::1]:3000']) assert.doesNotThrow(() => requireLoopback(value));
+const state = { head: 'a'.repeat(40), base: 'b'.repeat(40), fingerprint: 'c'.repeat(64) };
+const record = { id: 'seo', exitCode: 0, signal: null, error: null, durationMs: 1, stdoutSha256: 'd'.repeat(64), stderrSha256: 'e'.repeat(64) };
+const report = { version: 1, ...state, completedAt: new Date().toISOString(), checks: [record] };
+assert.doesNotThrow(() => validateReport(report, state, ['seo']));
+for (const patch of [{ head: 'f'.repeat(40) }, { base: 'f'.repeat(40) }, { fingerprint: 'f'.repeat(64) }, { completedAt: null }, { checks: [] }, { checks: [record, record] }, { checks: [{ ...record, exitCode: null }] }, { checks: [{ ...record, exitCode: 1 }] }, { checks: [{ ...record, error: 'ETIMEDOUT' }] }, { checks: [{ ...record, signal: 'SIGTERM' }] }]) assert.throws(() => validateReport({ ...report, ...patch }, state, ['seo']));
+console.log('PASS harness negative fixtures: scoped paths/checks/reviews, no arbitrary shell commands, loopback-only network checks, stale/incomplete/failed/timed-out evidence rejected');
