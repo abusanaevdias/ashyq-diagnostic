@@ -23,7 +23,10 @@ function renderInline(text: string): ReactNode {
       children.push(<strong key={`strong-${match.index}`}>{match[1]}</strong>);
     } else if (match[2] && match[3]) {
       const href = match[3];
-      children.push(href.startsWith('/')
+      const screenshot = /^\/blog\/trainer-[a-z-]+\.png$/.test(href);
+      children.push(screenshot
+        ? <a key={`link-${match.index}`} href={href}>{match[2]}</a>
+        : href.startsWith('/')
         ? <Link key={`link-${match.index}`} href={href}>{match[2]}</Link>
         : <a key={`link-${match.index}`} href={href} target="_blank" rel="noreferrer">{match[2]}</a>);
     }

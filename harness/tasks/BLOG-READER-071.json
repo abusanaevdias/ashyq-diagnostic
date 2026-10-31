@@ -16,13 +16,15 @@
     "Each depicted trainer has an adjacent descriptive direct exercise link",
     "Screenshots show actual current anonymous practice UI without learner data",
     "Article links are visibly identifiable without hover and have keyboard focus",
-    "Images and captions are useful and readable on narrow screens"
+    "Images and captions are useful and readable on narrow screens",
+    "Both screenshot thumbnail and caption open the actual PNG document, not a soft-routed blog slug"
   ],
   "counterexamples": [
     "An invisible link is not an adequate reader path",
     "A decorative cover is not a product screenshot",
     "A working HTTP route alone does not prove that the reader reaches the described exercise",
-    "No screenshot can imply a real learner result or automatic score guarantee"
+    "No screenshot can imply a real learner result or automatic score guarantee",
+    "HTTP200 and correct asset hashes do not prove that a Next Link caption opens the PNG; actually click both links"
   ],
   "checks": [
     "harness",
